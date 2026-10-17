@@ -1,0 +1,4 @@
+{
+  "_comment": "One entry per original translation unit. 'target' is the delinked object from the original exe (see docs/delinking.md); 'source' is our C/C++ file, omitted until work starts. 'category' must be one of the progress_categories in configure.py.",
+  "units": []
+}

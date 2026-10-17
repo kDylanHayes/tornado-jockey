@@ -1,0 +1,5 @@
+# Known symbols in Tornado.exe, one per line:
+#   <virtual address> <name> [function|data] [size]
+# Names use the original MSVC decorated name when it is known, otherwise a
+# readable placeholder such as FUN_00401000. Keep the file sorted by address.
+0x005c1839 entry function

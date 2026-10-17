@@ -1,0 +1,21 @@
+# Game files: never commit these
+orig/*
+!orig/README.md
+*.exe
+*.dll
+*.wkz
+
+# Generated
+build/
+build.ninja
+.ninja_*
+objdiff.json
+report.json
+__pycache__/
+*.pyc
+
+# Ghidra
+*.gpr
+*.rep/
+*.lock
+*.lock~

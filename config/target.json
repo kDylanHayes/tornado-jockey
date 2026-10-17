@@ -1,0 +1,17 @@
+{
+  "name": "Tornado.exe",
+  "version": "1.0.0.67",
+  "sha1": "71be8eb97a8fb0aa161af7a2af14bed63af2c6de",
+  "size": 2949120,
+  "image_base": "0x400000",
+  "entry_point": "0x5c1839",
+  "sections": [
+    { "name": ".text",  "va": "0x401000", "size": "0x254424" },
+    { "name": ".rdata", "va": "0x656000", "size": "0x56cc6" },
+    { "name": ".data",  "va": "0x6ad000", "size": "0x3667f8" },
+    { "name": ".data1", "va": "0xa14000", "size": "0x900" },
+    { "name": ".rsrc",  "va": "0xa15000", "size": "0x3e10" }
+  ],
+  "compiler": "msvc7.1 cl 13.10.3077",
+  "linker": "link 7.10.3077"
+}

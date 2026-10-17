@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Reject game files
+        run: |
+          bad=$(git ls-files | grep -i -E '\.(exe|dll|obj|wkz|mdl|sms|sma|scn|ams)$' || true)
+          if [ -n "$bad" ]; then
+            echo "These files must not be committed:"; echo "$bad"; exit 1
+          fi
+          for f in $(git ls-files); do
+            if [ -f "$f" ] && head -c 2 "$f" | grep -q '^MZ'; then
+              echo "PE file committed: $f"; exit 1
+            fi
+          done
+
+      - name: Validate config and generate build files
+        run: |
+          python -m json.tool config/target.json > /dev/null
+          python -m json.tool config/units.json > /dev/null
+          python configure.py --wine wine
