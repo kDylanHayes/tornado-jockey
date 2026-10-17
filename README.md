@@ -15,13 +15,13 @@ The goal is C++ source that, compiled with the original toolchain, reproduces th
 | Linked | 2006-07-14 21:22:54 UTC |
 | SHA-1 | `71be8eb97a8fb0aa161af7a2af14bed63af2c6de` |
 | Compiler | Microsoft Visual C++ 7.1 (`cl` 13.10.3077), linker 7.10.3077 |
-| Libraries | Direct3D 8 / D3DX8, DirectInput 8, FMOD 3.74, ODE, zlib 1.2.2, libjpeg 6b, libpng 1.2.8 and 1.0.5, FreeImage, Dinkumware STL, ATL |
+| Libraries | Direct3D 8 / D3DX8, DirectInput 8, FMOD 3.74, ODE, zlib 1.2.2, libjpeg 6b, libpng 1.2.8 (plus D3DX8's own libpng 1.0.5 and zlib), FreeImage, Dinkumware STL, ATL |
 
 The retail installer ships `Tornado.exe` with its code sections empty; the WildTangent launcher (`Tornado-WT.exe`) fills them in at runtime. The target is the complete, unprotected executable with the SHA-1 above. This project does not provide that file or any means of removing copy protection.
 
 ## Status
 
-FreeImage 3.7.0 matches 100%: its own C++ code (21 units) and its bundled zlib 1.2.2, libpng 1.2.8 and libjpeg 6b (59 units), 180 KB of code in all. So does the first engine unit, `SRESULT`. Next up on the library side: the older libpng copy and ODE. See [docs/roadmap.md](docs/roadmap.md).
+FreeImage 3.7.0 matches 100%: its own C++ code (21 units) and its bundled zlib 1.2.2, libpng 1.2.8 and libjpeg 6b (59 units). So does ODE 0.5 with OPCODE (49 units), and the first engine unit, `SRESULT`: 130 units and 395 KB of code in all. The older libpng copy turned out to be part of Microsoft's prebuilt D3DX8 library, so it gets linked rather than rebuilt. See [docs/roadmap.md](docs/roadmap.md).
 
 ## Getting started
 

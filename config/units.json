@@ -894,6 +894,545 @@
       "category": "lib",
       "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage",
       "complete": true
+    },
+    {
+      "name": "lib/ode/ode",
+      "ranges": [
+        "0x00586fd0-0x0058865f"
+      ],
+      "target": "build/target/lib/ode/ode.obj",
+      "source": "src/lib/ode/ode/src/ode.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/collision_space",
+      "ranges": [
+        "0x00588660-0x00588e1f"
+      ],
+      "target": "build/target/lib/ode/collision_space.obj",
+      "source": "src/lib/ode/ode/src/collision_space.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/collision_kernel",
+      "ranges": [
+        "0x00588e20-0x00589c4f"
+      ],
+      "target": "build/target/lib/ode/collision_kernel.obj",
+      "source": "src/lib/ode/ode/src/collision_kernel.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/collision_trimesh",
+      "ranges": [
+        "0x00589c50-0x0058ab8f"
+      ],
+      "target": "build/target/lib/ode/collision_trimesh.obj",
+      "source": "src/lib/ode/ode/src/collision_trimesh.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/collision_transform",
+      "ranges": [
+        "0x0058ab90-0x0058b07f"
+      ],
+      "target": "build/target/lib/ode/collision_transform.obj",
+      "source": "src/lib/ode/ode/src/collision_transform.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/collision_std",
+      "ranges": [
+        "0x0058b080-0x0058fc1f"
+      ],
+      "target": "build/target/lib/ode/collision_std.obj",
+      "source": "src/lib/ode/ode/src/collision_std.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/mass",
+      "ranges": [
+        "0x0058fc20-0x005905df"
+      ],
+      "target": "build/target/lib/ode/mass.obj",
+      "source": "src/lib/ode/ode/src/mass.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/collision_quadtreespace",
+      "ranges": [
+        "0x005905e0-0x0059110f"
+      ],
+      "target": "build/target/lib/ode/collision_quadtreespace.obj",
+      "source": "src/lib/ode/ode/src/collision_quadtreespace.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/error",
+      "ranges": [
+        "0x00591110-0x0059128f"
+      ],
+      "target": "build/target/lib/ode/error.obj",
+      "source": "src/lib/ode/ode/src/error.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/joint",
+      "ranges": [
+        "0x00591290-0x005947cf"
+      ],
+      "target": "build/target/lib/ode/joint.obj",
+      "source": "src/lib/ode/ode/src/joint.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/rotation",
+      "ranges": [
+        "0x005947d0-0x00594fdf"
+      ],
+      "target": "build/target/lib/ode/rotation.obj",
+      "source": "src/lib/ode/ode/src/rotation.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/odemath",
+      "ranges": [
+        "0x00594fe0-0x0059537f"
+      ],
+      "target": "build/target/lib/ode/odemath.obj",
+      "source": "src/lib/ode/ode/src/odemath.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/matrix",
+      "ranges": [
+        "0x00595380-0x005968df"
+      ],
+      "target": "build/target/lib/ode/matrix.obj",
+      "source": "src/lib/ode/ode/src/matrix.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/memory",
+      "ranges": [
+        "0x005968e0-0x0059692f"
+      ],
+      "target": "build/target/lib/ode/memory.obj",
+      "source": "src/lib/ode/ode/src/memory.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/obstack",
+      "ranges": [
+        "0x00596930-0x00596adf"
+      ],
+      "target": "build/target/lib/ode/obstack.obj",
+      "source": "src/lib/ode/ode/src/obstack.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/util",
+      "ranges": [
+        "0x00596ae0-0x0059710f"
+      ],
+      "target": "build/target/lib/ode/util.obj",
+      "source": "src/lib/ode/ode/src/util.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/step",
+      "ranges": [
+        "0x00597110-0x00598d9f"
+      ],
+      "target": "build/target/lib/ode/step.obj",
+      "source": "src/lib/ode/ode/src/step.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/quickstep",
+      "ranges": [
+        "0x00598da0-0x0059a66f"
+      ],
+      "target": "build/target/lib/ode/quickstep.obj",
+      "source": "src/lib/ode/ode/src/quickstep.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/misc",
+      "ranges": [
+        "0x0059a670-0x0059a6af"
+      ],
+      "target": "build/target/lib/ode/misc.obj",
+      "source": "src/lib/ode/ode/src/misc.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/collision_trimesh_ccylinder",
+      "ranges": [
+        "0x0059a6b0-0x0059c0ff"
+      ],
+      "target": "build/target/lib/ode/collision_trimesh_ccylinder.obj",
+      "source": "src/lib/ode/ode/src/collision_trimesh_ccylinder.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/collision_trimesh_trimesh",
+      "ranges": [
+        "0x0059c100-0x005a0e3f"
+      ],
+      "target": "build/target/lib/ode/collision_trimesh_trimesh.obj",
+      "source": "src/lib/ode/ode/src/collision_trimesh_trimesh.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/collision_trimesh_ray",
+      "ranges": [
+        "0x005a0e40-0x005a114f"
+      ],
+      "target": "build/target/lib/ode/collision_trimesh_ray.obj",
+      "source": "src/lib/ode/ode/src/collision_trimesh_ray.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/collision_trimesh_box",
+      "ranges": [
+        "0x005a1150-0x005a3b7f"
+      ],
+      "target": "build/target/lib/ode/collision_trimesh_box.obj",
+      "source": "src/lib/ode/ode/src/collision_trimesh_box.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/collision_trimesh_sphere",
+      "ranges": [
+        "0x005a3b80-0x005a47df"
+      ],
+      "target": "build/target/lib/ode/collision_trimesh_sphere.obj",
+      "source": "src/lib/ode/ode/src/collision_trimesh_sphere.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/array",
+      "ranges": [
+        "0x005a47e0-0x005a489f"
+      ],
+      "target": "build/target/lib/ode/array.obj",
+      "source": "src/lib/ode/ode/src/array.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/OPC_MeshInterface",
+      "ranges": [
+        "0x005a48a0-0x005a4a1f"
+      ],
+      "target": "build/target/lib/ode/OPC_MeshInterface.obj",
+      "source": "src/lib/ode/OPCODE/OPC_MeshInterface.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/IceContainer",
+      "ranges": [
+        "0x005a4a20-0x005a4b5f"
+      ],
+      "target": "build/target/lib/ode/IceContainer.obj",
+      "source": "src/lib/ode/OPCODE/Ice/IceContainer.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/OPC_Model",
+      "ranges": [
+        "0x005a4b60-0x005a4e2f"
+      ],
+      "target": "build/target/lib/ode/OPC_Model.obj",
+      "source": "src/lib/ode/OPCODE/OPC_Model.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/OPC_BaseModel",
+      "ranges": [
+        "0x005a4e30-0x005a507f"
+      ],
+      "target": "build/target/lib/ode/OPC_BaseModel.obj",
+      "source": "src/lib/ode/OPCODE/OPC_BaseModel.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/OPC_TreeCollider",
+      "ranges": [
+        "0x005a5080-0x005ac7af"
+      ],
+      "target": "build/target/lib/ode/OPC_TreeCollider.obj",
+      "source": "src/lib/ode/OPCODE/OPC_TreeCollider.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/OPC_PlanesCollider",
+      "ranges": [
+        "0x005ac7b0-0x005ac86f"
+      ],
+      "target": "build/target/lib/ode/OPC_PlanesCollider.obj",
+      "source": "src/lib/ode/OPCODE/OPC_PlanesCollider.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/OPC_SphereCollider",
+      "ranges": [
+        "0x005ac870-0x005aec0f"
+      ],
+      "target": "build/target/lib/ode/OPC_SphereCollider.obj",
+      "source": "src/lib/ode/OPCODE/OPC_SphereCollider.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/OPC_OBBCollider",
+      "ranges": [
+        "0x005aec10-0x005b3e0f"
+      ],
+      "target": "build/target/lib/ode/OPC_OBBCollider.obj",
+      "source": "src/lib/ode/OPCODE/OPC_OBBCollider.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/OPC_RayCollider",
+      "ranges": [
+        "0x005b3e10-0x005b6d5f"
+      ],
+      "target": "build/target/lib/ode/OPC_RayCollider.obj",
+      "source": "src/lib/ode/OPCODE/OPC_RayCollider.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/OPC_LSSCollider",
+      "ranges": [
+        "0x005b6d60-0x005b6daf"
+      ],
+      "target": "build/target/lib/ode/OPC_LSSCollider.obj",
+      "source": "src/lib/ode/OPCODE/OPC_LSSCollider.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/collision_util",
+      "ranges": [
+        "0x005b6db0-0x005b7cef"
+      ],
+      "target": "build/target/lib/ode/collision_util.obj",
+      "source": "src/lib/ode/ode/src/collision_util.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/fastltsolve",
+      "ranges": [
+        "0x005b7cf0-0x005b824f"
+      ],
+      "target": "build/target/lib/ode/fastltsolve.obj",
+      "source": "src/lib/ode/ode/src/fastltsolve.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/fastlsolve",
+      "ranges": [
+        "0x005b8250-0x005b88ef"
+      ],
+      "target": "build/target/lib/ode/fastlsolve.obj",
+      "source": "src/lib/ode/ode/src/fastlsolve.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/fastdot",
+      "ranges": [
+        "0x005b88f0-0x005b89af"
+      ],
+      "target": "build/target/lib/ode/fastdot.obj",
+      "source": "src/lib/ode/ode/src/fastdot.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/lcp",
+      "ranges": [
+        "0x005b89b0-0x005b9f0f"
+      ],
+      "target": "build/target/lib/ode/lcp.obj",
+      "source": "src/lib/ode/ode/src/lcp.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/IceMatrix4x4",
+      "ranges": [
+        "0x005b9f10-0x005b9faf"
+      ],
+      "target": "build/target/lib/ode/IceMatrix4x4.obj",
+      "source": "src/lib/ode/OPCODE/Ice/IceMatrix4x4.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/OPC_TreeBuilders",
+      "ranges": [
+        "0x005b9fb0-0x005ba50f"
+      ],
+      "target": "build/target/lib/ode/OPC_TreeBuilders.obj",
+      "source": "src/lib/ode/OPCODE/OPC_TreeBuilders.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/OPC_AABBTree",
+      "ranges": [
+        "0x005ba510-0x005bad2f"
+      ],
+      "target": "build/target/lib/ode/OPC_AABBTree.obj",
+      "source": "src/lib/ode/OPCODE/OPC_AABBTree.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/OPC_OptimizedTree",
+      "ranges": [
+        "0x005bad30-0x005bca2f"
+      ],
+      "target": "build/target/lib/ode/OPC_OptimizedTree.obj",
+      "source": "src/lib/ode/OPCODE/OPC_OptimizedTree.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/OPC_Collider",
+      "ranges": [
+        "0x005bca30-0x005bca7f"
+      ],
+      "target": "build/target/lib/ode/OPC_Collider.obj",
+      "source": "src/lib/ode/OPCODE/OPC_Collider.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/OPC_VolumeCollider",
+      "ranges": [
+        "0x005bca80-0x005bcc9f"
+      ],
+      "target": "build/target/lib/ode/OPC_VolumeCollider.obj",
+      "source": "src/lib/ode/OPCODE/OPC_VolumeCollider.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/IceOBB",
+      "ranges": [
+        "0x005bcca0-0x005bce8f"
+      ],
+      "target": "build/target/lib/ode/IceOBB.obj",
+      "source": "src/lib/ode/OPCODE/Ice/IceOBB.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/IceMatrix3x3",
+      "ranges": [
+        "0x005bce90-0x005bceef"
+      ],
+      "target": "build/target/lib/ode/IceMatrix3x3.obj",
+      "source": "src/lib/ode/OPCODE/Ice/IceMatrix3x3.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
+    },
+    {
+      "name": "lib/ode/fastldlt",
+      "ranges": [
+        "0x005bcef0-0x005bda8f"
+      ],
+      "target": "build/target/lib/ode/fastldlt.obj",
+      "source": "src/lib/ode/ode/src/fastldlt.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
+      "complete": true
     }
   ]
 }
