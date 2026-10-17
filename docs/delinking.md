@@ -25,7 +25,13 @@ python3 tools/delink.py       # exports every unit with "ranges" to build/target
 python3 configure.py
 ```
 
-`analyze.py` only needs to run again after `config/symbols.txt` changes a lot. `delink.py` applies `config/symbols.txt` first, so target objects use our names, e.g. `_adler32` instead of `FUN_0047e661`. It runs the delinker's relocation synthesizer on each unit's ranges and writes a COFF object to the unit's `target` path. Pass unit names to delink only those units. A log is written to `build/delink.log`.
+`analyze.py` only needs to run again after `config/symbols.txt` changes a lot. `delink.py` applies `config/symbols.txt` first, so target objects use our names, e.g. `_adler32` instead of `FUN_0047e661`. It runs the delinker's relocation synthesizer on each unit's ranges (`tools/ghidra/DelinkUnit.java`) and writes a COFF object to the unit's `target` path. Pass unit names to delink only those units. A log is written to `build/delink.log`.
+
+The game was compiled with `/Gy`, so the compiler put every function and every string literal in its own section, and the linker padded functions to 16 bytes with `int3`. `delink.py` therefore post-processes each target with `tools/split_functions.py`, which gives each function and each data symbol its own section, drops the `int3` padding, and resolves PC-relative relocations inside a function. Without this, objdiff counts the padding as mismatched code and calls between functions of the same unit as mismatched arguments.
+
+## Naming symbols
+
+objdiff pairs functions and relocations by name, so every symbol a unit defines or references needs its MSVC decorated name in `config/symbols.txt`. The easy way to get them is to compile the unit first and read the names out of our object (`objdump -t build/src/...obj`), including string literals (`??_C@_0...`) and compiler constants (`__real@00000000`).
 
 Target objects are derived from the game, so they stay in `build/` and are never committed.
 

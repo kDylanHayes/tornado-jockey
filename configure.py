@@ -79,6 +79,16 @@ def main() -> int:
         "",
     ]
 
+    # Header changes rebuild everything; there are few headers so far, and
+    # /showIncludes paths under Wine don't map back to Unix paths for ninja.
+    headers = sorted(
+        p.relative_to(ROOT).as_posix()
+        for d in ("include", "src")
+        for p in (ROOT / d).rglob("*")
+        if p.suffix.lower() in (".h", ".hpp", ".inl")
+    )
+    implicit = (" | " + " ".join(ninja_escape(h) for h in headers)) if headers else ""
+
     objdiff_units = []
     base_objects = []
     for unit in units:
@@ -99,7 +109,7 @@ def main() -> int:
             obj = f"build/{Path(source).with_suffix('.obj').as_posix()}"
             cflags = unit.get("cflags", DEFAULT_CFLAGS)
             lines += [
-                f"build {ninja_escape(obj)}: cc {ninja_escape(source)}",
+                f"build {ninja_escape(obj)}: cc {ninja_escape(source)}{implicit}",
                 f"  cflags = {cflags}",
                 "",
             ]

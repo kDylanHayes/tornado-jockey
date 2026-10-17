@@ -21,7 +21,7 @@ The retail installer ships `Tornado.exe` with its code sections empty; the WildT
 
 ## Status
 
-Pipeline proven: the first unit (zlib `adler32`) matches 100%. See [docs/roadmap.md](docs/roadmap.md).
+Pipeline proven: zlib `adler32` and the first engine unit, `SRESULT`, match 100%. See [docs/roadmap.md](docs/roadmap.md).
 
 ## Getting started
 

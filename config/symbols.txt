@@ -1,9 +1,33 @@
 # Known symbols in Tornado.exe, one per line:
 #   <virtual address> <name> <function|data> [size]
 # Names use the original MSVC decorated name when known. Keep sorted by address.
+0x004026c0 ?FreeValue@SRESULT@@QAEXXZ function 0x47
+0x00402730 ??1SRESULT@@UAE@XZ function 0xb
+0x00402740 ??_GSRESULT@@UAEPAXI@Z function 0x24
+0x00404ce0 ?SetType@SRESULT@@QAEXABW4SRESULTTYPE@@@Z function 0xfc
 0x0045446b operator_new function 0x24
 0x0045450f operator_new function 0x5
 0x0047e661 _adler32 function 0x119
+0x00482cf0 ?Error@LOG@@QAAXPBDZZ function 0x6e
+0x004a7fb0 ?GetTypeName@SRESULT@@QBEPBDXZ function 0x1b
+0x004a7fd0 ?ToBool@@YA_NABH@Z function 0xb
+0x004a7fe0 ?ToBool@@YA_NABM@Z function 0x1b
+0x004a8000 ?ToBool@@YA_NABD@Z function 0xb
+0x004a8010 ?GetChar@SRESULT@@QBEDABD@Z function 0x48
+0x004a8060 ?GetInt@SRESULT@@QBEHABH@Z function 0x53
+0x004a80c0 ?GetFloat@SRESULT@@QBEMABM@Z function 0x56
+0x004a8120 ?GetString@SRESULT@@QBEPBDPBD@Z function 0x46
+0x004a8170 ?GetUnicodeString@SRESULT@@QBEPBGPBG@Z function 0x46
+0x004a81c0 ?GetBool@SRESULT@@QBE_NAB_N@Z function 0x6d
+0x004a8230 ?GetV3@SRESULT@@QBE?AUV3@@ABU2@@Z function 0x75
+0x004a82b0 ?GetV2@SRESULT@@QBE?AUV2@@ABU2@@Z function 0x62
+0x004a8320 ?GetANG@SRESULT@@QBE?AUANG@@ABU2@@Z function 0x68
+0x004a8390 ?GetRGB@SRESULT@@QBE?AURGB@@ABU2@@Z function 0x75
+0x004a8410 ??0SRESULT@@QAE@PBD@Z function 0x7a
+0x004a8490 ??0SRESULT@@QAE@PBG@Z function 0x77
+0x004a8510 ?SetValue@SRESULT@@QAEXPBG@Z function 0x7e
+0x004a8590 ?SetValue@SRESULT@@QAEXPBD@Z function 0x81
+0x004a8620 ?GetTexture@SRESULT@@QBE?AUSRTEXTURE@@ABU2@@Z function 0x96
 0x00559cc6 FMOD.DLL::_FSOUND_GetError@0 function 0x6
 0x00559ccc FMOD.DLL::_FSOUND_StopSound@4 function 0x6
 0x00559cd2 FMOD.DLL::_FSOUND_Stream_Stop@4 function 0x6
@@ -61,11 +85,13 @@
 0x005c0231 _wcsncpy function 0x3d
 0x005c02dd _free function 0x38
 0x005c0315 __vsnprintf function 0x56
+0x005c036c __ftol2 function
 0x005c040e __heap_alloc function 0x46
 0x005c0454 __nh_malloc function 0x2c
 0x005c0480 _malloc function 0x12
 0x005c04a0 __chkstk function 0x3d
 0x005c04e0 _memmove function 0x2a0
+0x005c081d _wcslen function 0x16
 0x005c0833 __CxxThrowException@8 function 0x3a
 0x005c087e exception::exception function 0x3d
 0x005c08bb exception::exception function 0x4a
@@ -449,3 +475,22 @@
 0x005e69ae KERNEL32.DLL::RtlUnwind function 0x6
 0x005e6ae0 shortsort function 0x6a
 0x005e6b50 _qsort function 0x283
+0x00656898 __real@00000000 data 0x4
+0x0065691c ??_7SRESULT@@6B@ data 0x4
+0x0066a9f0 ?s_TypeNames@@3QAY0P@$$CBDA data 0xb4
+0x0066aaa4 ??_C@_0DA@KGMHJCC@SRESULT?3?3GetChar?$DO?5Error?5?9?5Wrong?5@ data
+0x0066aad4 ??_C@_0CP@NHGBBAKJ@SRESULT?3?3GetInt?$DO?5Error?5?9?5Wrong?5v@ data
+0x0066ab04 ??_C@_0DB@IAHPAMAK@SRESULT?3?3GetFloat?$DO?5Error?5?9?5Wrong@ data
+0x0066ab38 ??_C@_0DC@BHIIOFNG@SRESULT?3?3GetString?$DO?5Error?5?9?5Wron@ data
+0x0066ab6c ??_C@_0DJ@FADNJEGP@SRESULT?3?3GetUnicodeString?$DO?5Error@ data
+0x0066aba8 ??_C@_0DA@LLDKEJAI@SRESULT?3?3GetBool?$DO?5Error?5?9?5Wrong?5@ data
+0x0066abd8 ??_C@_0CO@FDEPIJNK@SRESULT?3?3GetV3?$DO?5Error?5?9?5Wrong?5va@ data
+0x0066ac08 ??_C@_0CO@GFLNBJCJ@SRESULT?3?3GetV2?$DO?5Error?5?9?5Wrong?5va@ data
+0x0066ac38 ??_C@_0CP@LMHDDBGI@SRESULT?3?3GetANG?$DO?5Error?5?9?5Wrong?5v@ data
+0x0066ac68 ??_C@_0CP@EOIDEGMC@SRESULT?3?3GetRGB?$DO?5Error?5?9?5Wrong?5v@ data
+0x0066ac98 ??_C@_0DE@FNACMGKN@SRESULT?3?3SRESULT?$DO?5Error?5?9?5string@ data
+0x0066accc ??_C@_0DM@DONJLFNN@SRESULT?3?3SRESULT?$DO?5Error?5?9?5unicod@ data
+0x0066ad08 ??_C@_0DN@BLACEIHK@SRESULT?3?3SetValue?$DO?5Error?5?9?5unico@ data
+0x0066ad48 ??_C@_0DF@NIGFJBLF@SRESULT?3?3SetValue?$DO?5Error?5?9?5strin@ data
+0x0066ad80 ??_C@_0DD@OAIJFCJA@SRESULT?3?3GetTexture?$DO?5Error?5?9?5Wro@ data
+0x006cbc80 ?g_pLog@@3PAVLOG@@A data 0x4

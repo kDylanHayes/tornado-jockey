@@ -12,6 +12,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import split_functions as split
+
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_PROJECT = ROOT / "build" / "ghidra"
 
@@ -39,20 +41,20 @@ def main() -> int:
         print("No units to delink.")
         return 0
 
-    script_args = ["/exporter", "COFF relocatable object"]
+    script_args = []
     for unit in selected:
         target = ROOT / unit["target"]
         target.parent.mkdir(parents=True, exist_ok=True)
-        for r in unit["ranges"]:
-            script_args += ["/include-range", r]
-        script_args += ["/export", str(target)]
+        if target.exists():
+            target.unlink()
+        script_args += [str(target), *unit["ranges"], "--"]
 
     cmd = [
         str(analyze_headless(args.ghidra)), str(args.project), "TornadoJockey",
         "-process", "Tornado.exe", "-noanalysis", "-readOnly",
         "-scriptPath", str(ROOT / "tools" / "ghidra"),
         "-preScript", "ApplySymbols.java", str(ROOT / "config" / "symbols.txt"),
-        "-postScript", "DelinkProgram.java", *script_args,
+        "-postScript", "DelinkUnit.java", *script_args,
     ]
     result = subprocess.run(cmd, capture_output=True, text=True)
     log = ROOT / "build" / "delink.log"
@@ -62,6 +64,8 @@ def main() -> int:
         print(f"error: delinking failed ({', '.join(missing) or 'see log'}); log in {log.relative_to(ROOT)}",
               file=sys.stderr)
         return 1
+    for unit in selected:
+        split.main_path(ROOT / unit["target"])
     print(f"Delinked {len(selected)} unit(s)")
     return 0
 
