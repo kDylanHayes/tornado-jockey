@@ -628,7 +628,7 @@ jpeg_read_exif_profile(FIBITMAP *dib, const BYTE *dataptr, unsigned int datalen)
 		if (first_offset < 8 || first_offset > 16) {
 			// This is usually set to 8
 			// but PENTAX Optio 230 has it set differently, and uses it as offset. 
-			FreeImage_OutputMessageProc(FIF_JPEG, "Exif: Suspicious offset of first IFD value");
+			FreeImage_OutputMessageProc(FIF_BMP, "Exif: Suspicious offset of first IFD value");
 			return FALSE;
 		}
 

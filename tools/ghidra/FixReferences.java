@@ -8,6 +8,13 @@
 //    0x400000 limit): every address listed in config/norefs.txt is the
 //    location of such a constant, and references to its value are removed
 //    so no relocation is emitted.
+// 3. Immediates pointing into data (mov eax, offset "PNG") that analysis
+//    left without a reference get one, so the delinker relocates them;
+//    so do immediates into their own function (a catch block returning
+//    the address where execution continues).
+//    When analysis typed a short string as a pointer ("PNG\0" reads as
+//    0x00474e50) the pointer is cleared; the delinker emits no relocation
+//    to it otherwise.
 // Usage: run as a -preScript before DelinkUnit.java (see tools/delink.py).
 //@category TornadoJockey
 
@@ -17,7 +24,10 @@ import java.nio.file.Paths;
 import ghidra.app.util.headless.HeadlessScript;
 import ghidra.program.model.address.Address;
 import ghidra.program.model.lang.Register;
+import ghidra.program.model.listing.Data;
+import ghidra.program.model.listing.Function;
 import ghidra.program.model.listing.Instruction;
+import ghidra.program.model.mem.MemoryBlock;
 import ghidra.program.model.scalar.Scalar;
 import ghidra.program.model.symbol.RefType;
 import ghidra.program.model.symbol.Reference;
@@ -25,10 +35,32 @@ import ghidra.program.model.symbol.ReferenceManager;
 import ghidra.program.model.symbol.SourceType;
 
 public class FixReferences extends HeadlessScript {
+	// A pointer whose four bytes are printable text ending in NUL.
+	private boolean looksLikeString(Address a) throws Exception {
+		Data d = getDataAt(a);
+		if (d == null || !d.isPointer()) {
+			return false;
+		}
+		byte[] b = new byte[4];
+		currentProgram.getMemory().getBytes(a, b);
+		boolean ended = false;
+		for (byte x : b) {
+			if (x == 0) {
+				ended = true;
+			}
+			else if (ended || x < 0x20 || x > 0x7e) {
+				return false;
+			}
+		}
+		return ended && b[0] != 0;
+	}
+
 	@Override
 	public void run() throws Exception {
 		ReferenceManager refs = currentProgram.getReferenceManager();
 		int fixed = 0;
+		int added = 0;
+		int cleared = 0;
 		for (Instruction ins : currentProgram.getListing().getInstructions(true)) {
 			for (int op = 0; op < ins.getNumOperands(); op++) {
 				Address disp = null;
@@ -43,6 +75,31 @@ public class FixReferences extends HeadlessScript {
 							disp = a;
 						}
 					}
+				}
+				if (!indexed && disp != null && looksLikeString(disp)) {
+					clearListing(disp, disp.add(3));
+					cleared++;
+				}
+				if (!indexed && disp != null && !ins.getFlowType().isFlow()) {
+					// The EH analysis can leave a flow reference on the
+					// continuation address a catch block returns.
+					for (Reference ref : ins.getOperandReferences(op)) {
+						if (ref.getReferenceType().isFlow()) {
+							refs.delete(ref);
+						}
+					}
+				}
+				if (!indexed && disp != null && ins.getOperandReferences(op).length == 0 &&
+					ins.getNumOperands() > 0) {
+					MemoryBlock block = currentProgram.getMemory().getBlock(disp);
+					Function owner = getFunctionContaining(ins.getAddress());
+					boolean sameFunction = owner != null && owner.getBody().contains(disp);
+					if (block != null && block.isInitialized() && (!block.isExecute() || sameFunction)) {
+						refs.addMemoryReference(ins.getAddress(), disp, RefType.DATA,
+							SourceType.USER_DEFINED, op);
+						added++;
+					}
+					continue;
 				}
 				if (!indexed || disp == null) {
 					continue;
@@ -60,6 +117,8 @@ public class FixReferences extends HeadlessScript {
 			}
 		}
 		println("Re-pointed " + fixed + " indexed operand references");
+		println("Added " + added + " references from immediates into data");
+		println("Cleared " + cleared + " short strings typed as pointers");
 
 		String[] args = getScriptArgs();
 		if (args.length == 0 || !Files.exists(Paths.get(args[0]))) {

@@ -16,3 +16,8 @@ Changes from upstream, each needed to match:
   which drops the external `.fip` plugin loader, `FreeLibrary` in
   `~PluginList` and `FreeImage_RegisterExternalPlugin`; the exe has none of
   them.
+- `Metadata/Exif.cpp`: `jpeg_read_exif_profile` reports a bad first IFD
+  offset with format 0, not `FIF_JPEG` (2); `FIF_BMP` reproduces it.
+- `FreeImage/PluginPNG.cpp`, `FreeImage/PluginJPEG.cpp`: the includes of
+  libpng and libjpeg point at `src/lib/libpng` and `src/lib/libjpeg`
+  instead of FreeImage's bundled copies (same sources).

@@ -16,7 +16,7 @@ Two independent signals line up:
 | 0x401000–0x4543ff | ~1,170 | aligned | Game and Tongas2 engine code |
 | 0x45446b–0x482a14 | ~620 | unaligned | C libraries: an older libpng, probably 1.0.5 (0x4679df…; the 1.2.8 copy references this copy's `png_libpng_ver` string, "1.0.5"), zlib 1.2.2 (inflate at 0x47de92, adler32 at 0x47e661) and others still to identify |
 | 0x482cd0–0x559dff | ~3,150 | aligned | Game and Tongas2 engine code (renderer, resources, GUI, input, ACTOR/SCENE). FMOD import thunks at 0x559cc6 |
-| 0x559e00–0x56717b | ~220 | aligned | FreeImage 3.7.0's C++ code, starting with FreeImage.cpp and Plugin.cpp (trimmed to PNG and JPEG), then bitmap access, metadata, PNG/JPEG plugins, quantizers), built with `/O2 /GX` |
+| 0x559e00–0x56717b | ~220 | aligned | FreeImage 3.7.0's C++ code, all matched: FreeImage.cpp and Plugin.cpp (trimmed to PNG and JPEG), then bitmap access, conversions, the PNG and JPEG plugins, metadata and quantizers, built with `/O2 /GX` |
 | 0x56717c–0x586df5 | ~460 | unaligned | FreeImage 3.6.1/3.7.0's bundled libraries, all matched: libpng 1.2.8 (0x56717c–0x574aa4), libjpeg 6b (0x574aa5–0x582970), zlib 1.2.2 (0x582971–0x586fc2; `adler32` is shared with block 1 at 0x47e661). FreeImage's own code is elsewhere |
 | 0x586fd0–0x5bf160 | ~490 | aligned | ODE (Open Dynamics Engine), built from `C:\Wanako\Tongas2\SDKs\ode` |
 | 0x5bf242–0x5e5f66 | ~715 | unaligned | Static MSVC 7.1 runtime: libcmt (CRT), libcpmt (Dinkumware STL), ATL, EH support |

@@ -13,6 +13,17 @@ import sys
 from pathlib import Path
 
 import split_functions as split
+from find_objects import Coff
+
+
+def base_function_sizes(path: Path) -> dict:
+    obj = Coff(path)
+    sizes = {}
+    for index, sec in enumerate(obj.sections):
+        if sec["flags"] & 0x20:  # code
+            for name, start, end in obj.functions(index):
+                sizes.setdefault(name, end - start)
+    return sizes
 
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_PROJECT = ROOT / "build" / "ghidra"
@@ -51,10 +62,13 @@ def main() -> int:
 
     # The COFF exporter refuses an object with two symbols of the same name.
     names = {}
+    sizes = []  # (name, address, size) of functions with a known size
     for line in (ROOT / "config" / "symbols.txt").read_text().splitlines():
         parts = line.split()
         if len(parts) >= 2 and not line.startswith("#") and "::" not in parts[1]:
             names.setdefault(parts[1], []).append(int(parts[0], 16))
+        if len(parts) >= 4 and parts[2] == "function":
+            sizes.append((parts[1], int(parts[0], 16), int(parts[3], 16)))
     for unit in selected:
         spans = [tuple(int(x, 16) for x in r.split("-")) for r in unit["ranges"]]
         for name, addrs in names.items():
@@ -84,7 +98,13 @@ def main() -> int:
         if unit["name"] in missing:
             continue
         base = int(unit["ranges"][0].split("-")[0], 16) if len(unit["ranges"]) == 1 else None
-        split.main_path(ROOT / unit["target"], base=base)
+        ours = ROOT / "build" / Path(unit["source"]).with_suffix(".obj") if "source" in unit else None
+        spans = [tuple(int(x, 16) for x in r.split("-")) for r in unit["ranges"]]
+        # Sizes from our object where symbols.txt has none: a function ending
+        # in a call that never returns keeps the int3 the compiler put after it.
+        unit_sizes = base_function_sizes(ours) if ours is not None and ours.is_file() else {}
+        unit_sizes.update({n: sz for n, a, sz in sizes if any(lo <= a <= hi for lo, hi in spans)})
+        split.main_path(ROOT / unit["target"], base=base, ours=ours, sizes=unit_sizes)
     if result.returncode != 0 or missing or "SCRIPT ERROR" in result.stdout + result.stderr:
         return 1
     print(f"Delinked {len(selected)} unit(s)")

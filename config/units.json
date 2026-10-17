@@ -694,7 +694,8 @@
       "target": "build/target/lib/freeimage/BitmapAccess.obj",
       "source": "src/lib/freeimage/FreeImage/BitmapAccess.cpp",
       "category": "lib",
-      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage"
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage",
+      "complete": true
     },
     {
       "name": "lib/freeimage/Conversion24",
@@ -726,7 +727,8 @@
       "target": "build/target/lib/freeimage/PixelAccess.obj",
       "source": "src/lib/freeimage/FreeImage/PixelAccess.cpp",
       "category": "lib",
-      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage"
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage",
+      "complete": true
     },
     {
       "name": "lib/freeimage/Rescale",
@@ -736,7 +738,8 @@
       "target": "build/target/lib/freeimage/Rescale.obj",
       "source": "src/lib/freeimage/FreeImageToolkit/Rescale.cpp",
       "category": "lib",
-      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage"
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage",
+      "complete": true
     },
     {
       "name": "lib/freeimage/Conversion32",
@@ -779,7 +782,8 @@
       "target": "build/target/lib/freeimage/PluginPNG.obj",
       "source": "src/lib/freeimage/FreeImage/PluginPNG.cpp",
       "category": "lib",
-      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage /DPNG_iTXt_SUPPORTED /Isrc/lib/zlib"
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage /DPNG_iTXt_SUPPORTED /Isrc/lib/zlib",
+      "complete": true
     },
     {
       "name": "lib/freeimage/PluginJPEG",
@@ -789,7 +793,8 @@
       "target": "build/target/lib/freeimage/PluginJPEG.obj",
       "source": "src/lib/freeimage/FreeImage/PluginJPEG.cpp",
       "category": "lib",
-      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage"
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage",
+      "complete": true
     },
     {
       "name": "lib/freeimage/FreeImageTag",
@@ -821,7 +826,8 @@
       "target": "build/target/lib/freeimage/Conversion.obj",
       "source": "src/lib/freeimage/FreeImage/Conversion.cpp",
       "category": "lib",
-      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage"
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage",
+      "complete": true
     },
     {
       "name": "lib/freeimage/Resize",
@@ -853,7 +859,8 @@
       "target": "build/target/lib/freeimage/Exif.obj",
       "source": "src/lib/freeimage/Metadata/Exif.cpp",
       "category": "lib",
-      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage"
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage",
+      "complete": true
     },
     {
       "name": "lib/freeimage/WuQuantizer",
@@ -863,7 +870,8 @@
       "target": "build/target/lib/freeimage/WuQuantizer.obj",
       "source": "src/lib/freeimage/FreeImage/WuQuantizer.cpp",
       "category": "lib",
-      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage"
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage",
+      "complete": true
     },
     {
       "name": "lib/freeimage/NNQuantizer",
@@ -873,7 +881,8 @@
       "target": "build/target/lib/freeimage/NNQuantizer.obj",
       "source": "src/lib/freeimage/FreeImage/NNQuantizer.cpp",
       "category": "lib",
-      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage"
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage",
+      "complete": true
     },
     {
       "name": "lib/freeimage/TagLib",
@@ -883,7 +892,8 @@
       "target": "build/target/lib/freeimage/TagLib.obj",
       "source": "src/lib/freeimage/Metadata/TagLib.cpp",
       "category": "lib",
-      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage"
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage",
+      "complete": true
     }
   ]
 }

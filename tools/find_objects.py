@@ -73,7 +73,9 @@ class Coff:
 
     def functions(self, index: int):
         syms = sorted(
-            (s for s in self.symbols if s["section"] == index + 1 and s["type"] == 0x20),
+            # $L symbols are catch blocks, part of the function before them
+            (s for s in self.symbols
+             if s["section"] == index + 1 and s["type"] == 0x20 and not s["name"].startswith("$L")),
             key=lambda s: s["value"],
         )
         size = self.sections[index]["size"]

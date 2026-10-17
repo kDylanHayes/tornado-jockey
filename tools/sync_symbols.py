@@ -116,7 +116,9 @@ def main() -> int:
                     # addend (crc_table + 0x400, _iob + 0x40 for stderr).
                     value = int.from_bytes(exe_bytes(faddr + off), "little")
                     addr = value - int.from_bytes(base_code[func][off:off + 4], "little", signed=True)
-                if addr is not None:
+                # A function name on a label inside another function means
+                # the code around the reference differs; don't trust it.
+                if addr is not None and not (is_func and tname.startswith("LAB_")):
                     found[addr] = (bname, is_func)
             if (bname is None and faddr is not None
                     and base_code.get(func) is not None
