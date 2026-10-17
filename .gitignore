@@ -19,3 +19,5 @@ __pycache__/
 *.rep/
 *.lock
 *.lock~
+
+tools/vc71/
