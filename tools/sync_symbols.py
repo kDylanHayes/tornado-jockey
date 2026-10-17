@@ -22,12 +22,13 @@ from pathlib import Path
 
 from find_objects import Coff, IMAGE_BASE, ROOT
 
+DIR32 = 0x06
 AUTO_NAME = re.compile(r"^(?:DAT|s|PTR|FUN|LAB|u|switchdataD)_.*?([0-9a-f]{8})$")
 
 
 def reloc_names(obj: Coff) -> dict:
     """Map (function name, offset in function) -> referenced symbol name."""
-    return {key: (name, is_func) for key, (name, is_func, _) in relocs(obj).items()}
+    return {key: (name, is_func) for key, (name, is_func, _, _) in relocs(obj).items()}
 
 
 def relocs(obj: Coff) -> dict:
@@ -38,11 +39,11 @@ def relocs(obj: Coff) -> dict:
         if not sec["name"].startswith(".text"):
             continue
         funcs = list(obj.functions(index))
-        for vaddr, symidx, _ in sec["relocs"]:
+        for vaddr, symidx, rtype in sec["relocs"]:
             for name, start, end in funcs:
                 if start <= vaddr < end:
                     sym = obj.by_index[symidx]
-                    out[(name, vaddr - start)] = (sym["name"], sym["type"] == 0x20, vaddr)
+                    out[(name, vaddr - start)] = (sym["name"], sym["type"] == 0x20, vaddr, rtype)
                     break
     return out
 
@@ -76,6 +77,22 @@ def main() -> int:
     args = parser.parse_args()
 
     units = {u["name"]: u for u in json.loads((ROOT / "config" / "units.json").read_text())["units"]}
+    # Where each target function sits, to locate relocations in the exe.
+    # Static functions can share a name across units, so pick the one
+    # inside the unit being synced.
+    func_addrs = {}
+    for line in (ROOT / "config" / "symbols.txt").read_text().splitlines():
+        parts = line.split()
+        if len(parts) >= 2 and not line.startswith("#"):
+            func_addrs.setdefault(parts[1], []).append(int(parts[0], 16))
+
+    def address_of(func, spans):
+        m = AUTO_NAME.match(func)
+        if m:
+            return int(m.group(1), 16)
+        inside = [a for a in func_addrs.get(func, []) if any(lo <= a <= hi for lo, hi in spans)]
+        return inside[0] if len(inside) == 1 else None
+
     found = {}
     norefs = set()
     for name in args.units:
@@ -86,41 +103,53 @@ def main() -> int:
         target = relocs(target_obj)
         base_code = function_bytes(base_obj)
         target_code = function_bytes(target_obj)
-        unit_start = int(unit["ranges"][0].split("-")[0], 16)
-        for key, (tname, _, vaddr) in target.items():
+        spans = [tuple(int(x, 16) for x in r.split("-")) for r in unit["ranges"]]
+        for key, (tname, _, _, rtype) in target.items():
+            func, off = key
+            faddr = address_of(func, spans)
             bname, is_func = base.get(key, (None, False))
             m = AUTO_NAME.match(tname)
-            if bname and m and not bname.startswith("$"):
-                found[int(m.group(1), 16)] = (bname, is_func)
-            func, off = key
-            if (bname is None and len(unit["ranges"]) == 1
+            if bname and (m or tname == bname) and not bname.startswith("$"):
+                addr = int(m.group(1), 16) if m else None
+                if rtype == DIR32 and faddr is not None and func in base_code:
+                    # The exe holds symbol + addend; our object holds the
+                    # addend (crc_table + 0x400, _iob + 0x40 for stderr).
+                    value = int.from_bytes(exe_bytes(faddr + off), "little")
+                    addr = value - int.from_bytes(base_code[func][off:off + 4], "little", signed=True)
+                if addr is not None:
+                    found[addr] = (bname, is_func)
+            if (bname is None and faddr is not None
                     and base_code.get(func) is not None
                     and len(base_code[func]) == len(target_code.get(func, b""))
-                    and base_code[func][off:off + 4] == exe_bytes(unit_start + vaddr)):
-                norefs.add(unit_start + vaddr)
-
-    # A base reference with an addend (crc_table + 0x400) shows up in the
-    # target as a separate auto-named symbol; keep only the lowest address.
-    lowest = {}
-    for addr, (name, is_func) in sorted(found.items()):
-        lowest.setdefault(name, (addr, is_func))
-    found = {addr: (name, is_func) for name, (addr, is_func) in lowest.items()}
+                    and base_code[func][off:off + 4] == exe_bytes(faddr + off)):
+                norefs.add(faddr + off)
 
     path = ROOT / "config" / "symbols.txt"
     lines = path.read_text().splitlines()
     header = [l for l in lines if l.startswith("#")]
     body = {int(l.split()[0], 16): l for l in lines if l and not l.startswith("#")}
-    # A name that's already placed is never added again: a reference with
-    # an addend (z_errmsg + 8) would otherwise create a second copy.
-    known = {l.split()[1] for l in body.values()}
+
+    # A data name placed where no reference points (an earlier run that
+    # ignored addends) is moved to where the references do point. Statics
+    # can legitimately share a name (extend_test in jdhuff and jdphuff).
+    found_at = {}
+    for addr, (name, _) in found.items():
+        found_at.setdefault(name, set()).add(addr)
+    moved = 0
+    for addr, line in list(body.items()):
+        parts = line.split()
+        if parts[1] in found_at and addr not in found_at[parts[1]] and parts[2:3] == ["data"]:
+            del body[addr]
+            moved += 1
+
     added = 0
     for addr, (name, is_func) in found.items():
-        if addr in body or name in known:
+        if addr in body:
             continue
         body[addr] = f"0x{addr:08x} {name} {'function' if is_func else 'data'}"
         added += 1
     path.write_text("\n".join(header + [body[a] for a in sorted(body)]) + "\n")
-    print(f"Added {added} names to config/symbols.txt")
+    print(f"Added {added} names to config/symbols.txt ({moved} moved)")
 
     path = ROOT / "config" / "norefs.txt"
     lines = path.read_text().splitlines() if path.exists() else [

@@ -1,6 +1,10 @@
 # Known symbols in Tornado.exe, one per line:
 #   <virtual address> <name> <function|data> [size]
 # Names use the original MSVC decorated name when known. Keep sorted by address.
+0x004026c0 ?FreeValue@SRESULT@@QAEXXZ function 0x47
+0x00402730 ??1SRESULT@@UAE@XZ function 0xb
+0x00402740 ??_GSRESULT@@UAEPAXI@Z function 0x24
+0x00404ce0 ?SetType@SRESULT@@QAEXABW4SRESULTTYPE@@@Z function 0xfc
 0x0045446b operator_new function 0x24
 0x0045450f operator_new function 0x5
 0x00456df2 _null_method function
@@ -12,6 +16,26 @@
 0x0046b9b2 _jround_up function
 0x0046c4a9 _do_barray_io function
 0x0047e661 _adler32 function 0x119
+0x00482cf0 ?Error@LOG@@QAAXPBDZZ function 0x6e
+0x004a7fb0 ?GetTypeName@SRESULT@@QBEPBDXZ function 0x1b
+0x004a7fd0 ?ToBool@@YA_NABH@Z function 0xb
+0x004a7fe0 ?ToBool@@YA_NABM@Z function 0x1b
+0x004a8000 ?ToBool@@YA_NABD@Z function 0xb
+0x004a8010 ?GetChar@SRESULT@@QBEDABD@Z function 0x48
+0x004a8060 ?GetInt@SRESULT@@QBEHABH@Z function 0x53
+0x004a80c0 ?GetFloat@SRESULT@@QBEMABM@Z function 0x56
+0x004a8120 ?GetString@SRESULT@@QBEPBDPBD@Z function 0x46
+0x004a8170 ?GetUnicodeString@SRESULT@@QBEPBGPBG@Z function 0x46
+0x004a81c0 ?GetBool@SRESULT@@QBE_NAB_N@Z function 0x6d
+0x004a8230 ?GetV3@SRESULT@@QBE?AUV3@@ABU2@@Z function 0x75
+0x004a82b0 ?GetV2@SRESULT@@QBE?AUV2@@ABU2@@Z function 0x62
+0x004a8320 ?GetANG@SRESULT@@QBE?AUANG@@ABU2@@Z function 0x68
+0x004a8390 ?GetRGB@SRESULT@@QBE?AURGB@@ABU2@@Z function 0x75
+0x004a8410 ??0SRESULT@@QAE@PBD@Z function 0x7a
+0x004a8490 ??0SRESULT@@QAE@PBG@Z function 0x77
+0x004a8510 ?SetValue@SRESULT@@QAEXPBG@Z function 0x7e
+0x004a8590 ?SetValue@SRESULT@@QAEXPBD@Z function 0x81
+0x004a8620 ?GetTexture@SRESULT@@QBE?AUSRTEXTURE@@ABU2@@Z function 0x96
 0x00559cc6 FMOD.DLL::_FSOUND_GetError@0 function 0x6
 0x00559ccc FMOD.DLL::_FSOUND_StopSound@4 function 0x6
 0x00559cd2 FMOD.DLL::_FSOUND_Stream_Stop@4 function 0x6
@@ -563,6 +587,7 @@
 0x005c0480 _malloc function 0x12
 0x005c04a0 __chkstk function 0x3d
 0x005c04e0 _memmove function 0x2a0
+0x005c081d _wcslen function 0x16
 0x005c0833 __CxxThrowException@8 function 0x3a
 0x005c087e exception::exception function 0x3d
 0x005c08bb exception::exception function 0x4a
@@ -612,6 +637,7 @@
 0x005c2748 __cexit function 0xf
 0x005c2766 _calloc function 0x7b
 0x005c27e1 __snprintf function 0x57
+0x005c2838 _fprintf function 0x32
 0x005c286a __strdate function 0x70
 0x005c28da __strtime function 0x67
 0x005c2c15 cvtdate function 0x1b8
@@ -947,6 +973,8 @@
 0x005e69ae KERNEL32.DLL::RtlUnwind function 0x6
 0x005e6ae0 shortsort function 0x6a
 0x005e6b50 _qsort function 0x283
+0x00656898 __real@00000000 data 0x4
+0x0065691c ??_7SRESULT@@6B@ data 0x4
 0x006595a8 __real@0000000000000000 data
 0x00659768 __real@3fd51eb860000000 data
 0x0065b110 __real@3fe0000000000000 data
@@ -1027,6 +1055,22 @@
 0x00666020 ??_C@_0BG@LBKINIKP@invalid?5distance?5code?$AA@ data
 0x00666038 ??_C@_0BM@FFFLPBBC@invalid?5literal?1length?5code?$AA@ data
 0x0066653c ??_C@_03OFAPEBGM@?$CFs?6?$AA@ data
+0x0066a9f0 ?s_TypeNames@@3QAY0P@$$CBDA data 0xb4
+0x0066aaa4 ??_C@_0DA@KGMHJCC@SRESULT?3?3GetChar?$DO?5Error?5?9?5Wrong?5@ data
+0x0066aad4 ??_C@_0CP@NHGBBAKJ@SRESULT?3?3GetInt?$DO?5Error?5?9?5Wrong?5v@ data
+0x0066ab04 ??_C@_0DB@IAHPAMAK@SRESULT?3?3GetFloat?$DO?5Error?5?9?5Wrong@ data
+0x0066ab38 ??_C@_0DC@BHIIOFNG@SRESULT?3?3GetString?$DO?5Error?5?9?5Wron@ data
+0x0066ab6c ??_C@_0DJ@FADNJEGP@SRESULT?3?3GetUnicodeString?$DO?5Error@ data
+0x0066aba8 ??_C@_0DA@LLDKEJAI@SRESULT?3?3GetBool?$DO?5Error?5?9?5Wrong?5@ data
+0x0066abd8 ??_C@_0CO@FDEPIJNK@SRESULT?3?3GetV3?$DO?5Error?5?9?5Wrong?5va@ data
+0x0066ac08 ??_C@_0CO@GFLNBJCJ@SRESULT?3?3GetV2?$DO?5Error?5?9?5Wrong?5va@ data
+0x0066ac38 ??_C@_0CP@LMHDDBGI@SRESULT?3?3GetANG?$DO?5Error?5?9?5Wrong?5v@ data
+0x0066ac68 ??_C@_0CP@EOIDEGMC@SRESULT?3?3GetRGB?$DO?5Error?5?9?5Wrong?5v@ data
+0x0066ac98 ??_C@_0DE@FNACMGKN@SRESULT?3?3SRESULT?$DO?5Error?5?9?5string@ data
+0x0066accc ??_C@_0DM@DONJLFNN@SRESULT?3?3SRESULT?$DO?5Error?5?9?5unicod@ data
+0x0066ad08 ??_C@_0DN@BLACEIHK@SRESULT?3?3SetValue?$DO?5Error?5?9?5unico@ data
+0x0066ad48 ??_C@_0DF@NIGFJBLF@SRESULT?3?3SetValue?$DO?5Error?5?9?5strin@ data
+0x0066ad80 ??_C@_0DD@OAIJFCJA@SRESULT?3?3GetTexture?$DO?5Error?5?9?5Wro@ data
 0x0067e3e0 __real@4020000000000000 data
 0x00680450 _png_libpng_ver data
 0x0068046c _png_IHDR data
@@ -1109,7 +1153,7 @@
 0x00680c68 ??_C@_0CH@DAMIMNHG@png_do_rgb_to_gray?5found?5nongray@ data
 0x00680c90 ??_C@_0CF@HEFPFJHN@NULL?5row?5buffer?5for?5row?5?$CFld?0?5pas@ data
 0x00680cb8 ??_C@_0L@BAFDDAPG@Read?5Error?$AA@ data
-0x00680cc4 ??_C@_0BC@MFANGAPN@libpng?5error?3?5?$CFs?6?$AA@ data
+0x00680cd4 ??_C@_0BC@MFANGAPN@libpng?5error?3?5?$CFs?6?$AA@ data
 0x00680ce8 ??_C@_0BN@HLDBDDID@libpng?5error?3?5?$CFs?0?5offset?$DN?$CFd?6?$AA@ data
 0x00680d08 ??_C@_0BJ@LPAEKCLO@libpng?5error?5no?4?5?$CFs?3?5?$CFs?6?$AA@ data
 0x00680d24 ??_C@_0BE@LNAJCNP@libpng?5warning?3?5?$CFs?6?$AA@ data
@@ -1159,6 +1203,8 @@
 0x00681370 ??_C@_0EA@NFOOLGHI@Ignoring?5attempt?5to?5write?5bKGD?5c@ data
 0x006813b0 ??_C@_0EA@PGJGJFFB@Ignoring?5attempt?5to?5write?516?9bit@ data
 0x006813f0 ??_C@_0CB@BIGCBPLL@Invalid?5background?5palette?5index@ data
+0x00681414 ??_C@_0CG@LALPJLHA@Unrecognized?5unit?5type?5for?5oFFs?5@ data
+0x0068143c ??_C@_0CG@OAABBGGO@Unrecognized?5unit?5type?5for?5pHYs?5@ data
 0x00681464 ??_C@_0CG@IADLICLG@Invalid?5time?5specified?5for?5tIME?5@ data
 0x0068148c ??_C@_0CB@MCDBJLEK@Unknown?5zTXt?5compression?5type?5?$CFd@ data
 0x006814b0 ??_C@_0BM@JFPBMAIB@Not?5enough?5memory?5for?5text?4?$AA@ data
@@ -1276,6 +1322,8 @@
 0x00682958 ??_C@_07OOOLPGAB@JPEGMEM?$AA@ data
 0x00682960 _extend_test data
 0x006829a0 _extend_offset data
+0x006829e0 _extend_test data
+0x00682a20 _extend_offset data
 0x00682a60 ?aanscales@?N@??start_pass@@9@9 data
 0x00682ae0 ?aanscales@?6??start_pass_fdctmgr@@9@9 data
 0x00682b60 _crc_table data
@@ -1290,7 +1338,7 @@
 0x00685490 ??_C@_0BE@GONKLEPM@header?5crc?5mismatch?$AA@ data
 0x006854a4 ??_C@_0BJ@BLBBCOMO@unknown?5header?5flags?5set?$AA@ data
 0x006854f8 _configuration_table data
-0x00685588 _z_errmsg data
+0x00685578 _z_errmsg data
 0x006855d0 ?lbase@?1??inflate_table@@9@9 data
 0x00685610 ?lext@?1??inflate_table@@9@9 data
 0x00685650 ?dbase@?1??inflate_table@@9@9 data
@@ -1300,7 +1348,7 @@
 0x0068580c _bl_order data
 0x00685820 _static_ltree data
 0x00685ca0 _static_dtree data
-0x00685e18 __dist_code data
+0x00685d18 __dist_code data
 0x00685f18 __length_code data
 0x00686018 _base_length data
 0x00686090 _base_dist data
@@ -1343,7 +1391,8 @@
 0x006c8670 _static_l_desc data
 0x006c8684 _static_d_desc data
 0x006c8698 _static_bl_desc data
-0x006c8a60 __iob data
+0x006c8a20 __iob data
+0x006cbc80 ?g_pLog@@3PAVLOG@@A data 0x4
 0x00a0f2ac _SSE2Available data
 0x00a0f2b0 ?cpuidDetected@?1??jpeg_CreateDecompress@@9@9 data
 0x00a12444 _MMXAvailable data

@@ -13,6 +13,8 @@ import ghidra.program.model.address.AddressSet;
 import ghidra.program.model.listing.Function;
 import ghidra.program.model.listing.FunctionManager;
 import ghidra.program.model.symbol.SourceType;
+import ghidra.program.model.symbol.Symbol;
+import ghidra.util.exception.DuplicateNameException;
 
 public class ApplySymbols extends HeadlessScript {
 	@Override
@@ -47,13 +49,27 @@ public class ApplySymbols extends HeadlessScript {
 			if (isFunction && parts.length > 3) {
 				f = setExtent(f, addr, Long.decode(parts[3]));
 			}
-			if (f != null) {
-				f.setName(name, SourceType.USER_DEFINED);
+			try {
+				if (f != null) {
+					f.setName(name, SourceType.USER_DEFINED);
+				}
+				else {
+					createLabel(addr, name, true, SourceType.USER_DEFINED);
+				}
+				applied++;
 			}
-			else {
-				createLabel(addr, name, true, SourceType.USER_DEFINED);
+			catch (DuplicateNameException e) {
+				// Analysis already put this name here as a secondary label
+				// (FID does for _fprintf); promote it.
+				Symbol existing = getSymbol(name, null);
+				if (existing != null && existing.getAddress().equals(addr)) {
+					existing.setPrimary();
+					applied++;
+				}
+				else {
+					printerr("Could not name " + addr + " " + name + ": " + e.getMessage());
+				}
 			}
-			applied++;
 		}
 		println("Applied " + applied + " symbols");
 	}

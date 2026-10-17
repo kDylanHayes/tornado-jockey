@@ -12,6 +12,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import split_functions as split
+
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_PROJECT = ROOT / "build" / "ghidra"
 
@@ -43,20 +45,22 @@ def main() -> int:
     for unit in selected:
         target = ROOT / unit["target"]
         target.parent.mkdir(parents=True, exist_ok=True)
-        target.unlink(missing_ok=True)  # so a failed export can't leave a stale object
-        script_args += [",".join(unit["ranges"]), str(target)]
+        if target.exists():
+            target.unlink()
+        script_args += [str(target), *unit["ranges"], "--"]
 
-    # The COFF exporter refuses an object with two symbols of the same name
-    # and doesn't say which, so catch that here.
-    seen = {}
+    # The COFF exporter refuses an object with two symbols of the same name.
+    names = {}
     for line in (ROOT / "config" / "symbols.txt").read_text().splitlines():
         parts = line.split()
         if len(parts) >= 2 and not line.startswith("#") and "::" not in parts[1]:
-            seen.setdefault(parts[1], []).append(parts[0])
-    for name, addrs in seen.items():
-        if len(addrs) > 1:
-            print(f"warning: {name} is named at {', '.join(addrs)}; delinking fails if two land in one unit",
-                  file=sys.stderr)
+            names.setdefault(parts[1], []).append(int(parts[0], 16))
+    for unit in selected:
+        spans = [tuple(int(x, 16) for x in r.split("-")) for r in unit["ranges"]]
+        for name, addrs in names.items():
+            inside = [a for a in addrs if any(lo <= a <= hi for lo, hi in spans)]
+            if len(inside) > 1:
+                print(f"warning: {name} is named {len(inside)} times inside {unit['name']}", file=sys.stderr)
 
     cmd = [
         str(analyze_headless(args.ghidra)), str(args.project), "TornadoJockey",
@@ -64,7 +68,7 @@ def main() -> int:
         "-scriptPath", str(ROOT / "tools" / "ghidra"),
         "-preScript", "ApplySymbols.java", str(ROOT / "config" / "symbols.txt"),
         "-preScript", "FixReferences.java", str(ROOT / "config" / "norefs.txt"),
-        "-postScript", "DelinkUnits.java", *script_args,
+        "-postScript", "DelinkUnit.java", *script_args,
     ]
     result = subprocess.run(cmd, capture_output=True, text=True)
     log = ROOT / "build" / "delink.log"
@@ -77,6 +81,9 @@ def main() -> int:
         print(f"error: delinking failed ({', '.join(missing) or 'see log'}); log in {log.relative_to(ROOT)}",
               file=sys.stderr)
         return 1
+    for unit in selected:
+        base = int(unit["ranges"][0].split("-")[0], 16) if len(unit["ranges"]) == 1 else None
+        split.main_path(ROOT / unit["target"], base=base)
     print(f"Delinked {len(selected)} unit(s)")
     return 0
 

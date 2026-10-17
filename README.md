@@ -21,7 +21,7 @@ The retail installer ships `Tornado.exe` with its code sections empty; the WildT
 
 ## Status
 
-FreeImage's bundled zlib 1.2.2, libpng 1.2.8 and libjpeg 6b match 100% (59 units, 131 KB of code). Next up: the older libpng copy, FreeImage itself and ODE. See [docs/roadmap.md](docs/roadmap.md).
+FreeImage's bundled zlib 1.2.2, libpng 1.2.8 and libjpeg 6b match 100% (59 units, 131 KB of code), and so does the first engine unit, `SRESULT`. Next up on the library side: the older libpng copy, FreeImage itself and ODE. See [docs/roadmap.md](docs/roadmap.md).
 
 ## Getting started
 

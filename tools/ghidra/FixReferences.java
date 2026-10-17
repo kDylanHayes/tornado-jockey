@@ -8,7 +8,7 @@
 //    0x400000 limit): every address listed in config/norefs.txt is the
 //    location of such a constant, and references to its value are removed
 //    so no relocation is emitted.
-// Usage: run as a -preScript before DelinkProgram.java (see tools/delink.py).
+// Usage: run as a -preScript before DelinkUnit.java (see tools/delink.py).
 //@category TornadoJockey
 
 import java.nio.file.Files;
