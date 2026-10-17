@@ -3,10 +3,14 @@
 # Names use the original MSVC decorated name when known. Keep sorted by address.
 0x0045446b operator_new function 0x24
 0x0045450f operator_new function 0x5
+0x00456df2 _null_method function
+0x0046785e _emit_message function
 0x00468469 _png_do_swap function
 0x00468496 _png_do_bgr function
 0x00468906 _png_do_chop function
 0x00468b82 _png_do_gamma function
+0x0046b9b2 _jround_up function
+0x0046c4a9 _do_barray_io function
 0x0047e661 _adler32 function 0x119
 0x00559cc6 FMOD.DLL::_FSOUND_GetError@0 function 0x6
 0x00559ccc FMOD.DLL::_FSOUND_StopSound@4 function 0x6
@@ -222,7 +226,257 @@
 0x005745b5 _png_handle_iTXt function 0x190
 0x00574745 _png_handle_unknown function 0x10f
 0x00574854 _png_read_finish_row function 0x251
+0x00574aa5 _jpeg_abort function 0x33
+0x00574ad8 _jpeg_destroy function 0x1b
+0x00574af3 _jpeg_alloc_quant_table function 0x1c
+0x00574b0f _jpeg_alloc_huff_table function 0x1c
+0x00574b2b _get_soi function 0x9c
+0x00574bc7 _get_sof function 0x2fb
+0x00574ec2 _get_sos function 0x2b2
+0x00575174 _get_dht function 0x29c
+0x00575410 _get_dqt function 0x23e
+0x0057564e _get_dri function 0xd7
+0x00575725 _examine_app0 function 0x1e1
+0x00575906 _examine_app14 function 0xb0
+0x005759b6 _get_interesting_appn function 0x13c
+0x00575af2 _save_marker function 0x24d
+0x00575d3f _skip_variable function 0xa3
+0x00575de2 _next_marker function 0xd7
+0x00575eb9 _first_marker function 0x97
+0x00575f50 _read_markers function 0x1eb
+0x0057613b _read_restart_marker function 0x7e
+0x005761b9 _jpeg_resync_to_restart function 0xef
+0x005762a8 _reset_marker_reader function 0x2b
+0x005762d3 _jinit_marker_reader function 0x63
+0x00576336 _jpeg_save_markers function 0xaa
+0x005763e0 _jpeg_CreateCompress function 0xb4
+0x00576494 _jpeg_suppress_tables function 0x4a
+0x005764de _jpeg_finish_compress function 0xec
+0x005765ca _jpeg_write_marker function 0x76
+0x00576640 _jpeg_destroy_compress function 0x5
+0x00576645 _default_decompress_parms function 0x174
+0x005767b9 _jpeg_consume_input function 0x9a
+0x00576853 _jpeg_finish_decompress function 0xa7
+0x005768fa _mmxsupport function 0x43
+0x0057693d _jpeg_CreateDecompress function 0x100
+0x00576a3d _jpeg_read_header function 0x63
+0x00576aa0 _output_pass_setup function 0x4d
+0x00576aed _jpeg_read_scanlines function 0x84
+0x00576b71 _jpeg_start_decompress function 0xbf
+0x00576c30 _error_exit function 0x1b
+0x00576c4b _output_message function 0x34
+0x00576c7f _format_message function 0x97
+0x00576d16 _reset_error_mgr function 0x11
+0x00576d27 _jpeg_std_error function 0x4c
+0x00576d73 _jpeg_start_compress function 0x6c
+0x00576ddf _jpeg_write_scanlines function 0xab
+0x00576e8a _jpeg_add_quant_table function 0xb0
+0x00576f3a _jpeg_set_linear_quality function 0x32
+0x00576f6c _jpeg_quality_scaling function 0x27
+0x00576f93 _jpeg_set_quality function 0x1c
+0x00576faf _add_huff_table function 0x6d
+0x0057701c _jpeg_set_colorspace function 0x28b
+0x005772a7 _jpeg_default_colorspace function 0x46
+0x005772ed _jpeg_set_defaults function 0x12f
+0x0057741c _jdiv_round_up function 0x10
+0x0057742c _jcopy_sample_rows function 0x3e
+0x0057746a _jcopy_block_row function 0x19
+0x00577483 _jzero_far function 0x13
+0x00577496 _out_of_memory function 0x15
+0x005774ab _alloc_small function 0xfc
+0x005775a7 _alloc_large function 0x8e
+0x00577635 _alloc_sarray function 0x92
+0x005776c7 _alloc_barray function 0x9e
+0x00577765 _request_virt_sarray function 0x61
+0x005777c6 _request_virt_barray function 0x61
+0x00577827 _realize_virt_arrays function 0x17f
+0x005779a6 _do_sarray_io function 0x88
+0x00577a2e _access_virt_sarray function 0x11e
+0x00577b4c _access_virt_barray function 0x123
+0x00577c6f _free_pool function 0xe1
+0x00577d50 _self_destruct function 0x30
+0x00577d80 _jinit_memory_mgr function 0x113
+0x00577e93 _emit_byte function 0x2b
+0x00577ebe _emit_marker function 0x1a
+0x00577ed8 _emit_2bytes function 0x20
+0x00577ef8 _emit_dqt function 0xc6
+0x00577fbe _emit_dht function 0xbd
+0x0057807b _emit_sof function 0x9e
+0x00578119 _emit_sos function 0xcb
+0x005781e4 _emit_jfif_app0 function 0x90
+0x00578274 _emit_adobe_app14 function 0x77
+0x005782eb _write_marker_header function 0x39
+0x00578324 _write_marker_byte function 0x11
+0x00578335 _write_file_header function 0x41
+0x00578376 _write_frame_header function 0xc9
+0x0057843f _write_scan_header function 0xd8
+0x00578517 _write_file_trailer function 0x10
+0x00578527 _write_tables_only function 0x7a
+0x005785a1 _jinit_marker_writer function 0x4e
+0x005785ef _initial_setup function 0x1bb
+0x005787aa _per_scan_setup function 0x176
+0x00578920 _latch_quant_tables function 0x94
+0x005789b4 _start_input_pass function 0x36
+0x005789ea _consume_markers function 0x93
+0x00578a7d _reset_input_controller function 0x37
+0x00578ab4 _finish_input_pass function 0x11
+0x00578ac5 _jinit_input_controller function 0x41
+0x00578b06 _use_merged_upsample function 0x71
+0x00578b77 _jpeg_calc_output_dimensions function 0x8d
+0x00578c04 _prepare_range_limit_table function 0x80
+0x00578c84 _master_selection function 0x1ab
+0x00578e2f _prepare_for_output_pass function 0x116
+0x00578f45 _finish_output_pass function 0x21
+0x00578f66 _jinit_master_decompress function 0x30
+0x00578f96 _jinit_compress_master function 0xa6
+0x0057903c _jpeg_get_small function
 0x00579047 _zcfree function
+0x00579052 _jpeg_mem_available function 0x5
+0x00579057 _jpeg_open_backing_store function 0x14
+0x0057906b _alloc_funny_pointers function 0xa8
+0x00579113 _make_funny_pointers function 0x131
+0x00579244 _set_wraparound_pointers function 0xd4
+0x00579318 _set_bottom_pointers function 0x96
+0x005793ae _process_data_simple_main function 0x68
+0x00579416 _process_data_context_main function 0x108
+0x0057951e _start_pass_main function 0x59
+0x00579577 _jinit_d_main_controller function 0xd3
+0x0057964a _start_iMCU_row function 0x3f
+0x00579689 _start_input_pass function 0x10
+0x00579699 _decompress_onepass function 0x1da
+0x00579873 _dummy_consume_data function 0x3
+0x00579876 _consume_data function 0x19f
+0x00579a15 _decompress_data function 0x166
+0x00579b7b _smoothing_ok function 0xe3
+0x00579c5e _decompress_smooth_data function 0x51a
+0x0057a178 _start_output_pass function 0x3b
+0x0057a1b3 _jinit_d_coef_controller function 0xf8
+0x0057a2ab _jpeg_make_d_derived_tbl function 0x28a
+0x0057a535 _jpeg_fill_bit_buffer function 0xfe
+0x0057a633 _jpeg_huff_decode function 0xd5
+0x0057a708 _process_restart function 0x60
+0x0057a768 _decode_mcu function 0x3a2
+0x0057ab0a _start_pass_huff_decoder function 0x137
+0x0057ac41 _jinit_huff_decoder function 0x3d
+0x0057ac7e _process_restart function 0x63
+0x0057ace1 _decode_mcu_DC_first function 0x1ef
+0x0057aed0 _decode_mcu_AC_first function 0x21b
+0x0057b0eb _decode_mcu_DC_refine function 0xca
+0x0057b1b5 _decode_mcu_AC_refine function 0x360
+0x0057b515 _start_pass_phuff_decoder function 0x235
+0x0057b74a _jinit_phuff_decoder function 0x61
+0x0057b7ab _start_pass function 0x14e
+0x0057b8f9 _jinit_inverse_dct function 0x75
+0x0057b96e _post_process_1pass function 0x65
+0x0057b9d3 _start_pass_dpost function 0x63
+0x0057ba36 _jinit_d_post_controller function 0x69
+0x0057ba9f _start_pass_upsample function 0x1a
+0x0057bab9 _sep_upsample function 0xc6
+0x0057bb7f _fullsize_upsample function 0xb
+0x0057bb8a _noop_upsample function 0x8
+0x0057bb92 _int_upsample function 0xdd
+0x0057bc6f _h2v1_upsample function 0x57
+0x0057bcc6 _h2v2_upsample function 0x6a
+0x0057bd30 _h2v1_fancy_upsample function 0xa4
+0x0057bdd4 _h2v2_fancy_upsample function 0x107
+0x0057bedb _jinit_upsampler function 0x1bf
+0x0057c09a _build_ycc_rgb_table function 0xb0
+0x0057c14a _ycc_rgb_convert function 0x10c
+0x0057c256 _null_convert function 0x6b
+0x0057c2c1 _grayscale_convert function 0x23
+0x0057c2e4 _gray_rgb_convert function 0x57
+0x0057c33b _ycck_cmyk_convert function 0x132
+0x0057c46d _jinit_color_deconverter function 0x132
+0x0057c59f _build_ycc_rgb_table function 0xb0
+0x0057c64f _start_pass_merged_upsample function 0x15
+0x0057c664 _merged_2v_upsample function 0xa6
+0x0057c70a _merged_1v_upsample function 0x31
+0x0057c73b _h2v1_merged_upsample function 0x156
+0x0057c891 _h2v2_merged_upsample_orig function 0x1e4
+0x0057ca75 _h2v2_merged_upsample_mmx function 0x4e4
+0x0057cf59 _h2v2_merged_upsample function 0x38
+0x0057cf91 _jinit_merged_upsampler function 0x75
+0x0057d006 _process_data_simple_main function 0x8e
+0x0057d094 _start_pass_main function 0x42
+0x0057d0d6 _jinit_c_main_controller function 0x84
+0x0057d15a _start_iMCU_row function 0x3c
+0x0057d196 _compress_data function 0x1e9
+0x0057d37f _compress_output function 0x171
+0x0057d4f0 _compress_first_pass function 0x1dc
+0x0057d6cc _start_pass_coef function 0x92
+0x0057d75e _jinit_c_coef_controller function 0xb1
+0x0057d80f _jpeg_make_c_derived_tbl function 0x1ea
+0x0057d9f9 _dump_buffer function 0x20
+0x0057da19 _emit_bits function 0x98
+0x0057dab1 _flush_bits function 0x1d
+0x0057dace _encode_one_block function 0x166
+0x0057dc34 _emit_restart function 0x6c
+0x0057dca0 _encode_mcu_huff function 0x112
+0x0057ddb2 _finish_pass_huff function 0x6d
+0x0057de1f _htest_one_block function 0xc7
+0x0057dee6 _encode_mcu_gather function 0xba
+0x0057dfa0 _jpeg_gen_optimal_table function 0x1b5
+0x0057e155 _finish_pass_gather function 0xdf
+0x0057e234 _start_pass_huff function 0x168
+0x0057e39c _jinit_huff_encoder function 0x39
+0x0057e3d5 _dump_buffer function 0x32
+0x0057e407 _emit_bits function 0xa4
+0x0057e4ab _emit_symbol function 0x2a
+0x0057e4d5 _emit_buffered_bits function 0x26
+0x0057e4fb _emit_eobrun function 0x66
+0x0057e561 _emit_restart function 0x8a
+0x0057e5eb _encode_mcu_DC_first function 0x128
+0x0057e713 _encode_mcu_AC_first function 0x18b
+0x0057e89e _encode_mcu_DC_refine function 0xad
+0x0057e94b _encode_mcu_AC_refine function 0x1dd
+0x0057eb28 _finish_pass_phuff function 0x4d
+0x0057eb75 _finish_pass_gather_phuff function 0xbd
+0x0057ec32 _start_pass_phuff function 0x167
+0x0057ed99 _jinit_phuff_encoder function 0x36
+0x0057edcf _start_pass_fdctmgr function 0x10c
+0x0057eedb _forward_DCT function 0x11a
+0x0057eff5 _jinit_forward_dct function 0x63
+0x0057f058 _start_pass_prep function 0x3e
+0x0057f096 _expand_bottom_edge function 0x2e
+0x0057f0c4 _pre_process_data function 0x148
+0x0057f20c _pre_process_context function 0x18a
+0x0057f396 _create_context_buffer function 0x103
+0x0057f499 _jinit_c_prep_controller function 0xa4
+0x0057f53d _expand_right_edge function 0x4c
+0x0057f589 _sep_downsample function 0x76
+0x0057f5ff _int_downsample function 0xed
+0x0057f6ec _fullsize_downsample function 0x3f
+0x0057f72b _h2v1_downsample function 0x86
+0x0057f7b1 _h2v2_downsample function 0xa2
+0x0057f853 _h2v2_smooth_downsample function 0x268
+0x0057fabb _fullsize_smooth_downsample function 0x14e
+0x0057fc09 _jinit_downsampler function 0x163
+0x0057fd6c _rgb_ycc_start function 0xc4
+0x0057fe30 _rgb_ycc_convert function 0xff
+0x0057ff2f _rgb_gray_convert function 0x86
+0x0057ffb5 _cmyk_ycck_convert function 0x138
+0x005800ed _grayscale_convert function 0x58
+0x00580145 _null_convert function 0x6a
+0x005801af _jinit_color_converter function 0x197
+0x00580346 _initial_setup function 0x1a0
+0x005804e6 _validate_script function 0x324
+0x0058080a _select_scan_parameters function 0xd5
+0x005808df _per_scan_setup function 0x19c
+0x00580a7b _prepare_for_pass function 0x16b
+0x00580be6 _pass_startup function 0x27
+0x00580c0d _finish_pass_master function 0x58
+0x00580c65 _jinit_c_master_control function 0x9f
+0x00580d04 _jpeg_idct_islow function 0x4da
+0x005811de _dct_8x8_inv_16s function 0x56b
+0x00581749 _ownpj_QuantInv_8x8_16s function 0x64
+0x005817ad _ownpj_Add128_8x8_16s8u function 0x87
+0x00581834 _ippiDCTQuantInv8x8LS_JPEG_16s8u_C1R function 0x36
+0x0058186a _jpeg_idct_islow_sse2 function 0x6d
+0x005818d7 _jpeg_idct_ifast_orig function 0x3de
+0x00581cb5 _jpeg_idct_ifast_mmx function 0x7ce
+0x00582483 _jpeg_idct_ifast function 0x18
+0x0058249b _jpeg_fdct_islow function 0x2f8
+0x00582793 _jpeg_fdct_ifast function 0x1de
 0x00582971 _crc32_little function 0x24d
 0x00582bbe _crc32 function 0x1a
 0x00582bd8 _inflateReset function 0x4e
@@ -772,6 +1026,7 @@
 0x00665f74 ??_C@_0BD@PJCBIDD@invalid?5block?5type?$AA@ data
 0x00666020 ??_C@_0BG@LBKINIKP@invalid?5distance?5code?$AA@ data
 0x00666038 ??_C@_0BM@FFFLPBBC@invalid?5literal?1length?5code?$AA@ data
+0x0066653c ??_C@_03OFAPEBGM@?$CFs?6?$AA@ data
 0x0067e3e0 __real@4020000000000000 data
 0x00680450 _png_libpng_ver data
 0x0068046c _png_IHDR data
@@ -1003,6 +1258,26 @@
 0x00682020 ??_C@_0CB@HOMFHGGH@No?5memory?5to?5process?5iTXt?5chunk?4@ data
 0x00682044 ??_C@_0BJ@ECMDOMPP@Missing?5IHDR?5before?5iTXt?$AA@ data
 0x00682060 ??_C@_0BH@FADDMAED@Extra?5compressed?5data?4?$AA@ data
+0x00682078 _jpeg_std_message_table data
+0x00682448 ?std_luminance_quant_tbl@?1??jpeg_set_linear_quality@@9@9 data
+0x00682548 ?std_chrominance_quant_tbl@?1??jpeg_set_linear_quality@@9@9 data
+0x00682648 ?bits_dc_luminance@?1??std_huff_tables@@9@9 data
+0x0068265c ?val_dc_luminance@?1??std_huff_tables@@9@9 data
+0x00682668 ?bits_dc_chrominance@?1??std_huff_tables@@9@9 data
+0x0068267c ?val_dc_chrominance@?1??std_huff_tables@@9@9 data
+0x00682688 ?bits_ac_luminance@?1??std_huff_tables@@9@9 data
+0x006826a0 ?val_ac_luminance@?1??std_huff_tables@@9@9 data
+0x00682744 ?bits_ac_chrominance@?1??std_huff_tables@@9@9 data
+0x00682758 ?val_ac_chrominance@?1??std_huff_tables@@9@9 data
+0x00682800 _jpeg_natural_order data
+0x00682940 _first_pool_slop data
+0x00682948 _extra_pool_slop data
+0x00682950 ??_C@_05IBIMIMKO@?$CFld?$CFc?$AA@ data
+0x00682958 ??_C@_07OOOLPGAB@JPEGMEM?$AA@ data
+0x00682960 _extend_test data
+0x006829a0 _extend_offset data
+0x00682a60 ?aanscales@?N@??start_pass@@9@9 data
+0x00682ae0 ?aanscales@?6??start_pass_fdctmgr@@9@9 data
 0x00682b60 _crc_table data
 0x00684b60 ?lenfix@?1??fixedtables@@9@9 data
 0x00685360 ?distfix@?1??fixedtables@@9@9 data
@@ -1034,7 +1309,41 @@
 0x006c82e8 _fourbppswaptable data
 0x006c83e8 _png_gamma_shift data
 0x006c8408 ?msg@?1??png_decompress_chunk@@9@9 data
+0x006c8428 _const1 data
+0x006c8430 _const2 data
+0x006c8438 _const5 data
+0x006c8440 _const6 data
+0x006c8448 _const05 data
+0x006c8450 _const15 data
+0x006c8458 _const45 data
+0x006c8460 _const55 data
+0x006c8470 _tab_i_04 data
+0x006c84b0 _tab_i_17 data
+0x006c84f0 _tab_i_26 data
+0x006c8530 _tab_i_35 data
+0x006c8570 _round_i_0 data
+0x006c8580 _round_i_1 data
+0x006c8590 _round_i_2 data
+0x006c85a0 _round_i_3 data
+0x006c85b0 _round_i_4 data
+0x006c85c0 _round_i_5 data
+0x006c85d0 _round_i_6 data
+0x006c85e0 _round_i_7 data
+0x006c85f0 _tg_1_16 data
+0x006c8600 _tg_2_16 data
+0x006c8610 _tg_3_16 data
+0x006c8620 _cos_4_16 data
+0x006c8630 _const_128 data
+0x006c8640 _fix_141 data
+0x006c8648 _fix_184n261 data
+0x006c8650 _fix_184 data
+0x006c8658 _fix_n184 data
+0x006c8660 _fix_108n184 data
+0x006c8668 _const_0x0080 data
 0x006c8670 _static_l_desc data
 0x006c8684 _static_d_desc data
 0x006c8698 _static_bl_desc data
 0x006c8a60 __iob data
+0x00a0f2ac _SSE2Available data
+0x00a0f2b0 ?cpuidDetected@?1??jpeg_CreateDecompress@@9@9 data
+0x00a12444 _MMXAvailable data

@@ -94,6 +94,10 @@ def main() -> int:
                 "progress_categories": [unit["category"]],
             },
         }
+        # Identical functions folded by the linker (/OPT:ICF) keep one name in
+        # the target; map it to the name our object uses for this unit's copy.
+        if unit.get("symbol_mappings"):
+            entry["symbol_mappings"] = unit["symbol_mappings"]
         source = unit.get("source")
         if source:
             obj = f"build/{Path(source).with_suffix('.obj').as_posix()}"

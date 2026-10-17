@@ -38,13 +38,14 @@ For code built from upstream source (zlib, libpng...), compile the source first,
 ```sh
 ninja
 python3 tools/find_objects.py --functions build/src/lib/zlib/*.obj     # where each function sits
+python3 tools/find_objects.py --functions --layout 0x582971-0x586fc2 build/src/lib/zlib/*.obj  # suggest unit ranges
 python3 tools/find_objects.py --functions --write build/src/lib/zlib/*.obj  # name them in symbols.txt
 python3 tools/delink.py
 python3 tools/sync_symbols.py lib/zlib/inflate lib/zlib/trees          # name referenced data
 python3 tools/delink.py
 ```
 
-`find_objects.py` searches the exe for each function's bytes with relocated bytes wildcarded; `--write` names functions found exactly once inside their unit's range. `sync_symbols.py` pairs relocations in a matching unit and gives the target's auto-named data (`DAT_…`, `s_…`) the names our compiler used, so objdiff can pair them. Functions the linker dropped (`/OPT:REF`) simply aren't found; identical functions the linker folded (`/OPT:ICF`, e.g. zlib's `zcfree`) are found at several addresses.
+`find_objects.py` searches the exe for each function's bytes with relocated bytes wildcarded; `--write` names functions found exactly once inside their unit's range. `sync_symbols.py` pairs relocations in a matching unit and gives the target's auto-named data (`DAT_…`, `s_…`) the names our compiler used, so objdiff can pair them. Functions the linker dropped (`/OPT:REF`) simply aren't found; identical functions the linker folded (`/OPT:ICF`, e.g. zlib's `zcfree`) are found at several addresses. A folded function carries one name in the target; when it sits in another unit, map it with `"symbol_mappings": {"_zcfree": "_jpeg_free_small"}` on that unit in `config/units.json`.
 
 ## Finding unit boundaries
 

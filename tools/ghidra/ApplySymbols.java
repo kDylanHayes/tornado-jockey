@@ -17,6 +17,17 @@ import ghidra.program.model.symbol.SourceType;
 public class ApplySymbols extends HeadlessScript {
 	@Override
 	public void run() throws Exception {
+		// A function that is only a jump to another one (jpeg_destroy_compress:
+		// jmp _jpeg_destroy) is a thunk to Ghidra and borrows its target's
+		// name, which gives a delinked object two symbols of that name. Make
+		// such functions ordinary; thunks to imports keep their DLL names.
+		for (Function f : currentProgram.getFunctionManager().getFunctions(true)) {
+			Function target = f.getThunkedFunction(false);
+			if (target != null && !target.isExternal()) {
+				f.setThunkedFunction(null);
+			}
+		}
+
 		String[] args = getScriptArgs();
 		int applied = 0;
 		for (String line : Files.readAllLines(Paths.get(args[0]))) {

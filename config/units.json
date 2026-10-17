@@ -242,6 +242,416 @@
       "category": "lib",
       "cflags": "/nologo /c /O1 /MT /W3 /Isrc/lib/zlib /DPNG_iTXt_SUPPORTED",
       "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jcomapi",
+      "ranges": [
+        "0x00574aa5-0x00574b2a"
+      ],
+      "target": "build/target/lib/libjpeg/jcomapi.obj",
+      "source": "src/lib/libjpeg/jcomapi.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jdmarker",
+      "ranges": [
+        "0x00574b2b-0x005763df"
+      ],
+      "target": "build/target/lib/libjpeg/jdmarker.obj",
+      "source": "src/lib/libjpeg/jdmarker.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jcapimin",
+      "ranges": [
+        "0x005763e0-0x00576644"
+      ],
+      "target": "build/target/lib/libjpeg/jcapimin.obj",
+      "source": "src/lib/libjpeg/jcapimin.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jdapimin",
+      "ranges": [
+        "0x00576645-0x00576a9f"
+      ],
+      "target": "build/target/lib/libjpeg/jdapimin.obj",
+      "source": "src/lib/libjpeg/jdapimin.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jdapistd",
+      "ranges": [
+        "0x00576aa0-0x00576c2f"
+      ],
+      "target": "build/target/lib/libjpeg/jdapistd.obj",
+      "source": "src/lib/libjpeg/jdapistd.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jerror",
+      "ranges": [
+        "0x00576c30-0x00576d72"
+      ],
+      "target": "build/target/lib/libjpeg/jerror.obj",
+      "source": "src/lib/libjpeg/jerror.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jcapistd",
+      "ranges": [
+        "0x00576d73-0x00576e89"
+      ],
+      "target": "build/target/lib/libjpeg/jcapistd.obj",
+      "source": "src/lib/libjpeg/jcapistd.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jcparam",
+      "ranges": [
+        "0x00576e8a-0x0057741b"
+      ],
+      "target": "build/target/lib/libjpeg/jcparam.obj",
+      "source": "src/lib/libjpeg/jcparam.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jutils",
+      "ranges": [
+        "0x0057741c-0x00577495"
+      ],
+      "target": "build/target/lib/libjpeg/jutils.obj",
+      "source": "src/lib/libjpeg/jutils.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jmemmgr",
+      "ranges": [
+        "0x00577496-0x00577e92"
+      ],
+      "target": "build/target/lib/libjpeg/jmemmgr.obj",
+      "source": "src/lib/libjpeg/jmemmgr.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jcmarker",
+      "ranges": [
+        "0x00577e93-0x005785ee"
+      ],
+      "target": "build/target/lib/libjpeg/jcmarker.obj",
+      "source": "src/lib/libjpeg/jcmarker.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jdinput",
+      "ranges": [
+        "0x005785ef-0x00578b05"
+      ],
+      "target": "build/target/lib/libjpeg/jdinput.obj",
+      "source": "src/lib/libjpeg/jdinput.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jdmaster",
+      "ranges": [
+        "0x00578b06-0x00578f95"
+      ],
+      "target": "build/target/lib/libjpeg/jdmaster.obj",
+      "source": "src/lib/libjpeg/jdmaster.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jcinit",
+      "ranges": [
+        "0x00578f96-0x0057903b"
+      ],
+      "target": "build/target/lib/libjpeg/jcinit.obj",
+      "source": "src/lib/libjpeg/jcinit.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jmemnobs",
+      "ranges": [
+        "0x0057903c-0x0057906a"
+      ],
+      "target": "build/target/lib/libjpeg/jmemnobs.obj",
+      "source": "src/lib/libjpeg/jmemnobs.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "symbol_mappings": {
+        "_zcfree": "_jpeg_free_small"
+      },
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jdmainct",
+      "ranges": [
+        "0x0057906b-0x00579649"
+      ],
+      "target": "build/target/lib/libjpeg/jdmainct.obj",
+      "source": "src/lib/libjpeg/jdmainct.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jdcoefct",
+      "ranges": [
+        "0x0057964a-0x0057a2aa"
+      ],
+      "target": "build/target/lib/libjpeg/jdcoefct.obj",
+      "source": "src/lib/libjpeg/jdcoefct.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jdhuff",
+      "ranges": [
+        "0x0057a2ab-0x0057ac7d"
+      ],
+      "target": "build/target/lib/libjpeg/jdhuff.obj",
+      "source": "src/lib/libjpeg/jdhuff.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jdphuff",
+      "ranges": [
+        "0x0057ac7e-0x0057b7aa"
+      ],
+      "target": "build/target/lib/libjpeg/jdphuff.obj",
+      "source": "src/lib/libjpeg/jdphuff.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jddctmgr",
+      "ranges": [
+        "0x0057b7ab-0x0057b96d"
+      ],
+      "target": "build/target/lib/libjpeg/jddctmgr.obj",
+      "source": "src/lib/libjpeg/jddctmgr.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jdpostct",
+      "ranges": [
+        "0x0057b96e-0x0057ba9e"
+      ],
+      "target": "build/target/lib/libjpeg/jdpostct.obj",
+      "source": "src/lib/libjpeg/jdpostct.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jdsample",
+      "ranges": [
+        "0x0057ba9f-0x0057c099"
+      ],
+      "target": "build/target/lib/libjpeg/jdsample.obj",
+      "source": "src/lib/libjpeg/jdsample.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jdcolor",
+      "ranges": [
+        "0x0057c09a-0x0057c59e"
+      ],
+      "target": "build/target/lib/libjpeg/jdcolor.obj",
+      "source": "src/lib/libjpeg/jdcolor.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jdmerge",
+      "ranges": [
+        "0x0057c59f-0x0057d005"
+      ],
+      "target": "build/target/lib/libjpeg/jdmerge.obj",
+      "source": "src/lib/libjpeg/jdmerge.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jcmainct",
+      "ranges": [
+        "0x0057d006-0x0057d159"
+      ],
+      "target": "build/target/lib/libjpeg/jcmainct.obj",
+      "source": "src/lib/libjpeg/jcmainct.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jccoefct",
+      "ranges": [
+        "0x0057d15a-0x0057d80e"
+      ],
+      "target": "build/target/lib/libjpeg/jccoefct.obj",
+      "source": "src/lib/libjpeg/jccoefct.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jchuff",
+      "ranges": [
+        "0x0057d80f-0x0057e3d4"
+      ],
+      "target": "build/target/lib/libjpeg/jchuff.obj",
+      "source": "src/lib/libjpeg/jchuff.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jcphuff",
+      "ranges": [
+        "0x0057e3d5-0x0057edce"
+      ],
+      "target": "build/target/lib/libjpeg/jcphuff.obj",
+      "source": "src/lib/libjpeg/jcphuff.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jcdctmgr",
+      "ranges": [
+        "0x0057edcf-0x0057f057"
+      ],
+      "target": "build/target/lib/libjpeg/jcdctmgr.obj",
+      "source": "src/lib/libjpeg/jcdctmgr.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jcprepct",
+      "ranges": [
+        "0x0057f058-0x0057f53c"
+      ],
+      "target": "build/target/lib/libjpeg/jcprepct.obj",
+      "source": "src/lib/libjpeg/jcprepct.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jcsample",
+      "ranges": [
+        "0x0057f53d-0x0057fd6b"
+      ],
+      "target": "build/target/lib/libjpeg/jcsample.obj",
+      "source": "src/lib/libjpeg/jcsample.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jccolor",
+      "ranges": [
+        "0x0057fd6c-0x00580345"
+      ],
+      "target": "build/target/lib/libjpeg/jccolor.obj",
+      "source": "src/lib/libjpeg/jccolor.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jcmaster",
+      "ranges": [
+        "0x00580346-0x00580d03"
+      ],
+      "target": "build/target/lib/libjpeg/jcmaster.obj",
+      "source": "src/lib/libjpeg/jcmaster.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jidctint",
+      "ranges": [
+        "0x00580d04-0x005818d6"
+      ],
+      "target": "build/target/lib/libjpeg/jidctint.obj",
+      "source": "src/lib/libjpeg/jidctint.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jidctfst",
+      "ranges": [
+        "0x005818d7-0x0058249a"
+      ],
+      "target": "build/target/lib/libjpeg/jidctfst.obj",
+      "source": "src/lib/libjpeg/jidctfst.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jfdctint",
+      "ranges": [
+        "0x0058249b-0x00582792"
+      ],
+      "target": "build/target/lib/libjpeg/jfdctint.obj",
+      "source": "src/lib/libjpeg/jfdctint.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/libjpeg/jfdctfst",
+      "ranges": [
+        "0x00582793-0x00582970"
+      ],
+      "target": "build/target/lib/libjpeg/jfdctfst.obj",
+      "source": "src/lib/libjpeg/jfdctfst.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
     }
   ]
 }

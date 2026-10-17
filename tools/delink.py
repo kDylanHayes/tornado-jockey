@@ -39,14 +39,12 @@ def main() -> int:
         print("No units to delink.")
         return 0
 
-    script_args = ["/exporter", "COFF relocatable object"]
+    script_args = []
     for unit in selected:
         target = ROOT / unit["target"]
         target.parent.mkdir(parents=True, exist_ok=True)
         target.unlink(missing_ok=True)  # so a failed export can't leave a stale object
-        for r in unit["ranges"]:
-            script_args += ["/include-range", r]
-        script_args += ["/export", str(target)]
+        script_args += [",".join(unit["ranges"]), str(target)]
 
     # The COFF exporter refuses an object with two symbols of the same name
     # and doesn't say which, so catch that here.
@@ -66,12 +64,15 @@ def main() -> int:
         "-scriptPath", str(ROOT / "tools" / "ghidra"),
         "-preScript", "ApplySymbols.java", str(ROOT / "config" / "symbols.txt"),
         "-preScript", "FixReferences.java", str(ROOT / "config" / "norefs.txt"),
-        "-postScript", "DelinkProgram.java", *script_args,
+        "-postScript", "DelinkUnits.java", *script_args,
     ]
     result = subprocess.run(cmd, capture_output=True, text=True)
     log = ROOT / "build" / "delink.log"
     log.write_text(result.stdout + result.stderr)
     missing = [u["name"] for u in selected if not (ROOT / u["target"]).is_file()]
+    for line in (result.stdout + result.stderr).splitlines():
+        if "DELINK FAILED" in line:
+            print(line[line.index("DELINK FAILED"):].replace(" (GhidraScript)", "").strip(), file=sys.stderr)
     if result.returncode != 0 or missing or "SCRIPT ERROR" in result.stdout + result.stderr:
         print(f"error: delinking failed ({', '.join(missing) or 'see log'}); log in {log.relative_to(ROOT)}",
               file=sys.stderr)

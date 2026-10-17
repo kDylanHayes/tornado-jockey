@@ -10,6 +10,10 @@ upstream source:
 
 With --functions --write, each function found exactly once inside its
 unit's range (config/units.json) is named in config/symbols.txt.
+
+With --functions --layout LO-HI, objects are ordered by where their
+functions sit inside that address range and a contiguous range is
+suggested for each, ready for config/units.json.
 """
 
 import argparse
@@ -84,7 +88,10 @@ def main() -> int:
     parser.add_argument("--exe", type=Path, default=ROOT / "orig" / "Tornado.exe")
     parser.add_argument("--functions", action="store_true", help="search each function separately")
     parser.add_argument("--write", action="store_true", help="name located functions in config/symbols.txt")
+    parser.add_argument("--layout", metavar="LO-HI", help="suggest unit ranges inside this address range")
     args = parser.parse_args()
+    layout_lo, layout_hi = (int(x, 16) for x in args.layout.split("-")) if args.layout else (0, 0)
+    placed = {}  # object stem -> [(address, size)] of functions found once in the layout range
 
     ranges = {}
     for unit in json.loads((ROOT / "config" / "units.json").read_text())["units"]:
@@ -114,6 +121,9 @@ def main() -> int:
                 where = ", ".join(f"0x{IMAGE_BASE + h:08x}" for h in hits[:4]) or "not found"
                 more = f" (+{len(hits) - 4} more)" if len(hits) > 4 else ""
                 print(f"{path.stem:12s} {name:40s} size 0x{end - start:<5x} {where}{more}")
+                in_layout = [IMAGE_BASE + h for h in hits if layout_lo <= IMAGE_BASE + h <= layout_hi]
+                if len(in_layout) == 1:
+                    placed.setdefault(path.stem, []).append((in_layout[0], end - start))
                 inside = [IMAGE_BASE + h for h in hits if any(a <= IMAGE_BASE + h <= b for a, b in limits or [])]
                 if args.functions and inside:
                     groups.setdefault(tuple(inside), []).append(f"{name} function 0x{end - start:x}")
@@ -121,6 +131,14 @@ def main() -> int:
             if len(inside) == len(entries):
                 for addr, entry in zip(inside, entries):
                     names[addr] = f"0x{addr:08x} {entry}"
+
+    if args.layout and placed:
+        order = sorted(placed, key=lambda stem: min(placed[stem]))
+        starts = [min(placed[stem])[0] for stem in order]
+        last = max(a + size for a, size in placed[order[-1]])
+        print("\nSuggested ranges (first function found to the next object's):")
+        for stem, start, nxt in zip(order, starts, starts[1:] + [last]):
+            print(f"  {stem:12s} 0x{start:08x}-0x{nxt - 1:08x}  ({len(placed[stem])} functions placed)")
 
     if args.write:
         path = ROOT / "config" / "symbols.txt"
