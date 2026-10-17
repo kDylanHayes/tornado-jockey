@@ -3,11 +3,14 @@
   "units": [
     {
       "name": "lib/zlib/adler32",
-      "ranges": ["0x0047e661-0x0047e779"],
+      "ranges": [
+        "0x0047e661-0x0047e779"
+      ],
       "target": "build/target/lib/zlib/adler32.obj",
       "source": "src/lib/zlib/adler32.c",
       "category": "lib",
-      "cflags": "/nologo /c /O2 /MT /W3"
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
     }
   ]
 }

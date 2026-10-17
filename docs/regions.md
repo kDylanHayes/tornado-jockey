@@ -28,4 +28,4 @@ Boundaries are approximate to within a few functions. Exact unit boundaries are 
 - About 60% of the functions are game and engine code. That's the real decompilation work.
 - zlib, libpng, ODE and probably FreeImage are open source. They should be matched by compiling the right upstream versions rather than decompiled by hand.
 - The CRT, STL, ATL and D3DX8 come from prebuilt Microsoft libraries. They don't need decompiling; they get linked from the original `.lib` files at the full-link stage.
-- Library C code with frame pointers (`push ebp; mov ebp, esp`, e.g. adler32) and no function alignment suggests those libraries were built with different flags from the game, likely without `/Gy` and with frame pointers kept.
+- The unaligned library blocks were built with different flags from the game. zlib matches with `/O1` (see [toolchain.md](toolchain.md)).

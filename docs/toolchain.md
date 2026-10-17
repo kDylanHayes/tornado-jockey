@@ -17,17 +17,20 @@ The Rich header in `Tornado.exe` lists the tools that produced each object file:
 
 ## Installing
 
-The toolkit is not redistributable, so this repository cannot include it. Install it yourself and check the version:
+The toolkit is not redistributable, so this repository cannot include it. Get `VCToolkitSetup.exe` yourself (SHA-1 `50dc6cca1503f08a41d56816f3f1abcaf347b0bd`), then unpack it without running the installer (needs `msitools`):
 
 ```sh
-wine /path/to/vctoolkit2003/bin/cl.exe
+python3 tools/extract_vctoolkit.py /path/to/VCToolkitSetup.exe tools/vc71
+wine tools/vc71/bin/cl.exe
 # Microsoft (R) 32-bit C/C++ Optimizing Compiler Version 13.10.3077 for 80x86
 ```
+
+`tools/vc71/` is git-ignored. On Windows you can also just run the installer.
 
 Then configure the project with that folder:
 
 ```sh
-python3 configure.py --msvc /path/to/vctoolkit2003
+python3 configure.py --msvc tools/vc71
 ```
 
 You can also set `TJ_MSVC` instead of passing `--msvc`. On Windows, pass `--wine ""`.
@@ -42,4 +45,10 @@ The default flags in `configure.py` (`/O2 /MT /GX`) are a starting guess based o
 - `/GX`: C++ exception handling is used (Dinkumware `std::exception` classes are present).
 - `/O2`: release build.
 
-These are confirmed or corrected when the first unit matches. Libraries such as ODE, zlib, libjpeg and libpng were probably built with their own flags, so units can override `cflags` in `config/units.json`.
+These are confirmed or corrected as game units match. Libraries were built with their own flags, so units can override `cflags` in `config/units.json`.
+
+Confirmed so far:
+
+| Code | Flags | Evidence |
+|---|---|---|
+| zlib 1.2.2 | `/O1` | `adler32` matches 100% (byte-identical `.text`) |

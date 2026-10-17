@@ -50,8 +50,13 @@ def main() -> int:
         print("warning: --msvc not given; build.ninja will not be able to compile", file=sys.stderr)
         msvc = Path("MSVC_NOT_CONFIGURED")
     cl = msvc / "bin" / "cl.exe"
+    def win_path(p: Path) -> str:
+        # Wine maps the Unix root to drive Z:.
+        p = p.resolve() if p.exists() else p
+        return str(p) if not args.wine else "Z:" + str(p).replace("/", "\\")
+
     include = ";".join(
-        str(p) for p in (ROOT / "include", ROOT / "src", msvc / "include")
+        win_path(p) for p in (ROOT / "include", ROOT / "src", msvc / "include")
     )
 
     lines = [
