@@ -11,6 +11,83 @@
       "category": "lib",
       "cflags": "/nologo /c /O1 /MT /W3",
       "complete": true
+    },
+    {
+      "name": "lib/zlib/crc32",
+      "ranges": [
+        "0x00582971-0x00582bd7"
+      ],
+      "target": "build/target/lib/zlib/crc32.obj",
+      "source": "src/lib/zlib/crc32.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/zlib/inflate",
+      "ranges": [
+        "0x00582bd8-0x00583ee4"
+      ],
+      "target": "build/target/lib/zlib/inflate.obj",
+      "source": "src/lib/zlib/inflate.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/zlib/deflate",
+      "ranges": [
+        "0x00583ee5-0x0058518b"
+      ],
+      "target": "build/target/lib/zlib/deflate.obj",
+      "source": "src/lib/zlib/deflate.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/zlib/zutil",
+      "ranges": [
+        "0x0058518c-0x0058519c"
+      ],
+      "target": "build/target/lib/zlib/zutil.obj",
+      "source": "src/lib/zlib/zutil.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/zlib/inffast",
+      "ranges": [
+        "0x0058519d-0x0058554b"
+      ],
+      "target": "build/target/lib/zlib/inffast.obj",
+      "source": "src/lib/zlib/inffast.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/zlib/inftrees",
+      "ranges": [
+        "0x0058554c-0x005858f2"
+      ],
+      "target": "build/target/lib/zlib/inftrees.obj",
+      "source": "src/lib/zlib/inftrees.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
+    },
+    {
+      "name": "lib/zlib/trees",
+      "ranges": [
+        "0x005858f3-0x00586fc2"
+      ],
+      "target": "build/target/lib/zlib/trees.obj",
+      "source": "src/lib/zlib/trees.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3",
+      "complete": true
     }
   ]
 }

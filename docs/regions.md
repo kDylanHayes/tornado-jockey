@@ -16,7 +16,7 @@ Two independent signals line up:
 | 0x401000–0x4543ff | ~1,170 | aligned | Game and Tongas2 engine code |
 | 0x45446b–0x482a14 | ~620 | unaligned | C libraries: libpng (0x4679df…), zlib 1.2.2 (inflate at 0x47de92, adler32 at 0x47e661) and others still to identify |
 | 0x482cd0–0x567120 | ~3,370 | aligned | Game and Tongas2 engine code (renderer, resources, GUI, input, ACTOR/SCENE). FMOD import thunks at 0x559cc6 |
-| 0x56717c–0x586df5 | ~460 | unaligned | A second block of image libraries: libpng (0x568ec4–0x5745b5), zlib (0x582dc9…). Probably FreeImage and its bundled copies (Ghidra finds a `FREE_IMAGE_FORMAT` type descriptor) |
+| 0x56717c–0x586df5 | ~460 | unaligned | A second block of image libraries: libpng (0x568ec4–0x5745b5), zlib 1.2.2 (0x582971–0x586fc2, matched; `adler32` is shared with block 1 at 0x47e661). Probably FreeImage and its bundled copies (Ghidra finds a `FREE_IMAGE_FORMAT` type descriptor) |
 | 0x586fd0–0x5bf160 | ~490 | aligned | ODE (Open Dynamics Engine), built from `C:\Wanako\Tongas2\SDKs\ode` |
 | 0x5bf242–0x5e5f66 | ~715 | unaligned | Static MSVC 7.1 runtime: libcmt (CRT), libcpmt (Dinkumware STL), ATL, EH support |
 | 0x5e5fa0–0x655400 | ~160 | aligned | Mostly large functions referencing D3DX: the prebuilt D3DX8 static library (the VC6-era objects in the Rich header) |

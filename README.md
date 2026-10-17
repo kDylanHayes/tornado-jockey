@@ -21,7 +21,7 @@ The retail installer ships `Tornado.exe` with its code sections empty; the WildT
 
 ## Status
 
-Pipeline proven: the first unit (zlib `adler32`) matches 100%. See [docs/roadmap.md](docs/roadmap.md).
+zlib 1.2.2 matches 100% (8 units). Next up: libpng and the other bundled libraries. See [docs/roadmap.md](docs/roadmap.md).
 
 ## Getting started
 

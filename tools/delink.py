@@ -52,6 +52,7 @@ def main() -> int:
         "-process", "Tornado.exe", "-noanalysis", "-readOnly",
         "-scriptPath", str(ROOT / "tools" / "ghidra"),
         "-preScript", "ApplySymbols.java", str(ROOT / "config" / "symbols.txt"),
+        "-preScript", "FixIndexedRefs.java",
         "-postScript", "DelinkProgram.java", *script_args,
     ]
     result = subprocess.run(cmd, capture_output=True, text=True)

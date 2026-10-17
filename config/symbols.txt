@@ -24,6 +24,50 @@
 0x00559d2c FMOD.DLL::_FSOUND_Stream_Play@8 function 0x6
 0x00559d32 FMOD.DLL::_FSOUND_Sample_SetMode@8 function 0x6
 0x00559d38 FMOD.DLL::_FSOUND_Stream_SetMode@8 function 0x6
+0x00579047 _zcfree function
+0x00582971 _crc32_little function 0x24d
+0x00582bbe _crc32 function 0x1a
+0x00582bd8 _inflateReset function 0x4e
+0x00582c26 _inflateInit2_ function 0xb4
+0x00582cda _inflateInit_ function 0x17
+0x00582cf1 _updatewindow function 0xd8
+0x00582dc9 _inflate function 0x10de
+0x00583ea7 _inflateEnd function 0x3e
+0x00583ee5 _putShortMSB function 0x22
+0x00583f07 _flush_pending function 0x4d
+0x00583f54 _deflate function 0x3a5
+0x005842f9 _deflateEnd function 0x95
+0x0058438e _lm_init function 0x7b
+0x00584409 _longest_match function 0x148
+0x00584551 _longest_match_fast function 0x8a
+0x005845db _fill_window function 0x14f
+0x0058472a _deflate_stored function 0x128
+0x00584852 _deflate_fast function 0x2e1
+0x00584b33 _deflate_slow function 0x3ba
+0x00584eed _deflateReset function 0x87
+0x00584f74 _deflateInit2_ function 0x1f7
+0x0058516b _deflateInit_ function 0x21
+0x0058518c _zcalloc function 0x11
+0x0058519d _inflate_fast function 0x3af
+0x0058554c _inflate_table function 0x3a7
+0x005858f3 _init_block function 0x5e
+0x00585951 _pqdownheap function 0xb0
+0x00585a01 _gen_bitlen function 0x1b8
+0x00585bb9 _scan_tree function 0xbc
+0x00585c75 _send_tree function 0x49d
+0x00586112 _send_all_trees function 0x239
+0x0058634b _compress_block function 0x3b2
+0x005866fd _set_data_type function 0x56
+0x00586753 _bi_flush function 0x6d
+0x005867c0 _bi_windup function 0x57
+0x00586817 _copy_block function 0x78
+0x0058688f __tr_init function 0x64
+0x005868f3 _gen_codes function 0x6e
+0x00586961 _build_tree function 0x1e5
+0x00586b46 _build_bl_tree function 0x5d
+0x00586ba3 __tr_stored_block function 0x8b
+0x00586c2e __tr_align function 0x1c7
+0x00586df5 __tr_flush_block function 0x1ce
 0x005bf25f ATL::_ATL_BASE_MODULE70::_ATL_BASE_MODULE70 function 0x1a
 0x005bf28f ATL::CAtlBaseModule::CAtlBaseModule function 0xab
 0x005bf33a ATL::CAtlComModule::CAtlComModule function 0x40
@@ -449,3 +493,42 @@
 0x005e69ae KERNEL32.DLL::RtlUnwind function 0x6
 0x005e6ae0 shortsort function 0x6a
 0x005e6b50 _qsort function 0x283
+0x00665210 ??_C@_0BF@MEIGEHBE@incorrect?5data?5check?$AA@ data
+0x00665228 ??_C@_0BH@LIBMMIGA@incorrect?5header?5check?$AA@ data
+0x00665240 ??_C@_0BE@EMOGCLGO@invalid?5window?5size?$AA@ data
+0x00665254 ??_C@_0BL@IHKGDAEE@unknown?5compression?5method?$AA@ data
+0x00665f14 ??_C@_0BK@BMMPFBBH@invalid?5bit?5length?5repeat?$AA@ data
+0x00665f30 ??_C@_0CE@GMIGFPBB@too?5many?5length?5or?5distance?5symb@ data
+0x00665f54 ??_C@_0BN@LGAADGOK@invalid?5stored?5block?5lengths?$AA@ data
+0x00665f74 ??_C@_0BD@PJCBIDD@invalid?5block?5type?$AA@ data
+0x00666020 ??_C@_0BG@LBKINIKP@invalid?5distance?5code?$AA@ data
+0x00666038 ??_C@_0BM@FFFLPBBC@invalid?5literal?1length?5code?$AA@ data
+0x00682b60 _crc_table data
+0x00684b60 ?lenfix@?1??fixedtables@@9@9 data
+0x00685360 ?distfix@?1??fixedtables@@9@9 data
+0x006853e0 ?order@?1??inflate@@9@9 data
+0x00685408 ??_C@_0BH@FGKKJGOC@incorrect?5length?5check?$AA@ data
+0x00685420 ??_C@_0BO@ECPMAOGG@invalid?5distance?5too?5far?5back?$AA@ data
+0x00685440 ??_C@_0BG@GMDFCBGP@invalid?5distances?5set?$AA@ data
+0x00685458 ??_C@_0BM@IIMGAINC@invalid?5literal?1lengths?5set?$AA@ data
+0x00685474 ??_C@_0BJ@HDEPPGOH@invalid?5code?5lengths?5set?$AA@ data
+0x00685490 ??_C@_0BE@GONKLEPM@header?5crc?5mismatch?$AA@ data
+0x006854a4 ??_C@_0BJ@BLBBCOMO@unknown?5header?5flags?5set?$AA@ data
+0x006854f8 _configuration_table data
+0x00685588 _z_errmsg data
+0x006855d0 ?lbase@?1??inflate_table@@9@9 data
+0x00685610 ?lext@?1??inflate_table@@9@9 data
+0x00685650 ?dbase@?1??inflate_table@@9@9 data
+0x00685690 ?dext@?1??inflate_table@@9@9 data
+0x006856d0 _extra_lbits data
+0x00685748 _extra_dbits data
+0x0068580c _bl_order data
+0x00685820 _static_ltree data
+0x00685ca0 _static_dtree data
+0x00685e18 __dist_code data
+0x00685f18 __length_code data
+0x00686018 _base_length data
+0x00686090 _base_dist data
+0x006c8670 _static_l_desc data
+0x006c8684 _static_d_desc data
+0x006c8698 _static_bl_desc data

@@ -27,7 +27,24 @@ python3 configure.py
 
 `analyze.py` only needs to run again after `config/symbols.txt` changes a lot. `delink.py` applies `config/symbols.txt` first, so target objects use our names, e.g. `_adler32` instead of `FUN_0047e661`. It runs the delinker's relocation synthesizer on each unit's ranges and writes a COFF object to the unit's `target` path. Pass unit names to delink only those units. A log is written to `build/delink.log`.
 
+Before delinking, `FixIndexedRefs.java` re-points indexed operands such as `jmp [eax*4 + table]` at the table itself. Ghidra's constant propagation sometimes leaves the reference on `table + n*4`, and the delinker would then emit no relocation for the instruction.
+
 Target objects are derived from the game, so they stay in `build/` and are never committed.
+
+## Placing library code
+
+For code built from upstream source (zlib, libpng...), compile the source first, then let the tools find it and copy names over:
+
+```sh
+ninja
+python3 tools/find_objects.py --functions build/src/lib/zlib/*.obj     # where each function sits
+python3 tools/find_objects.py --functions --write build/src/lib/zlib/*.obj  # name them in symbols.txt
+python3 tools/delink.py
+python3 tools/sync_symbols.py lib/zlib/inflate lib/zlib/trees          # name referenced data
+python3 tools/delink.py
+```
+
+`find_objects.py` searches the exe for each function's bytes with relocated bytes wildcarded; `--write` names functions found exactly once inside their unit's range. `sync_symbols.py` pairs relocations in a matching unit and gives the target's auto-named data (`DAT_…`, `s_…`) the names our compiler used, so objdiff can pair them. Functions the linker dropped (`/OPT:REF`) simply aren't found; identical functions the linker folded (`/OPT:ICF`, e.g. zlib's `zcfree`) are found at several addresses.
 
 ## Finding unit boundaries
 

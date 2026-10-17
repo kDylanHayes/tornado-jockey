@@ -51,4 +51,4 @@ Confirmed so far:
 
 | Code | Flags | Evidence |
 |---|---|---|
-| zlib 1.2.2 | `/O1` | `adler32` matches 100% (byte-identical `.text`) |
+| zlib 1.2.2 | `/O1` | all 8 linked objects (`adler32`, `crc32`, `deflate`, `inflate`, `inffast`, `inftrees`, `trees`, `zutil`) match 100% |
