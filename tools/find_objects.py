@@ -122,7 +122,9 @@ def main() -> int:
                 more = f" (+{len(hits) - 4} more)" if len(hits) > 4 else ""
                 print(f"{path.stem:12s} {name:40s} size 0x{end - start:<5x} {where}{more}")
                 in_layout = [IMAGE_BASE + h for h in hits if layout_lo <= IMAGE_BASE + h <= layout_hi]
-                if len(in_layout) == 1:
+                # Template instances (std::string...) are COMDATs shared by
+                # many objects, so they say nothing about which object sits where.
+                if len(in_layout) == 1 and "?$" not in name and "@std@@" not in name:
                     placed.setdefault(path.stem, []).append((in_layout[0], end - start))
                 inside = [IMAGE_BASE + h for h in hits if any(a <= IMAGE_BASE + h <= b for a, b in limits or [])]
                 if args.functions and inside:

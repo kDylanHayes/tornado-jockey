@@ -56,6 +56,26 @@
 0x00559d2c FMOD.DLL::_FSOUND_Stream_Play@8 function 0x6
 0x00559d32 FMOD.DLL::_FSOUND_Sample_SetMode@8 function 0x6
 0x00559d38 FMOD.DLL::_FSOUND_Stream_SetMode@8 function 0x6
+0x0055a300 _FreeImage_LoadFromHandle function
+0x0055afd0 _FreeImage_GetRedMask function
+0x0055aff0 _FreeImage_GetGreenMask function
+0x0055b140 _FreeImage_GetInfoHeader function
+0x0055b280 _FreeImage_GetWidth function
+0x0055b2b0 _FreeImage_GetHeight function
+0x0055b2e0 _FreeImage_GetBPP function
+0x0055b370 _FreeImage_GetPitch function
+0x0055b390 _FreeImage_GetColorsUsed function
+0x0055d9e0 _FreeImage_OpenMemory function 0x6d
+0x0055da50 _FreeImage_CloseMemory function 0x2b
+0x0055da80 _FreeImage_LoadFromMemory function 0x3f
+0x0055dac0 _FreeImage_GetFileTypeFromMemory function 0x36
+0x0055db00 _FreeImage_GetBits function 0x3c
+0x0055db40 _FreeImage_GetScanLine function 0x4b
+0x0055db90 _FreeImage_GetPixelColor function 0x202
+0x0055ed40 ?SetMemoryIO@@YAXPAUFreeImageIO@@@Z function
+0x00561360 _FreeImage_GetImageType function
+0x005613b0 _FreeImage_GetBlueMask function
+0x00561650 _FreeImage_GetFileTypeFromHandle function
 0x0056717c _png_set_sig_bytes function 0x2d
 0x005671a9 _png_sig_cmp function 0x67
 0x00567210 _png_zalloc function 0x47

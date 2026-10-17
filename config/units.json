@@ -663,6 +663,27 @@
       "source": "src/Tongas2/SRESULT.cpp",
       "category": "engine",
       "complete": true
+    },
+    {
+      "name": "lib/freeimage/MemoryIO",
+      "ranges": [
+        "0x0055d9e0-0x0055daff"
+      ],
+      "target": "build/target/lib/freeimage/MemoryIO.obj",
+      "source": "src/lib/freeimage/FreeImage/MemoryIO.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage",
+      "complete": true
+    },
+    {
+      "name": "lib/freeimage/PixelAccess",
+      "ranges": [
+        "0x0055db00-0x0055ddbf"
+      ],
+      "target": "build/target/lib/freeimage/PixelAccess.obj",
+      "source": "src/lib/freeimage/FreeImage/PixelAccess.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage"
     }
   ]
 }
