@@ -146,10 +146,17 @@ def add_except_list(coff: Coff) -> int:
     The exe has a plain 0 there, so the delinker can't know about it."""
     index = None
     added = 0
+    by_index = {i: rec for i, rec, _ in coff.symbols}
     for sec in coff.sections:
         if not sec["chars"] & IMAGE_SCN_CNT_CODE:
             continue
         data = sec["data"]
+        # The delinker relocates any absolute 0 to __except_list (it sits at
+        # address 0 in symbols.txt); keep that only on fs: accesses, so a
+        # deliberate write to address 0 (ODE's fastldlt.c) stays plain.
+        sec["relocs"] = [r for r in sec["relocs"]
+                         if r[1] not in by_index or coff.name(by_index[r[1]]) != "__except_list"
+                         or 0x64 in data[max(r[0] - 3, 0):r[0] - 1]]
         taken = {r[0] for r in sec["relocs"]}
         for i in range(len(data) - 5):
             if data[i] != 0x64:
