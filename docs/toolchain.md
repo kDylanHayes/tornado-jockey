@@ -52,3 +52,13 @@ Confirmed so far:
 | Code | Flags | Evidence |
 |---|---|---|
 | zlib 1.2.2 | `/O1` | `adler32` matches 100% (byte-identical `.text`) |
+| Tongas2 engine | `/O2 /GX` (the defaults) | `SRESULT` matches 100%, code and data |
+
+## Matching notes
+
+Things learned while matching engine code with `/O2`:
+
+- **Inline vs. out of line.** A small function that gets inlined in some callers and called in others (e.g. `SRESULT::GetTypeName`) was an inline member defined in the header. Making it a normal function changes register allocation in its callers: the compiler knows which registers a function defined earlier in the same file uses, but can't assume that for an inline function, because the linker may pick another file's copy.
+- **`bool` results.** `return x ? true : false;` or `x == 0 ? false : true` compile to `cmp [mem], 0` / `setne al`; `return x != 0;` adds an `xor eax, eax`.
+- **Small structs returned by value.** Whether a struct has a user-written copy constructor changes which registers copy it (`V2` has one, `V3` doesn't).
+- **Finding units.** Game classes log errors as `"CLASS::Method> Error ..."`, so string references (exported by `tools/ghidra/ExportStringRefs.java`) give a class's methods and roughly where its file starts and ends. The class's own `.rdata` strings sit together in the same order.

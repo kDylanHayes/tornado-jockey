@@ -11,6 +11,17 @@
       "category": "lib",
       "cflags": "/nologo /c /O1 /MT /W3",
       "complete": true
+    },
+    {
+      "name": "Tongas2/SRESULT",
+      "ranges": [
+        "0x004a7fb0-0x004a86b5",
+        "0x0066a9f0-0x0066adb2"
+      ],
+      "target": "build/target/Tongas2/SRESULT.obj",
+      "source": "src/Tongas2/SRESULT.cpp",
+      "category": "engine",
+      "complete": true
     }
   ]
 }
