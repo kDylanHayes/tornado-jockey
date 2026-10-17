@@ -665,6 +665,28 @@
       "complete": true
     },
     {
+      "name": "lib/freeimage/FreeImage",
+      "ranges": [
+        "0x00559e00-0x0055a13f"
+      ],
+      "target": "build/target/lib/freeimage/FreeImage.obj",
+      "source": "src/lib/freeimage/FreeImage/FreeImage.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage",
+      "complete": true
+    },
+    {
+      "name": "lib/freeimage/Plugin",
+      "ranges": [
+        "0x0055a140-0x0055af2f"
+      ],
+      "target": "build/target/lib/freeimage/Plugin.obj",
+      "source": "src/lib/freeimage/FreeImage/Plugin.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage",
+      "complete": true
+    },
+    {
       "name": "lib/freeimage/MemoryIO",
       "ranges": [
         "0x0055d9e0-0x0055daff"
