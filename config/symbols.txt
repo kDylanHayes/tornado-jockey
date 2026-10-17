@@ -5,6 +5,8 @@
 0x004026c0 ?FreeValue@SRESULT@@QAEXXZ function 0x47
 0x00402730 ??1SRESULT@@UAE@XZ function 0xb
 0x00402740 ??_GSRESULT@@UAEPAXI@Z function 0x24
+0x00402b80 ?Free@STRINGMANAGER@@QAEXAAH0@Z function
+0x00403c30 ?Reserve@STRING@@QAEXABH@Z function
 0x00404ce0 ?SetType@SRESULT@@QAEXABW4SRESULTTYPE@@@Z function 0xfc
 0x00406cc0 ?_Min@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@KAPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@PAU342@@Z function
 0x00406ce0 ?_Inc@const_iterator@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@QAEXXZ function
@@ -12,6 +14,7 @@
 0x004073b0 ?assign@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@PBDI@Z function
 0x00407a80 ??0logic_error@std@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@@Z function
 0x00407c50 ??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@PBD@Z function
+0x0040db30 ??4STRING@@QAEAAV0@ABV0@@Z function 0x65
 0x004381b0 ?_Tidy@?$deque@GV?$allocator@G@std@@@std@@IAEXXZ function
 0x0043cb20 ?SupportsICCProfiles@@YAJXZ function
 0x004494e0 ?compare@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBEHIIPBDI@Z function
@@ -30,6 +33,12 @@
 0x0046c4a9 _do_barray_io function
 0x0047e661 _adler32 function 0x119
 0x00482cf0 ?Error@LOG@@QAAXPBDZZ function 0x6e
+0x00484e20 ??4UNICODESTRING@@QAEAAV0@ABV0@@Z function
+0x004a7d00 ?UpdateHeapUsage@SYSMONITOR@@QAEXXZ function 0x90
+0x004a7d90 ??0SYSMONITOR@@QAE@XZ function 0x39
+0x004a7dd0 ??_GSYSMONITOR@@UAEPAXI@Z function 0x2a
+0x004a7e00 ?GetCpuUsage@SYSMONITOR@@QAEHXZ function 0x184
+0x004a7f90 ?Update@SYSMONITOR@@QAEXXZ function 0x1b
 0x004a7fb0 ?GetTypeName@SRESULT@@QBEPBDXZ function 0x1b
 0x004a7fd0 ?ToBool@@YA_NABH@Z function 0xb
 0x004a7fe0 ?ToBool@@YA_NABM@Z function 0x1b
@@ -49,6 +58,13 @@
 0x004a8510 ?SetValue@SRESULT@@QAEXPBG@Z function 0x7e
 0x004a8590 ?SetValue@SRESULT@@QAEXPBD@Z function 0x81
 0x004a8620 ?GetTexture@SRESULT@@QBE?AUSRTEXTURE@@ABU2@@Z function 0x96
+0x004a86c0 ?Merge@TOKENS@@QAE_NHHD@Z function 0xbd
+0x004a8780 ?AddToken@TOKENS@@QAEXPAD@Z function 0x29
+0x004a87b0 ?Split@TOKENS@@QAE_NABVSTRING@@PBD@Z function 0x69
+0x004a8820 ?Split@UNICODETOKENS@@QAE_NABVUNICODESTRING@@PBG@Z function 0x68
+0x004a8890 ?Reset@TOKENS@@QAEXXZ function 0x40
+0x004a88d0 ?Parse@TOKENS@@QAE_NAAVSTRING@@PA_N@Z function 0x3f4
+0x004a8cd0 ?Quote@TOKENS@@QAEXAAVSTRING@@@Z function 0x10b
 0x004cc8c0 ?_Max@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@KAPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@PAU342@@Z function
 0x004cc8e0 ?_Buynode@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@XZ function
 0x004cc950 ??1?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@XZ function
@@ -1272,8 +1288,17 @@
 0x005fa0a8 __ehhandler$??1TagLib@@QAE@XZ function
 0x005fa0ce __ehhandler$?instance@TagLib@@SAAAV1@XZ function
 0x006552c0 _$E2 function
+0x006560cc __imp__GetProcAddress@8 data 0x4
+0x006560d0 __imp__GetModuleHandleA@4 data 0x4
+0x00656100 __imp__DeleteFileA@4 data 0x4
+0x00656104 __imp__SetEnvironmentVariableA@8 data 0x4
+0x00656108 __imp__GetProcessHeaps@8 data 0x4
+0x0065610c __imp__HeapWalk@8 data 0x4
+0x00656210 __imp__Sleep@4 data 0x4
+0x00656890 ??_C@_00CNPNBAHC@?$AA@ data 0x1
 0x00656898 __real@00000000 data 0x4
 0x0065691c ??_7SRESULT@@6B@ data 0x4
+0x00656920 ??_C@_11LOCGONAA@?$AA?$AA@ data 0x2
 0x0065750c ??_C@_0BM@PAPJHAGI@invalid?5map?1set?$DMT?$DO?5iterator?$AA@ data
 0x00657528 ??_C@_0BE@JONHPENG@map?1set?$DMT?$DO?5too?5long?$AA@ data
 0x006595a8 __real@0000000000000000 data
@@ -1362,6 +1387,13 @@
 0x00666038 ??_C@_0BM@FFFLPBBC@invalid?5literal?1length?5code?$AA@ data
 0x0066653c ??_C@_03OFAPEBGM@?$CFs?6?$AA@ data
 0x006691d4 ??_C@_01IHBHIGKO@?0?$AA@ data
+0x0066a974 ??_7SYSMONITOR@@6B@ data 0x4
+0x0066a978 ??_C@_08EEHIEMNL@heap?4out?$AA@ data 0x9
+0x0066a984 ??_C@_0BF@PCCAIAOK@__MSVCRT_HEAP_SELECT?$AA@ data 0x15
+0x0066a99c ??_C@_0BJ@GIKAIDBA@__GLOBAL_HEAP_SELECTED?01?$AA@ data 0x19
+0x0066a9c0 __real@4059000000000000 data 0x8
+0x0066a9c8 ??_C@_05EMFAAAMC@ntdll?$AA@ data 0x6
+0x0066a9d0 ??_C@_0BJ@NDLOPGCH@NtQuerySystemInformation?$AA@ data 0x19
 0x0066a9f0 ?s_TypeNames@@3QAY0P@$$CBDA data 0xb4
 0x0066aaa4 ??_C@_0DA@KGMHJCC@SRESULT?3?3GetChar?$DO?5Error?5?9?5Wrong?5@ data
 0x0066aad4 ??_C@_0CP@NHGBBAKJ@SRESULT?3?3GetInt?$DO?5Error?5?9?5Wrong?5v@ data
@@ -1378,6 +1410,7 @@
 0x0066ad08 ??_C@_0DN@BLACEIHK@SRESULT?3?3SetValue?$DO?5Error?5?9?5unico@ data
 0x0066ad48 ??_C@_0DF@NIGFJBLF@SRESULT?3?3SetValue?$DO?5Error?5?9?5strin@ data
 0x0066ad80 ??_C@_0DD@OAIJFCJA@SRESULT?3?3GetTexture?$DO?5Error?5?9?5Wro@ data
+0x0066adb4 ??_C@_0BK@EKNCPJEH@Parse?$DO?5Error?5parsing?5?$CC?$CFs?$CC?$AA@ data 0x1a
 0x00679b3c ??_C@_03NAIKFGEJ@PNG?$AA@ data
 0x0067e3a4 ??_7CGenericFilter@@6B@ data
 0x0067e3ac ??_7CBoxFilter@@6B@ data
@@ -1776,6 +1809,9 @@
 0x006c8698 _static_bl_desc data
 0x006c8a20 __iob data
 0x006cbc80 ?g_pLog@@3PAVLOG@@A data 0x4
+0x006d2708 ?g_StringManager@@3VSTRINGMANAGER@@A data
+0x007e0ce0 ?liOldSystemTime@?1??GetCpuUsage@SYSMONITOR@@QAEHXZ@4T_LARGE_INTEGER@@A data 0x8
+0x007e0ce8 ?liOldIdleTime@?1??GetCpuUsage@SYSMONITOR@@QAEHXZ@4T_LARGE_INTEGER@@A data 0x8
 0x00a0f288 _s_format_id data
 0x00a0f28c _s_format_id data
 0x00a0f290 ?unknown_tag@?1??getTagFieldName@TagLib@@QAEPBDW4MDMODEL@2@G@Z@4PADA data
