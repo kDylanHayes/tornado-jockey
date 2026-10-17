@@ -1,0 +1,5 @@
+# Locations of constants that are not addresses; see tools/ghidra/FixReferences.java.
+0x0056d580
+0x0056d90b
+0x0056dce7
+0x0056e5f2

@@ -27,7 +27,7 @@ python3 configure.py
 
 `analyze.py` only needs to run again after `config/symbols.txt` changes a lot. `delink.py` applies `config/symbols.txt` first, so target objects use our names, e.g. `_adler32` instead of `FUN_0047e661`. It runs the delinker's relocation synthesizer on each unit's ranges and writes a COFF object to the unit's `target` path. Pass unit names to delink only those units. A log is written to `build/delink.log`.
 
-Before delinking, `FixIndexedRefs.java` re-points indexed operands such as `jmp [eax*4 + table]` at the table itself. Ghidra's constant propagation sometimes leaves the reference on `table + n*4`, and the delinker would then emit no relocation for the instruction.
+Before delinking, `FixReferences.java` corrects two kinds of bad references: indexed operands such as `jmp [eax*4 + table]` that Ghidra points at `table + n*4` (the delinker would emit no relocation), and constants that merely look like addresses (listed in `config/norefs.txt`, which `sync_symbols.py` fills in).
 
 Target objects are derived from the game, so they stay in `build/` and are never committed.
 

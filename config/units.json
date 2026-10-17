@@ -88,6 +88,160 @@
       "category": "lib",
       "cflags": "/nologo /c /O1 /MT /W3",
       "complete": true
+    },
+    {
+      "name": "lib/libpng/png",
+      "ranges": [
+        "0x0056717c-0x0056774e"
+      ],
+      "target": "build/target/lib/libpng/png.obj",
+      "source": "src/lib/libpng/png.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3 /Isrc/lib/zlib /DPNG_iTXt_SUPPORTED",
+      "complete": true
+    },
+    {
+      "name": "lib/libpng/pngset",
+      "ranges": [
+        "0x0056774f-0x0056889f"
+      ],
+      "target": "build/target/lib/libpng/pngset.obj",
+      "source": "src/lib/libpng/pngset.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3 /Isrc/lib/zlib /DPNG_iTXt_SUPPORTED",
+      "complete": true
+    },
+    {
+      "name": "lib/libpng/pngmem",
+      "ranges": [
+        "0x005688a0-0x00568a6d"
+      ],
+      "target": "build/target/lib/libpng/pngmem.obj",
+      "source": "src/lib/libpng/pngmem.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3 /Isrc/lib/zlib /DPNG_iTXt_SUPPORTED",
+      "complete": true
+    },
+    {
+      "name": "lib/libpng/pngwrite",
+      "ranges": [
+        "0x00568a6e-0x00569825"
+      ],
+      "target": "build/target/lib/libpng/pngwrite.obj",
+      "source": "src/lib/libpng/pngwrite.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3 /Isrc/lib/zlib /DPNG_iTXt_SUPPORTED",
+      "complete": true
+    },
+    {
+      "name": "lib/libpng/pngtrans",
+      "ranges": [
+        "0x00569826-0x00569b02"
+      ],
+      "target": "build/target/lib/libpng/pngtrans.obj",
+      "source": "src/lib/libpng/pngtrans.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3 /Isrc/lib/zlib /DPNG_iTXt_SUPPORTED",
+      "complete": true
+    },
+    {
+      "name": "lib/libpng/pngwio",
+      "ranges": [
+        "0x00569b03-0x00569bde"
+      ],
+      "target": "build/target/lib/libpng/pngwio.obj",
+      "source": "src/lib/libpng/pngwio.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3 /Isrc/lib/zlib /DPNG_iTXt_SUPPORTED",
+      "complete": true
+    },
+    {
+      "name": "lib/libpng/pngget",
+      "ranges": [
+        "0x00569bdf-0x00569ec4"
+      ],
+      "target": "build/target/lib/libpng/pngget.obj",
+      "source": "src/lib/libpng/pngget.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3 /Isrc/lib/zlib /DPNG_iTXt_SUPPORTED",
+      "complete": true
+    },
+    {
+      "name": "lib/libpng/pngread",
+      "ranges": [
+        "0x00569ec5-0x0056b0fe"
+      ],
+      "target": "build/target/lib/libpng/pngread.obj",
+      "source": "src/lib/libpng/pngread.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3 /Isrc/lib/zlib /DPNG_iTXt_SUPPORTED",
+      "complete": true
+    },
+    {
+      "name": "lib/libpng/pngrtran",
+      "ranges": [
+        "0x0056b0ff-0x0056e953"
+      ],
+      "target": "build/target/lib/libpng/pngrtran.obj",
+      "source": "src/lib/libpng/pngrtran.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3 /Isrc/lib/zlib /DPNG_iTXt_SUPPORTED",
+      "complete": true
+    },
+    {
+      "name": "lib/libpng/pngrio",
+      "ranges": [
+        "0x0056e954-0x0056e9f6"
+      ],
+      "target": "build/target/lib/libpng/pngrio.obj",
+      "source": "src/lib/libpng/pngrio.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3 /Isrc/lib/zlib /DPNG_iTXt_SUPPORTED",
+      "complete": true
+    },
+    {
+      "name": "lib/libpng/pngerror",
+      "ranges": [
+        "0x0056e9f7-0x0056ec7e"
+      ],
+      "target": "build/target/lib/libpng/pngerror.obj",
+      "source": "src/lib/libpng/pngerror.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3 /Isrc/lib/zlib /DPNG_iTXt_SUPPORTED",
+      "complete": true
+    },
+    {
+      "name": "lib/libpng/pngwutil",
+      "ranges": [
+        "0x0056ec7f-0x00571596"
+      ],
+      "target": "build/target/lib/libpng/pngwutil.obj",
+      "source": "src/lib/libpng/pngwutil.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3 /Isrc/lib/zlib /DPNG_iTXt_SUPPORTED",
+      "complete": true
+    },
+    {
+      "name": "lib/libpng/pngwtran",
+      "ranges": [
+        "0x00571597-0x00571ce9"
+      ],
+      "target": "build/target/lib/libpng/pngwtran.obj",
+      "source": "src/lib/libpng/pngwtran.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3 /Isrc/lib/zlib /DPNG_iTXt_SUPPORTED",
+      "complete": true
+    },
+    {
+      "name": "lib/libpng/pngrutil",
+      "ranges": [
+        "0x00571cea-0x00574aa4"
+      ],
+      "target": "build/target/lib/libpng/pngrutil.obj",
+      "source": "src/lib/libpng/pngrutil.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O1 /MT /W3 /Isrc/lib/zlib /DPNG_iTXt_SUPPORTED",
+      "complete": true
     }
   ]
 }

@@ -96,14 +96,18 @@ def main() -> int:
     for path in args.objects:
         obj = Coff(path)
         limits = ranges.get(path.resolve())
+        # Functions with identical code (e.g. png_write_oFFs and
+        # png_write_pHYs) all hit the same addresses; they're named in
+        # source order when there are as many hits as functions.
+        groups = {}
         for index, sec in enumerate(obj.sections):
             if not sec["name"].startswith(".text") or sec["size"] == 0:
                 continue
             if args.functions:
                 items = list(obj.functions(index))
             else:
-                names = [name for name, _, _ in obj.functions(index)]
-                items = [(names[0] if len(names) == 1 else f"{sec['name']} ({len(names)} functions)", 0, sec["size"])]
+                funcs = [name for name, _, _ in obj.functions(index)]
+                items = [(funcs[0] if len(funcs) == 1 else f"{sec['name']} ({len(funcs)} functions)", 0, sec["size"])]
             for name, start, end in items:
                 pat = obj.pattern(index, start, end)
                 hits = [m.start() for m in re.finditer(pat, exe, re.DOTALL)]
@@ -111,8 +115,12 @@ def main() -> int:
                 more = f" (+{len(hits) - 4} more)" if len(hits) > 4 else ""
                 print(f"{path.stem:12s} {name:40s} size 0x{end - start:<5x} {where}{more}")
                 inside = [IMAGE_BASE + h for h in hits if any(a <= IMAGE_BASE + h <= b for a, b in limits or [])]
-                if args.functions and len(inside) == 1:
-                    names[inside[0]] = f"0x{inside[0]:08x} {name} function 0x{end - start:x}"
+                if args.functions and inside:
+                    groups.setdefault(tuple(inside), []).append(f"{name} function 0x{end - start:x}")
+        for inside, entries in groups.items():
+            if len(inside) == len(entries):
+                for addr, entry in zip(inside, entries):
+                    names[addr] = f"0x{addr:08x} {entry}"
 
     if args.write:
         path = ROOT / "config" / "symbols.txt"

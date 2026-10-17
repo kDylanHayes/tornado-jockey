@@ -52,3 +52,4 @@ Confirmed so far:
 | Code | Flags | Evidence |
 |---|---|---|
 | zlib 1.2.2 | `/O1` | all 8 linked objects (`adler32`, `crc32`, `deflate`, `inflate`, `inffast`, `inftrees`, `trees`, `zutil`) match 100% |
+| libpng 1.2.8 (FreeImage's copy) | `/O1 /DPNG_iTXt_SUPPORTED` | all 14 linked objects match 100%. iTXt support changes `sizeof(png_text)` and adds `png_handle_iTXt`/`png_write_iTXt` |

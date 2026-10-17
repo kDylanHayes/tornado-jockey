@@ -43,23 +43,36 @@ def main() -> int:
     for unit in selected:
         target = ROOT / unit["target"]
         target.parent.mkdir(parents=True, exist_ok=True)
+        target.unlink(missing_ok=True)  # so a failed export can't leave a stale object
         for r in unit["ranges"]:
             script_args += ["/include-range", r]
         script_args += ["/export", str(target)]
+
+    # The COFF exporter refuses an object with two symbols of the same name
+    # and doesn't say which, so catch that here.
+    seen = {}
+    for line in (ROOT / "config" / "symbols.txt").read_text().splitlines():
+        parts = line.split()
+        if len(parts) >= 2 and not line.startswith("#") and "::" not in parts[1]:
+            seen.setdefault(parts[1], []).append(parts[0])
+    for name, addrs in seen.items():
+        if len(addrs) > 1:
+            print(f"warning: {name} is named at {', '.join(addrs)}; delinking fails if two land in one unit",
+                  file=sys.stderr)
 
     cmd = [
         str(analyze_headless(args.ghidra)), str(args.project), "TornadoJockey",
         "-process", "Tornado.exe", "-noanalysis", "-readOnly",
         "-scriptPath", str(ROOT / "tools" / "ghidra"),
         "-preScript", "ApplySymbols.java", str(ROOT / "config" / "symbols.txt"),
-        "-preScript", "FixIndexedRefs.java",
+        "-preScript", "FixReferences.java", str(ROOT / "config" / "norefs.txt"),
         "-postScript", "DelinkProgram.java", *script_args,
     ]
     result = subprocess.run(cmd, capture_output=True, text=True)
     log = ROOT / "build" / "delink.log"
     log.write_text(result.stdout + result.stderr)
     missing = [u["name"] for u in selected if not (ROOT / u["target"]).is_file()]
-    if result.returncode != 0 or missing:
+    if result.returncode != 0 or missing or "SCRIPT ERROR" in result.stdout + result.stderr:
         print(f"error: delinking failed ({', '.join(missing) or 'see log'}); log in {log.relative_to(ROOT)}",
               file=sys.stderr)
         return 1

@@ -3,6 +3,10 @@
 # Names use the original MSVC decorated name when known. Keep sorted by address.
 0x0045446b operator_new function 0x24
 0x0045450f operator_new function 0x5
+0x00468469 _png_do_swap function
+0x00468496 _png_do_bgr function
+0x00468906 _png_do_chop function
+0x00468b82 _png_do_gamma function
 0x0047e661 _adler32 function 0x119
 0x00559cc6 FMOD.DLL::_FSOUND_GetError@0 function 0x6
 0x00559ccc FMOD.DLL::_FSOUND_StopSound@4 function 0x6
@@ -24,6 +28,200 @@
 0x00559d2c FMOD.DLL::_FSOUND_Stream_Play@8 function 0x6
 0x00559d32 FMOD.DLL::_FSOUND_Sample_SetMode@8 function 0x6
 0x00559d38 FMOD.DLL::_FSOUND_Stream_SetMode@8 function 0x6
+0x0056717c _png_set_sig_bytes function 0x2d
+0x005671a9 _png_sig_cmp function 0x67
+0x00567210 _png_zalloc function 0x47
+0x00567257 _png_zfree function 0x5
+0x0056725c _png_reset_crc function 0x18
+0x00567274 _png_calculate_crc function 0x3f
+0x005672b3 _png_info_init_3 function 0x33
+0x005672e6 _png_free_data function 0x362
+0x00567648 _png_info_destroy function 0x51
+0x00567699 _png_get_io_ptr function 0x8
+0x005676a1 _png_handle_as_unknown function 0x57
+0x005676f8 _png_init_mmx_flags function 0x19
+0x00567711 _png_create_info_struct function 0x3e
+0x0056774f _png_set_bKGD function 0x28
+0x00567777 _png_set_cHRM function 0x230
+0x005679a7 _png_set_cHRM_fixed function 0x1cf
+0x00567b76 _png_set_gAMA function 0x80
+0x00567bf6 _png_set_gAMA_fixed function 0x76
+0x00567c6c _png_set_hIST function 0x90
+0x00567cfc _png_set_IHDR function 0x209
+0x00567f05 _png_set_oFFs function 0x28
+0x00567f2d _png_set_pCAL function 0x159
+0x00568086 _png_set_sCAL function 0x31
+0x005680b7 _png_set_pHYs function 0x28
+0x005680df _png_set_PLTE function 0x79
+0x00568158 _png_set_sBIT function 0x28
+0x00568180 _png_set_sRGB function 0x1b
+0x0056819b _png_set_sRGB_gAMA_and_cHRM function 0xd5
+0x00568270 _png_set_iCCP function 0xd8
+0x00568348 _png_set_text_2 function 0x249
+0x00568591 _png_set_tIME function 0x34
+0x005685c5 _png_set_tRNS function 0x89
+0x0056864e _png_set_sPLT function 0x103
+0x00568751 _png_set_unknown_chunks function 0x123
+0x00568874 _png_set_text function 0x2c
+0x005688a0 _png_create_struct_2 function 0x5f
+0x005688ff _png_destroy_struct_2 function 0x33
+0x00568932 _png_malloc_default function 0x1c
+0x0056894e _png_free_default function 0x19
+0x00568967 _png_memcpy_check function 0x15
+0x0056897c _png_memset_check function 0x15
+0x00568991 _png_set_mem_fn function 0x23
+0x005689b4 _png_create_struct function 0x11
+0x005689c5 _png_destroy_struct function 0xd
+0x005689d2 _png_malloc function 0x4d
+0x00568a1f _png_free function 0x2a
+0x00568a49 _png_malloc_warn function 0x25
+0x00568a6e _png_write_info_before_PLTE function 0x1a1
+0x00568c0f _png_write_info function 0x2b5
+0x00568ec4 _png_write_end function 0x159
+0x0056901d _png_write_row function 0x1e5
+0x00569202 _png_write_flush function 0xc4
+0x005692c6 _png_write_destroy function 0x112
+0x005693d8 _png_set_filter_heuristics function 0x214
+0x005695ec _png_create_write_struct_2 function 0x173
+0x0056975f _png_destroy_write_struct function 0xa9
+0x00569808 _png_create_write_struct function 0x1e
+0x00569826 _png_set_bgr function 0x9
+0x0056982f _png_set_swap function 0x12
+0x00569841 _png_set_packing function 0x19
+0x0056985a _png_set_interlace_handling function 0x19
+0x00569873 _png_set_invert_alpha function 0x9
+0x0056987c _png_set_invert_mono function 0x9
+0x00569885 _png_do_invert function 0x67
+0x005698ec _png_do_packswap function 0x4d
+0x00569939 _png_do_strip_filler function 0x1ca
+0x00569b03 _png_write_data function 0x28
+0x00569b2b _png_default_write_data function 0x2f
+0x00569b5a _png_flush function 0x13
+0x00569b6d _png_default_flush function 0x13
+0x00569b80 _png_set_write_fn function 0x5f
+0x00569bdf _png_get_valid function 0x1a
+0x00569bf9 _png_get_color_type function 0x16
+0x00569c0f _png_get_bKGD function 0x29
+0x00569c38 _png_get_gAMA function 0x29
+0x00569c61 _png_get_iCCP function 0x5f
+0x00569cc0 _png_get_IHDR function 0x110
+0x00569dd0 _png_get_pHYs function 0x4c
+0x00569e1c _png_get_text function 0x42
+0x00569e5e _png_get_tRNS function 0x67
+0x00569ec5 _png_create_read_struct_2 function 0x1e6
+0x0056a0ab _png_read_info function 0x4c1
+0x0056a56c _png_read_update_info function 0x2e
+0x0056a59a _png_read_row function 0x409
+0x0056a9a3 _png_read_image function 0x4d
+0x0056a9f0 _png_read_end function 0x404
+0x0056adf4 _png_read_destroy function 0x232
+0x0056b026 _png_create_read_struct function 0x1e
+0x0056b044 _png_destroy_read_struct function 0xbb
+0x0056b0ff _png_set_strip_16 function 0x9
+0x0056b108 _png_set_gamma function 0x53
+0x0056b15b _png_set_tRNS_to_alpha function 0x9
+0x0056b164 _png_set_gray_to_rgb function 0x9
+0x0056b16d _png_read_transform_info function 0x16e
+0x0056b2db _png_do_unpack function 0x110
+0x0056b3eb _png_do_unshift function 0x17a
+0x0056b565 _png_do_read_swap_alpha function 0xf2
+0x0056b657 _png_do_read_invert_alpha function 0xaa
+0x0056b701 _png_do_read_filler function 0x22e
+0x0056b92f _png_do_gray_to_rgb function 0x13e
+0x0056ba6d _png_do_rgb_to_gray function 0x5bb
+0x0056c028 _png_do_background function 0xe08
+0x0056ce30 _png_do_expand_palette function 0x208
+0x0056d038 _png_do_expand function 0x36b
+0x0056d3a3 _png_do_dither function 0x11e
+0x0056d4c1 _png_build_gamma_table function 0x610
+0x0056dad1 _png_do_read_intrapixel function 0xc2
+0x0056db93 _png_init_read_transformations function 0x9b7
+0x0056e54a _png_do_read_transformations function 0x40a
+0x0056e954 _png_read_data function 0x28
+0x0056e97c _png_default_read_data function 0x2f
+0x0056e9ab _png_set_read_fn function 0x4c
+0x0056e9f7 _png_format_buffer function 0x8b
+0x0056ea82 _png_default_error function 0x78
+0x0056eafa _png_set_error_fn function 0x1a
+0x0056eb14 _png_error function 0x87
+0x0056eb9b _png_warning function 0x9c
+0x0056ec37 _png_chunk_error function 0x23
+0x0056ec5a _png_chunk_warning function 0x25
+0x0056ec7f _png_save_uint_32 function 0x23
+0x0056eca2 _png_save_int_32 function 0x23
+0x0056ecc5 _png_write_chunk_start function 0x42
+0x0056ed07 _png_write_chunk_data function 0x28
+0x0056ed2f _png_write_chunk_end function 0x28
+0x0056ed57 _png_write_sig function 0x54
+0x0056edab _png_text_compress function 0x239
+0x0056efe4 _png_write_compressed_data_out function 0x95
+0x0056f079 _png_write_PLTE function 0xa7
+0x0056f120 _png_write_hIST function 0x70
+0x0056f190 _png_check_keyword function 0x180
+0x0056f310 _png_write_tEXt function 0x90
+0x0056f3a0 _png_write_zTXt function 0xce
+0x0056f46e _png_write_iTXt function 0x154
+0x0056f5c2 _png_write_pCAL function 0x147
+0x0056f709 _png_write_sCAL function 0xa2
+0x0056f7ab _png_write_start_row function 0x170
+0x0056f91b _png_do_write_interlace function 0x23b
+0x0056fb56 _png_write_chunk function 0x2c
+0x0056fb82 _png_write_IHDR function 0x302
+0x0056fe84 _png_write_IDAT function 0xfd
+0x0056ff81 _png_write_IEND function 0x1d
+0x0056ff9e _png_write_gAMA function 0x39
+0x0056ffd7 _png_write_sRGB function 0x37
+0x0057000e _png_write_iCCP function 0xce
+0x005700dc _png_write_sPLT function 0x156
+0x00570232 _png_write_sBIT function 0xa8
+0x005702da _png_write_cHRM function 0x2b9
+0x00570593 _png_write_tRNS function 0x103
+0x00570696 _png_write_bKGD function 0xfb
+0x00570791 _png_write_oFFs function 0x52
+0x005707e3 _png_write_pHYs function 0x52
+0x00570835 _png_write_tIME function 0x84
+0x005708b9 _png_write_finish_row function 0x198
+0x00570a51 _png_write_filtered_row function 0xbd
+0x00570b0e _png_write_find_filter function 0xa89
+0x00571597 _png_do_pack function 0x13d
+0x005716d4 _png_do_shift function 0x235
+0x00571909 _png_do_write_swap_alpha function 0xf2
+0x005719fb _png_do_write_invert_alpha function 0xeb
+0x00571ae6 _png_do_write_intrapixel function 0xc2
+0x00571ba8 _png_do_write_transformations function 0x142
+0x00571cea _png_get_int_32 function 0x23
+0x00571d0d _png_crc_read function 0x1a
+0x00571d27 _png_crc_error function 0x5e
+0x00571d85 _png_decompress_chunk function 0x31c
+0x005720a1 _png_check_chunk_name function 0x62
+0x00572103 _png_combine_row function 0x285
+0x00572388 _png_do_read_interlace function 0x3a3
+0x0057272b _png_read_filter_row function 0x179
+0x005728a4 _png_read_start_row function 0x267
+0x00572b0b _png_get_uint_31 function 0x29
+0x00572b34 _png_crc_finish function 0x8c
+0x00572bc0 _png_handle_IHDR function 0x139
+0x00572cf9 _png_handle_PLTE function 0x14b
+0x00572e44 _png_handle_IEND function 0x43
+0x00572e87 _png_handle_gAMA function 0x12d
+0x00572fb4 _png_handle_sBIT function 0x119
+0x005730cd _png_handle_cHRM function 0x3d8
+0x005734a5 _png_handle_sRGB function 0x1ce
+0x00573673 _png_handle_iCCP function 0x16b
+0x005737de _png_handle_sPLT function 0x1f2
+0x005739d0 _png_handle_tRNS function 0x1bf
+0x00573b8f _png_handle_bKGD function 0x188
+0x00573d17 _png_handle_hIST function 0xfb
+0x00573e12 _png_handle_pHYs function 0xa1
+0x00573eb3 _png_handle_oFFs function 0xa1
+0x00573f54 _png_handle_pCAL function 0x1ef
+0x00574143 _png_handle_sCAL function 0x158
+0x0057429b _png_handle_tIME function 0xbc
+0x00574357 _png_handle_tEXt function 0x10b
+0x00574462 _png_handle_zTXt function 0x153
+0x005745b5 _png_handle_iTXt function 0x190
+0x00574745 _png_handle_unknown function 0x10f
+0x00574854 _png_read_finish_row function 0x251
 0x00579047 _zcfree function
 0x00582971 _crc32_little function 0x24d
 0x00582bbe _crc32 function 0x1a
@@ -105,6 +303,7 @@
 0x005c0231 _wcsncpy function 0x3d
 0x005c02dd _free function 0x38
 0x005c0315 __vsnprintf function 0x56
+0x005c036c __ftol2 function
 0x005c040e __heap_alloc function 0x46
 0x005c0454 __nh_malloc function 0x2c
 0x005c0480 _malloc function 0x12
@@ -202,6 +401,7 @@
 0x005c4510 _strncmp function 0x39
 0x005c4550 _memcmp function 0xb8
 0x005c4610 _memset function 0x60
+0x005c4670 _strcpy function
 0x005c4768 _abort function 0x18
 0x005c4780 _fabs function 0xb1
 0x005c491c report_failure function 0x29
@@ -493,16 +693,316 @@
 0x005e69ae KERNEL32.DLL::RtlUnwind function 0x6
 0x005e6ae0 shortsort function 0x6a
 0x005e6b50 _qsort function 0x283
+0x006595a8 __real@0000000000000000 data
+0x00659768 __real@3fd51eb860000000 data
+0x0065b110 __real@3fe0000000000000 data
+0x0065e8a0 __real@3ff0000000000000 data
+0x00663218 __real@406fe00000000000 data
+0x00663220 __real@3f70101010101010 data
+0x00663228 __real@3eb0c6f7a0b5ed8d data
+0x00663240 __real@3727c5ac data
+0x006649bc ??_C@_0BD@LBMCPKOE@zlib?5version?5error?$AA@ data
+0x006649d0 ??_C@_0BC@MCPIPOGP@zlib?5memory?5error?$AA@ data
+0x006649e4 ??_C@_0BD@CPDHIJBA@Unknown?5zlib?5error?$AA@ data
+0x00664a00 ??_C@_0DH@LDFDLODO@Incompatible?5libpng?5version?5in?5a@ data
+0x00664a38 ??_C@_0BJ@LAKDHAPN@Missing?5PLTE?5before?5IDAT?$AA@ data
+0x00664a54 ??_C@_0BJ@FFGICIDJ@Missing?5IHDR?5before?5IDAT?$AA@ data
+0x00664a70 ??_C@_0CH@NMANOLCN@PNG?5file?5corrupted?5by?5ASCII?5conv@ data
+0x00664a98 ??_C@_0P@KIMIGLKH@Not?5a?5PNG?5file?$AA@ data
+0x00664aa8 ??_C@_0BG@OKGHHCLP@Extra?5compressed?5data?$AA@ data
+0x00664ac0 ??_C@_0BE@JMOGBNJB@Decompression?5error?$AA@ data
+0x00664ad4 ??_C@_0BG@EIEOOJHA@Not?5enough?5image?5data?$AA@ data
+0x00664aec ??_C@_0CB@KCPNIGFM@Invalid?5attempt?5to?5read?5row?5data@ data
+0x00664b10 ??_C@_0BG@JAHFDNP@Too?5many?5IDAT?8s?5found?$AA@ data
+0x00664b28 ??_C@_0DC@MHGEAIEM@Width?5too?5large?5for?5libpng?5to?5pr@ data
+0x00664b60 __real@3fa999999999999a data
+0x00664b68 __real@40efffe000000000 data
+0x00664b70 __real@3ef0001000100010 data
+0x00664b78 __real@3f70000000000000 data
+0x00664b80 __real@41f0000000000000 data
+0x00664c00 __real@3fdd1758e0000000 data
+0x00664c24 ??_C@_0DC@EOBOCMJO@same?5structure?4?5?5Resetting?5write@ data
+0x00664c58 ??_C@_0EB@NJKELLKM@It?8s?5an?5error?5to?5set?5both?5read_d@ data
 0x00665210 ??_C@_0BF@MEIGEHBE@incorrect?5data?5check?$AA@ data
 0x00665228 ??_C@_0BH@LIBMMIGA@incorrect?5header?5check?$AA@ data
 0x00665240 ??_C@_0BE@EMOGCLGO@invalid?5window?5size?$AA@ data
 0x00665254 ??_C@_0BL@IHKGDAEE@unknown?5compression?5method?$AA@ data
+0x006652f8 ??_C@_0BD@GFBMLKLH@invalid?5chunk?5type?$AA@ data
+0x0066530c ??_C@_0CC@FECADCN@Ignoring?5bad?5adaptive?5filter?5typ@ data
+0x00665330 ??_C@_09BJGMGMHA@CRC?5error?$AA@ data
+0x0066533c ??_C@_0BO@KOOEGEDO@Unknown?5filter?5method?5in?5IHDR?$AA@ data
+0x0066535c ??_C@_0CD@DDOOCEDP@Unknown?5compression?5method?5in?5IH@ data
+0x00665380 ??_C@_0CB@EMHJMLOA@Unknown?5interlace?5method?5in?5IHDR@ data
+0x006653a4 ??_C@_0DB@FGMBGHOJ@Invalid?5color?5type?1bit?5depth?5com@ data
+0x006653d8 ??_C@_0BL@KPIFPGMP@Invalid?5color?5type?5in?5IHDR?$AA@ data
+0x006653f4 ??_C@_0BK@OAKOLNFJ@Invalid?5bit?5depth?5in?5IHDR?$AA@ data
+0x00665410 ??_C@_0BL@PKEOJJBA@Invalid?5image?5size?5in?5IHDR?$AA@ data
+0x0066542c ??_C@_0BD@CLODLFAN@Invalid?5IHDR?5chunk?$AA@ data
+0x00665440 ??_C@_0BC@KBAKFAAH@Out?5of?5place?5IHDR?$AA@ data
+0x00665454 ??_C@_0CH@GNNEJFAH@Truncating?5incorrect?5tRNS?5chunk?5@ data
+0x0066547c ??_C@_0BG@HHEHMEJK@Invalid?5palette?5chunk?$AA@ data
+0x00665494 ??_C@_0BF@PMKDIIMG@Duplicate?5PLTE?5chunk?$AA@ data
+0x006654ac ??_C@_0BI@GEKPHPN@Invalid?5PLTE?5after?5IDAT?$AA@ data
+0x006654c4 ??_C@_0BJ@LEBILHKO@Missing?5IHDR?5before?5PLTE?$AA@ data
+0x006654e0 ??_C@_0BM@PFCLLCBO@Incorrect?5IEND?5chunk?5length?$AA@ data
+0x006654fc ??_C@_0BB@BLPFHNNN@No?5image?5in?5file?$AA@ data
+0x00665510 ??_C@_0DI@KINMKNNO@Ignoring?5incorrect?5gAMA?5value?5wh@ data
+0x00665570 ??_C@_0BI@JEEHFLME@Out?5of?5place?5gAMA?5chunk?$AA@ data
+0x00665588 ??_C@_0BI@POPIJBNN@Invalid?5gAMA?5after?5IDAT?$AA@ data
+0x006655a0 ??_C@_0BM@NIAHDFBB@Incorrect?5gAMA?5chunk?5length?$AA@ data
+0x006655bc ??_C@_0BJ@CCOIFGBO@Missing?5IHDR?5before?5gAMA?$AA@ data
+0x006655f0 ??_C@_0BF@EFDCKHOG@Duplicate?5sRGB?5chunk?$AA@ data
+0x00665608 ??_C@_0BI@FNFAFLBL@Out?5of?5place?5sRGB?5chunk?$AA@ data
+0x00665620 ??_C@_0BI@PGAMKAKH@Invalid?5sRGB?5after?5IDAT?$AA@ data
+0x00665638 ??_C@_0BM@FMAJKMKD@Incorrect?5sRGB?5chunk?5length?$AA@ data
+0x00665654 ??_C@_0BJ@NDJOEJDI@Missing?5IHDR?5before?5sRGB?$AA@ data
+0x00665670 ??_C@_0CK@JMGMOHJA@tRNS?5chunk?5not?5allowed?5with?5alph@ data
+0x0066569c ??_C@_0BM@JNMFOMLO@Incorrect?5tRNS?5chunk?5length?$AA@ data
+0x006656b8 ??_C@_0BF@HALLDFIL@Duplicate?5tRNS?5chunk?$AA@ data
+0x006656d0 ??_C@_0BI@MMDCNIMN@Invalid?5tRNS?5after?5IDAT?$AA@ data
+0x006656e8 ??_C@_0BH@JJNMONHM@Zero?5length?5tRNS?5chunk?$AA@ data
+0x00665700 ??_C@_0BJ@NIHNNFHD@Missing?5PLTE?5before?5tRNS?$AA@ data
+0x0066571c ??_C@_0BJ@DNLGINLH@Missing?5IHDR?5before?5tRNS?$AA@ data
+0x00665738 ??_C@_0BH@OMJPKJPP@unknown?5critical?5chunk?$AA@ data
+0x00665750 ??_C@_0BH@KJLLHDND@Extra?5compression?5data?$AA@ data
+0x00665768 ??_C@_0BE@JLEKBIKH@Decompression?5Error?$AA@ data
 0x00665f14 ??_C@_0BK@BMMPFBBH@invalid?5bit?5length?5repeat?$AA@ data
 0x00665f30 ??_C@_0CE@GMIGFPBB@too?5many?5length?5or?5distance?5symb@ data
 0x00665f54 ??_C@_0BN@LGAADGOK@invalid?5stored?5block?5lengths?$AA@ data
 0x00665f74 ??_C@_0BD@PJCBIDD@invalid?5block?5type?$AA@ data
 0x00666020 ??_C@_0BG@LBKINIKP@invalid?5distance?5code?$AA@ data
 0x00666038 ??_C@_0BM@FFFLPBBC@invalid?5literal?1length?5code?$AA@ data
+0x0067e3e0 __real@4020000000000000 data
+0x00680450 _png_libpng_ver data
+0x0068046c _png_IHDR data
+0x00680474 _png_IDAT data
+0x0068047c _png_IEND data
+0x00680484 _png_PLTE data
+0x0068048c _png_bKGD data
+0x00680494 _png_cHRM data
+0x0068049c _png_gAMA data
+0x006804a4 _png_hIST data
+0x006804ac _png_iCCP data
+0x006804b4 _png_iTXt data
+0x006804bc _png_oFFs data
+0x006804c4 _png_pCAL data
+0x006804cc _png_sCAL data
+0x006804d4 _png_pHYs data
+0x006804dc _png_sBIT data
+0x006804e4 _png_sPLT data
+0x006804ec _png_sRGB data
+0x006804f4 _png_tEXt data
+0x006804fc _png_tIME data
+0x00680504 _png_tRNS data
+0x0068050c _png_zTXt data
+0x00680514 _png_pass_start data
+0x00680530 _png_pass_inc data
+0x0068054c _png_pass_ystart data
+0x00680568 _png_pass_yinc data
+0x00680584 _png_pass_mask data
+0x006805a0 _png_pass_dsp_mask data
+0x006805ec ??_C@_0CD@PGGPKBFM@Potential?5overflow?5in?5png_zalloc@ data
+0x00680610 ??_C@_0DE@IIKHIEFN@Ignoring?5attempt?5to?5set?5negative@ data
+0x00680644 ??_C@_0DO@EEGLKLJK@Ignoring?5attempt?5to?5set?5chromati@ data
+0x00680688 __real@40f86a0000000000 data
+0x00680690 __real@40d4f8b51eb851ec data
+0x00680698 __real@3ee4f8b588e368f1 data
+0x006806a0 __real@41dfffffffc00000 data
+0x006806b8 ??_C@_0BL@OOPLOBFJ@Limiting?5gamma?5to?521474?483?$AA@ data
+0x006806d4 ??_C@_0BP@BJIADBMD@Setting?5negative?5gamma?5to?5zero?$AA@ data
+0x006806f4 ??_C@_0CJ@HIIPIHBM@Insufficient?5memory?5for?5hIST?5chu@ data
+0x00680720 ??_C@_0CJ@MEBJBBDP@Palette?5size?50?0?5hIST?5allocation?5@ data
+0x0068074c ??_C@_0BO@PAJOKPHG@Invalid?5filter?5method?5in?5IHDR?$AA@ data
+0x0068076c ??_C@_0DC@MJMOEJ@MNG?5features?5are?5not?5allowed?5in?5@ data
+0x006807a0 ??_C@_0DA@KJHOLOOI@Width?5is?5too?5large?5for?5libpng?5to@ data
+0x006807d0 ??_C@_0CH@MBJMGPKM@image?5size?5exceeds?5user?5limits?5i@ data
+0x006807f8 ??_C@_0CG@OEFPMCG@Image?5width?5or?5height?5is?5zero?5in@ data
+0x00680820 ??_C@_0CI@BJJAJFBL@Insufficient?5memory?5for?5pCAL?5par@ data
+0x00680848 ??_C@_0CF@FNBJPHKN@Insufficient?5memory?5for?5pCAL?5par@ data
+0x00680870 ??_C@_0CE@GHAOJDBK@Insufficient?5memory?5for?5pCAL?5uni@ data
+0x00680894 ??_C@_0CG@JFEJBACA@Insufficient?5memory?5for?5pCAL?5pur@ data
+0x006808c0 __real@3fd40346e0000000 data
+0x006808c8 __real@3fd50e5600000000 data
+0x006808d0 __real@3fe47ae140000000 data
+0x006808d8 __real@3fd3333340000000 data
+0x006808e0 __real@3fe3333340000000 data
+0x006808e8 __real@3fc3333340000000 data
+0x006808f0 __real@3faeb851e0000000 data
+0x00680928 ??_C@_0CL@FFBJCBGI@Insufficient?5memory?5to?5process?5i@ data
+0x00680954 ??_C@_0BN@MLELJANO@No?5memory?5for?5sPLT?5palettes?4?$AA@ data
+0x00680974 ??_C@_0CI@ICGKPKMD@Out?5of?5memory?5processing?5unknown@ data
+0x0068099c ??_C@_0CO@KHAGOEON@Out?5of?5memory?5while?5processing?5u@ data
+0x006809cc ??_C@_0CC@LLCCFJFC@Insufficient?5memory?5to?5store?5tex@ data
+0x006809f0 ??_C@_0P@PFFMKGBN@Out?5of?5Memory?$CB?$AA@ data
+0x00680a00 ??_C@_0CM@ECEDMABC@Valid?5palette?5required?5for?5palet@ data
+0x00680a2c ??_C@_0BL@LMBFPIMK@No?5IDATs?5written?5into?5file?$AA@ data
+0x00680a48 ??_C@_0DG@PIMMNKNE@png_write_info?5was?5never?5called?5@ data
+0x00680a80 ??_C@_0L@KKACNLAH@zlib?5error?$AA@ data
+0x00680a90 __real@4070000000000000 data
+0x00680ab8 ??_C@_0DG@CCNLMKFB@Application?5?5is?5?5running?5with?5pn@ data
+0x00680af0 ??_C@_0DG@OGOEMJOC@Application?5was?5compiled?5with?5pn@ data
+0x00680b28 ??_C@_0BM@HGGPCIDB@Call?5to?5NULL?5write?5function?$AA@ data
+0x00680b44 ??_C@_0M@POLPJMAP@Write?5Error?$AA@ data
+0x00680b50 ??_C@_0DF@KDLDDAHD@the?5same?5structure?4?5?5Resetting?5r@ data
+0x00680b88 ??_C@_0DI@HLGELEHE@Attempted?5to?5set?5both?5read_data_@ data
+0x00680bc0 ??_C@_0BF@IBPIFLEG@Invalid?5image?5height?$AA@ data
+0x00680bd8 ??_C@_0BE@MKFPKGEK@Invalid?5image?5width?$AA@ data
+0x00680bec ??_C@_0BD@JPMLPKHD@Invalid?5color?5type?$AA@ data
+0x00680c00 ??_C@_0BC@IIDONEMJ@Invalid?5bit?5depth?$AA@ data
+0x00680c14 ??_C@_05HKGLBEIA@1?42?42?$AA@ data
+0x00680c20 ??_C@_0EH@CHENFKEM@Ignoring?5extra?5png_read_update_i@ data
+0x00680c68 ??_C@_0CH@DAMIMNHG@png_do_rgb_to_gray?5found?5nongray@ data
+0x00680c90 ??_C@_0CF@HEFPFJHN@NULL?5row?5buffer?5for?5row?5?$CFld?0?5pas@ data
+0x00680cb8 ??_C@_0L@BAFDDAPG@Read?5Error?$AA@ data
+0x00680cc4 ??_C@_0BC@MFANGAPN@libpng?5error?3?5?$CFs?6?$AA@ data
+0x00680ce8 ??_C@_0BN@HLDBDDID@libpng?5error?3?5?$CFs?0?5offset?$DN?$CFd?6?$AA@ data
+0x00680d08 ??_C@_0BJ@LPAEKCLO@libpng?5error?5no?4?5?$CFs?3?5?$CFs?6?$AA@ data
+0x00680d24 ??_C@_0BE@LNAJCNP@libpng?5warning?3?5?$CFs?6?$AA@ data
+0x00680d38 ??_C@_0BL@FIILBAME@libpng?5warning?5no?4?5?$CFs?3?5?$CFs?6?$AA@ data
+0x00680d54 ??_C@_0BM@FELMNLDL@Unknown?5compression?5type?5?$CFd?$AA@ data
+0x00680d70 ??_C@_0DI@EOMIECBC@Ignoring?5request?5to?5write?5a?5PLTE@ data
+0x00680da8 ??_C@_0CE@HMOECEJ@Invalid?5number?5of?5colors?5in?5pale@ data
+0x00680dcc ??_C@_0CO@KLGKHOE@Invalid?5number?5of?5histogram?5entr@ data
+0x00680dfc ??_C@_0BE@PMDOJLFC@zero?5length?5keyword?$AA@ data
+0x00680e10 ??_C@_0CJ@IDAIANNL@keyword?5length?5must?5be?51?5?9?579?5ch@ data
+0x00680e3c ??_C@_0BE@OGMCMLFJ@Zero?5length?5keyword?$AA@ data
+0x00680e50 ??_C@_0CL@HHFCBFIC@extra?5interior?5spaces?5removed?5fr@ data
+0x00680e7c ??_C@_0CE@JDFMMCPJ@leading?5spaces?5removed?5from?5keyw@ data
+0x00680ea0 ??_C@_0CF@FJBLBIB@trailing?5spaces?5removed?5from?5key@ data
+0x00680ec8 ??_C@_0CB@BHOANKPI@invalid?5keyword?5character?50x?$CF02X@ data
+0x00680eec ??_C@_0CG@BDAAAKEB@Out?5of?5memory?5while?5procesing?5ke@ data
+0x00680f14 ??_C@_0BM@PNEBJDKO@Empty?5keyword?5in?5tEXt?5chunk?$AA@ data
+0x00680f30 ??_C@_0BM@GHFLFCHO@Empty?5keyword?5in?5zTXt?5chunk?$AA@ data
+0x00680f4c ??_C@_0BM@FAEPPALE@Empty?5keyword?5in?5iTXt?5chunk?$AA@ data
+0x00680f68 ??_C@_0CD@ONPNEICD@Empty?5language?5field?5in?5iTXt?5chu@ data
+0x00680f8c ??_C@_0CK@GBCGFDCK@Unrecognized?5equation?5type?5for?5p@ data
+0x00680fb8 ??_C@_07GFOOOEFJ@?$CF12?412e?$AA@ data
+0x00680fc0 ??_C@_0CB@INFMBLLB@Invalid?5interlace?5type?5specified@ data
+0x00680fe4 ??_C@_0BO@NHOMDFKG@Invalid?5filter?5type?5specified?$AA@ data
+0x00681004 ??_C@_0CD@KAANFJDM@Invalid?5compression?5type?5specifi@ data
+0x00681028 ??_C@_0CG@NMBHOEGJ@Invalid?5bit?5depth?5for?5grayscale?5@ data
+0x00681050 ??_C@_0CA@JFINDAEN@Invalid?5bit?5depth?5for?5RGB?5image?$AA@ data
+0x00681070 ??_C@_0CF@KCHGLJIB@Invalid?5bit?5depth?5for?5paletted?5i@ data
+0x00681098 ??_C@_0CM@FPEKKHEM@Invalid?5bit?5depth?5for?5grayscale?$CL@ data
+0x006810c4 ??_C@_0CB@KFCOJLNF@Invalid?5bit?5depth?5for?5RGBA?5image@ data
+0x006810e8 ??_C@_0CD@BMDFBAM@Invalid?5image?5color?5type?5specifi@ data
+0x0068110c ??_C@_0DB@EIEMKDIH@Invalid?5zlib?5compression?5method?5@ data
+0x00681140 ??_C@_0CI@CGCNKNIG@Invalid?5sRGB?5rendering?5intent?5sp@ data
+0x00681168 ??_C@_0BM@MGJENKCF@Empty?5keyword?5in?5iCCP?5chunk?$AA@ data
+0x00681184 ??_C@_0CH@GLHAJEH@Unknown?5compression?5type?5in?5iCCP@ data
+0x006811ac ??_C@_0BM@BNKHLNKK@Empty?5keyword?5in?5sPLT?5chunk?$AA@ data
+0x006811c8 ??_C@_0BN@EBBMENIF@Invalid?5sBIT?5depth?5specified?$AA@ data
+0x006811e8 ??_C@_0BI@INBHNBOF@white_x?$DN?$CFf?0?5white_y?$DN?$CFf?6?$AA@ data
+0x00681200 ??_C@_0CD@ENBHLKCJ@Invalid?5cHRM?5white?5point?5specifi@ data
+0x00681224 ??_C@_0CB@EPFJDOMM@Invalid?5cHRM?5red?5point?5specified@ data
+0x00681248 ??_C@_0CD@IEHDBPFI@Invalid?5cHRM?5green?5point?5specifi@ data
+0x0068126c ??_C@_0CC@NIHKPHAB@Invalid?5cHRM?5blue?5point?5specifie@ data
+0x00681290 __real@3fe999999999999a data
+0x006812c0 ??_C@_0EA@JIMPJFKJ@Ignoring?5attempt?5to?5write?516?9bit@ data
+0x00681300 ??_C@_0EA@GMIFOPEM@Ignoring?5attempt?5to?5write?5tRNS?5c@ data
+0x00681340 ??_C@_0CP@PFJBFCBG@Invalid?5number?5of?5transparent?5co@ data
+0x00681370 ??_C@_0EA@NFOOLGHI@Ignoring?5attempt?5to?5write?5bKGD?5c@ data
+0x006813b0 ??_C@_0EA@PGJGJFFB@Ignoring?5attempt?5to?5write?516?9bit@ data
+0x006813f0 ??_C@_0CB@BIGCBPLL@Invalid?5background?5palette?5index@ data
+0x00681464 ??_C@_0CG@IADLICLG@Invalid?5time?5specified?5for?5tIME?5@ data
+0x0068148c ??_C@_0CB@MCDBJLEK@Unknown?5zTXt?5compression?5type?5?$CFd@ data
+0x006814b0 ??_C@_0BM@JFPBMAIB@Not?5enough?5memory?5for?5text?4?$AA@ data
+0x006814cc ??_C@_0CN@DJANJIKN@Incomplete?5compressed?5datastream@ data
+0x006814fc ??_C@_0DA@FNMACPCD@Data?5error?5in?5compressed?5datastr@ data
+0x0068152c ??_C@_0DC@PEAPBHCI@Buffer?5error?5in?5compressed?5datas@ data
+0x00681560 ??_C@_0CG@CPNAANEJ@Not?5enough?5memory?5to?5decompress?5@ data
+0x00681588 ??_C@_0CI@GGNOMFOH@Not?5enough?5memory?5to?5decompress?5@ data
+0x006815b0 ??_C@_0CH@ECICABF@Not?5enough?5memory?5to?5decompress?5@ data
+0x006815d8 ??_C@_0CO@BIJGDGNC@Row?5has?5too?5many?5bytes?5to?5alloca@ data
+0x00681608 ??_C@_0CE@PKONPPC@PNG?5unsigned?5integer?5out?5of?5rang@ data
+0x0068162c ??_C@_0CM@LODLIOMP@Truncating?5incorrect?5info?5tRNS?5c@ data
+0x00681658 ??_C@_0CF@FFJHLJE@Ignoring?5PLTE?5chunk?5in?5grayscale@ data
+0x00681680 ??_C@_0BF@BDHDCHJF@gamma?5?$DN?5?$CI?$CFd?1100000?$CJ?6?$AA@ data
+0x00681698 ??_C@_0CB@NAEALNDI@Ignoring?5gAMA?5chunk?5with?5gamma?$DN0@ data
+0x006816bc ??_C@_0BM@NECIIMI@Incorrect?5sBIT?5chunk?5length?$AA@ data
+0x006816d8 ??_C@_0BF@BAIKMFDA@Duplicate?5sBIT?5chunk?$AA@ data
+0x006816f0 ??_C@_0BI@IOIDJMN@Out?5of?5place?5sBIT?5chunk?$AA@ data
+0x00681708 ??_C@_0BI@GNBHBDGP@Invalid?5sBIT?5after?5IDAT?$AA@ data
+0x00681720 ??_C@_0BJ@JFIBIGHK@Missing?5IHDR?5before?5sBIT?$AA@ data
+0x0068173c ??_C@_0BJ@FAHLKGEB@Invalid?5cHRM?5white?5point?$AA@ data
+0x00681758 ??_C@_0BH@MNPFDHMO@Invalid?5cHRM?5red?5point?$AA@ data
+0x00681770 ??_C@_0BJ@OMNHHNBI@Invalid?5cHRM?5green?5point?$AA@ data
+0x0068178c ??_C@_0BI@GNBEGBIO@Invalid?5cHRM?5blue?5point?$AA@ data
+0x006817a4 ??_C@_0BM@IACKJHOF@gx?$DN?$CFf?0?5gy?$DN?$CFf?0?5bx?$DN?$CFf?0?5by?$DN?$CFf?6?$AA@ data
+0x006817c0 ??_C@_0BM@NBPNPEHL@wx?$DN?$CFf?0?5wy?$DN?$CFf?0?5rx?$DN?$CFf?0?5ry?$DN?$CFf?6?$AA@ data
+0x006817dc ??_C@_0DI@MIMDNNAG@Ignoring?5incorrect?5cHRM?5value?5wh@ data
+0x00681814 ??_C@_0BM@JPCBJGIK@Incorrect?5cHRM?5chunk?5length?$AA@ data
+0x00681830 ??_C@_0BF@OEDPGHJO@Duplicate?5cHRM?5chunk?$AA@ data
+0x00681848 ??_C@_0BJ@PEGEEMNB@Missing?5PLTE?5before?5cHRM?$AA@ data
+0x00681864 ??_C@_0BI@PGCHPLFE@Invalid?5cHRM?5after?5IDAT?$AA@ data
+0x0068187c ??_C@_0BJ@BBKPBEBF@Missing?5IHDR?5before?5cHRM?$AA@ data
+0x00681898 ??_C@_0BN@PPEBNPGC@incorrect?5gamma?$DN?$CI?$CFd?1100000?$CJ?6?$AA@ data
+0x006818b8 ??_C@_0CL@DPOBKPIG@Profile?5size?5field?5missing?5from?5@ data
+0x006818e4 ??_C@_0CC@CMHPFMBC@Ignoring?5truncated?5iCCP?5profile?4@ data
+0x00681908 ??_C@_0DA@PBEFIAOD@Ignoring?5nonzero?5compression?5typ@ data
+0x00681938 ??_C@_0BF@NLNNCHCP@Malformed?5iCCP?5chunk?$AA@ data
+0x00681950 ??_C@_0BF@KCHFLGCF@Duplicate?5iCCP?5chunk?$AA@ data
+0x00681968 ??_C@_0BI@LKBHEKNI@Out?5of?5place?5iCCP?5chunk?$AA@ data
+0x00681980 ??_C@_0BI@NEPGPMDI@Invalid?5iCCP?5after?5IDAT?$AA@ data
+0x00681998 ??_C@_0BJ@GOJGCOOO@Missing?5IHDR?5before?5iCCP?$AA@ data
+0x006819b4 ??_C@_0CE@MCMAFPMA@sPLT?5chunk?5requires?5too?5much?5mem@ data
+0x006819d8 ??_C@_0BE@HJCMKPPM@sPLT?5chunk?5too?5long?$AA@ data
+0x006819ec ??_C@_0BK@FFJLCLGE@sPLT?5chunk?5has?5bad?5length?$AA@ data
+0x00681a08 ??_C@_0BF@JHCGGFHI@malformed?5sPLT?5chunk?$AA@ data
+0x00681a20 ??_C@_0BI@FFAFDNM@Invalid?5sPLT?5after?5IDAT?$AA@ data
+0x00681a38 ??_C@_0BJ@GJFKNLIF@Missing?5IHDR?5before?5sPLT?$AA@ data
+0x00681a54 ??_C@_0CB@NACPDIGJ@Incorrect?5bKGD?5chunk?5index?5value@ data
+0x00681a78 ??_C@_0BM@MJOFIPAI@Incorrect?5bKGD?5chunk?5length?$AA@ data
+0x00681a94 ??_C@_0BF@DHJOBPEI@Duplicate?5bKGD?5chunk?$AA@ data
+0x00681aac ??_C@_0BJ@BAJOBAFN@Missing?5PLTE?5before?5bKGD?$AA@ data
+0x00681ac8 ??_C@_0BI@CMLGFIFF@Invalid?5bKGD?5after?5IDAT?$AA@ data
+0x00681ae0 ??_C@_0BJ@PFFFEIJJ@Missing?5IHDR?5before?5bKGD?$AA@ data
+0x00681afc ??_C@_0BM@HJCIDHBG@Incorrect?5hIST?5chunk?5length?$AA@ data
+0x00681b18 ??_C@_0BF@FMFDLFKH@Duplicate?5hIST?5chunk?$AA@ data
+0x00681b30 ??_C@_0BJ@KBMKNJIK@Missing?5PLTE?5before?5hIST?$AA@ data
+0x00681b4c ??_C@_0BI@LLJKEGEF@Invalid?5hIST?5after?5IDAT?$AA@ data
+0x00681b64 ??_C@_0BJ@EEABIBEO@Missing?5IHDR?5before?5hIST?$AA@ data
+0x00681b80 ??_C@_0BF@MBDJBKMG@Duplicate?5pHYs?5chunk?$AA@ data
+0x00681b98 ??_C@_0BI@ILGPKLEK@Invalid?5pHYs?5after?5IDAT?$AA@ data
+0x00681bb0 ??_C@_0BM@CAALIFOJ@Incorrect?5pHYs?5chunk?5length?$AA@ data
+0x00681bcc ??_C@_0BJ@HLHPANNL@Missing?5IHDR?5before?5pHYs?$AA@ data
+0x00681be8 ??_C@_0BF@JBIHJHNI@Duplicate?5oFFs?5chunk?$AA@ data
+0x00681c00 ??_C@_0BI@DOPHGCAB@Invalid?5oFFs?5after?5IDAT?$AA@ data
+0x00681c18 ??_C@_0BM@NBDONMKL@Incorrect?5oFFs?5chunk?5length?$AA@ data
+0x00681c34 ??_C@_0BJ@GOGKJOPG@Missing?5IHDR?5before?5oFFs?$AA@ data
+0x00681c50 ??_C@_0BL@ELFLIGPP@No?5memory?5for?5pCAL?5params?4?$AA@ data
+0x00681c6c ??_C@_0CK@ONFOCIAG@Invalid?5pCAL?5parameters?5for?5equa@ data
+0x00681c98 ??_C@_0BC@KNEPBMNA@Invalid?5pCAL?5data?$AA@ data
+0x00681cac ??_C@_0BF@HCCMEAIJ@Duplicate?5pCAL?5chunk?$AA@ data
+0x00681cc4 ??_C@_0BI@CAHJBHPE@Invalid?5pCAL?5after?5IDAT?$AA@ data
+0x00681cdc ??_C@_0BM@BADKGCIJ@No?5memory?5for?5pCAL?5purpose?4?$AA@ data
+0x00681cf8 ??_C@_0BJ@OGJFFCCO@Missing?5IHDR?5before?5pCAL?$AA@ data
+0x00681d14 ??_C@_0BC@EGHIKHND@Invalid?5sCAL?5data?$AA@ data
+0x00681d28 ??_C@_0CG@ILPCKGAK@malformed?5height?5string?5in?5sCAL?5@ data
+0x00681d50 ??_C@_0CF@LLNCAD@malformed?5width?5string?5in?5sCAL?5c@ data
+0x00681d78 ??_C@_0BF@OLMOCGII@Duplicate?5sCAL?5chunk?$AA@ data
+0x00681d90 ??_C@_0BI@JLBKDAG@Invalid?5sCAL?5after?5IDAT?$AA@ data
+0x00681da8 ??_C@_0CK@IHKBDLGD@Out?5of?5memory?5while?5processing?5s@ data
+0x00681dd4 ??_C@_0BJ@KBDFCIPO@Missing?5IHDR?5before?5sCAL?$AA@ data
+0x00681df0 ??_C@_0BF@CMKMELPN@Duplicate?5tIME?5chunk?$AA@ data
+0x00681e08 ??_C@_0BM@HAEOJOJG@Incorrect?5tIME?5chunk?5length?$AA@ data
+0x00681e24 ??_C@_0BI@DEMOLHAA@Out?5of?5place?5tIME?5chunk?$AA@ data
+0x00681e3c ??_C@_0CL@OGIJCCIO@Insufficient?5memory?5to?5process?5t@ data
+0x00681e68 ??_C@_0CJ@FOHJNEOL@Not?5enough?5memory?5to?5process?5tex@ data
+0x00681e94 ??_C@_0CB@EKMLANHJ@No?5memory?5to?5process?5text?5chunk?4@ data
+0x00681eb8 ??_C@_0BJ@DCBGIPDG@Missing?5IHDR?5before?5tEXt?$AA@ data
+0x00681ed4 ??_C@_0CJ@KDPACLDH@Insufficient?5memory?5to?5store?5zTX@ data
+0x00681f00 ??_C@_0CJ@BBPBJAPJ@Not?5enough?5memory?5to?5process?5zTX@ data
+0x00681f2c ??_C@_0CH@KHHIIBBM@Unknown?5compression?5type?5in?5zTXt@ data
+0x00681f54 ??_C@_0BH@OKNNOGIJ@Zero?5length?5zTXt?5chunk?$AA@ data
+0x00681f6c ??_C@_0CF@INOJJBEP@Out?5of?5memory?5processing?5zTXt?5ch@ data
+0x00681f94 ??_C@_0BJ@GFIDABKN@Missing?5IHDR?5before?5zTXt?$AA@ data
+0x00681fb0 ??_C@_0CJ@NIHGBEDL@Insufficient?5memory?5to?5store?5iTX@ data
+0x00681fdc ??_C@_0CJ@GKHHKPPF@Not?5enough?5memory?5to?5process?5iTX@ data
+0x00682008 ??_C@_0BH@NNMJEEED@Zero?5length?5iTXt?5chunk?$AA@ data
+0x00682020 ??_C@_0CB@HOMFHGGH@No?5memory?5to?5process?5iTXt?5chunk?4@ data
+0x00682044 ??_C@_0BJ@ECMDOMPP@Missing?5IHDR?5before?5iTXt?$AA@ data
+0x00682060 ??_C@_0BH@FADDMAED@Extra?5compressed?5data?4?$AA@ data
 0x00682b60 _crc_table data
 0x00684b60 ?lenfix@?1??fixedtables@@9@9 data
 0x00685360 ?distfix@?1??fixedtables@@9@9 data
@@ -529,6 +1029,12 @@
 0x00685f18 __length_code data
 0x00686018 _base_length data
 0x00686090 _base_dist data
+0x006c80e8 _onebppswaptable data
+0x006c81e8 _twobppswaptable data
+0x006c82e8 _fourbppswaptable data
+0x006c83e8 _png_gamma_shift data
+0x006c8408 ?msg@?1??png_decompress_chunk@@9@9 data
 0x006c8670 _static_l_desc data
 0x006c8684 _static_d_desc data
 0x006c8698 _static_bl_desc data
+0x006c8a60 __iob data
