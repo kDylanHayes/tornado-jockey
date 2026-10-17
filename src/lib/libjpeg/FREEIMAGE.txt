@@ -1,0 +1,6 @@
+This is the IJG libjpeg 6b as bundled with FreeImage 3.7.0
+(Source/LibJPEG), which is what Tornado.exe links. FreeImage modified a few
+files (jconfig.h, jmorecfg.h, jpeglib.h, jerror.c/.h, jdapimin.c,
+jdatasrc.c, jddctmgr.c, jdmerge.c, jidctfst.c, jidctint.c). Line endings
+were converted to LF; the code is otherwise unchanged. See README for the
+IJG license.

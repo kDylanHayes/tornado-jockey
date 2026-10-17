@@ -63,7 +63,10 @@ public class DelinkUnit extends HeadlessScript {
 		}
 		exporter.setOptions(options);
 		if (!exporter.export(out, currentProgram, set, monitor)) {
-			throw new RuntimeException("Failed to export " + out);
+			// tools/delink.py prints these; the remaining units still export.
+			println("DELINK FAILED " + out.getName() + ": " +
+				exporter.getMessageLog().toString().strip().replace('\n', ' '));
+			return;
 		}
 		println("Exported " + out);
 	}

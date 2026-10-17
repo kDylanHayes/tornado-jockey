@@ -29,11 +29,31 @@ python3 configure.py
 
 The game was compiled with `/Gy`, so the compiler put every function and every string literal in its own section, and the linker padded functions to 16 bytes with `int3`. `delink.py` therefore post-processes each target with `tools/split_functions.py`, which gives each function and each data symbol its own section, drops the `int3` padding, and resolves PC-relative relocations inside a function. Without this, objdiff counts the padding as mismatched code and calls between functions of the same unit as mismatched arguments.
 
+For C++ code it also does what the exe can't show: it adds the `__except_list` relocation to every `fs:[0]` access (the exe holds a plain 0), keeps catch blocks inside their function, and renames Ghidra's labels there (`Catch@...`, `DAT_...`) to the compiler's `$L...` names taken from our object, so objdiff sees the same functions on both sides. Where a function's size is known (from `config/symbols.txt`, or from our object), the size decides where padding starts, so the `int3` the compiler leaves after a call that never returns (`_CxxThrowException`) is kept.
+
 ## Naming symbols
 
 objdiff pairs functions and relocations by name, so every symbol a unit defines or references needs its MSVC decorated name in `config/symbols.txt`. The easy way to get them is to compile the unit first and read the names out of our object (`objdump -t build/src/...obj`), including string literals (`??_C@_0...`) and compiler constants (`__real@00000000`).
 
+Before delinking, `ApplySymbols.java` names functions and sets their extent from the size column: it removes functions analysis split off inside the range, ends a function analysis ran past a neighbour's start, and disassembles code only reached through pointers or EH tables (catch blocks, `png_error` handlers). Then `FixReferences.java` corrects bad references: indexed operands such as `jmp [eax*4 + table]` that Ghidra points at `table + n*4` (the delinker would emit no relocation); immediates into data or into their own function (a catch block's continuation address) that have no reference; short strings analysis typed as pointers (`"PNG"` reads as 0x00474e50); and constants that merely look like addresses (listed in `config/norefs.txt`, which `sync_symbols.py` fills in).
+
 Target objects are derived from the game, so they stay in `build/` and are never committed.
+
+## Placing library code
+
+For code built from upstream source (zlib, libpng...), compile the source first, then let the tools find it and copy names over:
+
+```sh
+ninja
+python3 tools/find_objects.py --functions build/src/lib/zlib/*.obj     # where each function sits
+python3 tools/find_objects.py --functions --layout 0x582971-0x586fc2 build/src/lib/zlib/*.obj  # suggest unit ranges
+python3 tools/find_objects.py --functions --write build/src/lib/zlib/*.obj  # name them in symbols.txt
+python3 tools/delink.py
+python3 tools/sync_symbols.py lib/zlib/inflate lib/zlib/trees          # name referenced data
+python3 tools/delink.py
+```
+
+`find_objects.py` searches the exe for each function's bytes with relocated bytes wildcarded; `--write` names functions found exactly once inside their unit's range. `sync_symbols.py` pairs relocations in a matching unit and gives the target's auto-named data (`DAT_…`, `s_…`) the names our compiler used, so objdiff can pair them. Functions the linker dropped (`/OPT:REF`) simply aren't found; identical functions the linker folded (`/OPT:ICF`, e.g. zlib's `zcfree`) are found at several addresses. A folded function carries one name in the target; when it sits in another unit, map it with `"symbol_mappings": {"_zcfree": "_jpeg_free_small"}` on that unit in `config/units.json`.
 
 ## Finding unit boundaries
 
