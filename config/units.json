@@ -1,4 +1,13 @@
 {
-  "_comment": "One entry per original translation unit. 'target' is the delinked object from the original exe (see docs/delinking.md); 'source' is our C/C++ file, omitted until work starts. 'category' must be one of the progress_categories in configure.py.",
-  "units": []
+  "_comment": "One entry per original translation unit. 'ranges' are the unit's address ranges in Tornado.exe (start-end inclusive), delinked into 'target' by tools/delink.py. 'source' is our C/C++ file. 'category' must be one of the progress_categories in configure.py. 'cflags' overrides the default compiler flags.",
+  "units": [
+    {
+      "name": "lib/zlib/adler32",
+      "ranges": ["0x0047e661-0x0047e779"],
+      "target": "build/target/lib/zlib/adler32.obj",
+      "source": "src/lib/zlib/adler32.c",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /W3"
+    }
+  ]
 }

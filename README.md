@@ -32,15 +32,20 @@ Requirements:
 - Wine (Linux/macOS) to run the compiler, or Windows
 - Microsoft Visual C++ Toolkit 2003 (`cl` 13.10.3077). It is not redistributable, so install it yourself and point `configure.py` at it; see [docs/toolchain.md](docs/toolchain.md)
 - [objdiff](https://github.com/encounter/objdiff/releases) (GUI) and `objdiff-cli`
-- Ghidra plus the delinker extension, to regenerate target objects; see [docs/delinking.md](docs/delinking.md)
+- Ghidra 12.1.4 plus the delinker extension, to produce target objects; see [docs/delinking.md](docs/delinking.md)
+
+What's known about the binary's layout is in [docs/regions.md](docs/regions.md).
 
 Steps:
 
 ```sh
 cp /path/to/your/Tornado.exe orig/
 python3 tools/check_target.py          # verifies the SHA-1
+export GHIDRA_INSTALL_DIR=/path/to/ghidra_12.1.4_PUBLIC
+python3 tools/analyze.py               # Ghidra project + auto-analysis
+python3 tools/delink.py                # target objects into build/target/
 python3 configure.py --msvc /path/to/vctoolkit2003
-ninja                                  # compiles src/ and writes objdiff.json
+ninja                                  # compiles src/ into build/src/
 objdiff                                # open the project folder in the GUI
 ```
 
