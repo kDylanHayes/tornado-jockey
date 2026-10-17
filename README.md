@@ -21,7 +21,7 @@ The retail installer ships `Tornado.exe` with its code sections empty; the WildT
 
 ## Status
 
-FreeImage 3.7.0 matches 100%: its own C++ code (21 units) and its bundled zlib 1.2.2, libpng 1.2.8 and libjpeg 6b (59 units). So does ODE 0.5 with OPCODE (49 units), and the first engine unit, `SRESULT`: 130 units and 395 KB of code in all. The older libpng copy turned out to be part of Microsoft's prebuilt D3DX8 library, so it gets linked rather than rebuilt. See [docs/roadmap.md](docs/roadmap.md).
+FreeImage 3.7.0 matches 100%: its own C++ code (21 units) and its bundled zlib 1.2.2, libpng 1.2.8 and libjpeg 6b (59 units). So does ODE 0.5 with OPCODE (49 units), and the first three engine units, `SRESULT`, `SYSMONITOR` and `TOKENS`: 132 units in all. The older libpng copy turned out to be part of Microsoft's prebuilt D3DX8 library, so it gets linked rather than rebuilt. See [docs/roadmap.md](docs/roadmap.md).
 
 ## Getting started
 

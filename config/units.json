@@ -1433,6 +1433,29 @@
       "category": "lib",
       "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
       "complete": true
+    },
+    {
+      "name": "Tongas2/SYSMONITOR",
+      "ranges": [
+        "0x004a7d00-0x004a7fab",
+        "0x0066a974-0x0066a9e8",
+        "0x007e0ce0-0x007e0cef"
+      ],
+      "target": "build/target/Tongas2/SYSMONITOR.obj",
+      "source": "src/Tongas2/SYSMONITOR.cpp",
+      "category": "engine",
+      "complete": true
+    },
+    {
+      "name": "Tongas2/TOKENS",
+      "ranges": [
+        "0x004a86c0-0x004a8dda",
+        "0x0066adb4-0x0066adcd"
+      ],
+      "target": "build/target/Tongas2/TOKENS.obj",
+      "source": "src/Tongas2/TOKENS.cpp",
+      "category": "engine",
+      "complete": true
     }
   ]
 }
