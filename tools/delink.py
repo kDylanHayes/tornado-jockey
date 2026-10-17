@@ -80,10 +80,13 @@ def main() -> int:
     if result.returncode != 0 or missing or "SCRIPT ERROR" in result.stdout + result.stderr:
         print(f"error: delinking failed ({', '.join(missing) or 'see log'}); log in {log.relative_to(ROOT)}",
               file=sys.stderr)
-        return 1
     for unit in selected:
+        if unit["name"] in missing:
+            continue
         base = int(unit["ranges"][0].split("-")[0], 16) if len(unit["ranges"]) == 1 else None
         split.main_path(ROOT / unit["target"], base=base)
+    if result.returncode != 0 or missing or "SCRIPT ERROR" in result.stdout + result.stderr:
+        return 1
     print(f"Delinked {len(selected)} unit(s)")
     return 0
 

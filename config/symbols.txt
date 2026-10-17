@@ -5,10 +5,22 @@
 0x00402730 ??1SRESULT@@UAE@XZ function 0xb
 0x00402740 ??_GSRESULT@@UAEPAXI@Z function 0x24
 0x00404ce0 ?SetType@SRESULT@@QAEXABW4SRESULTTYPE@@@Z function 0xfc
+0x00406cc0 ?_Min@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@KAPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@PAU342@@Z function
+0x00406ce0 ?_Inc@const_iterator@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@QAEXXZ function
+0x004072c0 ?assign@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@ABV12@II@Z function
+0x004073b0 ?assign@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@PBDI@Z function
+0x00407a80 ??0logic_error@std@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@@Z function
+0x00407c50 ??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@PBD@Z function
+0x004381b0 ?_Tidy@?$deque@GV?$allocator@G@std@@@std@@IAEXXZ function
+0x0043cb20 ?SupportsICCProfiles@@YAJXZ function
+0x004494e0 ?compare@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBEHIIPBDI@Z function
+0x0044a620 ?append@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@PBDI@Z function
+0x004536f0 ??R?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@QBE_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@0@Z function
 0x0045446b operator_new function 0x24
 0x0045450f operator_new function 0x5
 0x00456df2 _null_method function
 0x0046785e _emit_message function
+0x00468335 _png_get_PLTE function
 0x00468469 _png_do_swap function
 0x00468496 _png_do_bgr function
 0x00468906 _png_do_chop function
@@ -36,6 +48,14 @@
 0x004a8510 ?SetValue@SRESULT@@QAEXPBG@Z function 0x7e
 0x004a8590 ?SetValue@SRESULT@@QAEXPBD@Z function 0x81
 0x004a8620 ?GetTexture@SRESULT@@QBE?AUSRTEXTURE@@ABU2@@Z function 0x96
+0x004cc8c0 ?_Max@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@KAPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@PAU342@@Z function
+0x004cc8e0 ?_Buynode@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@XZ function
+0x004cc950 ??1?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@XZ function
+0x004cc980 ?_Lbound@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@IBEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@@Z function
+0x004ccb30 ??1_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@QAE@XZ function
+0x004e7820 ?_Min@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@KAPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@PAU342@@Z function
+0x004e7ed0 ?_Buynode@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@PAU342@00ABU?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@2@D@Z function
+0x00547f50 ?term_source@@YAXPAUjpeg_decompress_struct@@@Z function
 0x00559cc6 FMOD.DLL::_FSOUND_GetError@0 function 0x6
 0x00559ccc FMOD.DLL::_FSOUND_StopSound@4 function 0x6
 0x00559cd2 FMOD.DLL::_FSOUND_Stream_Stop@4 function 0x6
@@ -80,14 +100,70 @@
 0x0055ae60 ??0PluginList@@QAE@XZ function 0x2c
 0x0055ae90 _FreeImage_Initialise function 0x64
 0x0055af00 _FreeImage_DeInitialise function 0x25
-0x0055afd0 _FreeImage_GetRedMask function
-0x0055aff0 _FreeImage_GetGreenMask function
+0x0055af30 ?FreeImage_Aligned_Malloc@@YAPAXII@Z function 0x2d
+0x0055af60 ?FreeImage_Aligned_Free@@YAXPAX@Z function 0x10
+0x0055af70 ?FreeImage_GetImageSize@@YAIHHH@Z function 0x55
+0x0055afd0 _FreeImage_GetRedMask function 0x11
+0x0055aff0 _FreeImage_GetGreenMask function 0x11
+0x0055b010 _FreeImage_HasBackgroundColor function 0x1a
+0x0055b030 _FreeImage_SetBackgroundColor function 0x34
+0x0055b070 _FreeImage_GetTransparencyTable function 0x11
+0x0055b090 _FreeImage_GetTransparencyCount function 0x11
+0x0055b0b0 _FreeImage_GetICCProfile function 0x13
+0x0055b0d0 _FreeImage_CreateICCProfile function 0x6a
 0x0055b140 _FreeImage_GetInfoHeader function
-0x0055b280 _FreeImage_GetWidth function
-0x0055b2b0 _FreeImage_GetHeight function
-0x0055b2e0 _FreeImage_GetBPP function
-0x0055b370 _FreeImage_GetPitch function
-0x0055b390 _FreeImage_GetColorsUsed function
+0x0055b170 _FreeImage_FindCloseMetadata function 0x23
+0x0055b1a0 ?_Rrotate@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@IAEXPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@@Z function 0x59
+0x0055b200 ?_Max@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@KAPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@PAU342@@Z function 0x1d
+0x0055b220 ?_Dec@const_iterator@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@QAEXXZ function 0x5d
+0x0055b280 _FreeImage_GetWidth function 0x2c
+0x0055b2b0 _FreeImage_GetHeight function 0x2c
+0x0055b2e0 _FreeImage_GetBPP function 0x2e
+0x0055b310 _FreeImage_GetLine function 0x59
+0x0055b370 _FreeImage_GetPitch function 0x1b
+0x0055b390 _FreeImage_GetColorsUsed function 0x2c
+0x0055b3c0 _FreeImage_GetPalette function 0x46
+0x0055b410 ?_Lrotate@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@IAEXPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@@Z function 0x55
+0x0055b470 _FreeImage_GetColorType function 0x204
+0x0055b680 _FreeImage_GetBackgroundColor function 0xb3
+0x0055b740 _FreeImage_IsTransparent function 0x54
+0x0055b7a0 _FreeImage_SetTransparent function 0x57
+0x0055b800 _FreeImage_SetTransparencyTable function 0x69
+0x0055b870 ?_Erase@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@IAEXPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@@Z function 0x37
+0x0055b8b0 _FreeImage_FindNextMetadata function 0x6a
+0x0055b920 ?_Insert@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@IAE?AViterator@12@_NPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@ABU?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@2@@Z function 0x1ad
+0x0055bad0 ?erase@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@QAE?AViterator@12@V312@@Z function 0x2b8
+0x0055bd90 ??0_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@QAE@PAU012@00ABU?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@2@D@Z function 0x57
+0x0055bdf0 ?insert@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@QAE?AU?$pair@Viterator@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@_N@2@ABU?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@2@@Z function 0xb9
+0x0055beb0 ?erase@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@QAE?AViterator@12@V312@0@Z function 0xb7
+0x0055bf70 ?erase@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@QAE?AViterator@12@V312@@Z function 0x2e0
+0x0055c250 ?_Buynode@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@PAU342@00ABU?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@2@D@Z function 0x72
+0x0055c2c2 $L24515 function 0x16
+0x0055c2e0 ?_Erase@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@IAEXPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@@Z function 0x3e
+0x0055c320 ?insert@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@QAE?AViterator@12@V312@ABU?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@2@@Z function 0x169
+0x0055c490 ?_Insert@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@IAE?AViterator@12@_NPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@ABU?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@2@@Z function 0x1ad
+0x0055c640 ??A?$map@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@@std@@QAEAAPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@1@ABH@Z function 0x79
+0x0055c6c0 ?insert@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@QAE?AU?$pair@Viterator@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@_N@2@ABU?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@2@@Z function 0x171
+0x0055c840 ?erase@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@QAE?AViterator@12@V312@0@Z function 0xb7
+0x0055c900 ??1?$map@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@@std@@QAE@XZ function
+0x0055c930 _FreeImage_FindFirstMetadata function 0x7e
+0x0055c9b0 ?insert@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@QAE?AViterator@12@V312@ABU?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@2@@Z function 0x1a7
+0x0055cb60 _FreeImage_AllocateT function 0x1fc
+0x0055cd60 ??A?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@QAEAAPAUFITAG@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@@Z function 0xbb
+0x0055ce20 _FreeImage_Allocate function 0x29
+0x0055ce50 ??1?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@QAE@XZ function
+0x0055ce80 _FreeImage_GetMetadata function 0x8a
+0x0055cf10 ??0?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@QAE@XZ function 0x2b
+0x0055cf40 _FreeImage_Clone function 0x219
+0x0055d160 _FreeImage_SetMetadata function 0x1f1
+0x0055d360 _FreeImage_Unload function 0xc9
+0x0055d430 _FreeImage_ConvertLine1To24 function 0x5d
+0x0055d490 _FreeImage_ConvertLine4To24 function 0x80
+0x0055d510 _FreeImage_ConvertLine8To24 function 0x4b
+0x0055d560 _FreeImage_ConvertLine16To24_555 function 0xa1
+0x0055d610 _FreeImage_ConvertLine16To24_565 function 0x9c
+0x0055d6b0 _FreeImage_ConvertLine32To24 function 0x2c
+0x0055d6e0 _FreeImage_ConvertTo24Bits function 0x2f8
 0x0055d9e0 _FreeImage_OpenMemory function 0x6d
 0x0055da50 _FreeImage_CloseMemory function 0x2b
 0x0055da80 _FreeImage_LoadFromMemory function 0x3f
@@ -95,10 +171,166 @@
 0x0055db00 _FreeImage_GetBits function 0x3c
 0x0055db40 _FreeImage_GetScanLine function 0x4b
 0x0055db90 _FreeImage_GetPixelColor function 0x202
+0x0055ddc0 ?Filter@CBoxFilter@@UAENN@Z function 0x22
+0x0055de10 ?Filter@CBilinearFilter@@UAENN@Z function 0x21
+0x0055de40 ??0CBicubicFilter@@QAE@NN@Z function 0xcf
+0x0055df10 ?Filter@CBicubicFilter@@UAENN@Z function 0x52
+0x0055df70 ?Filter@CCatmullRomFilter@@UAENN@Z function 0xc7
+0x0055e040 ?Filter@CBSplineFilter@@UAENN@Z function 0x61
+0x0055e0f0 _FreeImage_Rescale function 0x1e4
+0x0055e2d4 $L14437 function 0x80
+0x0055e360 ?Filter@CLanczos3Filter@@UAENN@Z function 0x75
+0x0055e3e0 _FreeImage_ConvertLine1To32 function 0x62
+0x0055e450 _FreeImage_ConvertLine4To32 function 0x84
+0x0055e4e0 _FreeImage_ConvertLine8To32 function 0x4f
+0x0055e530 _FreeImage_ConvertLine16To32_555 function 0xac
+0x0055e5e0 _FreeImage_ConvertLine16To32_565 function 0xa3
+0x0055e690 _FreeImage_ConvertLine24To32 function 0x33
+0x0055e6d0 ?MapTransparentTableToAlpha@@YAXPAUtagRGBQUAD@@PAE1HH@Z function 0x2f
+0x0055e700 _FreeImage_ConvertTo32Bits function 0x3a8
+0x0055eab0 _FreeImage_FlipVertical function 0xb7
+0x0055eb70 ?_ReadProc@@YAIPAXII0@Z function 0x5
+0x0055eb80 ?_WriteProc@@YAIPAXII0@Z function 0x5
+0x0055eb90 ?_SeekProc@@YAHPAXJH@Z function 0x5
+0x0055eba0 ?_TellProc@@YAJPAX@Z function 0x5
+0x0055ebb0 ?SetDefaultIO@@YAXPAUFreeImageIO@@@Z function 0x20
+0x0055ebd0 ?_MemoryReadProc@@YAIPAXII0@Z function 0x68
+0x0055ec40 ?_MemoryWriteProc@@YAIPAXII0@Z function 0xa6
+0x0055ecf0 ?_MemorySeekProc@@YAHPAXJH@Z function 0x32
+0x0055ed30 ?_MemoryTellProc@@YAJPAX@Z function 0xa
 0x0055ed40 ?SetMemoryIO@@YAXPAUFreeImageIO@@@Z function
-0x00561360 _FreeImage_GetImageType function
-0x005613b0 _FreeImage_GetBlueMask function
-0x00561650 _FreeImage_GetFileTypeFromHandle function
+0x0055ed60 ?_ReadProc@@YAXPAUpng_struct_def@@PAEI@Z function 0x22
+0x0055ed90 ?_WriteProc@@YAXPAUpng_struct_def@@PAEI@Z function 0x23
+0x0055edc0 ?error_handler@@YAXPAUpng_struct_def@@PBD@Z function 0x18
+0x0055ede0 ?WriteMetadata@@YAJPAUpng_struct_def@@PAUpng_info_struct@@PAUFIBITMAP@@@Z function 0x178
+0x0055ef60 ?Format@@YAPBDXZ function
+0x0055ef70 ?Description@@YAPBDXZ function
+0x0055ef80 ?Extension@@YAPBDXZ function
+0x0055ef90 ?RegExpr@@YAPBDXZ function
+0x0055efa0 ?MimeType@@YAPBDXZ function
+0x0055efb0 ?Validate@@YAJPAUFreeImageIO@@PAX@Z function 0x80
+0x0055f030 ?SupportsExportDepth@@YAJH@Z function 0x26
+0x0055f060 ?SupportsExportType@@YAJW4FREE_IMAGE_TYPE@@@Z function 0x1c
+0x0055f080 ?Save@@YAJPAUFreeImageIO@@PAUFIBITMAP@@PAXHH2@Z function 0x414
+0x0055f4a0 ?ReadMetadata@@YAJPAUpng_struct_def@@PAUpng_info_struct@@PAUFIBITMAP@@@Z function 0x122
+0x0055f5d0 ?Load@@YAPAUFIBITMAP@@PAUFreeImageIO@@PAXHH1@Z function 0x63a
+0x0055fc0a $L16385 function 0x8a
+0x0055fca0 ?InitPNG@@YAXPAUPlugin@@H@Z function 0x68
+0x0055fd10 ?jpeg_error_exit@@YAXPAUjpeg_common_struct@@@Z function 0x3c
+0x0055fd50 ?jpeg_output_message@@YAXPAUjpeg_common_struct@@@Z function 0x2c
+0x0055fd80 ?init_destination@@YAXPAUjpeg_compress_struct@@@Z function 0x26
+0x0055fdb0 ?empty_output_buffer@@YAEPAUjpeg_compress_struct@@@Z function 0x4e
+0x0055fe00 ?term_destination@@YAXPAUjpeg_compress_struct@@@Z function 0x45
+0x0055fe50 ?init_source@@YAXPAUjpeg_decompress_struct@@@Z function 0xc
+0x0055fe60 ?fill_input_buffer@@YAEPAUjpeg_decompress_struct@@@Z function 0x79
+0x0055fee0 ?skip_input_data@@YAXPAUjpeg_decompress_struct@@J@Z function 0x3e
+0x0055ff20 ?jpeg_freeimage_src@@YAXPAUjpeg_decompress_struct@@PAXPAUFreeImageIO@@@Z function 0x73
+0x0055ffa0 ?jpeg_freeimage_dst@@YAXPAUjpeg_compress_struct@@PAXPAUFreeImageIO@@@Z function 0x44
+0x0055fff0 ?jpeg_read_comment@@YAJPAUFIBITMAP@@PBEI@Z function 0xa6
+0x005600a0 ?marker_is_icc@@YAJPAUjpeg_marker_struct@@@Z function 0x6f
+0x00560110 ?jpeg_read_icc_profile@@YAJPAUjpeg_decompress_struct@@PAPAEPAI@Z function 0x159
+0x00560270 ?jpeg_read_xmp_profile@@YAJPAUFIBITMAP@@PBEI@Z function 0xba
+0x00560330 ?read_markers@@YAJPAUjpeg_decompress_struct@@PAUFIBITMAP@@@Z function 0xb9
+0x005603f0 ?Format@@YAPBDXZ function
+0x00560400 ?Description@@YAPBDXZ function
+0x00560410 ?Extension@@YAPBDXZ function
+0x00560420 ?RegExpr@@YAPBDXZ function
+0x00560430 ?MimeType@@YAPBDXZ function
+0x00560440 ?Validate@@YAJPAUFreeImageIO@@PAX@Z function 0x44
+0x00560490 ?SupportsExportDepth@@YAJH@Z function 0x17
+0x005604b0 ?SupportsExportType@@YAJW4FREE_IMAGE_TYPE@@@Z function 0xd
+0x005604c0 ?jpeg_write_comment@@YAJPAUjpeg_compress_struct@@PAUFIBITMAP@@@Z function 0xaf
+0x00560570 ?jpeg_write_icc_profile@@YAJPAUjpeg_compress_struct@@PAUFIBITMAP@@@Z function 0x147
+0x005606c0 ?jpeg_write_xmp_profile@@YAJPAUjpeg_compress_struct@@PAUFIBITMAP@@@Z function 0x123
+0x005607f0 ?Load@@YAPAUFIBITMAP@@PAUFreeImageIO@@PAXHH1@Z function 0x42a
+0x00560c1a $L15939 function 0x25
+0x00560c40 ?Save@@YAJPAUFreeImageIO@@PAUFIBITMAP@@PAXHH2@Z function 0x4c0
+0x00561100 $L15983 function 0x2c
+0x00561140 ?InitJPEG@@YAXPAUPlugin@@H@Z function 0x68
+0x005611b0 _FreeImage_CreateTag function 0x45
+0x00561200 _FreeImage_DeleteTag function 0x41
+0x00561250 _FreeImage_CloneTag function 0x110
+0x00561360 _FreeImage_GetTagKey function 0x10
+0x00561370 _FreeImage_GetTagID function 0x12
+0x00561390 _FreeImage_GetTagType function 0x12
+0x005613b0 _FreeImage_GetTagCount function 0x11
+0x005613d0 _FreeImage_GetTagLength function 0x11
+0x005613f0 _FreeImage_GetTagValue function 0x11
+0x00561410 _FreeImage_SetTagKey function 0x57
+0x00561470 _FreeImage_SetTagDescription function 0x65
+0x005614e0 _FreeImage_SetTagID function 0x1c
+0x00561500 _FreeImage_SetTagType function 0x1c
+0x00561520 _FreeImage_SetTagCount function 0x1a
+0x00561540 _FreeImage_SetTagLength function 0x1a
+0x00561560 ?FreeImage_TagDataWidth@@YAHG@Z function 0x19
+0x00561580 _FreeImage_SetTagValue function 0xc3
+0x00561650 _FreeImage_GetFileTypeFromHandle function 0x43
+0x005616a0 _FreeImage_ColorQuantizeEx function 0x112
+0x005617b2 $L14107 function 0x19
+0x005617d0 _FreeImage_ColorQuantize function 0x1c
+0x005617f0 ??0CWeightsTable@@QAE@PAVCGenericFilter@@KK@Z function 0x33e
+0x00561b30 ?horizontalFilter@CResizeEngine@@AAEXPAUFIBITMAP@@II0II@Z function 0x3d1
+0x00561f10 ?verticalFilter@CResizeEngine@@AAEXPAUFIBITMAP@@II0II@Z function 0x41d
+0x00562330 ?scale@CResizeEngine@@QAEPAUFIBITMAP@@PAU2@II@Z function 0x224
+0x00562560 _read_iptc_profile function 0x41f
+0x00562980 ?FreeImage_strnicmp@@YAHPBD0I@Z function 0x63
+0x005629f0 ?ReadUint32@@YAKJPAX@Z function
+0x00562a30 ?processMakerNote@@YAXPAUFIBITMAP@@PAUFITAG@@PADJPAKPAW4MDMODEL@TagLib@@@Z function 0x230
+0x00562c60 ?processCanonMakerNoteTag@@YAXPAUFIBITMAP@@PAUFITAG@@@Z function 0x17f
+0x00562de0 ?processExifTag@@YAXPAUFIBITMAP@@PAUFITAG@@PADJW4MDMODEL@TagLib@@@Z function 0x370
+0x00563150 ?_Xlen@?$deque@GV?$allocator@G@std@@@std@@IBEXXZ function
+0x005631c0 ?_Growmap@?$deque@GV?$allocator@G@std@@@std@@IAEXI@Z function 0x153
+0x00563480 ?push_back@?$deque@GV?$allocator@G@std@@@std@@QAEXABG@Z function 0x7a
+0x00563500 ?push_back@?$deque@W4MDMODEL@TagLib@@V?$allocator@W4MDMODEL@TagLib@@@std@@@std@@QAEXABW4MDMODEL@TagLib@@@Z function
+0x00563580 ?jpeg_read_exif_dir@@YAJPAUFIBITMAP@@PBEIIJ@Z function 0x4c8
+0x00563a50 _jpeg_read_exif_profile function
+0x00563b50 ??0WuQuantizer@@QAE@PAUFIBITMAP@@@Z function 0x17c
+0x00563cd0 ??1WuQuantizer@@QAE@XZ function 0x64
+0x00563d40 ?Hist3D@WuQuantizer@@IAEXPAJ000PAMHPAUtagRGBQUAD@@@Z function 0x41d
+0x00564160 ?M3D@WuQuantizer@@IAEXPAJ000PAM@Z function 0x602
+0x00564770 ?Vol@WuQuantizer@@IAEJPAUtagBox@1@PAJ@Z function 0xe7
+0x00564860 ?Bottom@WuQuantizer@@IAEJPAUtagBox@1@EPAJ@Z function 0x153
+0x005649c0 ?Top@WuQuantizer@@IAEJPAUtagBox@1@EHPAJ@Z function 0x161
+0x00564b30 ?Var@WuQuantizer@@IAEMPAUtagBox@1@@Z function 0x138
+0x00564c70 ?Maximize@WuQuantizer@@IAEMPAUtagBox@1@EHHPAHJJJJ@Z function 0x189
+0x00564e00 ?Cut@WuQuantizer@@IAE_NPAUtagBox@1@0@Z function 0x1bf
+0x00564fc0 ?Mark@WuQuantizer@@IAEXPAUtagBox@1@HPAE@Z function 0x71
+0x00565040 ?Quantize@WuQuantizer@@QAEPAUFIBITMAP@@HHPAUtagRGBQUAD@@@Z function 0x21d
+0x0056525d $L14364 function 0x18b
+0x005653f0 ??0NNQuantizer@@QAE@H@Z function 0xf9
+0x005654f0 ??1NNQuantizer@@QAE@XZ function 0x4e
+0x00565540 ?initnet@NNQuantizer@@IAEXXZ function 0x54
+0x005655a0 ?unbiasnet@NNQuantizer@@IAEXXZ function 0x7f
+0x00565620 ?inxbuild@NNQuantizer@@IAEXXZ function 0x141
+0x00565770 ?inxsearch@NNQuantizer@@IAEHHHH@Z function 0xfb
+0x00565870 ?contest@NNQuantizer@@IAEHHHH@Z function 0xf5
+0x00565970 ?alterneigh@NNQuantizer@@IAEXHHHHH@Z function 0x195
+0x00565b10 ?learn@NNQuantizer@@IAEXH@Z function 0x29b
+0x00565db0 ?Quantize@NNQuantizer@@QAEPAUFIBITMAP@@PAU2@HPAUtagRGBQUAD@@H@Z function 0x1ff
+0x00565fb0 ?getFreeImageModel@TagLib@@QAE?AW4FREE_IMAGE_MDMODEL@@W4MDMODEL@1@@Z function 0x92
+0x00566050 ?_Dec@const_iterator@?$_Tree@V?$_Tmap_traits@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@$0A@@std@@@std@@QAEXXZ function
+0x005660b0 ?_Inc@const_iterator@?$_Tree@V?$_Tmap_traits@HPAV?$map@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@@std@@@std@@@2@$0A@@std@@@std@@QAEXXZ function
+0x00566110 ?_Buynode@?$_Tree@V?$_Tmap_traits@HPAV?$map@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@@std@@@std@@@2@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@@std@@@std@@@2@$0A@@std@@@2@XZ function
+0x00566150 ?_Erase@?$_Tree@V?$_Tmap_traits@HPAV?$map@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@@std@@@std@@@2@$0A@@std@@@std@@IAEXPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@@std@@@std@@@2@$0A@@std@@@2@@Z function 0x37
+0x00566190 ?_Erase@?$_Tree@V?$_Tmap_traits@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@$0A@@std@@@std@@IAEXPAU_Node@?$_Tree_nod@V?$_Tmap_traits@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@$0A@@std@@@2@@Z function 0x37
+0x005661d0 ?_Insert@?$_Tree@V?$_Tmap_traits@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@$0A@@std@@@std@@IAE?AViterator@12@_NPAU_Node@?$_Tree_nod@V?$_Tmap_traits@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@$0A@@std@@@2@ABU?$pair@$$CBGPAUtagTagInfo@@@2@@Z function
+0x00566380 ?erase@?$_Tree@V?$_Tmap_traits@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@$0A@@std@@@std@@QAE?AViterator@12@V312@@Z function
+0x0056639e ?move@?$char_traits@D@std@@SAPADPADPBDI@Z function 0x5
+0x00566640 ?insert@?$_Tree@V?$_Tmap_traits@HPAV?$map@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@@std@@@std@@@2@$0A@@std@@@std@@QAE?AU?$pair@Viterator@?$_Tree@V?$_Tmap_traits@HPAV?$map@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@@std@@@std@@@2@$0A@@std@@@std@@_N@2@ABU?$pair@$$CBHPAV?$map@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@@std@@@2@@Z function 0xb9
+0x00566700 ?erase@?$_Tree@V?$_Tmap_traits@HPAV?$map@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@@std@@@std@@@2@$0A@@std@@@std@@QAE?AViterator@12@V312@0@Z function 0xb7
+0x005667c0 ?insert@?$_Tree@V?$_Tmap_traits@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@$0A@@std@@@std@@QAE?AU?$pair@Viterator@?$_Tree@V?$_Tmap_traits@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@$0A@@std@@@std@@_N@2@ABU?$pair@$$CBGPAUtagTagInfo@@@2@@Z function 0xbd
+0x00566880 ?erase@?$_Tree@V?$_Tmap_traits@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@$0A@@std@@@std@@QAE?AViterator@12@V312@0@Z function 0xb7
+0x00566940 ?insert@?$_Tree@V?$_Tmap_traits@HPAV?$map@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@@std@@@std@@@2@$0A@@std@@@std@@QAE?AViterator@12@V312@ABU?$pair@$$CBHPAV?$map@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@@std@@@2@@Z function 0x169
+0x00566ab0 ?insert@?$_Tree@V?$_Tmap_traits@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@$0A@@std@@@std@@QAE?AViterator@12@V312@ABU?$pair@$$CBGPAUtagTagInfo@@@2@@Z function 0x172
+0x00566c30 ??A?$map@HPAV?$map@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@@std@@@std@@@2@@std@@QAEAAPAV?$map@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@@1@ABH@Z function 0x79
+0x00566cb0 ??A?$map@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@@std@@QAEAAPAUtagTagInfo@@ABG@Z function 0x7d
+0x00566d60 ?getTagFieldName@TagLib@@QAEPBDW4MDMODEL@1@G@Z function 0x5a
+0x00566dc0 ?getTagDescription@TagLib@@QAEPBDW4MDMODEL@1@G@Z function 0x3c
+0x00566e00 ??0?$map@GPAUtagTagInfo@@U?$less@G@std@@V?$allocator@U?$pair@$$CBGPAUtagTagInfo@@@std@@@3@@std@@QAE@XZ function
+0x00566e30 ?addMetadataModel@TagLib@@AAEJW4MDMODEL@1@PAUtagTagInfo@@@Z function 0xc3
+0x00566f00 ??0TagLib@@AAE@XZ function 0x151
+0x00567060 ??1TagLib@@QAE@XZ function 0xb9
+0x00567120 ?instance@TagLib@@SAAAV1@XZ function 0x5c
 0x0056717c _png_set_sig_bytes function 0x2d
 0x005671a9 _png_sig_cmp function 0x67
 0x00567210 _png_zalloc function 0x47
@@ -606,10 +838,11 @@
 0x005bfa8a __Atexit function 0x20
 0x005bfad0 _strncpy function 0x124
 0x005bfc2c __fpmath function 0x1e
-0x005bfc4a _free function 0x5
+0x005bfc4a ??3@YAXPAX@Z function 0x5
 0x005bfc4f _JumpToContinuation function 0x2b
 0x005bfc86 _UnwindNestedFrames function 0x52
 0x005bfcd8 ___CxxFrameHandler function 0x36
+0x005bfd0e ___CxxLongjmpUnwind@4 function
 0x005bfd63 _CallSETranslator function 0xc5
 0x005bfe28 TranslatorGuardHandler function 0xaf
 0x005bfeda _GetRangeOfTrysToCheck function 0x7a
@@ -621,6 +854,7 @@
 0x005c005e __local_unwind2 function 0x68
 0x005c00c6 __abnormal_termination function 0x23
 0x005c00e9 __NLG_Notify1 function 0x9
+0x005c0110 _floor function
 0x005c0231 _wcsncpy function 0x3d
 0x005c02dd _free function 0x38
 0x005c0315 __vsnprintf function 0x56
@@ -634,9 +868,11 @@
 0x005c0833 __CxxThrowException@8 function 0x3a
 0x005c087e exception::exception function 0x3d
 0x005c08bb exception::exception function 0x4a
+0x005c099c _fwrite function
+0x005c0ad4 _fread function
 0x005c0bbd _atol function 0x58
-0x005c0c15 _atol function 0x5
-0x005c0c1a _free function 0x5
+0x005c0c15 _atoi function 0x5
+0x005c0c1a ??_V@YAXPAX@Z function 0x5
 0x005c0c1f __ArrayUnwind function 0x2f
 0x005c0c7d `eh_vector_destructor_iterator' function 0x48
 0x005c0cdd `eh_vector_constructor_iterator' function 0x4a
@@ -653,6 +889,7 @@
 0x005c14cc _fseek function 0x8e
 0x005c155a __fsopen function 0x2a
 0x005c1597 __resetstkoflw function 0xe3
+0x005c167a _realloc function
 0x005c17e0 __allmul function 0x34
 0x005c1814 __amsg_exit function 0x25
 0x005c1839 entry function 0x1b1
@@ -702,6 +939,7 @@
 0x005c35ac __set_osfhnd function 0x77
 0x005c3623 __free_osfhnd function 0x7a
 0x005c369d __get_osfhandle function 0x3c
+0x005c36f0 _ceil function
 0x005c380d _wcschr function 0x22
 0x005c382f _wcsncat function 0x3d
 0x005c386c _wcsstr function 0x5e
@@ -1013,18 +1251,41 @@
 0x005d771e VERSION.DLL::GetFileVersionInfoSizeA function 0x6
 0x005d7724 DINPUT8.DLL::DirectInput8Create function 0x6
 0x005e5f66 D3D8.DLL::Direct3DCreate8 function 0x6
+0x005e6400 ?_Lrotate@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@IAEXPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@@Z function
+0x005e6460 ?_Rrotate@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@IAEXPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@@Z function
 0x005e69ae KERNEL32.DLL::RtlUnwind function 0x6
 0x005e6ae0 shortsort function 0x6a
 0x005e6b50 _qsort function 0x283
+0x005f9f21 __ehhandler$?_Buynode@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@PAU342@00ABU?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@2@D@Z function
+0x005f9f38 __ehhandler$?_Insert@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@IAE?AViterator@12@_NPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@ABU?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@2@@Z function
+0x005f9f58 __ehhandler$??A?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@QAEAAPAUFITAG@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@@Z function
+0x005f9f78 __ehhandler$_FreeImage_Rescale function
+0x005f9f90 __ehhandler$?Load@@YAPAUFIBITMAP@@PAUFreeImageIO@@PAXHH1@Z function
+0x005f9fa0 __ehhandler$?Load@@YAPAUFIBITMAP@@PAUFreeImageIO@@PAXHH1@Z function
+0x005f9fb0 __ehhandler$?Save@@YAJPAUFreeImageIO@@PAUFIBITMAP@@PAXHH2@Z function
+0x005f9fd3 __ehhandler$_FreeImage_ColorQuantizeEx function
+0x005fa018 __ehhandler$?jpeg_read_exif_dir@@YAJPAUFIBITMAP@@PBEIIJ@Z function
+0x005fa030 __ehhandler$?Quantize@WuQuantizer@@QAEPAUFIBITMAP@@HHPAUtagRGBQUAD@@@Z function
+0x005fa06b __ehhandler$?addMetadataModel@TagLib@@AAEJW4MDMODEL@1@PAUtagTagInfo@@@Z function
+0x005fa088 __ehhandler$??0TagLib@@AAE@XZ function
+0x005fa0a8 __ehhandler$??1TagLib@@QAE@XZ function
+0x005fa0ce __ehhandler$?instance@TagLib@@SAAAV1@XZ function
+0x006552c0 _$E2 function
 0x00656898 __real@00000000 data 0x4
 0x0065691c ??_7SRESULT@@6B@ data 0x4
+0x0065750c ??_C@_0BM@PAPJHAGI@invalid?5map?1set?$DMT?$DO?5iterator?$AA@ data
+0x00657528 ??_C@_0BE@JONHPENG@map?1set?$DMT?$DO?5too?5long?$AA@ data
 0x006595a8 __real@0000000000000000 data
 0x00659768 __real@3fd51eb860000000 data
 0x0065b110 __real@3fe0000000000000 data
 0x0065e8a0 __real@3ff0000000000000 data
+0x00662ae0 ??_7length_error@std@@6B@ data
+0x00662aec ??_7out_of_range@std@@6B@ data
 0x00663218 __real@406fe00000000000 data
 0x00663220 __real@3f70101010101010 data
 0x00663228 __real@3eb0c6f7a0b5ed8d data
+0x00663230 __real@400199999999999a data
+0x00663238 ??_C@_05IAIEPMAK@1?42?48?$AA@ data
 0x00663240 __real@3727c5ac data
 0x006649bc ??_C@_0BD@LBMCPKOE@zlib?5version?5error?$AA@ data
 0x006649d0 ??_C@_0BC@MCPIPOGP@zlib?5memory?5error?$AA@ data
@@ -1098,6 +1359,7 @@
 0x00666020 ??_C@_0BG@LBKINIKP@invalid?5distance?5code?$AA@ data
 0x00666038 ??_C@_0BM@FFFLPBBC@invalid?5literal?1length?5code?$AA@ data
 0x0066653c ??_C@_03OFAPEBGM@?$CFs?6?$AA@ data
+0x006691d4 ??_C@_01IHBHIGKO@?0?$AA@ data
 0x0066a9f0 ?s_TypeNames@@3QAY0P@$$CBDA data 0xb4
 0x0066aaa4 ??_C@_0DA@KGMHJCC@SRESULT?3?3GetChar?$DO?5Error?5?9?5Wrong?5@ data
 0x0066aad4 ??_C@_0CP@NHGBBAKJ@SRESULT?3?3GetInt?$DO?5Error?5?9?5Wrong?5v@ data
@@ -1114,7 +1376,48 @@
 0x0066ad08 ??_C@_0DN@BLACEIHK@SRESULT?3?3SetValue?$DO?5Error?5?9?5unico@ data
 0x0066ad48 ??_C@_0DF@NIGFJBLF@SRESULT?3?3SetValue?$DO?5Error?5?9?5strin@ data
 0x0066ad80 ??_C@_0DD@OAIJFCJA@SRESULT?3?3GetTexture?$DO?5Error?5?9?5Wro@ data
+0x0067e3ac ??_7CBoxFilter@@6B@ data
+0x0067e3b4 ??_7CBilinearFilter@@6B@ data
+0x0067e3c0 __real@403e000000000000 data
+0x0067e3c8 __real@4048000000000000 data
+0x0067e3d0 __real@c028000000000000 data
+0x0067e3d8 __real@4038000000000000 data
 0x0067e3e0 __real@4020000000000000 data
+0x0067e3e8 __real@4022000000000000 data
+0x0067e3f0 __real@4032000000000000 data
+0x0067e3f8 __real@4028000000000000 data
+0x0067e400 __real@3fc5555555555555 data
+0x0067e408 __real@4018000000000000 data
+0x0067e410 ??_7CBicubicFilter@@6B@ data
+0x0067e418 __real@4000000000000000 data
+0x0067e420 ??_7CCatmullRomFilter@@6B@ data
+0x0067e430 __real@4008000000000000 data
+0x0067e448 ??_7CLanczos3Filter@@6B@ data
+0x0067e450 ??_7CBSplineFilter@@6B@ data
+0x0067e458 ??_7CResizeEngine@@6B@ data
+0x0067e460 __real@3fd5555555555555 data
+0x0067e4b8 ??_C@_0BB@NDNLODH@Embedded?5Profile?$AA@ data
+0x0067e4cc ??_C@_0BJ@BKEJFNKE@PNG?5format?5not?5supported?$AA@ data
+0x0067e4e8 ??_C@_07JABLCLAF@Comment?$AA@ data
+0x0067e4f0 ??_C@_0BN@NPNNJGID@http?3?1?1ns?4adobe?4com?1xap?11?40?1?$AA@ data
+0x0067e558 __real@4043af5ebd7af5ec data
+0x0067e598 __real@3f9a027525460aa6 data
+0x0067e5f0 ??_C@_04ONOFACOJ@AOC?$AA?$AA@ data
+0x0067e5f8 ??_C@_05EFCKMHJK@Asahi?$AA@ data
+0x0067e600 ??_C@_06HFNDPLNB@Pentax?$AA@ data
+0x0067e608 ??_C@_0N@JMHEFFKL@Panasonic?$AA?$AA?$AA?$AA@ data
+0x0067e618 ??_C@_07EBBJKCPL@Minolta?$AA@ data
+0x0067e620 ??_C@_0BH@GLGBOGGB@KYOCERA?5?5?5?5?5?5?5?5?5?5?5?5?$AA?$AA?$AA?$AA@ data
+0x0067e638 ??_C@_08JBDBFONL@Fujifilm?$AA@ data
+0x0067e644 ??_C@_08GMGMOCFP@FUJIFILM?$AA@ data
+0x0067e650 ??_C@_05LPEKPANG@Casio?$AA@ data
+0x0067e658 ??_C@_05KPDCGH@Canon?$AA@ data
+0x0067e660 ??_C@_05LLJPJKEK@Nikon?$AA@ data
+0x0067e668 ??_C@_05HHKFHIDC@NIKON?$AA@ data
+0x0067e670 ??_C@_05FJMMFAEC@OLYMP?$AA@ data
+0x0067e678 ??_C@_04EGCMLPFP@Make?$AA@ data
+0x0067e6ac ??_C@_0BC@BAKIAKOF@Not?5enough?5memory?$AA@ data
+0x00680444 ??_C@_0L@EEFGOJPL@Tag?50x?$CF04X?$AA@ data
 0x00680450 _png_libpng_ver data
 0x0068046c _png_IHDR data
 0x00680474 _png_IDAT data
@@ -1395,6 +1698,32 @@
 0x00685f18 __length_code data
 0x00686018 _base_length data
 0x00686090 _base_dist data
+0x0068f54c __TI3?AVout_of_range@std@@ data
+0x0068f64c __TI3?AVlength_error@std@@ data
+0x006a892c __TI2PAD data
+0x006aa528 __TI1H data
+0x006aa590 __TI2CPAD data
+0x006aa614 __TI1?AW4J_MESSAGE_CODE@@ data
+0x006c7074 _g_TagLib_XMPFieldName data
+0x006c7078 _g_TagLib_XMPFieldName data
+0x006c70c4 ?format_bytes@?1??FreeImage_TagDataWidth@@YAHG@Z@4PAHA data
+0x006c7110 _exif_exif_tag_table data
+0x006c75a8 _exif_gps_tag_table data
+0x006c7728 _exif_interop_tag_table data
+0x006c7770 _exif_canon_tag_table data
+0x006c7920 _exif_casio_tag_table data
+0x006c79c0 _exif_fujifilm_tag_table data
+0x006c7a8c _exif_kyocera_tag_table data
+0x006c7ab0 _exif_olympus_tag_table data
+0x006c7b20 _exif_minolta_tag_table data
+0x006c7b90 _exif_nikon_type1_tag_table data
+0x006c7c00 _exif_nikon_type2_tag_table data
+0x006c7cb8 _exif_nikon_type3_tag_table data
+0x006c7d78 _exif_panasonic_tag_table data
+0x006c7e08 _exif_pentax_tag_table data
+0x006c7ec0 _iptc_tag_table data
+0x006c7ff0 _geotiff_tag_table data
+0x006c8060 _animation_tag_table data
 0x006c80e8 _onebppswaptable data
 0x006c81e8 _twobppswaptable data
 0x006c82e8 _fourbppswaptable data
@@ -1436,6 +1765,11 @@
 0x006c8698 _static_bl_desc data
 0x006c8a20 __iob data
 0x006cbc80 ?g_pLog@@3PAVLOG@@A data 0x4
+0x00a0f288 _s_format_id data
+0x00a0f28c _s_format_id data
+0x00a0f290 ?unknown_tag@?1??getTagFieldName@TagLib@@QAEPBDW4MDMODEL@2@G@Z@4PADA data
+0x00a0f29c ?s@?1??instance@TagLib@@SAAAV2@XZ@4V2@A data
+0x00a0f2a8 ?$S1@?1??instance@TagLib@@SAAAV2@XZ@4IA data
 0x00a0f2ac _SSE2Available data
 0x00a0f2b0 ?cpuidDetected@?1??jpeg_CreateDecompress@@9@9 data
 0x00a12444 _MMXAvailable data

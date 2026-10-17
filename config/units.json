@@ -687,6 +687,27 @@
       "complete": true
     },
     {
+      "name": "lib/freeimage/BitmapAccess",
+      "ranges": [
+        "0x0055af30-0x0055d42f"
+      ],
+      "target": "build/target/lib/freeimage/BitmapAccess.obj",
+      "source": "src/lib/freeimage/FreeImage/BitmapAccess.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage"
+    },
+    {
+      "name": "lib/freeimage/Conversion24",
+      "ranges": [
+        "0x0055d430-0x0055d9df"
+      ],
+      "target": "build/target/lib/freeimage/Conversion24.obj",
+      "source": "src/lib/freeimage/FreeImage/Conversion24.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage",
+      "complete": true
+    },
+    {
       "name": "lib/freeimage/MemoryIO",
       "ranges": [
         "0x0055d9e0-0x0055daff"
@@ -704,6 +725,163 @@
       ],
       "target": "build/target/lib/freeimage/PixelAccess.obj",
       "source": "src/lib/freeimage/FreeImage/PixelAccess.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage"
+    },
+    {
+      "name": "lib/freeimage/Rescale",
+      "ranges": [
+        "0x0055ddc0-0x0055e3df"
+      ],
+      "target": "build/target/lib/freeimage/Rescale.obj",
+      "source": "src/lib/freeimage/FreeImageToolkit/Rescale.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage"
+    },
+    {
+      "name": "lib/freeimage/Conversion32",
+      "ranges": [
+        "0x0055e3e0-0x0055eaaf"
+      ],
+      "target": "build/target/lib/freeimage/Conversion32.obj",
+      "source": "src/lib/freeimage/FreeImage/Conversion32.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage",
+      "complete": true
+    },
+    {
+      "name": "lib/freeimage/Flip",
+      "ranges": [
+        "0x0055eab0-0x0055eb6f"
+      ],
+      "target": "build/target/lib/freeimage/Flip.obj",
+      "source": "src/lib/freeimage/FreeImageToolkit/Flip.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage",
+      "complete": true
+    },
+    {
+      "name": "lib/freeimage/FreeImageIO",
+      "ranges": [
+        "0x0055eb70-0x0055ed5f"
+      ],
+      "target": "build/target/lib/freeimage/FreeImageIO.obj",
+      "source": "src/lib/freeimage/FreeImage/FreeImageIO.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage",
+      "complete": true
+    },
+    {
+      "name": "lib/freeimage/PluginPNG",
+      "ranges": [
+        "0x0055ed60-0x0055fd0f"
+      ],
+      "target": "build/target/lib/freeimage/PluginPNG.obj",
+      "source": "src/lib/freeimage/FreeImage/PluginPNG.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage /DPNG_iTXt_SUPPORTED /Isrc/lib/zlib"
+    },
+    {
+      "name": "lib/freeimage/PluginJPEG",
+      "ranges": [
+        "0x0055fd10-0x005611af"
+      ],
+      "target": "build/target/lib/freeimage/PluginJPEG.obj",
+      "source": "src/lib/freeimage/FreeImage/PluginJPEG.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage"
+    },
+    {
+      "name": "lib/freeimage/FreeImageTag",
+      "ranges": [
+        "0x005611b0-0x0056164f"
+      ],
+      "target": "build/target/lib/freeimage/FreeImageTag.obj",
+      "source": "src/lib/freeimage/Metadata/FreeImageTag.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage",
+      "complete": true
+    },
+    {
+      "name": "lib/freeimage/GetType",
+      "ranges": [
+        "0x00561650-0x0056169f"
+      ],
+      "target": "build/target/lib/freeimage/GetType.obj",
+      "source": "src/lib/freeimage/FreeImage/GetType.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage",
+      "complete": true
+    },
+    {
+      "name": "lib/freeimage/Conversion",
+      "ranges": [
+        "0x005616a0-0x005617ef"
+      ],
+      "target": "build/target/lib/freeimage/Conversion.obj",
+      "source": "src/lib/freeimage/FreeImage/Conversion.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage"
+    },
+    {
+      "name": "lib/freeimage/Resize",
+      "ranges": [
+        "0x005617f0-0x0056255f"
+      ],
+      "target": "build/target/lib/freeimage/Resize.obj",
+      "source": "src/lib/freeimage/FreeImageToolkit/Resize.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage",
+      "complete": true
+    },
+    {
+      "name": "lib/freeimage/IPTC",
+      "ranges": [
+        "0x00562560-0x0056297f"
+      ],
+      "target": "build/target/lib/freeimage/IPTC.obj",
+      "source": "src/lib/freeimage/Metadata/IPTC.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage",
+      "complete": true
+    },
+    {
+      "name": "lib/freeimage/Exif",
+      "ranges": [
+        "0x00562980-0x00563b4f"
+      ],
+      "target": "build/target/lib/freeimage/Exif.obj",
+      "source": "src/lib/freeimage/Metadata/Exif.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage"
+    },
+    {
+      "name": "lib/freeimage/WuQuantizer",
+      "ranges": [
+        "0x00563b50-0x005653ef"
+      ],
+      "target": "build/target/lib/freeimage/WuQuantizer.obj",
+      "source": "src/lib/freeimage/FreeImage/WuQuantizer.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage"
+    },
+    {
+      "name": "lib/freeimage/NNQuantizer",
+      "ranges": [
+        "0x005653f0-0x00565faf"
+      ],
+      "target": "build/target/lib/freeimage/NNQuantizer.obj",
+      "source": "src/lib/freeimage/FreeImage/NNQuantizer.cpp",
+      "category": "lib",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage"
+    },
+    {
+      "name": "lib/freeimage/TagLib",
+      "ranges": [
+        "0x00565fb0-0x0056717b"
+      ],
+      "target": "build/target/lib/freeimage/TagLib.obj",
+      "source": "src/lib/freeimage/Metadata/TagLib.cpp",
       "category": "lib",
       "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage"
     }
