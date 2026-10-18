@@ -47,18 +47,25 @@ public class ApplySymbols extends HeadlessScript {
 			Address addr = toAddr(parts[0]);
 			String name = parts[1];
 			boolean isFunction = parts.length > 2 && parts[2].equals("function");
+			if (isFunction && getInstructionAt(addr) == null) {
+				// Only reached through a pointer, so analysis never
+				// disassembled it (png error_handler, the _$E1 dynamic
+				// initializers); the delinker needs instructions to find
+				// its relocations, and Ghidra needs them for a function.
+				// (Analysis may have taken its bytes for a string.)
+				if (getDataAt(addr) != null && getDataAt(addr).isDefined()) {
+					clearListing(addr);
+				}
+				if (!disassemble(addr)) {
+					printerr("Could not disassemble " + addr);
+				}
+			}
 			Function f = getFunctionAt(addr);
 			if (isFunction && parts.length > 3) {
 				f = setExtent(f, addr, Long.decode(parts[3]));
 			}
 			if (isFunction && f == null) {
 				f = splitAt(addr);
-			}
-			if (isFunction && getInstructionAt(addr) == null) {
-				// Only reached through a pointer, so analysis never
-				// disassembled it (png error_handler); the delinker
-				// needs instructions to find its relocations.
-				disassemble(addr);
 			}
 			try {
 				if (f != null) {

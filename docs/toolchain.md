@@ -74,4 +74,8 @@ Things learned while matching engine code with `/O2`:
 - **Early returns.** `if (!fp) return 0; if (_fstat64(...)) return 0; return st.st_mtime;` lays its blocks out differently from the same test joined with `&&`.
 - **Calls into the same file.** The compiler knows which registers a function defined earlier in the same file leaves alone, and keeps values in them across a call. `FILELOADERWKZ::IsError` reloads `g_pLog` after calling `WKZ::ErrorString`, so `WKZ` was compiled in a file of its own.
 - **Inline helpers.** An inline member that takes an argument evaluates it before its body runs, which moves loads ahead of the tests (`WKZSTREAM::Reserve` in `WKZ::Decompress`).
+- **Calls that can't throw.** With `/GX`, the compiler drops the EH state change around a call it knows can't throw, including a call to a function defined in the same file that throws nothing. `WTLEADERBOARDIMPL::GetSubmitURL` sets a state around its call to `Hash`, so `Hash` (with `Xor` and `Encrypt` next to it) was compiled in another file, `WTCRYPT`.
+- **Index variables.** `char c = ...; s += table[c];` gives the `movsx` the exe has; an `int` index doesn't (`Base64Encode`).
+- **`/GS`.** A function with a local array reads `___security_cookie` and calls `@__security_check_cookie@4`. `WTLEADERBOARDIMPL` is built with `/GS`; the game's own files so far aren't.
+- **Folded functions.** The linker folds identical functions (`/OPT:ICF`), so the empty `WTLEADERBOARDIMPL` constructor and destructor are calls to `??0Point@IceMaths@@QAE@XZ` and `?term_source@@...` in the exe; `symbol_mappings` on the unit pairs them.
 - **No Platform SDK.** The Toolkit has no `windows.h`; `include/windows.h` is a minimal stand-in with the SDK's declarations. Add to it as units need more.

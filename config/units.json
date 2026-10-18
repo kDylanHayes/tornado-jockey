@@ -1492,6 +1492,46 @@
       "source": "src/Tongas2/WKZ.cpp",
       "category": "engine",
       "complete": true
+    },
+    {
+      "name": "wt/WTLEADERBOARD",
+      "ranges": [
+        "0x005bda90-0x005bdd0f",
+        "0x006878ac-0x006878dc"
+      ],
+      "target": "build/target/wt/WTLEADERBOARD.obj",
+      "source": "src/wt/WTLEADERBOARD.cpp",
+      "category": "sdk",
+      "complete": true,
+      "symbol_mappings": {
+        "??0Point@IceMaths@@QAE@XZ": "??0WTLEADERBOARDIMPL@@QAE@XZ",
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "??1WTLEADERBOARDIMPL@@QAE@XZ"
+      }
+    },
+    {
+      "name": "wt/WTLEADERBOARDIMPL",
+      "ranges": [
+        "0x005bdd10-0x005be6bf",
+        "0x006541f0-0x0065420c",
+        "0x006553a0-0x006553cd",
+        "0x00687928-0x00687a3c",
+        "0x006c87ec-0x006c8807"
+      ],
+      "target": "build/target/wt/WTLEADERBOARDIMPL.obj",
+      "source": "src/wt/WTLEADERBOARDIMPL.cpp",
+      "category": "sdk",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /GS",
+      "complete": true
+    },
+    {
+      "name": "wt/WTCRYPT",
+      "ranges": [
+        "0x005be6c0-0x005be7e2"
+      ],
+      "target": "build/target/wt/WTCRYPT.obj",
+      "source": "src/wt/WTCRYPT.cpp",
+      "category": "sdk",
+      "complete": true
     }
   ]
 }

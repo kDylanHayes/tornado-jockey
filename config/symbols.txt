@@ -18,8 +18,14 @@
 0x004214f0 ??Y?$FIXEDSTRING@$0CAA@@@QAEXPBD@Z function
 0x004381b0 ?_Tidy@?$deque@GV?$allocator@G@std@@@std@@IAEXXZ function
 0x0043cb20 ?SupportsICCProfiles@@YAJXZ function
+0x004487b0 ?GetDPCodeName@WTINFO@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ function
+0x00448840 ?GetProductCodeName@WTINFO@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ function
 0x004494e0 ?compare@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBEHIIPBDI@Z function
+0x00449560 ?append@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@ID@Z function
+0x00449630 ?append@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@ABV12@II@Z function
+0x0044a440 ??$?HDU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@ABV10@0@Z function
 0x0044a620 ?append@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@PBDI@Z function
+0x0044a730 ??$?HDU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@ABV10@PBD@Z function
 0x004536f0 ??R?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@QBE_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@0@Z function
 0x0045446b ??2@YAPAXI@Z function 0x24
 0x0045450f ??_U@YAPAXI@Z function 0x5
@@ -89,6 +95,8 @@
 0x004e7ed0 ?_Buynode@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@PAU342@00ABU?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@2@D@Z function
 0x004eb950 ?IsCompressed@FILELOADER@@UAE_NXZ function 0x3
 0x00547f50 ?term_source@@YAXPAUjpeg_decompress_struct@@@Z function
+0x0054f1f0 ??1WTINFO@@QAE@XZ function
+0x00550520 ??0WTINFO@@QAE@_N@Z function
 0x00550e40 ?IsOpen@FILELOADER@@UAE_NXZ function 0xb
 0x00559cc6 FMOD.DLL::_FSOUND_GetError@0 function 0x6
 0x00559ccc FMOD.DLL::_FSOUND_StopSound@4 function 0x6
@@ -1389,6 +1397,16 @@
 0x005bcef0 _dSolveL1_1 function 0x1ce
 0x005bd0c0 _dSolveL1_2 function 0x35b
 0x005bd420 _dFactorLDLT function 0x667
+0x005bda90 ??0WTLEADERBOARD@@QAE@XZ function 0x64
+0x005bdb00 ??1WTLEADERBOARD@@QAE@XZ function 0x19
+0x005bdb20 ?GetSubmitURL@WTLEADERBOARD@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBD0H@Z function 0x123
+0x005bdc50 ?GetViewURL@WTLEADERBOARD@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBD@Z function 0xba
+0x005bdd10 ?Base64Encode@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBDH@Z function 0x1a8
+0x005bdec0 ?GetSubmitURL@WTLEADERBOARDIMPL@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV23@0H@Z function 0x640
+0x005be500 ?GetViewURL@WTLEADERBOARDIMPL@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV23@@Z function 0x1b2
+0x005be6c0 ?Xor@@YAPADPBD0HH@Z function 0x4b
+0x005be710 ?Hash@@YAHPBDH@Z function 0x2c
+0x005be740 ?Encrypt@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@0@Z function 0xa3
 0x005be7f0 ?InitFileLoaderWKZ@@YAXPAX@Z function 0x1a
 0x005be810 ?ShutdownFileLoaderWKZ@@YAXXZ function 0x1d
 0x005be830 ?IsCompressed@FILELOADERWKZ@@UAE_NXZ function 0x4
@@ -1450,6 +1468,8 @@
 0x005c02dd _free function 0x38
 0x005c0315 __vsnprintf function 0x56
 0x005c036c __ftol2 function
+0x005c03e1 _srand function
+0x005c03eb _rand function
 0x005c040e __heap_alloc function 0x46
 0x005c0454 __nh_malloc function 0x2c
 0x005c0480 _malloc function 0x12
@@ -1523,6 +1543,7 @@
 0x005c30c2 __stricmp function 0x43
 0x005c3105 _tolower function 0xd5
 0x005c31da _vsprintf function 0x57
+0x005c3231 _time function
 0x005c326a __wcsicmp function 0x88
 0x005c32f2 _wcstok function 0xa3
 0x005c3401 __flush function 0x5d
@@ -1560,7 +1581,7 @@
 0x005c4768 _abort function 0x18
 0x005c4780 _fabs function 0xb1
 0x005c491c report_failure function 0x29
-0x005c494d __security_check_cookie function 0xe
+0x005c494d @__security_check_cookie@4 function 0xe
 0x005c495b xtoa function 0x3e
 0x005c4999 __itoa function 0x2a
 0x005c49c4 __SEH_prolog function 0x3b
@@ -1866,9 +1887,18 @@
 0x005fa088 __ehhandler$??0TagLib@@AAE@XZ function
 0x005fa0a8 __ehhandler$??1TagLib@@QAE@XZ function
 0x005fa0ce __ehhandler$?instance@TagLib@@SAAAV1@XZ function
+0x005fa39b __ehhandler$??0WTLEADERBOARD@@QAE@XZ function
+0x005fa3c0 __ehhandler$?GetSubmitURL@WTLEADERBOARD@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBD0H@Z function
+0x005fa3e0 __ehhandler$?GetViewURL@WTLEADERBOARD@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBD@Z function
+0x005fa3f8 __ehhandler$?Base64Encode@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBDH@Z function
+0x005fa4df __ehhandler$?GetSubmitURL@WTLEADERBOARDIMPL@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV23@0H@Z function
+0x005fa535 __ehhandler$?GetViewURL@WTLEADERBOARDIMPL@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV23@@Z function
+0x005fa550 __ehhandler$?Encrypt@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@0@Z function
 0x005fa56b __ehhandler$?CreateFileLoaderWKZ@@YAPAVFILELOADER@@XZ function
 0x005fa588 __ehhandler$??1FILELOADERWKZ@@UAE@XZ function
+0x006541f0 _$E1 function 0x1d
 0x006552c0 _$E2 function
+0x006553a0 _$E2 function 0x2e
 0x006560cc __imp__GetProcAddress@8 data 0x4
 0x006560d0 __imp__GetModuleHandleA@4 data 0x4
 0x00656100 __imp__DeleteFileA@4 data 0x4
@@ -1986,6 +2016,7 @@
 0x00666038 ??_C@_0BM@FFFLPBBC@invalid?5literal?1length?5code?$AA@ data
 0x00666530 ??_C@_01EEMJAFIK@?6?$AA@ data
 0x0066653c ??_C@_03OFAPEBGM@?$CFs?6?$AA@ data
+0x00666990 ??_C@_02DPKJAMEF@?$CFd?$AA@ data
 0x00667384 ??_C@_01KDCPPGHE@r?$AA@ data
 0x006691d4 ??_C@_01IHBHIGKO@?0?$AA@ data
 0x0066a974 ??_7SYSMONITOR@@6B@ data 0x4
@@ -2497,6 +2528,16 @@
 0x00687654 ??_7AABBQuantizedNoLeafTree@Opcode@@6B@ data
 0x0068766c ??_7Collider@Opcode@@6B@ data
 0x0068767c ??_7VolumeCollider@Opcode@@6B@ data
+0x006878ac ??_C@_0DB@GNJHFMBJ@Secret?5Key?5or?5Leaderboard?5Key?5gi@ data
+0x00687928 ??_C@_0EB@NFPJKBDG@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdef@ data 0x41
+0x0068796c ??_C@_03HONEPLED@?$CGd?$DN?$AA@ data
+0x00687970 ??_C@_03HMJCEFBK@?$CGg?$DN?$AA@ data
+0x00687978 ??_C@_0FG@LDJDNKNA@http?3?1?1wildboards?4wildtangent?4co@ data
+0x006879d0 ??_C@_01EPMOAMKG@$?$AA@ data
+0x006879d4 ??_C@_01NEMOKFLO@?$DN?$AA@ data
+0x006879d8 ??_C@_03HAMHKKPL@?$CGl?$DN?$AA@ data
+0x006879dc ??_C@_04PNABJCPM@?$CGdp?$DN?$AA@ data
+0x006879e8 ??_C@_0FF@OKFJDNPI@http?3?1?1wildboards?4wildtangent?4co@ data
 0x00687bec ??_7FILELOADERWKZ@@6B@ data 0x34
 0x00687c20 ??_C@_0BJ@JBGCMJJM@Fileloader?5DX8?5error?3?5?$CFs?$AA@ data
 0x00687c3c ??_C@_0BL@JDBMLFHD@FILELOADERWKZ?5?$CIfile?5?$CFs?$CJ?5?$CFs?$AA@ data
@@ -2580,7 +2621,9 @@
 0x006c8754 ?__dslider_vtable@@3UVtable@dxJoint@@A data
 0x006c8768 ?__dcontact_vtable@@3UVtable@dxJoint@@A data
 0x006c87e0 _gFixQuantized data
+0x006c87ec _base64_chars data 0x1c
 0x006c8a20 __iob data
+0x006c8ca0 ___security_cookie data 0x4
 0x006cbc80 ?g_pLog@@3PAVLOG@@A data 0x4
 0x006d2708 ?g_StringManager@@3VSTRINGMANAGER@@A data
 0x007e0ce0 ?liOldSystemTime@?1??GetCpuUsage@SYSMONITOR@@QAEHXZ@4T_LARGE_INTEGER@@A data 0x8
