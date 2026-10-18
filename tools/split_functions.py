@@ -47,6 +47,7 @@ class Coff:
             self.sections.append({
                 "name": name, "vsize": vsize, "vaddr": vaddr, "chars": chars,
                 "data": bytearray(data[rawptr:rawptr + rawsize]) if rawptr else b"",
+                "bss": 0 if rawptr else rawsize,  # size of an uninitialized section
                 "relocs": [list(r) for r in relocs],
             })
         # Symbols as raw 18-byte records; aux records stay attached to their
@@ -106,7 +107,7 @@ class Coff:
                 body += struct.pack("<IIH", *r)
             pos += 10 * len(s["relocs"])
             table += s["name"].ljust(8, b"\0")[:8]
-            table += struct.pack("<IIIIIIHHI", s["vsize"], s["vaddr"], len(raw), rawptr,
+            table += struct.pack("<IIIIIIHHI", s["vsize"], s["vaddr"], len(raw) or s.get("bss", 0), rawptr,
                                  relptr, 0, len(s["relocs"]), 0, s["chars"])
         symtab = bytearray()
         nsym = 0

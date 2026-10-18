@@ -73,7 +73,15 @@ public class ApplySymbols extends HeadlessScript {
 				// Analysis already put this name here as a secondary label
 				// (FID does for _fprintf); promote it.
 				Symbol existing = getSymbol(name, null);
-				if (existing != null && existing.getAddress().equals(addr)) {
+				if (existing != null && existing.getAddress().equals(addr) && f != null) {
+					// A function's own name is always primary, so drop
+					// the label and rename the function (FID calls _fread
+					// "FID_conflict:__fread_lk").
+					existing.delete();
+					f.setName(name, SourceType.USER_DEFINED);
+					applied++;
+				}
+				else if (existing != null && existing.getAddress().equals(addr)) {
 					existing.setPrimary();
 					applied++;
 				}
