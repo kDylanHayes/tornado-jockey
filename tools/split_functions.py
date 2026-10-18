@@ -251,8 +251,10 @@ def split(coff: Coff, base: int | None = None, sizes: dict | None = None) -> int
             raise ValueError(f"section {secno} has contents before its first symbol")
         data = sec["data"]
         names = {}
-        # Prefer a function's name to the section symbol at the same offset.
-        for _, rec in sorted(syms, key=lambda ir: struct.unpack_from("<H", ir[1], 14)[0] != FUNCTION_TYPE):
+        # Prefer a function's name, then an external one (a string literal
+        # whose size the name gives), to the section symbol at the same offset.
+        for _, rec in sorted(syms, key=lambda ir: (struct.unpack_from("<H", ir[1], 14)[0] != FUNCTION_TYPE,
+                                                   ir[1][16] != IMAGE_SYM_CLASS_EXTERNAL)):
             names.setdefault(struct.unpack_from("<I", rec, 8)[0], coff.name(rec))
         bounds = []
         for n, start in enumerate(starts):
