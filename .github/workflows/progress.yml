@@ -145,20 +145,20 @@ jobs:
           python3 tools/progress.py build/report.json --changes build/changes.json | sed -n '/^### Changes/,$p' >> "$GITHUB_STEP_SUMMARY"
 
       - name: Build the progress page
-        if: steps.assets.outputs.available == 'true' && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: steps.assets.outputs.available == 'true' && github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         run: |
           pages="https://${GITHUB_REPOSITORY_OWNER,,}.github.io/${GITHUB_REPOSITORY#*/}"
           curl -fsSL -o history.json "$pages/history.json" || echo "[]" > history.json
           python3 tools/progress.py build/report.json --site build/site --history history.json
 
       - uses: actions/upload-pages-artifact@v3
-        if: steps.assets.outputs.available == 'true' && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: steps.assets.outputs.available == 'true' && github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         with:
           path: build/site
 
   pages:
     needs: report
-    if: needs.report.outputs.built == 'true' && github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: needs.report.outputs.built == 'true' && github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     permissions:
       pages: write
