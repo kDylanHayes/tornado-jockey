@@ -1469,6 +1469,29 @@
       "source": "src/Tongas2/FILELOADER.cpp",
       "category": "engine",
       "complete": true
+    },
+    {
+      "name": "Tongas2/FILELOADERWKZ",
+      "ranges": [
+        "0x005be7f0-0x005bebbc",
+        "0x00687bec-0x00687c5c",
+        "0x00a11294-0x00a11297"
+      ],
+      "target": "build/target/Tongas2/FILELOADERWKZ.obj",
+      "source": "src/Tongas2/FILELOADERWKZ.cpp",
+      "category": "engine",
+      "complete": true
+    },
+    {
+      "name": "Tongas2/WKZ",
+      "ranges": [
+        "0x005bebc0-0x005bf241",
+        "0x00687c60-0x00687d0f"
+      ],
+      "target": "build/target/Tongas2/WKZ.obj",
+      "source": "src/Tongas2/WKZ.cpp",
+      "category": "engine",
+      "complete": true
     }
   ]
 }

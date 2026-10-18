@@ -72,4 +72,6 @@ Things learned while matching engine code with `/O2`:
 - **Overloaded virtuals.** MSVC puts overloads of a virtual function into the vtable in the reverse of their declaration order, so `FILELOADER` declares `Read(buffer, size, count)` before `Read(buffer, size)`.
 - **`new[]` and `delete[]`.** Without `#include <new>`, `new char[n]` calls `operator new` (`??2`); with it, `operator new[]` (`??_U`). The game includes it.
 - **Early returns.** `if (!fp) return 0; if (_fstat64(...)) return 0; return st.st_mtime;` lays its blocks out differently from the same test joined with `&&`.
+- **Calls into the same file.** The compiler knows which registers a function defined earlier in the same file leaves alone, and keeps values in them across a call. `FILELOADERWKZ::IsError` reloads `g_pLog` after calling `WKZ::ErrorString`, so `WKZ` was compiled in a file of its own.
+- **Inline helpers.** An inline member that takes an argument evaluates it before its body runs, which moves loads ahead of the tests (`WKZSTREAM::Reserve` in `WKZ::Decompress`).
 - **No Platform SDK.** The Toolkit has no `windows.h`; `include/windows.h` is a minimal stand-in with the SDK's declarations. Add to it as units need more.

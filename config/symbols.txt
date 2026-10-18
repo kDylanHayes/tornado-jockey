@@ -15,6 +15,7 @@
 0x00407a80 ??0logic_error@std@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@@Z function
 0x00407c50 ??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@PBD@Z function
 0x0040db30 ??4STRING@@QAEAAV0@ABV0@@Z function 0x65
+0x004214f0 ??Y?$FIXEDSTRING@$0CAA@@@QAEXPBD@Z function
 0x004381b0 ?_Tidy@?$deque@GV?$allocator@G@std@@@std@@IAEXXZ function
 0x0043cb20 ?SupportsICCProfiles@@YAJXZ function
 0x004494e0 ?compare@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBEHIIPBDI@Z function
@@ -71,7 +72,7 @@
 0x004cc980 ?_Lbound@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@IBEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@@Z function
 0x004ccb30 ??1_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@QAE@XZ function
 0x004ce290 ?Open@FILELOADER@@UAE_NPAD@Z function 0x67
-0x004ce300 ?IsError@FILELOADER@@UAE_NXZ function 0xb
+0x004ce300 ?IsError@FILELOADER@@UAEHXZ function 0xb
 0x004ce310 ?IsEof@FILELOADER@@UAE_NXZ function 0x14
 0x004ce330 ?Close@FILELOADER@@UAEXXZ function 0x33
 0x004ce370 ?ReadLine@FILELOADER@@UAEPADXZ function 0x6b
@@ -1388,6 +1389,27 @@
 0x005bcef0 _dSolveL1_1 function 0x1ce
 0x005bd0c0 _dSolveL1_2 function 0x35b
 0x005bd420 _dFactorLDLT function 0x667
+0x005be7f0 ?InitFileLoaderWKZ@@YAXPAX@Z function 0x1a
+0x005be810 ?ShutdownFileLoaderWKZ@@YAXXZ function 0x1d
+0x005be830 ?IsCompressed@FILELOADERWKZ@@UAE_NXZ function 0x4
+0x005be840 ?Close@FILELOADERWKZ@@UAEXXZ function 0x28
+0x005be870 ?IsOpen@FILELOADERWKZ@@UAE_NXZ function 0x17
+0x005be890 ?IsError@FILELOADERWKZ@@UAEHXZ function 0x46
+0x005be8e0 ?IsEof@FILELOADERWKZ@@UAE_NXZ function 0x10
+0x005be8f0 ?ReadLine@FILELOADERWKZ@@UAEPADXZ function 0x51
+0x005be950 ?GetData@FILELOADERWKZ@@UAEPADXZ function 0xd
+0x005be960 ?GetSize@FILELOADERWKZ@@UAEHXZ function 0x10
+0x005be970 ?GetTime@FILELOADERWKZ@@UAE_JXZ function 0x13
+0x005be990 ?CreateFileLoaderWKZ@@YAPAVFILELOADER@@XZ function 0x6f
+0x005bea00 ??1FILELOADERWKZ@@UAE@XZ function 0x6d
+0x005bea70 ??_GFILELOADERWKZ@@UAEPAXI@Z function 0x1e
+0x005bea90 ?Open@FILELOADERWKZ@@UAE_NPAD@Z function 0x12d
+0x005bebc0 ?Read@WKZSTREAM@@QAEHPAXH@Z function 0x65
+0x005bec30 ?Write@WKZSTREAM@@QAEHPBXH@Z function 0x65
+0x005beca0 ?Compress@WKZ@@QAEHPAVWKZSTREAM@@0H@Z function 0x1e3
+0x005bee90 ?Decompress@WKZ@@QAEHPAVWKZSTREAM@@0@Z function 0x248
+0x005bf0e0 ?ErrorString@WKZ@@QAEPBDH@Z function 0x74
+0x005bf160 ?Load@WKZ@@QAEHPADPAPADPAHH_N@Z function 0xe2
 0x005bf25f ATL::_ATL_BASE_MODULE70::_ATL_BASE_MODULE70 function 0x1a
 0x005bf28f ATL::CAtlBaseModule::CAtlBaseModule function 0xab
 0x005bf33a ATL::CAtlComModule::CAtlComModule function 0x40
@@ -1446,6 +1468,7 @@
 0x005c0c7d `eh_vector_destructor_iterator' function 0x48
 0x005c0cdd `eh_vector_constructor_iterator' function 0x4a
 0x005c0d3f _atof function 0x4b
+0x005c0d90 _strstr function
 0x005c0f22 _wcscmp function 0x32
 0x005c1071 __onexit function 0x82
 0x005c10f3 _atexit function 0x12
@@ -1843,6 +1866,8 @@
 0x005fa088 __ehhandler$??0TagLib@@AAE@XZ function
 0x005fa0a8 __ehhandler$??1TagLib@@QAE@XZ function
 0x005fa0ce __ehhandler$?instance@TagLib@@SAAAV1@XZ function
+0x005fa56b __ehhandler$?CreateFileLoaderWKZ@@YAPAVFILELOADER@@XZ function
+0x005fa588 __ehhandler$??1FILELOADERWKZ@@UAE@XZ function
 0x006552c0 _$E2 function
 0x006560cc __imp__GetProcAddress@8 data 0x4
 0x006560d0 __imp__GetModuleHandleA@4 data 0x4
@@ -1961,6 +1986,7 @@
 0x00666038 ??_C@_0BM@FFFLPBBC@invalid?5literal?1length?5code?$AA@ data
 0x00666530 ??_C@_01EEMJAFIK@?6?$AA@ data
 0x0066653c ??_C@_03OFAPEBGM@?$CFs?6?$AA@ data
+0x00667384 ??_C@_01KDCPPGHE@r?$AA@ data
 0x006691d4 ??_C@_01IHBHIGKO@?0?$AA@ data
 0x0066a974 ??_7SYSMONITOR@@6B@ data 0x4
 0x0066a978 ??_C@_08EEHIEMNL@heap?4out?$AA@ data 0x9
@@ -2471,6 +2497,19 @@
 0x00687654 ??_7AABBQuantizedNoLeafTree@Opcode@@6B@ data
 0x0068766c ??_7Collider@Opcode@@6B@ data
 0x0068767c ??_7VolumeCollider@Opcode@@6B@ data
+0x00687bec ??_7FILELOADERWKZ@@6B@ data 0x34
+0x00687c20 ??_C@_0BJ@JBGCMJJM@Fileloader?5DX8?5error?3?5?$CFs?$AA@ data
+0x00687c3c ??_C@_0BL@JDBMLFHD@FILELOADERWKZ?5?$CIfile?5?$CFs?$CJ?5?$CFs?$AA@ data
+0x00687c58 ??_C@_04CAJGLEBP@?4wkz?$AA@ data
+0x00687c60 ??_C@_03LEPKMAAH@WKZ?$AA@ data
+0x00687c64 ??_C@_0O@BFJCFAAK@unknown?5error?$AA@ data
+0x00687c74 ??_C@_0BE@KAMCAEAN@no?5signature?5found?$CB?$AA@ data
+0x00687c88 ??_C@_0BA@KOCEOBHI@file?5not?5found?$CB?$AA@ data
+0x00687c98 ??_C@_0BH@KIELHKPM@zlib?5version?5mismatch?$CB?$AA@ data
+0x00687cb0 ??_C@_0P@PCJPAHLM@out?5of?5memory?6?$AA@ data
+0x00687cc0 ??_C@_0CD@EEKBAOMK@invalid?5or?5incomplete?5deflate?5da@ data
+0x00687ce4 ??_C@_0BK@LGAAHICF@invalid?5compression?5level?$AA@ data
+0x00687d00 ??_C@_0BA@IJFDPFOB@error?5in?5stream?$AA@ data
 0x0068f54c __TI3?AVout_of_range@std@@ data
 0x0068f64c __TI3?AVlength_error@std@@ data
 0x006a892c __TI2PAD data
@@ -2622,4 +2661,5 @@
 0x00a105e0 ?VertexCache@MeshInterface@Opcode@@0PAVPoint@IceMaths@@A data
 0x00a10604 ?mNbContainers@Container@IceCore@@0IA data
 0x00a10608 ?mUsedRam@Container@IceCore@@0IA data
+0x00a11294 ?g_pWkz@@3PAVWKZ@@A data 0x4
 0x00a12444 _MMXAvailable data

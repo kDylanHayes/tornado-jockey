@@ -28,7 +28,7 @@ bool FILELOADER::Open(char *name)
     return m_fp ? true : false;
 }
 
-bool FILELOADER::IsError()
+int FILELOADER::IsError()
 {
     return m_fp == NULL;
 }

@@ -12,8 +12,10 @@ public:
     virtual ~FILELOADER();
 
     virtual bool Open(char *name);
-    virtual bool IsOpen() { return m_fp != NULL; }
-    virtual bool IsError();
+    // Out of line, somewhere else: FILELOADERWKZ::IsOpen calls it
+    // rather than inlining it.
+    virtual bool IsOpen();
+    virtual int IsError();
     // MSVC puts overloads in the vtable in reverse order: Read(buffer,
     // size) comes first.
     virtual int Read(void *buffer, int size, int count);
