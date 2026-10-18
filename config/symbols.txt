@@ -20,8 +20,8 @@
 0x004494e0 ?compare@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBEHIIPBDI@Z function
 0x0044a620 ?append@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@PBDI@Z function
 0x004536f0 ??R?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@QBE_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@0@Z function
-0x0045446b operator_new function 0x24
-0x0045450f operator_new function 0x5
+0x0045446b ??2@YAPAXI@Z function 0x24
+0x0045450f ??_U@YAPAXI@Z function 0x5
 0x00456df2 _null_method function
 0x0046785e _emit_message function
 0x00468335 _png_get_PLTE function
@@ -70,9 +70,25 @@
 0x004cc950 ??1?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@XZ function
 0x004cc980 ?_Lbound@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@IBEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@@Z function
 0x004ccb30 ??1_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@QAE@XZ function
+0x004ce290 ?Open@FILELOADER@@UAE_NPAD@Z function 0x67
+0x004ce300 ?IsError@FILELOADER@@UAE_NXZ function 0xb
+0x004ce310 ?IsEof@FILELOADER@@UAE_NXZ function 0x14
+0x004ce330 ?Close@FILELOADER@@UAEXXZ function 0x33
+0x004ce370 ?ReadLine@FILELOADER@@UAEPADXZ function 0x6b
+0x004ce3e0 ?Read@FILELOADER@@UAEHPAXH@Z function 0x25
+0x004ce410 ?Read@FILELOADER@@UAEHPAXHH@Z function 0x28
+0x004ce440 ?GetData@FILELOADER@@UAEPADXZ function 0x3a
+0x004ce480 ?GetSize@FILELOADER@@UAEHXZ function 0x15
+0x004ce4a0 ?GetTime@FILELOADER@@UAE_JXZ function 0x32
+0x004ce4e0 ??0FILELOADER@@QAE@XZ function 0x14
+0x004ce500 ??1FILELOADER@@UAE@XZ function 0x50
+0x004ce550 ?CreateFileLoader@@YAPAVFILELOADER@@XZ function 0x23
+0x004ce580 ??_GFILELOADER@@UAEPAXI@Z function 0x1e
 0x004e7820 ?_Min@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@KAPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@PAU342@@Z function
 0x004e7ed0 ?_Buynode@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@PAU342@00ABU?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@2@D@Z function
+0x004eb950 ?IsCompressed@FILELOADER@@UAE_NXZ function 0x3
 0x00547f50 ?term_source@@YAXPAUjpeg_decompress_struct@@@Z function
+0x00550e40 ?IsOpen@FILELOADER@@UAE_NXZ function 0xb
 0x00559cc6 FMOD.DLL::_FSOUND_GetError@0 function 0x6
 0x00559ccc FMOD.DLL::_FSOUND_StopSound@4 function 0x6
 0x00559cd2 FMOD.DLL::_FSOUND_Stream_Stop@4 function 0x6
@@ -1439,8 +1455,10 @@
 0x005c1240 _memchr function 0xad
 0x005c12f0 _strrchr function 0x2d
 0x005c131d _ftell function 0x159
+0x005c1476 _fclose function
 0x005c14cc _fseek function 0x8e
 0x005c155a __fsopen function 0x2a
+0x005c1584 _fopen function
 0x005c1597 __resetstkoflw function 0xe3
 0x005c167a _realloc function
 0x005c17e0 __allmul function 0x34
@@ -1858,6 +1876,7 @@
 0x0065b13c __real@3e2aaaab data
 0x0065db8c ??_C@_0BC@KBDMBKEH@deque?$DMT?$DO?5too?5long?$AA@ data
 0x0065e8a0 __real@3ff0000000000000 data
+0x00661eac ??_C@_02JDPG@rb?$AA@ data 0x3
 0x00662ae0 ??_7length_error@std@@6B@ data
 0x00662aec ??_7out_of_range@std@@6B@ data
 0x006631d4 __real@4f800000 data
@@ -1967,6 +1986,7 @@
 0x0066ad48 ??_C@_0DF@NIGFJBLF@SRESULT?3?3SetValue?$DO?5Error?5?9?5strin@ data
 0x0066ad80 ??_C@_0DD@OAIJFCJA@SRESULT?3?3GetTexture?$DO?5Error?5?9?5Wro@ data
 0x0066adb4 ??_C@_0BK@EKNCPJEH@Parse?$DO?5Error?5parsing?5?$CC?$CFs?$CC?$AA@ data 0x1a
+0x0067252c ??_7FILELOADER@@6B@ data 0x34
 0x00672810 __real@3f847ae147ae147b data
 0x006734c4 __real@358637bd data
 0x00679658 __real@3f50624dd2f1a9fc data
@@ -2457,6 +2477,7 @@
 0x006aa528 __TI1H data
 0x006aa590 __TI2CPAD data
 0x006aa614 __TI1?AW4J_MESSAGE_CODE@@ data
+0x006c16d8 ?g_pfnCreateFileLoader@@3P6APAVFILELOADER@@XZA data 0x4
 0x006c7074 _g_TagLib_XMPFieldName data
 0x006c7078 _g_TagLib_XMPFieldName data
 0x006c70c4 ?format_bytes@?1??FreeImage_TagDataWidth@@YAHG@Z@4PAHA data
@@ -2525,6 +2546,7 @@
 0x006d2708 ?g_StringManager@@3VSTRINGMANAGER@@A data
 0x007e0ce0 ?liOldSystemTime@?1??GetCpuUsage@SYSMONITOR@@QAEHXZ@4T_LARGE_INTEGER@@A data 0x8
 0x007e0ce8 ?liOldIdleTime@?1??GetCpuUsage@SYSMONITOR@@QAEHXZ@4T_LARGE_INTEGER@@A data 0x8
+0x009eede8 _s_line data 0x10000
 0x00a0f288 _s_format_id data
 0x00a0f28c _s_format_id data
 0x00a0f290 ?unknown_tag@?1??getTagFieldName@TagLib@@QAEPBDW4MDMODEL@2@G@Z@4PADA data

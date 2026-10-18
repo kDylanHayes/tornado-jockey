@@ -69,4 +69,7 @@ Things learned while matching engine code with `/O2`:
 - **Case order.** MSVC lays out a switch's case bodies in source order, so the order of the blocks in the exe gives the order of the `case` labels (`TOKENS::Parse` lists its states 0, 9, 3, 4, 5, 2, 1, 10, 6, 7, 8).
 - **Tail merging.** Identical statement tails get merged into one block, and which copy survives shows in the jumps. Statement order inside a case (`*out++ = c; state = x;` vs. the reverse) decides whether two tails are identical before scheduling, even when the final code is the same.
 - **Inline shapes matter.** `STRING::c_str()` is `return !m_buf ? "" : m_buf;` (the reverse ternary lays the branch out the other way), and `STRING::Length()` returns early when the cached length is valid; the nested-`if` form allocates registers differently in callers.
+- **Overloaded virtuals.** MSVC puts overloads of a virtual function into the vtable in the reverse of their declaration order, so `FILELOADER` declares `Read(buffer, size, count)` before `Read(buffer, size)`.
+- **`new[]` and `delete[]`.** Without `#include <new>`, `new char[n]` calls `operator new` (`??2`); with it, `operator new[]` (`??_U`). The game includes it.
+- **Early returns.** `if (!fp) return 0; if (_fstat64(...)) return 0; return st.st_mtime;` lays its blocks out differently from the same test joined with `&&`.
 - **No Platform SDK.** The Toolkit has no `windows.h`; `include/windows.h` is a minimal stand-in with the SDK's declarations. Add to it as units need more.

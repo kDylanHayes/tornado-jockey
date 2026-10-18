@@ -1456,6 +1456,19 @@
       "source": "src/Tongas2/TOKENS.cpp",
       "category": "engine",
       "complete": true
+    },
+    {
+      "name": "Tongas2/FILELOADER",
+      "ranges": [
+        "0x004ce290-0x004ce59d",
+        "0x0067252c-0x0067255f",
+        "0x006c16d8-0x006c16db",
+        "0x009eede8-0x009fede7"
+      ],
+      "target": "build/target/Tongas2/FILELOADER.obj",
+      "source": "src/Tongas2/FILELOADER.cpp",
+      "category": "engine",
+      "complete": true
     }
   ]
 }
