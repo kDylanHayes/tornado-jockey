@@ -30,4 +30,6 @@ jobs:
         run: |
           python -m json.tool config/target.json > /dev/null
           python -m json.tool config/units.json > /dev/null
+          python -m json.tool config/regions.json > /dev/null
+          python -m py_compile tools/*.py
           python configure.py --wine wine

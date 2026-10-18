@@ -4,6 +4,7 @@ orig/*
 *.exe
 *.dll
 *.wkz
+assets/
 
 # Generated
 build/
@@ -11,6 +12,7 @@ build.ninja
 .ninja_*
 objdiff.json
 report.json
+build-analyze.log
 __pycache__/
 *.pyc
 
