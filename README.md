@@ -1,5 +1,7 @@
 # Tornado Jockey decompilation
 
+[![Progress](https://img.shields.io/endpoint?url=https%3A%2F%2Fkdylanhayes.github.io%2Ftornado-jockey%2Fbadge.json)](https://kdylanhayes.github.io/tornado-jockey/)
+
 A work-in-progress matching decompilation of **Tornado Jockey** (Wanako Games / WildTangent, 2006) for Windows.
 
 The goal is C++ source that, compiled with the original toolchain, reproduces the game's code byte-for-byte, in the spirit of [n64decomp/sm64](https://github.com/n64decomp/sm64). Progress is measured with [objdiff](https://github.com/encounter/objdiff); analysis is done in Ghidra, driven by humans or by agents through [rea](https://github.com/morluto/rea).
@@ -25,29 +27,26 @@ FreeImage 3.7.0 matches 100%: its own C++ code (21 units) and its bundled zlib 1
 
 ## Getting started
 
-Requirements:
-
-- Python 3.10+
-- [ninja](https://ninja-build.org/)
-- Wine (Linux/macOS) to run the compiler, or Windows
-- Microsoft Visual C++ Toolkit 2003 (`cl` 13.10.3077). It is not redistributable; bring your own `VCToolkitSetup.exe` and unpack it with `tools/extract_vctoolkit.py`, see [docs/toolchain.md](docs/toolchain.md)
-- [objdiff](https://github.com/encounter/objdiff/releases) (GUI) and `objdiff-cli`
-- Ghidra 12.1.4 plus the delinker extension, to produce target objects; see [docs/delinking.md](docs/delinking.md)
-
-What's known about the binary's layout is in [docs/regions.md](docs/regions.md).
-
-Steps:
+You need your own copy of the complete `Tornado.exe` and of Microsoft's free Visual C++ Toolkit 2003, plus Python, ninja, Wine (on Linux and macOS), Ghidra 12.1.4 with the delinker extension, and objdiff. [docs/getting-started.md](docs/getting-started.md) walks through installing them. Then:
 
 ```sh
 cp /path/to/your/Tornado.exe orig/
 python3 tools/check_target.py          # verifies the SHA-1
+python3 tools/extract_vctoolkit.py /path/to/VCToolkitSetup.exe tools/vc71
 export GHIDRA_INSTALL_DIR=/path/to/ghidra_12.1.4_PUBLIC
 python3 tools/analyze.py               # Ghidra project + auto-analysis
 python3 tools/delink.py                # target objects into build/target/
 python3 configure.py --msvc tools/vc71
 ninja                                  # compiles src/ into build/src/
 objdiff                                # open the project folder in the GUI
+python3 tools/report.py && python3 tools/progress.py build/report.json   # overall progress
 ```
+
+What's known about the binary's layout is in [docs/regions.md](docs/regions.md).
+
+## Progress
+
+Progress is the share of the exe's code (2.33 MB in `.text`) that objdiff reports as matching. CI measures it on every push and publishes it on the [progress page](https://kdylanhayes.github.io/tornado-jockey/), split into game and engine code, libraries, the C/C++ runtime and SDK libraries. See [docs/getting-started.md](docs/getting-started.md#progress-tracking).
 
 ## Repository layout
 

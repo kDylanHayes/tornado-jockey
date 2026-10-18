@@ -7,15 +7,11 @@ objdiff compares **object files**, but the original game exists only as a linked
 ## Setup
 
 1. Install [Ghidra 12.1.4](https://github.com/NationalSecurityAgency/ghidra/releases) and JDK 21. Set `GHIDRA_INSTALL_DIR` to the install folder.
-2. Build the [ghidra-delinker-extension](https://github.com/boricj/ghidra-delinker-extension) for that Ghidra version and install it:
+2. Download the [ghidra-delinker-extension 0.9.2 release](https://github.com/boricj/ghidra-delinker-extension/releases/tag/v0.9.2) built for Ghidra 12.1.4 (`ghidra_12.1.4_PUBLIC_20260926_ghidra-delinker-extension.zip`) and unzip it into Ghidra's own `Extensions` folder:
    ```sh
-   git clone --recursive https://github.com/boricj/ghidra-delinker-extension
-   cd ghidra-delinker-extension
-   gradle installStandaloneDeps && gradle buildExtension -Pstandalone
-   mkdir -p ~/.config/ghidra/ghidra_12.1.4_PUBLIC/Extensions
-   unzip dist/*.zip -d ~/.config/ghidra/ghidra_12.1.4_PUBLIC/Extensions
+   unzip ghidra_12.1.4_PUBLIC_20260926_ghidra-delinker-extension.zip -d "$GHIDRA_INSTALL_DIR/Ghidra/Extensions"
    ```
-   (On macOS the user folder is `~/Library/ghidra/ghidra_12.1.4_PUBLIC/Extensions`.)
+   (Unzipping it into your user folder, `~/.config/ghidra/ghidra_12.1.4_PUBLIC/Extensions` or `~/Library/ghidra/ghidra_12.1.4_PUBLIC/Extensions` on macOS, works too, as does building it from source with Gradle.)
 
 ## Steps
 
