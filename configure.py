@@ -18,7 +18,7 @@ PROGRESS_CATEGORIES = [
     {"id": "game", "name": "Game"},
     {"id": "engine", "name": "Tongas2 engine"},
     {"id": "lib", "name": "Third-party libraries"},
-    {"id": "sdk", "name": "WildTangent SDK"},
+    {"id": "sdk", "name": "SDK libraries (D3DX8, WildTangent)"},
     {"id": "crt", "name": "C/C++ runtime"},
 ]
 
