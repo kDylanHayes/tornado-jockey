@@ -41,6 +41,21 @@
 0x0047e661 _adler32 function 0x119
 0x00482cf0 ?Error@LOG@@QAAXPBDZZ function 0x6e
 0x00484e20 ??4UNICODESTRING@@QAEAAV0@ABV0@@Z function
+0x0048b960 ?SetResolution@APP@@QAEXH@Z function
+0x0048b9a0 ?SetFullscreen@APP@@QAEX_N@Z function
+0x0048b9d0 ?SetSound@APP@@QAEX_N@Z function
+0x0048b9f0 ?SetMusic@APP@@QAEX_N@Z function
+0x0048ba10 ?SetDetail@APP@@QAEXH@Z function
+0x004a77e0 ??0APPOPTIONS@@QAE@XZ function 0x3b
+0x004a7820 ?Apply@APPOPTIONS@@UAEXXZ function 0x65
+0x004a7890 ?SetDefaults@APPOPTIONS@@UAEXXZ function 0x15
+0x004a78b0 ?Read@APPOPTIONS@@UAEXPAU_iobuf@@@Z function 0x68
+0x004a7920 ?Write@APPOPTIONS@@UAEXPAU_iobuf@@@Z function 0x68
+0x004a7990 ?GetResolution@APPOPTIONS@@UAE?AURESOLUTION@@ABH@Z function 0x39
+0x004a79d0 ?GetWindowedResolution@APPOPTIONS@@UAE?AURESOLUTION@@ABH@Z function 0x39
+0x004a7a10 ?CreateAppOptions@@YAPAVAPPOPTIONS@@XZ function 0x4d
+0x004a7a60 ?Load@APPOPTIONS@@QAEXXZ function 0x1a7
+0x004a7c10 ?Save@APPOPTIONS@@QAEXXZ function 0xe4
 0x004a7d00 ?UpdateHeapUsage@SYSMONITOR@@QAEXXZ function 0x90
 0x004a7d90 ??0SYSMONITOR@@QAE@XZ function 0x39
 0x004a7dd0 ??_GSYSMONITOR@@UAEPAXI@Z function 0x2a
@@ -91,6 +106,8 @@
 0x004ce500 ??1FILELOADER@@UAE@XZ function 0x50
 0x004ce550 ?CreateFileLoader@@YAPAVFILELOADER@@XZ function 0x23
 0x004ce580 ??_GFILELOADER@@UAEPAXI@Z function 0x1e
+0x004d57c0 ?GetSaveFolder@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z function
+0x004d5f00 ?CreateFolder@@YAXABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z function
 0x004e7820 ?_Min@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@KAPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@PAU342@@Z function
 0x004e7ed0 ?_Buynode@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@PAU342@00ABU?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@2@D@Z function
 0x004eb950 ?IsCompressed@FILELOADER@@UAE_NXZ function 0x3
@@ -1871,6 +1888,8 @@
 0x005e69ae KERNEL32.DLL::RtlUnwind function 0x6
 0x005e6ae0 shortsort function 0x6a
 0x005e6b50 _qsort function 0x283
+0x005ea908 __ehhandler$?Load@APPOPTIONS@@QAEXXZ function
+0x005ea930 __ehhandler$?Save@APPOPTIONS@@QAEXXZ function
 0x005f9f21 __ehhandler$?_Buynode@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@PAU342@00ABU?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@2@D@Z function
 0x005f9f38 __ehhandler$?_Insert@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@IAE?AViterator@12@_NPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@ABU?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@2@@Z function
 0x005f9f58 __ehhandler$??A?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@QAEAAPAUFITAG@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@@Z function
@@ -1926,12 +1945,15 @@
 0x006595a8 __real@0000000000000000 data
 0x006596bc __real@40800000 data
 0x00659768 __real@3fd51eb860000000 data
+0x0065a5e8 ??_C@_04HDOCAJNK@?$CFs?$CFs?$AA@ data 0x5
 0x0065aa84 __real@3fc00000 data
 0x0065b110 __real@3fe0000000000000 data
 0x0065b13c __real@3e2aaaab data
 0x0065db8c ??_C@_0BC@KBDMBKEH@deque?$DMT?$DO?5too?5long?$AA@ data
 0x0065e8a0 __real@3ff0000000000000 data
+0x00661ac0 ??_7APPOPTIONS@@6B@ data 0x24
 0x00661eac ??_C@_02JDPG@rb?$AA@ data 0x3
+0x00661eb0 ??_C@_02GMLFBBN@wb?$AA@ data 0x3
 0x00662ae0 ??_7length_error@std@@6B@ data
 0x00662aec ??_7out_of_range@std@@6B@ data
 0x006631d4 __real@4f800000 data
@@ -2018,7 +2040,13 @@
 0x0066653c ??_C@_03OFAPEBGM@?$CFs?6?$AA@ data
 0x00666990 ??_C@_02DPKJAMEF@?$CFd?$AA@ data
 0x00667384 ??_C@_01KDCPPGHE@r?$AA@ data
+0x00667484 ??_C@_01KMDKNFGN@?1?$AA@ data 0x2
 0x006691d4 ??_C@_01IHBHIGKO@?0?$AA@ data
+0x0066a840 _s_resolutions data 0x70
+0x0066a8b0 _s_windowedResolutions data 0x70
+0x0066a920 ??_C@_0BM@HGLNGMMO@could?5not?5find?5options?5file?$AA@ data 0x1c
+0x0066a93c ??_C@_0CI@OANOPKMI@Error?5?9?5APPOPTIONS?3?3Load?$DO?5Wrong?5@ data 0x28
+0x0066a964 ??_C@_0P@BEBIMNM@optionswtj?4dat?$AA@ data 0xf
 0x0066a974 ??_7SYSMONITOR@@6B@ data 0x4
 0x0066a978 ??_C@_08EEHIEMNL@heap?4out?$AA@ data 0x9
 0x0066a984 ??_C@_0BF@PCCAIAOK@__MSVCRT_HEAP_SELECT?$AA@ data 0x15
@@ -2625,6 +2653,7 @@
 0x006c8a20 __iob data
 0x006c8ca0 ___security_cookie data 0x4
 0x006cbc80 ?g_pLog@@3PAVLOG@@A data 0x4
+0x006d09b4 ?g_pApp@@3PAVAPP@@A data 0x4
 0x006d2708 ?g_StringManager@@3VSTRINGMANAGER@@A data
 0x007e0ce0 ?liOldSystemTime@?1??GetCpuUsage@SYSMONITOR@@QAEHXZ@4T_LARGE_INTEGER@@A data 0x8
 0x007e0ce8 ?liOldIdleTime@?1??GetCpuUsage@SYSMONITOR@@QAEHXZ@4T_LARGE_INTEGER@@A data 0x8

@@ -1435,6 +1435,17 @@
       "complete": true
     },
     {
+      "name": "Tongas2/APPOPTIONS",
+      "ranges": [
+        "0x004a77e0-0x004a7cf3",
+        "0x0066a840-0x0066a972"
+      ],
+      "target": "build/target/Tongas2/APPOPTIONS.obj",
+      "source": "src/Tongas2/APPOPTIONS.cpp",
+      "category": "engine",
+      "complete": true
+    },
+    {
       "name": "Tongas2/SYSMONITOR",
       "ranges": [
         "0x004a7d00-0x004a7fab",

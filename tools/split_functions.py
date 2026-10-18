@@ -223,8 +223,11 @@ def name_local_labels(coff: Coff, base: Coff) -> int:
     return renamed
 
 
-def split(coff: Coff, base: int | None = None, sizes: dict | None = None) -> int:
-    """sizes: known function sizes by name; they decide where padding starts."""
+def split(coff: Coff, base: int | None = None, sizes: dict | None = None,
+          follows: set | None = None) -> int:
+    """sizes: known function sizes by name; they decide where padding starts.
+    follows: data symbols our compiler put after another one in the same
+    section (statics outside COMDATs); they don't start a section."""
     by_index = {i: (rec, aux) for i, rec, aux in coff.symbols}
     split_count = 0
     for secno in range(1, len(coff.sections) + 1):
@@ -243,7 +246,8 @@ def split(coff: Coff, base: int | None = None, sizes: dict | None = None) -> int
                       and not is_catch_block(coff.name(rec))}
         else:
             starts = {struct.unpack_from("<I", rec, 8)[0] for _, rec in syms
-                      if rec[16] == IMAGE_SYM_CLASS_EXTERNAL}
+                      if rec[16] == IMAGE_SYM_CLASS_EXTERNAL
+                      and coff.name(rec) not in (follows or ())}
         starts = sorted(starts)
         if not starts:
             continue
@@ -318,16 +322,30 @@ def split(coff: Coff, base: int | None = None, sizes: dict | None = None) -> int
     return split_count
 
 
+def data_followers(coff: Coff) -> set:
+    """Names of data symbols that don't start their section."""
+    names = set()
+    for _, rec, _ in coff.symbols:
+        secno = struct.unpack_from("<h", rec, 12)[0]
+        if (secno > 0 and not coff.sections[secno - 1]["chars"] & IMAGE_SCN_CNT_CODE
+                and struct.unpack_from("<I", rec, 8)[0] != 0 and not coff.name(rec).startswith(("$", "."))):
+            names.add(coff.name(rec))
+    return names
+
+
 def main_path(src, dst=None, base=None, ours=None, sizes=None) -> int:
     """base: exe address of the start of the object's code, if known.
     ours: our compiled object, to take $L label names from."""
     with open(src, "rb") as f:
         coff = Coff(f.read())
-    n = split(coff, base, sizes)
-    add_except_list(coff)
+    base_coff = None
     if ours is not None and ours.is_file():
         with open(ours, "rb") as f:
-            name_local_labels(coff, Coff(f.read()))
+            base_coff = Coff(f.read())
+    n = split(coff, base, sizes, data_followers(base_coff) if base_coff else None)
+    add_except_list(coff)
+    if base_coff is not None:
+        name_local_labels(coff, base_coff)
     # objdiff treats any other label in code as the start of a symbol (and
     # hangs on one in the middle of a jump table, "PTR_caseD_2_0055cd38+3");
     # it skips LAB_ labels.
