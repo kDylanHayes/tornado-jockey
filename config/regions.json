@@ -1,12 +1,45 @@
 {
   "_comment": "Progress category for code in .text that no unit in units.json covers yet. Ranges are inclusive; see docs/regions.md.",
   "regions": [
-    { "range": "0x00401000-0x0045446a", "category": "game",   "contents": "Game and Tongas2 engine code" },
-    { "range": "0x0045446b-0x00482ccf", "category": "lib",    "contents": "C libraries: libpng 1.0.5, zlib 1.2.2 and others" },
-    { "range": "0x00482cd0-0x00559dff", "category": "game",   "contents": "Game and Tongas2 engine code" },
-    { "range": "0x00559e00-0x00586fcf", "category": "lib",    "contents": "FreeImage 3.7.0 and its bundled libraries" },
-    { "range": "0x00586fd0-0x005bf241", "category": "lib",    "contents": "ODE" },
-    { "range": "0x005bf242-0x005e5f9f", "category": "crt",    "contents": "MSVC 7.1 runtime: libcmt, libcpmt, ATL, EH support" },
-    { "range": "0x005e5fa0-0x00655423", "category": "sdk",    "contents": "Prebuilt D3DX8 static library" }
+    {
+      "range": "0x00401000-0x0045446a",
+      "category": "game",
+      "contents": "Game and Tongas2 engine code"
+    },
+    {
+      "range": "0x0045446b-0x00482ccf",
+      "category": "sdk",
+      "contents": "Prebuilt D3DX8 C code, with its libpng 1.0.5 and zlib copies"
+    },
+    {
+      "range": "0x00482cd0-0x00559dff",
+      "category": "game",
+      "contents": "Game and Tongas2 engine code"
+    },
+    {
+      "range": "0x00559e00-0x00586fcf",
+      "category": "lib",
+      "contents": "FreeImage 3.7.0 and its bundled libraries"
+    },
+    {
+      "range": "0x00586fd0-0x005bda8f",
+      "category": "lib",
+      "contents": "ODE 0.5 with OPCODE"
+    },
+    {
+      "range": "0x005bda90-0x005bf241",
+      "category": "game",
+      "contents": "Game code: leaderboards, file loaders, .wkz archives"
+    },
+    {
+      "range": "0x005bf242-0x005e5f9f",
+      "category": "crt",
+      "contents": "MSVC 7.1 runtime: libcmt, libcpmt, ATL, EH support"
+    },
+    {
+      "range": "0x005e5fa0-0x00655423",
+      "category": "sdk",
+      "contents": "Prebuilt D3DX8 static library"
+    }
   ]
 }

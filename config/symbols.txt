@@ -5,6 +5,8 @@
 0x004026c0 ?FreeValue@SRESULT@@QAEXXZ function 0x47
 0x00402730 ??1SRESULT@@UAE@XZ function 0xb
 0x00402740 ??_GSRESULT@@UAEPAXI@Z function 0x24
+0x00402b80 ?Free@STRINGMANAGER@@QAEXAAH0@Z function
+0x00403c30 ?Reserve@STRING@@QAEXABH@Z function
 0x00404ce0 ?SetType@SRESULT@@QAEXABW4SRESULTTYPE@@@Z function 0xfc
 0x00406cc0 ?_Min@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@KAPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@PAU342@@Z function
 0x00406ce0 ?_Inc@const_iterator@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@QAEXXZ function
@@ -12,6 +14,7 @@
 0x004073b0 ?assign@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@PBDI@Z function
 0x00407a80 ??0logic_error@std@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@@Z function
 0x00407c50 ??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@PBD@Z function
+0x0040db30 ??4STRING@@QAEAAV0@ABV0@@Z function 0x65
 0x004381b0 ?_Tidy@?$deque@GV?$allocator@G@std@@@std@@IAEXXZ function
 0x0043cb20 ?SupportsICCProfiles@@YAJXZ function
 0x004494e0 ?compare@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBEHIIPBDI@Z function
@@ -30,6 +33,12 @@
 0x0046c4a9 _do_barray_io function
 0x0047e661 _adler32 function 0x119
 0x00482cf0 ?Error@LOG@@QAAXPBDZZ function 0x6e
+0x00484e20 ??4UNICODESTRING@@QAEAAV0@ABV0@@Z function
+0x004a7d00 ?UpdateHeapUsage@SYSMONITOR@@QAEXXZ function 0x90
+0x004a7d90 ??0SYSMONITOR@@QAE@XZ function 0x39
+0x004a7dd0 ??_GSYSMONITOR@@UAEPAXI@Z function 0x2a
+0x004a7e00 ?GetCpuUsage@SYSMONITOR@@QAEHXZ function 0x184
+0x004a7f90 ?Update@SYSMONITOR@@QAEXXZ function 0x1b
 0x004a7fb0 ?GetTypeName@SRESULT@@QBEPBDXZ function 0x1b
 0x004a7fd0 ?ToBool@@YA_NABH@Z function 0xb
 0x004a7fe0 ?ToBool@@YA_NABM@Z function 0x1b
@@ -49,6 +58,13 @@
 0x004a8510 ?SetValue@SRESULT@@QAEXPBG@Z function 0x7e
 0x004a8590 ?SetValue@SRESULT@@QAEXPBD@Z function 0x81
 0x004a8620 ?GetTexture@SRESULT@@QBE?AUSRTEXTURE@@ABU2@@Z function 0x96
+0x004a86c0 ?Merge@TOKENS@@QAE_NHHD@Z function 0xbd
+0x004a8780 ?AddToken@TOKENS@@QAEXPAD@Z function 0x29
+0x004a87b0 ?Split@TOKENS@@QAE_NABVSTRING@@PBD@Z function 0x69
+0x004a8820 ?Split@UNICODETOKENS@@QAE_NABVUNICODESTRING@@PBG@Z function 0x68
+0x004a8890 ?Reset@TOKENS@@QAEXXZ function 0x40
+0x004a88d0 ?Parse@TOKENS@@QAE_NAAVSTRING@@PA_N@Z function 0x3f4
+0x004a8cd0 ?Quote@TOKENS@@QAEXAAVSTRING@@@Z function 0x10b
 0x004cc8c0 ?_Max@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@KAPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@PAU342@@Z function
 0x004cc8e0 ?_Buynode@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@XZ function
 0x004cc950 ??1?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@XZ function
@@ -818,6 +834,544 @@
 0x00586ba3 __tr_stored_block function 0x8b
 0x00586c2e __tr_align function 0x1c7
 0x00586df5 __tr_flush_block function 0x1ce
+0x00586fd0 ?removeJointReferencesFromAttachedBodies@@YAXPAUdxJoint@@@Z function 0x57
+0x00587030 _dBodySetData function 0x34
+0x00587070 _dBodySetPosition function 0x5e
+0x005870d0 _dBodySetRotation function 0x9f
+0x00587170 _dBodySetLinearVel function 0x42
+0x005871c0 _dBodySetAngularVel function 0x42
+0x00587210 _dBodyGetPosition function 0x2a
+0x00587240 _dBodyGetRotation function 0x2a
+0x00587270 _dBodyGetLinearVel function 0x2a
+0x005872a0 _dBodyGetAngularVel function 0x2a
+0x005872d0 _dBodySetMass function 0x82
+0x00587360 _dBodyAddForce function 0x54
+0x005873c0 _dBodyAddTorque function 0x54
+0x00587420 _dBodyAddForceAtPos function 0xbe
+0x005874e0 ?dDOT@@YAMPBM0@Z function 0x1d
+0x00587500 _dBodyEnable function 0x45
+0x00587550 _dBodyDisable function 0x28
+0x00587580 _dBodyIsEnabled function 0x2f
+0x005875b0 _dBodySetGravityMode function 0x3d
+0x005875f0 _dBodySetAutoDisableDefaults function 0x7c
+0x00587670 ?dJointInit@@YAXPAUdxWorld@@PAUdxJoint@@@Z function 0x81
+0x00587700 ?createJoint@@YAPAUdxJoint@@PAUdxWorld@@PAUdxJointGroup@@PAUVtable@1@@Z function 0x78
+0x00587780 _dJointCreateBall function 0x38
+0x005877c0 _dJointCreateContact function 0x4a
+0x00587810 _dJointDestroy function 0x66
+0x00587880 ??0dxJointGroup@@QAE@XZ function 0xf
+0x00587890 ??1dxJointGroup@@QAE@XZ function 0x8
+0x005878a0 _dJointGroupEmpty function 0xc5
+0x00587970 _dJointAttach function 0x110
+0x00587a80 _dAreConnectedExcluding function 0x7c
+0x00587b00 _dWorldCreate function 0x69
+0x00587b70 _dWorldDestroy function 0x98
+0x00587c10 _dWorldSetGravity function 0x39
+0x00587c50 _dWorldSetERP function 0x34
+0x00587c90 _dWorldSetCFM function 0x34
+0x00587cd0 _dWorldStep function 0x61
+0x00587d40 _dWorldQuickStep function 0x61
+0x00587db0 _dWorldSetQuickStepNumIterations function 0x34
+0x00587df0 _dWorldSetContactMaxCorrectingVel function 0x34
+0x00587e30 _dWorldSetContactSurfaceLayer function 0x34
+0x00587e70 ??$dMULTIPLY0_331@MMM@@YAXPAMPBM1@Z function 0x53
+0x00587ed0 ??$dMULTIPLY1_331@MMM@@YAXPAMPBM1@Z function 0x53
+0x00587f30 _dBodyDestroy function 0xb8
+0x00587ff0 _dBodyAddRelForce function 0xbe
+0x005880b0 _dBodyAddForceAtRelPos function 0x106
+0x005881c0 _dBodyAddRelForceAtPos function 0x12e
+0x005882f0 _dBodyAddRelForceAtRelPos function 0x176
+0x00588470 _dJointGroupCreate function 0x21
+0x005884a0 _dBodyCreate function 0x164
+0x00588610 _dJointGroupDestroy function 0x43
+0x00588660 _dGeomMoved function 0xa7
+0x00588710 ??0dxSpace@@QAE@PAU0@@Z function 0x34
+0x00588750 ?getGeom@dxSpace@@UAEPAUdxGeom@@H@Z function 0x72
+0x005887d0 _dSpaceDestroy function 0x53
+0x00588830 _dSpaceSetCleanup function 0x58
+0x00588890 _dSpaceAdd function 0x7a
+0x00588910 _dSpaceRemove function 0x7a
+0x00588990 _dSpaceCollide function 0x61
+0x00588a00 _dSpaceCollide2 function 0x10a
+0x00588b10 ?computeAABB@dxSpace@@UAEXXZ function 0xf0
+0x00588c00 ?add@dxSpace@@UAEXPAUdxGeom@@@Z function 0xac
+0x00588cb0 ?remove@dxSpace@@UAEXPAUdxGeom@@@Z function 0x9b
+0x00588d50 ?dirty@dxSpace@@UAEXPAUdxGeom@@@Z function 0x37
+0x00588d90 ??1dxSpace@@UAE@XZ function 0x6e
+0x00588e00 ??_GdxSpace@@UAEPAXI@Z function 0x20
+0x00588e20 _dCollide function 0x2a5
+0x005890d0 ?bodyRemove@dxGeom@@QAEXXZ function 0x38
+0x00589110 _dGeomGetBodyNext function 0x8
+0x00589120 _dGeomDestroy function 0x29
+0x00589150 _dGeomSetData function 0x34
+0x00589190 _dGeomGetData function 0x27
+0x005891c0 _dGeomGetBody function 0x27
+0x005891f0 _dGeomSetPosition function 0xa1
+0x005892a0 _dGeomSetRotation function 0x9d
+0x00589340 _dGeomGetPosition function 0x46
+0x00589390 _dGeomGetRotation function 0x46
+0x005893e0 _dGeomIsSpace function 0x39
+0x00589420 _dGeomGetSpace function 0x27
+0x00589450 _dGeomSetCategoryBits function 0x64
+0x005894c0 _dGeomSetCollideBits function 0x64
+0x00589530 _dGeomEnable function 0x28
+0x00589560 _dGeomDisable function 0x28
+0x00589590 _dCloseODE function 0xd
+0x005895a0 ?space_geom_collider@@YAXPAXPAUdxGeom@@1@Z function 0x3f
+0x005895e0 ?dCollideSpaceGeom@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z function 0x50
+0x00589630 ?initColliders@@YAXXZ function 0x3a1
+0x005899e0 ??0dxGeom@@QAE@PAUdxSpace@@H@Z function 0xa5
+0x00589a90 ??1dxGeom@@UAE@XZ function 0x6f
+0x00589b00 _dGeomSetBody function 0x112
+0x00589c20 ??_GdxGeom@@UAEPAXI@Z function 0x20
+0x00589c40 ?AABBTest@dxGeom@@UAEHPAU1@QAM@Z function 0x8
+0x00589c50 _dGeomTriMeshSetData function 0x3a
+0x00589c90 ??1?$dArray@USphereTC@dxTriMesh@@@@QAE@XZ function 0x8
+0x00589ca0 ??1?$dArray@UBoxTC@dxTriMesh@@@@QAE@XZ function 0x8
+0x00589cb0 ??1?$dArray@UCCylinderTC@dxTriMesh@@@@QAE@XZ function 0x8
+0x00589cc0 ??0Point@IceMaths@@QAE@XZ function 0x3
+0x00589cd0 ??0CollisionFaces@Opcode@@QAE@XZ function 0xc
+0x00589ce0 ??1VolumeCache@Opcode@@QAE@XZ function 0x5
+0x00589cf0 ??0SphereCache@Opcode@@QAE@XZ function 0x24
+0x00589d20 ??0OBBCache@Opcode@@QAE@XZ function 0x58
+0x00589d80 ??0LSSCache@Opcode@@QAE@XZ function 0x51
+0x00589de0 ?FetchTriangle@@YAXPAUdxTriMesh@@HQBM1QAY03M@Z function 0x1fb
+0x00589fe0 ??0dxTriMeshData@@QAE@XZ function 0x44
+0x0058a030 ??1dxTriMeshData@@QAE@XZ function 0x4c
+0x0058a080 ?Build@dxTriMeshData@@QAEXPBXHH0HH0_N@Z function 0x671
+0x0058a700 _dGeomTriMeshDataCreate function 0x1b
+0x0058a720 _dGeomTriMeshDataBuildSingle function 0x4d
+0x0058a770 ??0dxTriMesh@@QAE@PAUdxSpace@@PAUdxTriMeshData@@@Z function 0x124
+0x0058a8a0 ??1dxTriMesh@@UAE@XZ function 0x72
+0x0058a920 ?computeAABB@dxTriMesh@@UAEXXZ function 0x10b
+0x0058aa30 _dCreateTriMesh function 0x50
+0x0058aa80 _dGeomTriMeshDataDestroy function 0x1b
+0x0058aaa0 ??_GdxTriMesh@@UAEPAXI@Z function 0x23
+0x0058aad0 ?ClearTCCache@dxTriMesh@@QAEXXZ function 0x90
+0x0058ab60 _dGeomTriMeshClearTCCache function 0x30
+0x0058ab90 ??0dxGeomTransform@@QAE@PAUdxSpace@@@Z function 0x44
+0x0058abe0 ??1dxGeomTransform@@UAE@XZ function 0x5e
+0x0058ac40 _dGeomTransformSetGeom function 0x57
+0x0058aca0 _dGeomTransformSetInfo function 0x3a
+0x0058ace0 ?dDOT14@@YAMPBM0@Z function 0x1d
+0x0058ad00 ??_GdxGeomTransform@@UAEPAXI@Z function 0x23
+0x0058ad30 _dCreateGeomTransform function 0x21
+0x0058ad60 ??$dMULTIPLY0_333@MMM@@YAXPAMPBM1@Z function 0xe7
+0x0058ae50 ?computeFinalTx@dxGeomTransform@@QAEXXZ function 0x85
+0x0058aee0 ?dCollideTransform@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z function 0x11a
+0x0058b000 ?computeAABB@dxGeomTransform@@UAEXXZ function 0x7d
+0x0058b080 ??0dxSphere@@QAE@PAUdxSpace@@M@Z function 0x50
+0x0058b0d0 ?computeAABB@dxSphere@@UAEXXZ function 0x38
+0x0058b110 _dGeomSphereSetRadius function 0x5f
+0x0058b170 _dGeomSphereGetRadius function 0x2b
+0x0058b1a0 ??0dxBox@@QAE@PAUdxSpace@@MMM@Z function 0x83
+0x0058b230 _dGeomBoxSetLengths function 0x94
+0x0058b2d0 _dGeomBoxGetLengths function 0x3f
+0x0058b310 ??0dxCCylinder@@QAE@PAUdxSpace@@MM@Z function 0x6b
+0x0058b380 ?computeAABB@dxCCylinder@@UAEXXZ function 0x6d
+0x0058b3f0 _dGeomCCylinderSetParams function 0x7c
+0x0058b470 _dGeomCCylinderGetParams function 0x3c
+0x0058b4b0 ?make_sure_plane_normal_has_unit_length@@YAXPAUdxPlane@@@Z function 0x68
+0x0058b520 ??0dxPlane@@QAE@PAUdxSpace@@MMMM@Z function 0x45
+0x0058b570 ?computeAABB@dxPlane@@UAEXXZ function 0x1d
+0x0058b590 ??0dxRay@@QAE@PAUdxSpace@@M@Z function 0x29
+0x0058b5c0 ?dDOT44@@YAMPBM0@Z function 0x1d
+0x0058b5e0 ?computeAABB@dxRay@@UAEXXZ function 0x90
+0x0058b670 _dGeomRayGetLength function 0x2d
+0x0058b6a0 _dGeomRayGet function 0x65
+0x0058b710 _dGeomRayGetParams function 0x47
+0x0058b760 _dGeomRayGetClosestHit function 0x33
+0x0058b7a0 ?intersectRectQuad@@YAHQAM00@Z function 0x1d6
+0x0058b980 ?cullPoints@@YAXHQAMHHQAH@Z function 0x409
+0x0058bd90 ?dCollideSphereSphere@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z function 0x90
+0x0058be20 ?dCollideSpherePlane@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z function 0xed
+0x0058bf10 ?dCollideBoxPlane@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z function 0x714
+0x0058c630 ?dCollideCCylinderSphere@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z function 0x120
+0x0058c750 ?dCollideCCylinderBox@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z function 0x118
+0x0058c870 ?dCollideCCylinderCCylinder@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z function 0x4aa
+0x0058cd20 ?dCollideCCylinderPlane@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z function 0x254
+0x0058cf80 ?ray_sphere_helper@@YAHPAUdxRay@@QAMMPAUdContactGeom@@H@Z function 0x163
+0x0058d0f0 ?dCollideRaySphere@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z function 0x8d
+0x0058d180 ?dCollideRayCCylinder@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z function 0x437
+0x0058d5c0 ?dCollideRayPlane@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z function 0x152
+0x0058d720 ??_GdxSphere@@UAEPAXI@Z function 0x20
+0x0058d740 _dCreateSphere function 0x23
+0x0058d770 ??_GdxBox@@UAEPAXI@Z function 0x20
+0x0058d790 ?computeAABB@dxBox@@UAEXXZ function 0xb4
+0x0058d850 _dCreateBox function 0x2d
+0x0058d880 ??_GdxCCylinder@@UAEPAXI@Z function 0x20
+0x0058d8a0 _dCreateCCylinder function 0x28
+0x0058d8d0 _dCreatePlane function 0x32
+0x0058d910 ??1dxSphere@@UAE@XZ function 0x5
+0x0058d920 _dCreateRay function 0x23
+0x0058d950 ?dBoxBox@@YAHQBM00000QAMPAMPAHHPAUdContactGeom@@H@Z function 0x190f
+0x0058f260 ?dCollideSphereBox@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z function 0x3db
+0x0058f640 ?dCollideBoxBox@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z function 0xf5
+0x0058f740 ?dCollideRayBox@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z function 0x4d7
+0x0058fc20 _dMassSetZero function 0x40
+0x0058fc60 _dMassAdd function 0xc2
+0x0058fd30 ??$dMULTIPLY2_333@MMM@@YAXPAMPBM1@Z function 0xe7
+0x0058fe20 ?checkMass@@YAHPAUdMass@@@Z function 0x15a
+0x0058ff80 _dMassSetParameters function 0xa8
+0x00590030 _dMassSetSphereTotal function 0x7a
+0x005900b0 _dMassSetCappedCylinder function 0x131
+0x005901f0 _dMassSetBoxTotal function 0xb5
+0x005902b0 _dMassAdjust function 0x5d
+0x00590310 _dMassTranslate function 0x199
+0x005904b0 _dMassRotate function 0xbb
+0x00590570 _dMassSetSphere function 0x2d
+0x005905a0 _dMassSetBox function 0x31
+0x005905e0 ?Create@Block@@QAEXQBM0PAV1@HAAPAV1@@Z function 0x134
+0x00590720 ?DelObject@Block@@QAEXPAUdxGeom@@@Z function 0x4d
+0x00590770 ?GetBlockChild@Block@@QAEPAV1@PBM@Z function 0x6d
+0x005907e0 ?getGeom@dxQuadTreeSpace@@UAEPAUdxGeom@@H@Z function 0x3a
+0x00590820 ??1?$dArray@PAUdxGeom@@@@QAE@XZ function 0x8
+0x00590830 ?collideAABBs@@YAXPAUdxGeom@@0PAXP6AX100@Z@Z function 0xdd
+0x00590910 ?Collide@Block@@QAEXPAUdxGeom@@0PAXP6AX100@Z@Z function 0xb9
+0x005909d0 ?GetBlock@Block@@QAEPAV1@PBM@Z function 0x4f
+0x00590a20 ?add@dxQuadTreeSpace@@UAEXPAUdxGeom@@@Z function 0xe1
+0x00590b10 ?remove@dxQuadTreeSpace@@UAEXPAUdxGeom@@@Z function 0xdc
+0x00590bf0 ?dirty@dxQuadTreeSpace@@UAEXPAUdxGeom@@@Z function 0x3a
+0x00590c30 ?collide2@dxQuadTreeSpace@@UAEXPAXPAUdxGeom@@P6AX011@Z@Z function 0xcf
+0x00590d00 ?Collide@Block@@QAEXPAXP6AX0PAUdxGeom@@1@Z@Z function 0x67
+0x00590d70 ??0dxQuadTreeSpace@@QAE@PAUdxSpace@@QAM1H@Z function 0x12d
+0x00590ea0 ??1dxQuadTreeSpace@@UAE@XZ function 0xd2
+0x00590f80 ?cleanGeoms@dxQuadTreeSpace@@UAEXXZ function 0xe0
+0x00591060 ?collide@dxQuadTreeSpace@@UAEXPAXP6AX0PAUdxGeom@@1@Z@Z function 0x4d
+0x005910b0 _dQuadTreeSpaceCreate function 0x30
+0x005910e0 ??_GdxQuadTreeSpace@@UAEPAXI@Z function 0x23
+0x00591110 _dSetErrorHandler function 0xa
+0x00591120 _dSetDebugHandler function 0xa
+0x00591130 _dSetMessageHandler function 0xa
+0x00591140 ?printMessage@@YAXHPBD0PAD@Z function 0x75
+0x005911c0 _dDebug function 0x8d
+0x00591250 _dMessage function 0x3e
+0x00591290 ?testRotationalLimit@dxJointLimitMotor@@QAEHM@Z function 0x52
+0x005912f0 ?addLimot@dxJointLimitMotor@@QAEHPAUdxJoint@@PAUInfo2@2@HQAMH@Z function 0x4a7
+0x005917a0 ?ballInit@@YAXPAUdxJointBall@@@Z function 0x20
+0x005917c0 ?ballGetInfo1@@YAXPAUdxJointBall@@PAUInfo1@dxJoint@@@Z function 0x12
+0x005917e0 ?hingeInit@@YAXPAUdxJointHinge@@@Z function 0xb0
+0x00591890 ?sliderInit@@YAXPAUdxJointSlider@@@Z function 0x8e
+0x00591920 ?contactGetInfo1@@YAXPAUdxJointContact@@PAUInfo1@dxJoint@@@Z function 0xac
+0x005919d0 ?contactGetInfo2@@YAXPAUdxJointContact@@PAUInfo2@dxJoint@@@Z function 0x5f0
+0x00591fc0 ?hinge2Init@@YAXPAUdxJointHinge2@@@Z function 0x13f
+0x00592100 ?universalInit@@YAXPAUdxJointUniversal@@@Z function 0x117
+0x00592220 ?amotorInit@@YAXPAUdxJointAMotor@@@Z function 0xc0
+0x005922e0 ?fixedInit@@YAXPAUdxJointFixed@@@Z function 0x20
+0x00592300 ?fixedGetInfo1@@YAXPAUdxJointFixed@@PAUInfo1@dxJoint@@@Z function 0x12
+0x00592320 ?nullGetInfo1@@YAXPAUdxJointNull@@PAUInfo1@dxJoint@@@Z function 0x12
+0x00592340 ?nullGetInfo2@@YAXPAUdxJointNull@@PAUInfo2@dxJoint@@@Z function 0x15
+0x00592360 ?setBall@@YAXPAUdxJoint@@PAUInfo2@1@QAM2@Z function 0x22d
+0x00592590 ?setBall2@@YAXPAUdxJoint@@PAUInfo2@1@QAM22M@Z function 0x500
+0x00592a90 ?setFixedOrientation@@YAXPAUdxJoint@@PAUInfo2@1@QAMH@Z function 0x16a
+0x00592c00 ?setAnchors@@YAXPAUdxJoint@@MMMQAM1@Z function 0xfa
+0x00592d00 ?getHingeAngleFromRelativeQuat@@YAMQAM0@Z function 0x63
+0x00592d70 ?getHingeAngle@@YAMPAUdxBody@@0QAM1@Z function 0x60
+0x00592dd0 ?ballGetInfo2@@YAXPAUdxJointBall@@PAUInfo2@dxJoint@@@Z function 0x18
+0x00592df0 _dJointSetBallAnchor function 0x69
+0x00592e60 ?hingeGetInfo1@@YAXPAUdxJointHinge@@PAUInfo1@dxJoint@@@Z function 0xa6
+0x00592f10 ?hingeGetInfo2@@YAXPAUdxJointHinge@@PAUInfo2@dxJoint@@@Z function 0x259
+0x00593170 _dJointGetSliderPosition function 0x179
+0x005932f0 ?sliderGetInfo1@@YAXPAUdxJointSlider@@PAUInfo1@dxJoint@@@Z function 0xdb
+0x005933d0 ?sliderGetInfo2@@YAXPAUdxJointSlider@@PAUInfo2@dxJoint@@@Z function 0x3ca
+0x005937a0 ?measureHinge2Angle@@YAMPAUdxJointHinge2@@@Z function 0xf7
+0x005938a0 ?hinge2GetInfo1@@YAXPAUdxJointHinge2@@PAUInfo1@dxJoint@@@Z function 0xa4
+0x00593950 ?hinge2GetInfo2@@YAXPAUdxJointHinge2@@PAUInfo2@dxJoint@@@Z function 0x22e
+0x00593b80 ?getUniversalAxes@@YAXPAUdxJointUniversal@@QAM1@Z function 0x8e
+0x00593c10 ?getUniversalAngle1@@YAMPAUdxJointUniversal@@@Z function 0xab
+0x00593cc0 ?getUniversalAngle2@@YAMPAUdxJointUniversal@@@Z function 0xcd
+0x00593d90 ?universalGetInfo1@@YAXPAUdxJointUniversal@@PAUInfo1@dxJoint@@@Z function 0x14e
+0x00593ee0 ?universalGetInfo2@@YAXPAUdxJointUniversal@@PAUInfo2@dxJoint@@@Z function 0x149
+0x00594030 ?amotorComputeGlobalAxes@@YAXPAUdxJointAMotor@@QAY03M@Z function 0x1c4
+0x00594200 ?amotorComputeEulerAngles@@YAXPAUdxJointAMotor@@QAY03M@Z function 0x243
+0x00594450 ?amotorGetInfo1@@YAXPAUdxJointAMotor@@PAUInfo1@dxJoint@@@Z function 0xb2
+0x00594510 ?amotorGetInfo2@@YAXPAUdxJointAMotor@@PAUInfo2@dxJoint@@@Z function 0x10a
+0x00594620 ?fixedGetInfo2@@YAXPAUdxJointFixed@@PAUInfo2@dxJoint@@@Z function 0x1a7
+0x005947d0 _dRSetIdentity function 0x4d
+0x00594820 _dQMultiply0 function 0xb3
+0x005948e0 _dQMultiply1 function 0xb3
+0x005949a0 _dQMultiply2 function 0xb3
+0x00594a60 _dQMultiply3 function 0xb3
+0x00594b20 _dRfromQ function 0xe1
+0x00594c10 _dQfromR function 0x18e
+0x00594da0 _dDQfromW function 0xae
+0x00594e50 _dRFrom2Axes function 0x183
+0x00594fe0 _dNormalize3 function 0x1f1
+0x005951e0 _dNormalize4 function 0xb0
+0x00595290 _dPlaneSpace function 0xe7
+0x00595380 _dSetZero function 0x35
+0x005953c0 _dSetValue function 0x37
+0x00595400 _dMultiply0 function 0x11b
+0x00595520 _dSolveCholesky function 0x2f6
+0x00595820 _dVectorScale function 0xa5
+0x005958d0 _dSolveLDLT function 0x6b
+0x00595940 _dLDLTAddTL function 0x639
+0x00595f80 _dRemoveRowCol function 0x160
+0x005960e0 _dFactorCholesky function 0x135
+0x00596220 _dInvertPDMatrix function 0x236
+0x00596460 _dIsPositiveDefinite function 0x7e
+0x005964e0 _dLDLTRemove function 0x3f8
+0x005968e0 _dAlloc function 0x10
+0x005968f0 _dRealloc function 0x1e
+0x00596910 _dFree function 0x1f
+0x00596930 ??0dObStack@@QAE@XZ function 0x10
+0x00596940 ??1dObStack@@QAE@XZ function 0x1f
+0x00596960 ?alloc@dObStack@@QAEPAXH@Z function 0xc3
+0x00596a30 ?freeAll@dObStack@@QAEXXZ function 0x23
+0x00596a60 ?rewind@dObStack@@QAEPAXXZ function 0x22
+0x00596a90 ?next@dObStack@@QAEPAXH@Z function 0x4c
+0x00596ae0 ?dInternalHandleAutoDisabling@@YAXPAUdxWorld@@M@Z function 0xef
+0x00596bd0 ?dxStepBody@@YAXPAUdxBody@@M@Z function 0x2bb
+0x00596e90 ?dxProcessIslands@@YAXPAUdxWorld@@MP6AX0PBQAUdxBody@@HPBQAUdxJoint@@HM@Z@Z function 0x280
+0x00597110 ?Multiply2_p8r@@YAXPAM00HHH@Z function 0xaa
+0x005971c0 ?MultiplyAdd2_p8r@@YAXPAM00HHH@Z function 0xad
+0x00597270 ?Multiply0_p81@@YAXPAM00H@Z function 0x73
+0x005972f0 ?MultiplyAdd0_p81@@YAXPAM00H@Z function 0x7f
+0x00597370 ?MultiplyAdd1_8q1@@YAXPAM00H@Z function 0x308
+0x00597680 ?Multiply1_8q1@@YAXPAM00H@Z function 0x2d8
+0x00597960 ?dInternalStepIsland_x2@@YAXPAUdxWorld@@PBQAUdxBody@@HPBQAUdxJoint@@HM@Z function 0x142d
+0x00598da0 ?multiply_invM_JT@@YAXHHPAMPAH00@Z function 0xdf
+0x00598e80 ?multiply_J@@YAXHPAMPAH00@Z function 0x9e
+0x00598f20 ?compute_invM_JT@@YAXHPAM0PAHPBQAUdxBody@@PBM@Z function 0x136
+0x00599060 ?SOR_LCP@@YAXHHPAMPAHPBQAUdxBody@@PBM0000031PAUdxQuickStepParameters@@@Z function 0x61e
+0x00599680 ?dxQuickStepper@@YAXPAUdxWorld@@PBQAUdxBody@@HPBQAUdxJoint@@HM@Z function 0xfe6
+0x0059a670 _dRandInt function 0x38
+0x0059a6b0 ?_length2OfVector3@@YAMQAM@Z function 0x23
+0x0059a6e0 ?_cldClipEdgeToPlane@@YAHAAY03M0AAY03$$CBM@Z function 0x14d
+0x0059a830 ?_CalculateAxis@@YAXAAY03$$CBM000AAY03M@Z function 0x84
+0x0059a8c0 ??0OBB@IceMaths@@QAE@ABVPoint@1@0ABVMatrix3x3@1@@Z function 0x40
+0x0059a900 ?MakeMatrix@@YAAAVMatrix4x4@IceMaths@@QBM0AAV12@@Z function 0x64
+0x0059a970 ?_IsNearContacts@@YAHAAU_sLocalContactData@@0@Z function 0xd2
+0x0059aa50 ?_OptimizeLocalContacts@@YAXXZ function 0x90
+0x0059aae0 ?_ProcessLocalContacts@@YAHXZ function 0xd0
+0x0059abb0 ?_cldTestAxis@@YAHAAY03$$CBM00QAMHH@Z function 0x259
+0x0059ae10 ?_cldTestSeparatingAxesOfCapsule@@YAHAAY03$$CBM00@Z function 0x834
+0x0059b650 ?_cldTestOneTriangleVSCCylinder@@YAXAAY03$$CBM00@Z function 0x68e
+0x0059bce0 ?push@?$dArray@UBoxTC@dxTriMesh@@@@QAEXUBoxTC@dxTriMesh@@@Z function 0x73
+0x0059bd60 ?dCollideCCTL@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z function 0x397
+0x0059c100 ?coplanar_tri_tri@@YAHQAM000000@Z function 0xc28
+0x0059cd30 ?isect2@@YAXQAM00MMMMMMPAM100@Z function 0xdb
+0x0059ce10 ?compute_intervals_isectline@@YAHQAM00MMMMMMMMPAM100@Z function 0x1b2
+0x0059cfd0 ?TriTriIntersectWithIsectLine@@YAHQAM00000PAH00@Z function 0x5d9
+0x0059d5b0 ?VecMatMult4@@YAXAAY03MAAVMatrix4x4@IceMaths@@0@Z function 0x50
+0x0059d600 ?dVector3Normalize@@YAXAAY03M@Z function 0x39
+0x0059d640 ?ClipConvexPolygonAgainstPlane@@YAXQBMMAAULineContactSet@@@Z function 0x6ae
+0x0059dcf0 ?RayTriangleIntersect@@YAHQBM0000PAM11@Z function 0x1c5
+0x0059dec0 ?Invert4x4@@YAXABVMatrix4x4@IceMaths@@AAV12@@Z function 0x263
+0x0059e130 ?ExamineContactPoint@@YAHPAY03MQAM1@Z function 0x37
+0x0059e170 ?SimpleUnclippedTest@@YA_NQAM000PAY03MAAN@Z function 0xdc
+0x0059e250 ?GenerateContact@@YAXHPAUdContactGeom@@HPAUdxTriMesh@@1QBM2MAAH@Z function 0x1ac
+0x0059e400 ?dCollideTTL@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z function 0x2a35
+0x005a0e40 ?dCollideRTL@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z function 0x30e
+0x005a1150 ?_cldTestFace@@YAHMMMMMQAMH@Z function 0x129
+0x005a1280 ?_cldClipPolyToPlane@@YAXQAY03MH0AAHAAY03$$CBM@Z function 0x195
+0x005a1420 ?_cldClosestPointOnTwoLines@@YAHQAM000AAM1@Z function 0xb4
+0x005a14e0 ?_cldTestNormal@@YAHMMQAMH@Z function 0xb5
+0x005a15a0 ?_cldTestEdge@@YAHMMMMQAMH@Z function 0x12a
+0x005a16d0 ?_cldTestSeparatingAxes@@YAHAAY03$$CBM00@Z function 0xe82
+0x005a2560 ?_cldClipping@@YAXAAY03$$CBM00@Z function 0x118e
+0x005a36f0 ?dCollideBTL@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z function 0x488
+0x005a3b80 ?GetContactData@@YA_NAAY03$$CBMMQBM11AAM22@Z function 0x57d
+0x005a4100 ?push@?$dArray@USphereTC@dxTriMesh@@@@QAEXUSphereTC@dxTriMesh@@@Z function 0x73
+0x005a4180 ?dCollideSTL@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z function 0x65e
+0x005a47e0 ?_freeAll@dArrayBase@@IAEXH@Z function 0x23
+0x005a4810 ?_setSize@dArrayBase@@IAEXHH@Z function 0x87
+0x005a48a0 ??0MeshInterface@Opcode@@QAE@XZ function 0x1f
+0x005a48c0 ?IsValid@MeshInterface@Opcode@@QBE_NXZ function 0x20
+0x005a48e0 ?CheckTopology@MeshInterface@Opcode@@QBEIXZ function 0xed
+0x005a49d0 ?SetPointers@MeshInterface@Opcode@@QAE_NPBVIndexedTriangle@IceMaths@@PBVPoint@4@@Z function 0x20
+0x005a49f0 ?SetStrides@MeshInterface@Opcode@@QAE_NII@Z function 0x22
+0x005a4a20 ??0Container@IceCore@@QAE@XZ function 0x21
+0x005a4a50 ?Resize@Container@IceCore@@AAE_NI@Z function 0xae
+0x005a4b00 ??1Container@IceCore@@QAE@XZ function 0x5a
+0x005a4b60 ?GetSplittingValue@AABBTreeBuilder@Opcode@@UBEMPBIIABVAABB@IceMaths@@I@Z function 0xe
+0x005a4b70 ?ValidateSubdivision@AABBTreeBuilder@Opcode@@UAEHPBIIABVAABB@IceMaths@@@Z function 0xe
+0x005a4b80 ??_GAABBTreeBuilder@Opcode@@UAEPAXI@Z function 0x1f
+0x005a4ba0 ??0AABBTreeOfTrianglesBuilder@Opcode@@QAE@XZ function 0x28
+0x005a4bd0 ??1AABBTreeBuilder@Opcode@@UAE@XZ function 0x7
+0x005a4be0 ??_GAABBTreeOfTrianglesBuilder@Opcode@@UAEPAXI@Z function 0x1e
+0x005a4c00 ??0Model@Opcode@@QAE@XZ function 0x12
+0x005a4c20 ?GetUsedBytes@Model@Opcode@@UBEIXZ function 0x12
+0x005a4c40 ??1Model@Opcode@@UAE@XZ function 0x4f
+0x005a4c90 ?Build@Model@Opcode@@UAE_NABUOPCODECREATE@2@@Z function 0x17e
+0x005a4e10 ??_GModel@Opcode@@UAEPAXI@Z function 0x1e
+0x005a4e30 ??0OPCODECREATE@Opcode@@QAE@XZ function 0x2c
+0x005a4e60 ??0BaseModel@Opcode@@QAE@XZ function 0x17
+0x005a4e80 ?CreateTree@BaseModel@Opcode@@IAE_N_N0@Z function 0x10c
+0x005a4f90 ?Refit@BaseModel@Opcode@@UAE_NXZ function 0xf
+0x005a4fa0 ?ReleaseBase@BaseModel@Opcode@@IAEXXZ function 0x39
+0x005a4fe0 ??1BaseModel@Opcode@@UAE@XZ function 0x3f
+0x005a5020 ??_GBaseModel@Opcode@@UAEPAXI@Z function 0x53
+0x005a5080 ??GPoint@IceMaths@@QBE?AV01@XZ function 0x1d
+0x005a50a0 ??GPoint@IceMaths@@QBE?AV01@ABV01@@Z function 0x23
+0x005a50d0 ??TPoint@IceMaths@@QBE?AV01@ABV01@@Z function 0x39
+0x005a5110 ??BMatrix4x4@IceMaths@@QBE?AVMatrix3x3@1@XZ function 0x43
+0x005a5160 ??DMatrix4x4@IceMaths@@QBE?AV01@ABV01@@Z function 0x25e
+0x005a53d0 ?planeBoxOverlap@@YAHABVPoint@IceMaths@@M0@Z function 0xd4
+0x005a54b0 ?TriBoxOverlap@AABBTreeCollider@Opcode@@IAEHABVPoint@IceMaths@@0@Z function 0x6e9
+0x005a5ba0 ?CoplanarTriTri@@YAHABVPoint@IceMaths@@000000@Z function 0xc24
+0x005a67d0 ?TriTriOverlap@AABBTreeCollider@Opcode@@IAEHABVPoint@IceMaths@@00000@Z function 0x6d1
+0x005a6eb0 ??0AABBTreeCollider@Opcode@@QAE@XZ function 0x86
+0x005a6f40 ??1AABBTreeCollider@Opcode@@UAE@XZ function 0x6c
+0x005a6fb0 ?ValidateSettings@AABBTreeCollider@Opcode@@UAEPBDXZ function 0x14
+0x005a6fd0 ?InitQuery@AABBTreeCollider@Opcode@@IAEXPBVMatrix4x4@IceMaths@@0@Z function 0x1ec
+0x005a71c0 ?PrimTest@AABBTreeCollider@Opcode@@IAEXII@Z function 0x363
+0x005a7530 ?_CollideTriBox@AABBTreeCollider@Opcode@@IAEXPBVAABBNoLeafNode@2@@Z function 0x2e7
+0x005a7820 ?_CollideBoxTri@AABBTreeCollider@Opcode@@IAEXPBVAABBNoLeafNode@2@@Z function 0x2e7
+0x005a7b10 ?_Collide@AABBTreeCollider@Opcode@@IAEXPBVAABBNoLeafNode@2@0@Z function 0x18f3
+0x005a9410 ?_Collide@AABBTreeCollider@Opcode@@IAEXPBVAABBQuantizedNode@2@0ABVPoint@IceMaths@@111@Z function 0x865
+0x005a9c80 ?_CollideTriBox@AABBTreeCollider@Opcode@@IAEXPBVAABBQuantizedNoLeafNode@2@@Z function 0x351
+0x005a9fe0 ?_CollideBoxTri@AABBTreeCollider@Opcode@@IAEXPBVAABBQuantizedNoLeafNode@2@@Z function 0x351
+0x005aa340 ?_Collide@AABBTreeCollider@Opcode@@IAEXPBVAABBQuantizedNoLeafNode@2@0@Z function 0x198d
+0x005abcd0 ??_GAABBTreeCollider@Opcode@@UAEPAXI@Z function 0x1e
+0x005abcf0 ?Collide@AABBTreeCollider@Opcode@@QAE_NPBVAABBNoLeafTree@2@0PBVMatrix4x4@IceMaths@@1PAUPair@IceCore@@@Z function 0x74
+0x005abd70 ?Collide@AABBTreeCollider@Opcode@@QAE_NPBVAABBQuantizedTree@2@0PBVMatrix4x4@IceMaths@@1PAUPair@IceCore@@@Z function 0x20a
+0x005abf80 ?Collide@AABBTreeCollider@Opcode@@QAE_NPBVAABBQuantizedNoLeafTree@2@0PBVMatrix4x4@IceMaths@@1PAUPair@IceCore@@@Z function 0xe0
+0x005ac060 ?_Collide@AABBTreeCollider@Opcode@@IAEXPBVAABBCollisionNode@2@0@Z function 0x5d6
+0x005ac640 ?Collide@AABBTreeCollider@Opcode@@QAE_NPBVAABBCollisionTree@2@0PBVMatrix4x4@IceMaths@@1PAUPair@IceCore@@@Z function 0x74
+0x005ac6c0 ?Collide@AABBTreeCollider@Opcode@@QAE_NAAUBVTCache@2@PBVMatrix4x4@IceMaths@@1@Z function 0xd6
+0x005ac7b0 ??0PlanesCollider@Opcode@@QAE@XZ function 0x1a
+0x005ac7d0 ??1PlanesCollider@Opcode@@UAE@XZ function 0x77
+0x005ac850 ??_GPlanesCollider@Opcode@@UAEPAXI@Z function 0x1e
+0x005ac870 ?SphereTriOverlap@SphereCollider@Opcode@@IAEHABVPoint@IceMaths@@00@Z function 0x5c3
+0x005ace40 ??0SphereCollider@Opcode@@QAE@XZ function 0x20
+0x005ace60 ??1SphereCollider@Opcode@@UAE@XZ function 0xb
+0x005ace70 ?InitQuery@SphereCollider@Opcode@@IAEHAAUSphereCache@2@ABVSphere@IceMaths@@PBVMatrix4x4@5@2@Z function 0x42d
+0x005ad2a0 ?SphereContainsBox@SphereCollider@Opcode@@IAEHABVPoint@IceMaths@@0@Z function 0x24d
+0x005ad4f0 ?_Collide@SphereCollider@Opcode@@IAEXPBVAABBCollisionNode@2@@Z function 0x27e
+0x005ad770 ?_CollideNoPrimitiveTest@SphereCollider@Opcode@@IAEXPBVAABBCollisionNode@2@@Z function 0x1a9
+0x005ad920 ?_Collide@SphereCollider@Opcode@@IAEXPBVAABBQuantizedNode@2@@Z function 0x301
+0x005adc30 ?_CollideNoPrimitiveTest@SphereCollider@Opcode@@IAEXPBVAABBQuantizedNode@2@@Z function 0x235
+0x005ade70 ?_Collide@SphereCollider@Opcode@@IAEXPBVAABBNoLeafNode@2@@Z function 0x394
+0x005ae210 ?_CollideNoPrimitiveTest@SphereCollider@Opcode@@IAEXPBVAABBNoLeafNode@2@@Z function 0x1de
+0x005ae3f0 ?_Collide@SphereCollider@Opcode@@IAEXPBVAABBQuantizedNoLeafNode@2@@Z function 0x41c
+0x005ae810 ?_CollideNoPrimitiveTest@SphereCollider@Opcode@@IAEXPBVAABBQuantizedNoLeafNode@2@@Z function 0x26f
+0x005aea80 ??_GSphereCollider@Opcode@@UAEPAXI@Z function 0x1e
+0x005aeaa0 ?Collide@SphereCollider@Opcode@@QAE_NAAUSphereCache@2@ABVSphere@IceMaths@@ABVModel@2@PBVMatrix4x4@5@3@Z function 0x169
+0x005aec10 ??DPoint@IceMaths@@QBE?AV01@ABVMatrix4x4@1@@Z function 0x5a
+0x005aec70 ??DMatrix3x3@IceMaths@@QBE?AV01@ABV01@@Z function 0xf5
+0x005aed70 ?TriBoxOverlap@OBBCollider@Opcode@@IAEHXZ function 0x6be
+0x005af430 ??0OBBCollider@Opcode@@QAE@XZ function 0x63
+0x005af4a0 ??1OBBCollider@Opcode@@UAE@XZ function 0x5f
+0x005af500 ?ValidateSettings@OBBCollider@Opcode@@UAEPBDXZ function 0x16
+0x005af520 ?InitQuery@OBBCollider@Opcode@@IAEHAAUOBBCache@2@ABVOBB@IceMaths@@PBVMatrix4x4@5@2@Z function 0x9c2
+0x005afef0 ?_Collide@OBBCollider@Opcode@@IAEXPBVAABBCollisionNode@2@@Z function 0x7af
+0x005b06a0 ?_CollideNoPrimitiveTest@OBBCollider@Opcode@@IAEXPBVAABBCollisionNode@2@@Z function 0x5c2
+0x005b0c70 ?_Collide@OBBCollider@Opcode@@IAEXPBVAABBQuantizedNode@2@@Z function 0x858
+0x005b14d0 ?_CollideNoPrimitiveTest@OBBCollider@Opcode@@IAEXPBVAABBQuantizedNode@2@@Z function 0x66a
+0x005b1b40 ?_Collide@OBBCollider@Opcode@@IAEXPBVAABBNoLeafNode@2@@Z function 0x9fb
+0x005b2540 ?_CollideNoPrimitiveTest@OBBCollider@Opcode@@IAEXPBVAABBNoLeafNode@2@@Z function 0x5f7
+0x005b2b40 ?_Collide@OBBCollider@Opcode@@IAEXPBVAABBQuantizedNoLeafNode@2@@Z function 0xa89
+0x005b35d0 ?_CollideNoPrimitiveTest@OBBCollider@Opcode@@IAEXPBVAABBQuantizedNoLeafNode@2@@Z function 0x6a3
+0x005b3c80 ??_GOBBCollider@Opcode@@UAEPAXI@Z function 0x1e
+0x005b3ca0 ?Collide@OBBCollider@Opcode@@QAE_NAAUOBBCache@2@ABVOBB@IceMaths@@ABVModel@2@PBVMatrix4x4@5@3@Z function 0x169
+0x005b3e10 ??HPoint@IceMaths@@QBE?AV01@ABV01@@Z function 0x23
+0x005b3e40 ??DPoint@IceMaths@@QBE?AV01@M@Z function 0x23
+0x005b3e70 ??DIceMaths@@YA?AVPoint@0@MABV10@@Z function 0x25
+0x005b3ea0 ??DMatrix3x3@IceMaths@@QBE?AVPoint@1@ABV21@@Z function 0x51
+0x005b3f00 ?RayTriOverlap@RayCollider@Opcode@@IAEHABVPoint@IceMaths@@00@Z function 0x28e
+0x005b4190 ??0RayCollider@Opcode@@QAE@XZ function 0x37
+0x005b41d0 ??1RayCollider@Opcode@@UAE@XZ function 0xb
+0x005b41e0 ?ValidateSettings@RayCollider@Opcode@@UAEPBDXZ function 0x5b
+0x005b4240 ?InitQuery@RayCollider@Opcode@@IAEHABVRay@IceMaths@@PBVMatrix4x4@4@PAI@Z function 0x5bd
+0x005b4800 ?_SegmentStab@RayCollider@Opcode@@IAEXPBVAABBCollisionNode@2@@Z function 0x313
+0x005b4b20 ?_SegmentStab@RayCollider@Opcode@@IAEXPBVAABBQuantizedNode@2@@Z function 0x392
+0x005b4ec0 ?_SegmentStab@RayCollider@Opcode@@IAEXPBVAABBNoLeafNode@2@@Z function 0x52e
+0x005b53f0 ?_SegmentStab@RayCollider@Opcode@@IAEXPBVAABBQuantizedNoLeafNode@2@@Z function 0x595
+0x005b5990 ?_RayStab@RayCollider@Opcode@@IAEXPBVAABBCollisionNode@2@@Z function 0x34c
+0x005b5ce0 ?_RayStab@RayCollider@Opcode@@IAEXPBVAABBQuantizedNode@2@@Z function 0x3cb
+0x005b60b0 ?_RayStab@RayCollider@Opcode@@IAEXPBVAABBNoLeafNode@2@@Z function 0x544
+0x005b6600 ?_RayStab@RayCollider@Opcode@@IAEXPBVAABBQuantizedNoLeafNode@2@@Z function 0x5b0
+0x005b6bb0 ??_GRayCollider@Opcode@@UAEPAXI@Z function 0x1e
+0x005b6bd0 ?Collide@RayCollider@Opcode@@QAE_NABVRay@IceMaths@@ABVModel@2@PBVMatrix4x4@4@PAI@Z function 0x18e
+0x005b6d60 ??0LSSCollider@Opcode@@QAE@XZ function 0x12
+0x005b6d80 ??1LSSCollider@Opcode@@UAE@XZ function 0xb
+0x005b6d90 ??_GLSSCollider@Opcode@@UAEPAXI@Z function 0x1e
+0x005b6db0 ?dCollideSpheres@@YAHQAMM0MPAUdContactGeom@@@Z function 0xf6
+0x005b6eb0 ?dLineClosestApproach@@YAXQBM000PAM1@Z function 0xc3
+0x005b6f80 _dClosestLineSegmentPoints function 0x6ff
+0x005b7680 ?dClosestLineBoxPoints@@YAXQBM0000QAM1@Z function 0x662
+0x005b7cf0 _dSolveL1T function 0x55e
+0x005b8250 _dSolveL1 function 0x696
+0x005b88f0 _dDot function 0xb1
+0x005b89b0 ?swapRowsAndCols@@YAXPAPAMHHHHH@Z function 0x323
+0x005b8ce0 ?swapProblem@@YAXPAPAMPAM1111PAH22HHHHH@Z function 0xf2
+0x005b8de0 ??0dLCP@@QAE@HHPAM0000000000PAH111PAPAM@Z function 0x27b
+0x005b9060 ?transfer_i_to_C@dLCP@@QAEXH@Z function 0xc8
+0x005b9130 ?transfer_i_from_N_to_C@dLCP@@QAEXH@Z function 0x153
+0x005b9290 ?transfer_i_from_C_to_N@dLCP@@QAEXH@Z function 0x12a
+0x005b93c0 ?pN_plusequals_ANi@dLCP@@QAEXPAMHH@Z function 0x6d
+0x005b9430 ?solve1@dLCP@@QAEXPAMHHH@Z function 0x13c
+0x005b9570 ?unpermute@dLCP@@QAEXXZ function 0x94
+0x005b9610 ?dSolveLCP@@YAXHPAM000H00PAH@Z function 0x900
+0x005b9f10 ?InvertPRMatrix@IceMaths@@YAXAAVMatrix4x4@1@ABV21@@Z function 0x9f
+0x005b9fb0 ?SetMinMax@AABB@IceMaths@@QAEXABVPoint@2@0@Z function 0x7a
+0x005ba030 ?ComputeGlobalBox@AABBTreeOfTrianglesBuilder@Opcode@@UBE_NPBIIAAVAABB@IceMaths@@@Z function 0x2a7
+0x005ba2e0 ?GetSplittingValue@AABBTreeOfTrianglesBuilder@Opcode@@UBEMII@Z function 0xd6
+0x005ba3c0 ?GetSplittingValue@AABBTreeOfTrianglesBuilder@Opcode@@UBEMPBIIABVAABB@IceMaths@@I@Z function 0x141
+0x005ba510 ??0AABBTreeNode@Opcode@@QAE@XZ function 0xe
+0x005ba520 ?Split@AABBTreeNode@Opcode@@IAEIIPAVAABBTreeBuilder@2@@Z function 0x73
+0x005ba5a0 ?Release@AABBTree@Opcode@@QAEXXZ function 0x49
+0x005ba5f0 ??1AABBTreeNode@Opcode@@QAE@XZ function 0x3f
+0x005ba630 ?Subdivide@AABBTreeNode@Opcode@@IAE_NPAVAABBTreeBuilder@2@@Z function 0x4b9
+0x005baaf0 ?_BuildHierarchy@AABBTreeNode@Opcode@@IAEXPAVAABBTreeBuilder@2@@Z function 0x42
+0x005bab40 ??0AABBTree@Opcode@@QAE@XZ function 0x17
+0x005bab60 ??1AABBTree@Opcode@@QAE@XZ function 0xad
+0x005bac10 ?Build@AABBTree@Opcode@@QAE_NPAVAABBTreeBuilder@2@@Z function 0x113
+0x005bad30 ?GetMin@CollisionAABB@Opcode@@QBEXAAVPoint@IceMaths@@@Z function 0x2b
+0x005bad60 ?GetMax@CollisionAABB@Opcode@@QBEXAAVPoint@IceMaths@@@Z function 0x2b
+0x005bad90 ??0AABBCollisionNode@Opcode@@QAE@XZ function 0xa
+0x005bada0 ??0AABBQuantizedNode@Opcode@@QAE@XZ function 0xa
+0x005badb0 ??0AABBNoLeafNode@Opcode@@QAE@XZ function 0xb
+0x005badc0 ??0AABBQuantizedNoLeafNode@Opcode@@QAE@XZ function 0xb
+0x005badd0 ??1AABBOptimizedTree@Opcode@@UAE@XZ function 0x7
+0x005bade0 ??_GAABBOptimizedTree@Opcode@@UAEPAXI@Z function 0x1f
+0x005bae00 ?_BuildCollisionTree@@YAXPAVAABBCollisionNode@Opcode@@IAAIPBVAABBTreeNode@2@@Z function 0xa6
+0x005baeb0 ?_BuildNoLeafTree@@YAXPAVAABBNoLeafNode@Opcode@@IAAIPBVAABBTreeNode@2@@Z function 0xe3
+0x005bafa0 ??0AABBCollisionTree@Opcode@@QAE@XZ function 0x11
+0x005bafc0 ?GetUsedBytes@AABBCollisionTree@Opcode@@UBEIXZ function 0x7
+0x005bafd0 ?Build@AABBCollisionTree@Opcode@@UAE_NPAVAABBTree@2@@Z function 0x10b
+0x005bb0f0 ?_Walk@Local@?3??Walk@AABBCollisionTree@Opcode@@UBE_NP6A_NPBXPAX@Z1@Z@SAXPBVAABBCollisionNode@4@21@Z function 0x3c
+0x005bb130 ??0AABBNoLeafTree@Opcode@@QAE@XZ function 0x11
+0x005bb150 ?GetUsedBytes@AABBNoLeafTree@Opcode@@UBEIXZ function 0x7
+0x005bb160 ?Build@AABBNoLeafTree@Opcode@@UAE_NPAVAABBTree@2@@Z function 0x11f
+0x005bb280 ?Refit@AABBNoLeafTree@Opcode@@UAE_NPBVMeshInterface@2@@Z function 0x650
+0x005bb8d0 ?_Walk@Local@?3??Walk@AABBNoLeafTree@Opcode@@UBE_NP6A_NPBXPAX@Z1@Z@SAXPBVAABBNoLeafNode@4@21@Z function 0x41
+0x005bb920 ??0AABBQuantizedTree@Opcode@@QAE@XZ function 0x11
+0x005bb940 ?GetUsedBytes@AABBQuantizedTree@Opcode@@UBEIXZ function 0x7
+0x005bb950 ?Build@AABBQuantizedTree@Opcode@@UAE_NPAVAABBTree@2@@Z function 0x680
+0x005bbfd0 ?_Walk@Local@?3??Walk@AABBQuantizedTree@Opcode@@UBE_NP6A_NPBXPAX@Z1@Z@SAXPBVAABBQuantizedNode@4@21@Z function 0x3c
+0x005bc010 ??0AABBQuantizedNoLeafTree@Opcode@@QAE@XZ function 0x11
+0x005bc030 ?GetUsedBytes@AABBQuantizedNoLeafTree@Opcode@@UBEIXZ function 0xa
+0x005bc040 ?Build@AABBQuantizedNoLeafTree@Opcode@@UAE_NPAVAABBTree@2@@Z function 0x698
+0x005bc6e0 ?_Walk@Local@?3??Walk@AABBQuantizedNoLeafTree@Opcode@@UBE_NP6A_NPBXPAX@Z1@Z@SAXPBVAABBQuantizedNoLeafNode@4@21@Z function 0x41
+0x005bc730 ??1AABBCollisionTree@Opcode@@UAE@XZ function 0x6e
+0x005bc7a0 ?Walk@AABBCollisionTree@Opcode@@UBE_NP6A_NPBXPAX@Z1@Z function 0x24
+0x005bc7d0 ??1AABBNoLeafTree@Opcode@@UAE@XZ function 0x6e
+0x005bc840 ?Walk@AABBNoLeafTree@Opcode@@UBE_NP6A_NPBXPAX@Z1@Z function 0x24
+0x005bc870 ??1AABBQuantizedTree@Opcode@@UAE@XZ function 0x6e
+0x005bc8e0 ?Walk@AABBQuantizedTree@Opcode@@UBE_NP6A_NPBXPAX@Z1@Z function 0x24
+0x005bc910 ??1AABBQuantizedNoLeafTree@Opcode@@UAE@XZ function 0x6e
+0x005bc980 ?Walk@AABBQuantizedNoLeafTree@Opcode@@UBE_NP6A_NPBXPAX@Z1@Z function 0x24
+0x005bc9b0 ??_GAABBCollisionTree@Opcode@@UAEPAXI@Z function 0x1e
+0x005bc9d0 ??_GAABBNoLeafTree@Opcode@@UAEPAXI@Z function 0x1e
+0x005bc9f0 ??_GAABBQuantizedTree@Opcode@@UAEPAXI@Z function 0x1e
+0x005bca10 ??_GAABBQuantizedNoLeafTree@Opcode@@UAEPAXI@Z function 0x1e
+0x005bca30 ??0Collider@Opcode@@QAE@XZ function 0x14
+0x005bca50 ??1Collider@Opcode@@UAE@XZ function 0x7
+0x005bca60 ??_GCollider@Opcode@@UAEPAXI@Z function 0x1f
+0x005bca80 ??0VolumeCollider@Opcode@@QAE@XZ function 0x1d
+0x005bcaa0 ??1VolumeCollider@Opcode@@UAE@XZ function 0x12
+0x005bcac0 ?_Dump@VolumeCollider@Opcode@@IAEXPBVAABBNoLeafNode@2@@Z function 0x88
+0x005bcb50 ?_Dump@VolumeCollider@Opcode@@IAEXPBVAABBQuantizedNoLeafNode@2@@Z function 0x88
+0x005bcbe0 ?_Dump@VolumeCollider@Opcode@@IAEXPBVAABBCollisionNode@2@@Z function 0x5a
+0x005bcc40 ?_Dump@VolumeCollider@Opcode@@IAEXPBVAABBQuantizedNode@2@@Z function 0x5a
+0x005bcca0 ?Rotate@OBB@IceMaths@@QBEXABVMatrix4x4@2@AAV12@@Z function 0x89
+0x005bcd30 ?IsInside@OBB@IceMaths@@QBEHABV12@@Z function 0x15a
+0x005bce90 ??BMatrix3x3@IceMaths@@QBE?AVMatrix4x4@1@XZ function 0x5e
+0x005bcef0 _dSolveL1_1 function 0x1ce
+0x005bd0c0 _dSolveL1_2 function 0x35b
+0x005bd420 _dFactorLDLT function 0x667
 0x005bf25f ATL::_ATL_BASE_MODULE70::_ATL_BASE_MODULE70 function 0x1a
 0x005bf28f ATL::CAtlBaseModule::CAtlBaseModule function 0xab
 0x005bf33a ATL::CAtlComModule::CAtlComModule function 0x40
@@ -1272,23 +1826,49 @@
 0x005fa0a8 __ehhandler$??1TagLib@@QAE@XZ function
 0x005fa0ce __ehhandler$?instance@TagLib@@SAAAV1@XZ function
 0x006552c0 _$E2 function
+0x006560cc __imp__GetProcAddress@8 data 0x4
+0x006560d0 __imp__GetModuleHandleA@4 data 0x4
+0x00656100 __imp__DeleteFileA@4 data 0x4
+0x00656104 __imp__SetEnvironmentVariableA@8 data 0x4
+0x00656108 __imp__GetProcessHeaps@8 data 0x4
+0x0065610c __imp__HeapWalk@8 data 0x4
+0x00656210 __imp__Sleep@4 data 0x4
+0x006563c4 __imp__MessageBoxA@16 data
+0x00656890 ??_C@_00CNPNBAHC@?$AA@ data 0x1
+0x00656894 __real@3f800000 data
 0x00656898 __real@00000000 data 0x4
+0x0065689c __real@c0490fdb data
+0x006568a0 __real@40c90fdb data
+0x006568a4 __real@40490fdb data
 0x0065691c ??_7SRESULT@@6B@ data 0x4
+0x00656920 ??_C@_11LOCGONAA@?$AA?$AA@ data 0x2
+0x00656b60 __real@3f000000 data
 0x0065750c ??_C@_0BM@PAPJHAGI@invalid?5map?1set?$DMT?$DO?5iterator?$AA@ data
 0x00657528 ??_C@_0BE@JONHPENG@map?1set?$DMT?$DO?5too?5long?$AA@ data
+0x00658160 __real@3e800000 data
+0x00658288 __real@3ecccccd data
+0x00659264 __real@bf800000 data
+0x00659380 __real@40400000 data
+0x0065956c __real@38d1b717 data
 0x006595a8 __real@0000000000000000 data
+0x006596bc __real@40800000 data
 0x00659768 __real@3fd51eb860000000 data
+0x0065aa84 __real@3fc00000 data
 0x0065b110 __real@3fe0000000000000 data
+0x0065b13c __real@3e2aaaab data
 0x0065db8c ??_C@_0BC@KBDMBKEH@deque?$DMT?$DO?5too?5long?$AA@ data
 0x0065e8a0 __real@3ff0000000000000 data
 0x00662ae0 ??_7length_error@std@@6B@ data
 0x00662aec ??_7out_of_range@std@@6B@ data
+0x006631d4 __real@4f800000 data
 0x00663218 __real@406fe00000000000 data
 0x00663220 __real@3f70101010101010 data
 0x00663228 __real@3eb0c6f7a0b5ed8d data
 0x00663230 __real@400199999999999a data
 0x00663238 ??_C@_05IAIEPMAK@1?42?48?$AA@ data
 0x00663240 __real@3727c5ac data
+0x00663270 __real@7f7fffff data
+0x00663290 __real@3eaaaaab data
 0x006649bc ??_C@_0BD@LBMCPKOE@zlib?5version?5error?$AA@ data
 0x006649d0 ??_C@_0BC@MCPIPOGP@zlib?5memory?5error?$AA@ data
 0x006649e4 ??_C@_0BD@CPDHIJBA@Unknown?5zlib?5error?$AA@ data
@@ -1360,8 +1940,16 @@
 0x00665f74 ??_C@_0BD@PJCBIDD@invalid?5block?5type?$AA@ data
 0x00666020 ??_C@_0BG@LBKINIKP@invalid?5distance?5code?$AA@ data
 0x00666038 ??_C@_0BM@FFFLPBBC@invalid?5literal?1length?5code?$AA@ data
+0x00666530 ??_C@_01EEMJAFIK@?6?$AA@ data
 0x0066653c ??_C@_03OFAPEBGM@?$CFs?6?$AA@ data
 0x006691d4 ??_C@_01IHBHIGKO@?0?$AA@ data
+0x0066a974 ??_7SYSMONITOR@@6B@ data 0x4
+0x0066a978 ??_C@_08EEHIEMNL@heap?4out?$AA@ data 0x9
+0x0066a984 ??_C@_0BF@PCCAIAOK@__MSVCRT_HEAP_SELECT?$AA@ data 0x15
+0x0066a99c ??_C@_0BJ@GIKAIDBA@__GLOBAL_HEAP_SELECTED?01?$AA@ data 0x19
+0x0066a9c0 __real@4059000000000000 data 0x8
+0x0066a9c8 ??_C@_05EMFAAAMC@ntdll?$AA@ data 0x6
+0x0066a9d0 ??_C@_0BJ@NDLOPGCH@NtQuerySystemInformation?$AA@ data 0x19
 0x0066a9f0 ?s_TypeNames@@3QAY0P@$$CBDA data 0xb4
 0x0066aaa4 ??_C@_0DA@KGMHJCC@SRESULT?3?3GetChar?$DO?5Error?5?9?5Wrong?5@ data
 0x0066aad4 ??_C@_0CP@NHGBBAKJ@SRESULT?3?3GetInt?$DO?5Error?5?9?5Wrong?5v@ data
@@ -1378,6 +1966,11 @@
 0x0066ad08 ??_C@_0DN@BLACEIHK@SRESULT?3?3SetValue?$DO?5Error?5?9?5unico@ data
 0x0066ad48 ??_C@_0DF@NIGFJBLF@SRESULT?3?3SetValue?$DO?5Error?5?9?5strin@ data
 0x0066ad80 ??_C@_0DD@OAIJFCJA@SRESULT?3?3GetTexture?$DO?5Error?5?9?5Wro@ data
+0x0066adb4 ??_C@_0BK@EKNCPJEH@Parse?$DO?5Error?5parsing?5?$CC?$CFs?$CC?$AA@ data 0x1a
+0x00672810 __real@3f847ae147ae147b data
+0x006734c4 __real@358637bd data
+0x00679658 __real@3f50624dd2f1a9fc data
+0x00679660 __real@bff0000000000000 data
 0x00679b3c ??_C@_03NAIKFGEJ@PNG?$AA@ data
 0x0067e3a4 ??_7CGenericFilter@@6B@ data
 0x0067e3ac ??_7CBoxFilter@@6B@ data
@@ -1709,6 +2302,155 @@
 0x00685f18 __length_code data
 0x00686018 _base_length data
 0x00686090 _base_dist data
+0x00686108 ??_C@_0BI@BPGDKPFJ@Bad?5argument?$CIs?$CJ?5?$CI?$CFs?3?$CFd?$CJ?$AA@ data
+0x00686120 ??_C@_0BM@EKCONFBE@src?1lib?1ode?1ode?1src?1ode?4cpp?$AA@ data
+0x0068614c ??_C@_0CK@EFOPHPIM@inertia?5must?5be?5positive?5definit@ data
+0x00686178 ??_C@_0CD@KOBLPCIK@assertion?5?$CCw?5?$CG?$CG?5j?$CC?5failed?5in?5?$CFs?3@ data
+0x0068619c ??_C@_0CI@PGLEOAHI@assertion?5?$CCw?5?$CG?$CG?5vtable?$CC?5failed?5i@ data
+0x006861c4 ??_C@_0DD@OGAOMIOK@joint?5can?5not?5be?5attached?5to?5jus@ data
+0x006861f8 ??_C@_0CP@BDKIFOI@joint?5and?5bodies?5must?5be?5in?5same@ data
+0x00686228 ??_C@_0CA@BLMGPAHF@can?8t?5have?5body1?$DN?$DNbody2?5?$CI?$CFs?3?$CFd?$CJ?$AA@ data
+0x00686248 ??_C@_0BL@DBHCCIG@bad?5joint?5argument?5?$CI?$CFs?3?$CFd?$CJ?$AA@ data
+0x00686264 ??_C@_0DE@ELGPNAC@warning?3?5destroying?5world?5contai@ data
+0x00686298 ??_C@_0BN@CIJGGBIJ@stepsize?5must?5be?5?$DO?50?5?$CI?$CFs?3?$CFd?$CJ?$AA@ data
+0x006862b8 ??_C@_0BL@FFHHHIFE@bad?5world?5argument?5?$CI?$CFs?3?$CFd?$CJ?$AA@ data
+0x006862d4 ??_C@_0CL@NEGNADP@invalid?5operation?5for?5locked?5spa@ data
+0x00686300 ??_C@_0CI@HCFNKEKL@src?1lib?1ode?1ode?1src?1collision_sp@ data
+0x00686338 ??_7dxSpace@@6B@ data
+0x00686360 ??_C@_0BL@PAKBEIKP@index?5out?5of?5range?5?$CI?$CFs?3?$CFd?$CJ?$AA@ data
+0x0068637c ??_C@_0BN@FEGHIDKE@argument?5not?5a?5space?5?$CI?$CFs?3?$CFd?$CJ?$AA@ data
+0x0068639c ??_C@_0DM@HEFMLCB@assertion?5?$CC?$CIg2?9?$DOgflags?5?$CG?5GEOM_AA@ data
+0x006863d8 ??_C@_0DM@LMMONGIO@assertion?5?$CC?$CIg1?9?$DOgflags?5?$CG?5GEOM_AA@ data
+0x00686414 ??_C@_0EN@EIKAHDBD@z?3?2home?2claude?2tornado?9jockey?2sr@ data
+0x00686454 ??_C@_0CD@LKAPFKPC@geom?5is?5already?5in?5a?5space?5?$CI?$CFs?3?$CF@ data
+0x00686478 ??_C@_0CE@FLCODHGG@object?5is?5not?5in?5this?5space?5?$CI?$CFs?3@ data
+0x0068649c __real@ff7fffff data
+0x006864a0 ??_C@_0BM@NAPOBHFM@bad?5o2?5class?5number?5?$CI?$CFs?3?$CFd?$CJ?$AA@ data
+0x006864bc ??_C@_0BM@KGBLCOGB@bad?5o1?5class?5number?5?$CI?$CFs?3?$CFd?$CJ?$AA@ data
+0x006864d8 ??_C@_0CI@BLEBJAOG@colliders?5array?5not?5initialized?5@ data
+0x00686500 ??_C@_0CJ@BFOMJFJL@src?1lib?1ode?1ode?1src?1collision_ke@ data
+0x00686538 ??_C@_0DD@JLEIJFNP@invalid?5operation?5for?5geom?5in?5lo@ data
+0x0068656c ??_C@_0BP@MPJCMMHD@geom?5must?5be?5placeable?5?$CI?$CFs?3?$CFd?$CJ?$AA@ data
+0x0068658c ??_7dxGeom@@6B@ data
+0x0068659c ??_C@_0CC@JPIGBNPJ@argument?5not?5trimesh?5data?5?$CI?$CFs?3?$CFd@ data
+0x006865c0 ??_C@_0CK@PNCNFLGP@src?1lib?1ode?1ode?1src?1collision_tr@ data
+0x006865fc ??_C@_0BP@JCALIHOA@argument?5not?5a?5trimesh?5?$CI?$CFs?3?$CFd?$CJ?$AA@ data
+0x0068661c ??_C@_08NGECHKHJ@?5?$CI?$CFs?3?$CFd?$CJ?$AA@ data
+0x00686628 ??_7dxTriMesh@@6B@ data
+0x00686634 ??_7dxGeomTransform@@6B@ data
+0x00686640 ??_C@_0CG@GMIBEPIK@argument?5not?5a?5geom?5transform?5?$CI?$CF@ data
+0x00686668 ??_C@_0CM@CHCOJHIA@src?1lib?1ode?1ode?1src?1collision_tr@ data
+0x006866a8 ??_C@_0EJ@BOKCKJFO@GeomTransform?5encapsulated?5objec@ data
+0x006866f8 ??_C@_0EB@CKEDBLID@GeomTransform?5encapsulated?5objec@ data
+0x0068673c ??_C@_0DM@KHOJAGJB@assertion?5?$CCo1?9?$DOtype?5?$DN?$DN?5dGeomTran@ data
+0x00686778 ??_C@_0DO@OHGIHFAL@assertion?5?$CCskip?5?$DO?$DN?5?$CIint?$CJsizeof?$CId@ data
+0x006867b8 ??_C@_0CG@LALDJIBO@src?1lib?1ode?1ode?1src?1collision_st@ data
+0x006867f0 ??_7dxSphere@@6B@ data
+0x006867fc ??_C@_0BO@PDIKDMEF@argument?5not?5a?5sphere?5?$CI?$CFs?3?$CFd?$CJ?$AA@ data
+0x0068681c ??_7dxBox@@6B@ data
+0x00686828 ??_C@_0BL@CODJECFE@argument?5not?5a?5box?5?$CI?$CFs?3?$CFd?$CJ?$AA@ data
+0x00686844 ??_7dxCCylinder@@6B@ data
+0x00686850 ??_C@_0CB@DHAOLAGD@argument?5not?5a?5ccylinder?5?$CI?$CFs?3?$CFd?$CJ@ data
+0x00686874 ??_7dxPlane@@6B@ data
+0x00686880 ??_7dxRay@@6B@ data
+0x0068688c ??_C@_0BL@JPJFOPJA@argument?5not?5a?5ray?5?$CI?$CFs?3?$CFd?$CJ?$AA@ data
+0x006868a8 __real@4e6e6b28 data
+0x006868ac ??_C@_0DF@PCLDGHNJ@assertion?5?$CCo2?9?$DOtype?5?$DN?$DN?5dSphereCl@ data
+0x006868e4 ??_C@_0DF@BBPKNAHL@assertion?5?$CCo1?9?$DOtype?5?$DN?$DN?5dSphereCl@ data
+0x0068691c ??_C@_0DE@IHHHIDEC@assertion?5?$CCo2?9?$DOtype?5?$DN?$DN?5dPlaneCla@ data
+0x00686950 ??_C@_0DC@CKLEEENI@assertion?5?$CCo1?9?$DOtype?5?$DN?$DN?5dBoxClass@ data
+0x00686984 ??_C@_0DI@NLAKNAMF@assertion?5?$CCo1?9?$DOtype?5?$DN?$DN?5dCCylinde@ data
+0x006869bc ??_C@_0DC@GHFMEELP@assertion?5?$CCo2?9?$DOtype?5?$DN?$DN?5dBoxClass@ data
+0x006869f0 ??_C@_0DI@KFHCJIGD@assertion?5?$CCo2?9?$DOtype?5?$DN?$DN?5dCCylinde@ data
+0x00686a28 ??_C@_0DC@EGBDIFJG@assertion?5?$CCo1?9?$DOtype?5?$DN?$DN?5dRayClass@ data
+0x00686a5c __real@3f866666 data
+0x00686a8c ??_C@_0DJ@HKCPNAGH@center?5of?5mass?5inconsistent?5with@ data
+0x00686ac8 ??_C@_0BJ@HCAIPDDC@mass?5must?5be?5?$DO?50?5?$CI?$CFs?3?$CFd?$CJ?$AA@ data
+0x00686ae4 __real@3daaaaab data
+0x00686ae8 __real@3ec00000 data
+0x00686aec __real@40860a92 data
+0x00686b10 ??_C@_0CP@IBJKKEGI@dxQuadTreeSpace?3?3getGeom?$CI?$CJ?5not?5y@ data
+0x00686b40 ??_C@_0DA@IMLFHKIB@src?1lib?1ode?1ode?1src?1collision_qu@ data
+0x00686b80 ??_7dxQuadTreeSpace@@6B@ data
+0x00686ba8 ??_C@_05CDHFJGNI@?6?$CFs?3?5?$AA@ data
+0x00686bb0 ??_C@_08OGHPEGLJ@?6?$CFs?5?$CFd?3?5?$AA@ data
+0x00686bbc ??_C@_0BG@IJGHIEJA@ODE?5INTERNAL?5ERROR?5?$CFd?$AA@ data
+0x00686bd4 ??_C@_0M@NEHELGBE@ODE?5Message?$AA@ data
+0x00686be0 ??_C@_0BO@PFNCENB@src?1lib?1ode?1ode?1src?1joint?4cpp?$AA@ data
+0x00686c10 ??_C@_0BO@EGEGAPEA@joint?5is?5not?5a?5slider?5?$CI?$CFs?3?$CFd?$CJ?$AA@ data
+0x00686c30 ??_C@_0BN@LMEGJHPH@this?5should?5never?5get?5called?$AA@ data
+0x00686c50 ??_C@_0BM@KDPHHNBN@joint?5is?5not?5a?5ball?5?$CI?$CFs?3?$CFd?$CJ?$AA@ data
+0x00686c6c ??_C@_0DA@PMFBDOG@assertion?5?$CCjoint?9?$DOnode?$FL1?$FN?4body?$CC?5@ data
+0x00686c9c ??_C@_0CB@BKEOMOJL@src?1lib?1ode?1ode?1src?1rotation?4cpp@ data
+0x00686ccc ??_C@_0BL@JONLAPCJ@zero?5length?5vector?5?$CI?$CFs?3?$CFd?$CJ?$AA@ data
+0x00686ce8 ??_C@_0CA@FLGLNCMF@src?1lib?1ode?1ode?1src?1odemath?4cpp?$AA@ data
+0x00686d18 ??_C@_0BN@CEAPOPDD@vector?5has?5zero?5size?5?$CI?$CFs?3?$CFd?$CJ?$AA@ data
+0x00686d38 __real@3f3504f3 data
+0x00686d6c ??_C@_0DD@JPNAKHMA@assertion?5?$CCp?$FLi?$FN?5?$DO?$DN?50?5?$CG?$CG?5p?$FLi?$FN?5?$DM?5n@ data
+0x00686da0 ??_C@_0BE@BGLBIMBE@num_bytes?5too?5large?$AA@ data
+0x00686db8 __real@3f1a36e2eb1c432d data
+0x00686de4 ??_C@_0CC@NOPANLHG@attached?5enabled?5joint?5not?5tagge@ data
+0x00686e08 ??_C@_0BI@EIELNPOI@enabled?5body?5not?5tagged?$AA@ data
+0x00686e20 ??_C@_0BF@MGEAPDPL@disabled?5body?5tagged?$AA@ data
+0x00686e38 ??_C@_0DD@PIBCNFBA@assertion?5?$CCstacksize?5?$DM?$DN?5world?9?$DOn@ data
+0x00686e6c ??_C@_0DD@PBLDMIJF@assertion?5?$CCstacksize?5?$DM?$DN?5world?9?$DOn@ data
+0x00686ea0 ??_C@_0BN@BHAFNPAA@src?1lib?1ode?1ode?1src?1util?4cpp?$AA@ data
+0x00686ecc ??_C@_0DG@KBEGCMII@assertion?5?$CCp?$DO0?5?$CG?$CG?5r?$DO0?5?$CG?$CG?5A?5?$CG?$CG?5B?5@ data
+0x00686f04 ??_C@_0BN@NHKLAOBO@src?1lib?1ode?1ode?1src?1step?4cpp?$AA@ data
+0x00686f30 ??_C@_0CP@MFABKDHD@assertion?5?$CCp?$DO0?5?$CG?$CG?5A?5?$CG?$CG?5B?5?$CG?$CG?5C?$CC?5f@ data
+0x00686f60 ??_C@_0CP@FAHBHHOG@assertion?5?$CCq?$DO0?5?$CG?$CG?5A?5?$CG?$CG?5B?5?$CG?$CG?5C?$CC?5f@ data
+0x00686f90 ??_C@_0GN@MGEOOHI@assertion?5?$CCinfo?$FLi?$FN?4m?5?$DO?$DN?50?5?$CG?$CG?5inf@ data
+0x00687000 ??_C@_0DO@FNBCMLNB@assertion?5?$CCjoint?$FLj2?$FN?9?$DOnode?$FL1?$FN?4bo@ data
+0x00687040 ??_C@_0DO@BKBCCODH@assertion?5?$CCjoint?$FLj1?$FN?9?$DOnode?$FL1?$FN?4bo@ data
+0x00687080 ??_C@_0CB@JDMCKEFM@assertion?5?$CCj?$DN?$DNm?$CC?5failed?5in?5?$CFs?3?$CFd@ data
+0x006870a4 ??_C@_0CC@GIMMKLAD@src?1lib?1ode?1ode?1src?1quickstep?4cp@ data
+0x006870d8 __real@3feccccccccccccd data
+0x00687110 __real@3df0000000000000 data
+0x0068711c _fSameContactPositionEpsilon data
+0x00687128 ??_C@_0EE@NAGGLHAA@assertion?5?$CCIndex?5?$DO?$DN?50?5?$CG?$CG?5Index?5?$DM@ data
+0x00687170 ??_C@_0EP@PGCKNIGH@z?3?2home?2claude?2tornado?9jockey?2sr@ data
+0x006871b8 __real@3e45798ee2308c3a data
+0x006871c0 __real@bf50624dd2f1a9fc data
+0x006871c8 ??_C@_0DC@JPBGGIEM@src?1lib?1ode?1ode?1src?1collision_tr@ data
+0x00687210 __real@3f30624de0000000 data
+0x00687218 __real@322bcc77 data
+0x00687220 __real@3fefae147ae147ae data
+0x00687228 __real@3ed4f8b580000000 data
+0x00687230 __real@3d719799812dea11 data
+0x00687238 __real@3e45798ee0000000 data
+0x00687240 __real@3feff7ced916872b data
+0x00687254 ??_C@_0CG@NMCBFDMP@setSize?$CI?$CJ?5out?5of?5space?5in?5LOCAL?5@ data
+0x00687288 ??_7AABBTreeBuilder@Opcode@@6B@ data
+0x0068729c ??_7AABBTreeOfTrianglesBuilder@Opcode@@6B@ data
+0x006872b0 ??_7Model@Opcode@@6B@ data
+0x006872c4 ??_7BaseModel@Opcode@@6B@ data
+0x006872d8 ??_7AABBTreeCollider@Opcode@@6B@ data
+0x006872e4 ??_C@_0DH@CENBPGJM@Temporal?5coherence?5only?5works?5wi@ data
+0x00687320 ??_7PlanesCollider@Opcode@@6B@ data
+0x00687330 ??_7SphereCollider@Opcode@@6B@ data
+0x00687340 ??_7OBBCollider@Opcode@@6B@ data
+0x00687350 __real@b58637bd data
+0x00687354 ??_7RayCollider@Opcode@@6B@ data
+0x00687360 ??_C@_0EE@BNAJANDH@SkipPrimitiveTests?5not?5possible?5@ data
+0x006873a4 ??_C@_0DK@NAOOGAEM@Temporal?5coherence?5can?8t?5guarant@ data
+0x006873e0 ??_C@_0DC@IMFKDDOD@Closest?5hit?5doesn?8t?5work?5with?5Fi@ data
+0x00687414 ??_C@_0CI@CJMDIHCG@Higher?5distance?5bound?5must?5be?5po@ data
+0x00687444 ??_7LSSCollider@Opcode@@6B@ data
+0x00687450 ??_C@_0GK@HALHKGLK@assertion?5?$CCA?5?$CG?$CG?5n?5?$DO?50?5?$CG?$CG?5i1?5?$DO?$DN?50@ data
+0x006874bc ??_C@_0BM@FCBNHPFB@src?1lib?1ode?1ode?1src?1lcp?4cpp?$AA@ data
+0x006874e8 ??_C@_0GD@CJEOIJML@assertion?5?$CCn?$DO0?5?$CG?$CG?5i1?5?$DO?$DN0?5?$CG?$CG?5i2?5?$DO@ data
+0x0068754c ??_C@_0CD@PHEAOKMO@assertion?5?$CCj?5?$DM?5nC?$CC?5failed?5in?5?$CFs?3@ data
+0x00687570 ??_C@_0CD@HGGFIPOJ@assertion?5?$CCk?5?$DM?5nC?$CC?5failed?5in?5?$CFs?3@ data
+0x00687594 ??_C@_0CE@PEHMBDPO@LCP?5internal?5error?0?5s?5?$DM?$DN?50?5?$CIs?$DN?$CF?4@ data
+0x006875b8 ??_C@_0DF@FBJAIME@assertion?5?$CClo?$FLk?$FN?5?$DM?$DN?50?5?$CG?$CG?5hi?$FLk?$FN?5?$DO@ data
+0x00687600 ??_7AABBOptimizedTree@Opcode@@6B@ data
+0x00687614 ??_7AABBCollisionTree@Opcode@@6B@ data
+0x00687628 ??_7AABBNoLeafTree@Opcode@@6B@ data
+0x0068763c ??_7AABBQuantizedTree@Opcode@@6B@ data
+0x00687650 __real@46fffe00 data
+0x00687654 ??_7AABBQuantizedNoLeafTree@Opcode@@6B@ data
+0x0068766c ??_7Collider@Opcode@@6B@ data
+0x0068767c ??_7VolumeCollider@Opcode@@6B@ data
 0x0068f54c __TI3?AVout_of_range@std@@ data
 0x0068f64c __TI3?AVlength_error@std@@ data
 0x006a892c __TI2PAD data
@@ -1774,8 +2516,15 @@
 0x006c8670 _static_l_desc data
 0x006c8684 _static_d_desc data
 0x006c8698 _static_bl_desc data
+0x006c872c ?__dball_vtable@@3UVtable@dxJoint@@A data
+0x006c8754 ?__dslider_vtable@@3UVtable@dxJoint@@A data
+0x006c8768 ?__dcontact_vtable@@3UVtable@dxJoint@@A data
+0x006c87e0 _gFixQuantized data
 0x006c8a20 __iob data
 0x006cbc80 ?g_pLog@@3PAVLOG@@A data 0x4
+0x006d2708 ?g_StringManager@@3VSTRINGMANAGER@@A data
+0x007e0ce0 ?liOldSystemTime@?1??GetCpuUsage@SYSMONITOR@@QAEHXZ@4T_LARGE_INTEGER@@A data 0x8
+0x007e0ce8 ?liOldIdleTime@?1??GetCpuUsage@SYSMONITOR@@QAEHXZ@4T_LARGE_INTEGER@@A data 0x8
 0x00a0f288 _s_format_id data
 0x00a0f28c _s_format_id data
 0x00a0f290 ?unknown_tag@?1??getTagFieldName@TagLib@@QAEPBDW4MDMODEL@2@G@Z@4PADA data
@@ -1783,4 +2532,72 @@
 0x00a0f2a8 ?$S1@?1??instance@TagLib@@SAAAV2@XZ@4IA data
 0x00a0f2ac _SSE2Available data
 0x00a0f2b0 ?cpuidDetected@?1??jpeg_CreateDecompress@@9@9 data
+0x00a0f308 _colliders data
+0x00a0fa10 _colliders_initialized data
+0x00a0fa14 _num_user_classes data
+0x00a0fa18 ?_PlanesCollider@dxTriMesh@@2VPlanesCollider@Opcode@@A data
+0x00a0fa60 ?_RayCollider@dxTriMesh@@2VRayCollider@Opcode@@A data
+0x00a0faf0 ?_SphereCollider@dxTriMesh@@2VSphereCollider@Opcode@@A data
+0x00a0fb38 ?_LSSCollider@dxTriMesh@@2VLSSCollider@Opcode@@A data
+0x00a0fb88 ?Faces@dxTriMesh@@2VCollisionFaces@Opcode@@A data
+0x00a0fb98 ?_AABBTreeCollider@dxTriMesh@@2VAABBTreeCollider@Opcode@@A data
+0x00a0fcb0 ?defaultBoxCache@dxTriMesh@@2UOBBCache@Opcode@@A data
+0x00a0fd08 ?_OBBCollider@dxTriMesh@@2VOBBCollider@Opcode@@A data
+0x00a0fe70 ?defaultSphereCache@dxTriMesh@@2USphereCache@Opcode@@A data
+0x00a0fe98 _error_function data
+0x00a0fe9c _debug_function data
+0x00a0fea0 _message_function data
+0x00a0fea4 _allocfn data
+0x00a0fea8 _reallocfn data
+0x00a0feac _freefn data
+0x00a0feb0 _seed data
+0x00a0feb8 _ContactGeoms data
+0x00a0febc ?gCylinder@@3PAUdxGeom@@A data
+0x00a0fec0 ?gTriMesh@@3PAUdxGeom@@A data
+0x00a0fec4 _iFlags data
+0x00a0fec8 _mTriMeshPos data
+0x00a0fed8 _iStride data
+0x00a0fedc _vE0 data
+0x00a0feec _mTriMeshRot data
+0x00a0ff1c _fBestrt data
+0x00a0ff20 _vE2 data
+0x00a0ff30 _vCapsuleRadius data
+0x00a0ff34 _vV1 data
+0x00a0ff44 _vV0 data
+0x00a0ff54 _vCapsuleAxis data
+0x00a0ff64 _fCapsuleSize data
+0x00a0ff68 _vV2 data
+0x00a0ff78 _vNormal data
+0x00a0ff88 _vCapsulePosition data
+0x00a0ff98 _mCapsuleRotation data
+0x00a0ffc8 _vE1 data
+0x00a0ffd8 _gLocalContacts data
+0x00a104d8 _fBestDepth data
+0x00a104dc _fBestCenter data
+0x00a104e0 _iBestAxis data
+0x00a104e4 _ctContacts data
+0x00a104e8 _vN data
+0x00a104f8 ?ColCache@?1??dCollideTTL@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z@4UBVTCache@Opcode@@A data
+0x00a10508 ?$S1@?1??dCollideTTL@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z@4IA data
+0x00a1050c _ContactGeoms data
+0x00a10510 _vHullBoxPos data
+0x00a10520 _mHullBoxRot data
+0x00a10550 _iFlags data
+0x00a10554 _iStride data
+0x00a10558 _vE0 data
+0x00a10568 _vN data
+0x00a10578 _vE2 data
+0x00a10588 _Geom1 data
+0x00a1058c _vBoxHalfSize data
+0x00a1059c _vHullDstPos data
+0x00a105ac _vBestNormal data
+0x00a105bc _vE1 data
+0x00a105cc _Geom2 data
+0x00a105d0 _fBestDepth data
+0x00a105d4 _iBestAxis data
+0x00a105d8 _iExitAxis data
+0x00a105dc _ctContacts data
+0x00a105e0 ?VertexCache@MeshInterface@Opcode@@0PAVPoint@IceMaths@@A data
+0x00a10604 ?mNbContainers@Container@IceCore@@0IA data
+0x00a10608 ?mUsedRam@Container@IceCore@@0IA data
 0x00a12444 _MMXAvailable data

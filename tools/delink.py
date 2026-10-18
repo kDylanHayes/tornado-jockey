@@ -82,6 +82,7 @@ def main() -> int:
         "-scriptPath", str(ROOT / "tools" / "ghidra"),
         "-preScript", "ApplySymbols.java", str(ROOT / "config" / "symbols.txt"),
         "-preScript", "FixReferences.java", str(ROOT / "config" / "norefs.txt"),
+        "-preScript", "FixJumpTables.java",
         "-postScript", "DelinkUnit.java", *script_args,
     ]
     result = subprocess.run(cmd, capture_output=True, text=True)
