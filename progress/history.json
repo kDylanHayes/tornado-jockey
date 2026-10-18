@@ -1,0 +1,41 @@
+[
+ {
+  "time": "2026-10-17T23:54:00+00:00",
+  "commit": "60f2173",
+  "percent": 7.5652,
+  "code": {
+   "matched_code": 184602,
+   "total_code": 2440132
+  }
+ },
+ {
+  "time": "2026-10-18T00:20:00+00:00",
+  "commit": "470db12",
+  "percent": 16.71
+ },
+ {
+  "time": "2026-10-18T13:03:53+00:00",
+  "commit": "f652c730b897096d4907a4dd5aa508fa4421bcc1",
+  "percent": 16.9842,
+  "code": {
+   "matched_code": 413698,
+   "total_code": 2435777
+  },
+  "game": {
+   "matched_code": 7250,
+   "total_code": 1224226
+  },
+  "lib": {
+   "matched_code": 403031,
+   "total_code": 403044
+  },
+  "crt": {
+   "matched_code": 0,
+   "total_code": 159070
+  },
+  "sdk": {
+   "matched_code": 3417,
+   "total_code": 649437
+  }
+ }
+]

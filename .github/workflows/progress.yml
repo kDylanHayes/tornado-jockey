@@ -1,164 +1,50 @@
 name: Progress
 
-# Builds every unit, diffs it against the original exe with objdiff and
-# reports how much of the game's code matches. The game exe and the compiler
-# can't be in this public repository, so they come from a private repository
-# (see docs/maintainers.md). Without access to it, the job only says so.
+# Publishes the progress page from the report committed in progress/.
+# The report itself needs the game exe and the compiler, which can't be on
+# GitHub's runners, so it is generated locally with tools/report.py and
+# recorded with tools/progress.py --record progress (see docs/progress.md).
 
 on:
   push:
     branches: [main]
+    paths:
+      - progress/**
+      - tools/progress.py
+      - .github/workflows/progress.yml
   pull_request:
+    paths:
+      - progress/**
+      - tools/progress.py
   workflow_dispatch:
 
 permissions:
   contents: read
-  actions: read
 
 concurrency:
   group: progress-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  GHIDRA_VERSION: "12.1.4"
-  GHIDRA_DATE: "20260921"
-  DELINKER_VERSION: "0.9.2"
-  DELINKER_DATE: "20260926"
-  OBJDIFF_VERSION: "v3.8.2"
-  ASSETS_REPO: ${{ vars.ASSETS_REPO || format('{0}-assets', github.repository) }}
-
 jobs:
-  report:
+  page:
     runs-on: ubuntu-24.04
-    outputs:
-      built: ${{ steps.assets.outputs.available }}
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check for game files
-        id: assets
-        env:
-          ASSETS_TOKEN: ${{ secrets.ASSETS_TOKEN }}
-        run: |
-          if [ -n "$ASSETS_TOKEN" ]; then
-            echo "available=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "available=false" >> "$GITHUB_OUTPUT"
-            msg="No ASSETS_TOKEN secret (pull requests from forks never get one), so progress isn't measured in this run. See docs/maintainers.md."
-            echo "::notice::$msg"
-            echo "$msg" >> "$GITHUB_STEP_SUMMARY"
-          fi
-
-      - name: Fetch game files
-        if: steps.assets.outputs.available == 'true'
-        uses: actions/checkout@v4
-        with:
-          repository: ${{ env.ASSETS_REPO }}
-          token: ${{ secrets.ASSETS_TOKEN }}
-          path: assets
-
-      - name: Verify the target
-        if: steps.assets.outputs.available == 'true'
-        run: |
-          mv assets/Tornado.exe orig/
-          python3 tools/check_target.py
-
-      - name: Install Wine, msitools and ninja
-        if: steps.assets.outputs.available == 'true'
-        run: |
-          sudo dpkg --add-architecture i386
-          sudo apt-get update -q
-          sudo apt-get install -y -q --no-install-recommends wine wine32:i386 msitools ninja-build
-
-      - uses: actions/setup-java@v4
-        if: steps.assets.outputs.available == 'true'
-        with:
-          distribution: temurin
-          java-version: "21"
-
-      - name: Cache Ghidra, the delinker and objdiff
-        if: steps.assets.outputs.available == 'true'
-        id: tools-cache
-        uses: actions/cache@v4
-        with:
-          path: ~/tools
-          key: tools-ghidra${{ env.GHIDRA_VERSION }}-delinker${{ env.DELINKER_VERSION }}-objdiff${{ env.OBJDIFF_VERSION }}
-
-      - name: Download Ghidra, the delinker and objdiff
-        if: steps.assets.outputs.available == 'true' && steps.tools-cache.outputs.cache-hit != 'true'
-        run: |
-          mkdir -p ~/tools && cd ~/tools
-          curl -fsSL -o ghidra.zip "https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_${GHIDRA_VERSION}_build/ghidra_${GHIDRA_VERSION}_PUBLIC_${GHIDRA_DATE}.zip"
-          unzip -q ghidra.zip && rm ghidra.zip
-          curl -fsSL -o delinker.zip "https://github.com/boricj/ghidra-delinker-extension/releases/download/v${DELINKER_VERSION}/ghidra_${GHIDRA_VERSION}_PUBLIC_${DELINKER_DATE}_ghidra-delinker-extension.zip"
-          unzip -q delinker.zip -d "ghidra_${GHIDRA_VERSION}_PUBLIC/Ghidra/Extensions" && rm delinker.zip
-          curl -fsSL -o objdiff-cli "https://github.com/encounter/objdiff/releases/download/${OBJDIFF_VERSION}/objdiff-cli-linux-x86_64"
-          chmod +x objdiff-cli
-
-      - name: Set up the compiler
-        if: steps.assets.outputs.available == 'true'
-        run: |
-          python3 tools/extract_vctoolkit.py assets/VCToolkitSetup.exe tools/vc71
-          rm -rf assets
-          echo "GHIDRA_INSTALL_DIR=$HOME/tools/ghidra_${GHIDRA_VERSION}_PUBLIC" >> "$GITHUB_ENV"
-          echo "OBJDIFF_CLI=$HOME/tools/objdiff-cli" >> "$GITHUB_ENV"
-
-      - name: Analyze the exe in Ghidra
-        if: steps.assets.outputs.available == 'true'
-        run: python3 tools/analyze.py > build-analyze.log 2>&1 || { tail -50 build-analyze.log; exit 1; }
-
-      - name: Delink target objects
-        if: steps.assets.outputs.available == 'true'
-        run: python3 tools/delink.py || { tail -50 build/delink.log; exit 1; }
-
-      - name: Compile
-        if: steps.assets.outputs.available == 'true'
-        run: |
-          python3 configure.py --msvc tools/vc71
-          ninja
-
-      - name: Generate the objdiff report
-        if: steps.assets.outputs.available == 'true'
-        run: |
-          python3 tools/report.py
-          python3 tools/progress.py build/report.json --markdown >> "$GITHUB_STEP_SUMMARY"
-
-      - name: Upload the report
-        if: steps.assets.outputs.available == 'true'
-        uses: actions/upload-artifact@v4
-        with:
-          name: Tornado_report
-          path: build/report.json
-
-      - name: Compare with main
-        if: steps.assets.outputs.available == 'true' && github.event_name == 'pull_request'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          run=$(gh run list -R "$GITHUB_REPOSITORY" --workflow progress.yml --branch main --event push \
-                --status success -L 1 --json databaseId -q '.[0].databaseId')
-          if [ -z "$run" ] || ! gh run download "$run" -R "$GITHUB_REPOSITORY" -n Tornado_report -D base; then
-            echo "No report from main to compare with yet." >> "$GITHUB_STEP_SUMMARY"
-            exit 0
-          fi
-          "$OBJDIFF_CLI" report changes base/report.json build/report.json -o build/changes.json
-          python3 tools/progress.py build/report.json --changes build/changes.json | sed -n '/^### Changes/,$p' >> "$GITHUB_STEP_SUMMARY"
+      - name: Summarize
+        run: python3 tools/progress.py progress/report.json --markdown >> "$GITHUB_STEP_SUMMARY"
 
       - name: Build the progress page
-        if: steps.assets.outputs.available == 'true' && github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
-        run: |
-          pages="https://${GITHUB_REPOSITORY_OWNER,,}.github.io/${GITHUB_REPOSITORY#*/}"
-          curl -fsSL -o history.json "$pages/history.json" || echo "[]" > history.json
-          python3 tools/progress.py build/report.json --site build/site --history history.json
+        run: python3 tools/progress.py progress/report.json --site build/site --history progress/history.json
 
       - uses: actions/upload-pages-artifact@v3
-        if: steps.assets.outputs.available == 'true' && github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         with:
           path: build/site
 
-  pages:
-    needs: report
-    if: needs.report.outputs.built == 'true' && github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+  deploy:
+    needs: page
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     permissions:
       pages: write

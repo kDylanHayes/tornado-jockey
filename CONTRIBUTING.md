@@ -35,7 +35,7 @@ Partial units are welcome too: leave `complete` off and say in the pull request 
 
 - One unit, or a few related ones, per pull request.
 - Fill in the template: which units, their match percentage, and anything learned about flags or quirks (add those to [docs/toolchain.md](docs/toolchain.md) as well).
-- CI checks that no game files are committed and that the config is valid. On pull requests from this repository it also builds everything and reports overall progress and which functions changed; on forks it can't (it has no game files), so paste the output of `tools/progress.py` from your machine instead.
+- CI checks that no game files are committed and that the config is valid. It can't build anything (GitHub's runners don't have the game), so paste the output of `tools/progress.py` from your machine. Don't commit `progress/`; maintainers re-measure after merging.
 
 ## Style
 
@@ -50,4 +50,4 @@ Partial units are welcome too: leave `complete` off and say in the pull request 
 - [docs/delinking.md](docs/delinking.md): producing target objects and naming symbols
 - [docs/regions.md](docs/regions.md): what's where in the exe
 - [docs/rea.md](docs/rea.md): agent-assisted analysis with rea
-- [docs/maintainers.md](docs/maintainers.md): CI secrets and the progress page
+- [docs/maintainers.md](docs/maintainers.md): updating the progress page

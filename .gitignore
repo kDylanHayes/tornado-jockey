@@ -12,6 +12,7 @@ build.ninja
 .ninja_*
 objdiff.json
 report.json
+!progress/report.json
 build-analyze.log
 __pycache__/
 *.pyc

@@ -1,35 +1,36 @@
-# Maintainer setup
+# Maintainer notes
 
-One-time settings that make the [Progress workflow](../.github/workflows/progress.yml) measure progress and publish the page. Contributors don't need any of this.
+## Updating progress
 
-## Game files for CI
+CI can't measure progress: it would need `Tornado.exe` and the Visual C++ Toolkit, which can't be on GitHub. So the numbers are measured on a machine that has them (a maintainer's, or a Claude session with the project files) and committed. After merging matching work:
 
-The workflow needs `Tornado.exe` and `VCToolkitSetup.exe`, which can't be in this public repository. It checks them out from a **private** repository instead.
+```sh
+git checkout main && git pull
+python3 tools/analyze.py            # only if config/symbols.txt changed a lot
+python3 tools/delink.py
+python3 configure.py --msvc tools/vc71 && ninja
+python3 tools/report.py
+python3 tools/progress.py build/report.json --record progress
+git checkout -b update-progress && git add progress && git commit -m "Update progress"
+```
 
-1. Create a private repository, by default `<owner>/tornado-jockey-assets` (to use another name, set the repository variable `ASSETS_REPO` to `owner/name` under Settings → Secrets and variables → Actions → Variables).
-2. Commit the two files to its root, with exactly those names. The workflow verifies `Tornado.exe`'s SHA-1.
-3. Create a [fine-grained personal access token](https://github.com/settings/personal-access-tokens/new) with access to only that repository and the permission **Contents: Read-only**.
-4. In this repository, add it as the Actions secret `ASSETS_TOKEN` (Settings → Secrets and variables → Actions → New repository secret).
-
-Without the secret, the workflow passes and writes a note saying progress wasn't measured. GitHub never passes secrets to pull requests from forks, so the game files stay out of reach of outside code, and those pull requests are measured once merged.
+`--record` saves the report to `progress/report.json` (without the per-function lists of placeholder units, to keep it small) and adds an entry for the current commit to `progress/history.json`. Merge that as a pull request; the [Progress workflow](../.github/workflows/progress.yml) then publishes the page.
 
 ## Progress page and badge
 
-Under Settings → Pages, set **Source** to **GitHub Actions**. The next push to `main` publishes:
+Pages must be set to deploy from GitHub Actions (Settings → Pages → Source). Each publish serves:
 
 | URL | Contents |
 |---|---|
-| `https://<owner>.github.io/tornado-jockey/` | progress page with per-category bars and history |
+| `https://kdylanhayes.github.io/tornado-jockey/` | progress page with per-category bars and history |
 | `.../badge.json` | [shields.io endpoint](https://shields.io/badges/endpoint-badge) for the README badge; `badge-game.json`, `badge-lib.json`, `badge-crt.json`, `badge-sdk.json` per category |
-| `.../progress.json`, `.../history.json` | current numbers and one entry per push to `main` |
-| `.../report.json` | the full objdiff report |
-
-History is kept by reading the previously published `history.json` before each deploy.
+| `.../progress.json`, `.../history.json` | current numbers and history |
+| `.../report.json` | the objdiff report |
 
 ## decomp.dev
 
-[decomp.dev](https://decomp.dev) lists decompilation projects with progress from their CI. Each run uploads `build/report.json` as the artifact `Tornado_report`, the objdiff report format decomp.dev reads. Sign in there with GitHub and add the repository to list it.
+[decomp.dev](https://decomp.dev) reads objdiff reports from a project's GitHub Actions artifacts, which this project can't produce because CI doesn't build. `progress/report.json` is in the same format if a listing is wanted later.
 
-## Pinned tool versions
+## Tool versions
 
-Ghidra, the delinker and objdiff versions are pinned at the top of the workflow (`GHIDRA_VERSION`, `GHIDRA_DATE`, …). Release file names carry a build date, so update the date along with the version. Downloads are cached between runs.
+The pipeline has been run with Ghidra 12.1.4 (`ghidra_12.1.4_PUBLIC_20260921.zip`), ghidra-delinker-extension 0.9.2 (`ghidra_12.1.4_PUBLIC_20260926_ghidra-delinker-extension.zip`) and objdiff-cli 3.8.2.

@@ -4,7 +4,9 @@
 Usage:
   progress.py build/report.json                  # print a summary
   progress.py build/report.json --markdown       # summary as Markdown (CI job summary)
-  progress.py build/report.json --site build/site [--history old/history.json]
+  progress.py build/report.json --record progress
+      saves the report in progress/ and adds an entry to progress/history.json
+  progress.py progress/report.json --site build/site --history progress/history.json
       writes index.html, progress.json, history.json and shields.io badge files
   progress.py build/report.json --changes changes.json
       Markdown list of what changed, from `objdiff-cli report changes`
@@ -19,6 +21,7 @@ import datetime
 import html
 import json
 import os
+import subprocess
 import sys
 from pathlib import Path
 
@@ -199,12 +202,38 @@ a {{ color:var(--accent); }}
 """
 
 
+def now() -> str:
+    return datetime.datetime.now(datetime.timezone.utc).replace(microsecond=0).isoformat()
+
+
+def record(report_path: Path, groups: dict, folder: Path) -> None:
+    """Keep the report in the repository, with one history entry per commit measured."""
+    commit = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True,
+                            cwd=Path(__file__).resolve().parent).stdout.strip()
+    folder.mkdir(parents=True, exist_ok=True)
+    history_path = folder / "history.json"
+    history = json.loads(history_path.read_text()) if history_path.is_file() else []
+    entry = {"time": now(), "commit": commit, "percent": round(groups["code"]["percent"], 4),
+             **{gid: {"matched_code": g["matched_code"], "total_code": g["total_code"]} for gid, g in groups.items()}}
+    history = [e for e in history if e.get("commit") != commit] + [entry]
+    history_path.write_text(json.dumps(history, indent=1) + "\n")
+    # Placeholder units' per-function lists are just Ghidra's FUN_ names; their
+    # totals are enough, and dropping them keeps the committed file small.
+    report = json.loads(report_path.read_text())
+    for unit in report.get("units", []):
+        if unit.get("metadata", {}).get("auto_generated"):
+            unit.pop("functions", None)
+    (folder / "report.json").write_text(json.dumps(report, separators=(",", ":")) + "\n")
+    print(f"Recorded {entry['percent']:.2f}% for {commit[:7]} in {folder}")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("report", type=Path, help="objdiff report (from tools/report.py)")
     parser.add_argument("--markdown", action="store_true", help="print the summary as Markdown")
     parser.add_argument("--site", type=Path, help="write the progress page and badges to this folder")
-    parser.add_argument("--history", type=Path, help="previous history.json to extend")
+    parser.add_argument("--record", type=Path, help="save the report to this folder and add it to history.json there")
+    parser.add_argument("--history", type=Path, help="history.json to chart on the page")
     parser.add_argument("--changes", type=Path, help="also print this `objdiff-cli report changes` output")
     args = parser.parse_args()
 
@@ -213,24 +242,20 @@ def main() -> int:
     sys.stdout.write(text_summary(groups, args.markdown))
     if args.changes:
         sys.stdout.write("\n" + changes_markdown(json.loads(args.changes.read_text())))
+    if args.record:
+        record(args.report, groups, args.record)
     if not args.site:
         return 0
 
-    meta = {
-        "time": datetime.datetime.now(datetime.timezone.utc).replace(microsecond=0).isoformat(),
-        "commit": os.environ.get("GITHUB_SHA", ""),
-        "repo": os.environ.get("GITHUB_REPOSITORY", ""),
-    }
     history = []
     if args.history and args.history.is_file():
-        try:
-            history = json.loads(args.history.read_text())
-        except json.JSONDecodeError:
-            print(f"warning: ignoring unreadable {args.history}", file=sys.stderr)
-    entry = {"time": meta["time"], "commit": meta["commit"], "percent": round(groups["code"]["percent"], 4),
-             **{gid: {"matched_code": g["matched_code"], "total_code": g["total_code"]} for gid, g in groups.items()}}
-    if not history or history[-1].get("commit") != entry["commit"] or not entry["commit"]:
-        history.append(entry)
+        history = json.loads(args.history.read_text())
+    last = history[-1] if history else {}
+    meta = {
+        "time": last.get("time") or now(),
+        "commit": last.get("commit", ""),
+        "repo": os.environ.get("GITHUB_REPOSITORY", "kDylanHayes/tornado-jockey"),
+    }
 
     site = args.site
     site.mkdir(parents=True, exist_ok=True)
