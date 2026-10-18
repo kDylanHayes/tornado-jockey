@@ -87,7 +87,7 @@ Game and engine    0.33%        4.0 KB / 1.17 MB       31 / 4,453 functions
 ...
 ```
 
-objdiff only counts code in units we've defined, so `tools/report.py` adds a placeholder unit for every stretch of `.text` that no unit covers yet (in its own objdiff project under `build/report/`, so the GUI isn't cluttered). The percentage is matched bytes of code out of all of the exe's code. CI runs the same two commands on every push; see [Progress tracking](#progress-tracking).
+objdiff only counts code in units we've defined, so `tools/report.py` adds a placeholder unit for every stretch of `.text` that no unit covers yet (in its own objdiff project under `build/report/`, so the GUI isn't cluttered). The percentage is matched bytes of code out of all of the exe's code. See [Progress tracking](#progress-tracking) for how the published numbers are updated.
 
 ## Next
 
@@ -99,6 +99,11 @@ objdiff only counts code in units we've defined, so `tools/report.py` adds a pla
 
 ## Progress tracking
 
-Every push to `main` and every pull request from this repository runs the [Progress workflow](../.github/workflows/progress.yml): it builds everything, generates the objdiff report and writes a summary into the run. On a pull request the summary also lists the functions that became matched or regressed compared with `main`. On `main` it publishes the [progress page](https://kdylanhayes.github.io/tornado-jockey/) and the README badge. The report is uploaded as the `Tornado_report` artifact in the format [decomp.dev](https://decomp.dev) reads.
+The game exe and the compiler can't be on GitHub's runners, so CI doesn't build anything. Progress is measured on a machine that has them, and the result is committed in `progress/` (`report.json`, the objdiff report, and `history.json`, one entry per measurement). When `progress/` changes on `main`, the [Progress workflow](../.github/workflows/progress.yml) publishes the [progress page](https://kdylanhayes.github.io/tornado-jockey/) and the README badge from it. Contributors don't commit `progress/`; see [maintainers.md](maintainers.md) for how it's updated.
 
-Pull requests from forks don't get access to the game files, so the workflow skips the build there; run steps 4 and 5 locally and paste the numbers into your pull request.
+To see what your branch changes, measure `main` and your branch and compare them:
+
+```sh
+objdiff-cli report changes main-report.json build/report.json -o changes.json
+python3 tools/progress.py build/report.json --changes changes.json
+```
