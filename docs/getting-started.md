@@ -82,8 +82,8 @@ python3 tools/progress.py build/report.json
 ```
 
 ```
-All code           7.57%      180.3 KB / 2.33 MB     760 / 13,165 functions
-Game and engine    0.13%        1.6 KB / 1.17 MB       19 / 4,427 functions
+All code          16.71%      397.6 KB / 2.32 MB   1,311 / 13,241 functions
+Game and engine    0.33%        4.0 KB / 1.17 MB       31 / 4,453 functions
 ...
 ```
 
