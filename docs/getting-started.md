@@ -99,7 +99,7 @@ objdiff only counts code in units we've defined, so `tools/report.py` adds a pla
 
 ## Progress tracking
 
-The game exe and the compiler can't be on GitHub's runners, so CI doesn't build anything. Progress is measured on a machine that has them, and the result is committed in `progress/` (`report.json`, the objdiff report, and `history.json`, one entry per measurement). When `progress/` changes on `main`, the [Progress workflow](../.github/workflows/progress.yml) publishes the [progress page](https://kdylanhayes.github.io/tornado-jockey/) and the README badge from it. Contributors don't commit `progress/`; see [maintainers.md](maintainers.md) for how it's updated.
+The game exe and the compiler can't be on GitHub, so CI doesn't build anything. Progress is measured on a machine that has them and committed to `progress/`: the objdiff report, a history entry per measurement, the [progress page](../progress/README.md) with its chart, and the shields.io badge files the README badge reads. Contributors don't commit `progress/`; see [maintainers.md](maintainers.md) for how it's updated.
 
 To see what your branch changes, measure `main` and your branch and compare them:
 

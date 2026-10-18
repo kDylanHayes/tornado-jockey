@@ -14,18 +14,19 @@ python3 tools/progress.py build/report.json --record progress
 git checkout -b update-progress && git add progress && git commit -m "Update progress"
 ```
 
-`--record` saves the report to `progress/report.json` (without the per-function lists of placeholder units, to keep it small) and adds an entry for the current commit to `progress/history.json`. Merge that as a pull request; the [Progress workflow](../.github/workflows/progress.yml) then publishes the page.
+`--record` saves the report to `progress/report.json` (without the per-function lists of placeholder units, to keep it small), adds an entry for the current commit to `progress/history.json`, and rewrites the page and badges. Merge that as a pull request.
 
 ## Progress page and badge
 
-Pages must be set to deploy from GitHub Actions (Settings → Pages → Source). Each publish serves:
+Everything lives in the repository, so nothing needs GitHub Pages or Actions:
 
-| URL | Contents |
+| File | Contents |
 |---|---|
-| `https://kdylanhayes.github.io/tornado-jockey/` | progress page with per-category bars and history |
-| `.../badge.json` | [shields.io endpoint](https://shields.io/badges/endpoint-badge) for the README badge; `badge-game.json`, `badge-lib.json`, `badge-crt.json`, `badge-sdk.json` per category |
-| `.../progress.json`, `.../history.json` | current numbers and history |
-| `.../report.json` | the objdiff report |
+| `progress/README.md` | the progress page: per-category table, chart, unit list |
+| `progress/history.svg` | the chart |
+| `progress/badge.json` | [shields.io endpoint](https://shields.io/badges/endpoint-badge) for the README badge (read from raw.githubusercontent.com); `badge-game.json`, `badge-lib.json`, `badge-crt.json`, `badge-sdk.json` per category |
+| `progress/history.json` | one entry per measurement |
+| `progress/report.json` | the objdiff report |
 
 ## decomp.dev
 
