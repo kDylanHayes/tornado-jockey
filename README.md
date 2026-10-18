@@ -1,6 +1,6 @@
 # Tornado Jockey decompilation
 
-[![Progress](https://img.shields.io/endpoint?url=https%3A%2F%2Fkdylanhayes.github.io%2Ftornado-jockey%2Fbadge.json)](https://kdylanhayes.github.io/tornado-jockey/)
+[![Progress](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FkDylanHayes%2Ftornado-jockey%2Fmain%2Fprogress%2Fbadge.json)](progress/README.md)
 
 A work-in-progress matching decompilation of **Tornado Jockey** (Wanako Games / WildTangent, 2006) for Windows.
 
@@ -46,7 +46,7 @@ What's known about the binary's layout is in [docs/regions.md](docs/regions.md).
 
 ## Progress
 
-Progress is the share of the exe's code (2.3 MB in `.text`) that objdiff reports as matching. The measured report is committed in `progress/`, and CI publishes it on the [progress page](https://kdylanhayes.github.io/tornado-jockey/), split into game and engine code, libraries, the C/C++ runtime and SDK libraries. See [docs/getting-started.md](docs/getting-started.md#progress-tracking).
+Progress is the share of the exe's code (2.3 MB in `.text`) that objdiff reports as matching. It is measured with the game files and committed to [progress/](progress/README.md), split into game and engine code, libraries, the C/C++ runtime and SDK libraries. See [docs/getting-started.md](docs/getting-started.md#progress-tracking).
 
 ## Repository layout
 

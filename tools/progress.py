@@ -5,9 +5,8 @@ Usage:
   progress.py build/report.json                  # print a summary
   progress.py build/report.json --markdown       # summary as Markdown (CI job summary)
   progress.py build/report.json --record progress
-      saves the report in progress/ and adds an entry to progress/history.json
-  progress.py progress/report.json --site build/site --history progress/history.json
-      writes index.html, progress.json, history.json and shields.io badge files
+      saves the report in progress/, adds an entry to progress/history.json and
+      rewrites the page (progress/README.md, history.svg) and badge files there
   progress.py build/report.json --changes changes.json
       Markdown list of what changed, from `objdiff-cli report changes`
 
@@ -18,7 +17,6 @@ no unit covers yet).
 
 import argparse
 import datetime
-import html
 import json
 import os
 import subprocess
@@ -102,108 +100,78 @@ def badge(label: str, percent: float) -> dict:
     return {"schemaVersion": 1, "label": label, "message": f"{percent:.2f}%", "color": color}
 
 
-def chart(history: list[dict]) -> str:
-    if len(history) < 2:
-        return ""
-    w, h, pad = 640, 160, 4
+def bar(percent: float, width: int = 20) -> str:
+    filled = round(percent / 100 * width)
+    return "█" * filled + "░" * (width - filled)
+
+
+def history_svg(history: list[dict]) -> str:
+    w, h, left, bottom, pad = 640, 180, 44, 22, 8
     times = [datetime.datetime.fromisoformat(e["time"]).timestamp() for e in history]
     values = [e["percent"] for e in history]
     t0, t1 = times[0], max(times[-1], times[0] + 1)
-    top = max(max(values) * 1.15, 1.0)
-    pts = " ".join(
-        f"{pad + (t - t0) / (t1 - t0) * (w - 2 * pad):.1f},{h - pad - v / top * (h - 2 * pad):.1f}"
-        for t, v in zip(times, values))
-    return (f'<svg class="chart" viewBox="0 0 {w} {h}" role="img" aria-label="Code matched over time">'
-            f'<polyline points="{pts}" fill="none" stroke="var(--accent)" stroke-width="2" '
-            f'stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg>'
-            f'<p class="axis"><span>{history[0]["time"][:10]}</span><span>{history[-1]["time"][:10]}</span></p>')
+    top = max(10.0, -(-max(values) * 1.2 // 10) * 10)
+    x = lambda t: left + (t - t0) / (t1 - t0) * (w - left - pad)
+    y = lambda v: pad + (1 - v / top) * (h - pad - bottom)
+    grid = "".join(
+        f'<line x1="{left}" x2="{w - pad}" y1="{y(v):.1f}" y2="{y(v):.1f}" stroke="#8884" />'
+        f'<text x="{left - 6}" y="{y(v) + 4:.1f}" text-anchor="end">{v:g}%</text>'
+        for v in (0, top / 2, top))
+    pts = " ".join(f"{x(t):.1f},{y(v):.1f}" for t, v in zip(times, values))
+    dots = "".join(f'<circle cx="{x(t):.1f}" cy="{y(v):.1f}" r="3" />' for t, v in zip(times, values))
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w} {h}" width="{w}" height="{h}" '
+            f'font-family="system-ui,sans-serif" font-size="11" fill="#888">{grid}'
+            f'<polyline points="{pts}" fill="none" stroke="#2f9e5f" stroke-width="2" stroke-linejoin="round" />'
+            f'<g fill="#2f9e5f">{dots}</g>'
+            f'<text x="{left}" y="{h - 6}">{history[0]["time"][:10]}</text>'
+            f'<text x="{w - pad}" y="{h - 6}" text-anchor="end">{history[-1]["time"][:10]}</text></svg>\n')
 
 
-def page(report: dict, groups: dict, history: list[dict], meta: dict) -> str:
+def markdown_page(report: dict, groups: dict, history: list[dict]) -> str:
     code = groups["code"]
-    bars = []
-    for gid, g in groups.items():
-        if gid == "code":
-            continue
-        bars.append(
-            f'<div class="row"><div class="label">{html.escape(g["label"])}</div>'
-            f'<div class="bar"><span style="width:{g["percent"]:.3f}%"></span></div>'
-            f'<div class="pct">{g["percent"]:.2f}%</div>'
-            f'<div class="detail">{fmt_bytes(g["matched_code"])} of {fmt_bytes(g["total_code"])}, '
-            f'{g["matched_functions"]:,} of {g["total_functions"]:,} functions</div></div>')
-
+    last = history[-1] if history else {}
+    out = [
+        "# Progress",
+        "",
+        f"**{code['percent']:.2f}%** of `Tornado.exe`'s code matches byte for byte: "
+        f"{fmt_bytes(code['matched_code'])} of {fmt_bytes(code['total_code'])}, "
+        f"{code['matched_functions']:,} of {code['total_functions']:,} functions, {code['complete_units']} units complete.",
+        "",
+        "| | | Matched | Code | Functions |",
+        "|---|---|---:|---:|---:|",
+    ]
+    for g in groups.values():
+        out.append(f"| {g['label']} | `{bar(g['percent'])}` | {g['percent']:.2f}% | "
+                   f"{fmt_bytes(g['matched_code'])} / {fmt_bytes(g['total_code'])} | "
+                   f"{g['matched_functions']:,} / {g['total_functions']:,} |")
+    if len(history) > 1:
+        out += ["", "## Over time", "", "![Code matched over time](history.svg)"]
     units = sorted((u for u in report.get("units", []) if not u.get("metadata", {}).get("auto_generated")),
                    key=lambda u: u["name"])
-    unit_rows = "".join(
-        f'<tr><td>{html.escape(u["name"])}</td>'
-        f'<td>{fmt_bytes(number(u["measures"], "total_code"))}</td>'
-        f'<td>{float(u["measures"].get("matched_code_percent") or 0):.2f}%</td>'
-        f'<td>{"yes" if u.get("metadata", {}).get("complete") else ""}</td></tr>'
-        for u in units)
-
-    commit = meta.get("commit", "")
-    repo = meta.get("repo", "")
-    commit_html = (f'<a href="https://github.com/{html.escape(repo)}/commit/{html.escape(commit)}">{html.escape(commit[:7])}</a>'
-                   if commit and repo else html.escape(commit[:7]))
-    return f"""<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tornado Jockey decomp progress</title>
-<style>
-:root {{ --bg:#fbfaf8; --fg:#1d1d1f; --muted:#6b6b70; --line:#e4e2dd; --track:#ecebe6; --accent:#2f7d4f; }}
-@media (prefers-color-scheme: dark) {{ :root {{ --bg:#16171a; --fg:#ececee; --muted:#9a9aa2; --line:#2c2d32; --track:#26272c; --accent:#5cc28a; }} }}
-* {{ box-sizing:border-box; }}
-body {{ margin:0; background:var(--bg); color:var(--fg); font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; }}
-main {{ max-width:760px; margin:0 auto; padding:40px 16px 64px; }}
-h1 {{ font-size:22px; margin:0 0 4px; }}
-.sub {{ color:var(--muted); margin:0 0 32px; }}
-.hero {{ display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:8px; }}
-.hero .big {{ font-size:48px; font-weight:650; letter-spacing:-0.02em; font-variant-numeric:tabular-nums; }}
-.hero .of {{ color:var(--muted); }}
-.bar {{ height:10px; background:var(--track); border-radius:5px; overflow:hidden; }}
-.bar span {{ display:block; height:100%; background:var(--accent); min-width:2px; }}
-.hero-bar {{ margin-bottom:36px; }}
-.hero-bar .bar {{ height:14px; border-radius:7px; }}
-.row {{ display:grid; grid-template-columns:150px 1fr 72px; gap:4px 16px; align-items:center; padding:12px 0; border-top:1px solid var(--line); }}
-.row .pct {{ text-align:right; font-variant-numeric:tabular-nums; }}
-.row .detail {{ grid-column:2 / 4; color:var(--muted); font-size:13px; }}
-@media (max-width:520px) {{ .row {{ grid-template-columns:1fr 64px; }} .row .bar {{ grid-column:1 / 3; grid-row:2; }} .row .detail {{ grid-column:1 / 3; }} }}
-h2 {{ font-size:16px; margin:40px 0 12px; }}
-.chart {{ width:100%; height:160px; display:block; border-bottom:1px solid var(--line); }}
-.axis {{ display:flex; justify-content:space-between; color:var(--muted); font-size:12px; margin:4px 0 0; }}
-details summary {{ cursor:pointer; color:var(--muted); }}
-table {{ width:100%; border-collapse:collapse; font-size:13px; margin-top:12px; }}
-th, td {{ text-align:left; padding:6px 8px 6px 0; border-bottom:1px solid var(--line); }}
-td:nth-child(n+2), th:nth-child(n+2) {{ text-align:right; font-variant-numeric:tabular-nums; }}
-td:first-child {{ word-break:break-all; }}
-footer {{ margin-top:40px; color:var(--muted); font-size:13px; }}
-a {{ color:var(--accent); }}
-</style>
-</head>
-<body>
-<main>
-<h1>Tornado Jockey decompilation</h1>
-<p class="sub">Matching C++ for <code>Tornado.exe</code> 1.0.0.67, measured with objdiff. <a href="https://github.com/{html.escape(repo)}">Source on GitHub</a></p>
-<div class="hero"><span class="big">{code["percent"]:.2f}%</span><span class="of">of the game's code matches byte for byte</span></div>
-<div class="hero-bar"><div class="bar"><span style="width:{code["percent"]:.3f}%"></span></div>
-<p class="sub" style="margin:8px 0 0">{fmt_bytes(code["matched_code"])} of {fmt_bytes(code["total_code"])}, {code["matched_functions"]:,} of {code["total_functions"]:,} functions, {code["complete_units"]} units complete</p></div>
-{"".join(bars)}
-{"<h2>Over time</h2>" + chart(history) if len(history) > 1 else ""}
-<h2>Units</h2>
-<details><summary>{len(units)} units with source</summary>
-<table><thead><tr><th>Unit</th><th>Code</th><th>Matched</th><th>Complete</th></tr></thead><tbody>{unit_rows}</tbody></table>
-</details>
-<footer>Updated {html.escape(meta.get("time", "")[:16].replace("T", " "))} UTC from commit {commit_html}. Badge data: <a href="badge.json">badge.json</a>, full report: <a href="report.json">report.json</a>.</footer>
-</main>
-</body>
-</html>
-"""
+    out += ["", "## Units", "", "<details><summary>" f"{len(units)} units with source</summary>", "",
+            "| Unit | Code | Matched | Complete |", "|---|---:|---:|---|"]
+    out += [f"| `{u['name']}` | {fmt_bytes(number(u['measures'], 'total_code'))} | "
+            f"{float(u['measures'].get('matched_code_percent') or 0):.2f}% | "
+            f"{'yes' if u.get('metadata', {}).get('complete') else ''} |" for u in units]
+    out += ["", "</details>", "",
+            f"Measured {last.get('time', '')[:16].replace('T', ' ')} UTC at commit {last.get('commit', '')[:7]} "
+            "with `tools/report.py`; see [docs/maintainers.md](../docs/maintainers.md). "
+            "Generated by `tools/progress.py`; don't edit by hand.", ""]
+    return "\n".join(out)
 
 
 def now() -> str:
     return datetime.datetime.now(datetime.timezone.utc).replace(microsecond=0).isoformat()
+
+
+def write_page(report: dict, groups: dict, history: list[dict], folder: Path) -> None:
+    (folder / "README.md").write_text(markdown_page(report, groups, history))
+    if len(history) > 1:
+        (folder / "history.svg").write_text(history_svg(history))
+    (folder / "badge.json").write_text(json.dumps(badge("decompiled", groups["code"]["percent"])) + "\n")
+    for gid, g in groups.items():
+        if gid != "code":
+            (folder / f"badge-{gid}.json").write_text(json.dumps(badge(g["label"].lower(), g["percent"])) + "\n")
 
 
 def record(report_path: Path, groups: dict, folder: Path) -> None:
@@ -224,6 +192,7 @@ def record(report_path: Path, groups: dict, folder: Path) -> None:
         if unit.get("metadata", {}).get("auto_generated"):
             unit.pop("functions", None)
     (folder / "report.json").write_text(json.dumps(report, separators=(",", ":")) + "\n")
+    write_page(report, groups, history, folder)
     print(f"Recorded {entry['percent']:.2f}% for {commit[:7]} in {folder}")
 
 
@@ -231,9 +200,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("report", type=Path, help="objdiff report (from tools/report.py)")
     parser.add_argument("--markdown", action="store_true", help="print the summary as Markdown")
-    parser.add_argument("--site", type=Path, help="write the progress page and badges to this folder")
     parser.add_argument("--record", type=Path, help="save the report to this folder and add it to history.json there")
-    parser.add_argument("--history", type=Path, help="history.json to chart on the page")
     parser.add_argument("--changes", type=Path, help="also print this `objdiff-cli report changes` output")
     args = parser.parse_args()
 
@@ -244,30 +211,6 @@ def main() -> int:
         sys.stdout.write("\n" + changes_markdown(json.loads(args.changes.read_text())))
     if args.record:
         record(args.report, groups, args.record)
-    if not args.site:
-        return 0
-
-    history = []
-    if args.history and args.history.is_file():
-        history = json.loads(args.history.read_text())
-    last = history[-1] if history else {}
-    meta = {
-        "time": last.get("time") or now(),
-        "commit": last.get("commit", ""),
-        "repo": os.environ.get("GITHUB_REPOSITORY", "kDylanHayes/tornado-jockey"),
-    }
-
-    site = args.site
-    site.mkdir(parents=True, exist_ok=True)
-    (site / "index.html").write_text(page(report, groups, history, meta))
-    (site / "progress.json").write_text(json.dumps({**meta, "groups": groups}, indent=2) + "\n")
-    (site / "history.json").write_text(json.dumps(history, indent=1) + "\n")
-    (site / "report.json").write_text(args.report.read_text())
-    (site / "badge.json").write_text(json.dumps(badge("decompiled", groups["code"]["percent"])) + "\n")
-    for gid, g in groups.items():
-        if gid != "code":
-            (site / f"badge-{gid}.json").write_text(json.dumps(badge(g["label"].lower(), g["percent"])) + "\n")
-    print(f"Wrote progress page to {site}")
     return 0
 
 
