@@ -15,6 +15,7 @@ class CMDBASE;
 typedef SRESULT (CMDBASE::*CMDFUNC)(TOKENS **args);
 typedef void (CMDBASE::*PROPSETTER)(const float &value);
 typedef float CMDBASE::*PROPFIELD;
+typedef float (CMDBASE::*PROPGETTER)();
 
 // One console command: its name, the hash filled in at registration, how
 // many arguments it takes and the method that runs it.
@@ -34,8 +35,13 @@ struct PROPENTRY
     int hash;
     int type;
     int m_c;
-    PROPFIELD field;
-    int m_1c;
+    // The value is read from a field or through a getter. Being a union
+    // also makes the compiler initialize everything from here on in code.
+    union
+    {
+        PROPFIELD field;
+        PROPGETTER getter;
+    };
     bool m_20;
     int m_24;
     PROPSETTER setter;
