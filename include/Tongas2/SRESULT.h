@@ -5,6 +5,8 @@
 #include <string.h>
 #include <wchar.h>
 
+#include "Tongas2/MATHS.h"
+
 #define SRESULT_MAX_STRING 512
 
 enum SRESULTTYPE
@@ -30,11 +32,6 @@ struct V2
 
     V2() {}
     V2(const V2 &other) : x(other.x), y(other.y) {}
-};
-
-struct V3
-{
-    float x, y, z;
 };
 
 struct RGB
