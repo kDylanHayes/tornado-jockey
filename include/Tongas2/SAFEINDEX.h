@@ -20,6 +20,8 @@ struct RESHANDLE
 {
     RESHANDLE() : serial(-1), index(-1), kind(0) {}
     RESHANDLE(int serial_, int index_, int kind_) : serial(serial_), index(index_), kind(kind_) {}
+    bool IsValid() const { return serial >= 0 && index >= 0; }
+    void Invalidate() { serial = -1; index = -1; }
     int serial;
     int index;
     int kind;
@@ -212,7 +214,7 @@ public:
             s_steps++;
             if (s_steps > N && g_pLog)
                 g_pLog->Error("SAFEINDEX:: ALERT!!!! - MAX WHILE STEPS!!! - SAFEINDEX!! searching: %s   -->   %d", name, i);
-            if (!_strnicmp(name, m_items[i]->m_name.c_str(), 0x1ff))
+            if (!_strnicmp(name, m_items[i]->m_path.c_str(), 0x1ff))
                 return m_items[i];
             i = m_next[i];
         }
@@ -260,13 +262,13 @@ public:
     {
         T *item = Get(h);
         if (item) {
-            item->m_name = name;
+            item->m_path = name;
             int i = h.index;
             if (IsValidPos(i))
                 HashRemove(i);
-            int hash = HashString(item->m_name.c_str(), H);
+            int hash = HashString(item->m_path.c_str(), H);
             if (!IsValidHash(hash) && g_pLog)
-                g_pLog->Error("SAFEINDEX::DirectChangeName> ERROR Invalid dispersion for %s", item->m_name.c_str());
+                g_pLog->Error("SAFEINDEX::DirectChangeName> ERROR Invalid dispersion for %s", item->m_path.c_str());
             HashInsert(hash, i, item);
         }
     }
@@ -279,20 +281,20 @@ public:
             char name[512];
             name[0] = '\0';
             name[511] = '\0';
-            T *old = Find((*item)->m_name.c_str());
+            T *old = Find((*item)->m_path.c_str());
             if (old) {
                 switch (mode) {
                 case 1:
-                    SafeSprintf(name, "%s%d", old->m_name.c_str(), old->m_handle.serial);
+                    SafeSprintf(name, "%s%d", old->m_path.c_str(), old->m_handle.serial);
                     DirectChangeName(old->m_handle, name);
                     break;
                 case 2:
-                    SafeSprintf(name, "%s%d", old->m_name.c_str(), m_serial);
-                    (*item)->m_name = name;
-                    *hash = HashString((*item)->m_name.c_str(), H);
+                    SafeSprintf(name, "%s%d", old->m_path.c_str(), m_serial);
+                    (*item)->m_path = name;
+                    *hash = HashString((*item)->m_path.c_str(), H);
                     if (!IsValidHash(*hash)) {
                         if (g_pLog)
-                            g_pLog->Error("SAFEINDEX::New> ERROR Ivalid dispersion for %s", (*item)->m_name.c_str());
+                            g_pLog->Error("SAFEINDEX::New> ERROR Ivalid dispersion for %s", (*item)->m_path.c_str());
                         *out = RESHANDLE();
                         return false;
                     }
@@ -312,7 +314,7 @@ public:
                     *out = old->m_handle;
                     return false;
                 case 5:
-                    SafeSprintf(name, "%s%d", old->m_name.c_str(), old->m_handle.serial);
+                    SafeSprintf(name, "%s%d", old->m_path.c_str(), old->m_handle.serial);
                     DirectChangeName(old->m_handle, name);
                     m_handles.Push(old->m_handle);
                     return true;
@@ -331,10 +333,10 @@ public:
 
     RESHANDLE Insert(T **item, int mode)
     {
-        int hash = HashString((*item)->m_name.c_str(), H);
+        int hash = HashString((*item)->m_path.c_str(), H);
         if (!IsValidHash(hash)) {
             if (g_pLog)
-                g_pLog->Error("SAFEINDEX::New> ERROR Invalid dispersion for %s", (*item)->m_name.c_str());
+                g_pLog->Error("SAFEINDEX::New> ERROR Invalid dispersion for %s", (*item)->m_path.c_str());
             return RESHANDLE();
         }
         RESHANDLE handle;
@@ -359,11 +361,11 @@ public:
         int i = h.index;
         T *item = Get(h);
         if (item) {
-            item->m_name = name;
+            item->m_path = name;
             HashRemove(i);
-            int hash = HashString(item->m_name.c_str(), H);
+            int hash = HashString(item->m_path.c_str(), H);
             if (!IsValidHash(hash) && g_pLog)
-                g_pLog->Error("SAFEINDEX::DirectChangeName> ERROR Invalid dispersion for %s", item->m_name.c_str());
+                g_pLog->Error("SAFEINDEX::DirectChangeName> ERROR Invalid dispersion for %s", item->m_path.c_str());
             if (New(&item, mode, &hash, &h))
                 HashInsert(hash, i, item);
         }

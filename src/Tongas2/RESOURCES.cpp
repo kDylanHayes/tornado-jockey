@@ -383,25 +383,25 @@ RESOURCE *RESOURCES::GetResource(RESHANDLE handle)
         // m_copies.Get, written out.
         if (handle.index >= 0x8000)
             return 0;
-        COPY *copy = m_copies.m_items[handle.index];
+        RESOURCE *copy = m_copies.m_items[handle.index];
         if (!copy || handle.serial != copy->m_handle.serial || handle.index != copy->m_handle.index || handle.kind != copy->m_handle.kind)
             return 0;
         return copy;
     }
     if (handle.kind == 4) {
-        MASTER *master = m_masters.Get(handle);
+        RESOURCEMASTER *master = m_masters.Get(handle);
         if (master)
             return master->GetCopy();
     }
     return 0;
 }
 
-MASTER *RESOURCES::FindMaster(const char *name)
+RESOURCEMASTER *RESOURCES::FindMaster(const char *name)
 {
     return m_masters.Find(name);
 }
 
-MASTER *RESOURCES::GetMaster(RESHANDLE handle)
+RESOURCEMASTER *RESOURCES::GetMaster(RESHANDLE handle)
 {
     if (handle.serial < 0 || handle.index < 0)
         return 0;
@@ -411,7 +411,7 @@ MASTER *RESOURCES::GetMaster(RESHANDLE handle)
 RESHANDLE RESOURCES::GetHandle(const char *name)
 {
     if (name && *name) {
-        MASTER *master = m_masters.Find(name);
+        RESOURCEMASTER *master = m_masters.Find(name);
         if (master)
             return master->m_handle;
         RESOURCEMANAGER *manager = GetManager(name);
@@ -492,14 +492,14 @@ RESOURCE *RESOURCES::GetResource(const char *name)
     return GetResource(handle);
 }
 
-void RESOURCES::RegisterCopy(COPY *copy)
+void RESOURCES::RegisterCopy(RESOURCE *copy)
 {
     RESHANDLE handle = m_copies.Insert(&copy, 0);
     if (handle.serial < 0 || handle.index < 0) {
         if (g_pLog)
             g_pLog->Error("Could not register copy", copy);
         if (copy->m_master && g_pLog)
-            g_pLog->Error(" from master:%s", copy->m_master->m_name.c_str());
+            g_pLog->Error(" from master:%s", copy->m_master->m_path.c_str());
     }
 }
 
@@ -508,9 +508,9 @@ void RESOURCES::RenameMaster(RESHANDLE &handle, const char *name)
     m_masters.ChangeName(handle, name, 2);
 }
 
-void RESOURCES::RegisterMaster(MASTER *master)
+void RESOURCES::RegisterMaster(RESOURCEMASTER *master)
 {
     RESHANDLE handle = m_masters.Insert(&master, 0);
     if ((handle.serial < 0 || handle.index < 0) && g_pLog)
-        g_pLog->Error("RESOURCES::RegisterMaster - Could not insert master:%s", master->m_fileName.c_str());
+        g_pLog->Error("RESOURCES::RegisterMaster - Could not insert master:%s", master->m_name.c_str());
 }

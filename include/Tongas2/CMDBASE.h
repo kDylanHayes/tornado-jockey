@@ -5,6 +5,7 @@
 #define TONGAS2_CMDBASE_H
 
 #include "Tongas2/CSTRING.h"
+#include "Tongas2/SAFEINDEX.h"
 #include "Tongas2/SRESULT.h"
 #include "Tongas2/TOKENS.h"
 
@@ -47,6 +48,10 @@ struct PROPENTRY
     PROPSETTER setter;
 };
 
+// A property's field and setter whatever their own types.
+#define PROP_FIELD(CLASS, member) (PROPFIELD)(float CLASS::*)&CLASS::member
+#define PROP_SETTER(CLASS, method) (PROPSETTER)(void (CLASS::*)(const float &))&CLASS::method
+
 // Per-class tables, indexed by class id.
 extern int g_classParents[];
 extern CMDENTRY *g_classCommands[];
@@ -66,8 +71,9 @@ public:
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
-    virtual void Virtual05();
-    virtual void Virtual06();
+    // Runs a command from the class's table.
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
+    virtual void SetName(const CSTRING &name) { m_name = name; }
     virtual void Virtual07();
     virtual int Virtual08() = 0;
     virtual void *Virtual09(const char *name) = 0;
@@ -81,13 +87,9 @@ public:
     virtual void Virtual17();
     virtual void Virtual18();
 
-    void SetName(const CSTRING &name) { m_name = name; }
-
     int m_4;
-    int m_8;
-    int m_c;
-    int m_10;
-    CSTRING m_14;
+    RESHANDLE m_handle;
+    CSTRING m_path;
     CSTRING m_name;
 };
 

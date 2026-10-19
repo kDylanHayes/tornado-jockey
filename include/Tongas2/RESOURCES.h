@@ -5,143 +5,18 @@
 #define TONGAS2_RESOURCES_H
 
 #include "Tongas2/CMDBASE.h"
+#include "Tongas2/RESOURCE.h"
 #include "Tongas2/CSTRING.h"
 #include "Tongas2/MATHS.h"
 #include "Tongas2/SAFEINDEX.h"
-
-class RESOURCE
-{
-public:
-    virtual void Virtual00();
-    virtual ~RESOURCE();
-
-    int m_4;
-    RESHANDLE m_handle;
-    CSTRING m_name;
-};
-
-class MASTER : public RESOURCE
-{
-public:
-    virtual void Virtual02();
-    virtual void Virtual03();
-    virtual void Virtual04();
-    virtual void Virtual05();
-    virtual void Virtual06();
-    virtual void Virtual07();
-    virtual void Virtual08();
-    virtual void Virtual09();
-    virtual void Virtual10();
-    virtual void Virtual11();
-    virtual void Virtual12();
-    virtual void Virtual13();
-    virtual void Virtual14();
-    virtual void Virtual15();
-    virtual void Virtual16();
-    virtual void Virtual17();
-    virtual void Virtual18();
-    virtual void Virtual19();
-    virtual void Virtual20();
-    virtual void Virtual21();
-    virtual void Virtual22();
-    virtual void Virtual23();
-    virtual void Virtual24();
-    virtual void Virtual25();
-    virtual void Virtual26();
-    virtual void Virtual27();
-    virtual void Virtual28();
-    virtual void Virtual29();
-    // A copy to use, for kinds of resource that are used through copies.
-    virtual RESOURCE *GetCopy();
-
-    CSTRING m_fileName;
-};
-
-class COPY : public RESOURCE
-{
-public:
-    int m_18[4];
-    MASTER *m_master;
-};
-
-// What CreateFromTemplate makes: an instance placed in the world.
-class OBJECT : public COPY
-{
-public:
-    // Defined in another unit.
-    void SetActive(bool active);
-
-    virtual void Virtual02();
-    virtual void Virtual03();
-    virtual void Virtual04();
-    virtual void Virtual05();
-    virtual void Virtual06();
-    virtual void Virtual07();
-    virtual void Virtual08();
-    virtual void Virtual09();
-    virtual void Virtual10();
-    virtual void Virtual11();
-    virtual void Virtual12();
-    virtual void Virtual13();
-    virtual void Virtual14();
-    virtual void Virtual15();
-    virtual void Virtual16();
-    virtual void Virtual17();
-    virtual void Virtual18();
-    virtual void Virtual19();
-    virtual void Virtual20();
-    virtual void Virtual21();
-    virtual void Virtual22();
-    virtual void Virtual23();
-    virtual void Virtual24();
-    virtual void Virtual25();
-    virtual void Virtual26();
-    virtual void Virtual27();
-    virtual void Virtual28();
-    virtual void Virtual29();
-    virtual void Virtual30();
-    virtual void Virtual31();
-    virtual void Virtual32();
-    virtual void Virtual33();
-    virtual void Virtual34();
-    virtual void Virtual35();
-    virtual void Virtual36();
-    virtual void Virtual37();
-    virtual void Virtual38();
-    virtual void Virtual39();
-    virtual void Virtual40();
-    virtual void Virtual41();
-    virtual void Virtual42();
-    virtual void Virtual43();
-    virtual void Virtual44();
-    virtual void Virtual45();
-    virtual void Virtual46();
-    virtual void Virtual47();
-    virtual void Virtual48();
-    virtual void Virtual49();
-    virtual void SetPosition(V3 position);
-    virtual void Virtual51();
-    virtual void SetScale(float x, float y, float z);
-    virtual void Virtual53();
-    virtual void Virtual54();
-    virtual void Virtual55();
-    virtual void SetAngles(ANG angles);
-    virtual void Virtual57();
-    virtual void SetLayer(int layer);
-    virtual void Virtual59();
-    virtual void SetAlpha(float alpha);
-    virtual void Virtual61();
-    virtual void Virtual62();
-    virtual void Virtual63();
-    virtual void SetHidden(bool hidden);
-};
 
 // One type of resource (meshes, sounds, ...). Defined in another unit.
 class RESOURCEMANAGER
 {
 public:
     virtual void Virtual00();
-    virtual void Virtual01();
+    // The four-letter type code paths start with.
+    virtual const char *GetTypeCode();
     virtual ~RESOURCEMANAGER();
     virtual void Update();
     virtual bool Load();
@@ -161,6 +36,8 @@ public:
     void DumpTotals(bool verbose);
     RESHANDLE GetHandle(const char *name);
     RESOURCE *GetResource(const char *name);
+    // Whether the type's flags allow loading ahead (0x20 set, or 4 clear).
+    bool CanPreload();
 
     int m_id;
     int m_8[4];
@@ -240,7 +117,7 @@ public:
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
-    virtual void Virtual05();
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
     virtual int Virtual08();
     virtual void *Virtual09(const char *name);
 
@@ -283,12 +160,12 @@ public:
     RESOURCE *GetResource(const char *name);
     RESHANDLE GetHandle(const char *name);
 
-    MASTER *FindMaster(const char *name);
-    MASTER *GetMaster(RESHANDLE handle);
-    void RegisterMaster(MASTER *master);
+    RESOURCEMASTER *FindMaster(const char *name);
+    RESOURCEMASTER *GetMaster(RESHANDLE handle);
+    void RegisterMaster(RESOURCEMASTER *master);
     void RemoveMaster(const RESHANDLE &handle);
     void RenameMaster(RESHANDLE &handle, const char *name);
-    void RegisterCopy(COPY *copy);
+    void RegisterCopy(RESOURCE *copy);
     void UnregisterCopy(const RESHANDLE &handle);
 
     static int s_classId;
@@ -305,8 +182,8 @@ public:
     static CALLBACKLIST<RESOURCESCALLBACK> s_onSetLevel;
     static CMDBASE *(*s_pfnCreate)();
 
-    SAFEINDEX<MASTER, 0x2000, 0xfb, 4> m_masters;
-    SAFEINDEX<COPY, 0x8000, 0x239, 3> m_copies;
+    SAFEINDEX<RESOURCEMASTER, 0x2000, 0xfb, 4> m_masters;
+    SAFEINDEX<RESOURCE, 0x8000, 0x239, 3> m_copies;
     int m_level;
     bool m_loaded;
     bool m_abort;

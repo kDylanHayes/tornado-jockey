@@ -39,15 +39,53 @@ struct RGB
     float r, g, b;
 };
 
-// Euler angles and the rotation matrix built from them, rebuilt when dirty.
+// Euler angles and the rotation matrix, each rebuilt from the other when
+// its flag is set.
 struct ANG
 {
+    enum
+    {
+        MATRIX_DIRTY = 1,
+        EULER_DIRTY = 2
+    };
+
     ANG() {}
-    ANG(float x, float y, float z) : euler(x, y, z), dirty(true) {}
+    ANG(float x, float y, float z) : euler(x, y, z), flags(MATRIX_DIRTY) {}
+    ANG(const MATRIX &m) : euler(0.0f, 0.0f, 0.0f), matrix(m), flags(EULER_DIRTY) {}
+
+    const V3 &GetEuler()
+    {
+        if (flags & EULER_DIRTY) {
+            matrix.ToEuler(&euler.z, &euler.y, &euler.x);
+            flags &= ~EULER_DIRTY;
+        }
+        return euler;
+    }
+    MATRIX GetMatrix()
+    {
+        if (flags & MATRIX_DIRTY) {
+            matrix.FromEuler(euler.z, euler.y, euler.x);
+            flags &= ~MATRIX_DIRTY;
+        }
+        return matrix;
+    }
+
+    void SetMatrix(const MATRIX &m)
+    {
+        matrix = m;
+        flags = EULER_DIRTY;
+    }
+
+    // Defined in other units.
+    bool IsZero();
+    // A point turned by the angles.
+    V3 Transform(V3 point);
+    // Turns these angles by other.
+    void Rotate(const ANG &other);
 
     V3 euler;
     MATRIX matrix;
-    bool dirty;
+    unsigned char flags;
 };
 
 struct SRTEXTURE
@@ -92,6 +130,12 @@ public:
         SetType(SRT_BOOL);
         m_value.b = value;
     }
+    SRESULT(const SRESULT &other)
+    {
+        m_type = SRT_NOTSET;
+        m_value.i = 0;
+        Assign(other);
+    }
     SRESULT(const char *value);
     SRESULT(const wchar_t *value);
     virtual ~SRESULT() { FreeValue(); }
@@ -120,7 +164,9 @@ public:
 
     // Defined in another unit.
     void SetType(const SRESULTTYPE &type);
-    void FreeValue();
+    void FreeValue() throw();
+    // Copies the value (strings and the larger types are duplicated).
+    void Assign(const SRESULT &other);
 
 private:
     union
