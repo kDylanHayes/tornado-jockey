@@ -39,10 +39,15 @@ struct RGB
     float r, g, b;
 };
 
-// 80 bytes; the layout isn't known yet.
+// Euler angles and the rotation matrix built from them, rebuilt when dirty.
 struct ANG
 {
-    float data[20];
+    ANG() {}
+    ANG(float x, float y, float z) : euler(x, y, z), dirty(true) {}
+
+    V3 euler;
+    MATRIX matrix;
+    bool dirty;
 };
 
 struct SRTEXTURE
@@ -59,12 +64,34 @@ struct SRTEXTURE
     }
 };
 
-// Indexed by SRESULTTYPE.
-extern const char s_TypeNames[SRT_COUNT][15];
+// Indexed by SRESULTTYPE. Defined here, so every unit that includes this
+// header has its own copy.
+// STRING and UNICODESTRING are swapped in the original table, so error
+// messages name the wrong one.
+static const char s_TypeNames[SRT_COUNT][15] = {
+    "NOTSET",
+    "CHAR",
+    "INT",
+    "UNICODESTRING",
+    "STRING",
+    "FLOAT",
+    "BOOL",
+    "V3",
+    "V2",
+    "ANG",
+    "RGB",
+    "TEXTURE",
+};
+
 
 class SRESULT
 {
 public:
+    SRESULT(bool value)
+    {
+        SetType(SRT_BOOL);
+        m_value.b = value;
+    }
     SRESULT(const char *value);
     SRESULT(const wchar_t *value);
     virtual ~SRESULT() { FreeValue(); }

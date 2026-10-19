@@ -3,23 +3,6 @@
 #include "Tongas2/LOG.h"
 #include "Tongas2/SRESULT.h"
 
-// STRING and UNICODESTRING are swapped in the original table, so error
-// messages name the wrong one.
-const char s_TypeNames[SRT_COUNT][15] = {
-    "NOTSET",
-    "CHAR",
-    "INT",
-    "UNICODESTRING",
-    "STRING",
-    "FLOAT",
-    "BOOL",
-    "V3",
-    "V2",
-    "ANG",
-    "RGB",
-    "TEXTURE",
-};
-
 bool ToBool(const int &value)
 {
     return value == 0 ? false : true;

@@ -4,7 +4,8 @@
 #define TONGAS2_APPOPTIONS_H
 
 #include <stdio.h>
-#include <string>
+
+#include "Tongas2/APP.h"
 
 struct DISPLAYMODE
 {
@@ -51,23 +52,5 @@ public:
 };
 
 APPOPTIONS *CreateAppOptions();
-
-// Elsewhere in the engine; only what APPOPTIONS needs.
-
-class APP
-{
-public:
-    void SetResolution(int index);
-    void SetFullscreen(bool on);
-    void SetSound(bool on);
-    void SetMusic(bool on);
-    void SetDetail(int level);
-};
-
-extern APP *g_pApp;
-
-// CSaveFile folders (0 = the game's own).
-std::string GetSaveFolder(int type);
-void CreateFolder(const std::string &path);
 
 #endif

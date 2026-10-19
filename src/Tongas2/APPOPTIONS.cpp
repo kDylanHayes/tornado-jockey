@@ -4,6 +4,10 @@
 #include "Tongas2/APPOPTIONS.h"
 #include "Tongas2/LOG.h"
 
+// Elsewhere in the engine. CSaveFile folders (0 = the game's own).
+std::string GetSaveFolder(int type);
+void CreateFolder(const std::string &path);
+
 static const DISPLAYMODE s_resolutions[APPOPTIONS_RESOLUTIONS] = {
     {0, 0}, {0, 0}, {0, 0}, {0, 0},
     {640, 480}, {800, 600}, {1024, 768}, {1280, 960},
