@@ -16,9 +16,9 @@ CMDENTRY RESOURCES::s_commands[] = {
 };
 
 PROPENTRY RESOURCES::s_properties[] = {
-    { "SoundMasterVolume", 0, 3, 0, (PROPFIELD)&RESOURCES::m_soundVolume, 0, false, 1, (PROPSETTER)&RESOURCES::SetSoundVolume },
-    { "MusicMasterVolume", 0, 3, 0, (PROPFIELD)&RESOURCES::m_musicVolume, 0, false, 1, (PROPSETTER)&RESOURCES::SetMusicVolume },
-    { 0, 0, 15, 0, 0 },
+    { "SoundMasterVolume", 0, 3, 0, (PROPFIELD)&RESOURCES::m_soundVolume, false, 1, (PROPSETTER)&RESOURCES::SetSoundVolume },
+    { "MusicMasterVolume", 0, 3, 0, (PROPFIELD)&RESOURCES::m_musicVolume, false, 1, (PROPSETTER)&RESOURCES::SetMusicVolume },
+    { 0, 0, 15, 0, 0, false },
 };
 
 CMDBASE *(*RESOURCES::s_pfnCreate)() = RESOURCES::Create;
