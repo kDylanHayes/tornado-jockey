@@ -1435,6 +1435,16 @@
       "complete": true
     },
     {
+      "name": "Tongas2/MATHS",
+      "ranges": [
+        "0x004a6c70-0x004a77da"
+      ],
+      "target": "build/target/Tongas2/MATHS.obj",
+      "source": "src/Tongas2/MATHS.cpp",
+      "category": "engine",
+      "complete": false
+    },
+    {
       "name": "Tongas2/APPOPTIONS",
       "ranges": [
         "0x004a77e0-0x004a7cf3",
