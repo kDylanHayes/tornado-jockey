@@ -7,6 +7,9 @@ class LOG
 public:
     // Writes "ERROR: <message>" and counts it.
     void Error(const char *format, ...);
+    // Compiled out of the release build, though its arguments are still
+    // evaluated. Placeholder: only seen through those arguments.
+    void Debug(const char *format, float x, float y, float z) {}
 };
 
 extern LOG *g_pLog;

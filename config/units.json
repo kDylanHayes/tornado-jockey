@@ -1453,6 +1453,23 @@
       }
     },
     {
+      "name": "Tongas2/RESOURCE",
+      "ranges": [
+        "0x004b1a10-0x004b2d2f",
+        "0x0060f1a0-0x0060f3b3",
+        "0x0066be4c-0x0066c0eb",
+        "0x006bd490-0x006bd5a7",
+        "0x007e0d50-0x007e0d8f"
+      ],
+      "target": "build/target/Tongas2/RESOURCE.obj",
+      "source": "src/Tongas2/RESOURCE.cpp",
+      "category": "engine",
+      "complete": false,
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z"
+      }
+    },
+    {
       "name": "Tongas2/MATHS",
       "ranges": [
         "0x004a6c70-0x004a77da"

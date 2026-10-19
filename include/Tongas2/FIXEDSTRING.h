@@ -9,6 +9,11 @@ template <int N>
 class FIXEDSTRING
 {
 public:
+    FIXEDSTRING()
+    {
+        m_buf[0] = '\0';
+        m_buf[N - 1] = '\0';
+    }
     FIXEDSTRING(const char *text)
     {
         if (text)
@@ -17,6 +22,9 @@ public:
             m_buf[0] = '\0';
         m_buf[N - 1] = '\0';
     }
+
+    // Out of line; defined in another unit.
+    FIXEDSTRING &operator=(const char *text);
 
     // Appends text only when all of it fits.
     void operator+=(const char *text)
