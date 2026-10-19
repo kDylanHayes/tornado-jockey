@@ -5,10 +5,16 @@
 0x004026c0 ?FreeValue@SRESULT@@QAEXXZ function 0x47
 0x00402730 ??1SRESULT@@UAE@XZ function 0xb
 0x00402740 ??_GSRESULT@@UAEPAXI@Z function 0x24
+0x004027b0 ?SetActive@OBJECT@@QAEX_N@Z function
+0x00402880 ?SafeSprintf@@YAHPADPBDZZ function
 0x00402b80 ?Free@STRINGMANAGER@@QAEXAAH0@Z function
 0x00402c90 ?Normalize@V3@@QAEXXZ function
+0x00402f00 ?Virtual14@CMDBASE@@UAEXXZ function
+0x00402f10 ?Virtual08@RESOURCES@@UAEHXZ function
+0x00403ae0 ?Virtual06@CMDBASE@@UAEXXZ function
 0x00403c30 ?Reserve@STRING@@QAEXABH@Z function
 0x00404ce0 ?SetType@SRESULT@@QAEXABW4SRESULTTYPE@@@Z function 0xfc
+0x004060a0 ?Virtual07@CMDBASE@@UAEXXZ function
 0x00406cc0 ?_Min@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@KAPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@PAU342@@Z function
 0x00406ce0 ?_Inc@const_iterator@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@QAEXXZ function
 0x004072c0 ?assign@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@ABV12@II@Z function
@@ -19,6 +25,15 @@
 0x004214f0 ??Y?$FIXEDSTRING@$0CAA@@@QAEXPBD@Z function
 0x004381b0 ?_Tidy@?$deque@GV?$allocator@G@std@@@std@@IAEXXZ function
 0x0043cb20 ?SupportsICCProfiles@@YAJXZ function
+0x00442340 ?GetClassId@RESOURCES@@UAEHXZ function
+0x00442350 ?GetParentClassId@RESOURCES@@UAEHXZ function
+0x00442360 ?GetClassName@RESOURCES@@UAEPBDXZ function
+0x00442370 ?SetSoundVolume@RESOURCES@@UAEXABM@Z function
+0x00442380 ?SetMusicVolume@RESOURCES@@UAEXABM@Z function
+0x00442390 ?GetMusicVolume@RESOURCES@@UAEMXZ function
+0x004423a0 ?GetSoundVolume@RESOURCES@@UAEMXZ function
+0x004423b0 ?Virtual09@RESOURCES@@UAEPAXPBD@Z function
+0x00442d60 ?Virtual05@RESOURCES@@UAEXXZ function
 0x004487b0 ?GetDPCodeName@WTINFO@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ function
 0x00448840 ?GetProductCodeName@WTINFO@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ function
 0x004494e0 ?compare@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBEHIIPBDI@Z function
@@ -28,6 +43,7 @@
 0x0044a620 ?append@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@PBDI@Z function
 0x0044a730 ??$?HDU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@ABV10@PBD@Z function
 0x004536f0 ??R?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@QBE_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@0@Z function
+0x004540f0 ?NewNode@?$CALLBACKLIST@P6AXXZ@@QAEPAUNODE@1@P6AXXZ@Z function
 0x0045446b ??2@YAPAXI@Z function 0x24
 0x0045450f ??_U@YAPAXI@Z function 0x5
 0x00456df2 _null_method function
@@ -41,12 +57,125 @@
 0x0046c4a9 _do_barray_io function
 0x0047e661 _adler32 function 0x119
 0x00482cf0 ?Error@LOG@@QAAXPBDZZ function 0x6e
+0x00483800 ?Virtual18@CMDBASE@@UAEXXZ function
+0x00483d40 ??0CMDBASE@@QAE@XZ function
+0x00483d80 ?Virtual11@CMDBASE@@UAEXXZ function
+0x00484470 ?Virtual12@CMDBASE@@UAEXXZ function
+0x00484820 ?Virtual10@CMDBASE@@UAEXXZ function
 0x00484e20 ??4UNICODESTRING@@QAEAAV0@ABV0@@Z function
+0x004861e0 ?Virtual16@CMDBASE@@UAEXXZ function
+0x00488430 ?Virtual00@CMDBASE@@UAE?AVSRESULT@@PAPAVTOKENS@@@Z function
+0x00488470 ?Virtual15@CMDBASE@@UAEXXZ function
+0x00488560 ?Virtual17@CMDBASE@@UAEXXZ function
+0x00489a00 ?HashCommands@@YAXPAUCMDENTRY@@@Z function
 0x0048b960 ?SetResolution@APP@@QAEXH@Z function
 0x0048b9a0 ?SetFullscreen@APP@@QAEX_N@Z function
 0x0048b9d0 ?SetSound@APP@@QAEX_N@Z function
 0x0048b9f0 ?SetMusic@APP@@QAEX_N@Z function
 0x0048ba10 ?SetDetail@APP@@QAEXH@Z function
+0x0048cd40 ??_9@$BFM@AE function
+0x0048cd50 ??_9@$BGA@AE function
+0x0048cd70 ??_9@$BFA@AE function
+0x0048cd80 ??_9@$BFE@AE function
+0x0048cd90 ??_9@$BFI@AE function
+0x0048ef70 ??_9@$BGE@AE function
+0x0048f8b0 ?IsValidHash@?$SAFEINDEX@VMASTER@@$0CAAA@$0PL@$03@@QAE_NH@Z function 0x17
+0x0048faf0 ??_9@$BEM@AE function
+0x00492480 ?Virtual13@CMDBASE@@UAEXXZ function
+0x004a2ad0 ?SetLevel@RESOURCEMANAGER@@QAEXH@Z function
+0x004a2b00 ?Flush@RESOURCEMANAGER@@QAEXXZ function
+0x004a2b20 ?DeleteUnused@RESOURCEMANAGER@@QAEXH_N@Z function
+0x004a2b70 ?HasTypeCode@RESOURCEMANAGER@@QAE_NPBD@Z function
+0x004a2bc0 ?Dump@RESOURCEMANAGER@@QAEX_NH@Z function
+0x004a2c40 ?DumpPropsType@RESOURCEMANAGER@@QAEXXZ function
+0x004a2c80 ?DumpTotals@RESOURCEMANAGER@@QAEX_N@Z function
+0x004a2f40 ?GetHandle@RESOURCEMANAGER@@QAE?AURESHANDLE@@PBD@Z function
+0x004a2fd0 ?GetResource@RESOURCEMANAGER@@QAEPAVRESOURCE@@PBD@Z function
+0x004a3420 ?RegisterCommands@RESOURCES@@SAXXZ function 0x3f
+0x004a3460 ?FreeImageMessage@@YAXW4FREE_IMAGE_FORMAT@@PBD@Z function 0x22
+0x004a3490 ?LoadManagers@RESOURCES@@SAXXZ function 0xcf0
+0x004a4180 ?FreeManagers@RESOURCES@@QAEXXZ function 0x3f
+0x004a41c0 ?SetLevel@RESOURCES@@UAEXH@Z function 0xb2
+0x004a4280 ?Load@RESOURCES@@QAE_NXZ function 0x61
+0x004a42f0 ?Update@RESOURCES@@UAEXXZ function 0x40
+0x004a4330 ?GetManager@RESOURCES@@QAEPAVRESOURCEMANAGER@@AAPBD@Z function 0xec
+0x004a4420 ?FindManager@RESOURCES@@QAEPAVRESOURCEMANAGER@@PBD@Z function 0x52
+0x004a4480 ?ResetGroups@RESOURCES@@UAEHXZ function 0x5
+0x004a4490 ?AddMainChannel@RESOURCES@@SAXXZ function 0x47
+0x004a44e0 ?InitGroups@RESOURCES@@UAEHXZ function 0x41
+0x004a4530 ?DumpAll@RESOURCES@@QAEX_N@Z function 0x42
+0x004a4580 ?Abort@RESOURCES@@QAEXXZ function 0xf
+0x004a4590 ?GetDetailBias@RESOURCES@@UAEHXZ function 0x23
+0x004a45c0 ?GetDetailScale@RESOURCES@@UAEMXZ function 0x20
+0x004a45e0 ?GetDetailFactor@RESOURCES@@UAEMXZ function 0x2b
+0x004a4610 ?GetGlobalScale@RESOURCES@@UAEMXZ function 0x7
+0x004a4620 ?SetGlobalScale@RESOURCES@@UAEXM@Z function 0xd
+0x004a4630 ?GetDetailSteps@RESOURCES@@UAEHXZ function 0x17
+0x004a4650 ?IsHighDetail@RESOURCES@@UAE_NXZ function 0x17
+0x004a4670 ?IsLowDetail@RESOURCES@@UAE_NXZ function 0x16
+0x004a4690 ?IsDetailed@RESOURCES@@UAE_NXZ function 0x16
+0x004a46b0 ??1?$LIFO@URESHANDLE@@$0CAAA@@@UAE@XZ function 0x22
+0x004a46e0 ??1?$LIFO@PAVMASTER@@$0CAAA@@@UAE@XZ function 0x22
+0x004a4710 ??1?$LIFO@URESHANDLE@@$0IAAA@@@UAE@XZ function 0x22
+0x004a4740 ??1?$LIFO@PAVCOPY@@$0IAAA@@@UAE@XZ function 0x22
+0x004a4770 ??_G?$LIFO@URESHANDLE@@$0CAAA@@@UAEPAXI@Z function 0x36
+0x004a47b0 ??_G?$LIFO@PAVMASTER@@$0CAAA@@@UAEPAXI@Z function 0x36
+0x004a47f0 ??_G?$LIFO@URESHANDLE@@$0IAAA@@@UAEPAXI@Z function 0x36
+0x004a4830 ??_G?$LIFO@PAVCOPY@@$0IAAA@@@UAEPAXI@Z function 0x36
+0x004a4870 ?Clear@?$SAFEINDEX@VMASTER@@$0CAAA@$0PL@$03@@QAEXXZ function 0x6d
+0x004a48e0 ?GetFreePos@?$SAFEINDEX@VMASTER@@$0CAAA@$0PL@$03@@QAEHXZ function 0x3c
+0x004a4920 ?FreePos@?$SAFEINDEX@VMASTER@@$0CAAA@$0PL@$03@@QAEXH_N@Z function 0xc6
+0x004a49f0 ?HashInsert@?$SAFEINDEX@VMASTER@@$0CAAA@$0PL@$03@@QAEXHHPAVMASTER@@@Z function 0x6e
+0x004a4a60 ?HashRemove@?$SAFEINDEX@VMASTER@@$0CAAA@$0PL@$03@@QAEXH@Z function 0x65
+0x004a4ad0 ??0?$LIFO@URESHANDLE@@$0CAAA@@@QAE@XZ function 0x5c
+0x004a4b30 ?Clear@?$SAFEINDEX@VCOPY@@$0IAAA@$0CDJ@$02@@QAEXXZ function 0x6d
+0x004a4ba0 ?IsValidHash@?$SAFEINDEX@VCOPY@@$0IAAA@$0CDJ@$02@@QAE_NH@Z function 0x19
+0x004a4bc0 ?GetFreePos@?$SAFEINDEX@VCOPY@@$0IAAA@$0CDJ@$02@@QAEHXZ function 0x3c
+0x004a4c00 ?FreePos@?$SAFEINDEX@VCOPY@@$0IAAA@$0CDJ@$02@@QAEXH_N@Z function 0xc6
+0x004a4cd0 ??0?$LIFO@URESHANDLE@@$0IAAA@@@QAE@XZ function 0x5c
+0x004a4d30 ?Push@?$LIFO@URESHANDLE@@$0CAAA@@@QAE_NABURESHANDLE@@@Z function 0x60
+0x004a4d90 ?Push@?$LIFO@PAVMASTER@@$0CAAA@@@QAE_NABQAVMASTER@@@Z function 0x4f
+0x004a4de0 ?Find@?$SAFEINDEX@VCOPY@@$0IAAA@$0CDJ@$02@@QAEPAVCOPY@@PBD@Z function 0xb1
+0x004a4ea0 ?Push@?$LIFO@URESHANDLE@@$0IAAA@@@QAE_NABURESHANDLE@@@Z function 0x60
+0x004a4f00 ?Push@?$LIFO@PAVCOPY@@$0IAAA@@@QAE_NABQAVCOPY@@@Z function 0x4f
+0x004a4f50 ?InitManagers@RESOURCES@@QAEXXZ function 0x9c
+0x004a4ff0 ?CreateFromTemplate@RESOURCES@@QAE?AURESHANDLE@@PBDUV3@@H@Z function 0x125
+0x004a5120 ??0?$SAFEINDEX@VMASTER@@$0CAAA@$0PL@$03@@QAE@XZ function 0x117
+0x004a5240 ??1?$SAFEINDEX@VMASTER@@$0CAAA@$0PL@$03@@UAE@XZ function 0xfd
+0x004a5340 ?Get@?$SAFEINDEX@VMASTER@@$0CAAA@$0PL@$03@@QAEPAVMASTER@@ABURESHANDLE@@@Z function 0x38
+0x004a5380 ?Find@?$SAFEINDEX@VMASTER@@$0CAAA@$0PL@$03@@QAEPAVMASTER@@PBD@Z function 0xb1
+0x004a5440 ?Remove@?$SAFEINDEX@VMASTER@@$0CAAA@$0PL@$03@@QAEXABURESHANDLE@@@Z function 0xb4
+0x004a5500 ??0?$SAFEINDEX@VCOPY@@$0IAAA@$0CDJ@$02@@QAE@XZ function 0x117
+0x004a5620 ??1?$SAFEINDEX@VCOPY@@$0IAAA@$0CDJ@$02@@UAE@XZ function 0xfd
+0x004a5720 ??_G?$SAFEINDEX@VMASTER@@$0CAAA@$0PL@$03@@UAEPAXI@Z function 0x1e
+0x004a5740 ??_G?$SAFEINDEX@VCOPY@@$0IAAA@$0CDJ@$02@@UAEPAXI@Z function 0x1e
+0x004a5760 ?DirectChangeName@?$SAFEINDEX@VMASTER@@$0CAAA@$0PL@$03@@QAEXABURESHANDLE@@PBD@Z function 0xf7
+0x004a5860 ?DirectChangeName@?$SAFEINDEX@VCOPY@@$0IAAA@$0CDJ@$02@@QAEXABURESHANDLE@@PBD@Z function 0xf7
+0x004a5960 ??0RESOURCES@@QAE@XZ function 0x15b
+0x004a5ac0 ??1RESOURCES@@UAE@XZ function 0x12e
+0x004a5bf0 ?CmdDeleteUnused@RESOURCES@@UAE?AVSRESULT@@PAPAVTOKENS@@@Z function 0x53
+0x004a5c50 ?GetResource@RESOURCES@@QAEPAVRESOURCE@@URESHANDLE@@@Z function 0x63
+0x004a5cc0 ?FindMaster@RESOURCES@@QAEPAVMASTER@@PBD@Z function 0x8
+0x004a5cd0 ?GetMaster@RESOURCES@@QAEPAVMASTER@@URESHANDLE@@@Z function 0x3c
+0x004a5d10 ?GetHandle@RESOURCES@@QAE?AURESHANDLE@@PBD@Z function 0x7f
+0x004a5d90 ?Dump@RESOURCES@@QAE?AVSRESULT@@PAPAVTOKENS@@@Z function 0x138
+0x004a5ed0 ?UnregisterCopy@RESOURCES@@QAEXABURESHANDLE@@@Z function 0x23
+0x004a5f00 ?RemoveMaster@RESOURCES@@QAEXABURESHANDLE@@@Z function 0x8
+0x004a5f10 ?CmdDumpAll@RESOURCES@@UAE?AVSRESULT@@PAPAVTOKENS@@@Z function 0x6f
+0x004a5f80 ?CmdDump@RESOURCES@@UAE?AVSRESULT@@PAPAVTOKENS@@@Z function 0x57
+0x004a5fe0 ?CmdDumpPropsType@RESOURCES@@UAE?AVSRESULT@@PAPAVTOKENS@@@Z function 0x82
+0x004a6070 ?CmdDumpTotals@RESOURCES@@UAE?AVSRESULT@@PAPAVTOKENS@@@Z function 0xa5
+0x004a6120 ?New@?$SAFEINDEX@VMASTER@@$0CAAA@$0PL@$03@@QAE_NPAPAVMASTER@@HPAHPAURESHANDLE@@@Z function 0x2ac
+0x004a63d0 ?New@?$SAFEINDEX@VCOPY@@$0IAAA@$0CDJ@$02@@QAE_NPAPAVCOPY@@HPAHPAURESHANDLE@@@Z function 0x2ac
+0x004a6680 ?Create@RESOURCES@@SAPAVCMDBASE@@XZ function 0x59
+0x004a66e0 ??_GRESOURCES@@UAEPAXI@Z function 0x1e
+0x004a6700 ?GetResource@RESOURCES@@QAEPAVRESOURCE@@PBD@Z function 0x3e
+0x004a6740 ?Insert@?$SAFEINDEX@VMASTER@@$0CAAA@$0PL@$03@@QAE?AURESHANDLE@@PAPAVMASTER@@H@Z function 0x181
+0x004a68d0 ?ChangeName@?$SAFEINDEX@VMASTER@@$0CAAA@$0PL@$03@@QAEXAAURESHANDLE@@PBDH@Z function 0x108
+0x004a69e0 ?Insert@?$SAFEINDEX@VCOPY@@$0IAAA@$0CDJ@$02@@QAE?AURESHANDLE@@PAPAVCOPY@@H@Z function 0x181
+0x004a6b70 ?RegisterCopy@RESOURCES@@QAEXPAVCOPY@@@Z function 0x77
+0x004a6bf0 ?RenameMaster@RESOURCES@@QAEXAAURESHANDLE@@PBD@Z function 0x17
+0x004a6c10 ?RegisterMaster@RESOURCES@@QAEXPAVMASTER@@@Z function 0x55
 0x004a6c70 ?SwapYZ@V3@@QAEXXZ function 0xd
 0x004a6c80 ?SegmentInBox@@YA_NABUV3@@00ABUMATRIX@@0@Z function 0x595
 0x004a7220 ?CatmullRom@@YAXPAUV3@@U1@111M@Z function 0x269
@@ -113,6 +242,7 @@
 0x004ce500 ??1FILELOADER@@UAE@XZ function 0x50
 0x004ce550 ?CreateFileLoader@@YAPAVFILELOADER@@XZ function 0x23
 0x004ce580 ??_GFILELOADER@@UAEPAXI@Z function 0x1e
+0x004d2ec0 ?HashString@@YAHPBDH@Z function
 0x004d57c0 ?GetSaveFolder@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z function
 0x004d5f00 ?CreateFolder@@YAXABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z function
 0x004e7820 ?_Min@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@KAPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@PAU342@@Z function
@@ -1509,11 +1639,12 @@
 0x005c0c15 _atoi function 0x5
 0x005c0c1a ??_V@YAXPAX@Z function 0x5
 0x005c0c1f __ArrayUnwind function 0x2f
-0x005c0c7d `eh_vector_destructor_iterator' function 0x48
-0x005c0cdd `eh_vector_constructor_iterator' function 0x4a
+0x005c0c7d ??_M@YGXPAXIHP6EX0@Z@Z function 0x48
+0x005c0cdd ??_L@YGXPAXIHP6EX0@Z1@Z function 0x4a
 0x005c0d3f _atof function 0x4b
 0x005c0d90 _strstr function
 0x005c0f22 _wcscmp function 0x32
+0x005c0f54 __purecall function
 0x005c1071 __onexit function 0x82
 0x005c10f3 _atexit function 0x12
 0x005c1105 ___onexitinit function 0x28
@@ -1922,7 +2053,15 @@
 0x005fa550 __ehhandler$?Encrypt@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@0@Z function
 0x005fa56b __ehhandler$?CreateFileLoaderWKZ@@YAPAVFILELOADER@@XZ function
 0x005fa588 __ehhandler$??1FILELOADERWKZ@@UAE@XZ function
+0x0060c9a0 _$E1 function 0xb1
+0x0060ca60 _$E3 function 0x105
+0x0060cb70 _$E5 function 0xc
+0x0060cb80 _$E8 function 0xc
+0x0060cb90 _$E11 function 0xc
 0x006541f0 _$E1 function 0x1d
+0x00654470 _$E6 function 0x24
+0x006544a0 _$E9 function 0x24
+0x006544d0 _$E12 function 0x24
 0x006552c0 _$E2 function
 0x006553a0 _$E2 function 0x2e
 0x006560cc __imp__GetProcAddress@8 data 0x4
@@ -1965,6 +2104,8 @@
 0x0065b13c __real@3e2aaaab data
 0x0065db8c ??_C@_0BC@KBDMBKEH@deque?$DMT?$DO?5too?5long?$AA@ data
 0x0065e8a0 __real@3ff0000000000000 data
+0x0065f888 ??_7CMDBASE@@6B@ data 0x4c
+0x006600f0 ??_C@_0FP@IKMMFDBK@ERROR?$CB?$CB?5RESOURCES?3?3LoadManagers?$DO@ data 0x5f
 0x00661ac0 ??_7APPOPTIONS@@6B@ data 0x24
 0x00661eac ??_C@_02JDPG@rb?$AA@ data 0x3
 0x00661eb0 ??_C@_02GMLFBBN@wb?$AA@ data 0x3
@@ -2052,12 +2193,75 @@
 0x00666038 ??_C@_0BM@FFFLPBBC@invalid?5literal?1length?5code?$AA@ data
 0x00666530 ??_C@_01EEMJAFIK@?6?$AA@ data
 0x0066653c ??_C@_03OFAPEBGM@?$CFs?6?$AA@ data
+0x006667d4 ??_C@_07GOLFKGID@CMDBASE?$AA@ data 0x8
 0x00666990 ??_C@_02DPKJAMEF@?$CFd?$AA@ data
+0x00667088 ??_C@_09CMINMFIB@RESOURCES?$AA@ data 0xa
+0x00667094 ??_C@_09LLOKOKDN@GUISLIDER?$AA@ data 0xa
+0x006670a0 ??_C@_0L@BDDGPKIA@GUIGENERIC?$AA@ data 0xb
+0x006670ac ??_C@_0M@DOJFBKCK@GUICHECKBOX?$AA@ data 0xc
+0x006670b8 ??_C@_0O@EHLGBHGO@GUICHECKGROUP?$AA@ data 0xe
+0x006670c8 ??_C@_08CMGFBHIM@GUIGROUP?$AA@ data 0x9
+0x006670d4 ??_C@_09KIKCHMPD@GUIVISUAL?$AA@ data 0xa
+0x006670e0 ??_C@_0M@EHIIDNGN@GUITEXTEDIT?$AA@ data 0xc
+0x006670ec ??_C@_07DNBOFAIK@GUITEXT?$AA@ data 0x8
 0x00667384 ??_C@_01KDCPPGHE@r?$AA@ data
 0x00667484 ??_C@_01KMDKNFGN@?1?$AA@ data 0x2
 0x00667ec8 __real@c3340000 data
 0x00667ecc __real@c3b40000 data
+0x00667ed8 ??_C@_0CM@OCPNAOAO@SAFEINDEX?3FreePos?$DO?5Invalid?5delet@ data 0x2c
+0x00667f04 ??_C@_0CP@MNDOJFFL@SAFEINDEX?3?3FreePos?$DO?5Error?5?9?5posi@ data 0x2f
+0x00667f34 ??_C@_0BP@MIFJHLDG@LIFO?3?3Push?$DO?5Error?5?9?5Table?5full?$AA@ data 0x1f
+0x00667f60 ??_C@_0FC@BEJMAJLI@SAFEINDEX?3?3?5ALERT?$CB?$CB?$CB?$CB?5?9?5MAX?5WHIL@ data 0x52
+0x00667fb4 ??_C@_0DN@CLCKHOGN@SAFEINDEX?3?3DirectChangeName?$DO?5ERR@ data 0x3d
+0x00668070 ??_C@_0CP@PMFMMKEI@SAFEINDEX?3?3New?$DO?5ERROR?5Ivalid?5dis@ data 0x2f
+0x006680a0 ??_C@_04HGGBINEM@?$CFs?$CFd?$AA@ data 0x5
+0x006680b4 ??_C@_0CK@FBJPJPNG@SAFEINDEX?3?3Insert?$DO?5ERROR?$CB?$CB?$CB?5Tabl@ data 0x2a
+0x006680e0 ??_C@_0DA@JIDJBGHL@SAFEINDEX?3?3New?$DO?5ERROR?5Invalid?5di@ data 0x30
+0x006686ec ??_C@_09BMHMPIHG@resources?$AA@ data 0xa
 0x006691d4 ??_C@_01IHBHIGKO@?0?$AA@ data
+0x0066a450 ??_C@_0BC@EJMGIAN@SoundMasterVolume?$AA@ data 0x12
+0x0066a464 ??_C@_07DGILALJJ@dumpall?$AA@ data 0x8
+0x0066a470 _s_TypeNames data 0xb4
+0x0066a524 ??_C@_0BH@CNALPMFA@FREEIMAGE?3?5?$CFs?5?$CIfif?$DN?$CFd?$CJ?$AA@ data 0x17
+0x0066a53c ??_C@_0P@PNBKMNCM@ACTORRESOURCES?$AA@ data 0xf
+0x0066a54c ??_C@_0P@GPDODOFP@PATHREPOSITORY?$AA@ data 0xf
+0x0066a55c ??_C@_04HBHDLLBA@PATH?$AA@ data 0x5
+0x0066a564 ??_C@_0L@PLMALBKO@GLOBALDEFS?$AA@ data 0xb
+0x0066a570 ??_C@_02GMLAAMD@FX?$AA@ data 0x3
+0x0066a574 ??_C@_05MFNJIKNP@LIGHT?$AA@ data 0x6
+0x0066a57c ??_C@_07IBALCCAB@EMITTER?$AA@ data 0x8
+0x0066a584 ??_C@_0M@LJBCIPLH@CPRIMITIVE3?$AA@ data 0xc
+0x0066a590 ??_C@_05GLGJCI@TESLA?$AA@ data 0x6
+0x0066a598 ??_C@_09LJNGPJIF@POLYTRAIL?$AA@ data 0xa
+0x0066a5a4 ??_C@_04OEPMCOLO@TEXT?$AA@ data 0x5
+0x0066a5ac ??_C@_0M@HMCHJDHM@SCREENDECAL?$AA@ data 0xc
+0x0066a5b8 ??_C@_05OONCNBDC@DECAL?$AA@ data 0x6
+0x0066a5c0 ??_C@_0M@EEFDIAHO@SIMPLEMODEL?$AA@ data 0xc
+0x0066a5cc ??_C@_04GDCOGJPB@MESH?$AA@ data 0x5
+0x0066a5d4 ??_C@_06BMJMJFME@SHADER?$AA@ data 0x7
+0x0066a5dc ??_C@_05MEGDOMG@SOUND?$AA@ data 0x6
+0x0066a5e4 ??_C@_0L@OFAKKBAE@BONEDMODEL?$AA@ data 0xb
+0x0066a5f0 ??_C@_0ED@HLHFABDM@ERROR?$CB?$CB?5resource?5?$CFs?5type?5not?5rec@ data 0x43
+0x0066a634 ??_C@_04KGFMLCPK@Main?$AA@ data 0x5
+0x0066a63c ??_C@_07EBHHCJEE@Ambient?$AA@ data 0x8
+0x0066a644 ??_7?$LIFO@URESHANDLE@@$0CAAA@@@6B@ data 0x4
+0x0066a648 ??_7?$LIFO@PAVMASTER@@$0CAAA@@@6B@ data 0x4
+0x0066a64c ??_7?$LIFO@URESHANDLE@@$0IAAA@@@6B@ data 0x4
+0x0066a650 ??_7?$LIFO@PAVCOPY@@$0IAAA@@@6B@ data 0x4
+0x0066a654 ??_7?$SAFEINDEX@VMASTER@@$0CAAA@$0PL@$03@@6B@ data 0x4
+0x0066a658 ??_7?$SAFEINDEX@VCOPY@@$0IAAA@$0CDJ@$02@@6B@ data 0x4
+0x0066a660 ??_7RESOURCES@@6B@ data 0xa4
+0x0066a704 ??_C@_0DC@JGLAKBLO@THERE?5ARE?5?$CFd?5COPIES?5IN?5GLOBAL?5PO@ data 0x32
+0x0066a738 ??_C@_0DD@KHJAOHOE@THERE?5ARE?5?$CFd?5MASTERS?5IN?5GLOBAL?5P@ data 0x33
+0x0066a76c ??_C@_0CG@LFMEEING@could?5not?5find?5resource?5type?5nam@ data 0x26
+0x0066a794 ??_C@_0BA@FNIMCHKF@?5from?5master?3?$CFs?$AA@ data 0x10
+0x0066a7a4 ??_C@_0BI@EBEGGEA@Could?5not?5register?5copy?$AA@ data 0x18
+0x0066a7bc ??_C@_0DH@PKOCMP@RESOURCES?3?3RegisterMaster?5?9?5Coul@ data 0x37
+0x0066a7f4 ??_C@_0N@CBCMMBAK@DeleteUnused?$AA@ data 0xd
+0x0066a804 ??_C@_0O@ECCGFLLL@dumppropstype?$AA@ data 0xe
+0x0066a814 ??_C@_0L@EOPLJFLJ@dumptotals?$AA@ data 0xb
+0x0066a820 ??_C@_04GGLOKIEE@dump?$AA@ data 0x5
+0x0066a828 ??_C@_0BC@LLDCKMIG@MusicMasterVolume?$AA@ data 0x12
 0x0066a840 _s_resolutions data 0x70
 0x0066a8b0 _s_windowedResolutions data 0x70
 0x0066a920 ??_C@_0BM@HGLNGMMO@could?5not?5find?5options?5file?$AA@ data 0x1c
@@ -2070,7 +2274,7 @@
 0x0066a9c0 __real@4059000000000000 data 0x8
 0x0066a9c8 ??_C@_05EMFAAAMC@ntdll?$AA@ data 0x6
 0x0066a9d0 ??_C@_0BJ@NDLOPGCH@NtQuerySystemInformation?$AA@ data 0x19
-0x0066a9f0 ?s_TypeNames@@3QAY0P@$$CBDA data 0xb4
+0x0066a9f0 _s_TypeNames data 0xb4
 0x0066aaa4 ??_C@_0DA@KGMHJCC@SRESULT?3?3GetChar?$DO?5Error?5?9?5Wrong?5@ data
 0x0066aad4 ??_C@_0CP@NHGBBAKJ@SRESULT?3?3GetInt?$DO?5Error?5?9?5Wrong?5v@ data
 0x0066ab04 ??_C@_0DB@IAHPAMAK@SRESULT?3?3GetFloat?$DO?5Error?5?9?5Wrong@ data
@@ -2601,7 +2805,39 @@
 0x006aa528 __TI1H data
 0x006aa590 __TI2CPAD data
 0x006aa614 __TI1?AW4J_MESSAGE_CODE@@ data
+0x006b92f0 ?g_classParents@@3PAHA data
+0x006b9af4 ?g_CMDBASEClassId@@3HA data 0x4
+0x006b9b30 ?s_classId@RESOURCES@@2HA data 0x4
+0x006bbcb8 ?s_pfnCreate@RESOURCES@@2P6APAVCMDBASE@@XZA data 0x4
+0x006bbcc0 ?s_commands@RESOURCES@@2PAUCMDENTRY@@A data 0xc0
+0x006bbd80 ?s_properties@RESOURCES@@2PAUPROPENTRY@@A data 0xa8
+0x006bbe9c ?g_pfnCreateDECAL@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006bc1b0 ?g_pfnCreatePATH@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006bc810 ?g_pfnCreateEMITTER@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006bd5e0 ?g_pfnCreateSOUND@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006bdf60 ?g_pfnCreateACTORRESOURCES@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006be160 ?g_pfnCreatePATHREPOSITORY@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006be1d8 ?g_pfnCreateGLOBALDEFS@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006be250 ?g_pfnCreateLIGHT@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006be488 ?g_pfnCreateGUISLIDER@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006be570 ?g_pfnCreateGUIGENERIC@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006be818 ?g_pfnCreateGUICHECKBOX@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006be8c8 ?g_pfnCreateGUICHECKGROUP@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006be978 ?g_pfnCreateGUIGROUP@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006bf010 ?g_pfnCreateGUIVISUAL@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006bf478 ?g_pfnCreateGUITEXTEDIT@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006bf640 ?g_pfnCreateGUITEXT@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006bfb18 ?g_pfnCreateSCREENDECAL@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006bfca8 ?g_pfnCreateBONEDMODEL@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006bfd90 ?g_pfnCreateFX@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006c01f8 ?g_pfnCreateCPRIMITIVE3@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006c0388 ?g_pfnCreateTESLA@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006c0518 ?g_pfnCreatePOLYTRAIL@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006c0750 ?g_pfnCreateTEXT@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006c08e0 ?g_pfnCreateSHADER@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006c16d8 ?g_pfnCreateFileLoader@@3P6APAVFILELOADER@@XZA data 0x4
+0x006c1808 ?g_pfnCreateSIMPLEMODEL@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006c180c ?g_pfnCreateMESH@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006c7074 _g_TagLib_XMPFieldName data
 0x006c7078 _g_TagLib_XMPFieldName data
 0x006c70c4 ?format_bytes@?1??FreeImage_TagDataWidth@@YAHG@Z@4PAHA data
@@ -2669,8 +2905,46 @@
 0x006c8a20 __iob data
 0x006c8ca0 ___security_cookie data 0x4
 0x006cbc80 ?g_pLog@@3PAVLOG@@A data 0x4
+0x006cc498 ?g_classCommands@@3PAPAUCMDENTRY@@A data
 0x006d09b4 ?g_pApp@@3PAVAPP@@A data 0x4
 0x006d2708 ?g_StringManager@@3VSTRINGMANAGER@@A data
+0x007df740 ?s_managerNames@RESOURCES@@2PAY0BO@DA data 0xf00
+0x007e0640 ?g_pGUIGROUP@@3PAVRESOURCEMANAGER@@A data 0x4
+0x007e0644 ?g_pGUISLIDER@@3PAVRESOURCEMANAGER@@A data 0x4
+0x007e0648 ?g_pGUICHECKGROUP@@3PAVRESOURCEMANAGER@@A data 0x4
+0x007e064c ?g_pGUICHECKBOX@@3PAVRESOURCEMANAGER@@A data 0x4
+0x007e0650 ?g_pGUIVISUAL@@3PAVRESOURCEMANAGER@@A data 0x4
+0x007e0654 ?g_pGUITEXTEDIT@@3PAVRESOURCEMANAGER@@A data 0x4
+0x007e0658 ?g_pGUITEXT@@3PAVRESOURCEMANAGER@@A data 0x4
+0x007e065c ?g_pGUIGENERIC@@3PAVRESOURCEMANAGER@@A data 0x4
+0x007e0660 ?g_pACTORRESOURCES@@3PAVRESOURCEMANAGER@@A data 0x4
+0x007e0664 ?g_pPATHREPOSITORY@@3PAVRESOURCEMANAGER@@A data 0x4
+0x007e0668 ?g_pPATH@@3PAVRESOURCEMANAGER@@A data 0x4
+0x007e066c ?g_pGLOBALDEFS@@3PAVRESOURCEMANAGER@@A data 0x4
+0x007e0670 ?g_pFX@@3PAVRESOURCEMANAGER@@A data 0x4
+0x007e0674 ?g_pLIGHT@@3PAVRESOURCEMANAGER@@A data 0x4
+0x007e0678 ?g_pEMITTER@@3PAVRESOURCEMANAGER@@A data 0x4
+0x007e067c ?g_pCPRIMITIVE3@@3PAVRESOURCEMANAGER@@A data 0x4
+0x007e0680 ?g_pTESLA@@3PAVRESOURCEMANAGER@@A data 0x4
+0x007e0684 ?g_pPOLYTRAIL@@3PAVRESOURCEMANAGER@@A data 0x4
+0x007e0688 ?g_pTEXT@@3PAVRESOURCEMANAGER@@A data 0x4
+0x007e068c ?g_pSCREENDECAL@@3PAVRESOURCEMANAGER@@A data 0x4
+0x007e0690 ?g_pDECAL@@3PAVRESOURCEMANAGER@@A data 0x4
+0x007e0694 ?g_pSIMPLEMODEL@@3PAVRESOURCEMANAGER@@A data 0x4
+0x007e0698 ?g_pMESH@@3PAVRESOURCEMANAGER@@A data 0x4
+0x007e069c ?g_pSHADER@@3PAVRESOURCEMANAGER@@A data 0x4
+0x007e06a0 ?g_pSOUND@@3PAVRESOURCEMANAGER@@A data 0x4
+0x007e06a4 ?g_pBONEDMODEL@@3PAVRESOURCEMANAGER@@A data 0x4
+0x007e06a8 ?s_managerSlots@RESOURCES@@2PAPAPAVRESOURCEMANAGER@@A data 0x200
+0x007e08a8 ?s_managers@RESOURCES@@2PAPAVRESOURCEMANAGER@@A data 0x200
+0x007e0aa8 ?g_pResources@@3PAVRESOURCES@@A data 0x4
+0x007e0aac ?s_numManagers@RESOURCES@@2HA data 0x4
+0x007e0ab0 ?s_managerFlags@RESOURCES@@2PAHA data 0x200
+0x007e0cb0 ?s_onInit@RESOURCES@@2V?$CALLBACKLIST@P6AXXZ@@A data 0x8
+0x007e0cb8 ?s_onCreate@RESOURCES@@2V?$CALLBACKLIST@P6AXXZ@@A data 0x8
+0x007e0cc0 ?s_onSetLevel@RESOURCES@@2V?$CALLBACKLIST@P6AXXZ@@A data 0x8
+0x007e0cc8 ?s_steps@?3??Find@?$SAFEINDEX@VCOPY@@$0IAAA@$0CDJ@$02@@QAEPAVCOPY@@PBD@Z@4HA data 0x4
+0x007e0ccc ?s_steps@?3??Find@?$SAFEINDEX@VMASTER@@$0CAAA@$0PL@$03@@QAEPAVMASTER@@PBD@Z@4HA data 0x4
 0x007e0ce0 ?liOldSystemTime@?1??GetCpuUsage@SYSMONITOR@@QAEHXZ@4T_LARGE_INTEGER@@A data 0x8
 0x007e0ce8 ?liOldIdleTime@?1??GetCpuUsage@SYSMONITOR@@QAEHXZ@4T_LARGE_INTEGER@@A data 0x8
 0x009eede8 _s_line data 0x10000
