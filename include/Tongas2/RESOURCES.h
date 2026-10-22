@@ -11,10 +11,16 @@
 #include "Tongas2/SAFEINDEX.h"
 
 // One type of resource (meshes, sounds, ...). Defined in another unit.
+class RESOURCEMASTER;
+
 class RESOURCEMANAGER
 {
 public:
-    virtual void Virtual00();
+    // Defined elsewhere.
+    RESOURCEMANAGER();
+
+    // A new master of the manager's type.
+    virtual RESOURCEMASTER *CreateMaster(const char *name);
     // The four-letter type code paths start with.
     virtual const char *GetTypeCode();
     virtual ~RESOURCEMANAGER();
@@ -40,8 +46,12 @@ public:
     bool CanPreload();
 
     int m_id;
-    int m_8[4];
+    bool m_8;
+    int m_c[3];
     bool m_18;
+    char m_19[9];
+    // The file the manager's types are listed in.
+    char m_fileName[0x200];
 };
 
 typedef RESOURCEMANAGER *(*CREATEMANAGER)();

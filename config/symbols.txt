@@ -2,16 +2,28 @@
 #   <virtual address> <name> <function|data> [size]
 # Names use the original MSVC decorated name when known. Keep sorted by address.
 0x00000000 __except_list data
+0x004024f0 ??_9@$BLM@AE function
+0x00402500 ??_9@$BJM@AE function
+0x00402520 ??_9@$BKA@AE function
+0x00402550 ??_9@$BKE@AE function
+0x00402590 ??_9@$BKI@AE function
+0x004025d0 ??_9@$BKM@AE function
+0x00402600 ??_9@$BLA@AE function
+0x00402630 ??_9@$BLE@AE function
+0x00402660 ??_9@$BLI@AE function
+0x00402670 ??_9@$BJI@AE function
 0x004026c0 ?FreeValue@SRESULT@@QAEXXZ function 0x47
 0x00402730 ??1SRESULT@@UAE@XZ function 0xb
 0x00402740 ??_GSRESULT@@UAEPAXI@Z function 0x24
-0x004027b0 ?SetActive@OBJECT@@QAEX_N@Z function
+0x004027b0 ?SetActive@RESOURCE@@QAEX_N@Z function
 0x00402880 ?SafeSprintf@@YAHPADPBDZZ function
 0x00402b80 ?Free@STRINGMANAGER@@QAEXAAH0@Z function
 0x00402c90 ?Normalize@V3@@QAEXXZ function
 0x00402f00 ?Virtual14@CMDBASE@@UAEXXZ function
 0x00402f10 ?Virtual08@RESOURCES@@UAEHXZ function
+0x004037d0 ?LookAt@MATRIX@@QAEXABUV3@@0@Z function
 0x00403ae0 ?SetName@CMDBASE@@UAEXABVCSTRING@@@Z function
+0x00403af0 ??4CSTRING@@QAEAAV0@ABV0@@Z function
 0x00403bb0 ??4?$FIXEDSTRING@$0CAA@@@QAEAAV0@PBD@Z function
 0x00403c30 ?Reserve@STRING@@QAEXABH@Z function
 0x00404ce0 ?SetType@SRESULT@@QAEXABW4SRESULTTYPE@@@Z function 0xfc
@@ -24,6 +36,8 @@
 0x00407a80 ??0logic_error@std@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@@Z function
 0x00407c50 ??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@PBD@Z function
 0x00408e30 ?FromEuler@MATRIX@@QAEXMMM@Z function
+0x00409300 ?GetDirection@ANG@@QAE?AUV3@@XZ function
+0x0040a150 ?RotateAxis@MATRIX@@QAEXMUV3@@@Z function
 0x0040af70 ?Invert@MATRIX@@QAEXXZ function
 0x0040b0a0 ??D@YA?AUMATRIX@@ABU0@0@Z function
 0x0040b420 ?Detach@OBJECT@@QAEXXZ function
@@ -31,10 +45,56 @@
 0x0040db30 ??4STRING@@QAEAAV0@ABV0@@Z function 0x65
 0x00410c30 ?ToEuler@MATRIX@@QAEXPAM00@Z function
 0x004214f0 ??Y?$FIXEDSTRING@$0CAA@@@QAEXPBD@Z function
+0x00426330 ?IsZero@V3@@QBE_NXZ function
+0x00426410 ??D@YA?AUV3@@ABU0@ABUMATRIX@@@Z function
 0x00434ea0 ?Transform@ANG@@QAE?AUV3@@U2@@Z function
 0x004381b0 ?_Tidy@?$deque@GV?$allocator@G@std@@@std@@IAEXXZ function
+0x0043c8b0 ??_9@$BIM@AE function
+0x0043c8c0 ??_9@$BJA@AE function
+0x0043c8d0 ??_9@$BJE@AE function
 0x0043cb20 ?SupportsICCProfiles@@YAJXZ function
+0x0043cb30 ?SetGroupMask@RESOURCEMASTER@@UAEXABH@Z function
+0x0043cb40 ?Virtual14@RESOURCEMASTER@@UAEXXZ function
 0x0043d540 ?Rotate@ANG@@QAEXABU1@@Z function
+0x00440120 ?GetClassId@RESOURCE@@UAEHXZ function
+0x00440130 ?GetParentClassId@RESOURCE@@UAEHXZ function
+0x00440140 ?GetClassName@RESOURCE@@UAEPBDXZ function
+0x00440150 ?Virtual08@RESOURCEMASTER@@UAEHXZ function
+0x00440190 ??1OBJECT@@UAE@XZ function
+0x00440220 ?Virtual08@RESOURCE@@UAEHXZ function
+0x00440250 ?SetFlag54@OBJECT@@UAEXAB_N@Z function
+0x00440260 ?Init@OBJECT@@UAEXXZ function
+0x00440380 ?Virtual37@OBJECT@@UAEXXZ function
+0x004403a0 ?Virtual36@OBJECT@@UAEXXZ function
+0x004403f0 ?Virtual38@OBJECT@@UAEXXZ function
+0x00440410 ?Virtual40@OBJECT@@UAEXXZ function
+0x00440430 ?Virtual39@OBJECT@@UAEXXZ function
+0x00440480 ?Virtual43@OBJECT@@UAEXXZ function
+0x004404a0 ?Virtual42@OBJECT@@UAEXXZ function
+0x004404f0 ?Virtual44@OBJECT@@UAEXXZ function
+0x00440510 ?Virtual45@OBJECT@@UAEXXZ function
+0x00440520 ?Virtual46@OBJECT@@UAEXXZ function
+0x00440530 ?Virtual47@OBJECT@@UAEXXZ function
+0x00440540 ?Virtual48@OBJECT@@UAEXXZ function
+0x00440570 ?Virtual49@OBJECT@@UAEXXZ function
+0x004405c0 ?Virtual51@OBJECT@@UAEXXZ function
+0x004405f0 ?SetScaleV@OBJECT@@UAEXUV3@@@Z function
+0x00440610 ?SetScale@OBJECT@@UAEXMMM@Z function
+0x00440660 ?Virtual54@OBJECT@@UAEXXZ function
+0x00440690 ?SetRotation@OBJECT@@UAEXMMM@Z function
+0x004406e0 ?Virtual57@OBJECT@@UAEXXZ function
+0x00440710 ?MakeName@OBJECT@@UAEPBDPBD@Z function
+0x00440720 ?SetAlpha@OBJECT@@UAEXM@Z function
+0x00440740 ?Virtual61@OBJECT@@UAEXXZ function
+0x00440750 ?SetVisibility@OBJECT@@UAEXH@Z function
+0x00440760 ?Virtual63@OBJECT@@UAEXXZ function
+0x00440770 ?Virtual68@OBJECT@@UAEXXZ function
+0x00440790 ?Virtual69@OBJECT@@UAEXXZ function
+0x004407a0 ?Virtual20@OBJECT@@UAEXXZ function
+0x00440810 ?SetAngles@OBJECT@@UAEXUANG@@@Z function
+0x004408a0 ??9@YA_NABUANG@@0@Z function
+0x00440eb0 ??0OBJECT@@QAE@PAVRESOURCEMASTER@@URESHANDLE@@@Z function
+0x00441350 ?Execute@RESOURCE@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function
 0x00442340 ?GetClassId@RESOURCES@@UAEHXZ function
 0x00442350 ?GetParentClassId@RESOURCES@@UAEHXZ function
 0x00442360 ?GetClassName@RESOURCES@@UAEPBDXZ function
@@ -44,6 +104,10 @@
 0x004423a0 ?GetSoundVolume@RESOURCES@@UAEMXZ function
 0x004423b0 ?Virtual09@RESOURCES@@UAEPAXPBD@Z function
 0x00442d60 ?Execute@RESOURCES@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function
+0x004438b0 ?SetLoop@DECALMASTER@@UAEXAB_N@Z function
+0x004442f0 ?SetAnimLen@DECALMASTER@@UAEXABM@Z function
+0x00444300 ?SetStartFrame@DECALMASTER@@UAEXABH@Z function
+0x00448570 ?Virtual09@RESOURCE@@UAEPAXPBD@Z function
 0x004487b0 ?GetDPCodeName@WTINFO@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ function
 0x00448840 ?GetProductCodeName@WTINFO@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ function
 0x004494e0 ?compare@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBEHIIPBDI@Z function
@@ -67,6 +131,7 @@
 0x0046c4a9 _do_barray_io function
 0x0047e661 _adler32 function 0x119
 0x00482cf0 ?Error@LOG@@QAAXPBDZZ function 0x6e
+0x00483730 ??9CSTRING@@QBE_NABV0@@Z function
 0x00483800 ?Virtual18@CMDBASE@@UAEXXZ function
 0x00483d40 ??0CMDBASE@@QAE@XZ function
 0x00483d80 ?Virtual11@CMDBASE@@UAEXXZ function
@@ -93,17 +158,25 @@
 0x0048faf0 ??_9@$BEM@AE function
 0x004908f0 ?GetActor@ACTORS@@QAEPAVWTACTOR@@URESHANDLE@@@Z function
 0x00492480 ?Virtual13@CMDBASE@@UAEXXZ function
+0x004980f0 ??9@YA_NABUV3@@0@Z function
 0x004992d0 ?IsZero@ANG@@QAE_NXZ function
+0x004a17a0 ?GetViewSize@CAMERA@@QAE?AUV2@@XZ function
+0x004a1d70 ?ScreenToWorld@CAMERA@@QAE?AUV3@@ABUV2@@ABM@Z function
 0x004a2ad0 ?SetLevel@RESOURCEMANAGER@@QAEXH@Z function
 0x004a2b00 ?Flush@RESOURCEMANAGER@@QAEXXZ function
 0x004a2b20 ?DeleteUnused@RESOURCEMANAGER@@QAEXH_N@Z function
+0x004a2b50 ?Update@RESOURCEMANAGER@@UAEXXZ function
 0x004a2b70 ?HasTypeCode@RESOURCEMANAGER@@QAE_NPBD@Z function
 0x004a2bc0 ?Dump@RESOURCEMANAGER@@QAEX_NH@Z function
+0x004a2c10 ?Virtual06@RESOURCEMANAGER@@UAEXXZ function
 0x004a2c40 ?DumpPropsType@RESOURCEMANAGER@@QAEXXZ function
 0x004a2c80 ?DumpTotals@RESOURCEMANAGER@@QAEX_N@Z function
 0x004a2cc0 ?CanPreload@RESOURCEMANAGER@@QAE_NXZ function
+0x004a2ce0 ??0RESOURCEMANAGER@@QAE@XZ function
+0x004a2e80 ?Init@RESOURCEMANAGER@@UAEXXZ function
 0x004a2f40 ?GetHandle@RESOURCEMANAGER@@QAE?AURESHANDLE@@PBD@Z function
 0x004a2fd0 ?GetResource@RESOURCEMANAGER@@QAEPAVRESOURCE@@PBD@Z function
+0x004a33b0 ?Load@RESOURCEMANAGER@@UAE_NXZ function
 0x004a3420 ?RegisterCommands@RESOURCES@@SAXXZ function 0x3f
 0x004a3460 ?FreeImageMessage@@YAXW4FREE_IMAGE_FORMAT@@PBD@Z function 0x22
 0x004a3490 ?LoadManagers@RESOURCES@@SAXXZ function 0xcf0
@@ -236,6 +309,50 @@
 0x004a8890 ?Reset@TOKENS@@QAEXXZ function 0x40
 0x004a88d0 ?Parse@TOKENS@@QAE_NAAVSTRING@@PA_N@Z function 0x3f4
 0x004a8cd0 ?Quote@TOKENS@@QAEXAAVSTRING@@@Z function 0x10b
+0x004a8de0 ?Identity@MATRIX@@QAEXXZ function 0x37
+0x004a8e20 ??0DECALVERTEX@@QAE@XZ function 0x13
+0x004a8e40 ?CreateMesh@DECAL@@QAEXXZ function 0x66
+0x004a8eb0 ?Init@DECAL@@UAEXXZ function 0x29
+0x004a8ee0 ?SetColor@DECAL@@QAEXABUV3@@@Z function 0x5c
+0x004a8f40 ?GetShaderHandle@DECAL@@QAE?AURESHANDLE@@XZ function 0x23
+0x004a8f70 ?SetUV@DECAL@@QAEXMMMM@Z function 0xc5
+0x004a9040 ?UpdateAngles@DECAL@@UAEXXZ function 0x5
+0x004a9050 ?RegisterCommands@DECALMASTER@@SAXXZ function 0x3f
+0x004a9090 ?LoadShader@DECALMASTER@@QAEXXZ function 0x3a
+0x004a90d0 ?ReleaseShader@DECALMASTER@@QAEXXZ function 0x3a
+0x004a9110 ?GetTypeCode@DECALMANAGER@@UAEPBDXZ function 0x6
+0x004a9120 ?CreateDECAL@@YAPAVRESOURCEMANAGER@@XZ function 0x80
+0x004a91a0 ??1DECAL@@UAE@XZ function 0x15
+0x004a91c0 ?SetPosition@DECAL@@UAEXUV3@@@Z function 0x24
+0x004a91f0 ?SetSize@DECAL@@UAEXMM@Z function 0x1a
+0x004a9210 ?GetScreenSize@DECAL@@UAE?AUV2@@XZ function 0x18
+0x004a9230 ?GetScaleFactor@DECAL@@UAE?AUV3@@XZ function 0x1e
+0x004a9250 ?SetFrame@DECAL@@UAEXH@Z function 0xd
+0x004a9260 ?Stop@DECAL@@UAEXXZ function 0x43
+0x004a92b0 ?CreateMeshCopy@DECAL@@QAEXXZ function 0x197
+0x004a9450 ?IsLoaded@DECAL@@UAE_NXZ function 0xa1
+0x004a9500 ?SetLayer@DECAL@@UAEXH@Z function 0x3c
+0x004a9540 ??1DECALMASTER@@UAE@XZ function 0x9d
+0x004a95e0 ?GetClassId@DECALMASTER@@UAEHXZ function 0x6
+0x004a95f0 ?GetParentClassId@DECALMASTER@@UAEHXZ function 0xd
+0x004a9600 ?GetClassName@DECALMASTER@@UAEPBDXZ function 0xe
+0x004a9610 ?SetFwBk@DECALMASTER@@UAEXAB_N@Z function 0xf
+0x004a9620 ?SetRandomStartFrame@DECALMASTER@@UAEXAB_N@Z function 0xf
+0x004a9630 ?SetLocalRotation@DECALMASTER@@UAEXABUANG@@@Z function 0x18
+0x004a9650 ?SetRotationSpeed@DECALMASTER@@UAEXABUV3@@@Z function 0x1d
+0x004a9670 ?UpdateCopies@DECALMASTER@@UAEXXZ function 0x3a
+0x004a96b0 ?SetShader@DECALMASTER@@UAEXABVCSTRING@@@Z function 0xb3
+0x004a9770 ?GetRoll@DECAL@@QAEMXZ function 0x2a
+0x004a97a0 ??0DECAL@@QAE@PAVDECALMASTER@@URESHANDLE@@@Z function 0x214
+0x004a99c0 ??_GDECAL@@UAEPAXI@Z function 0x1e
+0x004a99e0 ?Start@DECAL@@UAEXXZ function 0xf0
+0x004a9ad0 ?Update@DECAL@@UAEXXZ function 0x8a6
+0x004aa380 ??0DECALMASTER@@QAE@PAVRESOURCEMANAGER@@PBD@Z function 0x194
+0x004aa520 ??_GDECALMASTER@@UAEPAXI@Z function 0x1e
+0x004aa540 ?CreateCopy@DECALMASTER@@UAEPAVRESOURCE@@ABURESHANDLE@@@Z function 0x80
+0x004aa5c0 ?Execute@DECALMASTER@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function 0x73
+0x004aa640 ?CreateMaster@DECALMANAGER@@UAEPAVRESOURCEMASTER@@PBD@Z function 0x69
+0x004ac510 ?SetNeverRotate@DECALMASTER@@UAEXAB_N@Z function
 0x004b1a10 ?UpdateAngles@OBJECT@@UAEXXZ function
 0x004b1b00 ?Update@OBJECT@@UAEXXZ function
 0x004b1dd0 ?GetWorldMatrix@OBJECT@@QAE?AUMATRIX@@XZ function
@@ -269,6 +386,13 @@
 0x004b2ca0 ?RegisterCommands@RESOURCE@@SAXXZ function
 0x004b2ce0 ?GetManagerId@RESOURCE@@UAEHXZ function
 0x004b2cf0 ??0RESOURCE@@QAE@PAVRESOURCEMASTER@@ABURESHANDLE@@@Z function
+0x004ba640 ??_GDECALMANAGER@@UAEPAXI@Z function
+0x004ba940 ?SetSimulate3D@DECALMASTER@@UAEXAB_N@Z function
+0x004c57e0 ?AddUser@SHADERMASTER@@QAEXXZ function
+0x004c57f0 ?RemoveUser@SHADERMASTER@@QAEXXZ function
+0x004c6070 ?SetAlwaysLookCamera@DECALMASTER@@UAEXAB_N@Z function
+0x004c6080 ?SetDecalOrderForced@DECALMASTER@@UAEXABH@Z function
+0x004c60b0 ?SetLastFrame@DECALMASTER@@UAEXABH@Z function
 0x004cc8c0 ?_Max@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@KAPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@PAU342@@Z function
 0x004cc8e0 ?_Buynode@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@XZ function
 0x004cc950 ??1?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@XZ function
@@ -291,6 +415,7 @@
 0x004d2ec0 ?HashString@@YAHPBDH@Z function
 0x004d57c0 ?GetSaveFolder@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z function
 0x004d5f00 ?CreateFolder@@YAXABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z function
+0x004dfe20 ?SetDescription@RESOURCEMASTER@@UAEXABH@Z function
 0x004e7820 ?_Min@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@KAPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@PAU342@@Z function
 0x004e7ed0 ?_Buynode@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@PAU342@00ABU?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@2@D@Z function
 0x004eb950 ?IsCompressed@FILELOADER@@UAE_NXZ function 0x3
@@ -1556,6 +1681,7 @@
 0x005bafa0 ??0AABBCollisionTree@Opcode@@QAE@XZ function 0x11
 0x005bafc0 ?GetUsedBytes@AABBCollisionTree@Opcode@@UBEIXZ function 0x7
 0x005bafd0 ?Build@AABBCollisionTree@Opcode@@UAE_NPAVAABBTree@2@@Z function 0x10b
+0x005bb0e0 ?IsMyType@RESOURCEMANAGER@@UAE_NPBD@Z function
 0x005bb0f0 ?_Walk@Local@?3??Walk@AABBCollisionTree@Opcode@@UBE_NP6A_NPBXPAX@Z1@Z@SAXPBVAABBCollisionNode@4@21@Z function 0x3c
 0x005bb130 ??0AABBNoLeafTree@Opcode@@QAE@XZ function 0x11
 0x005bb150 ?GetUsedBytes@AABBNoLeafTree@Opcode@@UBEIXZ function 0x7
@@ -2104,6 +2230,8 @@
 0x0060cb70 _$E5 function 0xc
 0x0060cb80 _$E8 function 0xc
 0x0060cb90 _$E11 function 0xc
+0x0060cba0 _$E3 function 0x23
+0x0060cbd0 _$E5 function 0x50c
 0x0060f1a0 _$E1 function
 0x0060f1d0 _$E3 function
 0x0060f390 _$E5 function
@@ -2145,6 +2273,7 @@
 0x006595a8 __real@0000000000000000 data
 0x006596bc __real@40800000 data
 0x00659768 __real@3fd51eb860000000 data
+0x00659abc ??_C@_0O@JKCJNIGN@RotationSpeed?$AA@ data 0xe
 0x0065a5e8 ??_C@_04HDOCAJNK@?$CFs?$CFs?$AA@ data 0x5
 0x0065aa84 __real@3fc00000 data
 0x0065b0f8 __real@3c23d70a data
@@ -2172,6 +2301,7 @@
 0x00663240 __real@3727c5ac data
 0x00663270 __real@7f7fffff data
 0x00663290 __real@3eaaaaab data
+0x006632a8 __real@38000000 data 0x4
 0x006649bc ??_C@_0BD@LBMCPKOE@zlib?5version?5error?$AA@ data
 0x006649d0 ??_C@_0BC@MCPIPOGP@zlib?5memory?5error?$AA@ data
 0x006649e4 ??_C@_0BD@CPDHIJBA@Unknown?5zlib?5error?$AA@ data
@@ -2247,6 +2377,7 @@
 0x0066653c ??_C@_03OFAPEBGM@?$CFs?6?$AA@ data
 0x006667d4 ??_C@_07GOLFKGID@CMDBASE?$AA@ data 0x8
 0x00666990 ??_C@_02DPKJAMEF@?$CFd?$AA@ data
+0x00666fe4 ??_C@_0M@PGNOOMJE@DECALMASTER?$AA@ data 0xc
 0x0066707c ??_C@_08KGDJAKPA@RESOURCE?$AA@ data
 0x00667088 ??_C@_09CMINMFIB@RESOURCES?$AA@ data 0xa
 0x00667094 ??_C@_09LLOKOKDN@GUISLIDER?$AA@ data 0xa
@@ -2272,6 +2403,7 @@
 0x006680e0 ??_C@_0DA@JIDJBGHL@SAFEINDEX?3?3New?$DO?5ERROR?5Invalid?5di@ data 0x30
 0x006686ec ??_C@_09BMHMPIHG@resources?$AA@ data 0xa
 0x006691d4 ??_C@_01IHBHIGKO@?0?$AA@ data
+0x00669810 ??_C@_04KLCPKPBE@Loop?$AA@ data 0x5
 0x0066a35c ??_C@_05CCMOGDN@?$CFs?3?$CFs?$AA@ data
 0x0066a450 ??_C@_0BC@EJMGIAN@SoundMasterVolume?$AA@ data 0x12
 0x0066a464 ??_C@_07DGILALJJ@dumpall?$AA@ data 0x8
@@ -2345,6 +2477,24 @@
 0x0066ad48 ??_C@_0DF@NIGFJBLF@SRESULT?3?3SetValue?$DO?5Error?5?9?5strin@ data
 0x0066ad80 ??_C@_0DD@OAIJFCJA@SRESULT?3?3GetTexture?$DO?5Error?5?9?5Wro@ data
 0x0066adb4 ??_C@_0BK@EKNCPJEH@Parse?$DO?5Error?5parsing?5?$CC?$CFs?$CC?$AA@ data 0x1a
+0x0066add0 ??_C@_06NHAKHCIK@Shader?$AA@ data 0x7
+0x0066ae8c ??_C@_03CLKEPIDJ@__d?$AA@ data 0x4
+0x0066ae90 ??_7DECALMANAGER@@6B@ data 0x20
+0x0066aeb0 ??_C@_09KJMICEHL@DECAL?4txt?$AA@ data 0xa
+0x0066aebc ??_C@_04BGHEGNPE@DECL?$AA@ data 0x5
+0x0066aec8 ??_7DECAL@@6B@ data 0x124
+0x0066afec ??_C@_0DH@EHCCHLPP@warning?$CB?5could?5not?5create?5a?5mesh@ data 0x37
+0x0066b028 ??_7DECALMASTER@@6B@ data 0xc0
+0x0066b0e8 ??_C@_0O@BFKPDLOD@LocalRotation?$AA@ data 0xe
+0x0066b0f8 ??_C@_0BB@LIOICFOP@RandomStartFrame?$AA@ data 0x11
+0x0066b10c ??_C@_04ONJBNGOM@FwBk?$AA@ data 0x5
+0x0066b114 ??_C@_09GIBPIKCC@LastFrame?$AA@ data 0xa
+0x0066b120 ??_C@_0L@LGMACKMP@StartFrame?$AA@ data 0xb
+0x0066b12c ??_C@_07IOJKJAFE@AnimLen?$AA@ data 0x8
+0x0066b134 ??_C@_0BB@HCNPLKNB@DecalOrderForced?$AA@ data 0x11
+0x0066b148 ??_C@_0L@CMGGEJBD@Simulate3D?$AA@ data 0xb
+0x0066b154 ??_C@_0M@PGHPAMML@NeverRotate?$AA@ data 0xc
+0x0066b160 ??_C@_0BB@JCMOKHHI@AlwaysLookCamera?$AA@ data 0x11
 0x0066be4c ??_C@_0CP@GDGFKHNC@ERROR?$CB?5trying?5to?5attach?5to?5not?5e@ data
 0x0066be80 ??_C@_0EJ@CCCHDAI@ERROR?$CB?5trying?5to?5attach?5to?5a?5tag@ data
 0x0066becc ??_C@_09PBLIEIKC@GroupMask?$AA@ data
@@ -2873,10 +3023,14 @@
 0x006b9b30 ?s_classId@RESOURCES@@2HA data 0x4
 0x006b9b34 ?s_classId@RESOURCE@@2HA data 0x4
 0x006b9b38 ?s_classId@RESOURCEMASTER@@2HA data 0x4
+0x006b9b68 ?s_classId@DECALMASTER@@2HA data 0x4
 0x006bbcb8 ?s_pfnCreate@RESOURCES@@2P6APAVCMDBASE@@XZA data 0x4
 0x006bbcc0 ?s_commands@RESOURCES@@2PAUCMDENTRY@@A data 0xc0
 0x006bbd80 ?s_properties@RESOURCES@@2PAUPROPENTRY@@A data 0xa8
+0x006bbe60 ?s_corners@DECAL@@2PAY02MA data 0x30
+0x006bbe90 ?s_indices@DECAL@@2PAFA data 0xc
 0x006bbe9c ?g_pfnCreateDECAL@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006bbea0 ?s_properties@DECALMASTER@@2PAUPROPENTRY@@A data 0x310
 0x006bc1b0 ?g_pfnCreatePATH@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006bc810 ?g_pfnCreateEMITTER@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006bd490 ?s_properties@RESOURCEMASTER@@2PAUPROPENTRY@@A data 0x118
@@ -2974,6 +3128,7 @@
 0x006cc498 ?g_classCommands@@3PAPAUCMDENTRY@@A data
 0x006ccc98 ?g_classNames@@3PAY0BO@DA data
 0x006d09b4 ?g_pApp@@3PAVAPP@@A data 0x4
+0x006d09c0 ?g_pTimer@@3PAVTIMER@@A data 0x4
 0x006d09d4 ?g_pGame@@3PAVGAME@@A data 0x4
 0x006d15e0 ?g_pActors@@3PAVACTORS@@A data 0x4
 0x006d2708 ?g_StringManager@@3VSTRINGMANAGER@@A data
@@ -3017,6 +3172,7 @@
 0x007e0ccc ?s_steps@?3??Find@?$SAFEINDEX@VRESOURCEMASTER@@$0CAAA@$0PL@$03@@QAEPAVRESOURCEMASTER@@PBD@Z@4HA data 0x4
 0x007e0ce0 ?liOldSystemTime@?1??GetCpuUsage@SYSMONITOR@@QAEHXZ@4T_LARGE_INTEGER@@A data 0x8
 0x007e0ce8 ?liOldIdleTime@?1??GetCpuUsage@SYSMONITOR@@QAEHXZ@4T_LARGE_INTEGER@@A data 0x8
+0x007e0cf0 ?s_commands@DECALMASTER@@2PAUCMDENTRY@@A data 0x20
 0x007e0d50 ?s_commands@RESOURCEMASTER@@2PAUCMDENTRY@@A data 0x20
 0x007e0d70 ?s_commands@RESOURCE@@2PAUCMDENTRY@@A data 0x20
 0x009eede8 _s_line data 0x10000

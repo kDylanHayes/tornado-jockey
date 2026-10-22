@@ -329,7 +329,7 @@ RESHANDLE RESOURCES::CreateFromTemplate(const char *name, V3 position, int layer
             object->SetScale(1.0f, 1.0f, 1.0f);
             object->SetAlpha(1.0f);
             object->SetAngles(ANG(0.0f, 0.0f, 0.0f));
-            object->SetHidden(false);
+            object->SetFrame(0);
             object->SetLayer(layer);
             return object->m_handle;
         }

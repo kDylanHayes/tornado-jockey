@@ -31,6 +31,7 @@ struct V2
     float x, y;
 
     V2() {}
+    V2(float x_, float y_) : x(x_), y(y_) {}
     V2(const V2 &other) : x(other.x), y(other.y) {}
 };
 
@@ -75,6 +76,11 @@ struct ANG
         matrix = m;
         flags = EULER_DIRTY;
     }
+    void SetLookAt(const V3 &position, const V3 &direction)
+    {
+        matrix.LookAt(position, direction);
+        flags = EULER_DIRTY;
+    }
 
     // Defined in other units.
     bool IsZero();
@@ -82,11 +88,16 @@ struct ANG
     V3 Transform(V3 point);
     // Turns these angles by other.
     void Rotate(const ANG &other);
+    // The direction the angles face.
+    V3 GetDirection();
 
     V3 euler;
     MATRIX matrix;
     unsigned char flags;
 };
+
+// Defined in another unit: whether the euler angles differ.
+bool operator!=(const ANG &a, const ANG &b);
 
 struct SRTEXTURE
 {
