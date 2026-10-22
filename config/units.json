@@ -1508,6 +1508,21 @@
       }
     },
     {
+      "name": "Tongas2/UNICODESTRING",
+      "ranges": [
+        "0x004b3b70-0x004b418f",
+        "0x0060fb20-0x0060fb3f",
+        "0x00654500-0x0065450f",
+        "0x0066c544-0x0066c547",
+        "0x007e0db0-0x007e0e6f",
+        "0x007e0eb0-0x009edecb"
+      ],
+      "target": "build/target/Tongas2/UNICODESTRING.obj",
+      "source": "src/Tongas2/UNICODESTRING.cpp",
+      "category": "engine",
+      "complete": false
+    },
+    {
       "name": "Tongas2/SOUND",
       "ranges": [
         "0x004b2d30-0x004b3b6f",
