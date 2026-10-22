@@ -4,6 +4,9 @@
 #define TONGAS2_STRING_H
 
 #include <string.h>
+#include <wchar.h>
+
+#include "Tongas2/FIXEDSTRING.h"
 
 class STRINGMANAGER
 {
@@ -79,8 +82,30 @@ public:
     virtual ~UNICODESTRING();
 
     UNICODESTRING &operator=(const UNICODESTRING &other);
+    // Defined elsewhere: makes room for at least size bytes.
+    void Reserve(const int &size);
 
     const wchar_t *c_str() const { return !m_buf ? L"" : m_buf; }
+
+    int Length()
+    {
+        if (m_lengthValid)
+            return m_length;
+        if (m_pages > 0)
+            m_length = wcslen(m_buf);
+        else
+            m_length = 0;
+        m_lengthValid = true;
+        return m_length;
+    }
+
+    // Takes text, either "WC" and three characters per wide character (as
+    // ToEncoded writes it) or plain 8-bit text.
+    void FromAnsi(const char *text);
+    // The text as 8-bit characters, '?' for those that don't fit.
+    FIXEDSTRING<0x200> ToAnsi();
+    // The text as "WC" and three characters per wide character.
+    void ToEncoded(STRING &out);
 
     wchar_t *m_buf;
     int m_block;

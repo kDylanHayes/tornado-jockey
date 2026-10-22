@@ -245,9 +245,12 @@ def split(coff: Coff, base: int | None = None, sizes: dict | None = None,
                       if struct.unpack_from("<H", rec, 14)[0] == FUNCTION_TYPE
                       and not is_catch_block(coff.name(rec))}
         else:
+            # A follower at offset 0 still starts the section: the ranges put
+            # it first even though our compiler laid it out after another.
             starts = {struct.unpack_from("<I", rec, 8)[0] for _, rec in syms
                       if rec[16] == IMAGE_SYM_CLASS_EXTERNAL
-                      and coff.name(rec) not in (follows or ())}
+                      and (coff.name(rec) not in (follows or ())
+                           or struct.unpack_from("<I", rec, 8)[0] == 0)}
         starts = sorted(starts)
         if not starts:
             continue
