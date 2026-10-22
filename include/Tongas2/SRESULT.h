@@ -62,6 +62,41 @@ struct ANG
         }
         return euler;
     }
+    // Each euler angle, and all three.
+    float GetEulerX()
+    {
+        if (flags & EULER_DIRTY) {
+            matrix.ToEuler(&euler.z, &euler.y, &euler.x);
+            flags &= ~EULER_DIRTY;
+        }
+        return euler.x;
+    }
+    float GetEulerY()
+    {
+        if (flags & EULER_DIRTY) {
+            matrix.ToEuler(&euler.z, &euler.y, &euler.x);
+            flags &= ~EULER_DIRTY;
+        }
+        return euler.y;
+    }
+    float GetEulerZ()
+    {
+        if (flags & EULER_DIRTY) {
+            matrix.ToEuler(&euler.z, &euler.y, &euler.x);
+            flags &= ~EULER_DIRTY;
+        }
+        return euler.z;
+    }
+    void GetEuler(float *x, float *y, float *z)
+    {
+        if (flags & EULER_DIRTY) {
+            matrix.ToEuler(&euler.z, &euler.y, &euler.x);
+            flags &= ~EULER_DIRTY;
+        }
+        *x = euler.x;
+        *y = euler.y;
+        *z = euler.z;
+    }
     MATRIX GetMatrix()
     {
         if (flags & MATRIX_DIRTY) {
@@ -90,6 +125,8 @@ struct ANG
     void Rotate(const ANG &other);
     // The direction the angles face.
     V3 GetDirection();
+    // Turns the angles to face a direction.
+    void PointAt(const V3 &direction);
 
     V3 euler;
     MATRIX matrix;

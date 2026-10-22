@@ -42,6 +42,8 @@ public:
     void DumpTotals(bool verbose);
     RESHANDLE GetHandle(const char *name);
     RESOURCE *GetResource(const char *name);
+    // Defined elsewhere: the master with a name, or 0.
+    RESOURCEMASTER *GetMaster(const char *name);
     // Whether the type's flags allow loading ahead (0x20 set, or 4 clear).
     bool CanPreload();
 
