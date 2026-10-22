@@ -1508,12 +1508,29 @@
       }
     },
     {
+      "name": "Tongas2/SOUND",
+      "ranges": [
+        "0x004b2d30-0x004b3b6f",
+        "0x0060f400-0x0060fb1f",
+        "0x0066c1a4-0x0066c543",
+        "0x006bd5e0-0x006bda0f",
+        "0x007e0d90-0x007e0daf"
+      ],
+      "target": "build/target/Tongas2/SOUND.obj",
+      "source": "src/Tongas2/SOUND.cpp",
+      "category": "engine",
+      "complete": true,
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z"
+      }
+    },
+    {
       "name": "Tongas2/RESOURCE",
       "ranges": [
         "0x004b1a10-0x004b2d2f",
-        "0x0060f1a0-0x0060f3b3",
-        "0x0066be4c-0x0066c0eb",
-        "0x006bd490-0x006bd5a7",
+        "0x0060f1a0-0x0060f3fb",
+        "0x0066be4c-0x0066c1a3",
+        "0x006bd490-0x006bd5df",
         "0x007e0d50-0x007e0d8f"
       ],
       "target": "build/target/Tongas2/RESOURCE.obj",

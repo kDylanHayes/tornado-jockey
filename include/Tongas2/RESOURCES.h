@@ -49,7 +49,10 @@ public:
 
     int m_id;
     bool m_8;
-    int m_c[3];
+    // The manager's masters, linked through m_next.
+    RESOURCEMASTER *m_first;
+    int m_10;
+    int m_14;
     bool m_18;
     char m_19[9];
     // The file the manager's types are listed in.

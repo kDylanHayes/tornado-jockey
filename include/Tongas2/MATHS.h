@@ -20,6 +20,8 @@ struct V3
     V3 Transform(const MATRIX &m) const;
     bool IsZero() const { return x == 0.0f && y == 0.0f && z == 0.0f; }
     float Length() const { return (float)sqrt(x * x + y * y + z * z); }
+    // Defined elsewhere: how far o is.
+    float Distance(const V3 &o) const;
 
     // 0x402c90, out of line and called from everywhere.
     void Normalize();

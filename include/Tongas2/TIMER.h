@@ -9,6 +9,9 @@ public:
     int m_4;
     // The length of the last frame, in seconds.
     float m_dt;
+    int m_c;
+    // The frame time sound fades go by.
+    float m_soundDt;
 };
 extern TIMER *g_pTimer;
 
