@@ -43,6 +43,18 @@ struct MATRIX
     void FromEuler(float z, float y, float x);
     void ToEuler(float *z, float *y, float *x);
     void Invert();
+    // The rotation by angle degrees about axis.
+    void RotateAxis(float angle, V3 axis);
+    // The rotation that looks along direction from position.
+    void LookAt(const V3 &position, const V3 &direction);
+
+    void Identity()
+    {
+        _11 = 1.0f; _12 = 0.0f; _13 = 0.0f; _14 = 0.0f;
+        _21 = 0.0f; _22 = 1.0f; _23 = 0.0f; _24 = 0.0f;
+        _31 = 0.0f; _32 = 0.0f; _33 = 1.0f; _34 = 0.0f;
+        _41 = 0.0f; _42 = 0.0f; _43 = 0.0f; _44 = 1.0f;
+    }
 };
 
 inline V3 operator+(const V3 &a, const V3 &b)
@@ -63,8 +75,11 @@ inline V3 V3::Transform(const MATRIX &m) const
               x * m._13 + y * m._23 + z * m._33 + m._43);
 }
 
-// Defined in another unit.
+// Defined in other units.
 MATRIX operator*(const MATRIX &a, const MATRIX &b);
+// The point transformed by m, as V3::Transform.
+V3 operator*(const V3 &v, const MATRIX &m);
+bool operator!=(const V3 &a, const V3 &b);
 
 // Whether the segment a-b touches the box with the given center, rotation and
 // full extents.

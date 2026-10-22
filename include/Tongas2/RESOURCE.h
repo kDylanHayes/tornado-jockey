@@ -136,6 +136,9 @@ public:
     static void RegisterCommands();
 
     // Defined elsewhere.
+    // Takes the copy into use, once it is loaded.
+    void SetActive(bool active);
+
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
@@ -147,8 +150,9 @@ public:
     virtual void Init();
     virtual void Virtual20();
     virtual void Virtual21();
-    virtual void Virtual22();
-    virtual void Virtual23();
+    // Called when the copy is taken into use, and when it is let go.
+    virtual void Start();
+    virtual void Stop();
     virtual void Update();
     virtual bool IsLoaded() = 0;
     // The id of the master's manager.
@@ -279,8 +283,7 @@ class OBJECT : public RESOURCE
 {
 public:
     // Defined elsewhere.
-    OBJECT(RESOURCEMASTER *master, const RESHANDLE &handle);
-    void SetActive(bool active);
+    OBJECT(RESOURCEMASTER *master, RESHANDLE handle);
     // Stops following the parent.
     void Detach();
 
@@ -298,7 +301,7 @@ public:
     virtual void SetFlag54(const bool &value);
     virtual void Virtual30();
     virtual void Virtual31();
-    virtual void Virtual32() = 0;
+    virtual V3 GetScaleFactor() = 0;
     // Takes the parent's placement, offset by the object's own.
     virtual void FollowParent(WTACTOR *parent);
     // Defined elsewhere.
@@ -309,7 +312,7 @@ public:
     virtual void Virtual38();
     virtual void Virtual39();
     virtual void Virtual40();
-    virtual void Virtual41();
+    virtual V3 GetSize();
     virtual void Virtual42();
     virtual void Virtual43();
     virtual void Virtual44();
@@ -327,12 +330,13 @@ public:
     virtual void SetAngles(ANG angles);
     virtual void Virtual57();
     virtual void SetLayer(int layer);
-    virtual void Virtual59();
+    // A name for something made for the object, ending in suffix.
+    virtual const char *MakeName(const char *suffix);
     virtual void SetAlpha(float alpha);
     virtual void Virtual61();
     virtual void SetVisibility(int value);
     virtual void Virtual63();
-    virtual void SetHidden(bool hidden);
+    virtual void SetFrame(int frame);
     // Between world space and the object's space.
     virtual V3 WorldToLocal(const V3 &point);
     virtual V3 LocalToWorld(const V3 &point);
