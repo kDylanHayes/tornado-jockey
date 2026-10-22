@@ -66,9 +66,11 @@
 0x0040bbb0 ?SetParent@OBJECT@@QAEXURESHANDLE@@@Z function
 0x0040db30 ??4STRING@@QAEAAV0@ABV0@@Z function 0x65
 0x0040f230 ??D@YA?AUV3@@ABMABU0@@Z function
+0x0040f260 ?Distance@V3@@QBEMABU1@@Z function
 0x00410390 ??K@YA?AUV3@@ABU0@ABM@Z function
 0x004103f0 ?Length@V3@@QBEMXZ function
 0x00410c30 ?ToEuler@MATRIX@@QAEXPAM00@Z function
+0x00411980 ??0PLANE@@QAE@ABUV3@@0@Z function
 0x00411ad0 ?Rotate@V3@@QBE?AU1@U1@M@Z function
 0x00411f70 ?GetEulerX@ANG@@QAEMXZ function
 0x004214f0 ??Y?$FIXEDSTRING@$0CAA@@@QAEXPBD@Z function
@@ -137,7 +139,18 @@
 0x004423a0 ?GetSoundVolume@RESOURCES@@UAEMXZ function
 0x004423b0 ?Virtual09@RESOURCES@@UAEPAXPBD@Z function
 0x00442d60 ?Execute@RESOURCES@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function
+0x004435a0 ?_Lrotate@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@IAEXPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@2@@Z function
+0x00443640 ?_Rrotate@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@IAEXPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@2@@Z function
+0x004436a0 ?_Inc@const_iterator@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@QAEXXZ function
+0x00443780 ?_Buynode@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@2@XZ function
+0x00443800 ??1SOUNDMASTER@@UAE@XZ function
 0x004438b0 ?SetLoop@DECALMASTER@@UAEXAB_N@Z function
+0x00443cb0 ?erase@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@QAE?AViterator@12@V312@0@Z function
+0x00443d70 ??0SOUNDMANAGER@@QAE@XZ function
+0x00443e00 ?CreateMaster@SOUNDMANAGER@@UAEPAVRESOURCEMASTER@@PBD@Z function
+0x00443e70 ?GetTypeCode@SOUNDMANAGER@@UAEPBDXZ function
+0x00443e80 ?IsMyType@SOUNDMANAGER@@UAE_NPBD@Z function
+0x00443ea0 ??_GSOUNDMANAGER@@UAEPAXI@Z function
 0x004442f0 ?SetAnimLen@DECALMASTER@@UAEXABM@Z function
 0x00444300 ?SetStartFrame@DECALMASTER@@UAEXABH@Z function
 0x00448570 ?Virtual09@RESOURCE@@UAEPAXPBD@Z function
@@ -175,6 +188,7 @@
 0x00488430 ?Virtual00@CMDBASE@@UAE?AVSRESULT@@PAPAVTOKENS@@@Z function
 0x00488470 ?Virtual15@CMDBASE@@UAEXXZ function
 0x00488560 ?Virtual17@CMDBASE@@UAEXXZ function
+0x004899a0 ?ReplaceChar@@YAXPADDD@Z function
 0x00489a00 ?HashCommands@@YAXPAUCMDENTRY@@@Z function
 0x00489f10 ?Run@CONSOLE@@QAEXABVSTRING@@ABURESHANDLE@@@Z function
 0x0048b960 ?SetResolution@APP@@QAEXH@Z function
@@ -197,6 +211,7 @@
 0x004992d0 ?IsZero@ANG@@QAE_NXZ function
 0x004a17a0 ?GetViewSize@CAMERA@@QAE?AUV2@@XZ function
 0x004a1d70 ?ScreenToWorld@CAMERA@@QAE?AUV3@@ABUV2@@ABM@Z function
+0x004a29c0 ??1RESOURCEMANAGER@@UAE@XZ function
 0x004a2ad0 ?SetLevel@RESOURCEMANAGER@@QAEXH@Z function
 0x004a2b00 ?Flush@RESOURCEMANAGER@@QAEXXZ function
 0x004a2b20 ?DeleteUnused@RESOURCEMANAGER@@QAEXH_N@Z function
@@ -442,6 +457,7 @@
 0x004acb70 ?SetIsParamLength@PATHMASTER@@UAEXAB_N@Z function 0x1e
 0x004acb90 ?SetIsClosed@PATHMASTER@@UAEXAB_N@Z function 0x1e
 0x004acbb0 ?SetDeletePoint@PATHMASTER@@UAEXABHAB_N@Z function 0x32d
+0x004acfa0 ?Distance@PLANE@@QAEMABUV3@@PAU2@1@Z function
 0x004ad030 ??D@YA?AUV3I@@ABMABU0@@Z function 0x40
 0x004ad070 ??H@YA?AUV3I@@ABU0@0@Z function 0x2d
 0x004ad0a0 ?PickPixel@PARTICLE@@QAEHPAVEMITTERMASTER@@PAVEMITTER@@@Z function 0x7f
@@ -564,6 +580,39 @@
 0x004b2ca0 ?RegisterCommands@RESOURCE@@SAXXZ function
 0x004b2ce0 ?GetManagerId@RESOURCE@@UAEHXZ function
 0x004b2cf0 ??0RESOURCE@@QAE@PAVRESOURCEMASTER@@ABURESHANDLE@@@Z function
+0x004b2d30 ?Virtual30@SOUND@@UAEXXZ function
+0x004b2d40 ?Stop@SOUND@@UAEXXZ function
+0x004b2d50 ?Virtual31@SOUND@@UAEXXZ function
+0x004b2db0 ?GetListenerPosition@SOUND@@UAE?AUV3@@XZ function
+0x004b2dd0 ?FollowParent@SOUND@@UAEXPAVWTACTOR@@@Z function
+0x004b2e00 ?RegisterCommands@SOUNDMASTER@@SAXXZ function
+0x004b2e40 ?Init@SOUNDMANAGER@@UAEXXZ function
+0x004b2e50 ?EnableSounds@SOUNDMANAGER@@QAEX_N@Z function 0x4a
+0x004b2ea0 ?EnableStreams@SOUNDMANAGER@@QAEX_N@Z function 0x4a
+0x004b2ef0 ?_Dec@const_iterator@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@QAEXXZ function
+0x004b2f50 ??1SOUND@@UAE@XZ function
+0x004b2f60 ?Virtual20@SOUND@@UAEXXZ function
+0x004b2fb0 ??0SOUNDMASTER@@QAE@PAVRESOURCEMANAGER@@PBD@Z function
+0x004b3060 ?GetClassId@SOUNDMASTER@@UAEHXZ function
+0x004b3070 ?GetParentClassId@SOUNDMASTER@@UAEHXZ function
+0x004b3080 ?GetClassName@SOUNDMASTER@@UAEPBDXZ function
+0x004b3090 ??0SOUND@@QAE@PAVSOUNDMASTER@@ABURESHANDLE@@@Z function
+0x004b3120 ??_GSOUND@@UAEPAXI@Z function
+0x004b3140 ?Update@SOUND@@UAEXXZ function 0x150
+0x004b3290 ??_GSOUNDMASTER@@UAEPAXI@Z function
+0x004b32b0 ?SetFileName@SOUNDMASTER@@UAEXABVCSTRING@@@Z function
+0x004b3360 ?_Buynode@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@2@PAU342@00ABU?$pair@$$CBHURESHANDLE@@@2@D@Z function
+0x004b33b0 ?CreateCopy@SOUNDMASTER@@UAEPAVRESOURCE@@ABURESHANDLE@@@Z function
+0x004b3420 ?Execute@SOUNDMASTER@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function
+0x004b34a0 ?find@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@QAE?AViterator@12@ABH@Z function
+0x004b3510 ?_Insert@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@IAE?AViterator@12@_NPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@2@ABU?$pair@$$CBHURESHANDLE@@@2@@Z function
+0x004b36c0 ?insert@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@QAE?AU?$pair@Viterator@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@_N@2@ABU?$pair@$$CBHURESHANDLE@@@2@@Z function
+0x004b3780 ?insert@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@QAE?AViterator@12@V312@ABU?$pair@$$CBHURESHANDLE@@@2@@Z function
+0x004b38f0 ??A?$map@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@@std@@QAEAAURESHANDLE@@ABH@Z function
+0x004b3980 ??1SOUNDMANAGER@@UAE@XZ function
+0x004b3a10 ?PlayExclusive@SOUNDMANAGER@@QAEXPAVSOUND@@@Z function
+0x004b3af0 ?CreateSOUND@@YAPAVRESOURCEMANAGER@@XZ function
+0x004b3b50 ?Start@SOUND@@UAEXXZ function
 0x004ba640 ??_GDECALMANAGER@@UAEPAXI@Z function
 0x004ba940 ?SetSimulate3D@DECALMASTER@@UAEXAB_N@Z function
 0x004c57e0 ?AddUser@SHADERMASTER@@QAEXXZ function
@@ -3310,6 +3359,7 @@
 0x006b9b34 ?s_classId@RESOURCE@@2HA data 0x4
 0x006b9b38 ?s_classId@RESOURCEMASTER@@2HA data 0x4
 0x006b9b54 ?s_classId@EMITTERMASTER@@2HA data 0x4
+0x006b9b60 ?s_classId@SOUNDMASTER@@2HA data 0x4
 0x006b9b68 ?s_classId@DECALMASTER@@2HA data 0x4
 0x006b9b98 ?s_classId@PATHMASTER@@2HA data 0x4
 0x006bbcb8 ?s_pfnCreate@RESOURCES@@2P6APAVCMDBASE@@XZA data 0x4
@@ -3324,7 +3374,9 @@
 0x006bc810 ?g_pfnCreateEMITTER@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006bc818 ?s_properties@EMITTERMASTER@@2PAUPROPENTRY@@A data 0xc78
 0x006bd490 ?s_properties@RESOURCEMASTER@@2PAUPROPENTRY@@A data 0x118
+0x006bd5a8 ?s_properties@RESOURCE@@2PAUPROPENTRY@@A data 0x38
 0x006bd5e0 ?g_pfnCreateSOUND@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006bd5e8 ?s_properties@SOUNDMASTER@@2PAUPROPENTRY@@A data 0x428
 0x006bdf60 ?g_pfnCreateACTORRESOURCES@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006be160 ?g_pfnCreatePATHREPOSITORY@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006be1d8 ?g_pfnCreateGLOBALDEFS@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
@@ -3470,6 +3522,7 @@
 0x007e0d30 ?s_commands@EMITTERMASTER@@2PAUCMDENTRY@@A data 0x20
 0x007e0d50 ?s_commands@RESOURCEMASTER@@2PAUCMDENTRY@@A data 0x20
 0x007e0d70 ?s_commands@RESOURCE@@2PAUCMDENTRY@@A data 0x20
+0x007e0d90 ?s_commands@SOUNDMASTER@@2PAUCMDENTRY@@A data 0x20
 0x009eede8 _s_line data 0x10000
 0x00a0f288 _s_format_id data
 0x00a0f28c _s_format_id data

@@ -21,6 +21,10 @@ CMDENTRY RESOURCE::s_commands[] = {
     { 0, 0, 0, 0, 0 },
 };
 
+PROPENTRY RESOURCE::s_properties[] = {
+    { 0, 0, 15, 0, 0, false },
+};
+
 void OBJECT::UpdateAngles()
 {
     if (g_pLog)
@@ -354,7 +358,7 @@ RESOURCEMASTER::RESOURCEMASTER(RESOURCEMANAGER *manager, const char *name)
     m_used = 0;
     m_free = 0;
     m_3c = 0;
-    m_38 = 0;
+    m_next = 0;
     m_prepared = false;
     m_requested = 0;
     m_level = 0;

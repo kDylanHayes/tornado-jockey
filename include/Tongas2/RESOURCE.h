@@ -114,7 +114,8 @@ public:
     bool m_prepared;
     int m_30;
     int m_level;
-    int m_38;
+    // The next master of the same manager.
+    RESOURCEMASTER *m_next;
     int m_3c;
     RESOURCE *m_used;
     RESOURCE *m_free;
@@ -162,6 +163,7 @@ public:
 
     static int s_classId;
     static CMDENTRY s_commands[];
+    static PROPENTRY s_properties[];
 
     bool m_active;
     RESOURCE *m_next;
@@ -267,7 +269,9 @@ public:
     virtual V3 LocalToWorld(V3 point);
     virtual V3 WorldToLocal(V3 point);
 
-    char m_30[0x174 - 0x30];
+    char m_30[0x16c - 0x30];
+    bool m_16c;
+    char m_16d[0x174 - 0x16d];
     float m_fadeDistance;
     char m_178[0x970 - 0x178];
     float m_alpha;
