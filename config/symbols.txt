@@ -626,6 +626,10 @@
 0x004b4010 ?ToAnsi@UNICODESTRING@@QAE?AV?$FIXEDSTRING@$0CAA@@@XZ function 0xad
 0x004b40c0 ?Encode@UNICODESTRING_MANAGER@@SAXAAVSTRING@@PBGH@Z function 0x80
 0x004b4140 ?ToEncoded@UNICODESTRING@@QAEXAAVSTRING@@@Z function 0x4f
+0x004b4190 ?GetRegistryString@@YAHPBD0PAD@Z function 0x8a
+0x004b4220 ?RunProcess@@YAHPBDPAD@Z function 0x93
+0x004b42c0 ?OpenURL@@YAXPBD@Z function 0xfd
+0x004b43c0 ?ShellOpen@@YAPAXPBD0H@Z function 0x94
 0x004ba640 ??_GDECALMANAGER@@UAEPAXI@Z function
 0x004ba940 ?SetSimulate3D@DECALMASTER@@UAEXAB_N@Z function
 0x004c57e0 ?AddUser@SHADERMASTER@@QAEXXZ function
@@ -2489,13 +2493,22 @@
 0x00654500 _$E2 function 0xb
 0x006552c0 _$E2 function
 0x006553a0 _$E2 function 0x2e
+0x00656004 __imp__RegOpenKeyExA@20 data 0x4
+0x00656008 __imp__RegQueryValueExA@24 data 0x4
+0x0065600c __imp__RegCloseKey@4 data 0x4
+0x00656094 __imp__CloseHandle@4 data 0x4
 0x006560cc __imp__GetProcAddress@8 data 0x4
 0x006560d0 __imp__GetModuleHandleA@4 data 0x4
 0x00656100 __imp__DeleteFileA@4 data 0x4
 0x00656104 __imp__SetEnvironmentVariableA@8 data 0x4
 0x00656108 __imp__GetProcessHeaps@8 data 0x4
 0x0065610c __imp__HeapWalk@8 data 0x4
+0x0065611c __imp__CreateProcessA@40 data 0x4
+0x00656190 __imp__GetLastError@0 data 0x4
 0x00656210 __imp__Sleep@4 data 0x4
+0x00656250 __imp__GetExitCodeProcess@8 data 0x4
+0x006562a0 __imp__ShellExecuteExA@4 data 0x4
+0x006562ec __imp__wsprintfA data 0x4
 0x006563c4 __imp__MessageBoxA@16 data
 0x0065688c ??_7STRING@@6B@ data
 0x00656890 ??_C@_00CNPNBAHC@?$AA@ data 0x1
@@ -2857,6 +2870,12 @@
 0x0066c0d4 ??_C@_0M@OHKMKKDH@Description?$AA@ data
 0x0066c0e0 ??_C@_09DLCDDHDM@MinCopies?$AA@ data
 0x0066c544 ??_7UNICODESTRING_MANAGER@@6B@ data 0x4
+0x0066c548 ??_C@_0BK@BPAADEOI@Process?5failed?5to?5create?4?$AA@ data 0x1a
+0x0066c564 ??_C@_05NAOIJFC@Error?$AA@ data 0x6
+0x0066c56c ??_C@_05DNIIFBMG@?$CFs?5?$CFs?$AA@ data 0x6
+0x0066c574 ??_C@_01BJJEKLCA@?$CC?$AA@ data 0x2
+0x0066c578 ??_C@_0CH@OJAFCLPJ@Software?2CLASSES?2?$CFs?2shell?2open?2c@ data 0x27
+0x0066c5a0 ??_C@_0BG@NAPOHEAC@Software?2CLASSES?2?4htm?$AA@ data 0x16
 0x0067252c ??_7FILELOADER@@6B@ data 0x34
 0x00672810 __real@3f847ae147ae147b data
 0x006734c4 __real@358637bd data
