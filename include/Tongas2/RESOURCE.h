@@ -259,7 +259,7 @@ public:
     virtual ANG GetWorldAngles();
     virtual V3 GetWorldScale();
     virtual void Virtual93();
-    virtual void Virtual94();
+    virtual V3 GetDirection();
     virtual void Virtual95();
     virtual void Virtual96();
     virtual V3 LocalToWorld(V3 point);
