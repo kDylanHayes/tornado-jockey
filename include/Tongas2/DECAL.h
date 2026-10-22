@@ -7,17 +7,7 @@
 
 #include "Tongas2/RESOURCE.h"
 #include "Tongas2/RESOURCES.h"
-
-// Defined elsewhere: the frame timer at 0x6d09c0.
-class TIMER
-{
-public:
-    int m_0;
-    int m_4;
-    // The length of the last frame, in seconds.
-    float m_dt;
-};
-extern TIMER *g_pTimer;
+#include "Tongas2/TIMER.h"
 
 // Defined elsewhere: the camera actor g_pCamera points to.
 class CAMERA : public WTACTOR
@@ -99,7 +89,7 @@ class MESHMANAGER : public RESOURCEMANAGER
 {
 public:
     // A new mesh for the shader master.
-    virtual RESHANDLE CreateMesh(RESHANDLE shader, const char *name);
+    virtual RESHANDLE CreateMesh(RESHANDLE shader, int layer, const char *suffix);
 };
 
 class DECALMASTER : public RESOURCEMASTER

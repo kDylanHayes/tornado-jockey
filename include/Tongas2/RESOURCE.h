@@ -177,6 +177,8 @@ class ACTORS
 {
 public:
     WTACTOR *GetActor(RESHANDLE handle);
+    // The actor with a name, or 0.
+    WTACTOR *FindActor(const char *name);
 };
 extern ACTORS *g_pActors;
 
@@ -263,6 +265,7 @@ public:
     virtual void Virtual95();
     virtual void Virtual96();
     virtual V3 LocalToWorld(V3 point);
+    virtual V3 WorldToLocal(V3 point);
 
     char m_30[0x174 - 0x30];
     float m_fadeDistance;
@@ -274,6 +277,9 @@ public:
     int m_visibility;
     char m_990[0x9a0 - 0x990];
     bool m_placed;
+    char m_9a1[0xa10 - 0x9a1];
+    // Where the actor was the frame before.
+    V3 m_lastPosition;
 };
 
 // Defined elsewhere.
@@ -286,6 +292,8 @@ public:
     OBJECT(RESOURCEMASTER *master, RESHANDLE handle);
     // Stops following the parent.
     void Detach();
+    // Defined elsewhere: follows another object.
+    void SetParent(RESHANDLE parent);
 
     // Defined elsewhere.
     virtual void Init();
@@ -307,42 +315,43 @@ public:
     // Defined elsewhere.
     virtual void Virtual34();
     virtual void Virtual35();
-    virtual void Virtual36();
-    virtual void Virtual37();
-    virtual void Virtual38();
-    virtual void Virtual39();
-    virtual void Virtual40();
+    // Where the object sits, and how big it is, relative to its parent.
+    virtual void SetOffset(float x, float y, float z);
+    virtual void SetOffsetV(V3 offset);
+    virtual V3 GetOffset();
+    virtual void SetScaleFactor(float x, float y, float z);
+    virtual void SetScaleFactorV(V3 scale);
     virtual V3 GetSize();
-    virtual void Virtual42();
-    virtual void Virtual43();
-    virtual void Virtual44();
-    virtual void Virtual45();
-    virtual void Virtual46();
-    virtual void Virtual47();
-    virtual void Virtual48();
-    virtual void Virtual49();
+    // The rotation and layer relative to the parent.
+    virtual void SetRelRotation(float x, float y, float z);
+    virtual void SetRelAngles(ANG angles);
+    virtual ANG GetRelAngles();
+    virtual void SetRelLayer(int layer);
+    virtual int GetRelLayer();
+    virtual void SetAlphaFactor(float alpha);
+    virtual float GetAlphaFactor();
+    virtual void SetPositionXYZ(float x, float y, float z);
     virtual void SetPosition(V3 position);
-    virtual void Virtual51();
+    virtual V3 GetPosition();
     virtual void SetScale(float x, float y, float z);
     virtual void SetScaleV(V3 scale);
-    virtual void Virtual54();
+    virtual V3 GetScale();
     virtual void SetRotation(float x, float y, float z);
     virtual void SetAngles(ANG angles);
-    virtual void Virtual57();
+    virtual ANG GetAngles();
     virtual void SetLayer(int layer);
-    // A name for something made for the object, ending in suffix.
-    virtual const char *MakeName(const char *suffix);
+    virtual int GetLayer();
     virtual void SetAlpha(float alpha);
-    virtual void Virtual61();
+    virtual float GetAlpha();
     virtual void SetVisibility(int value);
-    virtual void Virtual63();
+    virtual int GetVisibility();
     virtual void SetFrame(int frame);
     // Between world space and the object's space.
     virtual V3 WorldToLocal(const V3 &point);
     virtual V3 LocalToWorld(const V3 &point);
     // Defined elsewhere.
     virtual void Virtual67();
-    virtual void Virtual68();
+    virtual RESHANDLE GetParent();
     virtual void Virtual69();
 
     // The inverse of the object's rotation.

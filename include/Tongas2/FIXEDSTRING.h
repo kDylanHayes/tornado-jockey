@@ -26,6 +26,21 @@ public:
     // Out of line; defined in another unit.
     FIXEDSTRING &operator=(const char *text);
 
+    void Set(const char *text)
+    {
+        strncpy(m_buf, text, N - 1);
+        m_buf[N - 1] = '\0';
+    }
+    void Replace(char from, char to)
+    {
+        for (int i = 0; i < N; i++) {
+            if (!m_buf[i])
+                return;
+            if (m_buf[i] == from)
+                m_buf[i] = to;
+        }
+    }
+
     // Appends text only when all of it fits.
     void operator+=(const char *text)
     {

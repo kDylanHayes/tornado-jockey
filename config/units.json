@@ -1490,6 +1490,24 @@
       }
     },
     {
+      "name": "Tongas2/EMITTER",
+      "ranges": [
+        "0x004ad030-0x004b196f",
+        "0x0060dbe0-0x0060f19f",
+        "0x0066b534-0x0066bd97",
+        "0x006bc810-0x006bd48f",
+        "0x007e0d30-0x007e0d4f"
+      ],
+      "target": "build/target/Tongas2/EMITTER.obj",
+      "source": "src/Tongas2/EMITTER.cpp",
+      "category": "engine",
+      "complete": false,
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z",
+        "?SupportsICCProfiles@@YAJXZ": "?GetCopiesPerBatch@RESOURCEMASTER@@UAEHXZ"
+      }
+    },
+    {
       "name": "Tongas2/RESOURCE",
       "ranges": [
         "0x004b1a10-0x004b2d2f",

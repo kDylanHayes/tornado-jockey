@@ -58,7 +58,7 @@ PROPENTRY DECALMASTER::s_properties[] = {
 void DECAL::CreateMesh()
 {
     DECALMASTER *master = Master();
-    m_mesh = ((MESHMANAGER *)g_pMESH)->CreateMesh(master->m_shaderHandle, MakeName("__d"));
+    m_mesh = ((MESHMANAGER *)g_pMESH)->CreateMesh(master->m_shaderHandle, GetLayer(), "__d");
 }
 
 void DECAL::Init()
