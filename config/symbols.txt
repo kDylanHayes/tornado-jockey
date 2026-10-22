@@ -2,14 +2,26 @@
 #   <virtual address> <name> <function|data> [size]
 # Names use the original MSVC decorated name when known. Keep sorted by address.
 0x00000000 __except_list data
+0x00401f60 ??0STRING@@QAE@XZ function
+0x004024e0 ??_9@$BNM@AE function
 0x004024f0 ??_9@$BLM@AE function
 0x00402500 ??_9@$BJM@AE function
+0x00402510 ??_9@$BMA@AE function
 0x00402520 ??_9@$BKA@AE function
+0x00402530 ??_9@$BOA@AE function
+0x00402540 ??_9@$BME@AE function
 0x00402550 ??_9@$BKE@AE function
+0x00402570 ??_9@$BOE@AE function
+0x00402580 ??_9@$BMI@AE function
 0x00402590 ??_9@$BKI@AE function
+0x004025a0 ??_9@$BOI@AE function
+0x004025c0 ??_9@$BMM@AE function
 0x004025d0 ??_9@$BKM@AE function
+0x004025f0 ??_9@$BNA@AE function
 0x00402600 ??_9@$BLA@AE function
+0x00402620 ??_9@$BNE@AE function
 0x00402630 ??_9@$BLE@AE function
+0x00402650 ??_9@$BNI@AE function
 0x00402660 ??_9@$BLI@AE function
 0x00402670 ??_9@$BJI@AE function
 0x004026c0 ?FreeValue@SRESULT@@QAEXXZ function 0x47
@@ -25,10 +37,15 @@
 0x00403ae0 ?SetName@CMDBASE@@UAEXABVCSTRING@@@Z function
 0x00403af0 ??4CSTRING@@QAEAAV0@ABV0@@Z function
 0x00403bb0 ??4?$FIXEDSTRING@$0CAA@@@QAEAAV0@PBD@Z function
+0x00403be0 ??1STRING@@UAE@XZ function
 0x00403c30 ?Reserve@STRING@@QAEXABH@Z function
 0x00404ce0 ?SetType@SRESULT@@QAEXABW4SRESULTTYPE@@@Z function 0xfc
+0x00404e70 ??4STRING@@QAEAAV0@PBD@Z function
 0x004058a0 ?Assign@SRESULT@@QAEXABV1@@Z function
 0x004060a0 ?Virtual07@CMDBASE@@UAEXXZ function
+0x00406390 ??_9@$BOM@AE function
+0x004063a0 ??_9@$BPA@AE function
+0x004063b0 ??_9@$BPE@AE function
 0x00406cc0 ?_Min@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@KAPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@PAU342@@Z function
 0x00406ce0 ?_Inc@const_iterator@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@QAEXXZ function
 0x004072c0 ?assign@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@ABV12@II@Z function
@@ -49,6 +66,7 @@
 0x00426410 ??D@YA?AUV3@@ABU0@ABUMATRIX@@@Z function
 0x00434ea0 ?Transform@ANG@@QAE?AUV3@@U2@@Z function
 0x004381b0 ?_Tidy@?$deque@GV?$allocator@G@std@@@std@@IAEXXZ function
+0x0043c8a0 ??_9@$BII@AE function
 0x0043c8b0 ??_9@$BIM@AE function
 0x0043c8c0 ??_9@$BJA@AE function
 0x0043c8d0 ??_9@$BJE@AE function
@@ -143,6 +161,7 @@
 0x00488470 ?Virtual15@CMDBASE@@UAEXXZ function
 0x00488560 ?Virtual17@CMDBASE@@UAEXXZ function
 0x00489a00 ?HashCommands@@YAXPAUCMDENTRY@@@Z function
+0x00489f10 ?Run@CONSOLE@@QAEXABVSTRING@@ABURESHANDLE@@@Z function
 0x0048b960 ?SetResolution@APP@@QAEXH@Z function
 0x0048b9a0 ?SetFullscreen@APP@@QAEX_N@Z function
 0x0048b9d0 ?SetSound@APP@@QAEX_N@Z function
@@ -352,7 +371,60 @@
 0x004aa540 ?CreateCopy@DECALMASTER@@UAEPAVRESOURCE@@ABURESHANDLE@@@Z function 0x80
 0x004aa5c0 ?Execute@DECALMASTER@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function 0x73
 0x004aa640 ?CreateMaster@DECALMANAGER@@UAEPAVRESOURCEMASTER@@PBD@Z function 0x69
+0x004aa6b0 ?Hermite@@YA?AUV3@@ABU1@000M@Z function 0x117
+0x004aa7d0 ?HermiteTangent@@YA?AUV3@@ABU1@000M@Z function 0x123
+0x004aa900 ?RegisterCommands@PATHMASTER@@SAXXZ function 0x3f
+0x004aa940 ?Prepare@PATHMASTER@@UAEXXZ function 0x15
+0x004aa960 ?SetScalePoints@PATHMASTER@@UAEXABM@Z function 0x13
+0x004aa980 ?SetDisplaySegments@PATHMASTER@@UAEXABH@Z function 0x13
+0x004aa9a0 ?SetDisplayUp@PATHMASTER@@UAEXAB_N@Z function 0x27
+0x004aa9d0 ?SetDisplayRadius@PATHMASTER@@UAEXAB_N@Z function 0x27
+0x004aaa00 ?SetDisplayPointsSegment@PATHMASTER@@UAEXAB_N@Z function 0x16
+0x004aaa20 ?SetColor@PATHMASTER@@UAEXABUPATHCOLOR@@@Z function 0x26
+0x004aaa50 ?SetRadius@PATHMASTER@@UAEXABHABM@Z function 0x1d
+0x004aaa70 ?SetAngle@PATHMASTER@@UAEXABHABM@Z function 0x1d
+0x004aaa90 ?WrapIndex@PATHMASTER@@QAEHH@Z function 0x41
+0x004aaae0 ?FindSegment@PATHMASTER@@QAEXMPAMPAH@Z function 0xe2
+0x004aabd0 ?GetLinear@PATHMASTER@@QAE_NMPAUV3@@00PAM1@Z function 0x1e9
+0x004aadc0 ?UpdateCopies@PATHMASTER@@UAEXXZ function 0x5
+0x004aadd0 ?ArcParam@PATHMASTER@@QAEMHM@Z function 0xa3
+0x004aae80 ?GetTypeCode@PATHMANAGER@@UAEPBDXZ function 0x6
+0x004aae90 ?CreatePATH@@YAPAVRESOURCEMANAGER@@XZ function 0x80
+0x004aaf10 ?SetCalculateTangents@PATHMASTER@@UAEXAB_N@Z function 0x22b
+0x004ab140 ?GetLinearLength@PATHMASTER@@QAEMH@Z function 0xa3
+0x004ab1f0 ?MeasureCurve@PATHMASTER@@QAEMH@Z function 0x218
+0x004ab410 ?RunCommands@PATHMASTER@@QAEXMMURESHANDLE@@@Z function 0x207
+0x004ab620 ?GetCatmullRom@PATHMASTER@@QAE_NMPAUV3@@00PAM1@Z function 0x343
+0x004ab970 ?GetHermite@PATHMASTER@@QAE_NMPAUV3@@00PAM1@Z function 0x258
+0x004abbd0 ?GetLinearDistance@PATHMASTER@@QAE_NUV3@@HPAM1@Z function 0x2ad
+0x004abe80 ?GetCurveDistance@PATHMASTER@@QAE_NUV3@@HPAM1@Z function 0x30
+0x004abeb0 ?GetSegmentLength@PATHMASTER@@QAEMH@Z function 0x8e
+0x004abf40 ?GetPoint@PATHMASTER@@QAE_NMPAUV3@@00PAM1@Z function 0x45
+0x004abf80 ?GetSegmentDistance@PATHMASTER@@QAE_NUV3@@HPAM1@Z function 0xf5
+0x004ac070 ?FindNearest@PATHMASTER@@QAE_NUV3@@PAHPAM@Z function 0x14f
+0x004ac1c0 ??0PATHMASTER@@QAE@PAVRESOURCEMANAGER@@PBD@Z function 0x31c
+0x004ac4e0 ?GetClassId@PATHMASTER@@UAEHXZ function 0x6
+0x004ac4f0 ?GetParentClassId@PATHMASTER@@UAEHXZ function 0xd
+0x004ac500 ?GetClassName@PATHMASTER@@UAEPBDXZ function 0xe
 0x004ac510 ?SetNeverRotate@DECALMASTER@@UAEXAB_N@Z function
+0x004ac520 ?Execute@PATHMASTER@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function 0x83
+0x004ac5b0 ?SetCommand@PATHMASTER@@UAEXABHABVSTRING@@@Z function 0x1d
+0x004ac5d0 ??_GPATHMASTER@@UAEPAXI@Z function 0x1e
+0x004ac5f0 ??1PATHMASTER@@UAE@XZ function 0x59
+0x004ac650 ?UpdateLengths@PATHMASTER@@QAEXXZ function 0x9d
+0x004ac6f0 ?SetInsertPoint@PATHMASTER@@UAEXABHAB_N@Z function 0x247
+0x004ac940 ?CreateMaster@PATHMANAGER@@UAEPAVRESOURCEMASTER@@PBD@Z function 0x69
+0x004ac9b0 ?SetCalculateLengths@PATHMASTER@@UAEXAB_N@Z function 0x51
+0x004aca10 ?SetCurvature@PATHMASTER@@UAEXABH@Z function 0x1e
+0x004aca30 ?SetContinuous@PATHMASTER@@UAEXABH0@Z function 0x28
+0x004aca60 ?SetPos@PATHMASTER@@UAEXABHABUV3@@@Z function 0x40
+0x004acaa0 ?SetUp@PATHMASTER@@UAEXABHABUV3@@@Z function 0x40
+0x004acae0 ?SetDirection@PATHMASTER@@UAEXABHABUV3@@@Z function 0x40
+0x004acb20 ?SetLength@PATHMASTER@@UAEXABHABM@Z function 0x2e
+0x004acb50 ?SetCloseToPoint@PATHMASTER@@UAEXABH@Z function 0x1e
+0x004acb70 ?SetIsParamLength@PATHMASTER@@UAEXAB_N@Z function 0x1e
+0x004acb90 ?SetIsClosed@PATHMASTER@@UAEXAB_N@Z function 0x1e
+0x004acbb0 ?SetDeletePoint@PATHMASTER@@UAEXABHAB_N@Z function 0x32d
 0x004b1a10 ?UpdateAngles@OBJECT@@UAEXXZ function
 0x004b1b00 ?Update@OBJECT@@UAEXXZ function
 0x004b1dd0 ?GetWorldMatrix@OBJECT@@QAE?AUMATRIX@@XZ function
@@ -2232,6 +2304,8 @@
 0x0060cb90 _$E11 function 0xc
 0x0060cba0 _$E3 function 0x23
 0x0060cbd0 _$E5 function 0x50c
+0x0060d0e0 _$E1 function 0x23
+0x0060d110 _$E3 function 0xac8
 0x0060f1a0 _$E1 function
 0x0060f1d0 _$E3 function
 0x0060f390 _$E5 function
@@ -2249,6 +2323,7 @@
 0x0065610c __imp__HeapWalk@8 data 0x4
 0x00656210 __imp__Sleep@4 data 0x4
 0x006563c4 __imp__MessageBoxA@16 data
+0x0065688c ??_7STRING@@6B@ data
 0x00656890 ??_C@_00CNPNBAHC@?$AA@ data 0x1
 0x00656894 __real@3f800000 data
 0x00656898 __real@00000000 data 0x4
@@ -2280,6 +2355,7 @@
 0x0065b110 __real@3fe0000000000000 data
 0x0065b11c __real@43b40000 data
 0x0065b13c __real@3e2aaaab data
+0x0065d088 ??_C@_09DAPGLLEF@Direction?$AA@ data 0xa
 0x0065db8c ??_C@_0BC@KBDMBKEH@deque?$DMT?$DO?5too?5long?$AA@ data
 0x0065e8a0 __real@3ff0000000000000 data
 0x0065e974 ??_C@_0P@CLCMAHCC@RESOURCEMASTER?$AA@ data
@@ -2287,6 +2363,7 @@
 0x0065f888 ??_7CMDBASE@@6B@ data 0x4c
 0x0065f900 ??_7RESOURCE@@6B@ data
 0x006600f0 ??_C@_0FP@IKMMFDBK@ERROR?$CB?$CB?5RESOURCES?3?3LoadManagers?$DO@ data 0x5f
+0x00660ce8 ??_C@_06GJMFONGK@Radius?$AA@ data 0x7
 0x00661ac0 ??_7APPOPTIONS@@6B@ data 0x24
 0x00661eac ??_C@_02JDPG@rb?$AA@ data 0x3
 0x00661eb0 ??_C@_02GMLFBBN@wb?$AA@ data 0x3
@@ -2377,6 +2454,7 @@
 0x0066653c ??_C@_03OFAPEBGM@?$CFs?6?$AA@ data
 0x006667d4 ??_C@_07GOLFKGID@CMDBASE?$AA@ data 0x8
 0x00666990 ??_C@_02DPKJAMEF@?$CFd?$AA@ data
+0x00666f14 ??_C@_0L@GMKAKGOI@PATHMASTER?$AA@ data 0xb
 0x00666fe4 ??_C@_0M@PGNOOMJE@DECALMASTER?$AA@ data 0xc
 0x0066707c ??_C@_08KGDJAKPA@RESOURCE?$AA@ data
 0x00667088 ??_C@_09CMINMFIB@RESOURCES?$AA@ data 0xa
@@ -2402,6 +2480,7 @@
 0x006680b4 ??_C@_0CK@FBJPJPNG@SAFEINDEX?3?3Insert?$DO?5ERROR?$CB?$CB?$CB?5Tabl@ data 0x2a
 0x006680e0 ??_C@_0DA@JIDJBGHL@SAFEINDEX?3?3New?$DO?5ERROR?5Invalid?5di@ data 0x30
 0x006686ec ??_C@_09BMHMPIHG@resources?$AA@ data 0xa
+0x00668b9c ??_C@_03FCCPIJGJ@Pos?$AA@ data 0x4
 0x006691d4 ??_C@_01IHBHIGKO@?0?$AA@ data
 0x00669810 ??_C@_04KLCPKPBE@Loop?$AA@ data 0x5
 0x0066a35c ??_C@_05CCMOGDN@?$CFs?3?$CFs?$AA@ data
@@ -2495,6 +2574,36 @@
 0x0066b148 ??_C@_0L@CMGGEJBD@Simulate3D?$AA@ data 0xb
 0x0066b154 ??_C@_0M@PGHPAMML@NeverRotate?$AA@ data 0xc
 0x0066b160 ??_C@_0BB@JCMOKHHI@AlwaysLookCamera?$AA@ data 0x11
+0x0066b174 ??_C@_0BB@PDJNAFGA@StartEditingMode?$AA@ data 0x11
+0x0066b188 _s_TypeNames data 0xb4
+0x0066b240 _s_curvatureNames data 0x96
+0x0066b2d8 ??_7PATHMANAGER@@6B@ data 0x20
+0x0066b2f8 ??_C@_08DBBPAOEF@PATH?4txt?$AA@ data 0x9
+0x0066b308 ??_7PATHMASTER@@6B@ data 0xf8
+0x0066b400 ??_C@_0M@IOECJLFA@InsertPoint?$AA@ data 0xc
+0x0066b40c ??_C@_0M@OCKPFJGC@DeletePoint?$AA@ data 0xc
+0x0066b418 ??_C@_07FFLLKOAD@Command?$AA@ data 0x8
+0x0066b420 ??_C@_02EFPGLDEA@Up?$AA@ data 0x3
+0x0066b424 ??_C@_06MHCOIGNA@Length?$AA@ data 0x7
+0x0066b42c ??_C@_0L@GPAKMECE@Continuous?$AA@ data 0xb
+0x0066b438 ??_C@_05FDINCMKF@Angle?$AA@ data 0x6
+0x0066b440 ??_C@_05PDOBBJNA@Color?$AA@ data 0x6
+0x0066b448 ??_C@_0BF@GAJKIALJ@DisplayPointsSegment?$AA@ data 0x15
+0x0066b460 ??_C@_0O@GKELBJNK@DisplayRadius?$AA@ data 0xe
+0x0066b470 ??_C@_09DNEIKKJD@DisplayUp?$AA@ data 0xa
+0x0066b47c ??_C@_0BA@LDINFPFF@DisplaySegments?$AA@ data 0x10
+0x0066b48c ??_C@_0M@NIMGNJPJ@ScalePoints?$AA@ data 0xc
+0x0066b498 ??_C@_0N@OBHIDGBF@CloseToPoint?$AA@ data 0xd
+0x0066b4a8 ??_C@_08GOKICADN@IsClosed?$AA@ data 0x9
+0x0066b4b4 ??_C@_0BB@LCMGNKMP@CalculateLengths?$AA@ data 0x11
+0x0066b4c8 ??_C@_0BC@OBINCKDG@CalculateTangents?$AA@ data 0x12
+0x0066b4dc ??_C@_04OFFCAMCD@Test?$AA@ data 0x5
+0x0066b4e4 ??_C@_0O@DMEDFOEO@IsParamLength?$AA@ data 0xe
+0x0066b4f4 ??_C@_08JLKOPNJP@IsLinear?$AA@ data 0x9
+0x0066b500 ??_C@_0M@FNEPBKLO@IsFixedPath?$AA@ data 0xc
+0x0066b50c ??_C@_09GOOFDHMO@Curvature?$AA@ data 0xa
+0x0066b518 ??_C@_0M@OODIJJLN@TotalLength?$AA@ data 0xc
+0x0066b524 ??_C@_0BA@EDJGJMOI@StopEditingMode?$AA@ data 0x10
 0x0066be4c ??_C@_0CP@GDGFKHNC@ERROR?$CB?5trying?5to?5attach?5to?5not?5e@ data
 0x0066be80 ??_C@_0EJ@CCCHDAI@ERROR?$CB?5trying?5to?5attach?5to?5a?5tag@ data
 0x0066becc ??_C@_09PBLIEIKC@GroupMask?$AA@ data
@@ -3024,6 +3133,7 @@
 0x006b9b34 ?s_classId@RESOURCE@@2HA data 0x4
 0x006b9b38 ?s_classId@RESOURCEMASTER@@2HA data 0x4
 0x006b9b68 ?s_classId@DECALMASTER@@2HA data 0x4
+0x006b9b98 ?s_classId@PATHMASTER@@2HA data 0x4
 0x006bbcb8 ?s_pfnCreate@RESOURCES@@2P6APAVCMDBASE@@XZA data 0x4
 0x006bbcc0 ?s_commands@RESOURCES@@2PAUCMDENTRY@@A data 0xc0
 0x006bbd80 ?s_properties@RESOURCES@@2PAUPROPENTRY@@A data 0xa8
@@ -3032,6 +3142,7 @@
 0x006bbe9c ?g_pfnCreateDECAL@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006bbea0 ?s_properties@DECALMASTER@@2PAUPROPENTRY@@A data 0x310
 0x006bc1b0 ?g_pfnCreatePATH@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006bc1b8 ?s_properties@PATHMASTER@@2PAUPROPENTRY@@A data 0x658
 0x006bc810 ?g_pfnCreateEMITTER@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006bd490 ?s_properties@RESOURCEMASTER@@2PAUPROPENTRY@@A data 0x118
 0x006bd5e0 ?g_pfnCreateSOUND@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
@@ -3125,6 +3236,8 @@
 0x006c8a20 __iob data
 0x006c8ca0 ___security_cookie data 0x4
 0x006cbc80 ?g_pLog@@3PAVLOG@@A data 0x4
+0x006cbc88 ?g_i@@3HA data 0x4
+0x006cc490 ?g_pConsole@@3PAVCONSOLE@@A data 0x4
 0x006cc498 ?g_classCommands@@3PAPAUCMDENTRY@@A data
 0x006ccc98 ?g_classNames@@3PAY0BO@DA data
 0x006d09b4 ?g_pApp@@3PAVAPP@@A data 0x4
@@ -3173,6 +3286,7 @@
 0x007e0ce0 ?liOldSystemTime@?1??GetCpuUsage@SYSMONITOR@@QAEHXZ@4T_LARGE_INTEGER@@A data 0x8
 0x007e0ce8 ?liOldIdleTime@?1??GetCpuUsage@SYSMONITOR@@QAEHXZ@4T_LARGE_INTEGER@@A data 0x8
 0x007e0cf0 ?s_commands@DECALMASTER@@2PAUCMDENTRY@@A data 0x20
+0x007e0d10 ?s_commands@PATHMASTER@@2PAUCMDENTRY@@A data 0x20
 0x007e0d50 ?s_commands@RESOURCEMASTER@@2PAUCMDENTRY@@A data 0x20
 0x007e0d70 ?s_commands@RESOURCE@@2PAUCMDENTRY@@A data 0x20
 0x009eede8 _s_line data 0x10000

@@ -1471,6 +1471,25 @@
       }
     },
     {
+      "name": "Tongas2/PATH",
+      "ranges": [
+        "0x004aa6b0-0x004acedf",
+        "0x0060d0e0-0x0060dbdf",
+        "0x0066b174-0x0066b533",
+        "0x006bc1b0-0x006bc80f",
+        "0x007e0d10-0x007e0d2f"
+      ],
+      "target": "build/target/Tongas2/PATH.obj",
+      "source": "src/Tongas2/PATH.cpp",
+      "category": "engine",
+      "complete": false,
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z",
+        "?SupportsICCProfiles@@YAJXZ": "?GetCopiesPerBatch@RESOURCEMASTER@@UAEHXZ",
+        "?SetNeverRotate@DECALMASTER@@UAEXAB_N@Z": "?SetIsLinear@PATHMASTER@@UAEXAB_N@Z"
+      }
+    },
+    {
       "name": "Tongas2/RESOURCE",
       "ranges": [
         "0x004b1a10-0x004b2d2f",

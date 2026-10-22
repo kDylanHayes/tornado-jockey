@@ -17,9 +17,27 @@ extern STRINGMANAGER g_StringManager;
 class STRING
 {
 public:
-    virtual ~STRING();
+    // Defined elsewhere.
+    STRING();
+    STRING(const char *text)
+    {
+        m_block = -1;
+        m_pages = 0;
+        m_buf = 0;
+        m_length = 0;
+        m_lengthValid = true;
+        Reserve(strlen(text) + 1);
+        *this = text;
+    }
+    virtual ~STRING()
+    {
+        if (m_pages > 0)
+            Free();
+    }
 
     STRING &operator=(const STRING &other);
+    // Defined elsewhere.
+    STRING &operator=(const char *text);
     // Makes room for at least length characters.
     void Reserve(const int &length);
 
