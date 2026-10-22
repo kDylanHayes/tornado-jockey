@@ -1508,6 +1508,17 @@
       }
     },
     {
+      "name": "Tongas2/SHELL",
+      "ranges": [
+        "0x004b4190-0x004b445f",
+        "0x0066c548-0x0066c5b7"
+      ],
+      "target": "build/target/Tongas2/SHELL.obj",
+      "source": "src/Tongas2/SHELL.cpp",
+      "category": "engine",
+      "complete": true
+    },
+    {
       "name": "Tongas2/UNICODESTRING",
       "ranges": [
         "0x004b3b70-0x004b418f",
