@@ -47,6 +47,13 @@ public:
 class UNICODETOKENS
 {
 public:
+    UNICODETOKENS()
+    {
+        m_count = 0;
+        m_parsed = false;
+    }
+    ~UNICODETOKENS() { m_string.Free(); }
+
     // Tokenizes with wcstok.
     bool Split(const UNICODESTRING &text, const wchar_t *delimiters);
 
@@ -56,6 +63,13 @@ public:
             m_offsets[m_count] = ((unsigned)token - (unsigned)m_string.c_str()) / sizeof(wchar_t);
             m_count++;
         }
+    }
+
+    const wchar_t *GetToken(int i)
+    {
+        if (i < 0 || i >= m_count)
+            return L"";
+        return m_string.c_str() + m_offsets[i];
     }
 
     UNICODESTRING m_string;

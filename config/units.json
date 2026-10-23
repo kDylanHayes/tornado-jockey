@@ -1758,6 +1758,22 @@
       }
     },
     {
+      "name": "Tongas2/TEXT",
+      "ranges": [
+        "0x004c2f80-0x004c577f",
+        "0x00614900-0x00614bbf",
+        "0x00670544-0x006709af",
+        "0x006c0750-0x006c08df",
+        "0x009eed40-0x009eed5f"
+      ],
+      "target": "build/target/Tongas2/TEXT.obj",
+      "source": "src/Tongas2/TEXT.cpp",
+      "category": "engine",
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z"
+      }
+    },
+    {
       "name": "Tongas2/TESLA",
       "ranges": [
         "0x004c0c10-0x004c157f",

@@ -12,6 +12,8 @@
 int HashString(const char *str, int size);
 // _vsnprintf into a 512-byte buffer.
 int SafeSprintf(char *buf, const char *format, ...) throw();
+// The same for wide text, up to 0x1fe characters.
+int SafeSwprintf(wchar_t *buf, const wchar_t *format, ...) throw();
 
 // Names an item in a SAFEINDEX: the slot, the insertion serial that was
 // current when it went in (so stale handles to a reused slot fail), and the

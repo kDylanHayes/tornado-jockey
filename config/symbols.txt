@@ -4,6 +4,7 @@
 0x00000000 __except_list data
 0x00401f30 ??_H@YGXPAXIHP6EPAX0@Z@Z function 0x30
 0x00401f60 ??0STRING@@QAE@XZ function
+0x004024a0 ?SafeSwprintf@@YAHPAGPBGZZ function 0x1d
 0x004024e0 ??_9@$BNM@AE function
 0x004024f0 ??_9@$BLM@AE function
 0x00402500 ??_9@$BJM@AE function
@@ -62,6 +63,7 @@
 0x0040a150 ?RotateAxis@MATRIX@@QAEXMUV3@@@Z function
 0x0040a8d0 ??G@YA?AUV3@@ABU0@0@Z function
 0x0040a930 ??D@YA?AUV3@@ABU0@ABM@Z function
+0x0040add0 ?Clear@?$DYNAMICARRAY@UFONTCHAR@@@@QAEXXZ function 0x3a
 0x0040af70 ?Invert@MATRIX@@QAEXXZ function
 0x0040b0a0 ??D@YA?AUMATRIX@@ABU0@0@Z function
 0x0040b420 ?Detach@OBJECT@@QAEXXZ function
@@ -160,6 +162,7 @@
 0x00443ea0 ??_GSOUNDMANAGER@@UAEPAXI@Z function
 0x004442f0 ?SetAnimLen@DECALMASTER@@UAEXABM@Z function
 0x00444300 ?SetStartFrame@DECALMASTER@@UAEXABH@Z function
+0x00445600 ??1UNICODESTRING@@UAE@XZ function 0x4d
 0x00448570 ?Virtual09@RESOURCE@@UAEPAXPBD@Z function
 0x004487b0 ?GetDPCodeName@WTINFO@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ function
 0x00448840 ?GetProductCodeName@WTINFO@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ function
@@ -195,6 +198,7 @@
 0x00484470 ?Virtual12@CMDBASE@@UAEXXZ function
 0x00484820 ?Virtual10@CMDBASE@@UAEXXZ function
 0x00484d20 ?Format@STRING@@QAAXPBDZZ function 0x6c
+0x00484d90 ??4UNICODESTRING@@QAEAAV0@PBG@Z function
 0x00484e20 ??4UNICODESTRING@@QAEAAV0@ABV0@@Z function
 0x004861e0 ?Virtual16@CMDBASE@@UAEXXZ function
 0x00488430 ?Virtual00@CMDBASE@@UAE?AVSRESULT@@PAPAVTOKENS@@@Z function
@@ -203,6 +207,7 @@
 0x004899a0 ?ReplaceChar@@YAXPADDD@Z function
 0x00489a00 ?HashCommands@@YAXPAUCMDENTRY@@@Z function
 0x00489f10 ?Run@CONSOLE@@QAEXABVSTRING@@ABURESHANDLE@@@Z function
+0x0048a2d0 ?Evaluate@CONSOLE@@QAE?AVSRESULT@@ABVSTRING@@ABURESHANDLE@@@Z function
 0x0048b960 ?SetResolution@APP@@QAEXH@Z function
 0x0048b9a0 ?SetFullscreen@APP@@QAEX_N@Z function
 0x0048b9d0 ?SetSound@APP@@QAEX_N@Z function
@@ -389,7 +394,7 @@
 0x004a9120 ?CreateDECAL@@YAPAVRESOURCEMANAGER@@XZ function 0x80
 0x004a91a0 ??1DECAL@@UAE@XZ function 0x15
 0x004a91c0 ?SetPosition@DECAL@@UAEXUV3@@@Z function 0x24
-0x004a91f0 ?SetSize@DECAL@@UAEXMM@Z function 0x1a
+0x004a91f0 ?SetSize@DECAL@@UAEXUV2@@@Z function 0x1a
 0x004a9210 ?GetScreenSize@DECAL@@UAE?AUV2@@XZ function 0x18
 0x004a9230 ?GetScaleFactor@DECAL@@UAE?AUV3@@XZ function 0x1e
 0x004a9250 ?SetFrame@DECAL@@UAEXH@Z function 0xd
@@ -1055,6 +1060,48 @@
 0x004c2ca0 ?SetNumPoints@CURVE@@QAE_NH@Z function 0x269
 0x004c2f10 ?SetLayer@CURVE@@UAEXH@Z function 0x46
 0x004c2f60 ?Start@CURVE@@UAEXXZ function 0x13
+0x004c2f80 ?SetBullet@TEXT@@QAEXG@Z function 0x16
+0x004c2fa0 ?ClearBullet@TEXT@@QAEXXZ function 0x8
+0x004c2fb0 ?IsLoaded@TEXT@@UAE_NXZ function 0x54
+0x004c3010 ?SetText@TEXT@@QAEXPBG@Z function 0x1c
+0x004c3030 ?Start@TEXT@@UAEXXZ function 0x8f
+0x004c30c0 ?Stop@TEXT@@UAEXXZ function 0x65
+0x004c3130 ?SetWrapWidth@TEXT@@QAEXM@Z function 0xd
+0x004c3140 ?RegisterCommands@TEXTMASTER@@SAXXZ function 0x3f
+0x004c3180 ??1?$DYNAMICARRAY@UFONTCHAR@@@@UAE@XZ function 0x50
+0x004c31d0 ?Resize@?$DYNAMICARRAY@UFONTCHAR@@@@QAEXABH@Z function 0x163
+0x004c3340 ??_G?$DYNAMICARRAY@UFONTCHAR@@@@UAEPAXI@Z function 0x1e
+0x004c3360 ?Set@?$DYNAMICARRAY@UFONTCHAR@@@@QAEPAUFONTCHAR@@ABU2@ABH@Z function 0x45
+0x004c33b0 ?GetTypeCode@TEXTMANAGER@@UAEPBDXZ function 0x6
+0x004c33c0 ?CreateTEXT@@YAPAVRESOURCEMANAGER@@XZ function 0x80
+0x004c3440 ??1TEXT@@UAE@XZ function 0xa9
+0x004c34f0 ?SetPosition@TEXT@@UAEXUV3@@@Z function 0x24
+0x004c3520 ?Init@TEXT@@UAEXXZ function 0x83
+0x004c35b0 ?SetShaderNames@TEXTMASTER@@UAEXABHABVCSTRING@@@Z function 0x99
+0x004c3650 ?Insert@?$DYNAMICARRAY@UFONTCHAR@@@@QAEPAUFONTCHAR@@ABU2@@Z function 0xef
+0x004c3740 ?Get@?$DYNAMICARRAY@UFONTCHAR@@@@QAEPAUFONTCHAR@@H@Z function 0x4c
+0x004c3790 ??0TEXT@@QAE@PAVTEXTMASTER@@ABURESHANDLE@@@Z function 0x121
+0x004c38c0 ??_GTEXT@@UAEPAXI@Z function 0x1e
+0x004c38e0 ?GetCharFrame@TEXTMASTER@@QAEHG@Z function 0x65
+0x004c3950 ?GetCharWidth@TEXTMASTER@@QAEMG@Z function 0x30
+0x004c3980 ??0TEXTMASTER@@QAE@PAVRESOURCEMANAGER@@PBD@Z function 0x16a
+0x004c3af0 ?GetClassId@TEXTMASTER@@UAEHXZ function 0x6
+0x004c3b00 ?GetParentClassId@TEXTMASTER@@UAEHXZ function 0xd
+0x004c3b10 ?GetClassName@TEXTMASTER@@UAEPBDXZ function 0xe
+0x004c3b20 ?SetSpacingHorizontal@TEXTMASTER@@UAEXABM@Z function 0xf
+0x004c3b30 ?SetSpacingVertical@TEXTMASTER@@UAEXABM@Z function 0xf
+0x004c3b40 ?SetBaseLine@TEXTMASTER@@UAEXABM@Z function 0xf
+0x004c3b50 ?SetDefaultHeight@TEXTMASTER@@UAEXABM@Z function 0xf
+0x004c3b60 ?CreateCopy@TEXTMASTER@@UAEPAVRESOURCE@@ABURESHANDLE@@@Z function 0x69
+0x004c3bd0 ?Execute@TEXTMASTER@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function 0x73
+0x004c3c50 ??_GTEXTMASTER@@UAEPAXI@Z function 0x1e
+0x004c3c70 ??1TEXTMASTER@@UAE@XZ function 0x6c
+0x004c3ce0 ??1UNICODETOKENS@@QAE@XZ function 0x6a
+0x004c3d50 ?CreateMaster@TEXTMANAGER@@UAEPAVRESOURCEMASTER@@PBD@Z function 0x69
+0x004c3dc0 ?Update@TEXT@@UAEXXZ function 0x158d
+0x004c5350 ?BuildCharacters@TEXTMASTER@@QAEXXZ function 0x3eb
+0x004c5740 ?SetCharactersData@TEXTMASTER@@UAEXABVUNICODESTRING@@@Z function 0x29
+0x004c5770 ?Prepare@TEXTMASTER@@UAEXXZ function 0x5
 0x004c57e0 ?AddUser@SHADERMASTER@@QAEXXZ function
 0x004c57f0 ?RemoveUser@SHADERMASTER@@QAEXXZ function
 0x004c6050 ?SetRenderPassesFlags@BONEDMODELMASTER@@UAEXABH@Z function 0xa
@@ -2567,6 +2614,7 @@
 0x005c380d _wcschr function 0x22
 0x005c382f _wcsncat function 0x3d
 0x005c386c _wcsstr function 0x5e
+0x005c38ca __wtof function
 0x005c39a0 __wtol function 0x5f
 0x005c39ff __wtol function 0x5
 0x005c3a04 _fgets function 0x57
@@ -2959,6 +3007,8 @@
 0x00614520 _$E3 function 0x169
 0x00614690 _$E1 function 0x23
 0x006146c0 _$E3 function 0x231
+0x00614900 _$E1 function 0x23
+0x00614930 _$E3 function 0x283
 0x006541f0 _$E1 function 0x1d
 0x00654470 _$E6 function 0x24
 0x006544a0 _$E9 function 0x24
@@ -2998,6 +3048,10 @@
 0x00656f50 __real@43340000 data
 0x0065750c ??_C@_0BM@PAPJHAGI@invalid?5map?1set?$DMT?$DO?5iterator?$AA@ data
 0x00657528 ??_C@_0BE@JONHPENG@map?1set?$DMT?$DO?5too?5long?$AA@ data
+0x00658024 ??_C@_0DC@OEHLFMM@Error?5?9?5DYNAMICARRAY?5resize?5with@ data 0x32
+0x006580a4 ??_C@_0CM@JFJKNKHK@DYNAMICARRAY?3Insert?$DO?5Error?5?9?5tab@ data 0x2c
+0x006580d0 ??_C@_0DN@EHHGKNPK@DYNAMICARRAY?3Insert?$DO?5Error?5?9?5Inv@ data 0x3d
+0x00658110 ??_C@_0CM@JHNMGECD@DYNAMICARRAY?3Insert?$DO?5Error?5?9?5tab@ data 0x2c
 0x00658160 __real@3e800000 data
 0x006581b8 __real@40a00000 data
 0x00658234 __real@42652ee1 data
@@ -3029,12 +3083,14 @@
 0x0065f224 ??_C@_07GKACAEDJ@Texture?$AA@ data 0x8
 0x0065f888 ??_7CMDBASE@@6B@ data 0x4c
 0x0065f900 ??_7RESOURCE@@6B@ data
+0x0065fae0 __real@3b808081 data 0x4
 0x0065fc58 ??_C@_0BB@NJBJIAGB@BarGrowDirection?$AA@ data 0x11
 0x0065fc6c ??_C@_0N@IGCJLPCK@BarEndOffset?$AA@ data 0xd
 0x0065fc7c ??_C@_0P@EKAGPCOP@BarStartOffset?$AA@ data 0xf
 0x0065fec4 ??_C@_09OOOMBMED@ScreenPos?$AA@ data 0xa
 0x006600f0 ??_C@_0FP@IKMMFDBK@ERROR?$CB?$CB?5RESOURCES?3?3LoadManagers?$DO@ data 0x5f
 0x00660ce8 ??_C@_06GJMFONGK@Radius?$AA@ data 0x7
+0x006612c0 ??_7UNICODESTRING@@6B@ data 0x4
 0x00661ac0 ??_7APPOPTIONS@@6B@ data 0x24
 0x00661e7c ??_C@_0BD@OLBABOEK@vector?$DMT?$DO?5too?5long?$AA@ data 0x13
 0x00661eac ??_C@_02JDPG@rb?$AA@ data 0x3
@@ -3148,6 +3204,7 @@
 0x00667034 ??_C@_0M@LHCCHCAG@TESLAMASTER?$AA@ data 0xc
 0x00667040 ??_C@_0BA@OGDBAEPO@POLYTRAILMASTER?$AA@ data 0x10
 0x00667050 ??_C@_0M@DDDCBPJF@CURVEMASTER?$AA@ data 0xc
+0x0066705c ??_C@_0L@BILCKCGA@TEXTMASTER?$AA@ data 0xb
 0x0066707c ??_C@_08KGDJAKPA@RESOURCE?$AA@ data
 0x00667088 ??_C@_09CMINMFIB@RESOURCES?$AA@ data 0xa
 0x00667094 ??_C@_09LLOKOKDN@GUISLIDER?$AA@ data 0xa
@@ -3607,6 +3664,33 @@
 0x006704f0 ??_C@_0EA@JAKKKDFP@warning?$CB?5curve?5is?5already?5added?5@ data 0x40
 0x00670530 ??_C@_0L@JGBPIJFA@LookCamera?$AA@ data 0xb
 0x0067053c ??_C@_05IHOGHNDL@Alpha?$AA@ data 0x6
+0x00670544 ??_C@_0M@OLMMCPOL@ShaderNames?$AA@ data 0xc
+0x00670550 _s_TypeNames data 0xb4
+0x00670604 ??_7?$DYNAMICARRAY@UFONTCHAR@@@@6B@ data 0x4
+0x00670608 ??_7TEXTMANAGER@@6B@ data 0x20
+0x00670628 ??_C@_08FLANPJCH@TEXT?4txt?$AA@ data 0x9
+0x00670638 ??_7TEXT@@6B@ data 0x120
+0x00670758 ??_C@_0EA@IDCAJKHJ@FONT?5?$CFs?5?9?5using?5unicode?5char?50x?$CF@ data 0x40
+0x00670798 ??_C@_09NNANOLPB@whiteFont?$AA@ data 0xa
+0x006707a8 ??_7TEXTMASTER@@6B@ data 0xa0
+0x00670848 ??_C@_0BO@NOGBNOGG@Can?8t?5use?5decal?5?$CFd?5of?5text?5?$CFs?$AA@ data 0x1e
+0x00670868 ??_C@_15OJKDPEFE@?$AA?5?$AA?5?$AA?$AA@ data 0x6
+0x00670870 ??_C@_15CGCMLLAO@?$AA?5?$AA?6?$AA?$AA@ data 0x6
+0x00670878 ??_C@_0CF@EOPOAPPB@?5?5Error?5at?5scanning?5command?5for?5@ data 0x25
+0x006708a0 ??_C@_15KNBIKKIN@?$AA?$CF?$AAd?$AA?$AA@ data 0x6
+0x006708a8 ??_C@_0DB@PBNLEJJE@Error?5?9?5Variable?5in?5TEXT?5?9?5Type?5@ data 0x31
+0x006708dc ??_C@_15HBBGCAG@?$AA?$CF?$AAf?$AA?$AA@ data 0x6
+0x006708e4 ??_C@_02KPKOKMHB@?$CFS?$AA@ data 0x3
+0x006708e8 ??_C@_15NOPDEMPF@?$AA?$EA?$AA?3?$AA?$AA@ data 0x6
+0x006708f0 ??_C@_0DA@NKEFLMIO@TEXTMASTER?5?$CFs?5Char?50x?$CF04X?5has?5in@ data 0x30
+0x00670920 ??_C@_13DEFPDAGF@?$AA?0?$AA?$AA@ data 0x4
+0x00670924 ??_C@_0DG@PNPAANBH@TEXTMASTER?5?$CFs?5Char?50x?$CF04X?5has?5du@ data 0x36
+0x0067095c ??_C@_13LBAGMAIH@?$AA?6?$AA?$AA@ data 0x4
+0x00670960 ??_C@_0P@DOECOANG@CharactersData?$AA@ data 0xf
+0x00670970 ??_C@_0O@KBAMONJC@DefaultHeight?$AA@ data 0xe
+0x00670980 ??_C@_08PBIEEAKD@BaseLine?$AA@ data 0x9
+0x0067098c ??_C@_0BA@JNOLOOGK@SpacingVertical?$AA@ data 0x10
+0x0067099c ??_C@_0BC@GCOIKBHC@SpacingHorizontal?$AA@ data 0x12
 0x0067252c ??_7FILELOADER@@6B@ data 0x34
 0x00672810 __real@3f847ae147ae147b data
 0x006734c4 __real@358637bd data
@@ -4126,6 +4210,7 @@
 0x006b9b30 ?s_classId@RESOURCES@@2HA data 0x4
 0x006b9b34 ?s_classId@RESOURCE@@2HA data 0x4
 0x006b9b38 ?s_classId@RESOURCEMASTER@@2HA data 0x4
+0x006b9b44 ?s_classId@TEXTMASTER@@2HA data 0x4
 0x006b9b48 ?s_classId@CURVEMASTER@@2HA data 0x4
 0x006b9b4c ?s_classId@POLYTRAILMASTER@@2HA data 0x4
 0x006b9b50 ?s_classId@TESLAMASTER@@2HA data 0x4
@@ -4200,6 +4285,7 @@
 0x006c0520 ?s_properties@POLYTRAILMASTER@@2PAUPROPENTRY@@A data 0xe0
 0x006c0600 ?s_properties@CURVEMASTER@@2PAUPROPENTRY@@A data 0x150
 0x006c0750 ?g_pfnCreateTEXT@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006c0758 ?s_properties@TEXTMASTER@@2PAUPROPENTRY@@A data 0x188
 0x006c08e0 ?g_pfnCreateSHADER@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006c16d8 ?g_pfnCreateFileLoader@@3P6APAVFILELOADER@@XZA data 0x4
 0x006c1808 ?g_pfnCreateSIMPLEMODEL@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
@@ -4277,6 +4363,7 @@
 0x006ccc98 ?g_classNames@@3PAY0BO@DA data
 0x006d08b0 ?g_basePath@@3PADA data
 0x006d09b4 ?g_pApp@@3PAVAPP@@A data 0x4
+0x006d09b8 ?g_pDisplay@@3PAVDISPLAY@@A data 0x4
 0x006d09c0 ?g_pTimer@@3PAVTIMER@@A data 0x4
 0x006d09d4 ?g_pGame@@3PAVGAME@@A data 0x4
 0x006d15e0 ?g_pActors@@3PAVACTORS@@A data 0x4
@@ -4350,6 +4437,7 @@
 0x009ee118 ?s_indices@CURVE@@2PAFA data 0xc00
 0x009eed18 ?s_indicesReady@CURVE@@2_NA data 0x1
 0x009eed20 ?s_commands@CURVEMASTER@@2PAUCMDENTRY@@A data 0x20
+0x009eed40 ?s_commands@TEXTMASTER@@2PAUCMDENTRY@@A data 0x20
 0x009eede8 _s_line data 0x10000
 0x00a0f288 _s_format_id data
 0x00a0f28c _s_format_id data
