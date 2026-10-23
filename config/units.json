@@ -1542,6 +1542,23 @@
       }
     },
     {
+      "name": "Tongas2/PATHREPOSITORY",
+      "ranges": [
+        "0x004b6580-0x004b778f",
+        "0x00610700-0x006107df",
+        "0x0066cfe0-0x0066d1cf",
+        "0x006be160-0x006be1d7",
+        "0x009edef8-0x009edf17"
+      ],
+      "target": "build/target/Tongas2/PATHREPOSITORY.obj",
+      "source": "src/Tongas2/PATHREPOSITORY.cpp",
+      "category": "engine",
+      "complete": false,
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z"
+      }
+    },
+    {
       "name": "Tongas2/GLOBALDEFS",
       "ranges": [
         "0x004b7790-0x004b7a5f",

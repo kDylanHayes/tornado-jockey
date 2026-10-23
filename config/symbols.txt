@@ -160,9 +160,12 @@
 0x004494e0 ?compare@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBEHIIPBDI@Z function
 0x00449560 ?append@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@ID@Z function
 0x00449630 ?append@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@ABV12@II@Z function
+0x00449b20 ??$_Destroy_range@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@YAXPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0AAV?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@0@U_Nonscalar_ptr_iterator_tag@0@@Z function
+0x00449e50 ?_Insert_n@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@IAEXViterator@12@IABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@@Z function
 0x0044a440 ??$?HDU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@ABV10@0@Z function
 0x0044a620 ?append@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@PBDI@Z function
 0x0044a730 ??$?HDU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@ABV10@PBD@Z function
+0x004513c0 ??$copy@PAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAV12@@std@@YAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PAV10@00@Z function
 0x004536f0 ??R?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@QBE_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@0@Z function
 0x004540f0 ?NewNode@?$CALLBACKLIST@P6AXXZ@@QAEPAUNODE@1@P6AXXZ@Z function
 0x0045446b ??2@YAPAXI@Z function 0x24
@@ -185,6 +188,7 @@
 0x00484010 ?Reserve@UNICODESTRING@@QAEXABH@Z function
 0x00484470 ?Virtual12@CMDBASE@@UAEXXZ function
 0x00484820 ?Virtual10@CMDBASE@@UAEXXZ function
+0x00484d20 ?Format@STRING@@QAAXPBDZZ function 0x6c
 0x00484e20 ??4UNICODESTRING@@QAEAAV0@ABV0@@Z function
 0x004861e0 ?Virtual16@CMDBASE@@UAEXXZ function
 0x00488430 ?Virtual00@CMDBASE@@UAE?AVSRESULT@@PAPAVTOKENS@@@Z function
@@ -225,6 +229,7 @@
 0x004a2c80 ?DumpTotals@RESOURCEMANAGER@@QAEX_N@Z function
 0x004a2cc0 ?CanPreload@RESOURCEMANAGER@@QAE_NXZ function
 0x004a2ce0 ??0RESOURCEMANAGER@@QAE@XZ function
+0x004a2e60 ?AddMaster@RESOURCEMANAGER@@QAEPAVRESOURCEMASTER@@PBD@Z function 0x1e
 0x004a2e80 ?Init@RESOURCEMANAGER@@UAEXXZ function
 0x004a2f40 ?GetHandle@RESOURCEMANAGER@@QAE?AURESHANDLE@@PBD@Z function
 0x004a2fd0 ?GetResource@RESOURCEMANAGER@@QAEPAVRESOURCE@@PBD@Z function
@@ -650,6 +655,34 @@
 0x004b6460 ??_GACTORRESOURCESMASTER@@UAEPAXI@Z function 0x1e
 0x004b6480 ??1ACTORRESOURCESMASTER@@UAE@XZ function 0x70
 0x004b64f0 ?Execute@ACTORRESOURCESMASTER@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function 0x83
+0x004b6580 ?RegisterCommands@PATHREPOSITORYMASTER@@SAXXZ function 0x3f
+0x004b65c0 ??$_Copy_opt@PAUPATHREPOPOINT@@PAU1@@std@@YAPAUPATHREPOPOINT@@PAU1@00U_Nonscalar_ptr_iterator_tag@0@@Z function 0x47
+0x004b6610 ??$_Copy_backward_opt@PAUPATHREPOPOINT@@PAU1@@std@@YAPAUPATHREPOPOINT@@PAU1@00U_Nonscalar_ptr_iterator_tag@0@@Z function 0x47
+0x004b6660 ?GetTypeCode@PATHREPOSITORYMANAGER@@UAEPBDXZ function 0x6
+0x004b6670 ?CreatePATHREPOSITORY@@YAPAVRESOURCEMANAGER@@XZ function 0x80
+0x004b66f0 ??$_Uninit_copy@PAUPATHREPOPOINT@@PAU1@V?$allocator@UPATHREPOPOINT@@@std@@@std@@YAPAUPATHREPOPOINT@@PAU1@00AAV?$allocator@UPATHREPOPOINT@@@0@U_Nonscalar_ptr_iterator_tag@0@@Z function 0x4b
+0x004b6740 ??$_Uninit_fill_n@PAUPATHREPOPOINT@@IU1@V?$allocator@UPATHREPOPOINT@@@std@@@std@@YAXPAUPATHREPOPOINT@@IABU1@AAV?$allocator@UPATHREPOPOINT@@@0@U_Nonscalar_ptr_iterator_tag@0@@Z function 0x49
+0x004b6790 ?_Ufill@?$vector@UPATHREPOPOINT@@V?$allocator@UPATHREPOPOINT@@@std@@@std@@IAEPAUPATHREPOPOINT@@PAU3@IABU3@@Z function 0x2a
+0x004b67c0 ?_Xlen@?$vector@UPATHREPOPOINT@@V?$allocator@UPATHREPOPOINT@@@std@@@std@@IBEXXZ function 0x6a
+0x004b6830 ?_Insert_n@?$vector@UPATHREPOPOINT@@V?$allocator@UPATHREPOPOINT@@@std@@@std@@IAEXViterator@12@IABUPATHREPOPOINT@@@Z function 0x2ca
+0x004b6b00 ??1?$GROWARRAY@V?$vector@UPATHREPOPOINT@@V?$allocator@UPATHREPOPOINT@@@std@@@std@@@@UAE@XZ function 0x83
+0x004b6b90 ??_G?$GROWARRAY@V?$vector@UPATHREPOPOINT@@V?$allocator@UPATHREPOPOINT@@@std@@@std@@@@UAEPAXI@Z function 0x1e
+0x004b6bb0 ??0?$vector@UPATHREPOPOINT@@V?$allocator@UPATHREPOPOINT@@@std@@@std@@QAE@XZ function 0xe
+0x004b6bc0 ?resize@?$vector@UPATHREPOPOINT@@V?$allocator@UPATHREPOPOINT@@@std@@@std@@QAEXIUPATHREPOPOINT@@@Z function 0xa7
+0x004b6c70 ?resize@?$vector@UPATHREPOPOINT@@V?$allocator@UPATHREPOPOINT@@@std@@@std@@QAEXI@Z function 0x71
+0x004b6cf0 ?Reserve@?$GROWARRAY@V?$vector@UPATHREPOPOINT@@V?$allocator@UPATHREPOPOINT@@@std@@@std@@@@QAEXI@Z function 0xd7
+0x004b6dd0 ?erase@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QAE?AViterator@12@V312@0@Z function 0x45
+0x004b6e20 ??0PATHREPOSITORYMASTER@@QAE@PAVRESOURCEMANAGER@@PBD@Z function 0x93
+0x004b6ec0 ?GetClassId@PATHREPOSITORYMASTER@@UAEHXZ function 0x6
+0x004b6ed0 ?GetParentClassId@PATHREPOSITORYMASTER@@UAEHXZ function 0xd
+0x004b6ee0 ?GetClassName@PATHREPOSITORYMASTER@@UAEPBDXZ function 0xe
+0x004b6ef0 ?Execute@PATHREPOSITORYMASTER@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function 0x83
+0x004b6f80 ?resize@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QAEXIV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@@Z function 0xdb
+0x004b7060 ?CreateMaster@PATHREPOSITORYMANAGER@@UAEPAVRESOURCEMASTER@@PBD@Z function 0x69
+0x004b70d0 ?Clear@PATHREPOSITORYMASTER@@QAEXXZ function 0xb1
+0x004b7190 ??1PATHREPOSITORYMASTER@@UAE@XZ function 0xaa
+0x004b7240 ?SetFileName@PATHREPOSITORYMASTER@@UAEXABVCSTRING@@@Z function 0x52b
+0x004b7770 ??_GPATHREPOSITORYMASTER@@UAEPAXI@Z function 0x1e
 0x004b7790 ?RegisterCommands@GLOBALDEFSMASTER@@SAXXZ function 0x3f
 0x004b77d0 ?GetTypeCode@GLOBALDEFSMANAGER@@UAEPBDXZ function 0x6
 0x004b77e0 ?CreateGLOBALDEFS@@YAPAVRESOURCEMANAGER@@XZ function 0x80
@@ -718,6 +751,9 @@
 0x004e7820 ?_Min@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@KAPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@PAU342@@Z function
 0x004e7ed0 ?_Buynode@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@PAU342@00ABU?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@2@D@Z function
 0x004eb950 ?IsCompressed@FILELOADER@@UAE_NXZ function 0x3
+0x004fbbb0 ??1?$vector@UPATHREPOPOINT@@V?$allocator@UPATHREPOPOINT@@@std@@@std@@QAE@XZ function
+0x0053dad0 ?size@?$vector@UPATHREPOPOINT@@V?$allocator@UPATHREPOPOINT@@@std@@@std@@QBEIXZ function 0x1f
+0x0053db30 ??$fill@PAUPATHREPOPOINT@@U1@@std@@YAXPAUPATHREPOPOINT@@0ABU1@@Z function
 0x00547f50 ?term_source@@YAXPAUjpeg_decompress_struct@@@Z function
 0x0054f1f0 ??1WTINFO@@QAE@XZ function
 0x00550520 ??0WTINFO@@QAE@_N@Z function
@@ -2181,6 +2217,7 @@
 0x005c35ac __set_osfhnd function 0x77
 0x005c3623 __free_osfhnd function 0x7a
 0x005c369d __get_osfhandle function 0x3c
+0x005c36d9 _fscanf function
 0x005c36f0 _ceil function
 0x005c380d _wcschr function 0x22
 0x005c382f _wcsncat function 0x3d
@@ -2543,6 +2580,8 @@
 0x0060fb20 _$E1 function 0x16
 0x00610390 _$E1 function 0x23
 0x006103c0 _$E3 function 0x33e
+0x00610700 _$E1 function 0x23
+0x00610730 _$E3 function 0xa1
 0x006107e0 _$E1 function 0x23
 0x00610810 _$E3 function 0xa1
 0x006108c0 _$E1 function 0x23
@@ -2614,6 +2653,7 @@
 0x006600f0 ??_C@_0FP@IKMMFDBK@ERROR?$CB?$CB?5RESOURCES?3?3LoadManagers?$DO@ data 0x5f
 0x00660ce8 ??_C@_06GJMFONGK@Radius?$AA@ data 0x7
 0x00661ac0 ??_7APPOPTIONS@@6B@ data 0x24
+0x00661e7c ??_C@_0BD@OLBABOEK@vector?$DMT?$DO?5too?5long?$AA@ data 0x13
 0x00661eac ??_C@_02JDPG@rb?$AA@ data 0x3
 0x00661eb0 ??_C@_02GMLFBBN@wb?$AA@ data 0x3
 0x00662ae0 ??_7length_error@std@@6B@ data
@@ -2706,6 +2746,7 @@
 0x006667d4 ??_C@_07GOLFKGID@CMDBASE?$AA@ data 0x8
 0x00666990 ??_C@_02DPKJAMEF@?$CFd?$AA@ data
 0x00666ee4 ??_C@_0BF@MHILCODM@ACTORRESOURCESMASTER?$AA@ data 0x15
+0x00666efc ??_C@_0BF@JEGOCPCJ@PATHREPOSITORYMASTER?$AA@ data 0x15
 0x00666f14 ??_C@_0L@GMKAKGOI@PATHMASTER?$AA@ data 0xb
 0x00666f20 ??_C@_0BB@OFLFLDGO@GLOBALDEFSMASTER?$AA@ data 0x11
 0x00666f34 ??_C@_0M@PANODEBC@LIGHTMASTER?$AA@ data 0xc
@@ -2720,6 +2761,7 @@
 0x006670d4 ??_C@_09KIKCHMPD@GUIVISUAL?$AA@ data 0xa
 0x006670e0 ??_C@_0M@EHIIDNGN@GUITEXTEDIT?$AA@ data 0xc
 0x006670ec ??_C@_07DNBOFAIK@GUITEXT?$AA@ data 0x8
+0x006671c0 ??_C@_06DIJPEION@?$CFs?$CFs?$CFs?$AA@ data 0x7
 0x00667384 ??_C@_01KDCPPGHE@r?$AA@ data
 0x00667484 ??_C@_01KMDKNFGN@?1?$AA@ data 0x2
 0x00667ec8 __real@c3340000 data
@@ -2943,6 +2985,7 @@
 0x0066c0a8 ??_C@_0CM@OKKLNIAA@ERROR?$CB?$CB?5?9?5not?5unused?5copies?5for?5@ data
 0x0066c0d4 ??_C@_0M@OHKMKKDH@Description?$AA@ data
 0x0066c0e0 ??_C@_09DLCDDHDM@MinCopies?$AA@ data
+0x0066c1a4 ??_C@_08FDCJCDOL@FileName?$AA@ data 0x9
 0x0066c544 ??_7UNICODESTRING_MANAGER@@6B@ data 0x4
 0x0066c548 ??_C@_0BK@BPAADEOI@Process?5failed?5to?5create?4?$AA@ data 0x1a
 0x0066c564 ??_C@_05NAOIJFC@Error?$AA@ data 0x6
@@ -2956,6 +2999,18 @@
 0x0066cf1c ??_C@_0BD@ILKPECFL@ACTORRESOURCES?4txt?$AA@ data 0x13
 0x0066cf30 ??_C@_04CLEBHKIB@ACRS?$AA@ data 0x5
 0x0066cf38 ??_7ACTORRESOURCESMASTER@@6B@ data 0xa8
+0x0066cfe0 _s_TypeNames data 0xb4
+0x0066d094 ??_7PATHREPOSITORYMANAGER@@6B@ data 0x20
+0x0066d0b4 ??_C@_0BD@KKEOJDGO@PATHREPOSITORY?4txt?$AA@ data 0x13
+0x0066d0c8 ??_C@_04MAFALJOP@PARE?$AA@ data 0x5
+0x0066d0d0 ??_7?$GROWARRAY@V?$vector@UPATHREPOPOINT@@V?$allocator@UPATHREPOPOINT@@@std@@@std@@@@6B@ data 0x4
+0x0066d0d8 ??_7PATHREPOSITORYMASTER@@6B@ data 0x8c
+0x0066d164 ??_C@_0BK@NDKBELPE@?$FL?$CFf?0?$CFf?0?$CFf?$FN?5?$FL?$CFf?0?$CFf?0?$CFf?$FN?5?$CFd?6?$AA@ data 0x1a
+0x0066d180 ??_C@_03PMGGPEJJ@?$CFd?6?$AA@ data 0x4
+0x0066d184 ??_C@_07OGJHLKIB@?$CFs?$FL?$FO?6?$FN?6?$AA@ data 0x8
+0x0066d18c ??_C@_09JMPBJMIJ@Total?3?$CFd?6?$AA@ data 0xa
+0x0066d198 ??_C@_0DE@BOPFMNEL@PATHREPOSITYMASTER?3?3SetFileName?5@ data 0x34
+0x0066d1cc ??_C@_02BMJICGCB@rt?$AA@ data 0x3
 0x0066d1d0 ??_C@_05LPIJGKJ@Value?$AA@ data 0x6
 0x0066d28c ??_7GLOBALDEFSMANAGER@@6B@ data 0x20
 0x0066d2ac ??_C@_0P@DKACFHP@GLOBALDEFS?4txt?$AA@ data 0xf
@@ -3496,6 +3551,7 @@
 0x006b9b90 ?s_classId@LIGHTMASTER@@2HA data 0x4
 0x006b9b94 ?s_classId@GLOBALDEFSMASTER@@2HA data 0x4
 0x006b9b98 ?s_classId@PATHMASTER@@2HA data 0x4
+0x006b9b9c ?s_classId@PATHREPOSITORYMASTER@@2HA data 0x4
 0x006b9ba0 ?s_classId@ACTORRESOURCESMASTER@@2HA data 0x4
 0x006bbcb8 ?s_pfnCreate@RESOURCES@@2P6APAVCMDBASE@@XZA data 0x4
 0x006bbcc0 ?s_commands@RESOURCES@@2PAUCMDENTRY@@A data 0xc0
@@ -3515,6 +3571,7 @@
 0x006bdf60 ?g_pfnCreateACTORRESOURCES@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006bdf68 ?s_properties@ACTORRESOURCESMASTER@@2PAUPROPENTRY@@A data 0x1f8
 0x006be160 ?g_pfnCreatePATHREPOSITORY@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006be168 ?s_properties@PATHREPOSITORYMASTER@@2PAUPROPENTRY@@A data 0x70
 0x006be1d8 ?g_pfnCreateGLOBALDEFS@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006be1e0 ?s_properties@GLOBALDEFSMASTER@@2PAUPROPENTRY@@A data 0x70
 0x006be250 ?g_pfnCreateLIGHT@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
@@ -3665,6 +3722,7 @@
 0x007e0e30 ?s_encode@UNICODESTRING_MANAGER@@2PADA data 0x40
 0x007e0eb0 ?g_UnicodeStringManager@@3VUNICODESTRING_MANAGER@@A data 0x20d01c
 0x009eded8 ?s_commands@ACTORRESOURCESMASTER@@2PAUCMDENTRY@@A data 0x20
+0x009edef8 ?s_commands@PATHREPOSITORYMASTER@@2PAUCMDENTRY@@A data 0x20
 0x009edf18 ?s_commands@GLOBALDEFSMASTER@@2PAUCMDENTRY@@A data 0x20
 0x009edf38 ?s_commands@LIGHTMASTER@@2PAUCMDENTRY@@A data 0x20
 0x009eede8 _s_line data 0x10000
