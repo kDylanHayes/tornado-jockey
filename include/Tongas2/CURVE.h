@@ -63,6 +63,7 @@ public:
 struct CURVEPOINT : V3
 {
     CURVEPOINT() : V3(0.0f, 0.0f, 0.0f) {}
+    CURVEPOINT &operator=(const V3 &v) { V3::operator=(v); return *this; }
 };
 
 // Texture coordinates that start as the whole texture.
@@ -109,6 +110,7 @@ public:
         }
         return true;
     }
+    virtual V3 GetScaleFactor() { return m_scaleFactor; }
     virtual void SetLayer(int layer);
     // Where the curve type puts its points.
     virtual void PlacePoints() {}

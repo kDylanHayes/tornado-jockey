@@ -1758,6 +1758,22 @@
       }
     },
     {
+      "name": "Tongas2/POLYTRAIL",
+      "ranges": [
+        "0x004c1580-0x004c215f",
+        "0x006144f0-0x0061468f",
+        "0x0066ff50-0x00670213",
+        "0x006c0518-0x006c05ff",
+        "0x009ee0f8-0x009ee117"
+      ],
+      "target": "build/target/Tongas2/POLYTRAIL.obj",
+      "source": "src/Tongas2/POLYTRAIL.cpp",
+      "category": "engine",
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z"
+      }
+    },
+    {
       "name": "Tongas2/PATHREPOSITORY",
       "ranges": [
         "0x004b6580-0x004b778f",

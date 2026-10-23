@@ -15,6 +15,7 @@ struct V3
     V3(float x_, float y_, float z_) : x(x_), y(y_), z(z_) {}
 
     V3 &operator+=(const V3 &o) { x += o.x; y += o.y; z += o.z; return *this; }
+    V3 &operator-=(const V3 &o) { x -= o.x; y -= o.y; z -= o.z; return *this; }
 
     // The point transformed by m, translation included.
     V3 Transform(const MATRIX &m) const;
