@@ -1542,6 +1542,23 @@
       }
     },
     {
+      "name": "Tongas2/GUISLIDER",
+      "ranges": [
+        "0x004b7fd0-0x004b873f",
+        "0x00610c90-0x00610e2f",
+        "0x0066d6cc-0x0066d8ef",
+        "0x006be488-0x006be56f",
+        "0x009edf58-0x009edf77"
+      ],
+      "target": "build/target/Tongas2/GUISLIDER.obj",
+      "source": "src/Tongas2/GUISLIDER.cpp",
+      "category": "engine",
+      "complete": true,
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z"
+      }
+    },
+    {
       "name": "Tongas2/GUIGENERIC",
       "ranges": [
         "0x004b8740-0x004b8e8f",

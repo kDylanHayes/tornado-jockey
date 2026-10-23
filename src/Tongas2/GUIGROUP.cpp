@@ -120,8 +120,8 @@ GUIGROUPMASTER::GUIGROUPMASTER(RESOURCEMANAGER *manager, const char *name)
     m_onClick = "";
     m_onMouseOver = "";
     m_onMouseOut = "";
-    m_mouseAreaOffset = V2(0.0f, 0.0f);
-    m_mouseAreaSize = V2(0.0f, 0.0f);
+    m_mouseAreaOffset = GUIGROUPV2(0.0f, 0.0f);
+    m_mouseAreaSize = GUIGROUPV2(0.0f, 0.0f);
     m_mouseOverOutWhenDisable = false;
     m_passMouseOverToFather = false;
     m_selectableWithKeyboard = false;

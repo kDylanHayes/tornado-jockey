@@ -18,7 +18,8 @@
 struct GUIGROUPV2 : V2
 {
     GUIGROUPV2() : V2(0.0f, 0.0f) {}
-    GUIGROUPV2(const V2 &v) : V2(v) {}
+    GUIGROUPV2(float x_, float y_) : V2(x_, y_) {}
+    GUIGROUPV2 &operator=(const V2 &v) { V2::operator=(v); return *this; }
 };
 
 class GUIGROUPMASTER : public RESOURCEMASTER
@@ -39,33 +40,13 @@ public:
 
     virtual void SetTimeSpace(const int &timeSpace) { m_timeSpace = timeSpace; }
     virtual void SetOnActivateCommand(const STRING &command) { m_onActivateCommand = command; }
-    virtual void SetOnDeactivateCommand(STRING &command)
-    {
-        m_onDeactivateCommand.Reserve(command.Length());
-        m_onDeactivateCommand = command.c_str();
-    }
-    virtual void SetOnStepCommand(STRING &command)
-    {
-        m_onStepCommand.Reserve(command.Length());
-        m_onStepCommand = command.c_str();
-    }
+    virtual void SetOnDeactivateCommand(const STRING &command) { m_onDeactivateCommand = command; }
+    virtual void SetOnStepCommand(const STRING &command) { m_onStepCommand = command; }
     virtual void SetSetOnTopPriority(const bool &onTop) { m_setOnTopPriority = onTop; }
     virtual void SetFullScreenInputBlocker(const bool &blocker) { m_fullScreenInputBlocker = blocker; }
-    virtual void SetOnClick(STRING &command)
-    {
-        m_onClick.Reserve(command.Length());
-        m_onClick = command.c_str();
-    }
-    virtual void SetOnMouseOver(STRING &command)
-    {
-        m_onMouseOver.Reserve(command.Length());
-        m_onMouseOver = command.c_str();
-    }
-    virtual void SetOnMouseOut(STRING &command)
-    {
-        m_onMouseOut.Reserve(command.Length());
-        m_onMouseOut = command.c_str();
-    }
+    virtual void SetOnClick(const STRING &command) { m_onClick = command; }
+    virtual void SetOnMouseOver(const STRING &command) { m_onMouseOver = command; }
+    virtual void SetOnMouseOut(const STRING &command) { m_onMouseOut = command; }
     virtual void SetMouseAreaOffset(const V2 &offset) { m_mouseAreaOffset = offset; }
     virtual void SetMouseAreaSize(const V2 &size) { m_mouseAreaSize = size; }
     virtual void SetMouseOverOutWhenDisable(const bool &value) { m_mouseOverOutWhenDisable = value; }
