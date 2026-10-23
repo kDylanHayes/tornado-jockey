@@ -275,9 +275,10 @@ public:
     float m_fadeDistance;
     char m_178[0x970 - 0x178];
     float m_alpha;
-    char m_974[0x984 - 0x974];
+    bool m_974;
+    char m_975[0x984 - 0x975];
     int m_layer;
-    int m_988;
+    float m_988;
     int m_visibility;
     char m_990[0x9a0 - 0x990];
     bool m_placed;
