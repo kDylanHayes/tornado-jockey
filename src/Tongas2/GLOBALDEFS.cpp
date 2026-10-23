@@ -23,8 +23,8 @@ CMDENTRY GLOBALDEFSMASTER::s_commands[] = {
 };
 
 PROPENTRY GLOBALDEFSMASTER::s_properties[] = {
-    { "Value", 0, 8, 0 },
-    { 0 },
+    { "Value", 0, 8, 0, PROP_FIELD(GLOBALDEFSMASTER, m_value), false, 1, PROP_SETTER(GLOBALDEFSMASTER, SetValue) },
+    { 0, 0, 15, 0, 0, false },
 };
 
 void GLOBALDEFSMASTER::RegisterCommands()

@@ -1511,6 +1511,7 @@
       "name": "Tongas2/GLOBALDEFS",
       "ranges": [
         "0x004b7790-0x004b7a5f",
+        "0x006107e0-0x006108bf",
         "0x0066d1d0-0x0066d357",
         "0x006be1d8-0x006be24f",
         "0x009edf18-0x009edf37"
