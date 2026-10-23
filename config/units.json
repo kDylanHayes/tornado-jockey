@@ -1644,6 +1644,46 @@
       }
     },
     {
+      "name": "Tongas2/GUITEXTEDIT",
+      "ranges": [
+        "0x004ba5f0-0x004bae2f",
+        "0x00612810-0x00612b2f",
+        "0x0066e6c0-0x0066e903",
+        "0x006bf478-0x006bf63f",
+        "0x009ee018-0x009ee037"
+      ],
+      "target": "build/target/Tongas2/GUITEXTEDIT.obj",
+      "source": "src/Tongas2/GUITEXTEDIT.cpp",
+      "category": "engine",
+      "complete": true,
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z",
+        "??0CSTRING@@QAE@XZ": "??0CWSTRING@@QAE@XZ",
+        "??1CSTRING@@QAE@XZ": "??1CWSTRING@@QAE@XZ",
+        "??_GDECALMANAGER@@UAEPAXI@Z": "??_GGUITEXTEDITMANAGER@@UAEPAXI@Z",
+        "?SetSimulate3D@DECALMASTER@@UAEXAB_N@Z": "?SetCheckMouseClick@GUITEXTMASTER@@UAEXAB_N@Z"
+      }
+    },
+    {
+      "name": "Tongas2/GUITEXT",
+      "ranges": [
+        "0x004bae30-0x004bb64f",
+        "0x00612b30-0x0061338f",
+        "0x0066e904-0x0066ec47",
+        "0x006bf640-0x006bfb17",
+        "0x009ee038-0x009ee057"
+      ],
+      "target": "build/target/Tongas2/GUITEXT.obj",
+      "source": "src/Tongas2/GUITEXT.cpp",
+      "category": "engine",
+      "complete": true,
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z",
+        "??0CSTRING@@QAE@XZ": "??0CWSTRING@@QAE@XZ",
+        "??1CSTRING@@QAE@XZ": "??1CWSTRING@@QAE@XZ"
+      }
+    },
+    {
       "name": "Tongas2/PATHREPOSITORY",
       "ranges": [
         "0x004b6580-0x004b778f",
