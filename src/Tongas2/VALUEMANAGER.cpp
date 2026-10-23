@@ -35,7 +35,8 @@ SRESULT VALUEMANAGER::GetProperty(PROPENTRY *property, int index)
 
 bool VALUEMANAGER::Exists(const char *name)
 {
-    return m_values.find(name) != m_values.end();
+    std::map<std::string, SRESULT *>::iterator it = m_values.find(name);
+    return it != m_values.end();
 }
 
 PROPENTRY *VALUEMANAGER::FindProperty(const char *name, int classId)
@@ -84,7 +85,9 @@ SRESULT VALUEMANAGER::Execute(CMDENTRY *command, TOKENS **args)
 
 VALUEMANAGER::VALUEMANAGER()
 {
-    m_name = CSTRING("var");
+    CSTRING name("var");
+    if (m_name != name)
+        m_name = name.c_str();
 }
 
 static CMDBASE *CreateValueManager()
@@ -112,9 +115,11 @@ SRESULT VALUEMANAGER::Delete(CMDCALL *call)
             g_pLog->Error("could not delete variable '%s', does not exist!", name);
         return SRESULT(false);
     }
-    if (m_values[name] != &s_unset && m_values[name]) {
-        delete m_values[name];
-        m_values[name] = 0;
+    if (m_values[name] != &s_unset) {
+        if (m_values[name]) {
+            delete m_values[name];
+            m_values[name] = 0;
+        }
     }
     m_values.erase(name);
     return SRESULT(true);
@@ -123,16 +128,22 @@ SRESULT VALUEMANAGER::Delete(CMDCALL *call)
 SRESULT VALUEMANAGER::Set(CMDCALL *call)
 {
     const char *name = call->tokens->GetToken(1);
-    if (m_values.find(name) == m_values.end()) {
+    std::map<std::string, SRESULT *>::iterator it = m_values.find(name);
+    if (it == m_values.end()) {
         if (g_pLog)
             g_pLog->Error("could not set variable '%s', does not exist!", name);
         return SRESULT(false);
     }
     SRESULT *value = new SRESULT;
-    value->Assign(g_pConsole->Evaluate(STRING(call->tokens->GetToken(2)), call->caller));
-    if (m_values[name] != &s_unset && m_values[name]) {
-        delete m_values[name];
-        m_values[name] = 0;
+    {
+        STRING expression(call->tokens->GetToken(2));
+        value->Assign(g_pConsole->Evaluate(expression, call->caller));
+    }
+    if (m_values[name] != &s_unset) {
+        if (m_values[name]) {
+            delete m_values[name];
+            m_values[name] = 0;
+        }
     }
     m_values[name] = value;
     return SRESULT(*value);
