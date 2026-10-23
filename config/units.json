@@ -1703,6 +1703,26 @@
       }
     },
     {
+      "name": "Tongas2/BONEDMODEL",
+      "ranges": [
+        "0x004bbbb0-0x004bc3bf",
+        "0x00613650-0x006137ef",
+        "0x0066eff8-0x0066f407",
+        "0x006bfca8-0x006bfd8f",
+        "0x009ee078-0x009ee097"
+      ],
+      "target": "build/target/Tongas2/BONEDMODEL.obj",
+      "source": "src/Tongas2/BONEDMODEL.cpp",
+      "category": "engine",
+      "complete": true,
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z",
+        "?SetFileName@SCREENDECALMASTER@@UAEXABVCSTRING@@@Z": "?SetFileName@BONEDMODELMASTER@@UAEXABVCSTRING@@@Z",
+        "?IsLoaded@SCREENDECAL@@UAE_NXZ": "?IsLoaded@BONEDMODELRESOURCE@@UAE_NXZ",
+        "?SetDescription@RESOURCEMASTER@@UAEXABH@Z": "?Virtual77@BONEDMODELRESOURCE@@UAEXH@Z"
+      }
+    },
+    {
       "name": "Tongas2/PATHREPOSITORY",
       "ranges": [
         "0x004b6580-0x004b778f",
