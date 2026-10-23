@@ -14,9 +14,6 @@
 
 struct CONTACT;
 
-// Defined elsewhere: whether two handles are the same.
-bool operator==(const RESHANDLE &a, const RESHANDLE &b);
-
 // What a script command is run with: the tokens and who ran it.
 struct CMDCALL
 {
@@ -58,6 +55,8 @@ class TRANSFORM
 public:
     // Turns the rotation by m.
     void Rotate(const MATRIX &m);
+    // The rotation's forward and up axes.
+    void GetAxes(V3 *forward, V3 *up);
 
     V3 m_position;
     MATRIX m_rotation;
@@ -156,10 +155,10 @@ public:
     virtual ANG GetAngles();
     virtual V3 GetScale();
     virtual void Virtual93();
-    virtual void Virtual94();
-    virtual void Virtual95();
+    virtual V3 GetDirection();
+    virtual V3 GetUp();
     virtual void Virtual96();
-    virtual void Virtual97();
+    virtual V3 LocalToWorld(V3 point);
     virtual void Virtual98();
     virtual void Virtual99();
     virtual void Virtual100();
@@ -232,7 +231,9 @@ public:
     V3 m_13c;
     char m_148[0x998 - 0x148];
     bool m_998;
-    char m_999[0xa78 - 0x999];
+    char m_999[0x9a1 - 0x999];
+    bool m_9a1;
+    char m_9a2[0xa78 - 0x9a2];
     // The spawner that made the actor.
     RESHANDLE m_spawner;
     char m_a84[0xccc - 0xa84];

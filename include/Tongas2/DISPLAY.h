@@ -34,14 +34,16 @@ public:
     virtual void Virtual24();
     virtual void Virtual25();
     virtual void Virtual26();
-    virtual void Virtual27();
-    virtual void Virtual28();
+    // The size of the screen in pixels.
+    virtual int GetWidth();
+    virtual int GetHeight();
     virtual void Virtual29();
     virtual void Virtual30();
     // Whether the screen's shape calls for heights to be corrected, and the
     // correction.
     virtual bool NeedsAspectFix();
     virtual void FixHeight(float *height);
+    virtual void Virtual33(float *height);
 };
 extern DISPLAY *g_pDisplay;
 

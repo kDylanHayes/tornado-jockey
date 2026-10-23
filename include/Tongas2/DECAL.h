@@ -5,36 +5,11 @@
 #ifndef TONGAS2_DECAL_H
 #define TONGAS2_DECAL_H
 
+#include "Tongas2/CAMERA.h"
 #include "Tongas2/RESOURCE.h"
 #include "Tongas2/RESOURCES.h"
 #include "Tongas2/SHADER.h"
 #include "Tongas2/TIMER.h"
-
-// Defined elsewhere: what the camera sees through.
-struct CAMERALENS
-{
-    char m_0[0x40];
-    // How tall the view is at distance 1.
-    float m_viewHeight;
-};
-
-// Defined elsewhere: the camera actor g_pCamera points to.
-class CAMERA : public WTACTOR
-{
-public:
-    // The size of the view at distance 1.
-    V2 GetViewSize();
-    // The point at depth in front of the camera, from a point on the screen.
-    V3 ScreenToWorld(const V2 &point, const float &depth);
-
-    // Where a point in the world lands on the screen.
-    virtual bool WorldToScreen(V3 point, V2 *screen);
-
-    char m_a1c[0xd8c - 0xa1c];
-    V3 m_viewPosition;
-    V3 m_viewDirection;
-    CAMERALENS *m_lens;
-};
 
 // A corner of a decal's quad.
 struct DECALVERTEX

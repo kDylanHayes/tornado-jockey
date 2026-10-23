@@ -13,6 +13,9 @@
 
 #define TRIGGER_MAX_COMMANDS 16
 
+// Defined elsewhere: whether two handles are the same.
+bool operator==(const RESHANDLE &a, const RESHANDLE &b);
+
 // A wait time range, none until set.
 struct TRIGGERWAIT : V2
 {
