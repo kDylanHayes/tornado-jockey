@@ -1684,6 +1684,25 @@
       }
     },
     {
+      "name": "Tongas2/SCREENDECAL",
+      "ranges": [
+        "0x004bb650-0x004bbbaf",
+        "0x00613390-0x0061364f",
+        "0x0066ec48-0x0066eff7",
+        "0x006bfb18-0x006bfca7",
+        "0x009ee058-0x009ee077"
+      ],
+      "target": "build/target/Tongas2/SCREENDECAL.obj",
+      "source": "src/Tongas2/SCREENDECAL.cpp",
+      "category": "engine",
+      "complete": true,
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z",
+        "?SetDescription@RESOURCEMASTER@@UAEXABH@Z": "?SetLayer@SCREENDECAL@@UAEXH@Z",
+        "?SetDecalOrderForced@DECALMASTER@@UAEXABH@Z": "?SetBlend@SCREENDECALMASTER@@UAEXABH@Z"
+      }
+    },
+    {
       "name": "Tongas2/PATHREPOSITORY",
       "ranges": [
         "0x004b6580-0x004b778f",
