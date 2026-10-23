@@ -1723,6 +1723,25 @@
       }
     },
     {
+      "name": "Tongas2/FX",
+      "ranges": [
+        "0x004bc3c0-0x004be24f",
+        "0x006137f0-0x00613f7f",
+        "0x0066f408-0x0066f72f",
+        "0x006bfd90-0x006c01f7",
+        "0x009ee098-0x009ee0b7"
+      ],
+      "target": "build/target/Tongas2/FX.obj",
+      "source": "src/Tongas2/FX.cpp",
+      "category": "engine",
+      "complete": true,
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z",
+        "?IsLoaded@SCREENDECAL@@UAE_NXZ": "?IsLoaded@FX@@UAE_NXZ",
+        "?GetScaleFactor@DECAL@@UAE?AUV3@@XZ": "?GetScaleFactor@FX@@UAE?AUV3@@XZ"
+      }
+    },
+    {
       "name": "Tongas2/PATHREPOSITORY",
       "ranges": [
         "0x004b6580-0x004b778f",

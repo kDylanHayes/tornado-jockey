@@ -295,10 +295,26 @@ class OBJECT : public RESOURCE
 public:
     // Defined elsewhere.
     OBJECT(RESOURCEMASTER *master, RESHANDLE handle);
-    // Stops following the parent.
-    void Detach();
-    // Defined elsewhere: follows another object.
-    void SetParent(RESHANDLE parent);
+    // Stops following the parent and the tag it was attached to.
+    void Detach()
+    {
+        m_parent.Invalidate();
+        if (m_attached.IsValid())
+            m_attached.Invalidate();
+        if (m_tag) {
+            delete m_tag;
+            m_tag = 0;
+        }
+        Virtual31();
+    }
+    // Follows another object.
+    void SetParent(RESHANDLE parent)
+    {
+        if (m_parent.IsValid())
+            Detach();
+        m_parent = parent;
+        Virtual30();
+    }
 
     // Defined elsewhere.
     virtual void Init();

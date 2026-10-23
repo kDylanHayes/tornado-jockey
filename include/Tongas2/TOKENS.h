@@ -11,6 +11,14 @@
 class TOKENS
 {
 public:
+    TOKENS()
+    {
+        m_count = 0;
+        m_parsed = false;
+    }
+    // Defined elsewhere.
+    ~TOKENS();
+
     // Joins tokens first..last into one, separated by sep.
     bool Merge(int first, int last, char sep);
     void AddToken(char *token);
