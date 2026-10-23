@@ -116,7 +116,8 @@ public:
     int m_level;
     // The next master of the same manager.
     RESOURCEMASTER *m_next;
-    int m_3c;
+    // The previous master of the same manager.
+    RESOURCEMASTER *m_prev;
     RESOURCE *m_used;
     RESOURCE *m_free;
     bool m_48;

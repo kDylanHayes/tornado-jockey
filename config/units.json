@@ -1458,6 +1458,19 @@
       "complete": true
     },
     {
+      "name": "Tongas2/RESOURCEMANAGER",
+      "ranges": [
+        "0x004a29c0-0x004a341f",
+        "0x0066a288-0x0066a44f"
+      ],
+      "target": "build/target/Tongas2/RESOURCEMANAGER.obj",
+      "source": "src/Tongas2/RESOURCEMANAGER.cpp",
+      "category": "engine",
+      "symbol_mappings": {
+        "?Virtual09@RESOURCE@@UAEPAXPBD@Z": "?CreateMaster@RESOURCEMANAGER@@UAEPAVRESOURCEMASTER@@PBD@Z"
+      }
+    },
+    {
       "name": "Tongas2/RESOURCES",
       "ranges": [
         "0x004a3420-0x004a6c65",

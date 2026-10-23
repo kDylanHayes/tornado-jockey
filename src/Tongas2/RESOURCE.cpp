@@ -357,7 +357,7 @@ RESOURCEMASTER::RESOURCEMASTER(RESOURCEMANAGER *manager, const char *name)
     m_numUsed = 0;
     m_used = 0;
     m_free = 0;
-    m_3c = 0;
+    m_prev = 0;
     m_next = 0;
     m_prepared = false;
     m_requested = 0;
