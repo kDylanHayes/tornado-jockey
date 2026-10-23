@@ -1525,6 +1525,23 @@
       }
     },
     {
+      "name": "Tongas2/LIGHT",
+      "ranges": [
+        "0x004b7a60-0x004b7fcf",
+        "0x006108c0-0x00610c8f",
+        "0x0066d358-0x0066d6cb",
+        "0x006be250-0x006be487",
+        "0x009edf38-0x009edf57"
+      ],
+      "target": "build/target/Tongas2/LIGHT.obj",
+      "source": "src/Tongas2/LIGHT.cpp",
+      "category": "engine",
+      "complete": false,
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z"
+      }
+    },
+    {
       "name": "Tongas2/GLOBALDEFS",
       "ranges": [
         "0x004b7790-0x004b7a5f",
