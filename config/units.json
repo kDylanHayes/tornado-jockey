@@ -1542,6 +1542,23 @@
       }
     },
     {
+      "name": "Tongas2/GUIGENERIC",
+      "ranges": [
+        "0x004b8740-0x004b8e8f",
+        "0x00610e30-0x006112bf",
+        "0x0066d8f0-0x0066dab3",
+        "0x006be570-0x006be817",
+        "0x009edf78-0x009edf97"
+      ],
+      "target": "build/target/Tongas2/GUIGENERIC.obj",
+      "source": "src/Tongas2/GUIGENERIC.cpp",
+      "category": "engine",
+      "complete": true,
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z"
+      }
+    },
+    {
       "name": "Tongas2/PATHREPOSITORY",
       "ranges": [
         "0x004b6580-0x004b778f",
