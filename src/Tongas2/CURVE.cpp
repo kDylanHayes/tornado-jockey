@@ -108,6 +108,12 @@ CURVE::CURVE(CURVEMASTER *master, const RESHANDLE &handle)
         master->LoadShader();
 }
 
+CURVE::~CURVE()
+{
+    if (m_master)
+        Master()->m_numUsers--;
+}
+
 void CURVE::CreateMesh()
 {
     FIXEDSTRING<0x200> name;
