@@ -1742,6 +1742,22 @@
       }
     },
     {
+      "name": "Tongas2/CURVE",
+      "ranges": [
+        "0x004c2160-0x004c2f7f",
+        "0x00614690-0x006148ff",
+        "0x00670220-0x00670543",
+        "0x006c0600-0x006c074f",
+        "0x009ee118-0x009eed3f"
+      ],
+      "target": "build/target/Tongas2/CURVE.obj",
+      "source": "src/Tongas2/CURVE.cpp",
+      "category": "engine",
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z"
+      }
+    },
+    {
       "name": "Tongas2/PATHREPOSITORY",
       "ranges": [
         "0x004b6580-0x004b778f",
