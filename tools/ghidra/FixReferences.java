@@ -6,8 +6,9 @@
 //    instruction. They're re-pointed at the displacement.
 // 2. Constants that only look like addresses (a flag mask of 0x600080, a
 //    0x400000 limit): every address listed in config/norefs.txt is the
-//    location of such a constant, and references to its value are removed
-//    so no relocation is emitted.
+//    location of such a constant (in an instruction, or in data such as
+//    the bytes of L"%f"), and references to its value are removed so no
+//    relocation is emitted.
 // 3. Immediates pointing into data (mov eax, offset "PNG") that analysis
 //    left without a reference get one, so the delinker relocates them;
 //    so do immediates into their own function (a catch block returning
@@ -133,7 +134,15 @@ public class FixReferences extends HeadlessScript {
 			Address loc = toAddr(line.split("\\s+")[0]);
 			Instruction ins = getInstructionContaining(loc);
 			if (ins == null) {
-				printerr("No instruction at " + loc);
+				// Data that only looks like a pointer (the bytes of L"%f").
+				Data d = getDataAt(loc);
+				if (d != null && d.isPointer()) {
+					clearListing(loc, loc.add(3));
+				}
+				for (Reference ref : refs.getReferencesFrom(loc)) {
+					refs.delete(ref);
+					removed++;
+				}
 				continue;
 			}
 			Address value = toAddr(currentProgram.getMemory().getInt(loc) & 0xffffffffL);

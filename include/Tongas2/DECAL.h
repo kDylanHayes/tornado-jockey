@@ -9,6 +9,14 @@
 #include "Tongas2/RESOURCES.h"
 #include "Tongas2/TIMER.h"
 
+// Defined elsewhere: what the camera sees through.
+struct CAMERALENS
+{
+    char m_0[0x40];
+    // How tall the view is at distance 1.
+    float m_viewHeight;
+};
+
 // Defined elsewhere: the camera actor g_pCamera points to.
 class CAMERA : public WTACTOR
 {
@@ -69,9 +77,10 @@ public:
     // Where a point in the world lands on the screen.
     virtual bool WorldToScreen(V3 point, V2 *screen);
 
-    char m_9a1[0xd8c - 0x9a1];
+    char m_a1c[0xd8c - 0xa1c];
     V3 m_viewPosition;
     V3 m_viewDirection;
+    CAMERALENS *m_lens;
 };
 
 // Defined elsewhere: the master a decal's shader handle names.
@@ -218,8 +227,8 @@ public:
     virtual void SetPosition(V3 position);
     virtual void SetLayer(int layer);
     virtual void SetFrame(int frame) { m_frame = frame; }
-    virtual void SetSize(float x, float y) { SetScale(x, y, 1.0f); }
-    virtual void SetScreenSize(float x, float y) { SetScale(x, y, 1.0f); }
+    virtual void SetSize(V2 size) { SetScale(size.x, size.y, 1.0f); }
+    virtual void SetScreenSize(V2 size) { SetScale(size.x, size.y, 1.0f); }
     virtual V2 GetScreenSize() { return V2(m_scale.x, m_scale.y); }
 
     void CreateMesh();

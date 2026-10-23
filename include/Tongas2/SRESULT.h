@@ -211,6 +211,7 @@ public:
     void SetValue(const wchar_t *value);
     void SetValue(const char *value);
 
+    SRESULTTYPE GetType() const { return m_type; }
     const char *GetTypeName() const
     {
         if (m_type >= 0 && m_type < SRT_COUNT)

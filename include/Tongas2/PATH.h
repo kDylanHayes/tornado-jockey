@@ -22,6 +22,8 @@ class CONSOLE
 public:
     // Runs command on behalf of the resource with the handle.
     void Run(const STRING &command, const RESHANDLE &caller);
+    // The value of a script expression, for the resource with the handle.
+    SRESULT Evaluate(const STRING &expression, const RESHANDLE &caller);
 };
 extern CONSOLE *g_pConsole;
 

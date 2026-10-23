@@ -17,6 +17,11 @@ public:
 
 extern STRINGMANAGER g_StringManager;
 
+// The pool UNICODESTRING buffers come from (UNICODESTRING.h). Its Free is
+// the same code as STRINGMANAGER's, and the linker kept that one.
+class UNICODESTRING_MANAGER;
+extern UNICODESTRING_MANAGER g_UnicodeStringManager;
+
 class STRING
 {
 public:
@@ -92,9 +97,35 @@ public:
 class UNICODESTRING
 {
 public:
-    virtual ~UNICODESTRING();
+    UNICODESTRING()
+    {
+        m_block = -1;
+        m_pages = 0;
+        m_buf = 0;
+        m_length = 0;
+        m_lengthValid = true;
+    }
+    UNICODESTRING(const wchar_t *text)
+    {
+        m_block = -1;
+        m_pages = 0;
+        m_buf = 0;
+        m_length = 0;
+        m_lengthValid = true;
+        Reserve((wcslen(text) + 1) * 2);
+        *this = text;
+    }
+    // Seen as not throwing: the units that destroy one keep no unwind
+    // state for it.
+    virtual ~UNICODESTRING() throw()
+    {
+        if (m_pages > 0)
+            Free();
+    }
 
     UNICODESTRING &operator=(const UNICODESTRING &other);
+    // Defined elsewhere; 0 empties the string.
+    UNICODESTRING &operator=(const wchar_t *text);
     // Defined elsewhere: makes room for at least size bytes.
     void Reserve(const int &size);
 
@@ -110,6 +141,17 @@ public:
             m_length = 0;
         m_lengthValid = true;
         return m_length;
+    }
+
+    void Free()
+    {
+        if (m_block >= 0)
+            ((STRINGMANAGER *)&g_UnicodeStringManager)->Free(m_block, m_pages);
+        m_block = -1;
+        m_pages = 0;
+        m_buf = 0;
+        m_length = 0;
+        m_lengthValid = true;
     }
 
     // Takes text, either "WC" and three characters per wide character (as
