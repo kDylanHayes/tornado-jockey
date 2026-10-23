@@ -173,6 +173,7 @@ public:
 };
 
 class WTACTOR;
+struct CONTACT;
 
 // Defined elsewhere: finds the actor with a handle.
 class ACTORS
@@ -268,8 +269,64 @@ public:
     virtual void Virtual96();
     virtual V3 LocalToWorld(V3 point);
     virtual V3 WorldToLocal(V3 point);
+    virtual void Virtual99();
+    virtual void Virtual100();
+    virtual void Virtual101();
+    virtual void Virtual102();
+    virtual void Virtual103();
+    virtual void Virtual104();
+    virtual void Virtual105();
+    virtual void Virtual106();
+    virtual void Virtual107();
+    virtual void Virtual108();
+    virtual void Virtual109();
+    virtual void Virtual110();
+    virtual void Virtual111();
+    virtual void Virtual112();
+    virtual void Virtual113();
+    virtual void Virtual114();
+    virtual void Virtual115();
+    virtual void Virtual116();
+    virtual void Virtual117();
+    virtual void Virtual118();
+    virtual void Virtual119();
+    // A contact the collision manager found for the actor.
+    virtual void OnContact(CONTACT *contact);
+    virtual void Virtual121();
+    virtual void Virtual122();
+    virtual void Virtual123();
+    virtual void Virtual124();
+    virtual void Virtual125();
+    virtual void Virtual126();
+    virtual void Virtual127();
+    virtual void Virtual128();
+    virtual void Virtual129();
+    virtual void Virtual130();
+    virtual void Virtual131();
+    virtual void Virtual132();
+    virtual void Virtual133();
+    virtual void Virtual134();
+    virtual void Virtual135();
+    virtual void Virtual136();
+    virtual void Virtual137();
+    virtual void Virtual138();
+    // The actor touched another on the screen.
+    virtual void OnCollide(WTACTOR *other);
+    virtual void Virtual140();
+    virtual void Virtual141();
+    virtual void Virtual142();
+    virtual void Virtual143();
+    virtual void Virtual144();
+    virtual void Virtual145();
+    virtual void Virtual146();
 
-    char m_30[0x16c - 0x30];
+    char m_30[0x98 - 0x30];
+    // Whether the actor gives its collision helpers its own colour.
+    bool m_98;
+    V3I m_9c;
+    // Whether the actor shows its helpers.
+    bool m_a8;
+    char m_a9[0x16c - 0xa9];
     bool m_16c;
     char m_16d[0x174 - 0x16d];
     float m_fadeDistance;

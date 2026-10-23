@@ -13,6 +13,29 @@
       "complete": true
     },
     {
+      "name": "Tongas2/CPRIMITIVE3",
+      "ranges": [
+        "0x004be250-0x004c0c0f",
+        "0x00613f80-0x0061422f",
+        "0x0066f730-0x0066fc6f",
+        "0x006c01f8-0x006c0387",
+        "0x009ee0b8-0x009ee0d7"
+      ],
+      "target": "build/target/Tongas2/CPRIMITIVE3.obj",
+      "source": "src/Tongas2/CPRIMITIVE3.cpp",
+      "category": "engine",
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z",
+        "?SupportsICCProfiles@@YAJXZ": "?GetCopiesPerBatch@RESOURCEMASTER@@UAEHXZ",
+        "?SetRenderPassesFlags@BONEDMODELMASTER@@UAEXABH@Z": "?SetCollisionMask@CPRIMITIVE3MASTER@@UAEXABH@Z",
+        "?SetWidth@CURVEMASTER@@UAEXABM@Z": "?SetCollisionGroup@CPRIMITIVE3MASTER@@UAEXABH@Z",
+        "?SetAlwaysLookCamera@DECALMASTER@@UAEXAB_N@Z": "?SetRegisterInManager@CPRIMITIVE3MASTER@@UAEXAB_N@Z",
+        "?SetLastFrame@DECALMASTER@@UAEXABH@Z": "?SetCollisionTest@CPRIMITIVE3MASTER@@UAEXABH@Z",
+        "?IsLoaded@SCREENDECAL@@UAE_NXZ": "?IsLoaded@CPRIMITIVE3RESOURCE@@UAE_NXZ",
+        "?GetScaleFactor@DECAL@@UAE?AUV3@@XZ": "?GetSize@CPRIMITIVE3RESOURCE@@UAE?AUV3@@XZ"
+      }
+    },
+    {
       "name": "lib/zlib/crc32",
       "ranges": [
         "0x00582971-0x00582bd7"

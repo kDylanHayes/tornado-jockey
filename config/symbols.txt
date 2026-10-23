@@ -4,6 +4,7 @@
 0x00000000 __except_list data
 0x00401f30 ??_H@YGXPAXIHP6EPAX0@Z@Z function 0x30
 0x00401f60 ??0STRING@@QAE@XZ function
+0x00401fc0 ??0PRIMV2@@QAE@XZ function
 0x004024a0 ?SafeSwprintf@@YAHPAGPBGZZ function 0x1d
 0x004024e0 ??_9@$BNM@AE function
 0x004024f0 ??_9@$BLM@AE function
@@ -97,6 +98,7 @@
 0x0043d540 ?Rotate@ANG@@QAEXABU1@@Z function
 0x0043d5d0 ??1CSTRING@@QAE@XZ function 0x1a
 0x0043e880 ??4CWSTRING@@QAEAAV0@ABV0@@Z function 0x6a
+0x0043ffc0 ?GetRightPoint@ANG@@QAE?AUV3@@XZ function
 0x00440120 ?GetClassId@RESOURCE@@UAEHXZ function
 0x00440130 ?GetParentClassId@RESOURCE@@UAEHXZ function
 0x00440140 ?GetClassName@RESOURCE@@UAEPBDXZ function
@@ -138,6 +140,7 @@
 0x004408a0 ??9@YA_NABUANG@@0@Z function
 0x00440eb0 ??0OBJECT@@QAE@PAVRESOURCEMASTER@@URESHANDLE@@@Z function
 0x00441350 ?Execute@RESOURCE@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function
+0x00442130 ??1CPRIMITIVE3MASTER@@UAE@XZ function
 0x00442340 ?GetClassId@RESOURCES@@UAEHXZ function
 0x00442350 ?GetParentClassId@RESOURCES@@UAEHXZ function
 0x00442360 ?GetClassName@RESOURCES@@UAEPBDXZ function
@@ -988,6 +991,66 @@
 0x004bd1a0 ??_GFX@@UAEPAXI@Z function 0x1e
 0x004bd1c0 ?Spawn@FX@@QAEXH@Z function 0x864
 0x004bda30 ?Update@FX@@UAEXXZ function 0x813
+0x004be250 ?Append@LISTNODE@@QAEXPAU1@@Z function 0x18
+0x004be270 ?Set@PLANE3@@QAEXABUV3@@0@Z function 0x40
+0x004be2b0 ??0OOBOX3@@QAE@XZ function 0xfb
+0x004be3b0 ??0QUAD3@@QAE@XZ function 0x6f
+0x004be420 ??0CAPSULE3@@QAE@XZ function 0x30
+0x004be450 ?Clear@PRIMITIVE3@@QAEXXZ function 0x4c
+0x004be4a0 ?SetOOBox@PRIMITIVE3@@QAEXPAUOOBOX3@@@Z function 0x20
+0x004be4c0 ?SetPlane@PRIMITIVE3@@QAEXPAUPLANE3@@@Z function 0x20
+0x004be4e0 ?SetSphere@PRIMITIVE3@@QAEXPAUSPHERE3@@@Z function 0x20
+0x004be500 ?SetQuad@PRIMITIVE3@@QAEXPAUQUAD3@@@Z function 0x20
+0x004be520 ?SetCapsule@PRIMITIVE3@@QAEXPAUCAPSULE3@@@Z function 0x20
+0x004be540 ?SetOffsetV@CPRIMITIVE3RESOURCE@@UAEXUV3@@@Z function 0x85
+0x004be5d0 ?SetScaleFactorV@CPRIMITIVE3RESOURCE@@UAEXUV3@@@Z function 0x85
+0x004be660 ?SetRelAngles@CPRIMITIVE3RESOURCE@@UAEXUANG@@@Z function 0x7d
+0x004be6e0 ?RegisterCommands@CPRIMITIVE3MASTER@@SAXXZ function 0x3f
+0x004be720 ??0CPRIMITIVE3MASTER@@QAE@PAVRESOURCEMANAGER@@PBD@Z function 0x52
+0x004be780 ?GetClassId@CPRIMITIVE3MASTER@@UAEHXZ function 0x6
+0x004be790 ?GetParentClassId@CPRIMITIVE3MASTER@@UAEHXZ function 0xd
+0x004be7a0 ?GetClassName@CPRIMITIVE3MASTER@@UAEPBDXZ function 0xe
+0x004be7b0 ?SetBoxColor@CPRIMITIVE3MASTER@@UAEXABUV3I@@@Z function 0x1a
+0x004be7d0 ?SetPrimitiveType@CPRIMITIVE3MASTER@@UAEXABH@Z function 0x40
+0x004be810 ?PointInQuad@@YAHABUV2@@0000@Z function 0x183
+0x004be9a0 ?Collide@CPRIMITIVE3MANAGER@@QAE_NPAVPRIMITIVE3@@0PAUCONTACT@@1@Z function 0x425
+0x004bedd0 ?Add@?$LIST@VCPRIMITIVE3RESOURCE@@@@QAEXPAVCPRIMITIVE3RESOURCE@@@Z function 0x4b
+0x004bee20 ?Remove@?$LIST@VCPRIMITIVE3RESOURCE@@@@QAEXPAVCPRIMITIVE3RESOURCE@@@Z function 0x71
+0x004beea0 ??1?$DYNAMICARRAY@UCONTACT@@@@UAE@XZ function 0x50
+0x004beef0 ??_G?$DYNAMICARRAY@UCONTACT@@@@UAEPAXI@Z function 0x1e
+0x004bef10 ??0CONTACT@@QAE@XZ function 0x3d
+0x004bef50 ??1PRIMITIVE3@@UAE@XZ function 0x50
+0x004befa0 ?ShowHelper@CPRIMITIVE3RESOURCE@@QAEXAB_NH@Z function 0x454
+0x004bf400 ??_GCPRIMITIVE3MASTER@@UAEPAXI@Z function 0x1e
+0x004bf420 ??1?$LIST@VCPRIMITIVE3RESOURCE@@@@UAE@XZ function 0x41
+0x004bf470 ??0?$DYNAMICARRAY@UCONTACT@@@@QAE@XZ function 0x61
+0x004bf4e0 ?Resize@?$DYNAMICARRAY@UCONTACT@@@@QAEXABH@Z function 0x1a2
+0x004bf690 ?Insert@?$DYNAMICARRAY@UCONTACT@@@@QAEPAUCONTACT@@ABU2@@Z function 0x13b
+0x004bf7d0 ??_G?$LIST@VCPRIMITIVE3RESOURCE@@@@UAEPAXI@Z function 0x1e
+0x004bf7f0 ??0CPRIMITIVE3MANAGER@@QAE@XZ function 0x4a
+0x004bf840 ?GetTypeCode@CPRIMITIVE3MANAGER@@UAEPBDXZ function 0x6
+0x004bf850 ?CreateMaster@CPRIMITIVE3MANAGER@@UAEPAVRESOURCEMASTER@@PBD@Z function 0x69
+0x004bf8c0 ?CreateCPRIMITIVE3@@YAPAVRESOURCEMANAGER@@XZ function 0x59
+0x004bf920 ??_GPRIMITIVE3@@UAEPAXI@Z function 0x1e
+0x004bf940 ?Update@PRIMITIVE3@@QAEXABUV3@@ABUANG@@0@Z function 0x14c
+0x004bfa90 ??0CPRIMITIVE3RESOURCE@@QAE@PAVCPRIMITIVE3MASTER@@ABURESHANDLE@@@Z function 0x9a
+0x004bfb30 ??_GCPRIMITIVE3RESOURCE@@UAEPAXI@Z function 0x1e
+0x004bfb50 ??1CPRIMITIVE3RESOURCE@@UAE@XZ function 0x1c
+0x004bfb70 ?Start@CPRIMITIVE3RESOURCE@@UAEXXZ function 0x1d4
+0x004bfd50 ?ShowAllHelpers@CPRIMITIVE3RESOURCE@@QAEXAB_N@Z function 0x3c
+0x004bfd90 ?ShowHelpers@CPRIMITIVE3MASTER@@QAEXAB_N@Z function 0x56
+0x004bfdf0 ?Init@CPRIMITIVE3MANAGER@@UAEXXZ function 0x38
+0x004bfe30 ?ToggleHelpers@CPRIMITIVE3MANAGER@@QAEXXZ function 0x32
+0x004bfe70 ?TestScreen@CPRIMITIVE3MANAGER@@QAEXPAVCPRIMITIVE3RESOURCE@@0@Z function 0x753
+0x004c05d0 ?Test@CPRIMITIVE3MANAGER@@QAEXPAVCPRIMITIVE3RESOURCE@@0PAV?$DYNAMICARRAY@UCONTACT@@@@@Z function 0x1a2
+0x004c0780 ?CreateCopy@CPRIMITIVE3MASTER@@UAEPAVRESOURCE@@ABURESHANDLE@@@Z function 0x69
+0x004c07f0 ?Execute@CPRIMITIVE3MASTER@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function 0x73
+0x004c0870 ??_GCPRIMITIVE3MANAGER@@UAEPAXI@Z function 0x1e
+0x004c0890 ??1CPRIMITIVE3MANAGER@@UAE@XZ function 0x5a
+0x004c08f0 ?Stop@CPRIMITIVE3RESOURCE@@UAEXXZ function 0x40
+0x004c0930 ?Update@CPRIMITIVE3RESOURCE@@UAEXXZ function 0xe7
+0x004c0a20 ?UpdateCollisions@CPRIMITIVE3MANAGER@@QAEXXZ function 0x1b3
+0x004c0be0 ?Update@CPRIMITIVE3MANAGER@@UAEXXZ function 0x30
 0x004c0c10 ??$_Pow_int@H@@YAHHH@Z function 0x3d
 0x004c0c50 ?Strike@TESLA@@QAEXXZ function 0x2ae
 0x004c0f00 ?RegisterCommands@TESLAMASTER@@SAXXZ function 0x3f
@@ -1168,6 +1231,25 @@
 0x004d4610 ?PointAt@ANG@@QAEXABUV3@@@Z function
 0x004d57c0 ?GetSaveFolder@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z function
 0x004d5f00 ?CreateFolder@@YAXABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z function
+0x004d6d60 ?CollideQuadSegment@@YA_NPAUQUAD3@@PAUSEGMENT3@@PAUV3@@2PAM2@Z function
+0x004d7090 ?CollideSphereSegment@@YA_NPAUSPHERE3@@PAUSEGMENT3@@PAUV3@@2PAM2@Z function
+0x004d71a0 ?CollideCapsuleCapsule@@YA_NPAUCAPSULE3@@0PAUV3@@1PAM1@Z function
+0x004d7200 ?CollideCapsuleSphere@@YA_NPAUCAPSULE3@@PAUSPHERE3@@PAUV3@@2PAM2@Z function
+0x004d7270 ?CollideCapsuleBox@@YA_NPAUCAPSULE3@@PAUOOBOX3@@PAUV3@@2PAM2@Z function
+0x004d7330 ?CollideSphereSphere@@YA_NPAUSPHERE3@@0PAUV3@@1PAM@Z function
+0x004d76d0 ?CollideBoxBox@@YA_NPAUOOBOX3@@0PAUV3@@1PAM@Z function
+0x004d80f0 ?CollideSphereBox@@YA_NPAUSPHERE3@@PAUOOBOX3@@PAUV3@@2PAM@Z function
+0x004d83e0 ?CollideSphereQuad@@YA_NPAUSPHERE3@@PAUQUAD3@@PAUV3@@2PAM@Z function
+0x004d8680 ?CollideBoxSegment@@YA_NPAUOOBOX3@@PAUSEGMENT3@@PAUV3@@2PAM2@Z function
+0x004d8c00 ?CollideBoxQuad@@YA_NPAUOOBOX3@@PAUQUAD3@@PAUV3@@2PAMH@Z function
+0x004d9590 ?Set@CAPSULE3@@QAEXABUV3@@ABM1ABUANG@@@Z function
+0x004d96e0 ?SetCenter@QUAD3@@QAEXABUV3@@@Z function
+0x004d9730 ?SetSize@QUAD3@@QAEXABUV3@@@Z function
+0x004d9780 ?SetAngles@QUAD3@@QAEXABUANG@@@Z function
+0x004d9af0 ?SetCenter@OOBOX3@@QAEXABUV3@@@Z function
+0x004d9b50 ?SetSize@OOBOX3@@QAEXABUV3@@@Z function
+0x004d9bb0 ?SetAngles@OOBOX3@@QAEXABUANG@@@Z function
+0x004da7c0 ?GetCorners@OOBOX3@@QAEPAUV3@@XZ function
 0x004ded00 ?IsLoaded@SCREENDECAL@@UAE_NXZ function 0x3
 0x004dfe20 ?SetDescription@RESOURCEMASTER@@UAEXABH@Z function
 0x004e7820 ?_Min@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@KAPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@PAU342@@Z function
@@ -1181,6 +1263,7 @@
 0x0053dad0 ?size@?$vector@UPATHREPOPOINT@@V?$allocator@UPATHREPOPOINT@@@std@@@std@@QBEIXZ function 0x1f
 0x0053db30 ??$fill@PAUPATHREPOPOINT@@U1@@std@@YAXPAUPATHREPOPOINT@@0ABU1@@Z function
 0x00547f50 ?term_source@@YAXPAUjpeg_decompress_struct@@@Z function
+0x00548d70 ?GetScaleFactor@CPRIMITIVE3RESOURCE@@UAE?AUV3@@XZ function
 0x0054d310 ?Virtual82@BONEDMODELRESOURCE@@UAE?AUV3@@H@Z function 0x11
 0x0054d340 ?Update@BONEDMODELRESOURCE@@UAEXXZ function 0x5
 0x0054f1f0 ??1WTINFO@@QAE@XZ function
@@ -3037,6 +3120,8 @@
 0x00613680 _$E3 function 0x164
 0x006137f0 _$E1 function 0x23
 0x00613820 _$E3 function 0x75b
+0x00613f80 _$E1 function
+0x00613fb0 _$E3 function
 0x00614230 _$E1 function 0x23
 0x00614260 _$E3 function 0x28c
 0x006144f0 _$E1 function 0x23
@@ -3239,6 +3324,7 @@
 0x00666fe4 ??_C@_0M@PGNOOMJE@DECALMASTER?$AA@ data 0xc
 0x00666ff0 ??_C@_0BB@DCJKJGHM@BONEDMODELMASTER?$AA@ data 0x11
 0x00667004 ??_C@_08BGGFOJMM@FXMASTER?$AA@ data 0x9
+0x00667010 ??_C@_0BC@CADOMOGG@CPRIMITIVE3MASTER?$AA@ data 0x12
 0x00667034 ??_C@_0M@LHCCHCAG@TESLAMASTER?$AA@ data 0xc
 0x00667040 ??_C@_0BA@OGDBAEPO@POLYTRAILMASTER?$AA@ data 0x10
 0x00667050 ??_C@_0M@DDDCBPJF@CURVEMASTER?$AA@ data 0xc
@@ -3675,6 +3761,29 @@
 0x0066f700 ??_C@_0BC@DBEIMCPF@ForceCompletePlay?$AA@ data 0x12
 0x0066f714 ??_C@_07LHLKDFLL@Looping?$AA@ data 0x8
 0x0066f71c ??_C@_0O@PCBLAFGI@PrimitiveType?$AA@ data 0xe
+0x0066f730 _s_TypeNames data 0xb4
+0x0066f7e8 _s_types data 0xd2
+0x0066f8c0 _s_spaces data 0x78
+0x0066f938 ??_C@_0BE@MNEGHDML@Not?5valid?5primitive?$AA@ data 0x14
+0x0066f94c ??_7PRIMITIVE3@@6B@ data 0x4
+0x0066f950 ??_7CPRIMITIVE3MASTER@@6B@ data 0xa0
+0x0066f9f0 ??_7?$LIST@VCPRIMITIVE3RESOURCE@@@@6B@ data 0x4
+0x0066f9f4 ??_7?$DYNAMICARRAY@UCONTACT@@@@6B@ data 0x4
+0x0066f9f8 ??_C@_0EF@BKECCBMD@Error?5?9?5CPRIMITIVE3RESOURCE?3?3Sho@ data 0x45
+0x0066fa40 ??_C@_08GNLJBPEP@cylinder?$AA@ data 0x9
+0x0066fa4c ??_C@_03OLPJGAII@box?$AA@ data 0x4
+0x0066fa50 ??_C@_03FOOEKGGO@sph?$AA@ data 0x4
+0x0066fa54 ??_C@_0BA@CLJIHCNB@CPRIMITIVE3?4txt?$AA@ data 0x10
+0x0066fa64 ??_7CPRIMITIVE3MANAGER@@6B@ data 0x20
+0x0066fa84 ??_C@_04GPJLIGHO@CLP3?$AA@ data 0x5
+0x0066fa90 ??_7CPRIMITIVE3RESOURCE@@6B@ data 0x118
+0x0066fba8 ??_C@_0FL@FBPHGAIO@Error?5?9?5CPRIMITIVE3RESOURCE?3?3OnA@ data 0x5b
+0x0066fc04 ??_C@_0N@DEPNBBEJ@null?5contact?$AA@ data 0xd
+0x0066fc14 ??_C@_0O@PFHOEDNC@CollisionTest?$AA@ data 0xe
+0x0066fc24 ??_C@_08ICACKLAH@BoxColor?$AA@ data 0x9
+0x0066fc30 ??_C@_0BC@IOECJAPA@RegisterInManager?$AA@ data 0x12
+0x0066fc44 ??_C@_0P@LJIANPK@CollisionGroup?$AA@ data 0xf
+0x0066fc54 ??_C@_0O@NKLGCPOI@CollisionMask?$AA@ data 0xe
 0x0066fc64 ??_C@_05BOMFGPKE@Depth?$AA@ data 0x6
 0x0066fc70 _s_TypeNames data 0xb4
 0x0066fd28 ??_7TESLA@@6B@ data 0x11c
@@ -4292,6 +4401,7 @@
 0x006b9b4c ?s_classId@POLYTRAILMASTER@@2HA data 0x4
 0x006b9b50 ?s_classId@TESLAMASTER@@2HA data 0x4
 0x006b9b54 ?s_classId@EMITTERMASTER@@2HA data 0x4
+0x006b9b58 ?s_classId@CPRIMITIVE3MASTER@@2HA data 0x4
 0x006b9b5c ?s_classId@FXMASTER@@2HA data 0x4
 0x006b9b60 ?s_classId@SOUNDMASTER@@2HA data 0x4
 0x006b9b64 ?s_classId@BONEDMODELMASTER@@2HA data 0x4
@@ -4313,6 +4423,7 @@
 0x006bbcb8 ?s_pfnCreate@RESOURCES@@2P6APAVCMDBASE@@XZA data 0x4
 0x006bbcc0 ?s_commands@RESOURCES@@2PAUCMDENTRY@@A data 0xc0
 0x006bbd80 ?s_properties@RESOURCES@@2PAUPROPENTRY@@A data 0xa8
+0x006bbe28 ?g_up@@3UV3@@A data 0xc
 0x006bbe60 ?s_corners@DECAL@@2PAY02MA data 0x30
 0x006bbe90 ?s_indices@DECAL@@2PAFA data 0xc
 0x006bbe9c ?g_pfnCreateDECAL@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
@@ -4356,6 +4467,7 @@
 0x006bfd90 ?g_pfnCreateFX@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006bfd98 ?s_properties@FXMASTER@@2PAUPROPENTRY@@A data 0x460
 0x006c01f8 ?g_pfnCreateCPRIMITIVE3@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006c0200 ?s_properties@CPRIMITIVE3MASTER@@2PAUPROPENTRY@@A data 0x188
 0x006c0388 ?g_pfnCreateTESLA@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006c0390 ?s_properties@TESLAMASTER@@2PAUPROPENTRY@@A data 0x188
 0x006c0518 ?g_pfnCreatePOLYTRAIL@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
@@ -4366,6 +4478,7 @@
 0x006c08e0 ?g_pfnCreateSHADER@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006c08e8 ?s_properties@SHADERMASTER@@2PAUPROPENTRY@@A data 0x6c8
 0x006c16d8 ?g_pfnCreateFileLoader@@3P6APAVFILELOADER@@XZA data 0x4
+0x006c17b8 ?g_zeroAngles@@3UANG@@A data 0x50
 0x006c1808 ?g_pfnCreateSIMPLEMODEL@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006c180c ?g_pfnCreateMESH@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006c7074 _g_TagLib_XMPFieldName data
@@ -4510,6 +4623,7 @@
 0x009ee058 ?s_commands@SCREENDECALMASTER@@2PAUCMDENTRY@@A data 0x20
 0x009ee078 ?s_commands@BONEDMODELMASTER@@2PAUCMDENTRY@@A data 0x20
 0x009ee098 ?s_commands@FXMASTER@@2PAUCMDENTRY@@A data 0x20
+0x009ee0b8 ?s_commands@CPRIMITIVE3MASTER@@2PAUCMDENTRY@@A data 0x20
 0x009ee0d8 ?s_commands@TESLAMASTER@@2PAUCMDENTRY@@A data 0x20
 0x009ee0f8 ?s_commands@POLYTRAILMASTER@@2PAUCMDENTRY@@A data 0x20
 0x009ee118 ?s_indices@CURVE@@2PAFA data 0xc00

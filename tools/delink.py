@@ -65,6 +65,7 @@ def main() -> int:
     names = {}
     sizes = []  # (name, address, size) of functions with a known size
     variables = []  # (name, address) of data symbols
+    sized = []  # (name, address, size) of data symbols with a known size
     for line in (ROOT / "config" / "symbols.txt").read_text().splitlines():
         parts = line.split()
         if len(parts) >= 2 and not line.startswith("#") and "::" not in parts[1]:
@@ -73,6 +74,8 @@ def main() -> int:
             sizes.append((parts[1], int(parts[0], 16), int(parts[3], 16)))
         if len(parts) >= 3 and parts[2] == "data":
             variables.append((parts[1], int(parts[0], 16)))
+        if len(parts) >= 4 and parts[2] == "data":
+            sized.append((parts[1], int(parts[0], 16), int(parts[3], 16)))
     for unit in selected:
         spans = [tuple(int(x, 16) for x in r.split("-")) for r in unit["ranges"]]
         for name, addrs in names.items():
@@ -111,7 +114,8 @@ def main() -> int:
         unit_sizes.update({n: sz for n, a, sz in sizes if any(lo <= a <= hi for lo, hi in spans)})
         split.main_path(ROOT / unit["target"], base=base, ours=ours, sizes=unit_sizes)
         fix_data_symbols.main_path(ROOT / unit["target"],
-                                   {n: a for n, a in variables if any(lo <= a <= hi for lo, hi in spans)})
+                                   {n: a for n, a in variables if any(lo <= a <= hi for lo, hi in spans)},
+                                   [v for v in sized if not any(lo <= v[1] <= hi for lo, hi in spans)])
     if result.returncode != 0 or missing or "SCRIPT ERROR" in result.stdout + result.stderr:
         return 1
     print(f"Delinked {len(selected)} unit(s)")

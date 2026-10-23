@@ -27,54 +27,6 @@ public:
     // The point at depth in front of the camera, from a point on the screen.
     V3 ScreenToWorld(const V2 &point, const float &depth);
 
-    virtual void Virtual99();
-    virtual void Virtual100();
-    virtual void Virtual101();
-    virtual void Virtual102();
-    virtual void Virtual103();
-    virtual void Virtual104();
-    virtual void Virtual105();
-    virtual void Virtual106();
-    virtual void Virtual107();
-    virtual void Virtual108();
-    virtual void Virtual109();
-    virtual void Virtual110();
-    virtual void Virtual111();
-    virtual void Virtual112();
-    virtual void Virtual113();
-    virtual void Virtual114();
-    virtual void Virtual115();
-    virtual void Virtual116();
-    virtual void Virtual117();
-    virtual void Virtual118();
-    virtual void Virtual119();
-    virtual void Virtual120();
-    virtual void Virtual121();
-    virtual void Virtual122();
-    virtual void Virtual123();
-    virtual void Virtual124();
-    virtual void Virtual125();
-    virtual void Virtual126();
-    virtual void Virtual127();
-    virtual void Virtual128();
-    virtual void Virtual129();
-    virtual void Virtual130();
-    virtual void Virtual131();
-    virtual void Virtual132();
-    virtual void Virtual133();
-    virtual void Virtual134();
-    virtual void Virtual135();
-    virtual void Virtual136();
-    virtual void Virtual137();
-    virtual void Virtual138();
-    virtual void Virtual139();
-    virtual void Virtual140();
-    virtual void Virtual141();
-    virtual void Virtual142();
-    virtual void Virtual143();
-    virtual void Virtual144();
-    virtual void Virtual145();
-    virtual void Virtual146();
     // Where a point in the world lands on the screen.
     virtual bool WorldToScreen(V3 point, V2 *screen);
 

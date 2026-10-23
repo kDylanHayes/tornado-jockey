@@ -24,6 +24,10 @@ struct RESHANDLE
     RESHANDLE(int serial_, int index_, int kind_) : serial(serial_), index(index_), kind(kind_) {}
     bool IsValid() const { return serial >= 0 && index >= 0; }
     void Invalidate() { serial = -1; index = -1; }
+    bool operator==(const RESHANDLE &other) const
+    {
+        return serial == other.serial && index == other.index && kind == other.kind;
+    }
     int serial;
     int index;
     int kind;
