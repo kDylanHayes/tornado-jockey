@@ -78,7 +78,8 @@ public:
     virtual SRESULT Run(STRING command);
     virtual int Virtual08() = 0;
     virtual void *Virtual09(const char *name) = 0;
-    virtual void Virtual10();
+    // The value of a property, or of element index of an array one.
+    virtual SRESULT GetProperty(PROPENTRY *property, int index);
     virtual void Virtual11();
     virtual void Virtual12();
     virtual void Virtual13();
@@ -86,7 +87,9 @@ public:
     virtual void Virtual15();
     virtual void Virtual16();
     virtual void Virtual17();
-    virtual void Virtual18();
+    // The property with the name, searching from the class with the id
+    // up through its parents (g_CMDBASEClassId: the object's own class).
+    virtual PROPENTRY *FindProperty(const char *name, int classId);
 
     // Defined elsewhere.
     void ApplyProperties();
