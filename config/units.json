@@ -1559,6 +1559,23 @@
       }
     },
     {
+      "name": "Tongas2/GUIGROUP",
+      "ranges": [
+        "0x004b9400-0x004b9caf",
+        "0x00611530-0x0061207f",
+        "0x0066dec8-0x0066e377",
+        "0x006be978-0x006bf00f",
+        "0x009edfd8-0x009edff7"
+      ],
+      "target": "build/target/Tongas2/GUIGROUP.obj",
+      "source": "src/Tongas2/GUIGROUP.cpp",
+      "category": "engine",
+      "complete": true,
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z"
+      }
+    },
+    {
       "name": "Tongas2/PATHREPOSITORY",
       "ranges": [
         "0x004b6580-0x004b778f",
