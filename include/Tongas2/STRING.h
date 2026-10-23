@@ -20,8 +20,14 @@ extern STRINGMANAGER g_StringManager;
 class STRING
 {
 public:
-    // Defined elsewhere.
-    STRING();
+    STRING()
+    {
+        m_block = -1;
+        m_pages = 0;
+        m_buf = 0;
+        m_length = 0;
+        m_lengthValid = true;
+    }
     STRING(const char *text)
     {
         m_block = -1;
@@ -32,7 +38,7 @@ public:
         Reserve(strlen(text) + 1);
         *this = text;
     }
-    virtual ~STRING()
+    virtual ~STRING() throw()
     {
         if (m_pages > 0)
             Free();
