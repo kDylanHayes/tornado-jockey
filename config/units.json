@@ -2083,6 +2083,20 @@
       }
     },
     {
+      "name": "Tongas2/LOG",
+      "ranges": [
+        "0x00482cd0-0x004836af",
+        "0x00666478-0x00666677",
+        "0x006b91a4-0x006b91d7"
+      ],
+      "target": "build/target/Tongas2/LOG.obj",
+      "source": "src/Tongas2/LOG.cpp",
+      "category": "engine",
+      "symbol_mappings": {
+        "?IsCompressed@FILELOADER@@UAE_NXZ": "?Virtual00@LOG@@UAE_NXZ"
+      }
+    },
+    {
       "name": "Tongas2/FILELOADER",
       "ranges": [
         "0x004ce290-0x004ce59d",

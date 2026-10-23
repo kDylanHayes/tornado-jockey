@@ -259,7 +259,20 @@
 0x0046b9b2 _jround_up function
 0x0046c4a9 _do_barray_io function
 0x0047e661 _adler32 function 0x119
+0x00482cd0 ?Toggle@LOG@@QAEXXZ function 0x12
 0x00482cf0 ?Error@LOG@@QAAXPBDZZ function 0x6e
+0x00482d60 ?ContentError@LOG@@QAAXPBDZZ function 0x6e
+0x00482dd0 ??1_Sentry_base@?$basic_ostream@DU?$char_traits@D@std@@@std@@QAE@XZ function 0x18
+0x00482df0 ?flush@?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV12@XZ function 0x51
+0x00482e50 ??0sentry@?$basic_ostream@DU?$char_traits@D@std@@@std@@QAE@AAV12@@Z function 0x84
+0x00482ee0 ?SetColor@LOG@@UAEXH@Z function 0xe7
+0x00482fd0 ??1sentry@?$basic_ostream@DU?$char_traits@D@std@@@std@@QAE@XZ function 0x70
+0x00483040 ??$?6U?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@PBD@Z function 0x209
+0x00483250 ?Write@LOG@@UAEX_N@Z function 0x129
+0x00483380 ??0LOG@@QAE@XZ function 0x188
+0x00483510 ??1LOG@@UAE@XZ function 0x113
+0x00483630 ?CreateLog@@YAPAVLOG@@XZ function 0x59
+0x00483690 ??_GLOG@@UAEPAXI@Z function 0x1e
 0x00483730 ??9CSTRING@@QBE_NABV0@@Z function
 0x00483800 ?FindProperty@CMDBASE@@UAEPAUPROPENTRY@@PBDH@Z function
 0x00483d40 ??0CMDBASE@@QAE@XZ function
@@ -869,6 +882,7 @@
 0x004b4220 ?RunProcess@@YAHPBDPAD@Z function 0x93
 0x004b42c0 ?OpenURL@@YAXPBD@Z function 0xfd
 0x004b43c0 ?ShellOpen@@YAPAXPBD0H@Z function 0x94
+0x004b49f0 ?Close@LOGSTREAM@@QAEXXZ function 0x6b
 0x004b4a60 ?RegisterCommands@TRIGGER@@SAXXZ function 0x3f
 0x004b4aa0 ?SetPosition@TRIGGER@@UAEXABUV3@@@Z function 0x29
 0x004b4ad0 ?SetScale@TRIGGER@@UAEXABUV3@@@Z function 0x29
@@ -2908,8 +2922,9 @@
 0x005bf25f ATL::_ATL_BASE_MODULE70::_ATL_BASE_MODULE70 function 0x1a
 0x005bf28f ATL::CAtlBaseModule::CAtlBaseModule function 0xab
 0x005bf33a ATL::CAtlComModule::CAtlComModule function 0x40
-0x005bf3b6 std::ios_base::clear function 0xc6
+0x005bf3b6 ?clear@ios_base@std@@QAEXH_N@Z function 0xc6
 0x005bf494 std::ios_base::_Init function 0x46
+0x005bf4da ?uncaught_exception@std@@YA_NXZ function 0x5
 0x005bf4df __Tolower function 0x103
 0x005bf5e2 __Getctype function 0x65
 0x005bf684 __Setgloballocale function 0x25
@@ -3012,6 +3027,8 @@
 0x005c2838 _fprintf function 0x32
 0x005c286a __strdate function 0x70
 0x005c28da __strtime function 0x67
+0x005c2941 _getenv function
+0x005c29c2 __tzset function
 0x005c2c15 cvtdate function 0x1b8
 0x005c2dcd __isindst function 0x18d
 0x005c2f5a ___tzset function 0x15
@@ -3330,6 +3347,8 @@
 0x005d745d __chsize function 0x15c
 0x005d75b9 __mbschr function 0x67
 0x005d7620 __setmode function 0x82
+0x005d76a2 ?_Lock@_Mutex@std@@QAEXXZ function 0x9
+0x005d76ab ?_Unlock@_Mutex@std@@QAEXXZ function 0x9
 0x005d76ca MSVFW32.DLL::ICSendMessage function 0x6
 0x005d76d0 MSVFW32.DLL::ICLocate function 0x6
 0x005d76d6 AVIFIL32.DLL::AVIStreamInfoA function 0x6
@@ -3353,6 +3372,9 @@
 0x005e69b4 __strlwr function 0xea
 0x005e6ae0 shortsort function 0x6a
 0x005e6b50 _qsort function 0x283
+0x005e9938 __ehhandler$??0sentry@?$basic_ostream@DU?$char_traits@D@std@@@std@@QAE@AAV12@@Z function
+0x005e9958 __ehhandler$??$?6U?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@PBD@Z function
+0x005e997b __ehhandler$?CreateLog@@YAPAVLOG@@XZ function
 0x005ea738 __ehhandler$??0CAMERA@@QAE@XZ function
 0x005ea75b __ehhandler$?CreateCamera@@YAPAVCAMERA@@XZ function
 0x005ea778 __ehhandler$?Reset@CAMERA@@UAEXXZ function
@@ -3474,6 +3496,8 @@
 0x00656094 __imp__CloseHandle@4 data 0x4
 0x006560cc __imp__GetProcAddress@8 data 0x4
 0x006560d0 __imp__GetModuleHandleA@4 data 0x4
+0x006560f4 __imp__SetConsoleTextAttribute@8 data 0x4
+0x006560f8 __imp__GetConsoleScreenBufferInfo@8 data 0x4
 0x00656100 __imp__DeleteFileA@4 data 0x4
 0x00656104 __imp__SetEnvironmentVariableA@8 data 0x4
 0x00656108 __imp__GetProcessHeaps@8 data 0x4
@@ -3530,6 +3554,7 @@
 0x0065a5e8 ??_C@_04HDOCAJNK@?$CFs?$CFs?$AA@ data 0x5
 0x0065a708 __real@3ccccccd data 0x4
 0x0065aa84 __real@3fc00000 data
+0x0065abf8 ??_C@_02DKCKIIND@?$CFs?$AA@ data 0x3
 0x0065b0f8 __real@3c23d70a data
 0x0065b110 __real@3fe0000000000000 data
 0x0065b11c __real@43b40000 data
@@ -3639,8 +3664,36 @@
 0x00665f74 ??_C@_0BD@PJCBIDD@invalid?5block?5type?$AA@ data
 0x00666020 ??_C@_0BG@LBKINIKP@invalid?5distance?5code?$AA@ data
 0x00666038 ??_C@_0BM@FFFLPBBC@invalid?5literal?1length?5code?$AA@ data
+0x00666478 _s_consoleColors data 0xc
+0x00666484 ??_C@_0BK@GDCIEFHB@?$DMfont?5color?$DN?8?$CD0070d0?8?$DO?$DMb?$DO?$AA@ data 0x1a
+0x006664a0 ??_C@_0BK@GECNILPM@?$DMfont?5color?$DN?8?$CD00d040?8?$DO?$DMb?$DO?$AA@ data 0x1a
+0x006664bc ??_C@_0BK@DEDAPGH@?$DMfont?5color?$DN?8?$CDbb00bb?8?$DO?$DMb?$DO?$AA@ data 0x1a
+0x006664d8 ??_C@_0BG@MEKPMBNE@?$DMfont?5color?$DN?8red?8?$DO?$DMb?$DO?$AA@ data 0x16
+0x006664f0 ??_C@_0BI@KCHIPAEO@?$DMfont?5color?$DN?8brown?8?$DO?$DMb?$DO?$AA@ data 0x18
+0x00666508 ??_C@_0M@FEBAKOFE@?$DM?1b?$DO?$DM?1font?$DO?$AA@ data 0xc
+0x00666514 ??_C@_07JHDPBCI@ERROR?3?5?$AA@ data 0x8
+0x0066651c ??_C@_0BA@EEMODGPC@CONTENT?5ERROR?3?5?$AA@ data 0x10
+0x0066652c ??_C@_02CPIDLAI@at?$AA@ data 0x3
 0x00666530 ??_C@_01EEMJAFIK@?6?$AA@ data
-0x0066653c ??_C@_03OFAPEBGM@?$CFs?6?$AA@ data
+0x00666534 ??_C@_04NKJDMFKO@?$DMbr?$DO?$AA@ data 0x5
+0x0066653c ??_C@_03OFAPEBGM@?$CFs?6?$AA@ data 0x4
+0x00666540 ??_C@_06JBOOIEJJ@?$CFs?$DMbr?$DO?$AA@ data 0x7
+0x00666548 ??_C@_02BKFDOEMK@wt?$AA@ data 0x3
+0x0066654c ??_C@_0DE@HAFMGGCH@?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK@ data 0x34
+0x00666580 ??_C@_0N@IKBLMNJD@LOG?3?5date?3?$CFs?$AA@ data 0xd
+0x00666590 ??_C@_0N@OBJGOBIM@LOG?3?5time?3?$CFs?$AA@ data 0xd
+0x006665a0 ??_C@_0N@JMNIMDAM@?$DMhtml?$DO?$DMbody?$DO?$AA@ data 0xd
+0x006665b0 ??_C@_05JAIDJNKL@c?3?2?$CFs?$AA@ data 0x6
+0x006665b8 ??_C@_08BNIFEKEE@log?4html?$AA@ data 0x9
+0x006665c4 ??_C@_05BMGBEOOC@?$CFs?2?$CFs?$AA@ data 0x6
+0x006665cc ??_C@_07POILLFDI@log?4txt?$AA@ data 0x8
+0x006665d4 ??_C@_03PFOEJJJD@Tmp?$AA@ data 0x4
+0x006665d8 ??_C@_04JHIGEHFN@Temp?$AA@ data 0x5
+0x006665e0 ??_7LOG@@6B@ data 0x10
+0x006665f0 ??_C@_0P@MIGDDGFP@?$DM?1body?$DO?$DM?1html?$DO?$AA@ data 0xf
+0x00666600 ??_C@_0BO@CPCEOMCO@LOG?3?5founded?3?$CFd?5content?5error?$AA@ data 0x1e
+0x00666620 ??_C@_0BG@OGMCJIHP@LOG?3?5founded?3?$CFd?5error?$AA@ data 0x16
+0x00666638 ??_C@_0DG@IMLNMFBD@?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK@ data 0x36
 0x00666678 ??_C@_03KCHOJKKI@set?$AA@ data 0x4
 0x00666738 ??_C@_0EI@NHFHJGLP@UNICODESTRING_MANAGER?3?3CheckInde@ data 0x48
 0x00666780 ??_C@_0FB@CMMEMJAA@UNICODESTRING_MANAGER?3?3GetPointe@ data 0x51
@@ -4792,6 +4845,9 @@
 0x006aa528 __TI1H data
 0x006aa590 __TI2CPAD data
 0x006aa614 __TI1?AW4J_MESSAGE_CODE@@ data
+0x006b91a4 _s_closeTags data 0x18
+0x006b91bc _s_openTags data 0x18
+0x006b91d4 ?g_pfnCreateLog@@3P6APAVLOG@@XZA data 0x4
 0x006b92f0 ?g_classParents@@3PAHA data
 0x006b9af4 ?g_CMDBASEClassId@@3HA data 0x4
 0x006b9afc ?s_classId@VALUEMANAGER@@2HA data 0x4
