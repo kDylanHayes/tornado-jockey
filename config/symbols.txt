@@ -3272,6 +3272,7 @@
 0x005eacf8 __ehhandler$?Execute@SPAWNER@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function
 0x005ead26 __ehhandler$??0SPAWNER@@QAE@XZ function
 0x005ead46 __ehhandler$?Spawn@SPAWNER@@UAEPAVACTOR@@XZ function
+0x005eb8c1 __ehhandler$?Spawn@FX@@QAEXH@Z function
 0x005eb8db __ehhandler$?Resize@?$DYNAMICARRAY@UCONTACT@@@@QAEXABH@Z function
 0x005eb8fb __ehhandler$?CreateMaster@CPRIMITIVE3MANAGER@@UAEPAVRESOURCEMASTER@@PBD@Z function
 0x005eb918 __ehhandler$?Execute@CPRIMITIVE3MASTER@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function

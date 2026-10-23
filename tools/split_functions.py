@@ -263,6 +263,9 @@ def split(coff: Coff, base: int | None = None, sizes: dict | None = None,
         for _, rec in sorted(syms, key=lambda ir: (struct.unpack_from("<H", ir[1], 14)[0] != FUNCTION_TYPE,
                                                    ir[1][16] != IMAGE_SYM_CLASS_EXTERNAL)):
             names.setdefault(struct.unpack_from("<I", rec, 8)[0], coff.name(rec))
+        # Offsets of relocations and other symbols, which data must keep.
+        later = [vaddr for vaddr, _, _ in sec["relocs"]] + [
+            struct.unpack_from("<I", rec, 8)[0] for _, rec in syms]
         bounds = []
         for n, start in enumerate(starts):
             end = starts[n + 1] if n + 1 < len(starts) else len(data)
@@ -274,8 +277,11 @@ def split(coff: Coff, base: int | None = None, sizes: dict | None = None,
                 while body_end > start and end - body_end < 15 and data[body_end - 1] == 0xCC:
                     body_end -= 1
             else:
+                # Only when nothing after the string belongs to it: unnamed
+                # data after a named string stays in the string's section.
                 size = string_literal_size(names.get(start, ""))
-                if size is not None and start + size <= end:
+                if size is not None and start + size <= end and not any(
+                        start + size <= v < end for v in later):
                     body_end = start + size
             bounds.append((start, end, body_end))
 
