@@ -983,9 +983,37 @@
 0x004bd1a0 ??_GFX@@UAEPAXI@Z function 0x1e
 0x004bd1c0 ?Spawn@FX@@QAEXH@Z function 0x864
 0x004bda30 ?Update@FX@@UAEXXZ function 0x813
+0x004c1070 ?SetColor@CURVEMASTER@@UAEXABHABUV3I@@@Z function 0x26
+0x004c10a0 ?SetAlpha@CURVEMASTER@@UAEXABHABM@Z function 0x16
+0x004c10c0 ?SetLookCamera@CURVEMASTER@@UAEXAB_N@Z function 0xf
+0x004c2070 ?Stop@CURVE@@UAEXXZ function 0x43
+0x004c20c0 ?IsLoaded@CURVE@@UAE_NXZ function 0x95
+0x004c2160 ?RegisterCommands@CURVEMASTER@@SAXXZ function 0x3f
+0x004c21a0 ??1CURVEMASTER@@UAE@XZ function 0xb
+0x004c21b0 ?GetClassId@CURVEMASTER@@UAEHXZ function 0x6
+0x004c21c0 ?GetParentClassId@CURVEMASTER@@UAEHXZ function 0xd
+0x004c21d0 ?GetClassName@CURVEMASTER@@UAEPBDXZ function 0xe
+0x004c21e0 ?LoadShader@CURVEMASTER@@QAEXXZ function 0x3a
+0x004c2220 ?ReleaseShader@CURVEMASTER@@QAEXXZ function 0x3a
+0x004c2260 ?UpdateCopies@CURVEMASTER@@UAEXXZ function 0x3a
+0x004c22a0 ?SetShaderHandle@CURVEMASTER@@QAEXABURESHANDLE@@@Z function 0x78
+0x004c2320 ??1CURVE@@UAE@XZ function 0x15
+0x004c2340 ??_GCURVEMASTER@@UAEPAXI@Z function 0x1e
+0x004c2360 ?SetTexture@CURVEMASTER@@UAEXABUSRTEXTURE@@@Z function 0x48
+0x004c23b0 ??0CURVE@@QAE@PAVCURVEMASTER@@ABURESHANDLE@@@Z function 0x112
+0x004c24d0 ??_GCURVE@@UAEPAXI@Z function 0x1e
+0x004c24f0 ?CreateMesh@CURVE@@QAEXXZ function 0x9f
+0x004c2590 ?UpdateMesh@CURVE@@QAEXXZ function 0x3a1
+0x004c2940 ?AddMesh@CURVE@@QAEXXZ function 0x1b6
+0x004c2b00 ??0CURVEMASTER@@QAE@PAVRESOURCEMANAGER@@PBD@Z function 0x117
+0x004c2c20 ?Execute@CURVEMASTER@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function 0x73
+0x004c2ca0 ?SetNumPoints@CURVE@@QAE_NH@Z function 0x269
+0x004c2f10 ?SetLayer@CURVE@@UAEXH@Z function 0x46
+0x004c2f60 ?Start@CURVE@@UAEXXZ function 0x13
 0x004c57e0 ?AddUser@SHADERMASTER@@QAEXXZ function
 0x004c57f0 ?RemoveUser@SHADERMASTER@@QAEXXZ function
 0x004c6050 ?SetRenderPassesFlags@BONEDMODELMASTER@@UAEXABH@Z function 0xa
+0x004c6060 ?SetWidth@CURVEMASTER@@UAEXABM@Z function 0xa
 0x004c6070 ?SetAlwaysLookCamera@DECALMASTER@@UAEXAB_N@Z function
 0x004c6080 ?SetDecalOrderForced@DECALMASTER@@UAEXABH@Z function
 0x004c60b0 ?SetLastFrame@DECALMASTER@@UAEXABH@Z function
@@ -2880,6 +2908,8 @@
 0x00613680 _$E3 function 0x164
 0x006137f0 _$E1 function 0x23
 0x00613820 _$E3 function 0x75b
+0x00614690 _$E1 function 0x23
+0x006146c0 _$E3 function 0x231
 0x006541f0 _$E1 function 0x1d
 0x00654470 _$E6 function 0x24
 0x006544a0 _$E9 function 0x24
@@ -2924,13 +2954,16 @@
 0x00658234 __real@42652ee1 data
 0x00658288 __real@3ecccccd data
 0x00659264 __real@bf800000 data
+0x00659280 __real@3d4ccccd data 0x4
 0x00659380 __real@40400000 data
 0x0065956c __real@38d1b717 data
 0x006595a8 __real@0000000000000000 data
 0x006596bc __real@40800000 data
+0x0065971c __real@437f0000 data 0x4
 0x00659768 __real@3fd51eb860000000 data
 0x00659abc ??_C@_0O@JKCJNIGN@RotationSpeed?$AA@ data 0xe
 0x0065a5e8 ??_C@_04HDOCAJNK@?$CFs?$CFs?$AA@ data 0x5
+0x0065a708 __real@3ccccccd data 0x4
 0x0065aa84 __real@3fc00000 data
 0x0065b0f8 __real@3c23d70a data
 0x0065b110 __real@3fe0000000000000 data
@@ -3061,6 +3094,7 @@
 0x00666fe4 ??_C@_0M@PGNOOMJE@DECALMASTER?$AA@ data 0xc
 0x00666ff0 ??_C@_0BB@DCJKJGHM@BONEDMODELMASTER?$AA@ data 0x11
 0x00667004 ??_C@_08BGGFOJMM@FXMASTER?$AA@ data 0x9
+0x00667050 ??_C@_0M@DDDCBPJF@CURVEMASTER?$AA@ data 0xc
 0x0066707c ??_C@_08KGDJAKPA@RESOURCE?$AA@ data
 0x00667088 ??_C@_09CMINMFIB@RESOURCES?$AA@ data 0xa
 0x00667094 ??_C@_09LLOKOKDN@GUISLIDER?$AA@ data 0xa
@@ -3492,6 +3526,16 @@
 0x0066f700 ??_C@_0BC@DBEIMCPF@ForceCompletePlay?$AA@ data 0x12
 0x0066f714 ??_C@_07LHLKDFLL@Looping?$AA@ data 0x8
 0x0066f71c ??_C@_0O@PCBLAFGI@PrimitiveType?$AA@ data 0xe
+0x00670214 ??_C@_05IBAMDCFI@Width?$AA@ data 0x6
+0x00670220 _s_TypeNames data 0xb4
+0x006702d8 ??_7CURVEMASTER@@6B@ data 0x9c
+0x00670378 ??_7CURVE@@6B@ data 0x11c
+0x00670494 ??_C@_05BPCCMOCB@__c?$CFd?$AA@ data 0x6
+0x0067049c ??_C@_0CE@OECICIMF@warning?$CB?5no?5mesh?5updating?5curve?5@ data 0x24
+0x006704c0 ??_C@_0CO@PPEFMGFA@Could?5not?5create?5a?5mesh?5resource@ data 0x2e
+0x006704f0 ??_C@_0EA@JAKKKDFP@warning?$CB?5curve?5is?5already?5added?5@ data 0x40
+0x00670530 ??_C@_0L@JGBPIJFA@LookCamera?$AA@ data 0xb
+0x0067053c ??_C@_05IHOGHNDL@Alpha?$AA@ data 0x6
 0x0067252c ??_7FILELOADER@@6B@ data 0x34
 0x00672810 __real@3f847ae147ae147b data
 0x006734c4 __real@358637bd data
@@ -4011,6 +4055,7 @@
 0x006b9b30 ?s_classId@RESOURCES@@2HA data 0x4
 0x006b9b34 ?s_classId@RESOURCE@@2HA data 0x4
 0x006b9b38 ?s_classId@RESOURCEMASTER@@2HA data 0x4
+0x006b9b48 ?s_classId@CURVEMASTER@@2HA data 0x4
 0x006b9b54 ?s_classId@EMITTERMASTER@@2HA data 0x4
 0x006b9b5c ?s_classId@FXMASTER@@2HA data 0x4
 0x006b9b60 ?s_classId@SOUNDMASTER@@2HA data 0x4
@@ -4078,6 +4123,7 @@
 0x006c01f8 ?g_pfnCreateCPRIMITIVE3@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006c0388 ?g_pfnCreateTESLA@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006c0518 ?g_pfnCreatePOLYTRAIL@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006c0600 ?s_properties@CURVEMASTER@@2PAUPROPENTRY@@A data 0x150
 0x006c0750 ?g_pfnCreateTEXT@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006c08e0 ?g_pfnCreateSHADER@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006c16d8 ?g_pfnCreateFileLoader@@3P6APAVFILELOADER@@XZA data 0x4
@@ -4224,6 +4270,9 @@
 0x009ee058 ?s_commands@SCREENDECALMASTER@@2PAUCMDENTRY@@A data 0x20
 0x009ee078 ?s_commands@BONEDMODELMASTER@@2PAUCMDENTRY@@A data 0x20
 0x009ee098 ?s_commands@FXMASTER@@2PAUCMDENTRY@@A data 0x20
+0x009ee118 ?s_indices@CURVE@@2PAFA data 0xc00
+0x009eed18 ?s_indicesReady@CURVE@@2_NA data 0x1
+0x009eed20 ?s_commands@CURVEMASTER@@2PAUCMDENTRY@@A data 0x20
 0x009eede8 _s_line data 0x10000
 0x00a0f288 _s_format_id data
 0x00a0f28c _s_format_id data
