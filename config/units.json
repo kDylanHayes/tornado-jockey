@@ -1576,6 +1576,40 @@
       }
     },
     {
+      "name": "Tongas2/GUICHECKBOX",
+      "ranges": [
+        "0x004b8e90-0x004b91af",
+        "0x006112c0-0x006113ff",
+        "0x0066dab4-0x0066dcbb",
+        "0x006be818-0x006be8c7",
+        "0x009edf98-0x009edfb7"
+      ],
+      "target": "build/target/Tongas2/GUICHECKBOX.obj",
+      "source": "src/Tongas2/GUICHECKBOX.cpp",
+      "category": "engine",
+      "complete": true,
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z"
+      }
+    },
+    {
+      "name": "Tongas2/GUICHECKGROUP",
+      "ranges": [
+        "0x004b91b0-0x004b93ff",
+        "0x00611400-0x0061152f",
+        "0x0066dcbc-0x0066dec7",
+        "0x006be8c8-0x006be977",
+        "0x009edfb8-0x009edfd7"
+      ],
+      "target": "build/target/Tongas2/GUICHECKGROUP.obj",
+      "source": "src/Tongas2/GUICHECKGROUP.cpp",
+      "category": "engine",
+      "complete": true,
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z"
+      }
+    },
+    {
       "name": "Tongas2/GUIGROUP",
       "ranges": [
         "0x004b9400-0x004b9caf",
