@@ -13,6 +13,8 @@ class STRINGMANAGER
 public:
     // Returns a buffer to the pool and updates the usage counters.
     void Free(int &block, int &pages);
+    // Checks the pool for errors.
+    void Check();
 };
 
 extern STRINGMANAGER g_StringManager;
@@ -57,6 +59,8 @@ public:
     }
     // Defined elsewhere.
     STRING &operator=(const char *text);
+    // Defined elsewhere: appends text.
+    void Append(const char *text);
     // Makes room for at least length characters.
     void Reserve(const int &length);
     // Defined elsewhere: printf into the string, up to 0x3fff characters.

@@ -4,6 +4,7 @@
 #define TONGAS2_APP_H
 
 class APPOPTIONS;
+class SYSMONITOR;
 
 class APP
 {
@@ -14,7 +15,8 @@ public:
     void SetMusic(bool on);
     void SetDetail(int level);
 
-    int m_0[4];
+    int m_0[3];
+    SYSMONITOR *m_monitor;
     APPOPTIONS *m_pOptions;
 };
 

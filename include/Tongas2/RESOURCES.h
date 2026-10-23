@@ -13,10 +13,11 @@
 // One type of resource (meshes, sounds, ...). Defined in another unit.
 class RESOURCEMASTER;
 
+class FILELOADER;
+
 class RESOURCEMANAGER
 {
 public:
-    // Defined elsewhere.
     RESOURCEMANAGER();
 
     // A new master of the manager's type.
@@ -25,38 +26,57 @@ public:
     virtual const char *GetTypeCode();
     virtual ~RESOURCEMANAGER();
     virtual void Update();
+    // Loads the list, then the masters, as long as that takes under half a
+    // second a step.
     virtual bool Load();
     // Whether name has this manager's file extension.
     virtual bool IsMyType(const char *name);
     virtual void Virtual06();
+    // Opens the list of the manager's masters.
     virtual void Init();
 
+    // Whether name starts with this manager's type code and a ':'.
+    bool HasPrefix(const char *name);
+    bool RemoveMaster(const RESHANDLE &handle);
     // Deletes the resources not used by level (all of them if all is set).
     void DeleteUnused(int level, bool all);
     void Flush();
     void SetLevel(int level);
     // Whether name starts with this manager's four-letter type code.
     bool HasTypeCode(const char *name);
+    // Sets up the masters once the list is loaded.
+    void PrepareMasters();
     void Dump(bool verbose, int index);
     void DumpPropsType();
+    void FreeAll();
     void DumpTotals(bool verbose);
-    RESHANDLE GetHandle(const char *name);
-    RESOURCE *GetResource(const char *name);
-    // Defined elsewhere: the master with a name, or 0.
-    RESOURCEMASTER *GetMaster(const char *name);
-    // Defined elsewhere: a new master with the name, added to the manager.
-    RESOURCEMASTER *AddMaster(const char *name);
     // Whether the type's flags allow loading ahead (0x20 set, or 4 clear).
     bool CanPreload();
+    // The master with a name, with or without the type code, or 0.
+    RESOURCEMASTER *FindMaster(const char *name);
+    // Adds a master to the manager.
+    void Insert(RESOURCEMASTER *master);
+    // A new master with the name, added to the manager.
+    RESOURCEMASTER *AddMaster(const char *name);
+    // Reads the list: "create <name> [command];" lines up to "end".
+    bool IsListLoaded();
+    // The master's handle, made if the type allows loading ahead.
+    RESHANDLE GetHandle(const char *name);
+    RESOURCE *GetResource(const char *name);
+    // The master with a name, or 0.
+    RESOURCEMASTER *GetMaster(const char *name);
 
     int m_id;
     bool m_8;
-    // The manager's masters, linked through m_next.
+    // The manager's masters, linked through m_next and m_prev.
     RESOURCEMASTER *m_first;
-    int m_10;
-    int m_14;
+    RESOURCEMASTER *m_last;
+    int m_count;
     bool m_18;
-    char m_19[9];
+    // Reads the list.
+    FILELOADER *m_loader;
+    bool m_loaded;
+    bool m_initialized;
     // The file the manager's types are listed in.
     char m_fileName[0x200];
 };

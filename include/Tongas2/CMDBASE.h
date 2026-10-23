@@ -74,7 +74,8 @@ public:
     // Runs a command from the class's table.
     virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
     virtual void SetName(const CSTRING &name) { m_name = name; }
-    virtual void Virtual07();
+    // Parses and runs a script command.
+    virtual SRESULT Run(STRING command);
     virtual int Virtual08() = 0;
     virtual void *Virtual09(const char *name) = 0;
     virtual void Virtual10();
@@ -86,6 +87,11 @@ public:
     virtual void Virtual16();
     virtual void Virtual17();
     virtual void Virtual18();
+
+    // Defined elsewhere.
+    void ApplyProperties();
+    // Logs the properties and their values.
+    void DumpProperties();
 
     int m_4;
     RESHANDLE m_handle;
