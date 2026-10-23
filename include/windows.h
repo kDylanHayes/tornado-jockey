@@ -109,6 +109,26 @@ typedef union _LARGE_INTEGER {
     __int64 QuadPart;
 } LARGE_INTEGER;
 
+typedef struct _COORD {
+    short X;
+    short Y;
+} COORD;
+
+typedef struct _SMALL_RECT {
+    short Left;
+    short Top;
+    short Right;
+    short Bottom;
+} SMALL_RECT;
+
+typedef struct _CONSOLE_SCREEN_BUFFER_INFO {
+    COORD dwSize;
+    COORD dwCursorPosition;
+    WORD wAttributes;
+    SMALL_RECT srWindow;
+    COORD dwMaximumWindowSize;
+} CONSOLE_SCREEN_BUFFER_INFO, *PCONSOLE_SCREEN_BUFFER_INFO;
+
 #define PROCESS_HEAP_ENTRY_BUSY 0x0004
 
 typedef struct _PROCESS_HEAP_ENTRY {
@@ -150,6 +170,9 @@ WINADVAPI LONG WINAPI RegOpenKeyExA(HKEY hKey, LPCSTR lpSubKey, DWORD ulOptions,
 WINADVAPI LONG WINAPI RegQueryValueExA(HKEY hKey, LPCSTR lpValueName, LPDWORD lpReserved, LPDWORD lpType,
     LPBYTE lpData, LPDWORD lpcbData);
 WINADVAPI LONG WINAPI RegCloseKey(HKEY hKey);
+WINBASEAPI BOOL WINAPI GetConsoleScreenBufferInfo(HANDLE hConsoleOutput,
+    PCONSOLE_SCREEN_BUFFER_INFO lpConsoleScreenBufferInfo);
+WINBASEAPI BOOL WINAPI SetConsoleTextAttribute(HANDLE hConsoleOutput, WORD wAttributes);
 WINUSERAPI int WINAPI MessageBoxA(HWND hWnd, LPCSTR lpText, LPCSTR lpCaption, UINT uType);
 WINUSERAPI int WINAPIV wsprintfA(LPSTR, LPCSTR, ...);
 }
