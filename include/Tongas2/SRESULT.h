@@ -202,6 +202,11 @@ static const char s_TypeNames[SRT_COUNT][15] = {
 class SRESULT
 {
 public:
+    SRESULT()
+    {
+        m_type = SRT_NOTSET;
+        m_value.i = 0;
+    }
     SRESULT(bool value)
     {
         SetType(SRT_BOOL);

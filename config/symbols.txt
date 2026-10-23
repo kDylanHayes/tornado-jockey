@@ -261,13 +261,13 @@
 0x0047e661 _adler32 function 0x119
 0x00482cf0 ?Error@LOG@@QAAXPBDZZ function 0x6e
 0x00483730 ??9CSTRING@@QBE_NABV0@@Z function
-0x00483800 ?Virtual18@CMDBASE@@UAEXXZ function
+0x00483800 ?FindProperty@CMDBASE@@UAEPAUPROPENTRY@@PBDH@Z function
 0x00483d40 ??0CMDBASE@@QAE@XZ function
 0x00483d80 ?Virtual11@CMDBASE@@UAEXXZ function
 0x00484010 ?Reserve@UNICODESTRING@@QAEXABH@Z function
 0x00484150 ??0TOKENS@@QAE@XZ function
 0x00484470 ?Virtual12@CMDBASE@@UAEXXZ function
-0x00484820 ?Virtual10@CMDBASE@@UAEXXZ function
+0x00484820 ?GetProperty@CMDBASE@@UAE?AVSRESULT@@PAUPROPENTRY@@H@Z function
 0x00484d20 ?Format@STRING@@QAAXPBDZZ function 0x6c
 0x00484d90 ??4UNICODESTRING@@QAEAAV0@PBG@Z function
 0x00484e20 ??4UNICODESTRING@@QAEAAV0@ABV0@@Z function
@@ -1482,11 +1482,40 @@
 0x004c62b0 ?SetLayersOpacityName@SHADERMASTER@@UAEXABHABVCSTRING@@@Z function
 0x004c6300 ?CreateCopy@SHADERMASTER@@UAEPAVRESOURCE@@ABURESHANDLE@@@Z function
 0x004c6360 ?Execute@SHADERMASTER@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function
+0x004cc880 ?RegisterCommands@VALUEMANAGER@@SAXXZ function 0x3f
 0x004cc8c0 ?_Max@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@KAPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@PAU342@@Z function
 0x004cc8e0 ?_Buynode@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@XZ function
+0x004cc920 ?GetProperty@VALUEMANAGER@@UAE?AVSRESULT@@PAUPROPENTRY@@H@Z function 0x2b
 0x004cc950 ??1?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@XZ function
 0x004cc980 ?_Lbound@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@IBEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@@Z function
+0x004cca40 ?_Ubound@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@@std@@@2@$0A@@std@@@std@@IBEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@@std@@@2@$0A@@std@@@2@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@@Z function 0xb0
+0x004ccaf0 ??$_Distance@Viterator@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@@std@@@2@$0A@@std@@@std@@I@std@@YAXViterator@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@@std@@@2@$0A@@std@@@0@0AAI@Z function 0x34
 0x004ccb30 ??1_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@QAE@XZ function
+0x004ccb60 ?find@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@@std@@@2@$0A@@std@@@std@@QAE?AViterator@12@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@@Z function 0x67
+0x004ccbd0 ?Exists@VALUEMANAGER@@QAE_NPBD@Z function 0xa1
+0x004ccc80 ?FindProperty@VALUEMANAGER@@UAEPAUPROPENTRY@@PBDH@Z function 0xb6
+0x004ccd40 ?Exist@VALUEMANAGER@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0x5f
+0x004ccda0 ?_Erase@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@@std@@@2@$0A@@std@@@std@@IAEXPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@@std@@@2@$0A@@std@@@2@@Z function 0x3e
+0x004ccde0 ?erase@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@@std@@@2@$0A@@std@@@std@@QAE?AViterator@12@V312@@Z function 0x2e0
+0x004cd0c0 ?_Buynode@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@@std@@@2@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@@std@@@2@$0A@@std@@@2@PAU342@00ABU?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@@2@D@Z function 0x87
+0x004cd150 ?erase@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@@std@@@2@$0A@@std@@@std@@QAE?AViterator@12@V312@0@Z function 0xb7
+0x004cd210 ?_Insert@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@@std@@@2@$0A@@std@@@std@@IAE?AViterator@12@_NPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@@std@@@2@$0A@@std@@@2@ABU?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@@2@@Z function 0x1ad
+0x004cd3c0 ?erase@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@@std@@@2@$0A@@std@@@std@@QAEIABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@@Z function 0x4c
+0x004cd410 ?insert@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@@std@@@2@$0A@@std@@@std@@QAE?AU?$pair@Viterator@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@@std@@@2@$0A@@std@@@std@@_N@2@ABU?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@@2@@Z function 0x171
+0x004cd590 ??1?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@@std@@@2@@std@@QAE@XZ function 0x2e
+0x004cd5c0 ??1VALUEMANAGER@@UAE@XZ function 0xf8
+0x004cd6c0 ?GetClassId@VALUEMANAGER@@UAEHXZ function 0x6
+0x004cd6d0 ?GetParentClassId@VALUEMANAGER@@UAEHXZ function 0xd
+0x004cd6e0 ?GetClassName@VALUEMANAGER@@UAEPBDXZ function 0xe
+0x004cd6f0 ?Execute@VALUEMANAGER@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function 0x73
+0x004cd770 ?insert@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@@std@@@2@$0A@@std@@@std@@QAE?AViterator@12@V312@ABU?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@@2@@Z function 0x1a7
+0x004cd920 ??0VALUEMANAGER@@QAE@XZ function 0xd7
+0x004cda00 ??_GVALUEMANAGER@@UAEPAXI@Z function 0x1e
+0x004cda20 ??A?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAVSRESULT@@@std@@@2@@std@@QAEAAPAVSRESULT@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@@Z function 0xbb
+0x004cdae0 ?CreateValueManager@@YAPAVCMDBASE@@XZ function 0x56
+0x004cdb40 ?Add@VALUEMANAGER@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0x124
+0x004cdc70 ?Delete@VALUEMANAGER@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0x28c
+0x004cdf00 ?Set@VALUEMANAGER@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0x385
 0x004ce290 ?Open@FILELOADER@@UAE_NPAD@Z function 0x67
 0x004ce300 ?IsError@FILELOADER@@UAEHXZ function 0xb
 0x004ce310 ?IsEof@FILELOADER@@UAE_NXZ function 0x14
@@ -3609,11 +3638,13 @@
 0x00666038 ??_C@_0BM@FFFLPBBC@invalid?5literal?1length?5code?$AA@ data
 0x00666530 ??_C@_01EEMJAFIK@?6?$AA@ data
 0x0066653c ??_C@_03OFAPEBGM@?$CFs?6?$AA@ data
+0x00666678 ??_C@_03KCHOJKKI@set?$AA@ data 0x4
 0x00666738 ??_C@_0EI@NHFHJGLP@UNICODESTRING_MANAGER?3?3CheckInde@ data 0x48
 0x00666780 ??_C@_0FB@CMMEMJAA@UNICODESTRING_MANAGER?3?3GetPointe@ data 0x51
 0x006667d4 ??_C@_07GOLFKGID@CMDBASE?$AA@ data 0x8
 0x00666990 ??_C@_02DPKJAMEF@?$CFd?$AA@ data
 0x00666bb8 ??_C@_08OEKJENGB@?$CFf?5?$CFf?5?$CFf?$AA@ data 0x9
+0x00666e18 ??_C@_07GOOEBILB@seteval?$AA@ data 0x8
 0x00666ed4 ??_C@_07MFGAOKLA@TRIGGER?$AA@ data 0x8
 0x00666edc ??_C@_07KJIBKIOF@SPAWNER?$AA@ data 0x8
 0x00666ee4 ??_C@_0BF@MHILCODM@ACTORRESOURCESMASTER?$AA@ data 0x15
@@ -3649,6 +3680,7 @@
 0x006670d4 ??_C@_09KIKCHMPD@GUIVISUAL?$AA@ data 0xa
 0x006670e0 ??_C@_0M@EHIIDNGN@GUITEXTEDIT?$AA@ data 0xc
 0x006670ec ??_C@_07DNBOFAIK@GUITEXT?$AA@ data 0x8
+0x00667108 ??_C@_0N@BNHCIJEP@VALUEMANAGER?$AA@ data 0xd
 0x006671c0 ??_C@_06DIJPEION@?$CFs?$CFs?$CFs?$AA@ data 0x7
 0x00667248 ??_C@_03JBJLGPFL@end?$AA@ data 0x4
 0x00667384 ??_C@_01KDCPPGHE@r?$AA@ data
@@ -3672,7 +3704,9 @@
 0x00668608 ??_C@_05ODPICHEP@ZSort?$AA@ data 0x6
 0x00668610 ??_C@_04EBKMHHBE@Size?$AA@ data 0x5
 0x0066861c ??_C@_06HBNONAG@create?$AA@ data 0x7
+0x006686dc ??_C@_03MEPDGFMA@var?$AA@ data 0x4
 0x006686ec ??_C@_09BMHMPIHG@resources?$AA@ data 0xa
+0x00668a90 ??_C@_03BDGOHNNK@add?$AA@ data 0x4
 0x00668b9c ??_C@_03FCCPIJGJ@Pos?$AA@ data 0x4
 0x006690c0 ??_C@_04IMHCLIFH@BNMD?$AA@ data 0x5
 0x006691d4 ??_C@_01IHBHIGKO@?0?$AA@ data
@@ -4235,6 +4269,12 @@
 0x006710a4 ??_C@_05DPKHHBAM@ZTest?$AA@ data 0x6
 0x006710ac ??_C@_06HKPDPKHP@ZWrite?$AA@ data 0x7
 0x006710b4 ??_C@_08PJPCIKLF@GridCols?$AA@ data 0x9
+0x00672430 ??_7VALUEMANAGER@@6B@ data 0x5c
+0x0067248c ??_C@_0CN@NAKADGJH@could?5not?5add?5variable?5?8?$CFs?8?0?5alr@ data 0x2d
+0x006724bc ??_C@_0DA@EDGBPLDG@could?5not?5delete?5variable?5?8?$CFs?8?0?5@ data 0x30
+0x006724ec ??_C@_0CN@LLGFCCF@could?5not?5set?5variable?5?8?$CFs?8?0?5doe@ data 0x2d
+0x0067251c ??_C@_05IEGMLJMJ@exist?$AA@ data 0x6
+0x00672524 ??_C@_06FOBLBEIN@delete?$AA@ data 0x7
 0x0067252c ??_7FILELOADER@@6B@ data 0x34
 0x00672810 __real@3f847ae147ae147b data
 0x006734c4 __real@358637bd data
@@ -4751,6 +4791,7 @@
 0x006aa614 __TI1?AW4J_MESSAGE_CODE@@ data
 0x006b92f0 ?g_classParents@@3PAHA data
 0x006b9af4 ?g_CMDBASEClassId@@3HA data 0x4
+0x006b9afc ?s_classId@VALUEMANAGER@@2HA data 0x4
 0x006b9b30 ?s_classId@RESOURCES@@2HA data 0x4
 0x006b9b34 ?s_classId@RESOURCE@@2HA data 0x4
 0x006b9b38 ?s_classId@RESOURCEMASTER@@2HA data 0x4
@@ -4852,6 +4893,9 @@
 0x006c0758 ?s_properties@TEXTMASTER@@2PAUPROPENTRY@@A data 0x188
 0x006c08e0 ?g_pfnCreateSHADER@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006c08e8 ?s_properties@SHADERMASTER@@2PAUPROPENTRY@@A data 0x6c8
+0x006c15d0 ?g_pfnCreateValueManager@@3P6APAVCMDBASE@@XZA data 0x4
+0x006c15d4 ?s_unset@VALUEMANAGER@@2VSRESULT@@A data 0xc
+0x006c15e0 ?s_commands@VALUEMANAGER@@2PAUCMDENTRY@@A data 0xc0
 0x006c16d8 ?g_pfnCreateFileLoader@@3P6APAVFILELOADER@@XZA data 0x4
 0x006c17b8 ?g_zeroAngles@@3UANG@@A data 0x50
 0x006c1808 ?g_pfnCreateSIMPLEMODEL@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
