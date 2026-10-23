@@ -182,6 +182,8 @@ public:
     WTACTOR *GetActor(RESHANDLE handle);
     // The actor with a name, or 0.
     WTACTOR *FindActor(const char *name);
+    // Removes the actor with a handle.
+    void Remove(RESHANDLE handle);
 };
 extern ACTORS *g_pActors;
 

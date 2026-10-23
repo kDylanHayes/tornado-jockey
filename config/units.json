@@ -1551,6 +1551,26 @@
       }
     },
     {
+      "name": "Tongas2/SPAWNER",
+      "ranges": [
+        "0x004b51a0-0x004b5e5f",
+        "0x0060fee0-0x0061038f",
+        "0x0066c9a8-0x0066ce17",
+        "0x006bdc80-0x006bdf5f",
+        "0x009eded0-0x009eded3"
+      ],
+      "target": "build/target/Tongas2/SPAWNER.obj",
+      "source": "src/Tongas2/SPAWNER.cpp",
+      "category": "engine",
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z",
+        "?SupportsICCProfiles@@YAJXZ": "?Virtual85@ACTOR@@UAEXXZ",
+        "?SetDescription@RESOURCEMASTER@@UAEXABH@Z": "?Virtual28@ACTOR@@UAEXXZ",
+        "?SetForce@EMITTERMASTER@@UAEXABUV3@@@Z": "?SetScale@ACTOR@@UAEXABUV3@@@Z",
+        "?GetFactoryId@ACTOR@@UAEHXZ": "?GetParentFactoryId@SPAWNER@@UAEHXZ"
+      }
+    },
+    {
       "name": "Tongas2/ACTORRESOURCES",
       "ranges": [
         "0x004b5e60-0x004b657f",

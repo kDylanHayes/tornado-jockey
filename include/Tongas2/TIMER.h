@@ -6,7 +6,8 @@ class TIMER
 {
 public:
     int m_0;
-    int m_4;
+    // The time since the game started, in seconds.
+    float m_time;
     // The length of the last frame, in seconds.
     float m_dt;
     int m_c;

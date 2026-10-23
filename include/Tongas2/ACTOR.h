@@ -52,6 +52,18 @@ public:
     int m_8;
 };
 
+// Defined elsewhere: a position and rotation.
+class TRANSFORM
+{
+public:
+    // Turns the rotation by m.
+    void Rotate(const MATRIX &m);
+
+    V3 m_position;
+    MATRIX m_rotation;
+    int m_flags;
+};
+
 // Defined elsewhere.
 class ACTOR : public CMDBASE, public ACTORLINK
 {
@@ -73,9 +85,9 @@ public:
     virtual int GetFactoryFlags();
     virtual void SetPosition(const V3 &position);
     virtual void Virtual23();
-    virtual void Virtual24();
+    virtual void SetAngles(const ANG &angles);
     virtual void SetScale(const V3 &scale);
-    virtual void Virtual26();
+    virtual void Virtual26(const bool &value);
     virtual void Virtual27();
     virtual void Virtual28();
     virtual void Virtual29();
@@ -135,13 +147,14 @@ public:
     virtual void Virtual83();
     virtual void Virtual84();
     virtual void Virtual85();
-    virtual void Virtual86();
+    // A copy of the actor.
+    virtual ACTOR *Virtual86(int flags);
     virtual void Virtual87();
     virtual void Virtual88();
-    virtual void Virtual89();
-    virtual void Virtual90();
-    virtual void Virtual91();
-    virtual void Virtual92();
+    virtual void Virtual89(bool value);
+    virtual V3 GetPosition();
+    virtual ANG GetAngles();
+    virtual V3 GetScale();
     virtual void Virtual93();
     virtual void Virtual94();
     virtual void Virtual95();
@@ -168,7 +181,8 @@ public:
     virtual void Virtual115();
     virtual void Virtual116();
     virtual void Virtual117();
-    virtual void Virtual118();
+    // The size of the actor's model.
+    virtual V3 GetSize();
     virtual void Virtual119();
     // A contact the collision manager found for the actor.
     virtual void OnContact(CONTACT *contact);
@@ -212,9 +226,16 @@ public:
     static int s_factoryId;
 
     V3 m_position;
-    char m_34[0x84 - 0x34];
+    TRANSFORM m_transform;
     V3 m_scale;
-    char m_90[0xccc - 0x90];
+    char m_90[0x13c - 0x90];
+    V3 m_13c;
+    char m_148[0x998 - 0x148];
+    bool m_998;
+    char m_999[0xa78 - 0x999];
+    // The spawner that made the actor.
+    RESHANDLE m_spawner;
+    char m_a84[0xccc - 0xa84];
 };
 
 #endif
