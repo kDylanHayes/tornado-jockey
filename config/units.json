@@ -1627,6 +1627,23 @@
       }
     },
     {
+      "name": "Tongas2/GUIVISUAL",
+      "ranges": [
+        "0x004b9cb0-0x004ba5ef",
+        "0x00612080-0x0061280f",
+        "0x0066e378-0x0066e6bf",
+        "0x006bf010-0x006bf477",
+        "0x009edff8-0x009ee017"
+      ],
+      "target": "build/target/Tongas2/GUIVISUAL.obj",
+      "source": "src/Tongas2/GUIVISUAL.cpp",
+      "category": "engine",
+      "complete": true,
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z"
+      }
+    },
+    {
       "name": "Tongas2/PATHREPOSITORY",
       "ranges": [
         "0x004b6580-0x004b778f",

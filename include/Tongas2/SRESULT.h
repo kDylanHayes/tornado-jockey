@@ -141,12 +141,24 @@ struct SRTEXTURE
     char name[SRESULT_MAX_STRING];
     int index;
 
+    SRTEXTURE()
+    {
+        name[0] = 0;
+        name[SRESULT_MAX_STRING - 1] = 0;
+        index = 0;
+    }
     SRTEXTURE(const SRTEXTURE &other)
     {
         name[0] = 0;
         name[SRESULT_MAX_STRING - 1] = 0;
         memcpy(name, other.name, sizeof(name));
         index = other.index;
+    }
+    SRTEXTURE &operator=(const SRTEXTURE &other)
+    {
+        memcpy(name, other.name, sizeof(name));
+        index = other.index;
+        return *this;
     }
 };
 
