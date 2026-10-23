@@ -53,6 +53,12 @@ struct ANG
     ANG() {}
     ANG(float x, float y, float z) : euler(x, y, z), flags(MATRIX_DIRTY) {}
     ANG(const MATRIX &m) : euler(0.0f, 0.0f, 0.0f), matrix(m), flags(EULER_DIRTY) {}
+    // Looking along direction from position.
+    ANG(const V3 &position, const V3 &direction) : euler(0.0f, 0.0f, 0.0f)
+    {
+        matrix.LookAt(position, direction);
+        flags = EULER_DIRTY;
+    }
 
     const V3 &GetEuler()
     {
@@ -125,6 +131,8 @@ struct ANG
     void Rotate(const ANG &other);
     // The direction the angles face.
     V3 GetDirection();
+    // The translation plus the up axis of the matrix.
+    V3 GetUpPoint();
     // Turns the angles to face a direction.
     void PointAt(const V3 &direction);
 

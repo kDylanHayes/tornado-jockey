@@ -44,7 +44,9 @@
 0x00404ce0 ?SetType@SRESULT@@QAEXABW4SRESULTTYPE@@@Z function 0xfc
 0x00404e70 ??4STRING@@QAEAAV0@PBD@Z function
 0x004058a0 ?Assign@SRESULT@@QAEXABV1@@Z function
+0x00405c50 ??0STRING@@QAE@PBD@Z function 0x5a
 0x004060a0 ?Virtual07@CMDBASE@@UAEXXZ function
+0x00406220 ??1TOKENS@@QAE@XZ function 0x6a
 0x00406390 ??_9@$BOM@AE function
 0x004063a0 ??_9@$BPA@AE function
 0x004063b0 ??_9@$BPE@AE function
@@ -56,6 +58,7 @@
 0x00407c50 ??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@PBD@Z function
 0x00408e30 ?FromEuler@MATRIX@@QAEXMMM@Z function
 0x00409300 ?GetDirection@ANG@@QAE?AUV3@@XZ function
+0x00409350 ?GetUpPoint@ANG@@QAE?AUV3@@XZ function 0x42
 0x0040a150 ?RotateAxis@MATRIX@@QAEXMUV3@@@Z function
 0x0040a8d0 ??G@YA?AUV3@@ABU0@0@Z function
 0x0040a930 ??D@YA?AUV3@@ABU0@ABM@Z function
@@ -941,6 +944,45 @@
 0x004bc260 ??_GBONEDMODELRESOURCE@@UAEPAXI@Z function 0x1e
 0x004bc280 ?Prepare@BONEDMODELMASTER@@UAEXXZ function 0xbf
 0x004bc340 ?Execute@BONEDMODELMASTER@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function 0x73
+0x004bc3c0 ?Virtual31@FX@@UAEXXZ function 0x92
+0x004bc460 ?RegisterCommands@FXMASTER@@SAXXZ function 0x3f
+0x004bc4a0 ?PickRandom@FXMASTER@@QAEHXZ function 0xc9
+0x004bc570 ?GetTypeCode@FXMANAGER@@UAEPBDXZ function 0x6
+0x004bc580 ?CreateFX@@YAPAVRESOURCEMANAGER@@XZ function 0x80
+0x004bc600 ?Reset@FX@@QAEXXZ function 0x1b7
+0x004bc7c0 ??0FXMASTER@@QAE@PAVRESOURCEMANAGER@@PBD@Z function 0x408
+0x004bcbd0 ?GetClassId@FXMASTER@@UAEHXZ function 0x6
+0x004bcbe0 ?GetParentClassId@FXMASTER@@UAEHXZ function 0xd
+0x004bcbf0 ?GetClassName@FXMASTER@@UAEPBDXZ function 0xe
+0x004bcc00 ?SetRandomMode@FXMASTER@@UAEXAB_N@Z function 0xc
+0x004bcc10 ?SetLooping@FXMASTER@@UAEXAB_N@Z function 0xc
+0x004bcc20 ?SetForceCompletePlay@FXMASTER@@UAEXAB_N@Z function 0xc
+0x004bcc30 ?SetWait@FXMASTER@@UAEXABHABM@Z function 0x13
+0x004bcc50 ?SetPos@FXMASTER@@UAEXABHABUV3@@@Z function 0x26
+0x004bcc80 ?SetAng@FXMASTER@@UAEXABHABUANG@@@Z function 0x25
+0x004bccb0 ?SetScale@FXMASTER@@UAEXABHABUV3@@@Z function 0x27
+0x004bcce0 ?SetOpacity@FXMASTER@@UAEXABHABM@Z function 0x16
+0x004bcd00 ?SetZSort@FXMASTER@@UAEXABH0@Z function 0x16
+0x004bcd20 ?SetSpecific@FXMASTER@@UAEXABH0@Z function 0x16
+0x004bcd40 ?SetLife@FXMASTER@@UAEXABHABM@Z function 0x16
+0x004bcd60 ?SetScreenPos@FXMASTER@@UAEXABUV2@@@Z function 0x18
+0x004bcd80 ?SetForceScreenPos@FXMASTER@@UAEXAB_N@Z function 0xf
+0x004bcd90 ?SetDetachToScreen@FXMASTER@@UAEXAB_N@Z function 0xf
+0x004bcda0 ?SetBoneAttach@FXMASTER@@UAEXABHABVCSTRING@@@Z function 0x1a
+0x004bcdc0 ?SetCommand@FXMASTER@@UAEXABHABVCSTRING@@@Z function 0x1a
+0x004bcde0 ?SetResource@FXMASTER@@UAEXABHABVCSTRING@@@Z function 0x88
+0x004bce70 ?CreateMaster@FXMANAGER@@UAEPAVRESOURCEMASTER@@PBD@Z function 0x69
+0x004bcee0 ??0FX@@QAE@PAVFXMASTER@@ABURESHANDLE@@@Z function 0x9e
+0x004bcf80 ??1FX@@UAE@XZ function 0x4f
+0x004bcfd0 ?Start@FX@@UAEXXZ function 0x5
+0x004bcfe0 ?Stop@FX@@UAEXXZ function 0x1a
+0x004bd000 ??_GFXMASTER@@UAEPAXI@Z function 0x1e
+0x004bd020 ??1FXMASTER@@UAE@XZ function 0x8d
+0x004bd0b0 ?CreateCopy@FXMASTER@@UAEPAVRESOURCE@@ABURESHANDLE@@@Z function 0x69
+0x004bd120 ?Execute@FXMASTER@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function 0x73
+0x004bd1a0 ??_GFX@@UAEPAXI@Z function 0x1e
+0x004bd1c0 ?Spawn@FX@@QAEXH@Z function 0x864
+0x004bda30 ?Update@FX@@UAEXXZ function 0x813
 0x004c57e0 ?AddUser@SHADERMASTER@@QAEXXZ function
 0x004c57f0 ?RemoveUser@SHADERMASTER@@QAEXXZ function
 0x004c6050 ?SetRenderPassesFlags@BONEDMODELMASTER@@UAEXABH@Z function 0xa
@@ -2836,6 +2878,8 @@
 0x006133c0 _$E3 function 0x289
 0x00613650 _$E1 function 0x23
 0x00613680 _$E3 function 0x164
+0x006137f0 _$E1 function 0x23
+0x00613820 _$E3 function 0x75b
 0x006541f0 _$E1 function 0x1d
 0x00654470 _$E6 function 0x24
 0x006544a0 _$E9 function 0x24
@@ -3016,6 +3060,7 @@
 0x00666fd0 ??_C@_0BC@KOJAAGKK@SCREENDECALMASTER?$AA@ data 0x12
 0x00666fe4 ??_C@_0M@PGNOOMJE@DECALMASTER?$AA@ data 0xc
 0x00666ff0 ??_C@_0BB@DCJKJGHM@BONEDMODELMASTER?$AA@ data 0x11
+0x00667004 ??_C@_08BGGFOJMM@FXMASTER?$AA@ data 0x9
 0x0066707c ??_C@_08KGDJAKPA@RESOURCE?$AA@ data
 0x00667088 ??_C@_09CMINMFIB@RESOURCES?$AA@ data 0xa
 0x00667094 ??_C@_09LLOKOKDN@GUISLIDER?$AA@ data 0xa
@@ -3435,6 +3480,18 @@
 0x0066f3d4 ??_C@_0BB@IKPLMNHF@NormalizeNormals?$AA@ data 0x11
 0x0066f3e8 ??_C@_0BC@POCLBNDB@RenderPassesFlags?$AA@ data 0x12
 0x0066f3fc ??_C@_0L@BHGJBGPE@RandomMode?$AA@ data 0xb
+0x0066f408 _s_TypeNames data 0xb4
+0x0066f4bc ??_7FXMANAGER@@6B@ data 0x20
+0x0066f4dc ??_C@_06COIIMJOM@FX?4txt?$AA@ data 0x7
+0x0066f4e4 ??_C@_04OGKCKEGI@FXFX?$AA@ data 0x5
+0x0066f4f0 ??_7FXMASTER@@6B@ data 0xd0
+0x0066f5c0 ??_7FX@@6B@ data 0x118
+0x0066f6d8 ??_C@_0P@CCMJFGEF@DetachToScreen?$AA@ data 0xf
+0x0066f6e8 ??_C@_0P@EMBKKOMP@ForceScreenPos?$AA@ data 0xf
+0x0066f6f8 ??_C@_04DMCBMHAC@Wait?$AA@ data 0x5
+0x0066f700 ??_C@_0BC@DBEIMCPF@ForceCompletePlay?$AA@ data 0x12
+0x0066f714 ??_C@_07LHLKDFLL@Looping?$AA@ data 0x8
+0x0066f71c ??_C@_0O@PCBLAFGI@PrimitiveType?$AA@ data 0xe
 0x0067252c ??_7FILELOADER@@6B@ data 0x34
 0x00672810 __real@3f847ae147ae147b data
 0x006734c4 __real@358637bd data
@@ -3955,6 +4012,7 @@
 0x006b9b34 ?s_classId@RESOURCE@@2HA data 0x4
 0x006b9b38 ?s_classId@RESOURCEMASTER@@2HA data 0x4
 0x006b9b54 ?s_classId@EMITTERMASTER@@2HA data 0x4
+0x006b9b5c ?s_classId@FXMASTER@@2HA data 0x4
 0x006b9b60 ?s_classId@SOUNDMASTER@@2HA data 0x4
 0x006b9b64 ?s_classId@BONEDMODELMASTER@@2HA data 0x4
 0x006b9b68 ?s_classId@DECALMASTER@@2HA data 0x4
@@ -4016,6 +4074,7 @@
 0x006bfca8 ?g_pfnCreateBONEDMODEL@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006bfcb0 ?s_properties@BONEDMODELMASTER@@2PAUPROPENTRY@@A data 0xe0
 0x006bfd90 ?g_pfnCreateFX@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006bfd98 ?s_properties@FXMASTER@@2PAUPROPENTRY@@A data 0x460
 0x006c01f8 ?g_pfnCreateCPRIMITIVE3@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006c0388 ?g_pfnCreateTESLA@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006c0518 ?g_pfnCreatePOLYTRAIL@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
@@ -4164,6 +4223,7 @@
 0x009ee038 ?s_commands@GUITEXTMASTER@@2PAUCMDENTRY@@A data 0x20
 0x009ee058 ?s_commands@SCREENDECALMASTER@@2PAUCMDENTRY@@A data 0x20
 0x009ee078 ?s_commands@BONEDMODELMASTER@@2PAUCMDENTRY@@A data 0x20
+0x009ee098 ?s_commands@FXMASTER@@2PAUCMDENTRY@@A data 0x20
 0x009eede8 _s_line data 0x10000
 0x00a0f288 _s_format_id data
 0x00a0f28c _s_format_id data
