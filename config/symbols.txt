@@ -146,6 +146,7 @@
 0x004436a0 ?_Inc@const_iterator@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@QAEXXZ function
 0x00443780 ?_Buynode@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@2@XZ function
 0x00443800 ??1SOUNDMASTER@@UAE@XZ function
+0x00443870 ?SetForceDuplicates@SCREENDECALMASTER@@UAEXAB_N@Z function 0xc
 0x004438b0 ?SetLoop@DECALMASTER@@UAEXAB_N@Z function
 0x00443cb0 ?erase@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@QAE?AViterator@12@V312@0@Z function
 0x00443d70 ??0SOUNDMANAGER@@QAE@XZ function
@@ -214,6 +215,7 @@
 0x004908f0 ?GetActor@ACTORS@@QAEPAVWTACTOR@@URESHANDLE@@@Z function
 0x00490930 ?FindActor@ACTORS@@QAEPAVWTACTOR@@PBD@Z function
 0x00492480 ?Virtual13@CMDBASE@@UAEXXZ function
+0x00492d50 ?GetScaleFactor@SCREENDECAL@@UAE?AUV3@@XZ function 0x14
 0x004980f0 ??9@YA_NABUV3@@0@Z function
 0x004992d0 ?IsZero@ANG@@QAE_NXZ function
 0x004a17a0 ?GetViewSize@CAMERA@@QAE?AUV2@@XZ function
@@ -892,6 +894,27 @@
 0x004bb530 ?CreateMaster@GUITEXTMANAGER@@UAEPAVRESOURCEMASTER@@PBD@Z function 0x69
 0x004bb5a0 ??_GGUITEXTMASTER@@UAEPAXI@Z function 0x1e
 0x004bb5c0 ?Execute@GUITEXTMASTER@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function 0x83
+0x004bb650 ?SetPosition@SCREENDECAL@@UAEXUV3@@@Z function 0x24
+0x004bb680 ?SetScreenPosition@SCREENDECAL@@QAEXMM@Z function 0x1e
+0x004bb6a0 ?GetScreenPosition@SCREENDECAL@@QAE?AUV2@@XZ function 0x18
+0x004bb6c0 ?SetScreenSize@SCREENDECAL@@QAEXABUV2@@@Z function 0x18
+0x004bb6e0 ?RegisterCommands@SCREENDECALMASTER@@SAXXZ function 0x3f
+0x004bb720 ?GetTypeCode@SCREENDECALMANAGER@@UAEPBDXZ function 0x6
+0x004bb730 ?CreateSCREENDECAL@@YAPAVRESOURCEMANAGER@@XZ function 0x80
+0x004bb7b0 ??1SCREENDECAL@@UAE@XZ function 0xb
+0x004bb7c0 ??0SCREENDECALMASTER@@QAE@PAVRESOURCEMANAGER@@PBD@Z function 0x7b
+0x004bb840 ?GetClassId@SCREENDECALMASTER@@UAEHXZ function 0x6
+0x004bb850 ?GetParentClassId@SCREENDECALMASTER@@UAEHXZ function 0xd
+0x004bb860 ?GetClassName@SCREENDECALMASTER@@UAEPBDXZ function 0xe
+0x004bb870 ?SetShifterSpeed@SCREENDECALMASTER@@UAEXABUV2@@@Z function 0x12
+0x004bb890 ??_GSCREENDECALMASTER@@UAEPAXI@Z function 0x1e
+0x004bb8b0 ??1SCREENDECALMASTER@@UAE@XZ function 0x3f
+0x004bb8f0 ?CreateMaster@SCREENDECALMANAGER@@UAEPAVRESOURCEMASTER@@PBD@Z function 0x66
+0x004bb960 ??0SCREENDECAL@@QAE@PAVSCREENDECALMASTER@@ABURESHANDLE@@@Z function 0x7d
+0x004bb9e0 ??_GSCREENDECAL@@UAEPAXI@Z function 0x1e
+0x004bba00 ?Prepare@SCREENDECALMASTER@@UAEXXZ function 0xbf
+0x004bbac0 ?CreateCopy@SCREENDECALMASTER@@UAEPAVRESOURCE@@ABURESHANDLE@@@Z function 0x69
+0x004bbb30 ?Execute@SCREENDECALMASTER@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function 0x73
 0x004c57e0 ?AddUser@SHADERMASTER@@QAEXXZ function
 0x004c57f0 ?RemoveUser@SHADERMASTER@@QAEXXZ function
 0x004c6070 ?SetAlwaysLookCamera@DECALMASTER@@UAEXAB_N@Z function
@@ -920,11 +943,15 @@
 0x004d4610 ?PointAt@ANG@@QAEXABUV3@@@Z function
 0x004d57c0 ?GetSaveFolder@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z function
 0x004d5f00 ?CreateFolder@@YAXABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z function
+0x004ded00 ?IsLoaded@SCREENDECAL@@UAE_NXZ function 0x3
 0x004dfe20 ?SetDescription@RESOURCEMASTER@@UAEXABH@Z function
 0x004e7820 ?_Min@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@KAPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@PAU342@@Z function
 0x004e7ed0 ?_Buynode@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@PAU342@00ABU?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@2@D@Z function
 0x004eb950 ?IsCompressed@FILELOADER@@UAE_NXZ function 0x3
+0x004ecf10 ?SetUserFolder@SCREENDECALMASTER@@UAEXAB_N@Z function 0xc
+0x004ecf20 ?SetCorrectSizeInWidescreen@SCREENDECALMASTER@@UAEXAB_N@Z function 0xc
 0x004fbbb0 ??1?$vector@UPATHREPOPOINT@@V?$allocator@UPATHREPOPOINT@@@std@@@std@@QAE@XZ function
+0x00537270 ?SetFileName@SCREENDECALMASTER@@UAEXABVCSTRING@@@Z function 0x34
 0x0053dad0 ?size@?$vector@UPATHREPOPOINT@@V?$allocator@UPATHREPOPOINT@@@std@@@std@@QBEIXZ function 0x1f
 0x0053db30 ??$fill@PAUPATHREPOPOINT@@U1@@std@@YAXPAUPATHREPOPOINT@@0ABU1@@Z function
 0x00547f50 ?term_source@@YAXPAUjpeg_decompress_struct@@@Z function
@@ -2775,6 +2802,8 @@
 0x00612840 _$E3 function 0x2e3
 0x00612b30 _$E1 function 0x23
 0x00612b60 _$E3 function 0x823
+0x00613390 _$E1 function 0x23
+0x006133c0 _$E3 function 0x289
 0x006541f0 _$E1 function 0x1d
 0x00654470 _$E6 function 0x24
 0x006544a0 _$E9 function 0x24
@@ -2952,6 +2981,7 @@
 0x00666f9c ??_C@_0BA@LLPFCLEM@GUIVISUALMASTER?$AA@ data 0x10
 0x00666fac ??_C@_0BC@JEDLPFEB@GUITEXTEDITMASTER?$AA@ data 0x12
 0x00666fc0 ??_C@_0O@DPJFDOHJ@GUITEXTMASTER?$AA@ data 0xe
+0x00666fd0 ??_C@_0BC@KOJAAGKK@SCREENDECALMASTER?$AA@ data 0x12
 0x00666fe4 ??_C@_0M@PGNOOMJE@DECALMASTER?$AA@ data 0xc
 0x0066707c ??_C@_08KGDJAKPA@RESOURCE?$AA@ data
 0x00667088 ??_C@_09CMINMFIB@RESOURCES?$AA@ data 0xa
@@ -3347,6 +3377,18 @@
 0x0066ec14 ??_C@_0BA@FICPAFLI@CheckMouseClick?$AA@ data 0x10
 0x0066ec24 ??_C@_0P@HBIMEDKJ@CheckMouseMove?$AA@ data 0xf
 0x0066ec34 ??_C@_0P@KIDDKPFN@ParagraphSpace?$AA@ data 0xf
+0x0066ec48 _s_TypeNames data 0xb4
+0x0066ed00 _s_blends data 0xb4
+0x0066edb4 ??_7SCREENDECALMANAGER@@6B@ data 0x20
+0x0066edd4 ??_C@_0BA@NGNHLFEL@SCREENDECAL?4txt?$AA@ data 0x10
+0x0066ede4 ??_C@_04GDAIHDPA@SCDC?$AA@ data 0x5
+0x0066edf0 ??_7SCREENDECAL@@6B@ data 0x118
+0x0066ef08 ??_7SCREENDECALMASTER@@6B@ data 0xa0
+0x0066efa8 ??_C@_0BI@LHECANGN@CorrectSizeInWidescreen?$AA@ data 0x18
+0x0066efc0 ??_C@_0L@BNIEEGID@UserFolder?$AA@ data 0xb
+0x0066efcc ??_C@_05BPEPCAMP@Blend?$AA@ data 0x6
+0x0066efd4 ??_C@_0N@ODPLODHF@ShifterSpeed?$AA@ data 0xd
+0x0066efe4 ??_C@_0BA@OLINBLDA@ForceDuplicates?$AA@ data 0x10
 0x0067252c ??_7FILELOADER@@6B@ data 0x34
 0x00672810 __real@3f847ae147ae147b data
 0x006734c4 __real@358637bd data
@@ -3869,6 +3911,7 @@
 0x006b9b54 ?s_classId@EMITTERMASTER@@2HA data 0x4
 0x006b9b60 ?s_classId@SOUNDMASTER@@2HA data 0x4
 0x006b9b68 ?s_classId@DECALMASTER@@2HA data 0x4
+0x006b9b6c ?s_classId@SCREENDECALMASTER@@2HA data 0x4
 0x006b9b70 ?s_classId@GUITEXTMASTER@@2HA data 0x4
 0x006b9b74 ?s_classId@GUITEXTEDITMASTER@@2HA data 0x4
 0x006b9b78 ?s_classId@GUIVISUALMASTER@@2HA data 0x4
@@ -3922,6 +3965,7 @@
 0x006bf640 ?g_pfnCreateGUITEXT@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006bf648 ?s_properties@GUITEXTMASTER@@2PAUPROPENTRY@@A data 0x4d0
 0x006bfb18 ?g_pfnCreateSCREENDECAL@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006bfb20 ?s_properties@SCREENDECALMASTER@@2PAUPROPENTRY@@A data 0x188
 0x006bfca8 ?g_pfnCreateBONEDMODEL@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006bfd90 ?g_pfnCreateFX@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006c01f8 ?g_pfnCreateCPRIMITIVE3@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
@@ -4070,6 +4114,7 @@
 0x009edff8 ?s_commands@GUIVISUALMASTER@@2PAUCMDENTRY@@A data 0x20
 0x009ee018 ?s_commands@GUITEXTEDITMASTER@@2PAUCMDENTRY@@A data 0x20
 0x009ee038 ?s_commands@GUITEXTMASTER@@2PAUCMDENTRY@@A data 0x20
+0x009ee058 ?s_commands@SCREENDECALMASTER@@2PAUCMDENTRY@@A data 0x20
 0x009eede8 _s_line data 0x10000
 0x00a0f288 _s_format_id data
 0x00a0f28c _s_format_id data
