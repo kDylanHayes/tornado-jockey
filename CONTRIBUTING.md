@@ -50,4 +50,5 @@ Partial units are welcome too: leave `complete` off and say in the pull request 
 - [docs/delinking.md](docs/delinking.md): producing target objects and naming symbols
 - [docs/regions.md](docs/regions.md): what's where in the exe
 - [docs/rea.md](docs/rea.md): agent-assisted analysis with rea
+- [docs/kuna.md](docs/kuna.md): decompiling with kuna, without Ghidra
 - [docs/maintainers.md](docs/maintainers.md): updating the progress page
