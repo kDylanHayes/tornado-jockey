@@ -44,7 +44,12 @@ public:
             Free();
     }
 
-    STRING &operator=(const STRING &other);
+    STRING &operator=(const STRING &other)
+    {
+        Reserve(const_cast<STRING &>(other).Length());
+        *this = other.c_str();
+        return *this;
+    }
     // Defined elsewhere.
     STRING &operator=(const char *text);
     // Makes room for at least length characters.
