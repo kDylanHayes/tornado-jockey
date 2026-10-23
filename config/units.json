@@ -1531,6 +1531,26 @@
       }
     },
     {
+      "name": "Tongas2/TRIGGER",
+      "ranges": [
+        "0x004b4a60-0x004b519f",
+        "0x0060fb40-0x0060fedf",
+        "0x0066c5ec-0x0066c9a7",
+        "0x006bda28-0x006bdc7f"
+      ],
+      "target": "build/target/Tongas2/TRIGGER.obj",
+      "source": "src/Tongas2/TRIGGER.cpp",
+      "category": "engine",
+      "complete": true,
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z",
+        "?SupportsICCProfiles@@YAJXZ": "?Virtual85@ACTOR@@UAEXXZ",
+        "?SetDescription@RESOURCEMASTER@@UAEXABH@Z": "?Virtual28@ACTOR@@UAEXXZ",
+        "?SetForce@EMITTERMASTER@@UAEXABUV3@@@Z": "?SetScale@ACTOR@@UAEXABUV3@@@Z",
+        "?GetFactoryId@ACTOR@@UAEHXZ": "?GetParentFactoryId@TRIGGER@@UAEHXZ"
+      }
+    },
+    {
       "name": "Tongas2/ACTORRESOURCES",
       "ranges": [
         "0x004b5e60-0x004b657f",
