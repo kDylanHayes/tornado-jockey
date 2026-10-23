@@ -1519,7 +1519,7 @@
       "target": "build/target/Tongas2/ACTORRESOURCES.obj",
       "source": "src/Tongas2/ACTORRESOURCES.cpp",
       "category": "engine",
-      "complete": false,
+      "complete": true,
       "symbol_mappings": {
         "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z"
       }
@@ -1553,7 +1553,7 @@
       "target": "build/target/Tongas2/GLOBALDEFS.obj",
       "source": "src/Tongas2/GLOBALDEFS.cpp",
       "category": "engine",
-      "complete": false,
+      "complete": true,
       "symbol_mappings": {
         "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z"
       }

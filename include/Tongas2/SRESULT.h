@@ -212,7 +212,14 @@ public:
 
     // Defined in another unit.
     void SetType(const SRESULTTYPE &type);
+    // Most of the exe's objects were built seeing FreeValue as not
+    // throwing; the few that weren't define SRESULT_FREEVALUE_MAY_THROW
+    // (see toolchain.md).
+#ifdef SRESULT_FREEVALUE_MAY_THROW
+    void FreeValue();
+#else
     void FreeValue() throw();
+#endif
     // Copies the value (strings and the larger types are duplicated).
     void Assign(const SRESULT &other);
 

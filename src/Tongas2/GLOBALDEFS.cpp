@@ -1,3 +1,6 @@
+// This file was built seeing SRESULT::FreeValue as one that can throw.
+#define SRESULT_FREEVALUE_MAY_THROW
+
 #include "Tongas2/GLOBALDEFS.h"
 
 class GLOBALDEFSMANAGER : public RESOURCEMANAGER
