@@ -50,6 +50,8 @@ struct MATRIX
     void Invert();
     // The rotation by angle degrees about axis.
     void RotateAxis(float angle, V3 axis);
+    // The rotation by degrees about the Y axis.
+    void RotateY(float degrees);
     // The rotation that looks along direction from position.
     void LookAt(const V3 &position, const V3 &direction);
 
