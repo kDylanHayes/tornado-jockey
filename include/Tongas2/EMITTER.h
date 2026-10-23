@@ -46,25 +46,6 @@ struct EMITV3 : V3
     }
 };
 
-// Three ints: a colour from 0 to 255 a component. Zero until set.
-struct V3I
-{
-    V3I() { x = y = z = 0; }
-    V3I(int x_, int y_, int z_) : x(x_), y(y_), z(z_) {}
-
-    int x, y, z;
-};
-
-inline V3I operator*(const float &s, const V3I &v)
-{
-    return V3I((int)(v.x * s), (int)(v.y * s), (int)(v.z * s));
-}
-
-inline V3I operator+(const V3I &a, const V3I &b)
-{
-    return V3I(a.x + b.x, a.y + b.y, a.z + b.z);
-}
-
 // A lit pixel of the emitter's picture: where it is (0..1) and its colour.
 struct EMITPIXEL
 {

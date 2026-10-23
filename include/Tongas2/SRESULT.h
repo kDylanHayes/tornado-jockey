@@ -33,7 +33,14 @@ struct V2
     V2() {}
     V2(float x_, float y_) : x(x_), y(y_) {}
     V2(const V2 &other) : x(other.x), y(other.y) {}
+
+    float Length() const { return (float)sqrt(x * x + y * y); }
 };
+
+inline V2 operator-(const V2 &a, const V2 &b)
+{
+    return V2(a.x - b.x, a.y - b.y);
+}
 
 struct RGB
 {
@@ -133,6 +140,8 @@ struct ANG
     V3 GetDirection();
     // The translation plus the up axis of the matrix.
     V3 GetUpPoint();
+    // The translation plus the right axis of the matrix.
+    V3 GetRightPoint();
     // Turns the angles to face a direction.
     void PointAt(const V3 &direction);
 

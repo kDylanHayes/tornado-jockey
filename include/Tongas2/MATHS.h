@@ -104,6 +104,25 @@ inline V3 V3::Transform(const MATRIX &m) const
               x * m._13 + y * m._23 + z * m._33 + m._43);
 }
 
+// Three ints: a colour from 0 to 255 a component. Zero until set.
+struct V3I
+{
+    V3I() { x = y = z = 0; }
+    V3I(int x_, int y_, int z_) : x(x_), y(y_), z(z_) {}
+
+    int x, y, z;
+};
+
+inline V3I operator*(const float &s, const V3I &v)
+{
+    return V3I((int)(v.x * s), (int)(v.y * s), (int)(v.z * s));
+}
+
+inline V3I operator+(const V3I &a, const V3I &b)
+{
+    return V3I(a.x + b.x, a.y + b.y, a.z + b.z);
+}
+
 // Defined in other units.
 MATRIX operator*(const MATRIX &a, const MATRIX &b);
 // The point transformed by m, as V3::Transform.

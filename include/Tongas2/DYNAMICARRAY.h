@@ -33,6 +33,30 @@ public:
     bool IsValid(const int &i) { return i >= 0 && i < m_capacity && m_data; }
     // The nth used item, or 0.
     T *Get(int n);
+    // The first used slot, the next one after slot i, or -1.
+    int First()
+    {
+        for (int i = 0; i < m_next + 1; i++) {
+            if (IsValid(i) && m_used[i])
+                return i;
+        }
+        return -1;
+    }
+    int Next(int i)
+    {
+        for (int j = i + 1; j < m_next + 1; j++) {
+            if (IsValid(j) && m_used[j])
+                return j;
+        }
+        return -1;
+    }
+    // The item in a used slot, or 0.
+    T *At(int i)
+    {
+        if (IsValid(i) && m_used[i])
+            return &m_data[i];
+        return 0;
+    }
 
     T *m_data;
     // The slots given back, as a stack.
@@ -44,7 +68,8 @@ public:
     int m_freeTop;
     // The first slot never used.
     int m_next;
-    int m_20[4];
+    // A default item; unused here.
+    T m_empty;
     // How many slots Insert adds when the table is full; 0 for none.
     int m_growBy;
 };

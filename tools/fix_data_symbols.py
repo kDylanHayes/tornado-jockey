@@ -11,6 +11,9 @@
   variable of this object starts at most 4 bytes after that address, the
   relocation is moved onto the variable with the difference as addend, the
   way the compiler wrote it.
+- A reference into another unit's variable past its start (the y of a V3)
+  is relocated against an undefined DAT_<address> too; when symbols.txt
+  gives that variable's size, the relocation moves onto it plus an offset.
 """
 
 import re
@@ -25,8 +28,9 @@ IMAGE_SCN_CNT_UNINITIALIZED_DATA = 0x80
 IMAGE_SYM_CLASS_EXTERNAL = 2
 
 
-def fix(coff: split.Coff, variables: dict) -> int:
-    """variables: name -> exe address of the unit's data symbols."""
+def fix(coff: split.Coff, variables: dict, externals=()) -> int:
+    """variables: name -> exe address of the unit's data symbols.
+    externals: (name, address, size) of other units' sized data symbols."""
     by_index = {i: rec for i, rec, _ in coff.symbols}
     defined = {}
     for i, rec, _ in coff.symbols:
@@ -75,6 +79,17 @@ def fix(coff: split.Coff, variables: dict) -> int:
             if not m or struct.unpack_from("<h", rec, 12)[0] != 0:
                 continue
             addr = int(m[1], 16)
+            owner = next(((n, a) for n, a, size in externals if a < addr < a + size), None)
+            if owner is not None:
+                index = next((i for i, r, _ in coff.symbols if coff.name(r) == owner[0]), None)
+                if index is None:
+                    index = coff.add_symbol(owner[0], 0, 0, 0, IMAGE_SYM_CLASS_EXTERNAL)
+                    by_index[index] = coff.symbols[-1][1]
+                reloc[1] = index
+                value = struct.unpack_from("<i", sec["data"], vaddr)[0]
+                struct.pack_into("<i", sec["data"], vaddr, value + addr - owner[1])
+                changed += 1
+                continue
             for back in range(1, MAX_BEFORE + 1):
                 if addr + back in defined:
                     reloc[1] = defined[addr + back]
@@ -97,10 +112,10 @@ def fix(coff: split.Coff, variables: dict) -> int:
     return changed
 
 
-def main_path(path, variables: dict) -> int:
+def main_path(path, variables: dict, externals=()) -> int:
     with open(path, "rb") as f:
         coff = split.Coff(f.read())
-    n = fix(coff, variables)
+    n = fix(coff, variables, externals)
     if n:
         with open(path, "wb") as f:
             f.write(coff.write())
