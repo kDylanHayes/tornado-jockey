@@ -469,8 +469,8 @@ void TEXT::Update()
             down = V3(0.0f, 1.0f, 0.0f);
         } else {
             origin = m_position;
-            const V3 &a = camera->m_viewPosition;
-            const V3 &b = camera->m_viewDirection;
+            const V3 &a = camera->m_up;
+            const V3 &b = camera->m_direction;
             V3 side;
             side = V3(a.y * b.z - a.z * b.y, a.z * b.x - b.z * a.x, b.y * a.x - a.y * b.x);
             float length = side.Length();
@@ -483,9 +483,9 @@ void TEXT::Update()
                 side.x = side.y = side.z = 0.0f;
             }
             right = side;
-            down = camera->m_viewPosition * -1.0f;
+            down = camera->m_up * -1.0f;
         }
-        float height = camera->m_lens->m_viewHeight * m_scale.y;
+        float height = camera->m_lens->m_aspect * m_scale.y;
         float width = m_scale.x;
         if (g_pDisplay->NeedsAspectFix())
             g_pDisplay->FixHeight(&height);

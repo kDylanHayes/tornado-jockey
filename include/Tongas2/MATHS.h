@@ -43,6 +43,8 @@ struct MATRIX
     float _31, _32, _33, _34;
     float _41, _42, _43, _44;
 
+    MATRIX() {}
+
     // Defined in other units. The rotation from euler angles (in degrees),
     // as ANG passes them: z, y, then x.
     void FromEuler(float z, float y, float x);
@@ -54,6 +56,16 @@ struct MATRIX
     void RotateY(float degrees);
     // The rotation that looks along direction from position.
     void LookAt(const V3 &position, const V3 &direction);
+    // Defined in another unit: the matrix of cofactors.
+    MATRIX Adjoint();
+    // Defined in another unit: an orthographic projection.
+    void Ortho(float width, float height, float zNear, float zFar);
+    // A perspective projection with fov (radians) the vertical field of view.
+    void Perspective(float fov, float aspect, float zNear, float zFar);
+    // The view from eye looking at at.
+    void View(const V3 &eye, const V3 &at, const V3 &up);
+    float Determinant();
+    MATRIX Inverse();
 
     void Identity()
     {
@@ -127,6 +139,7 @@ inline V3I operator+(const V3I &a, const V3I &b)
 
 // Defined in other units.
 MATRIX operator*(const MATRIX &a, const MATRIX &b);
+MATRIX operator/(const MATRIX &m, float s);
 // The point transformed by m, as V3::Transform.
 V3 operator*(const V3 &v, const MATRIX &m);
 bool operator!=(const V3 &a, const V3 &b);

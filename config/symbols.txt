@@ -217,6 +217,7 @@
 0x004435a0 ?_Lrotate@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@IAEXPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@2@@Z function
 0x00443640 ?_Rrotate@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@IAEXPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@2@@Z function
 0x004436a0 ?_Inc@const_iterator@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@QAEXXZ function
+0x00443700 ?GetAxes@TRANSFORM@@QAEXPAUV3@@0@Z function
 0x00443780 ?_Buynode@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@2@XZ function
 0x00443800 ??1SOUNDMASTER@@UAE@XZ function
 0x00443870 ?SetForceDuplicates@SCREENDECALMASTER@@UAEXAB_N@Z function 0xc
@@ -286,6 +287,7 @@
 0x0048b9d0 ?SetSound@APP@@QAEX_N@Z function
 0x0048b9f0 ?SetMusic@APP@@QAEX_N@Z function
 0x0048ba10 ?SetDetail@APP@@QAEXH@Z function
+0x0048c930 ?UpdateListener@AUDIO@@QAEXXZ function
 0x0048cd40 ??_9@$BFM@AE function
 0x0048cd50 ??_9@$BGA@AE function
 0x0048cd70 ??_9@$BFA@AE function
@@ -333,6 +335,7 @@
 0x004990e0 ?Link14@ACTOR@@UAEXXZ function
 0x004990f0 ?Virtual09@ACTOR@@UAEPAXPBD@Z function
 0x004992d0 ?IsZero@ANG@@QAE_NXZ function
+0x00499330 ??0BOXCORNERS@@QAE@XZ function
 0x00499520 ?Virtual105@ACTOR@@UAEXXZ function
 0x004999d0 ?Virtual108@ACTOR@@UAEXXZ function
 0x00499a70 ?Virtual23@ACTOR@@UAEXXZ function
@@ -378,8 +381,66 @@
 0x0049d4d0 ??0ACTOR@@QAE@XZ function
 0x0049df00 ?OnContact@ACTOR@@UAEXPAUCONTACT@@@Z function
 0x0049dfc0 ?Virtual129@ACTOR@@UAEXXZ function
-0x004a17a0 ?GetViewSize@CAMERA@@QAE?AUV2@@XZ function
-0x004a1d70 ?ScreenToWorld@CAMERA@@QAE?AUV3@@ABUV2@@ABM@Z function
+0x004a0c40 ?Ortho@MATRIX@@QAEXMMMM@Z function
+0x004a0dc0 ?Adjoint@MATRIX@@QAE?AU1@XZ function
+0x004a0e30 ??K@YA?AUMATRIX@@ABU0@M@Z function
+0x004a0f30 ?RegisterCommands@CAMERA@@SAXXZ function 0x3f
+0x004a0f70 ??0CAMERA@@QAE@XZ function 0x1a0
+0x004a1110 ?GetClassId@CAMERA@@UAEHXZ function 0x6
+0x004a1120 ?GetParentClassId@CAMERA@@UAEHXZ function 0xd
+0x004a1130 ?GetClassName@CAMERA@@UAEPBDXZ function 0xe
+0x004a1140 ?GetFactoryId@CAMERA@@UAEHXZ function 0x6
+0x004a1150 ?GetFactoryFlags@CAMERA@@UAEHXZ function 0xd
+0x004a1160 ??1CAMERA@@UAE@XZ function 0x6b
+0x004a11d0 ?SetClipping@CAMERA@@UAEXABM@Z function 0xb
+0x004a11e0 ?ResetMotion@CAMERA@@QAEXUV3@@@Z function 0x99
+0x004a1280 ?SetPosition@CAMERA@@UAEXABUV3@@@Z function 0x1f
+0x004a12a0 ?SetFov@CAMERA@@UAEXABM@Z function 0x33
+0x004a12e0 ?SetReflectionFov@CAMERA@@UAEXABM@Z function 0x1b
+0x004a1300 ?WorldToScreen@CAMERA@@UAEXUV3@@PAUV2@@@Z function 0x67
+0x004a1370 ?StopJitter@CAMERA@@QAEXXZ function 0x21
+0x004a13a0 ?SetUseOrthoProjection@CAMERA@@UAEXAB_N@Z function 0x72
+0x004a1420 ?SetOrthoBoxWidth@CAMERA@@UAEXABM@Z function 0x2f
+0x004a1450 ?SetPosition@CAMERALENS@@UAEXABUV3@@@Z function 0x59
+0x004a14b0 ?SetOrientation@CAMERALENS@@UAEXABUV3@@0@Z function 0x94
+0x004a1550 ?SetFov@CAMERALENS@@UAEXABM@Z function 0x42
+0x004a15a0 ?SetReflectionFov@CAMERALENS@@UAEXABM@Z function 0x2d
+0x004a15d0 ?GetFar@CAMERALENS@@QAEMXZ function 0x4
+0x004a15e0 ?GetNear@CAMERALENS@@QAEMXZ function 0x4
+0x004a15f0 ?SetFar@CAMERALENS@@UAEXABM@Z function 0x29
+0x004a1620 ?SetNear@CAMERALENS@@UAEXABM@Z function 0x29
+0x004a1650 ?SetAspect@CAMERALENS@@UAEXABM@Z function 0x29
+0x004a1680 ?SetFlag4c@CAMERALENS@@UAEXAB_N@Z function 0xc
+0x004a1690 ?SetOrtho@CAMERALENS@@UAEXAB_N@Z function 0x22
+0x004a16c0 ?SetOrthoWidth@CAMERALENS@@UAEXABM@Z function 0x13
+0x004a16e0 ?Project@CAMERALENS@@UAE?AUV2@@ABUV3@@@Z function 0x14
+0x004a1700 ?UpdateBillboard@CAMERALENS@@UAEXXZ function 0x63
+0x004a1770 ?UpdateFrustum@CAMERALENS@@UAEXXZ function 0x25
+0x004a17a0 ?GetViewSize@CAMERA@@QAE?AUV2@@XZ function 0xbc
+0x004a1860 ??_ECAMERA@@WBM@AEPAXI@Z function 0x8
+0x004a1870 ?Perspective@MATRIX@@QAEXMMMM@Z function 0x74
+0x004a18f0 ?View@MATRIX@@QAEXABUV3@@00@Z function 0x1da
+0x004a1ad0 ?Determinant@MATRIX@@QAEMXZ function 0x5b
+0x004a1b30 ?Inverse@MATRIX@@QAE?AU1@XZ function 0x6b
+0x004a1ba0 ?CreateCamera@@YAPAVCAMERA@@XZ function 0x59
+0x004a1c00 ??_GCAMERA@@UAEPAXI@Z function 0x1e
+0x004a1c20 ?Reset@CAMERA@@UAEXXZ function 0x14d
+0x004a1d70 ?ScreenToWorld@CAMERA@@QAE?AUV3@@ABUV2@@ABM@Z function 0x237
+0x004a1fb0 ??0FRUSTUM@@QAE@XZ function 0x78
+0x004a2030 ?UpdateProjection@CAMERALENS@@UAEXXZ function 0x50
+0x004a2080 ?UpdateView@CAMERALENS@@UAEXXZ function 0x73
+0x004a2100 ?Update@CAMERALENS@@QAEX_N@Z function 0xe6
+0x004a21f0 ?Update@CAMERA@@UAEXXZ function 0x1b7
+0x004a23b0 ?Virtual103@CAMERA@@UAEXXZ function 0xcd
+0x004a2480 ?SetAngles@CAMERA@@UAEXABUANG@@@Z function 0x38
+0x004a24c0 ?PanTo@CAMERA@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0xdf
+0x004a25a0 ?RotateTo@CAMERA@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0xdb
+0x004a2680 ?Jitter@CAMERA@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0xa3
+0x004a2730 ??0CAMERALENS@@QAE@XZ function 0xd2
+0x004a2810 ??_GCAMERALENS@@UAEPAXI@Z function 0x1f
+0x004a2830 ?GetFrustum@CAMERALENS@@QAEPAUFRUSTUM@@XZ function 0xe1
+0x004a2920 ?Execute@CAMERA@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function 0x7a
+0x004a29a0 ?CreateCameraLens@@YAPAVCAMERALENS@@XZ function 0x1b
 0x004a29c0 ??1RESOURCEMANAGER@@UAE@XZ function 0x3e
 0x004a2a00 ?GetTypeCode@RESOURCEMANAGER@@UAEPBDXZ function 0x6
 0x004a2a10 ?HasPrefix@RESOURCEMANAGER@@QAE_NPBD@Z function 0x32
@@ -1442,6 +1503,7 @@
 0x004ce580 ??_GFILELOADER@@UAEPAXI@Z function 0x1e
 0x004d2ec0 ?HashString@@YAHPBDH@Z function
 0x004d4610 ?PointAt@ANG@@QAEXABUV3@@@Z function
+0x004d4ca0 ?Build@FRUSTUM@@QAEXABUMATRIX@@0@Z function
 0x004d57c0 ?GetSaveFolder@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z function
 0x004d5f00 ?CreateFolder@@YAXABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z function
 0x004d6d60 ?CollideQuadSegment@@YA_NPAUQUAD3@@PAUSEGMENT3@@PAUV3@@2PAM2@Z function
@@ -3262,6 +3324,10 @@
 0x005e69b4 __strlwr function 0xea
 0x005e6ae0 shortsort function 0x6a
 0x005e6b50 _qsort function 0x283
+0x005ea738 __ehhandler$??0CAMERA@@QAE@XZ function
+0x005ea75b __ehhandler$?CreateCamera@@YAPAVCAMERA@@XZ function
+0x005ea778 __ehhandler$?Reset@CAMERA@@UAEXXZ function
+0x005ea798 __ehhandler$?Execute@CAMERA@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function
 0x005ea7b8 __ehhandler$?Init@RESOURCEMANAGER@@UAEXXZ function
 0x005ea7e6 __ehhandler$?IsListLoaded@RESOURCEMANAGER@@QAE_NXZ function
 0x005ea908 __ehhandler$?Load@APPOPTIONS@@QAEXXZ function
@@ -3401,10 +3467,13 @@
 0x00656b64 __real@41200000 data 0x4
 0x00656b68 __real@3dcccccd data 0x4
 0x00656be4 __real@42c80000 data
+0x00656f48 __real@3c8efa35 data 0x4
 0x00656f50 __real@43340000 data
 0x0065750c ??_C@_0BM@PAPJHAGI@invalid?5map?1set?$DMT?$DO?5iterator?$AA@ data
 0x00657528 ??_C@_0BE@JONHPENG@map?1set?$DMT?$DO?5too?5long?$AA@ data
 0x00657574 ??_C@_05CCEOMINC@ACTOR?$AA@ data 0x6
+0x00657b14 ??_C@_06FNKMPIBD@camera?$AA@ data 0x7
+0x00657b74 ??_C@_06FJIHCGMB@CAMERA?$AA@ data 0x7
 0x00658024 ??_C@_0DC@OEHLFMM@Error?5?9?5DYNAMICARRAY?5resize?5with@ data 0x32
 0x006580a4 ??_C@_0CM@JFJKNKHK@DYNAMICARRAY?3Insert?$DO?5Error?5?9?5tab@ data 0x2c
 0x006580d0 ??_C@_0DN@EHHGKNPK@DYNAMICARRAY?3Insert?$DO?5Error?5?9?5Inv@ data 0x3d
@@ -3421,8 +3490,10 @@
 0x006595a8 __real@0000000000000000 data
 0x006596bc __real@40800000 data
 0x0065971c __real@437f0000 data 0x4
+0x00659744 __real@3f400000 data 0x4
 0x00659768 __real@3fd51eb860000000 data
 0x006598a4 ??_C@_04LGCACNFD@Life?$AA@ data 0x5
+0x006599b4 ??_C@_03FKCKHFGP@Fov?$AA@ data 0x4
 0x00659abc ??_C@_0O@JKCJNIGN@RotationSpeed?$AA@ data 0xe
 0x0065a5e8 ??_C@_04HDOCAJNK@?$CFs?$CFs?$AA@ data 0x5
 0x0065a708 __real@3ccccccd data 0x4
@@ -3436,6 +3507,7 @@
 0x0065db8c ??_C@_0BC@KBDMBKEH@deque?$DMT?$DO?5too?5long?$AA@ data
 0x0065e8a0 __real@3ff0000000000000 data
 0x0065e974 ??_C@_0P@CLCMAHCC@RESOURCEMASTER?$AA@ data
+0x0065ebc8 ??_C@_0O@FJHJOIHE@ReflectionFov?$AA@ data 0xe
 0x0065f1f8 ??_C@_07PCOLMHKH@Preview?$AA@ data
 0x0065f224 ??_C@_07GKACAEDJ@Texture?$AA@ data 0x8
 0x0065f888 ??_7CMDBASE@@6B@ data 0x4c
@@ -3541,6 +3613,7 @@
 0x00666780 ??_C@_0FB@CMMEMJAA@UNICODESTRING_MANAGER?3?3GetPointe@ data 0x51
 0x006667d4 ??_C@_07GOLFKGID@CMDBASE?$AA@ data 0x8
 0x00666990 ??_C@_02DPKJAMEF@?$CFd?$AA@ data
+0x00666bb8 ??_C@_08OEKJENGB@?$CFf?5?$CFf?5?$CFf?$AA@ data 0x9
 0x00666ed4 ??_C@_07MFGAOKLA@TRIGGER?$AA@ data 0x8
 0x00666edc ??_C@_07KJIBKIOF@SPAWNER?$AA@ data 0x8
 0x00666ee4 ??_C@_0BF@MHILCODM@ACTORRESOURCESMASTER?$AA@ data 0x15
@@ -3617,6 +3690,19 @@
 0x00669a00 ??_C@_05MAGIBEFI@Scale?$AA@ data 0x6
 0x00669a08 ??_C@_03JFOGAEPB@Ang?$AA@ data 0x4
 0x00669e1c ??_C@_0BB@BKBHDPNK@SetOnTopPriority?$AA@ data 0x11
+0x00669e80 ??_C@_06NJLEAOMD@jitter?$AA@ data 0x7
+0x00669e88 _s_TypeNames data 0xb4
+0x00669f3c ??_7CAMERA@@6BACTORLINK@@@ data 0x3c
+0x00669f78 ??_7CAMERA@@6BCMDBASE@@@ data 0x260
+0x0066a1d8 __real@3fe0c15236000000 data 0x8
+0x0066a1e0 __real@3fd0c15236000000 data 0x8
+0x0066a1e8 ??_7CAMERALENS@@6B@ data 0x48
+0x0066a230 ??_C@_08JMJNCKOI@rotateTo?$AA@ data 0x9
+0x0066a23c ??_C@_05LDGEHMFE@panTo?$AA@ data 0x6
+0x0066a244 ??_C@_0O@OHGPPFCF@OrthoBoxWidth?$AA@ data 0xe
+0x0066a254 ??_C@_0BD@PPLNPCMK@UseOrthoProjection?$AA@ data 0x13
+0x0066a268 ??_C@_0P@CPDALHDM@PausedMovement?$AA@ data 0xf
+0x0066a278 ??_C@_08LLKICGJM@Clipping?$AA@ data 0x9
 0x0066a288 _s_TypeNames data 0xb4
 0x0066a33c ??_7RESOURCEMANAGER@@6B@ data 0x20
 0x0066a35c ??_C@_05CCMOGDN@?$CFs?3?$CFs?$AA@ data 0x6
@@ -4694,11 +4780,17 @@
 0x006b9b9c ?s_classId@PATHREPOSITORYMASTER@@2HA data 0x4
 0x006b9ba0 ?s_classId@ACTORRESOURCESMASTER@@2HA data 0x4
 0x006b9ba4 ?s_classId@ACTOR@@2HA data 0x4
+0x006b9ba8 ?s_classId@CAMERA@@2HA data 0x4
 0x006b9bac ?s_classId@SPAWNER@@2HA data 0x4
 0x006b9bb0 ?s_classId@TRIGGER@@2HA data 0x4
 0x006b9e90 ?s_factoryId@ACTOR@@2HA data 0x4
+0x006b9e94 ?s_factoryId@CAMERA@@2HA data 0x4
 0x006b9e98 ?s_factoryId@SPAWNER@@2HA data 0x4
 0x006b9e9c ?s_factoryId@TRIGGER@@2HA data 0x4
+0x006bbaa8 ?g_pfnCreateCameraLens@@3P6APAVCAMERALENS@@XZA data 0x4
+0x006bbaac ?g_pfnCreateCamera@@3P6APAVCAMERA@@XZA data 0x4
+0x006bbab0 ?s_commands@CAMERA@@2PAUCMDENTRY@@A data 0x80
+0x006bbb30 ?s_properties@CAMERA@@2PAUPROPENTRY@@A data 0x188
 0x006bbcb8 ?s_pfnCreate@RESOURCES@@2P6APAVCMDBASE@@XZA data 0x4
 0x006bbcc0 ?s_commands@RESOURCES@@2PAUCMDENTRY@@A data 0xc0
 0x006bbd80 ?s_properties@RESOURCES@@2PAUPROPENTRY@@A data 0xa8
@@ -4838,6 +4930,7 @@
 0x006d08b0 ?g_basePath@@3PADA data
 0x006d09b4 ?g_pApp@@3PAVAPP@@A data 0x4
 0x006d09b8 ?g_pDisplay@@3PAVDISPLAY@@A data 0x4
+0x006d09bc ?g_pAudio@@3PAVAUDIO@@A data 0x4
 0x006d09c0 ?g_pTimer@@3PAVTIMER@@A data 0x4
 0x006d09d4 ?g_pGame@@3PAVGAME@@A data 0x4
 0x006d15e0 ?g_pActors@@3PAVACTORS@@A data 0x4

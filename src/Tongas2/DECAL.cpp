@@ -379,8 +379,8 @@ void DECAL::Update()
         mesh->SetScale(scale);
         if (master->m_alwaysLookCamera) {
             camera = (CAMERA *)g_pCamera;
-            V3 direction = camera->m_viewDirection * -1.0f;
-            V3 position = camera->m_viewPosition;
+            V3 direction = camera->m_direction * -1.0f;
+            V3 position = camera->m_up;
             float roll = GetRoll();
             if (roll != 0.0f && !master->m_neverRotate) {
                 MATRIX m;
@@ -408,8 +408,8 @@ void DECAL::Update()
         }
         if (master->m_alwaysLookCamera) {
             camera = (CAMERA *)g_pCamera;
-            V3 direction = camera->m_viewDirection * -1.0f;
-            V3 position = camera->m_viewPosition;
+            V3 direction = camera->m_direction * -1.0f;
+            V3 position = camera->m_up;
             if (master->m_simulate3D) {
                 V3 forward = m_angles.GetDirection();
                 MATRIX m = g_pCamera->GetWorldAngles().GetMatrix();

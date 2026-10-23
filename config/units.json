@@ -1458,6 +1458,26 @@
       "complete": true
     },
     {
+      "name": "Tongas2/CAMERA",
+      "ranges": [
+        "0x004a0f30-0x004a29bf",
+        "0x0060c690-0x0060c99f",
+        "0x00669e80-0x0066a287",
+        "0x006bbaa8-0x006bbcb7"
+      ],
+      "target": "build/target/Tongas2/CAMERA.obj",
+      "source": "src/Tongas2/CAMERA.cpp",
+      "category": "engine",
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z",
+        "?SupportsICCProfiles@@YAJXZ": "?Virtual85@ACTOR@@UAEXXZ",
+        "?SetDescription@RESOURCEMASTER@@UAEXABH@Z": "?Virtual28@ACTOR@@UAEXXZ",
+        "?SetForce@EMITTERMASTER@@UAEXABUV3@@@Z": "?SetScale@ACTOR@@UAEXABUV3@@@Z",
+        "?GetFactoryId@ACTOR@@UAEHXZ": "?GetParentFactoryId@CAMERA@@UAEHXZ",
+        "?Virtual82@BONEDMODELRESOURCE@@UAE?AUV3@@H@Z": "?Unproject@CAMERALENS@@UAE?AUV3@@ABUV2@@@Z"
+      }
+    },
+    {
       "name": "Tongas2/RESOURCEMANAGER",
       "ranges": [
         "0x004a29c0-0x004a341f",
