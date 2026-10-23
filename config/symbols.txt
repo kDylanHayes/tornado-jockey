@@ -1102,13 +1102,49 @@
 0x004c5350 ?BuildCharacters@TEXTMASTER@@QAEXXZ function 0x3eb
 0x004c5740 ?SetCharactersData@TEXTMASTER@@UAEXABVUNICODESTRING@@@Z function 0x29
 0x004c5770 ?Prepare@TEXTMASTER@@UAEXXZ function 0x5
+0x004c5780 ?CreateSHADER@@YAPAVRESOURCEMANAGER@@XZ function
+0x004c57a0 ?RegisterCommands@SHADERMASTER@@SAXXZ function
 0x004c57e0 ?AddUser@SHADERMASTER@@QAEXXZ function
 0x004c57f0 ?RemoveUser@SHADERMASTER@@QAEXXZ function
-0x004c6050 ?SetRenderPassesFlags@BONEDMODELMASTER@@UAEXABH@Z function 0xa
-0x004c6060 ?SetWidth@CURVEMASTER@@UAEXABM@Z function 0xa
+0x004c5800 ?SetLayers@SHADERMASTER@@UAEXABH@Z function
+0x004c5830 ?SetDiffuseColor@SHADERMASTER@@UAEXABUV3I@@@Z function
+0x004c5880 ?SetDiffuseAlpha@SHADERMASTER@@UAEXABH@Z function
+0x004c58c0 ?SetAmbientColor@SHADERMASTER@@UAEXABUV3I@@@Z function
+0x004c5910 ?SetSpecularColor@SHADERMASTER@@UAEXABUV3I@@@Z function
+0x004c5960 ?SetEmissiveColor@SHADERMASTER@@UAEXABUV3I@@@Z function
+0x004c59b0 ?SetSpecularPowerValue@SHADERMASTER@@UAEXABM@Z function
+0x004c5a00 ?SetAllowResize@SHADERMASTER@@UAEXAB_N@Z function
+0x004c5a40 ?SetAllowCompress@SHADERMASTER@@UAEXAB_N@Z function
+0x004c5a80 ?SetLayersDiffuseColor@SHADERMASTER@@UAEXABHABUV3I@@@Z function
+0x004c5ae0 ?SetLayersDiffuseWidth@SHADERMASTER@@UAEXABH0@Z function
+0x004c5b20 ?SetLayersDiffuseHeight@SHADERMASTER@@UAEXABH0@Z function
+0x004c5b60 ?SetLayersMipmaps@SHADERMASTER@@UAEXABH0@Z function
+0x004c5ba0 ??0SHADER@@QAE@PAVSHADERMASTER@@ABURESHANDLE@@@Z function
+0x004c5bc0 ?GetFrame@SHADER@@UAE?AUUVRECT@@H@Z function
+0x004c5be0 ??0SHADERMASTER@@QAE@PAVRESOURCEMANAGER@@PBD@Z function 0x435
+0x004c6020 ?GetClassId@SHADERMASTER@@UAEHXZ function
+0x004c6030 ?GetParentClassId@SHADERMASTER@@UAEHXZ function
+0x004c6040 ?GetClassName@SHADERMASTER@@UAEPBDXZ function
+0x004c6050 ?SetRenderPassesFlags@BONEDMODELMASTER@@UAEXABH@Z function 0xc
+0x004c6060 ?SetWidth@CURVEMASTER@@UAEXABM@Z function 0xc
 0x004c6070 ?SetAlwaysLookCamera@DECALMASTER@@UAEXAB_N@Z function
 0x004c6080 ?SetDecalOrderForced@DECALMASTER@@UAEXABH@Z function
+0x004c6090 ?SetLighting@SHADERMASTER@@UAEXAB_N@Z function
+0x004c60a0 ?SetRenderLines@SHADERMASTER@@UAEXAB_N@Z function
 0x004c60b0 ?SetLastFrame@DECALMASTER@@UAEXABH@Z function
+0x004c60c0 ?SetLayersBlend@SHADERMASTER@@UAEXABH0@Z function
+0x004c60e0 ?SetLayersUVEffect@SHADERMASTER@@UAEXABH0@Z function
+0x004c6100 ?SetShifterScale@SHADERMASTER@@UAEXABHABUV2@@@Z function 0x22
+0x004c6130 ?SetShifterSpeed@SHADERMASTER@@UAEXABHABUV2@@@Z function 0x22
+0x004c6160 ?SetFilterMipMap@SHADERMASTER@@UAEXABH0@Z function
+0x004c6180 ?SetFilterMinimize@SHADERMASTER@@UAEXABH0@Z function
+0x004c61a0 ?SetFilterMaximize@SHADERMASTER@@UAEXABH0@Z function
+0x004c61c0 ??_GSHADERMASTER@@UAEPAXI@Z function
+0x004c61e0 ??1SHADERMASTER@@UAE@XZ function 0x79
+0x004c6260 ?SetLayersDiffuseName@SHADERMASTER@@UAEXABHABVCSTRING@@@Z function
+0x004c62b0 ?SetLayersOpacityName@SHADERMASTER@@UAEXABHABVCSTRING@@@Z function
+0x004c6300 ?CreateCopy@SHADERMASTER@@UAEPAVRESOURCE@@ABURESHANDLE@@@Z function
+0x004c6360 ?Execute@SHADERMASTER@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function
 0x004cc8c0 ?_Max@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@KAPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@PAU342@@Z function
 0x004cc8e0 ?_Buynode@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@XZ function
 0x004cc950 ??1?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@XZ function
@@ -3009,6 +3045,8 @@
 0x006146c0 _$E3 function 0x231
 0x00614900 _$E1 function 0x23
 0x00614930 _$E3 function 0x283
+0x00614bc0 _$E1 function 0x23
+0x00614bf0 _$E3 function
 0x006541f0 _$E1 function 0x1d
 0x00654470 _$E6 function 0x24
 0x006544a0 _$E9 function 0x24
@@ -3205,6 +3243,7 @@
 0x00667040 ??_C@_0BA@OGDBAEPO@POLYTRAILMASTER?$AA@ data 0x10
 0x00667050 ??_C@_0M@DDDCBPJF@CURVEMASTER?$AA@ data 0xc
 0x0066705c ??_C@_0L@BILCKCGA@TEXTMASTER?$AA@ data 0xb
+0x00667068 ??_C@_0N@FFONGAKJ@SHADERMASTER?$AA@ data 0xd
 0x0066707c ??_C@_08KGDJAKPA@RESOURCE?$AA@ data
 0x00667088 ??_C@_09CMINMFIB@RESOURCES?$AA@ data 0xa
 0x00667094 ??_C@_09LLOKOKDN@GUISLIDER?$AA@ data 0xa
@@ -3691,6 +3730,43 @@
 0x00670980 ??_C@_08PBIEEAKD@BaseLine?$AA@ data 0x9
 0x0067098c ??_C@_0BA@JNOLOOGK@SpacingVertical?$AA@ data 0x10
 0x0067099c ??_C@_0BC@GCOIKBHC@SpacingHorizontal?$AA@ data 0x12
+0x006709b0 ??_C@_08LEABHIBG@GridRows?$AA@ data 0x9
+0x006709c0 _s_TypeNames data 0xb4
+0x00670a78 _s_layerBlends data 0x96
+0x00670b10 _s_uvEffects data 0xb4
+0x00670bc8 _s_blends data 0xb4
+0x00670c80 _s_filters data 0x78
+0x00670cf8 _s_cullings data 0x78
+0x00670d70 ??_C@_0CE@COICCCJO@No?5default?5plugin?5for?5SHADERMANA@ data 0x24
+0x00670d98 ??_7SHADER@@6B@ data 0x84
+0x00670e20 ??_7SHADERMASTER@@6B@ data 0x10c
+0x00670f2c ??_C@_0P@CHBMGILF@FilterMaximize?$AA@ data 0xf
+0x00670f3c ??_C@_0P@PAPHNKPE@FilterMinimize?$AA@ data 0xf
+0x00670f4c ??_C@_0N@PJFECAGM@FilterMipMap?$AA@ data 0xd
+0x00670f5c ??_C@_0N@FNBDJDLO@ShifterScale?$AA@ data 0xd
+0x00670f6c ??_C@_0O@CANAHKKB@LayersMipmaps?$AA@ data 0xe
+0x00670f7c ??_C@_0P@PIAKPMLF@LayersUVEffect?$AA@ data 0xf
+0x00670f8c ??_C@_0M@FODGMCGI@LayersBlend?$AA@ data 0xc
+0x00670f98 ??_C@_0BC@JFCEIOLL@LayersOpacityName?$AA@ data 0x12
+0x00670fac ??_C@_0BE@KMOMIJKE@LayersDiffuseHeight?$AA@ data 0x14
+0x00670fc0 ??_C@_0BD@NMGCMJLF@LayersDiffuseWidth?$AA@ data 0x13
+0x00670fd4 ??_C@_0BD@KOIPOCDN@LayersDiffuseColor?$AA@ data 0x13
+0x00670fe8 ??_C@_0BC@DOBFGMH@LayersDiffuseName?$AA@ data 0x12
+0x00670ffc ??_C@_0BD@GEAPJMNK@SpecularPowerValue?$AA@ data 0x13
+0x00671010 ??_C@_0O@JDGJHCFC@EmissiveColor?$AA@ data 0xe
+0x00671020 ??_C@_0O@MGEAOFBM@SpecularColor?$AA@ data 0xe
+0x00671030 ??_C@_0N@HFEJFJCA@AmbientColor?$AA@ data 0xd
+0x00671040 ??_C@_0N@NEGCGMFJ@DiffuseAlpha?$AA@ data 0xd
+0x00671050 ??_C@_0N@KAGFAILC@DiffuseColor?$AA@ data 0xd
+0x00671060 ??_C@_0O@EOICMLBP@AllowCompress?$AA@ data 0xe
+0x00671070 ??_C@_0M@MOHFMCHH@AllowResize?$AA@ data 0xc
+0x0067107c ??_C@_07IOLAOMLK@Culling?$AA@ data 0x8
+0x00671084 ??_C@_0M@CFPLDACK@RenderLines?$AA@ data 0xc
+0x00671090 ??_C@_08GGMLLKEC@Lighting?$AA@ data 0x9
+0x0067109c ??_C@_06IJMNPAPH@Layers?$AA@ data 0x7
+0x006710a4 ??_C@_05DPKHHBAM@ZTest?$AA@ data 0x6
+0x006710ac ??_C@_06HKPDPKHP@ZWrite?$AA@ data 0x7
+0x006710b4 ??_C@_08PJPCIKLF@GridCols?$AA@ data 0x9
 0x0067252c ??_7FILELOADER@@6B@ data 0x34
 0x00672810 __real@3f847ae147ae147b data
 0x006734c4 __real@358637bd data
@@ -4210,6 +4286,7 @@
 0x006b9b30 ?s_classId@RESOURCES@@2HA data 0x4
 0x006b9b34 ?s_classId@RESOURCE@@2HA data 0x4
 0x006b9b38 ?s_classId@RESOURCEMASTER@@2HA data 0x4
+0x006b9b40 ?s_classId@SHADERMASTER@@2HA data 0x4
 0x006b9b44 ?s_classId@TEXTMASTER@@2HA data 0x4
 0x006b9b48 ?s_classId@CURVEMASTER@@2HA data 0x4
 0x006b9b4c ?s_classId@POLYTRAILMASTER@@2HA data 0x4
@@ -4287,6 +4364,7 @@
 0x006c0750 ?g_pfnCreateTEXT@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006c0758 ?s_properties@TEXTMASTER@@2PAUPROPENTRY@@A data 0x188
 0x006c08e0 ?g_pfnCreateSHADER@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006c08e8 ?s_properties@SHADERMASTER@@2PAUPROPENTRY@@A data 0x6c8
 0x006c16d8 ?g_pfnCreateFileLoader@@3P6APAVFILELOADER@@XZA data 0x4
 0x006c1808 ?g_pfnCreateSIMPLEMODEL@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006c180c ?g_pfnCreateMESH@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
@@ -4438,6 +4516,7 @@
 0x009eed18 ?s_indicesReady@CURVE@@2_NA data 0x1
 0x009eed20 ?s_commands@CURVEMASTER@@2PAUCMDENTRY@@A data 0x20
 0x009eed40 ?s_commands@TEXTMASTER@@2PAUCMDENTRY@@A data 0x20
+0x009eed60 ?s_commands@SHADERMASTER@@2PAUCMDENTRY@@A data 0x20
 0x009eede8 _s_line data 0x10000
 0x00a0f288 _s_format_id data
 0x00a0f28c _s_format_id data

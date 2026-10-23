@@ -1758,6 +1758,27 @@
       }
     },
     {
+      "name": "Tongas2/SHADER",
+      "ranges": [
+        "0x004c5780-0x004c63df",
+        "0x00614bc0-0x0061575f",
+        "0x006709b0-0x006710bf",
+        "0x006c08e0-0x006c0faf",
+        "0x009eed60-0x009eed7f"
+      ],
+      "target": "build/target/Tongas2/SHADER.obj",
+      "source": "src/Tongas2/SHADER.cpp",
+      "category": "engine",
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z",
+        "?SetRenderPassesFlags@BONEDMODELMASTER@@UAEXABH@Z": "?SetGridRows@SHADERMASTER@@UAEXABH@Z",
+        "?SetWidth@CURVEMASTER@@UAEXABM@Z": "?SetGridCols@SHADERMASTER@@UAEXABH@Z",
+        "?SetAlwaysLookCamera@DECALMASTER@@UAEXAB_N@Z": "?SetZWrite@SHADERMASTER@@UAEXAB_N@Z",
+        "?SetDecalOrderForced@DECALMASTER@@UAEXABH@Z": "?SetBlend@SHADERMASTER@@UAEXABH@Z",
+        "?SetLastFrame@DECALMASTER@@UAEXABH@Z": "?SetCulling@SHADERMASTER@@UAEXABH@Z"
+      }
+    },
+    {
       "name": "Tongas2/TEXT",
       "ranges": [
         "0x004c2f80-0x004c577f",

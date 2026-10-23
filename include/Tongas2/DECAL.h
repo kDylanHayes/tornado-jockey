@@ -7,6 +7,7 @@
 
 #include "Tongas2/RESOURCE.h"
 #include "Tongas2/RESOURCES.h"
+#include "Tongas2/SHADER.h"
 #include "Tongas2/TIMER.h"
 
 // Defined elsewhere: what the camera sees through.
@@ -81,30 +82,6 @@ public:
     V3 m_viewPosition;
     V3 m_viewDirection;
     CAMERALENS *m_lens;
-};
-
-// Defined elsewhere: the master a decal's shader handle names.
-class SHADERMASTER : public RESOURCEMASTER
-{
-public:
-    void AddUser();
-    void RemoveUser();
-};
-
-// A frame's part of a shader's texture.
-struct UVRECT
-{
-    float left, right, top, bottom;
-};
-
-// Defined elsewhere: a loaded shader.
-class SHADER : public RESOURCE
-{
-public:
-    virtual void Virtual29();
-    virtual void Virtual30();
-    virtual void Virtual31();
-    virtual UVRECT GetFrame(int frame);
 };
 
 // A corner of a decal's quad.
