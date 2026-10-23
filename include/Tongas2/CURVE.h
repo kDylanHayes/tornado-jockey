@@ -77,11 +77,8 @@ class CURVE : public OBJECT
 {
 public:
     CURVE(CURVEMASTER *master, const RESHANDLE &handle);
-    virtual ~CURVE()
-    {
-        if (m_master)
-            Master()->m_numUsers--;
-    }
+    // Counts the curve off its type's users.
+    virtual ~CURVE();
 
     CURVEMASTER *Master() { return (CURVEMASTER *)m_master; }
 

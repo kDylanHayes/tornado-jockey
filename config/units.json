@@ -1758,6 +1758,22 @@
       }
     },
     {
+      "name": "Tongas2/TESLA",
+      "ranges": [
+        "0x004c0c10-0x004c157f",
+        "0x00614230-0x006144ef",
+        "0x0066fc70-0x0066ff4f",
+        "0x006c0388-0x006c0517",
+        "0x009ee0d8-0x009ee0f7"
+      ],
+      "target": "build/target/Tongas2/TESLA.obj",
+      "source": "src/Tongas2/TESLA.cpp",
+      "category": "engine",
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z"
+      }
+    },
+    {
       "name": "Tongas2/POLYTRAIL",
       "ranges": [
         "0x004c1580-0x004c215f",
