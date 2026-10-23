@@ -49,6 +49,8 @@ public:
     STRING &operator=(const char *text);
     // Makes room for at least length characters.
     void Reserve(const int &length);
+    // Defined elsewhere: printf into the string, up to 0x3fff characters.
+    void Format(const char *format, ...);
 
     const char *c_str() const { return !m_buf ? "" : m_buf; }
 
