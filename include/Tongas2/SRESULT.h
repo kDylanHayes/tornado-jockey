@@ -36,6 +36,8 @@ struct V2
     V2(const V2 &other) : x(other.x), y(other.y) {}
 
     float Length() const { return (float)sqrt(x * x + y * y); }
+    // The vector scaled to length 1; zero stays zero. Defined elsewhere.
+    V2 Normalized() const;
 };
 
 inline V2 operator-(const V2 &a, const V2 &b)

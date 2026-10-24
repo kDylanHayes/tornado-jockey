@@ -5,12 +5,12 @@
 #define TONGAS2_CONSOLE_H
 
 #include "Tongas2/FIXEDSTRING.h"
-#include "Tongas2/GUI.h"
+#include "Tongas2/INPUT.h"
 #include "Tongas2/SAFEINDEX.h"
 
 #define CONSOLE_LINES 15
 
-class CONSOLE : public GUIKEYLISTENER
+class CONSOLE : public INPUTLISTENER
 {
 public:
     CONSOLE();

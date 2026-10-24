@@ -1,6 +1,7 @@
 #include "Tongas2/CAMERA.h"
 #include "Tongas2/CSTRING.h"
 #include "Tongas2/APPWINDOW.h"
+#include "Tongas2/GUI.h"
 #include "Tongas2/TIMER.h"
 #include "Tongas2/TOKENS.h"
 
@@ -9,13 +10,6 @@
 
 #define CMD_FUNC(CLASS, method) (CMDFUNC)(SRESULT (CLASS::*)(TOKENS **))(SRESULT (CLASS::*)(CMDCALL *))&CLASS::method
 
-// Defined elsewhere: the sound system, which hears from where the camera is.
-class AUDIO
-{
-public:
-    void UpdateListener();
-};
-extern AUDIO *g_pAudio;
 
 static CAMERALENS *CreateCameraLens();
 static CAMERA *CreateCamera();
@@ -91,6 +85,13 @@ CAMERA::~CAMERA()
         delete m_lens;
         m_lens = 0;
     }
+}
+
+void CAMERA::StopJitter()
+{
+    m_jitterTime = 0.0f;
+    m_jitterAmount = 0.0f;
+    m_jitter.x = m_jitter.y = m_jitter.z = 0.0f;
 }
 
 void CAMERA::ResetMotion(V3 position)
@@ -382,8 +383,8 @@ void CAMERA::Update()
         SetPosition(m_position + m_jitter);
         m_jitterTime -= g_pTimer->m_dt;
     }
-    if (g_pAudio)
-        g_pAudio->UpdateListener();
+    if (g_pGui)
+        g_pGui->UpdateLayout();
     m_lens->Update(false);
 }
 

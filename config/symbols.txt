@@ -133,6 +133,7 @@
 0x0040db30 ??4STRING@@QAEAAV0@ABV0@@Z function 0x65
 0x0040f230 ??D@YA?AUV3@@ABMABU0@@Z function
 0x0040f260 ?Distance@V3@@QBEMABU1@@Z function
+0x00410340 ?Normalized@V2@@QBE?AU1@XZ function
 0x00410390 ??K@YA?AUV3@@ABU0@ABM@Z function
 0x004103f0 ?Length@V3@@QBEMXZ function
 0x00410730 ?GetFactoryId@ACTOR@@UAEHXZ function 0x6
@@ -396,16 +397,75 @@
 0x0048c5b0 ?UnfixY@APPWINDOW@@UAEXPAM@Z function 0x1a
 0x0048c5d0 ?GetResolution@APPWINDOW@@UAEHXZ function 0x27
 0x0048c600 ??_GAPPWINDOW@@UAEPAXI@Z function 0x1f
-0x0048c620 ?RegisterCommands@GUI@@SAXXZ function
-0x0048c790 ?Pause@AUDIO@@QAEX_N@Z function
-0x0048c820 ?GetObject@AUDIO@@QAEPAVCMDBASE@@ABURESHANDLE@@@Z function
-0x0048c930 ?UpdateListener@AUDIO@@QAEXXZ function
-0x0048cd40 ??_9@$BFM@AE function
-0x0048cd50 ??_9@$BGA@AE function
-0x0048cd70 ??_9@$BFA@AE function
-0x0048cd80 ??_9@$BFE@AE function
-0x0048cd90 ??_9@$BFI@AE function
+0x0048c620 ?RegisterCommands@GUI@@SAXXZ function 0x3f
+0x0048c660 ?SetBlackZSort@GUI@@QAEXH@Z function 0x6f
+0x0048c6d0 ?SetBlackOpacity@GUI@@QAEXM@Z function 0x6f
+0x0048c740 ?FadeBlack@GUI@@QAEXMMM@Z function 0x25
+0x0048c770 ?AddGroup@GUI@@QAEPAVGUIGROUP@@PBD@Z function 0x14
+0x0048c790 ?Pause@GUI@@QAEX_N@Z function 0x88
+0x0048c820 ?GetObject@GUI@@QAEPAVCMDBASE@@ABURESHANDLE@@@Z function 0x39
+0x0048c860 ?AddControl@GUI@@QAEXPAVGUICONTROL@@@Z function 0x73
+0x0048c8e0 ?RemoveControl@GUI@@QAEXPAVGUICONTROL@@@Z function 0x4a
+0x0048c930 ?UpdateLayout@GUI@@QAEXXZ function 0x10
+0x0048c940 ?Virtual09@GUI@@UAEPAXPBD@Z function 0x30
+0x0048c970 ?IsSelectable@GUI@@QAE_NPAVGUICONTROL@@ABUV2@@@Z function 0x82
+0x0048ca00 ?IsSelectableElsewhere@GUI@@QAE_NPAVGUICONTROL@@ABUV2@@@Z function 0xa1
+0x0048cab0 ?MoveMouseTo@GUI@@QAE_NPAVGUICONTROL@@@Z function 0x50
+0x0048cb00 ?ClickSelected@GUI@@QAE_NXZ function 0x81
+0x0048cb90 ?GetTopZSort@GUI@@QAEHXZ function 0x18
+0x0048cbb0 ?PlayClick@GUI@@QAEXXZ function 0x8
+0x0048cbc0 ?PlayMouseOver@GUI@@QAEXXZ function 0x8
+0x0048cbd0 ?LockInput@GUI@@QAEXXZ function 0x4
+0x0048cbe0 ?UnlockInput@GUI@@QAEXXZ function 0x4
+0x0048cbf0 ?ShowControl@GUI@@QAEXPBDM@Z function 0x53
+0x0048cc50 ?HideControl@GUI@@QAEXPBDM@Z function 0x53
+0x0048ccb0 ?ReloadScreen@GUI@@UAEXXZ function 0x12
+0x0048ccd0 ?OnFullscreenChanged@GUI@@UAEXXZ function 0x23
+0x0048cd00 ?_Max@?$_Tree@V?$_Tset_traits@PAVGUIGROUP@@U?$less@PAVGUIGROUP@@@std@@V?$allocator@PAVGUIGROUP@@@3@$0A@@std@@@std@@KAPAU_Node@?$_Tree_nod@V?$_Tset_traits@PAVGUIGROUP@@U?$less@PAVGUIGROUP@@@std@@V?$allocator@PAVGUIGROUP@@@3@$0A@@std@@@2@PAU342@@Z function 0x1d
+0x0048cd20 ?_Min@?$_Tree@V?$_Tset_traits@PAVGUIGROUP@@U?$less@PAVGUIGROUP@@@std@@V?$allocator@PAVGUIGROUP@@@3@$0A@@std@@@std@@KAPAU_Node@?$_Tree_nod@V?$_Tset_traits@PAVGUIGROUP@@U?$less@PAVGUIGROUP@@@std@@V?$allocator@PAVGUIGROUP@@@3@$0A@@std@@@2@PAU342@@Z function 0x1c
+0x0048cd40 ??_9@$BFM@AE function 0x5
+0x0048cd50 ??_9@$BGA@AE function 0x5
+0x0048cd60 ??_9@$BGI@AE function 0x5
+0x0048cd70 ??_9@$BFA@AE function 0x5
+0x0048cd80 ??_9@$BFE@AE function 0x5
+0x0048cd90 ??_9@$BFI@AE function 0x5
+0x0048cda0 ?GetDistance@GUI@@QAE_NABHABUV2@@PAVGUICONTROL@@PAM@Z function 0x158
+0x0048cf00 ?FindNext@GUI@@QAEPAVGUICONTROL@@ABH@Z function 0x13a
+0x0048d040 ?_Lrotate@?$_Tree@V?$_Tset_traits@PAVGUIGROUP@@U?$less@PAVGUIGROUP@@@std@@V?$allocator@PAVGUIGROUP@@@3@$0A@@std@@@std@@IAEXPAU_Node@?$_Tree_nod@V?$_Tset_traits@PAVGUIGROUP@@U?$less@PAVGUIGROUP@@@std@@V?$allocator@PAVGUIGROUP@@@3@$0A@@std@@@2@@Z function 0x55
+0x0048d0a0 ?_Rrotate@?$_Tree@V?$_Tset_traits@PAVGUIGROUP@@U?$less@PAVGUIGROUP@@@std@@V?$allocator@PAVGUIGROUP@@@3@$0A@@std@@@std@@IAEXPAU_Node@?$_Tree_nod@V?$_Tset_traits@PAVGUIGROUP@@U?$less@PAVGUIGROUP@@@std@@V?$allocator@PAVGUIGROUP@@@3@$0A@@std@@@2@@Z function 0x59
+0x0048d100 ?_Dec@const_iterator@?$_Tree@V?$_Tset_traits@PAVGUIGROUP@@U?$less@PAVGUIGROUP@@@std@@V?$allocator@PAVGUIGROUP@@@3@$0A@@std@@@std@@QAEXXZ function 0x5d
+0x0048d160 ?_Inc@const_iterator@?$_Tree@V?$_Tset_traits@PAVGUIGROUP@@U?$less@PAVGUIGROUP@@@std@@V?$allocator@PAVGUIGROUP@@@3@$0A@@std@@@std@@QAEXXZ function 0x57
+0x0048d1c0 ?SetSound@GUI@@QAEXPBD@Z function 0x3f
+0x0048d200 ?BlackZSort@GUI@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0x6a
+0x0048d270 ?BlackOpacity@GUI@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0x69
+0x0048d2e0 ?BlackFade@GUI@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0xde
+0x0048d3c0 ?MoveSelection@GUI@@QAE_NABH@Z function 0x23
+0x0048d3f0 ?OnKeyDown@GUI@@UAE_NI@Z function 0xcc
+0x0048d4c0 ?AddGroup@GUI@@QAEPAVGUIGROUP@@PBD0ABUV2@@1ABMABH@Z function 0x131
+0x0048d600 ?_Erase@?$_Tree@V?$_Tset_traits@PAVGUIGROUP@@U?$less@PAVGUIGROUP@@@std@@V?$allocator@PAVGUIGROUP@@@3@$0A@@std@@@std@@IAEXPAU_Node@?$_Tree_nod@V?$_Tset_traits@PAVGUIGROUP@@U?$less@PAVGUIGROUP@@@std@@V?$allocator@PAVGUIGROUP@@@3@$0A@@std@@@2@@Z function 0x37
+0x0048d640 ?_Buynode@?$_Tree@V?$_Tset_traits@PAVGUIGROUP@@U?$less@PAVGUIGROUP@@@std@@V?$allocator@PAVGUIGROUP@@@3@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tset_traits@PAVGUIGROUP@@U?$less@PAVGUIGROUP@@@std@@V?$allocator@PAVGUIGROUP@@@3@$0A@@std@@@2@PAU342@00ABQAVGUIGROUP@@D@Z function 0x39
+0x0048d680 ?_Buynode@?$_Tree@V?$_Tset_traits@PAVGUIGROUP@@U?$less@PAVGUIGROUP@@@std@@V?$allocator@PAVGUIGROUP@@@3@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tset_traits@PAVGUIGROUP@@U?$less@PAVGUIGROUP@@@std@@V?$allocator@PAVGUIGROUP@@@3@$0A@@std@@@2@XZ function 0x37
+0x0048d6c0 ?DeleteClosedScreens@GUI@@QAEXXZ function 0x8d
+0x0048d750 ?_Insert@?$_Tree@V?$_Tset_traits@PAVGUIGROUP@@U?$less@PAVGUIGROUP@@@std@@V?$allocator@PAVGUIGROUP@@@3@$0A@@std@@@std@@IAE?AViterator@12@_NPAU_Node@?$_Tree_nod@V?$_Tset_traits@PAVGUIGROUP@@U?$less@PAVGUIGROUP@@@std@@V?$allocator@PAVGUIGROUP@@@3@$0A@@std@@@2@ABQAVGUIGROUP@@@Z function 0x1ad
+0x0048d900 ?erase@?$_Tree@V?$_Tset_traits@PAVGUIGROUP@@U?$less@PAVGUIGROUP@@@std@@V?$allocator@PAVGUIGROUP@@@3@$0A@@std@@@std@@QAE?AViterator@12@V312@@Z function 0x2b8
+0x0048dbc0 ?insert@?$_Tree@V?$_Tset_traits@PAVGUIGROUP@@U?$less@PAVGUIGROUP@@@std@@V?$allocator@PAVGUIGROUP@@@3@$0A@@std@@@std@@QAE?AU?$pair@Viterator@?$_Tree@V?$_Tset_traits@PAVGUIGROUP@@U?$less@PAVGUIGROUP@@@std@@V?$allocator@PAVGUIGROUP@@@3@$0A@@std@@@std@@_N@2@ABQAVGUIGROUP@@@Z function 0xb9
+0x0048dc80 ?erase@?$_Tree@V?$_Tset_traits@PAVGUIGROUP@@U?$less@PAVGUIGROUP@@@std@@V?$allocator@PAVGUIGROUP@@@3@$0A@@std@@@std@@QAE?AViterator@12@V312@0@Z function 0xb7
+0x0048dd40 ?Update@GUI@@QAEXXZ function 0x249
+0x0048df90 ?OpenScreen@GUI@@QAEXURESHANDLE@@@Z function 0x139
+0x0048e0d0 ?SetScreen@GUI@@UAEXABV?$FIXEDSTRING@$0CAA@@@@Z function 0x1e2
+0x0048e2c0 ??1?$set@PAVGUIGROUP@@U?$less@PAVGUIGROUP@@@std@@V?$allocator@PAVGUIGROUP@@@3@@std@@QAE@XZ function 0x2e
+0x0048e2f0 ??1GUI@@UAE@XZ function 0x13c
+0x0048e430 ?GetClassId@GUI@@UAEHXZ function 0x6
+0x0048e440 ?GetParentClassId@GUI@@UAEHXZ function 0xd
+0x0048e450 ?GetClassName@GUI@@UAEPBDXZ function 0xe
+0x0048e460 ?GetScreenZSort@GUI@@UAEHXZ function 0x6
+0x0048e470 ??_EGUI@@WBM@AEPAXI@Z function 0x8
+0x0048e480 ?Execute@GUI@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function 0x7a
+0x0048e500 ??0GUI@@QAE@XZ function 0x227
+0x0048e730 ??_GGUI@@UAEPAXI@Z function 0x1e
+0x0048e750 ?CreateGui@@YAPAVGUI@@XZ function 0x59
 0x0048e8d0 ?Update@TIMER@@QAEXM@Z function
+0x0048ea00 ?SetPaused@TIMER@@QAEX_N@Z function
 0x0048ee10 ?RegisterCommands@GAME@@SAXXZ function
 0x0048ef70 ??_9@$BGE@AE function
 0x0048f110 ?RegisterCommands@DRM@@SAXXZ function
@@ -417,14 +477,16 @@
 0x004908f0 ?GetActor@ACTORS@@QAEPAVWTACTOR@@URESHANDLE@@@Z function
 0x00490930 ?FindActor@ACTORS@@QAEPAVWTACTOR@@PBD@Z function
 0x00490df0 ?Remove@ACTORS@@QAEXURESHANDLE@@@Z function
-0x00491c70 ?OnMouse@GUI@@QAEXHHH@Z function
-0x00492150 ?OnKey@GUI@@QAEXIH@Z function
-0x004922f0 ?SetMouseCapture@GUI@@QAEX_N@Z function 0x1f
+0x00491c70 ?OnMouse@INPUT@@QAEXHHH@Z function
+0x00492150 ?OnKey@INPUT@@QAEXIH@Z function
+0x004922f0 ?SetMouseCapture@INPUT@@QAEX_N@Z function 0x1f
 0x00492480 ?Virtual13@CMDBASE@@UAEXXZ function
-0x004927a0 ?SetPriority@GUIKEYLISTENER@@QAEXH@Z function 0x1a
-0x004928f0 ??0GUIKEYLISTENER@@QAE@XZ function 0x1f
-0x00492910 ??1GUIKEYLISTENER@@UAE@XZ function 0x19
+0x004927a0 ?SetPriority@INPUTLISTENER@@QAEXH@Z function 0x1a
+0x004928f0 ??0INPUTLISTENER@@QAE@XZ function 0x1f
+0x00492910 ??1INPUTLISTENER@@UAE@XZ function 0x19
 0x004929f0 ?RegisterCommands@GUICONTROL@@SAXXZ function
+0x00492c90 ?IsVisible@GUICONTROL@@QAE_NXZ function
+0x00492cb0 ?IsEnabled@GUICONTROL@@QAE_NXZ function
 0x00492d50 ?GetScaleFactor@SCREENDECAL@@UAE?AUV3@@XZ function 0x14
 0x00493400 ?Virtual138@ACTOR@@UAEXXZ function
 0x00493860 ?Check@STRINGMANAGER@@QAEXXZ function
@@ -509,6 +571,13 @@
 0x0049df00 ?OnContact@ACTOR@@UAEXPAUCONTACT@@@Z function
 0x0049dfc0 ?Virtual129@ACTOR@@UAEXXZ function
 0x0049e430 ?RegisterCommands@GUIGROUP@@SAXXZ function
+0x0049e800 ?Find@GUIGROUP@@QAEPAXPBD@Z function
+0x0049e870 ?FindControl@GUIGROUP@@QAEPAVGUICONTROL@@PBD@Z function
+0x0049e900 ?GetMouseZSort@GUIGROUP@@QAEHH@Z function
+0x0049ea20 ?IsMouseOver@GUIGROUP@@QAE_NMM@Z function
+0x0049ee20 ?UpdateLayout@GUIGROUP@@QAEXXZ function
+0x0049f720 ?AddGroup@GUIGROUP@@QAEPAV1@PBD@Z function
+0x004a0650 ??0GUIGROUP@@QAE@ABURESHANDLE@@PAV0@@Z function
 0x004a0c40 ?Ortho@MATRIX@@QAEXMMMM@Z function
 0x004a0dc0 ?Adjoint@MATRIX@@QAE?AU1@XZ function
 0x004a0e30 ??K@YA?AUMATRIX@@ABU0@M@Z function
@@ -3508,6 +3577,13 @@
 0x005e9d81 __ehhandler$??0APP@@QAE@XZ function
 0x005e9d9b __ehhandler$??1APP@@UAE@XZ function
 0x005e9dbb __ehhandler$?CreateApp@@YAPAVAPP@@XZ function
+0x005e9ddb __ehhandler$?AddGroup@GUI@@QAEPAVGUIGROUP@@PBD0ABUV2@@1ABMABH@Z function
+0x005e9df8 __ehhandler$?_Insert@?$_Tree@V?$_Tset_traits@PAVGUIGROUP@@U?$less@PAVGUIGROUP@@@std@@V?$allocator@PAVGUIGROUP@@@3@$0A@@std@@@std@@IAE?AViterator@12@_NPAU_Node@?$_Tree_nod@V?$_Tset_traits@PAVGUIGROUP@@U?$less@PAVGUIGROUP@@@std@@V?$allocator@PAVGUIGROUP@@@3@$0A@@std@@@2@ABQAVGUIGROUP@@@Z function
+0x005e9e1b __ehhandler$?OpenScreen@GUI@@QAEXURESHANDLE@@@Z function
+0x005e9e82 __ehhandler$??1GUI@@UAE@XZ function
+0x005e9e98 __ehhandler$?Execute@GUI@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function
+0x005e9ed1 __ehhandler$??0GUI@@QAE@XZ function
+0x005e9eeb __ehhandler$?CreateGui@@YAPAVGUI@@XZ function
 0x005ea738 __ehhandler$??0CAMERA@@QAE@XZ function
 0x005ea75b __ehhandler$?CreateCamera@@YAPAVCAMERA@@XZ function
 0x005ea778 __ehhandler$?Reset@CAMERA@@UAEXXZ function
@@ -3552,6 +3628,8 @@
 0x005fa550 __ehhandler$?Encrypt@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@0@Z function
 0x005fa56b __ehhandler$?CreateFileLoaderWKZ@@YAPAVFILELOADER@@XZ function
 0x005fa588 __ehhandler$??1FILELOADERWKZ@@UAE@XZ function
+0x00609bb0 _$E1 function 0x79
+0x00609c30 _$E3 function 0x1c4
 0x0060c9a0 _$E1 function 0xb1
 0x0060ca60 _$E3 function 0x105
 0x0060cb70 _$E5 function 0xc
@@ -3956,6 +4034,32 @@
 0x006674b0 _s_TypeNames data 0xb4
 0x00667564 ??_C@_0CA@CLPEAOCF@No?5default?5plugin?5for?5APPWINDOW?$AA@ data 0x20
 0x00667588 ??_7APPWINDOW@@6B@ data 0xa0
+0x00667628 ??_C@_06MEEGFFCD@Screen?$AA@ data 0x7
+0x00667630 ??_C@_0L@KAHOPMJF@blackzsort?$AA@ data 0xb
+0x00667640 _s_TypeNames data 0xb4
+0x006676f4 ??_C@_0DC@BDCHECHO@GUI?3?3SetBlackOpacity?$DOERROR?3?5no?5d@ data 0x32
+0x00667728 ??_C@_0DE@EECBBAAC@GUI?3?3SetBlackOpacity?$DOERROR?3?5no?5d@ data 0x34
+0x0066775c ??_C@_0CM@PDDAAEND@FINDING?4?4?4?5?8?$CFs?8?5in?5the?5gui?5and?5n@ data 0x2c
+0x00667788 ??_C@_0BJ@GPDMKMJD@Can?8t?5find?5GUICONTROL?5?$CFs?$AA@ data 0x19
+0x006677a4 __real@bf7ae148 data 0x4
+0x006677a8 __real@3f5db22d data 0x4
+0x006677ac ??_C@_0DK@ECNOMDFL@Error?5?9?5GUI?3?3AddGroup?5could?5not?5@ data 0x3a
+0x006677e8 ??_C@_07OEHOHAFJ@GGRP?3?$CFs?$AA@ data 0x8
+0x006677f0 ??_C@_0P@PNDBCECG@menu_mouseover?$AA@ data 0xf
+0x00667800 ??_C@_0L@MFGOJOKA@menu_click?$AA@ data 0xb
+0x0066780c ??_C@_0CN@GBABEFKF@Set?5screen?5could?5not?5find?5group?5@ data 0x2d
+0x0066783c ??_C@_0M@IJODBACF@_WideScreen?$AA@ data 0xc
+0x00667848 ??_C@_0BN@JLIPIAOE@Could?5not?5create?5black?5decal?$AA@ data 0x1d
+0x00667868 ??_C@_0BC@KCFFBKCI@DECL?3black_screen?$AA@ data 0x12
+0x0066787c ??_7GUI@@6BINPUTLISTENER@@@ data 0x10
+0x00667890 ??_7GUI@@6BCMDBASE@@@ data 0x7c
+0x0066790c ??_C@_03JOEPJFAM@gui?$AA@ data 0x4
+0x00667910 ??_C@_09HFKANGCF@blackfade?$AA@ data 0xa
+0x0066791c ??_C@_0N@NFHCBHPH@blackopacity?$AA@ data 0xd
+0x0066792c ??_C@_0O@JOODLBA@VersionString?$AA@ data 0xe
+0x0066793c ??_C@_0BA@PODDKBAI@LoadingProgress?$AA@ data 0x10
+0x0066794c ??_C@_03DACHGFGH@Fps?$AA@ data 0x4
+0x00667950 _s_TypeNames_2 data 0xb4
 0x00667ec8 __real@c3340000 data
 0x00667ecc __real@c3b40000 data
 0x00667ed8 ??_C@_0CM@OCPNAOAO@SAFEINDEX?3FreePos?$DO?5Invalid?5delet@ data 0x2c
@@ -5120,6 +5224,8 @@
 0x006b9bb4 ?g_pfnCreateConsole@@3P6APAVCONSOLE@@XZA data 0x4
 0x006b9bb8 ?g_pfnCreateApp@@3P6APAVAPP@@XZA data 0x4
 0x006b9bbc ?g_pfnCreateAppWindow@@3P6APAVAPPWINDOW@@XZA data 0x4
+0x006b9bc0 ?g_pfnCreateGui@@3P6APAVGUI@@XZA data 0x4
+0x006b9bc8 ?s_commands@GUI@@2PAUCMDENTRY@@A data 0x80
 0x006b9c48 ?s_properties@GUI@@2PAUPROPENTRY@@A data
 0x006b9d60 ?g_pfnCreateTimer@@3P6APAVTIMER@@XZA data 0x4
 0x006b9dd0 ?s_properties@GAME@@2PAUPROPENTRY@@A data
@@ -5294,13 +5400,13 @@
 0x006d08b0 ?g_basePath@@3PADA data
 0x006d09b4 ?g_pApp@@3PAVAPP@@A data 0x4
 0x006d09b8 ?g_pDisplay@@3PAVAPPWINDOW@@A data 0x4
-0x006d09bc ?g_pAudio@@3PAVAUDIO@@A data 0x4
+0x006d09bc ?g_pGui@@3PAVGUI@@A data 0x4
 0x006d09c0 ?g_pTimer@@3PAVTIMER@@A data 0x4
 0x006d09d4 ?g_pGame@@3PAVGAME@@A data 0x4
 0x006d09d8 ?g_pDrm@@3PAVDRM@@A data 0x4
 0x006d15e0 ?g_pActors@@3PAVACTORS@@A data 0x4
 0x006d24e8 ?g_factoryFlags@@3PAHA data
-0x006d2700 ?g_pGui@@3PAVGUI@@A data 0x4
+0x006d2700 ?g_pInput@@3PAVINPUT@@A data 0x4
 0x006d2708 ?g_StringManager@@3VSTRINGMANAGER@@A data
 0x007df724 ?g_pScriptRoot@@3PAVCMDBASE@@A data 0x4
 0x007df738 ?g_pCamera@@3PAVWTACTOR@@A data 0x4

@@ -6,6 +6,7 @@
 #define TONGAS2_GUIGROUP_H
 
 #include "Tongas2/CSTRING.h"
+#include "Tongas2/GUICONTROL.h"
 #include "Tongas2/RESOURCE.h"
 #include "Tongas2/RESOURCES.h"
 #include "Tongas2/SRESULT.h"
@@ -102,14 +103,39 @@ public:
     CSTRING m_groupCommands[GUIGROUP_MAX_COMMANDS];
 };
 
-// The GUI group objects, defined elsewhere; only what CMDMGR needs so far.
-class GUIGROUP
+// A GUI screen or panel made from a GUIGROUPMASTER, with the controls in
+// it. Defined elsewhere; only what other units need so far.
+class GUIGROUP : public GUICONTROL
 {
 public:
+    GUIGROUP(const RESHANDLE &master, GUIGROUP *parent);
+
     static void RegisterCommands();
+
+    // Makes a group from the template with the name ("GGRP:name") and puts
+    // it in this one; the wide-screen one ("name_WideScreen") when the
+    // screen calls for it and there is one.
+    GUIGROUP *AddGroup(const char *name);
+    // The object a script names, among the controls.
+    void *Find(const char *name);
+    // The control with the name.
+    GUICONTROL *FindControl(const char *name);
+    // The highest zsort of the controls that take the mouse, over min.
+    int GetMouseZSort(int min);
+    // Whether the point is in the mouse area.
+    bool IsMouseOver(float x, float y);
+    // Places the controls again.
+    void UpdateLayout();
 
     static int s_classId;
     static PROPENTRY s_properties[];
+
+    char m_5c[0xc];
+    // Set once the group has closed.
+    bool m_closed;
+    char m_69[0x37];
+    GUIGROUPMASTER *m_master;
+    char m_a4[0x9c];
 };
 
 #endif

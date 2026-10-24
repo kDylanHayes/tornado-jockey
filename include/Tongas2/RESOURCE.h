@@ -15,7 +15,8 @@ class RESOURCE;
 class RESOURCEMANAGER;
 class OBJECT;
 
-// Placeholder for the object at 0x6d09d4; only slot 25 is used here.
+// Placeholder for the object at 0x6d09d4; only slots 24, 25 and 34 are used
+// so far.
 class GAME
 {
 public:
@@ -43,8 +44,19 @@ public:
     virtual void Virtual21();
     virtual void Virtual22();
     virtual void Virtual23();
-    virtual void Virtual24();
+    // Whether a game is being played. Placeholder name.
+    virtual bool IsPlaying();
     virtual bool Virtual25();
+    virtual void Virtual26();
+    virtual void Virtual27();
+    virtual void Virtual28();
+    virtual void Virtual29();
+    virtual void Virtual30();
+    virtual void Virtual31();
+    virtual void Virtual32();
+    virtual void Virtual33();
+    // The game was paused. Placeholder name.
+    virtual void OnPaused();
 
     static void RegisterCommands();
 

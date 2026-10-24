@@ -12,6 +12,8 @@ public:
 
     // Measures the frame.
     void Update(float dt);
+    // Stops the game's time, or lets it run.
+    void SetPaused(bool paused);
 
     // The time since the game started, in seconds.
     float m_time;
@@ -20,6 +22,8 @@ public:
     int m_c;
     // The frame time sound fades go by.
     float m_soundDt;
+    char m_14[0x14];
+    bool m_paused;
 };
 extern TIMER *g_pTimer;
 
