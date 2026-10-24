@@ -53,4 +53,7 @@ public:
 
 APPOPTIONS *CreateAppOptions();
 
+// Makes the options; the game points it at its own.
+extern APPOPTIONS *(*g_pfnCreateAppOptions)();
+
 #endif

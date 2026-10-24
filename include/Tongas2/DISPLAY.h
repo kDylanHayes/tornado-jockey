@@ -6,8 +6,9 @@
 class DISPLAY
 {
 public:
-    virtual void Virtual00();
-    virtual void Virtual01();
+    virtual ~DISPLAY();
+    // Opens the window and the renderer.
+    virtual void Create();
     virtual void Virtual02();
     virtual void Virtual03();
     virtual void Virtual04();
@@ -15,7 +16,7 @@ public:
     virtual void Virtual06();
     virtual void Virtual07();
     virtual void Virtual08();
-    virtual void Virtual09();
+    virtual void SetDetail(int level);
     virtual void Virtual10();
     virtual void Virtual11();
     // Seconds since the last call.
@@ -28,10 +29,11 @@ public:
     virtual void Virtual18();
     virtual void Virtual19();
     virtual void Virtual20();
-    virtual void Virtual21();
+    virtual void SetFullscreen(bool on);
     virtual void Virtual22();
     virtual void Virtual23();
-    virtual void Virtual24();
+    // Switches to the resolution with the index; the index it switched to.
+    virtual int SetResolution(int index);
     virtual void Virtual25();
     virtual void Virtual26();
     // The size of the screen in pixels.
@@ -44,7 +46,14 @@ public:
     virtual bool NeedsAspectFix();
     virtual void FixHeight(float *height);
     virtual void Virtual33(float *height);
+
+    int m_4[5];
+    // The instance APP::Init was given.
+    void *m_instance;
 };
 extern DISPLAY *g_pDisplay;
+
+// Makes the display.
+extern DISPLAY *(*g_pfnCreateDisplay)();
 
 #endif

@@ -23,6 +23,7 @@ public:
     DWORD m_heapUsed;
     DWORD m_unknown410;
     DWORD m_sampleTime; // ms between CPU samples
+    DWORD m_418[3];
 };
 
 #endif
