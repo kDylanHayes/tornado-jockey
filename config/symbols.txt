@@ -351,11 +351,22 @@
 0x0048a6d0 ?LoadScript@CMDMGR@@QAE_NXZ function
 0x0048a8b0 ?Update@CMDMGR@@QAEXXZ function 0x1bc
 0x0048aa70 ??_GCMDMGR@@UAEPAXI@Z function
+0x0048b790 ?GetScreenSize@APP@@UAEXXZ function 0x1b
+0x0048b7b0 ?Frame@APP@@QAEXM@Z function 0x39
+0x0048b7f0 ?Init@APP@@QAEXPAUHINSTANCE__@@@Z function 0xe9
+0x0048b8e0 ?Shutdown@APP@@QAEXXZ function 0x43
+0x0048b930 ?Start@APP@@QAEXXZ function 0x27
 0x0048b960 ?SetResolution@APP@@QAEXH@Z function
 0x0048b9a0 ?SetFullscreen@APP@@QAEX_N@Z function
 0x0048b9d0 ?SetSound@APP@@QAEX_N@Z function
 0x0048b9f0 ?SetMusic@APP@@QAEX_N@Z function
 0x0048ba10 ?SetDetail@APP@@QAEXH@Z function
+0x0048ba30 ?Virtual04@APP@@UAEXXZ function 0xb
+0x0048ba40 ??0APP@@QAE@XZ function 0x106
+0x0048bb50 ??1APP@@UAE@XZ function 0xfc
+0x0048bc50 ?ParseArg@APP@@UAE_NPBD@Z function 0x93
+0x0048bcf0 ?CreateApp@@YAPAVAPP@@XZ function 0x59
+0x0048bd50 ??_GAPP@@UAEPAXI@Z function 0x1e
 0x0048c620 ?RegisterCommands@GUI@@SAXXZ function
 0x0048c820 ?GetObject@AUDIO@@QAEPAVCMDBASE@@ABURESHANDLE@@@Z function
 0x0048c930 ?UpdateListener@AUDIO@@QAEXXZ function
@@ -364,6 +375,7 @@
 0x0048cd70 ??_9@$BFA@AE function
 0x0048cd80 ??_9@$BFE@AE function
 0x0048cd90 ??_9@$BFI@AE function
+0x0048e8d0 ?Update@TIMER@@QAEXM@Z function
 0x0048ee10 ?RegisterCommands@GAME@@SAXXZ function
 0x0048ef70 ??_9@$BGE@AE function
 0x0048f110 ?RegisterCommands@DRM@@SAXXZ function
@@ -374,6 +386,7 @@
 0x004908f0 ?GetActor@ACTORS@@QAEPAVWTACTOR@@URESHANDLE@@@Z function
 0x00490930 ?FindActor@ACTORS@@QAEPAVWTACTOR@@PBD@Z function
 0x00490df0 ?Remove@ACTORS@@QAEXURESHANDLE@@@Z function
+0x004922f0 ?SetWideScreen@GUI@@QAEX_N@Z function 0x1f
 0x00492480 ?Virtual13@CMDBASE@@UAEXXZ function
 0x004929f0 ?RegisterCommands@GUICONTROL@@SAXXZ function
 0x00492d50 ?GetScaleFactor@SCREENDECAL@@UAE?AUV3@@XZ function 0x14
@@ -1617,6 +1630,7 @@
 0x004ce500 ??1FILELOADER@@UAE@XZ function 0x50
 0x004ce550 ?CreateFileLoader@@YAPAVFILELOADER@@XZ function 0x23
 0x004ce580 ??_GFILELOADER@@UAEPAXI@Z function 0x1e
+0x004cea40 ??0SCREENSHOT@@QAE@XZ function 0x31
 0x004d2ec0 ?HashString@@YAHPBDH@Z function
 0x004d4610 ?PointAt@ANG@@QAEXABUV3@@@Z function
 0x004d4ca0 ?Build@FRUSTUM@@QAEXABUMATRIX@@0@Z function
@@ -3448,6 +3462,9 @@
 0x005e9938 __ehhandler$??0sentry@?$basic_ostream@DU?$char_traits@D@std@@@std@@QAE@AAV12@@Z function
 0x005e9958 __ehhandler$??$?6U?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@PBD@Z function
 0x005e997b __ehhandler$?CreateLog@@YAPAVLOG@@XZ function
+0x005e9d81 __ehhandler$??0APP@@QAE@XZ function
+0x005e9d9b __ehhandler$??1APP@@UAE@XZ function
+0x005e9dbb __ehhandler$?CreateApp@@YAPAVAPP@@XZ function
 0x005ea738 __ehhandler$??0CAMERA@@QAE@XZ function
 0x005ea75b __ehhandler$?CreateCamera@@YAPAVCAMERA@@XZ function
 0x005ea778 __ehhandler$?Reset@CAMERA@@UAEXXZ function
@@ -3571,16 +3588,19 @@
 0x006560d0 __imp__GetModuleHandleA@4 data 0x4
 0x006560f4 __imp__SetConsoleTextAttribute@8 data 0x4
 0x006560f8 __imp__GetConsoleScreenBufferInfo@8 data 0x4
+0x006560fc __imp__SetCurrentDirectoryA@4 data 0x4
 0x00656100 __imp__DeleteFileA@4 data 0x4
 0x00656104 __imp__SetEnvironmentVariableA@8 data 0x4
 0x00656108 __imp__GetProcessHeaps@8 data 0x4
 0x0065610c __imp__HeapWalk@8 data 0x4
 0x0065611c __imp__CreateProcessA@40 data 0x4
 0x00656190 __imp__GetLastError@0 data 0x4
+0x006561a8 __imp__GetModuleFileNameA@12 data 0x4
 0x00656210 __imp__Sleep@4 data 0x4
 0x00656250 __imp__GetExitCodeProcess@8 data 0x4
 0x006562a0 __imp__ShellExecuteExA@4 data 0x4
 0x006562ec __imp__wsprintfA data 0x4
+0x006563c0 __imp__GetSystemMetrics@4 data 0x4
 0x006563c4 __imp__MessageBoxA@16 data
 0x006564a0 ??_C@_0FN@NIKDIMLH@ERROR?$CB?$CB?5LoadRunnersInformation?$DOF@ data 0x5d
 0x0065688c ??_7STRING@@6B@ data
@@ -3875,7 +3895,12 @@
 0x00667248 ??_C@_03JBJLGPFL@end?$AA@ data 0x4
 0x0066724c ??_C@_0DO@HBLPAEFC@CMDMGR?3LoadScript?$DO?5Error?5loading@ data 0x3e
 0x00667384 ??_C@_01KDCPPGHE@r?$AA@ data
+0x006673d0 _s_TypeNames data 0xb4
 0x00667484 ??_C@_01KMDKNFGN@?1?$AA@ data 0x2
+0x00667488 ??_7APP@@6B@ data 0x14
+0x0066749c ??_C@_06CLBNJNOB@?9level?$AA@ data 0x7
+0x006674a4 ??_C@_02FCBLCILD@?5?$DN?$AA@ data 0x3
+0x006674a8 ??_C@_04KPOKBEGI@?9map?$AA@ data 0x5
 0x00667ec8 __real@c3340000 data
 0x00667ecc __real@c3b40000 data
 0x00667ed8 ??_C@_0CM@OCPNAOAO@SAFEINDEX?3FreePos?$DO?5Invalid?5delet@ data 0x2c
@@ -5037,8 +5062,12 @@
 0x006b9ba8 ?s_classId@CAMERA@@2HA data 0x4
 0x006b9bac ?s_classId@SPAWNER@@2HA data 0x4
 0x006b9bb0 ?s_classId@TRIGGER@@2HA data 0x4
+0x006b9bb8 ?g_pfnCreateApp@@3P6APAVAPP@@XZA data 0x4
+0x006b9bbc ?g_pfnCreateDisplay@@3P6APAVDISPLAY@@XZA data 0x4
 0x006b9c48 ?s_properties@GUI@@2PAUPROPENTRY@@A data
+0x006b9d60 ?g_pfnCreateTimer@@3P6APAVTIMER@@XZA data 0x4
 0x006b9dd0 ?s_properties@GAME@@2PAUPROPENTRY@@A data
+0x006b9e08 ?g_pfnCreateDrm@@3P6APAVDRM@@XZA data 0x4
 0x006b9e50 ?s_properties@DRM@@2PAUPROPENTRY@@A data
 0x006b9e90 ?s_factoryId@ACTOR@@2HA data 0x4
 0x006b9e94 ?s_factoryId@CAMERA@@2HA data 0x4
@@ -5057,6 +5086,7 @@
 0x006bbcc0 ?s_commands@RESOURCES@@2PAUCMDENTRY@@A data 0xc0
 0x006bbd80 ?s_properties@RESOURCES@@2PAUPROPENTRY@@A data 0xa8
 0x006bbe28 ?g_up@@3UV3@@A data 0xc
+0x006bbe58 ?g_pfnCreateAppOptions@@3P6APAVAPPOPTIONS@@XZA data 0x4
 0x006bbe60 ?s_corners@DECAL@@2PAY02MA data 0x30
 0x006bbe90 ?s_indices@DECAL@@2PAFA data 0xc
 0x006bbe9c ?g_pfnCreateDECAL@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
@@ -5209,8 +5239,10 @@
 0x006d09bc ?g_pAudio@@3PAVAUDIO@@A data 0x4
 0x006d09c0 ?g_pTimer@@3PAVTIMER@@A data 0x4
 0x006d09d4 ?g_pGame@@3PAVGAME@@A data 0x4
+0x006d09d8 ?g_pDrm@@3PAVDRM@@A data 0x4
 0x006d15e0 ?g_pActors@@3PAVACTORS@@A data 0x4
 0x006d24e8 ?g_factoryFlags@@3PAHA data
+0x006d2700 ?g_pGui@@3PAVGUI@@A data 0x4
 0x006d2708 ?g_StringManager@@3VSTRINGMANAGER@@A data
 0x007df724 ?g_pScriptRoot@@3PAVCMDBASE@@A data 0x4
 0x007df738 ?g_pCamera@@3PAVWTACTOR@@A data 0x4

@@ -48,6 +48,9 @@ typedef ACCESS_MASK REGSAM;
 #define MB_OK 0x00000000L
 #define SW_SHOWNORMAL 1
 #define SEE_MASK_NOCLOSEPROCESS 0x00000040
+#define MAX_PATH 260
+#define SM_CXSCREEN 0
+#define SM_CYSCREEN 1
 
 typedef struct _SECURITY_ATTRIBUTES {
     DWORD nLength;
@@ -161,6 +164,8 @@ WINBASEAPI FARPROC WINAPI GetProcAddress(HMODULE hModule, LPCSTR lpProcName);
 WINBASEAPI void WINAPI Sleep(DWORD dwMilliseconds);
 WINBASEAPI BOOL WINAPI CloseHandle(HANDLE hObject);
 WINBASEAPI DWORD WINAPI GetLastError(void);
+WINBASEAPI DWORD WINAPI GetModuleFileNameA(HMODULE hModule, LPSTR lpFilename, DWORD nSize);
+WINBASEAPI BOOL WINAPI SetCurrentDirectoryA(LPCSTR lpPathName);
 WINBASEAPI BOOL WINAPI GetExitCodeProcess(HANDLE hProcess, LPDWORD lpExitCode);
 WINBASEAPI BOOL WINAPI CreateProcessA(LPCSTR lpApplicationName, LPSTR lpCommandLine,
     LPSECURITY_ATTRIBUTES lpProcessAttributes, LPSECURITY_ATTRIBUTES lpThreadAttributes,
@@ -174,6 +179,7 @@ WINBASEAPI BOOL WINAPI GetConsoleScreenBufferInfo(HANDLE hConsoleOutput,
     PCONSOLE_SCREEN_BUFFER_INFO lpConsoleScreenBufferInfo);
 WINBASEAPI BOOL WINAPI SetConsoleTextAttribute(HANDLE hConsoleOutput, WORD wAttributes);
 WINUSERAPI int WINAPI MessageBoxA(HWND hWnd, LPCSTR lpText, LPCSTR lpCaption, UINT uType);
+WINUSERAPI int WINAPI GetSystemMetrics(int nIndex);
 WINUSERAPI int WINAPIV wsprintfA(LPSTR, LPCSTR, ...);
 }
 
