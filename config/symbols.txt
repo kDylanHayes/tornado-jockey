@@ -5,6 +5,7 @@
 0x00401ea0 ??8@YA_NABURESHANDLE@@0@Z function
 0x00401f30 ??_H@YGXPAXIHP6EPAX0@Z@Z function 0x30
 0x00401f60 ??0STRING@@QAE@XZ function
+0x00401f80 ?Length@STRING@@QAEHXZ function 0x36
 0x00401fc0 ??0PRIMV2@@QAE@XZ function
 0x004024a0 ?SafeSwprintf@@YAHPAGPBGZZ function 0x1d
 0x004024e0 ??_9@$BNM@AE function
@@ -331,17 +332,31 @@
 0x00488760 ?_Incsize@?$list@HV?$allocator@H@std@@@std@@IAEXI@Z function
 0x00488800 ?FindCommonClass@@YAHHH@Z function
 0x00488a30 ??0CMDCONTEXT@@QAE@PAVTOKENS@@ABURESHANDLE@@@Z function
+0x00488a80 ?RegisterClasses@CMDMGR@@QAEXXZ function
+0x00488aa0 ?RegisterEngineClasses@@YAXXZ function
+0x00489900 ?Queue@CMDMGR@@QAEXPAVCMDCONTEXT@@@Z function
 0x004899a0 ?ReplaceChar@@YAXPADDD@Z function
 0x004899d0 ?HashName@@YAHPBD@Z function
 0x00489a00 ?HashCommands@@YAXPAUCMDENTRY@@@Z function
+0x00489a50 ?FindCommand@CMDCONTEXT@@QAEPAUCMDENTRY@@PBDH@Z function
+0x00489b40 ?Run@CMDCONTEXT@@QAE?AVSRESULT@@PAVCMDBASE@@@Z function
+0x00489ce0 ??0CMDMGR@@QAE@XZ function
+0x00489d40 ?CreateCmdMgr@@YAPAVCMDMGR@@XZ function
+0x00489da0 ?LoadMap@CMDMGR@@QAEXPBD@Z function
 0x00489e60 ?Append@STRING@@QAEXPBD@Z function
-0x00489f10 ?Run@CONSOLE@@QAEXABVSTRING@@ABURESHANDLE@@@Z function
-0x0048a2d0 ?Evaluate@CONSOLE@@QAE?AVSRESULT@@ABVSTRING@@ABURESHANDLE@@@Z function
+0x00489f10 ?Run@CMDMGR@@QAE_NABVSTRING@@ABURESHANDLE@@@Z function 0x3c0
+0x0048a2d0 ?Evaluate@CMDMGR@@QAE?AVSRESULT@@ABVSTRING@@ABURESHANDLE@@@Z function
+0x0048a580 ?Clear@CMDMGR@@QAEXXZ function
+0x0048a610 ?ClearFlagged@CMDMGR@@QAEXXZ function
+0x0048a6d0 ?LoadScript@CMDMGR@@QAE_NXZ function
+0x0048a8b0 ?Update@CMDMGR@@QAEXXZ function 0x1bc
+0x0048aa70 ??_GCMDMGR@@UAEPAXI@Z function
 0x0048b960 ?SetResolution@APP@@QAEXH@Z function
 0x0048b9a0 ?SetFullscreen@APP@@QAEX_N@Z function
 0x0048b9d0 ?SetSound@APP@@QAEX_N@Z function
 0x0048b9f0 ?SetMusic@APP@@QAEX_N@Z function
 0x0048ba10 ?SetDetail@APP@@QAEXH@Z function
+0x0048c620 ?RegisterCommands@GUI@@SAXXZ function
 0x0048c820 ?GetObject@AUDIO@@QAEPAVCMDBASE@@ABURESHANDLE@@@Z function
 0x0048c930 ?UpdateListener@AUDIO@@QAEXXZ function
 0x0048cd40 ??_9@$BFM@AE function
@@ -349,17 +364,24 @@
 0x0048cd70 ??_9@$BFA@AE function
 0x0048cd80 ??_9@$BFE@AE function
 0x0048cd90 ??_9@$BFI@AE function
+0x0048ee10 ?RegisterCommands@GAME@@SAXXZ function
 0x0048ef70 ??_9@$BGE@AE function
+0x0048f110 ?RegisterCommands@DRM@@SAXXZ function
+0x0048f400 ?RegisterCommands@SCENE@@SAXXZ function
 0x0048f8b0 ?IsValidHash@?$SAFEINDEX@VRESOURCEMASTER@@$0CAAA@$0PL@$03@@QAE_NH@Z function 0x17
 0x0048faf0 ??_9@$BEM@AE function
+0x0048fd50 ?OnScriptLoaded@ACTORS@@QAEXXZ function 0x70
 0x004908f0 ?GetActor@ACTORS@@QAEPAVWTACTOR@@URESHANDLE@@@Z function
 0x00490930 ?FindActor@ACTORS@@QAEPAVWTACTOR@@PBD@Z function
 0x00490df0 ?Remove@ACTORS@@QAEXURESHANDLE@@@Z function
 0x00492480 ?Virtual13@CMDBASE@@UAEXXZ function
+0x004929f0 ?RegisterCommands@GUICONTROL@@SAXXZ function
 0x00492d50 ?GetScaleFactor@SCREENDECAL@@UAE?AUV3@@XZ function 0x14
 0x00493400 ?Virtual138@ACTOR@@UAEXXZ function
 0x00493860 ?Check@STRINGMANAGER@@QAEXXZ function
+0x00493f20 ?RegisterCommands@KERNELCOMMANDS@@SAXXZ function
 0x004980f0 ??9@YA_NABUV3@@0@Z function
+0x00498350 ?RegisterCommands@ACTOR@@SAXXZ function
 0x00498390 ?Virtual89@ACTOR@@UAEX_N@Z function
 0x004984c0 ?Virtual114@ACTOR@@UAEXXZ function
 0x00498510 ?Virtual112@ACTOR@@UAEXXZ function
@@ -437,6 +459,7 @@
 0x0049d4d0 ??0ACTOR@@QAE@XZ function
 0x0049df00 ?OnContact@ACTOR@@UAEXPAUCONTACT@@@Z function
 0x0049dfc0 ?Virtual129@ACTOR@@UAEXXZ function
+0x0049e430 ?RegisterCommands@GUIGROUP@@SAXXZ function
 0x004a0c40 ?Ortho@MATRIX@@QAEXMMMM@Z function
 0x004a0dc0 ?Adjoint@MATRIX@@QAE?AU1@XZ function
 0x004a0e30 ??K@YA?AUMATRIX@@ABU0@M@Z function
@@ -1539,6 +1562,13 @@
 0x004c62b0 ?SetLayersOpacityName@SHADERMASTER@@UAEXABHABVCSTRING@@@Z function
 0x004c6300 ?CreateCopy@SHADERMASTER@@UAEPAVRESOURCE@@ABURESHANDLE@@@Z function
 0x004c6360 ?Execute@SHADERMASTER@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function
+0x004c63e0 ?RegisterCommands@GUISLIDER@@SAXXZ function
+0x004c6b20 ?RegisterCommands@GUIGENERIC@@SAXXZ function
+0x004c8320 ?RegisterCommands@GUICHECKBOX@@SAXXZ function
+0x004c8670 ?RegisterCommands@GUICHECKGROUP@@SAXXZ function
+0x004c89c0 ?RegisterCommands@GUIVISUAL@@SAXXZ function
+0x004ca290 ?RegisterCommands@GUITEXTEDIT@@SAXXZ function
+0x004cade0 ?RegisterCommands@GUITEXT@@SAXXZ function
 0x004cc880 ?RegisterCommands@VALUEMANAGER@@SAXXZ function 0x3f
 0x004cc8c0 ?_Max@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@KAPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@PAU342@@Z function
 0x004cc8e0 ?_Buynode@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@XZ function
@@ -3552,6 +3582,7 @@
 0x006562a0 __imp__ShellExecuteExA@4 data 0x4
 0x006562ec __imp__wsprintfA data 0x4
 0x006563c4 __imp__MessageBoxA@16 data
+0x006564a0 ??_C@_0FN@NIKDIMLH@ERROR?$CB?$CB?5LoadRunnersInformation?$DOF@ data 0x5d
 0x0065688c ??_7STRING@@6B@ data
 0x00656890 ??_C@_00CNPNBAHC@?$AA@ data 0x1
 0x00656894 __real@3f800000 data
@@ -3559,6 +3590,7 @@
 0x0065689c __real@c0490fdb data
 0x006568a0 __real@40c90fdb data
 0x006568a4 __real@40490fdb data
+0x006568a8 ??_C@_04FOKBGDA@GAME?$AA@ data 0x5
 0x0065691c ??_7SRESULT@@6B@ data 0x4
 0x00656920 ??_C@_11LOCGONAA@?$AA?$AA@ data 0x2
 0x00656b5c __real@40000000 data
@@ -3569,6 +3601,7 @@
 0x00656f48 __real@3c8efa35 data 0x4
 0x00656f50 __real@43340000 data
 0x006570b8 ??_7CMDCONTEXT@@6B@ data 0x4
+0x0065738c ??_C@_0P@BDMBJLKE@KERNELCOMMANDS?$AA@ data 0xf
 0x0065750c ??_C@_0BM@PAPJHAGI@invalid?5map?1set?$DMT?$DO?5iterator?$AA@ data
 0x00657528 ??_C@_0BE@JONHPENG@map?1set?$DMT?$DO?5too?5long?$AA@ data
 0x00657574 ??_C@_05CCEOMINC@ACTOR?$AA@ data 0x6
@@ -3619,8 +3652,10 @@
 0x0065fc7c ??_C@_0P@EKAGPCOP@BarStartOffset?$AA@ data 0xf
 0x0065fec4 ??_C@_09OOOMBMED@ScreenPos?$AA@ data 0xa
 0x006600f0 ??_C@_0FP@IKMMFDBK@ERROR?$CB?$CB?5RESOURCES?3?3LoadManagers?$DO@ data 0x5f
+0x0066064c ??_C@_0M@EKBNJFKI@SOUNDMASTER?$AA@ data 0xc
 0x00660ce8 ??_C@_06GJMFONGK@Radius?$AA@ data 0x7
 0x006612c0 ??_7UNICODESTRING@@6B@ data 0x4
+0x006612c4 ??_C@_03JDLEFIHA@GUI?$AA@ data 0x4
 0x00661ac0 ??_7APPOPTIONS@@6B@ data 0x24
 0x00661e7c ??_C@_0BD@OLBABOEK@vector?$DMT?$DO?5too?5long?$AA@ data 0x13
 0x00661eac ??_C@_02JDPG@rb?$AA@ data 0x3
@@ -3784,6 +3819,7 @@
 0x00666e00 ??_C@_09GCFNMLAG@dumpprops?$AA@ data 0xa
 0x00666e0c ??_C@_0M@OCFELLAL@setindirect?$AA@ data 0xc
 0x00666e18 ??_C@_07GOOEBILB@seteval?$AA@ data 0x8
+0x00666e20 _s_TypeNames data 0xb4
 0x00666ed4 ??_C@_07MFGAOKLA@TRIGGER?$AA@ data 0x8
 0x00666edc ??_C@_07KJIBKIOF@SPAWNER?$AA@ data 0x8
 0x00666ee4 ??_C@_0BF@MHILCODM@ACTORRESOURCESMASTER?$AA@ data 0x15
@@ -3804,12 +3840,14 @@
 0x00666ff0 ??_C@_0BB@DCJKJGHM@BONEDMODELMASTER?$AA@ data 0x11
 0x00667004 ??_C@_08BGGFOJMM@FXMASTER?$AA@ data 0x9
 0x00667010 ??_C@_0BC@CADOMOGG@CPRIMITIVE3MASTER?$AA@ data 0x12
+0x00667024 ??_C@_0O@GDHDMJBE@EMITTERMASTER?$AA@ data 0xe
 0x00667034 ??_C@_0M@LHCCHCAG@TESLAMASTER?$AA@ data 0xc
 0x00667040 ??_C@_0BA@OGDBAEPO@POLYTRAILMASTER?$AA@ data 0x10
 0x00667050 ??_C@_0M@DDDCBPJF@CURVEMASTER?$AA@ data 0xc
 0x0066705c ??_C@_0L@BILCKCGA@TEXTMASTER?$AA@ data 0xb
 0x00667068 ??_C@_0N@FFONGAKJ@SHADERMASTER?$AA@ data 0xd
-0x0066707c ??_C@_08KGDJAKPA@RESOURCE?$AA@ data
+0x00667078 ??_C@_03OACCCEBP@DRM?$AA@ data 0x4
+0x0066707c ??_C@_08KGDJAKPA@RESOURCE?$AA@ data 0x9
 0x00667088 ??_C@_09CMINMFIB@RESOURCES?$AA@ data 0xa
 0x00667094 ??_C@_09LLOKOKDN@GUISLIDER?$AA@ data 0xa
 0x006670a0 ??_C@_0L@BDDGPKIA@GUIGENERIC?$AA@ data 0xb
@@ -3819,9 +3857,23 @@
 0x006670d4 ??_C@_09KIKCHMPD@GUIVISUAL?$AA@ data 0xa
 0x006670e0 ??_C@_0M@EHIIDNGN@GUITEXTEDIT?$AA@ data 0xc
 0x006670ec ??_C@_07DNBOFAIK@GUITEXT?$AA@ data 0x8
+0x006670f4 ??_C@_0L@ONJJHFHL@GUICONTROL?$AA@ data 0xb
+0x00667100 ??_C@_05IALELFBJ@SCENE?$AA@ data 0x6
 0x00667108 ??_C@_0N@BNHCIJEP@VALUEMANAGER?$AA@ data 0xd
+0x00667118 ??_C@_0BK@BGLGDEDK@Too?5many?5parameters?3?5?8?$CFs?8?$AA@ data 0x1a
+0x00667134 ??_C@_0BJ@GBPAFJFN@Too?5few?5parameters?3?5?8?$CFs?8?$AA@ data 0x19
+0x00667150 ??_C@_0CF@MLNDBCPD@scripting?5object?5without?5base?5ty@ data 0x25
+0x00667178 ??_C@_0CI@BBMOHDE@could?5not?5find?5object?5to?5run?5com@ data 0x28
+0x006671a0 ??_C@_0BM@LKMBJBCK@no?5context?5to?5run?5command?$CB?$CB?$AA@ data 0x1c
+0x006671bc ??_7CMDMGR@@6B@ data 0x4
 0x006671c0 ??_C@_06DIJPEION@?$CFs?$CFs?$CFs?$AA@ data 0x7
+0x006671c8 ??_C@_0L@PNAHLDOP@data?1maps?1?$AA@ data 0xb
+0x006671d4 ??_C@_0BL@GLKMKBJB@CMDMGR?3?3Run?$DOError?5in?5?$CC?$CFs?$CC?5?$AA@ data 0x1b
+0x006671f0 ??_C@_0CG@FFGELJBF@Parse?5error?5in?5?$CC?$CFs?$CC?5?0?5command?5sk@ data 0x26
+0x00667218 ??_C@_01ICJEACDI@?$DL?$AA@ data 0x2
+0x0066721c ??_C@_0CL@LHMDKM@CMDMGR?3LoadScript?$DO?5Error?5in?5scri@ data 0x2b
 0x00667248 ??_C@_03JBJLGPFL@end?$AA@ data 0x4
+0x0066724c ??_C@_0DO@HBLPAEFC@CMDMGR?3LoadScript?$DO?5Error?5loading@ data 0x3e
 0x00667384 ??_C@_01KDCPPGHE@r?$AA@ data
 0x00667484 ??_C@_01KMDKNFGN@?1?$AA@ data 0x2
 0x00667ec8 __real@c3340000 data
@@ -4020,6 +4072,7 @@
 0x0066ba34 ??_C@_0BH@PPBGFLKL@Could?5not?5open?5file?5?$CFs?$AA@ data 0x17
 0x0066ba4c ??_C@_0CI@DIMKMKLO@Image?3?5?$CFs?5?$CI?$CFd?0?$CFd?$CJ?5bigger?5than?5?$CFd@ data 0x28
 0x0066ba74 ??_C@_0BJ@EEOLOJNL@Could?5not?5load?5image?3?5?$CFs?$AA@ data 0x19
+0x0066ba90 ??_C@_0DB@EHAFAGKM@Trying?5to?5emit?5an?5invalid?5resour@ data 0x31
 0x0066bac4 ??_C@_0BA@EONHAMD@UsePictureColor?$AA@ data 0x10
 0x0066bad4 ??_C@_0BA@CBGIIPK@PictureFileName?$AA@ data 0x10
 0x0066bae4 ??_C@_0BC@OCILOJNH@ExtForceActorName?$AA@ data 0x12
@@ -4933,14 +4986,28 @@
 0x006b91d4 ?g_pfnCreateLog@@3P6APAVLOG@@XZA data 0x4
 0x006b91d8 ?s_commands@CMDBASE@@2PAUCMDENTRY@@A data 0xa0
 0x006b9278 ?s_properties@CMDBASE@@2PAUPROPENTRY@@A data 0x70
-0x006b92f0 ?g_classParents@@3PAHA data
+0x006b92e8 ?g_pfnCreateCmdMgr@@3P6APAVCMDMGR@@XZA data 0x4
+0x006b92f0 ?g_classParents@@3PAHA data 0x800
 0x006b9af0 ?g_NONEClassId@@3HA data 0x4
 0x006b9af4 ?g_CMDBASEClassId@@3HA data 0x4
 0x006b9af8 ?s_classId@KERNELCOMMANDS@@2HA data 0x4
 0x006b9afc ?s_classId@VALUEMANAGER@@2HA data 0x4
+0x006b9b00 ?s_classId@GAME@@2HA data 0x4
+0x006b9b04 ?s_classId@SCENE@@2HA data 0x4
+0x006b9b08 ?s_classId@GUI@@2HA data 0x4
+0x006b9b0c ?s_classId@GUICONTROL@@2HA data 0x4
+0x006b9b10 ?s_classId@GUITEXT@@2HA data 0x4
+0x006b9b14 ?s_classId@GUITEXTEDIT@@2HA data 0x4
+0x006b9b18 ?s_classId@GUIVISUAL@@2HA data 0x4
+0x006b9b1c ?s_classId@GUIGROUP@@2HA data 0x4
+0x006b9b20 ?s_classId@GUICHECKGROUP@@2HA data 0x4
+0x006b9b24 ?s_classId@GUICHECKBOX@@2HA data 0x4
+0x006b9b28 ?s_classId@GUIGENERIC@@2HA data 0x4
+0x006b9b2c ?s_classId@GUISLIDER@@2HA data 0x4
 0x006b9b30 ?s_classId@RESOURCES@@2HA data 0x4
 0x006b9b34 ?s_classId@RESOURCE@@2HA data 0x4
 0x006b9b38 ?s_classId@RESOURCEMASTER@@2HA data 0x4
+0x006b9b3c ?s_classId@DRM@@2HA data 0x4
 0x006b9b40 ?s_classId@SHADERMASTER@@2HA data 0x4
 0x006b9b44 ?s_classId@TEXTMASTER@@2HA data 0x4
 0x006b9b48 ?s_classId@CURVEMASTER@@2HA data 0x4
@@ -4970,10 +5037,18 @@
 0x006b9ba8 ?s_classId@CAMERA@@2HA data 0x4
 0x006b9bac ?s_classId@SPAWNER@@2HA data 0x4
 0x006b9bb0 ?s_classId@TRIGGER@@2HA data 0x4
+0x006b9c48 ?s_properties@GUI@@2PAUPROPENTRY@@A data
+0x006b9dd0 ?s_properties@GAME@@2PAUPROPENTRY@@A data
+0x006b9e50 ?s_properties@DRM@@2PAUPROPENTRY@@A data
 0x006b9e90 ?s_factoryId@ACTOR@@2HA data 0x4
 0x006b9e94 ?s_factoryId@CAMERA@@2HA data 0x4
 0x006b9e98 ?s_factoryId@SPAWNER@@2HA data 0x4
 0x006b9e9c ?s_factoryId@TRIGGER@@2HA data 0x4
+0x006b9f40 ?s_properties@SCENE@@2PAUPROPENTRY@@A data
+0x006ba110 ?s_properties@GUICONTROL@@2PAUPROPENTRY@@A data
+0x006ba808 ?s_properties@KERNELCOMMANDS@@2PAUPROPENTRY@@A data
+0x006bab00 ?s_properties@ACTOR@@2PAUPROPENTRY@@A data
+0x006bba70 ?s_properties@GUIGROUP@@2PAUPROPENTRY@@A data
 0x006bbaa8 ?g_pfnCreateCameraLens@@3P6APAVCAMERALENS@@XZA data 0x4
 0x006bbaac ?g_pfnCreateCamera@@3P6APAVCAMERA@@XZA data 0x4
 0x006bbab0 ?s_commands@CAMERA@@2PAUCMDENTRY@@A data 0x80
@@ -5039,9 +5114,17 @@
 0x006c0758 ?s_properties@TEXTMASTER@@2PAUPROPENTRY@@A data 0x188
 0x006c08e0 ?g_pfnCreateSHADER@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006c08e8 ?s_properties@SHADERMASTER@@2PAUPROPENTRY@@A data 0x6c8
+0x006c0fb0 ?s_properties@GUISLIDER@@2PAUPROPENTRY@@A data
+0x006c1068 ?s_properties@GUIGENERIC@@2PAUPROPENTRY@@A data
+0x006c11b8 ?s_properties@GUICHECKBOX@@2PAUPROPENTRY@@A data
+0x006c1228 ?s_properties@GUICHECKGROUP@@2PAUPROPENTRY@@A data
+0x006c12a0 ?s_properties@GUIVISUAL@@2PAUPROPENTRY@@A data
+0x006c1438 ?s_properties@GUITEXTEDIT@@2PAUPROPENTRY@@A data
+0x006c1528 ?s_properties@GUITEXT@@2PAUPROPENTRY@@A data
 0x006c15d0 ?g_pfnCreateValueManager@@3P6APAVCMDBASE@@XZA data 0x4
 0x006c15d4 ?s_unset@VALUEMANAGER@@2VSRESULT@@A data 0xc
 0x006c15e0 ?s_commands@VALUEMANAGER@@2PAUCMDENTRY@@A data 0xc0
+0x006c16a0 ?s_properties@VALUEMANAGER@@2PAUPROPENTRY@@A data 0x38
 0x006c16d8 ?g_pfnCreateFileLoader@@3P6APAVFILELOADER@@XZA data 0x4
 0x006c17b8 ?g_zeroAngles@@3UANG@@A data 0x50
 0x006c1808 ?g_pfnCreateSIMPLEMODEL@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
@@ -5115,9 +5198,11 @@
 0x006cbc80 ?g_pLog@@3PAVLOG@@A data 0x4
 0x006cbc88 ?g_i@@3HA data 0x4
 0x006cbc90 ?g_classProps@@3PAPAUPROPENTRY@@A data 0x800
-0x006cc490 ?g_pConsole@@3PAVCONSOLE@@A data 0x4
+0x006cc490 ?g_pCmdMgr@@3PAVCMDMGR@@A data 0x4
 0x006cc498 ?g_classCommands@@3PAPAUCMDENTRY@@A data
 0x006ccc98 ?g_classNames@@3PAY0BO@DA data
+0x006d0898 ?g_classCount@@3HA data 0x4
+0x006d089c ?g_classRegistrars@@3V?$CALLBACKLIST@P6AXXZ@@A data 0x8
 0x006d08b0 ?g_basePath@@3PADA data
 0x006d09b4 ?g_pApp@@3PAVAPP@@A data 0x4
 0x006d09b8 ?g_pDisplay@@3PAVDISPLAY@@A data 0x4
@@ -5127,6 +5212,7 @@
 0x006d15e0 ?g_pActors@@3PAVACTORS@@A data 0x4
 0x006d24e8 ?g_factoryFlags@@3PAHA data
 0x006d2708 ?g_StringManager@@3VSTRINGMANAGER@@A data
+0x007df724 ?g_pScriptRoot@@3PAVCMDBASE@@A data 0x4
 0x007df738 ?g_pCamera@@3PAVWTACTOR@@A data 0x4
 0x007df740 ?s_managerNames@RESOURCES@@2PAY0BO@DA data 0xf00
 0x007e0640 ?g_pGUIGROUP@@3PAVRESOURCEMANAGER@@A data 0x4

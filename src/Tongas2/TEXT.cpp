@@ -1,6 +1,7 @@
 #include "Tongas2/TEXT.h"
 #include "Tongas2/LOG.h"
 #include "Tongas2/PATH.h"
+#include "Tongas2/CMDMGR.h"
 #include "Tongas2/SAFEINDEX.h"
 #include "Tongas2/TOKENS.h"
 
@@ -288,7 +289,7 @@ void TEXT::Update()
                 }
                 *end = 0;
                 sprintf(expression, "%S", at + 2);
-                SRESULT r = g_pConsole->Evaluate(STRING(expression), RESHANDLE());
+                SRESULT r = g_pCmdMgr->Evaluate(STRING(expression), RESHANDLE());
                 switch (r.GetType()) {
                 case SRT_INT:
                     SafeSwprintf(value, L"%d", r.GetInt(0));

@@ -2,6 +2,7 @@
 #include "Tongas2/ACTOR.h"
 #include "Tongas2/LOG.h"
 #include "Tongas2/PATH.h"
+#include "Tongas2/CMDMGR.h"
 
 #define CMD_FUNC(CLASS, method) (CMDFUNC)(SRESULT (CLASS::*)(TOKENS **))(SRESULT (CLASS::*)(CMDCALL *))&CLASS::method
 
@@ -137,7 +138,7 @@ SRESULT VALUEMANAGER::Set(CMDCALL *call)
     SRESULT *value = new SRESULT;
     {
         STRING expression(call->tokens->GetToken(2));
-        value->Assign(g_pConsole->Evaluate(expression, call->caller));
+        value->Assign(g_pCmdMgr->Evaluate(expression, call->caller));
     }
     if (m_values[name] != &s_unset) {
         if (m_values[name]) {

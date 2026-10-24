@@ -151,4 +151,17 @@ void CatmullRom(V3 *out, V3 p0, V3 p1, V3 p2, V3 p3, float t);
 void CatmullRomTangent(V3 *out, V3 p0, V3 p1, V3 p2, V3 p3, float t);
 V3 TriangleNormal(const V3 &a, const V3 &b, const V3 &c);
 
+// A plane: its normal and distance, all zero until set.
+struct PLANE
+{
+    PLANE() { a = b = c = d = 0.0f; }
+    // Defined elsewhere: the plane through point, facing along normal.
+    PLANE(const V3 &normal, const V3 &point);
+    // Defined elsewhere: how far point is from the plane; where it is and
+    // where it lands on the plane are written to the pointers that are set.
+    float Distance(const V3 &point, V3 *at, V3 *onPlane);
+
+    float a, b, c, d;
+};
+
 #endif

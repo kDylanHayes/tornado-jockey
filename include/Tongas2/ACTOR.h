@@ -214,8 +214,11 @@ public:
     virtual void Link13();
     virtual void Link14();
 
+    static void RegisterCommands();
+
     static int s_classId;
     static int s_factoryId;
+    static PROPENTRY s_properties[];
 
     V3 m_position;
     TRANSFORM m_transform;

@@ -1,6 +1,7 @@
 #include "Tongas2/TRIGGER.h"
 #include "Tongas2/CPRIMITIVE3.h"
 #include "Tongas2/PATH.h"
+#include "Tongas2/CMDMGR.h"
 #include "Tongas2/TIMER.h"
 
 #include <stdlib.h>
@@ -53,9 +54,9 @@ void TRIGGER::RunCommand()
         STRING &command = m_commands[i];
         if (strlen(command.c_str()) != 0) {
             if (m_sendToToucher)
-                g_pConsole->Run(command, m_toucher);
+                g_pCmdMgr->Run(command, m_toucher);
             else
-                g_pConsole->Run(command, RESHANDLE());
+                g_pCmdMgr->Run(command, RESHANDLE());
         }
     }
     m_commandsRun++;

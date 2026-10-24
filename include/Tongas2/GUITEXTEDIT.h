@@ -45,4 +45,14 @@ public:
     bool m_dontAllowStartSpaces[GUITEXT_MAX];
 };
 
+// The GUI text edit objects, defined elsewhere; only what CMDMGR needs so far.
+class GUITEXTEDIT
+{
+public:
+    static void RegisterCommands();
+
+    static int s_classId;
+    static PROPENTRY s_properties[];
+};
+
 #endif

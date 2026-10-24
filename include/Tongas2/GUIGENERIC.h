@@ -77,4 +77,14 @@ public:
     int m_specific[GUIGENERIC_MAX];
 };
 
+// The GUI generic objects, defined elsewhere; only what CMDMGR needs so far.
+class GUIGENERIC
+{
+public:
+    static void RegisterCommands();
+
+    static int s_classId;
+    static PROPENTRY s_properties[];
+};
+
 #endif

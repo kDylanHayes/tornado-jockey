@@ -38,4 +38,14 @@ public:
     int m_maxSelected;
 };
 
+// The GUI check group objects, defined elsewhere; only what CMDMGR needs so far.
+class GUICHECKGROUP
+{
+public:
+    static void RegisterCommands();
+
+    static int s_classId;
+    static PROPENTRY s_properties[];
+};
+
 #endif

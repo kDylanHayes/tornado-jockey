@@ -11,14 +11,6 @@
 
 #define DEG2RAD(degrees) (0.017453292f * (degrees))
 
-// A plane, all zero until set.
-struct PLANE
-{
-    PLANE() { a = b = c = d = 0.0f; }
-
-    float a, b, c, d;
-};
-
 // Defined elsewhere: the corners of a box, a unit cube until set.
 struct BOXCORNERS
 {

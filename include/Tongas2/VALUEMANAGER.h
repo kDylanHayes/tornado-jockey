@@ -42,6 +42,7 @@ public:
 
     static int s_classId;
     static CMDENTRY s_commands[];
+    static PROPENTRY s_properties[];
     static SRESULT s_unset;
 
     std::map<std::string, SRESULT *> m_values;

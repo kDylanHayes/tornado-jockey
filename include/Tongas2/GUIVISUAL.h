@@ -79,4 +79,14 @@ public:
     bool m_reposOnScale;
 };
 
+// The GUI visual objects, defined elsewhere; only what CMDMGR needs so far.
+class GUIVISUAL
+{
+public:
+    static void RegisterCommands();
+
+    static int s_classId;
+    static PROPENTRY s_properties[];
+};
+
 #endif

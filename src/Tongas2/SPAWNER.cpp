@@ -1,6 +1,7 @@
 #include "Tongas2/SPAWNER.h"
 #include "Tongas2/LOG.h"
 #include "Tongas2/PATH.h"
+#include "Tongas2/CMDMGR.h"
 #include "Tongas2/TIMER.h"
 
 #define CMD_FUNC(CLASS, method) (CMDFUNC)(SRESULT (CLASS::*)(TOKENS **))(SRESULT (CLASS::*)(CMDCALL *))&CLASS::method
@@ -170,7 +171,7 @@ ACTOR *SPAWNER::Spawn()
     name.Format("%s_spw_%02d", tmpl->m_name.c_str(), m_spawned);
     actor->SetName(CSTRING(name.c_str()));
     if (m_targetCommand.Length() > 1)
-        g_pConsole->Run(m_targetCommand, actor->m_handle);
+        g_pCmdMgr->Run(m_targetCommand, actor->m_handle);
     m_spawned++;
     if (m_useSpawnerAngleScale) {
         actor->SetAngles(GetAngles());

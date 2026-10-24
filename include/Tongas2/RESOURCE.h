@@ -45,6 +45,11 @@ public:
     virtual void Virtual23();
     virtual void Virtual24();
     virtual bool Virtual25();
+
+    static void RegisterCommands();
+
+    static int s_classId;
+    static PROPENTRY s_properties[];
 };
 extern GAME *g_pGame;
 
@@ -185,6 +190,8 @@ public:
     WTACTOR *FindActor(const char *name);
     // Removes the actor with a handle.
     void Remove(RESHANDLE handle);
+    // Tells each actor the map's command script has run.
+    void OnScriptLoaded();
 };
 extern ACTORS *g_pActors;
 
