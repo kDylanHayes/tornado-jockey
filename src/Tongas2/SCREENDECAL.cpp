@@ -60,7 +60,7 @@ PROPENTRY SCREENDECALMASTER::s_properties[] = {
     { "FileName", 0, 7, 0, PROP_FIELD(SCREENDECALMASTER, m_file), false, 1, PROP_SETTER(SCREENDECALMASTER, SetFileName) },
     { "ForceDuplicates", 0, 2, 0, PROP_FIELD(SCREENDECALMASTER, m_forceDuplicates), false, 1, PROP_SETTER(SCREENDECALMASTER, SetForceDuplicates) },
     { "ShifterSpeed", 0, 10, 0, PROP_FIELD(SCREENDECALMASTER, m_shifterSpeed), false, 1, PROP_SETTER(SCREENDECALMASTER, SetShifterSpeed) },
-    { "Blend", 0, 1, (int)s_blends, PROP_FIELD(SCREENDECALMASTER, m_blend), false, 1, PROP_SETTER(SCREENDECALMASTER, SetBlend) },
+    { "Blend", 0, 1, s_blends, PROP_FIELD(SCREENDECALMASTER, m_blend), false, 1, PROP_SETTER(SCREENDECALMASTER, SetBlend) },
     { "UserFolder", 0, 2, 0, PROP_FIELD(SCREENDECALMASTER, m_userFolder), false, 1, PROP_SETTER(SCREENDECALMASTER, SetUserFolder) },
     { "CorrectSizeInWidescreen", 0, 2, 0, PROP_FIELD(SCREENDECALMASTER, m_correctSizeInWidescreen), false, 1, PROP_SETTER(SCREENDECALMASTER, SetCorrectSizeInWidescreen) },
     { 0, 0, 15, 0, 0, false },

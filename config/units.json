@@ -2097,6 +2097,17 @@
       }
     },
     {
+      "name": "Tongas2/CMDBASE",
+      "ranges": [
+        "0x004836b0-0x00488a7f",
+        "0x00666678-0x00666e1f",
+        "0x006b91d8-0x006b92e7"
+      ],
+      "target": "build/target/Tongas2/CMDBASE.obj",
+      "source": "src/Tongas2/CMDBASE.cpp",
+      "category": "engine"
+    },
+    {
       "name": "Tongas2/FILELOADER",
       "ranges": [
         "0x004ce290-0x004ce59d",

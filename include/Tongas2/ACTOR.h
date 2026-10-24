@@ -14,13 +14,6 @@
 
 struct CONTACT;
 
-// What a script command is run with: the tokens and who ran it.
-struct CMDCALL
-{
-    TOKENS *tokens;
-    RESHANDLE caller;
-};
-
 // Defined elsewhere: per factory id, the factory's flags.
 extern int g_factoryFlags[];
 

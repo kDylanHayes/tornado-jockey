@@ -128,7 +128,7 @@ void RESOURCEMANAGER::PrepareMasters()
     RESOURCEMASTER *master = m_first;
     while (master) {
         RESOURCEMASTER *next = master->m_next;
-        master->ApplyProperties();
+        master->ResizeArrays();
         master->Prepare();
         master->m_prepared = true;
         master = next;

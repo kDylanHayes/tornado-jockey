@@ -63,7 +63,7 @@ public:
     void Append(const char *text);
     // Makes room for at least length characters.
     void Reserve(const int &length);
-    // Defined elsewhere: printf into the string, up to 0x3fff characters.
+    // printf into the string, up to 0x3fff characters (UNICODESTRING.h).
     void Format(const char *format, ...);
 
     const char *c_str() const { return !m_buf ? "" : m_buf; }
@@ -127,10 +127,11 @@ public:
             Free();
     }
 
-    UNICODESTRING &operator=(const UNICODESTRING &other);
-    // Defined elsewhere; 0 empties the string.
-    UNICODESTRING &operator=(const wchar_t *text);
-    // Defined elsewhere: makes room for at least size bytes.
+    // These three are defined in UNICODESTRING.h.
+    void operator=(const UNICODESTRING &other);
+    // 0 empties the string.
+    void operator=(const wchar_t *text);
+    // Makes room for at least size bytes, keeping the text.
     void Reserve(const int &size);
 
     const wchar_t *c_str() const { return !m_buf ? L"" : m_buf; }

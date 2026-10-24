@@ -41,12 +41,9 @@ public:
         }
     }
 
-    // Appends text only when all of it fits.
-    void operator+=(const char *text)
-    {
-        if ((int)(strlen(text) + strlen(m_buf)) < N - 1)
-            strcat(m_buf, text);
-    }
+    // Appends text only when all of it fits. Out of line; defined in
+    // another unit (the exe never inlines it).
+    void operator+=(const char *text);
 
     operator char *() { return m_buf; }
 

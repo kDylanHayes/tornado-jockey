@@ -16,16 +16,7 @@
 // Defined elsewhere: the loop counter at 0x6cbc88 that many units share.
 extern int g_i;
 
-// Defined elsewhere: runs script commands.
-class CONSOLE
-{
-public:
-    // Runs command on behalf of the resource with the handle.
-    void Run(const STRING &command, const RESHANDLE &caller);
-    // The value of a script expression, for the resource with the handle.
-    SRESULT Evaluate(const STRING &expression, const RESHANDLE &caller);
-};
-extern CONSOLE *g_pConsole;
+#include "Tongas2/CONSOLE.h"
 
 // A point of the path, at the origin until set.
 struct PATHV3 : V3
