@@ -93,4 +93,14 @@ public:
     GUITEXTCOLOR m_color[GUITEXT_MAX];
 };
 
+// The GUI text objects, defined elsewhere; only what CMDMGR needs so far.
+class GUITEXT
+{
+public:
+    static void RegisterCommands();
+
+    static int s_classId;
+    static PROPENTRY s_properties[];
+};
+
 #endif

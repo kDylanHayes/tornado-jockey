@@ -12,7 +12,13 @@ class STRINGMANAGER
 {
 public:
     // Returns a buffer to the pool and updates the usage counters.
+    // CMDMGR was built seeing it as not throwing; it defines
+    // STRINGMANAGER_FREE_NOTHROW (see toolchain.md).
+#ifdef STRINGMANAGER_FREE_NOTHROW
+    void Free(int &block, int &pages) throw();
+#else
     void Free(int &block, int &pages);
+#endif
     // Checks the pool for errors.
     void Check();
 };

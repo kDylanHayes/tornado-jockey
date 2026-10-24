@@ -35,4 +35,14 @@ public:
     CSTRING m_onChange;
 };
 
+// The GUI slider objects, defined elsewhere; only what CMDMGR needs so far.
+class GUISLIDER
+{
+public:
+    static void RegisterCommands();
+
+    static int s_classId;
+    static PROPENTRY s_properties[];
+};
+
 #endif

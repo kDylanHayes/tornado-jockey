@@ -259,6 +259,7 @@ public:
     void SetValue(const char *value);
 
     SRESULTTYPE GetType() const { return m_type; }
+    bool IsSet() const { return m_type != SRT_NOTSET ? true : false; }
     const char *GetTypeName() const
     {
         if (m_type >= 0 && m_type < SRT_COUNT)

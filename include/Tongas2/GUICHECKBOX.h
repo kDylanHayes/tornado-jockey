@@ -33,4 +33,14 @@ public:
     STRING m_onCheckOff;
 };
 
+// The GUI check box objects, defined elsewhere; only what CMDMGR needs so far.
+class GUICHECKBOX
+{
+public:
+    static void RegisterCommands();
+
+    static int s_classId;
+    static PROPENTRY s_properties[];
+};
+
 #endif

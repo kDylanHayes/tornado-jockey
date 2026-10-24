@@ -96,6 +96,9 @@ extern int g_classParents[];
 extern CMDENTRY *g_classCommands[];
 extern PROPENTRY *g_classProps[];
 
+// The number of classes registered so far.
+extern int g_classCount;
+
 // The id of no class: CMDBASE's parent, and what FindProperty takes for
 // the object's own class.
 extern int g_NONEClassId;
@@ -187,19 +190,19 @@ extern int g_CMDBASEClassId;
 // own.
 int FindCommonClass(int classA, int classB);
 
-// What a command gives back, the base of CMDCONTEXT. Placeholder names.
+// When a queued command runs, the base of CMDCONTEXT. Placeholder names.
 class CMDCONTEXTBASE
 {
 public:
     CMDCONTEXTBASE()
     {
-        m_4 = 0;
-        m_8 = 0;
+        m_time = 0;
+        m_frames = 0;
     }
-    virtual ~CMDCONTEXTBASE() {}
-
-    int m_4;
-    int m_8;
+    // The game time to run at, if above 0.
+    float m_time;
+    // Otherwise the number of frames to wait.
+    int m_frames;
 };
 
 // A command being run: the call the command gets and what it gives back.
@@ -211,8 +214,17 @@ public:
     // Defined elsewhere.
     virtual ~CMDCONTEXT() {}
 
+    // The command with the name in the class with the id or its parents,
+    // if the call has the arguments it takes (CMDMGR.cpp).
+    CMDENTRY *FindCommand(const char *name, int classId);
+    // Runs the command, or reads the property, the first token names, on
+    // root or the object a dotted name leads to from it (CMDMGR.cpp).
+    SRESULT Run(CMDBASE *root);
+
     CMDCALL m_call;
-    int m_1c;
+    // The next command in CMDMGR's queue.
+    CMDCONTEXT *m_next;
+    // What the game's Virtual25 gave when it was queued.
     bool m_20;
 };
 

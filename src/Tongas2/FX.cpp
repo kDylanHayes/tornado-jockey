@@ -1,6 +1,7 @@
 #include "Tongas2/FX.h"
 #include "Tongas2/DECAL.h"
 #include "Tongas2/PATH.h"
+#include "Tongas2/CMDMGR.h"
 #include "Tongas2/TIMER.h"
 #include "Tongas2/TOKENS.h"
 
@@ -360,7 +361,7 @@ void FX::Spawn(int i)
     child->SetActive(true);
     {
         STRING command(master->m_command[i].c_str());
-        g_pConsole->Run(command, m_parent);
+        g_pCmdMgr->Run(command, m_parent);
     }
 }
 

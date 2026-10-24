@@ -102,4 +102,14 @@ public:
     CSTRING m_groupCommands[GUIGROUP_MAX_COMMANDS];
 };
 
+// The GUI group objects, defined elsewhere; only what CMDMGR needs so far.
+class GUIGROUP
+{
+public:
+    static void RegisterCommands();
+
+    static int s_classId;
+    static PROPENTRY s_properties[];
+};
+
 #endif

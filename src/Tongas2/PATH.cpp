@@ -1,6 +1,7 @@
 #include <math.h>
 
 #include "Tongas2/PATH.h"
+#include "Tongas2/CMDMGR.h"
 
 // The names of the curvature types, as the Curvature property shows them.
 static const char s_curvatureNames[][30] = {
@@ -318,7 +319,7 @@ void PATHMASTER::RunCommands(float from, float to, RESHANDLE caller)
 {
     if (from == 0.0f && to != 0.0f) {
         if (m_command[0].Length() > 0)
-            g_pConsole->Run(m_command[0], caller);
+            g_pCmdMgr->Run(m_command[0], caller);
     }
     if (m_totalLength != 0.0f) {
         float distance;
@@ -332,7 +333,7 @@ void PATHMASTER::RunCommands(float from, float to, RESHANDLE caller)
             if (distance < point && point <= end) {
                 int i = WrapIndex(segment);
                 if (m_command[i].Length() > 0)
-                    g_pConsole->Run(m_command[i], caller);
+                    g_pCmdMgr->Run(m_command[i], caller);
             }
             int i = WrapIndex(segment);
             segment++;

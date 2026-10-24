@@ -16,8 +16,6 @@
 // Defined elsewhere: the loop counter at 0x6cbc88 that many units share.
 extern int g_i;
 
-#include "Tongas2/CONSOLE.h"
-
 // A point of the path, at the origin until set.
 struct PATHV3 : V3
 {

@@ -2108,6 +2108,17 @@
       "category": "engine"
     },
     {
+      "name": "Tongas2/CMDMGR",
+      "ranges": [
+        "0x00488a80-0x0048aaaf",
+        "0x00666e20-0x0066728f",
+        "0x006b92e8-0x006b9bb3"
+      ],
+      "target": "build/target/Tongas2/CMDMGR.obj",
+      "source": "src/Tongas2/CMDMGR.cpp",
+      "category": "engine"
+    },
+    {
       "name": "Tongas2/FILELOADER",
       "ranges": [
         "0x004ce290-0x004ce59d",

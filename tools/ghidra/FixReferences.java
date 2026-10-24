@@ -165,20 +165,26 @@ public class FixReferences extends HeadlessScript {
 					createAsciiString(value);
 					strings++;
 				}
-				if (!isString(value)) {
+				// A string's address, or a function's (a function pointer
+				// table or global that analysis didn't type).
+				if (!isString(value) && getFunctionAt(value) == null) {
 					continue;
 				}
 				Data here = getDataContaining(at);
 				if (here == null || !here.isDefined()) {
 					if (refs.getReferencesFrom(at).length == 0) {
-						createData(at, ghidra.program.model.data.PointerDataType.dataType);
-						pointers++;
+						try {
+							createData(at, ghidra.program.model.data.PointerDataType.dataType);
+							pointers++;
+						} catch (ghidra.program.model.util.CodeUnitInsertionException e) {
+							// Something else is defined in the word.
+						}
 					}
 				}
 			}
 		}
 		println("Made " + strings + " short strings pointed to from data strings");
-		println("Typed " + pointers + " words in data holding a string's address as pointers");
+		println("Typed " + pointers + " words in data holding a string's or function's address as pointers");
 
 		String[] args = getScriptArgs();
 		if (args.length == 0 || !Files.exists(Paths.get(args[0]))) {

@@ -18,18 +18,6 @@ extern char g_basePath[];
 // Defined elsewhere: replaces each from in s with to.
 void ReplaceChar(char *s, char from, char to);
 
-// Defined elsewhere: a plane through point, facing along normal.
-struct PLANE
-{
-    PLANE(const V3 &normal, const V3 &point);
-    // How far point is from the plane; where it is and where it lands on
-    // the plane are written to the pointers that are set.
-    float Distance(const V3 &point, V3 *at, V3 *onPlane);
-
-    V3 normal;
-    float d;
-};
-
 class SOUNDMASTER : public RESOURCEMASTER
 {
 public:

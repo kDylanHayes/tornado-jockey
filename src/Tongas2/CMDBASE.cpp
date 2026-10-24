@@ -2,7 +2,7 @@
 
 #include "Tongas2/CMDBASE.h"
 #include "Tongas2/AUDIO.h"
-#include "Tongas2/CONSOLE.h"
+#include "Tongas2/CMDMGR.h"
 #include "Tongas2/CWSTRING.h"
 #include "Tongas2/KERNELCOMMANDS.h"
 #include "Tongas2/LOG.h"
@@ -740,7 +740,7 @@ bool CMDBASE::SetAttributeEval(const char *name, int index, const char *expressi
             g_pLog->Error("CMDBASE::SetAttributeEval> ERROR: Index %d, of the attribute %s is out of range", index, name);
         return false;
     }
-    SRESULT value = g_pConsole->Evaluate(STRING(expression), caller);
+    SRESULT value = g_pCmdMgr->Evaluate(STRING(expression), caller);
     if (value.GetType() == SRT_NOTSET) {
         if (g_pLog)
             g_pLog->Error("CMDBASE::SetAttributeEval> ERROR: Invalid expression: %s", expression);
@@ -886,14 +886,14 @@ SRESULT CMDBASE::SetIndirect(CMDCALL *call)
     int index;
     int valueAt;
     if (call->tokens->m_count > 3) {
-        index = g_pConsole->Evaluate(STRING(call->tokens->GetToken(2)), RESHANDLE()).GetInt(0);
+        index = g_pCmdMgr->Evaluate(STRING(call->tokens->GetToken(2)), RESHANDLE()).GetInt(0);
         valueAt = 3;
     } else {
         index = 0;
         valueAt = 2;
     }
     STRING text(call->tokens->GetToken(1));
-    SRESULT name = g_pConsole->Evaluate(text, call->caller);
+    SRESULT name = g_pCmdMgr->Evaluate(text, call->caller);
     return SRESULT(SetAttributeEval(name.GetString(""), index, call->tokens->GetToken(valueAt), call->caller));
 }
 
@@ -925,7 +925,7 @@ int FindCommonClass(int classA, int classB)
 
 CMDCONTEXT::CMDCONTEXT(TOKENS *tokens, const RESHANDLE &caller)
 {
-    m_1c = 0;
+    m_next = 0;
     m_20 = false;
     m_call.tokens = tokens;
     m_call.caller = caller;
