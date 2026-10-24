@@ -69,7 +69,7 @@ void TIMER::Update(float dt)
         g_pCmdMgr->Update();
         g_pConsole->Update();
         if (g_pGame)
-            g_pGame->Virtual19();
+            g_pGame->Update();
         g_pCamera->Step();
         g_pActors->Update();
         g_pGui->Update();

@@ -2183,6 +2183,23 @@
       "category": "engine"
     },
     {
+      "name": "Tongas2/GAME",
+      "ranges": [
+        "0x0048edf0-0x0048f10f",
+        "0x00609e20-0x00609ebf",
+        "0x00667a78-0x00667bf7",
+        "0x006b9d68-0x006b9e07",
+        "0x006d09d4-0x006d09d7"
+      ],
+      "target": "build/target/Tongas2/GAME.obj",
+      "source": "src/Tongas2/GAME.cpp",
+      "category": "engine",
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z",
+        "??_9@$BGE@AE": "?IsPlaying@GAME@@UAE_NXZ"
+      }
+    },
+    {
       "name": "Tongas2/FILELOADER",
       "ranges": [
         "0x004ce290-0x004ce59d",
