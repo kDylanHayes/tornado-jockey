@@ -203,12 +203,7 @@ public:
     V3 ScreenToWorld(const V2 &point, const float &depth);
     // Stops any jitter, pan and turn and puts the camera at position.
     void ResetMotion(V3 position);
-    void StopJitter()
-    {
-        m_jitterTime = 0.0f;
-        m_jitterAmount = 0.0f;
-        m_jitter.x = m_jitter.y = m_jitter.z = 0.0f;
-    }
+    void StopJitter();
     void StopPan()
     {
         m_panTime = 0.0f;

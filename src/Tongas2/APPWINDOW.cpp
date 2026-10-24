@@ -5,18 +5,9 @@
 #include "Tongas2/APPOPTIONS.h"
 #include "Tongas2/APPWINDOW.h"
 #include "Tongas2/CMDMGR.h"
-#include "Tongas2/GUI.h"
+#include "Tongas2/INPUT.h"
 #include "Tongas2/LOG.h"
-
-// The slots the script root has after CMDBASE's. Placeholder names.
-class SCRIPTROOT : public CMDBASE
-{
-public:
-    // A disc or other medium was put in the drive with the letter, or taken
-    // out.
-    virtual void OnMediaArrived(char drive);
-    virtual void OnMediaRemoved(char drive);
-};
+#include "Tongas2/SCRIPTROOT.h"
 
 APPWINDOW *CreateAppWindow();
 
@@ -86,91 +77,91 @@ long APPWINDOW::WndProc(HWND__ *window, unsigned int message, unsigned int wPara
         Virtual02();
         return -1;
     case WM_CHAR:
-        if (!g_pGui)
+        if (!g_pInput)
             break;
-        g_pGui->OnKey(wParam, GUIKEY_CHAR);
+        g_pInput->OnKey(wParam, INPUTKEY_CHAR);
         return -1;
     case WM_KEYDOWN:
     case WM_SYSKEYDOWN:
-        if (!g_pGui)
+        if (!g_pInput)
             break;
-        g_pGui->OnKey(wParam, GUIKEY_DOWN);
+        g_pInput->OnKey(wParam, INPUTKEY_DOWN);
         return -1;
     case WM_MOUSEMOVE:
-        if (!g_pGui)
+        if (!g_pInput)
             break;
-        if (!g_pGui->m_mouseCapture) {
-            if (!(wParam & MK_LBUTTON) && g_pGui->IsButtonDown(0))
-                g_pGui->OnMouse(GUIMOUSE_LUP, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-            if (!(wParam & MK_MBUTTON) && g_pGui->IsButtonDown(2))
-                g_pGui->OnMouse(GUIMOUSE_MUP, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-            if (!(wParam & MK_RBUTTON) && g_pGui->IsButtonDown(1))
-                g_pGui->OnMouse(GUIMOUSE_RUP, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+        if (!g_pInput->m_mouseCapture) {
+            if (!(wParam & MK_LBUTTON) && g_pInput->IsButtonDown(0))
+                g_pInput->OnMouse(INPUTMOUSE_LUP, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+            if (!(wParam & MK_MBUTTON) && g_pInput->IsButtonDown(2))
+                g_pInput->OnMouse(INPUTMOUSE_MUP, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+            if (!(wParam & MK_RBUTTON) && g_pInput->IsButtonDown(1))
+                g_pInput->OnMouse(INPUTMOUSE_RUP, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
         }
-        g_pGui->OnMouse(GUIMOUSE_MOVE, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+        g_pInput->OnMouse(INPUTMOUSE_MOVE, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
         return 0;
     case WM_LBUTTONDOWN:
-        if (!g_pGui)
+        if (!g_pInput)
             break;
-        g_pGui->OnMouse(GUIMOUSE_LDOWN, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+        g_pInput->OnMouse(INPUTMOUSE_LDOWN, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
         return -1;
     case WM_LBUTTONUP:
-        if (!g_pGui)
+        if (!g_pInput)
             break;
-        g_pGui->OnMouse(GUIMOUSE_LUP, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+        g_pInput->OnMouse(INPUTMOUSE_LUP, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
         return -1;
     case WM_KEYUP:
     case WM_SYSKEYUP:
-        if (!g_pGui)
+        if (!g_pInput)
             break;
-        g_pGui->OnKey(wParam, GUIKEY_UP);
+        g_pInput->OnKey(wParam, INPUTKEY_UP);
         return -1;
     case WM_LBUTTONDBLCLK:
-        if (!g_pGui)
+        if (!g_pInput)
             break;
-        g_pGui->OnMouse(GUIMOUSE_LDBLCLK, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+        g_pInput->OnMouse(INPUTMOUSE_LDBLCLK, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
         return -1;
     case WM_MBUTTONDBLCLK:
-        if (!g_pGui)
+        if (!g_pInput)
             break;
-        g_pGui->OnMouse(GUIMOUSE_MDBLCLK, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+        g_pInput->OnMouse(INPUTMOUSE_MDBLCLK, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
         return -1;
     case WM_MBUTTONDOWN:
-        if (!g_pGui)
+        if (!g_pInput)
             break;
-        g_pGui->OnMouse(GUIMOUSE_MDOWN, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+        g_pInput->OnMouse(INPUTMOUSE_MDOWN, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
         return -1;
     case WM_MBUTTONUP:
-        if (!g_pGui)
+        if (!g_pInput)
             break;
-        g_pGui->OnMouse(GUIMOUSE_MUP, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+        g_pInput->OnMouse(INPUTMOUSE_MUP, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
         return -1;
     case WM_RBUTTONDBLCLK:
-        if (!g_pGui)
+        if (!g_pInput)
             break;
-        g_pGui->OnMouse(GUIMOUSE_RDBLCLK, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+        g_pInput->OnMouse(INPUTMOUSE_RDBLCLK, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
         return -1;
     case WM_RBUTTONDOWN:
-        if (!g_pGui)
+        if (!g_pInput)
             break;
-        g_pGui->OnMouse(GUIMOUSE_RDOWN, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+        g_pInput->OnMouse(INPUTMOUSE_RDOWN, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
         return -1;
     case WM_RBUTTONUP:
-        if (!g_pGui)
+        if (!g_pInput)
             break;
-        g_pGui->OnMouse(GUIMOUSE_RUP, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+        g_pInput->OnMouse(INPUTMOUSE_RUP, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
         return -1;
     case WM_MOUSEWHEEL: {
-        if (!g_pGui)
+        if (!g_pInput)
             break;
         POINT point;
         point.x = GET_X_LPARAM(lParam);
         point.y = GET_Y_LPARAM(lParam);
         ScreenToClient(GetWindow(), &point);
         if (GET_WHEEL_DELTA_WPARAM(wParam) > 0)
-            g_pGui->OnMouse(GUIMOUSE_WHEELUP, point.x, point.y);
+            g_pInput->OnMouse(INPUTMOUSE_WHEELUP, point.x, point.y);
         else
-            g_pGui->OnMouse(GUIMOUSE_WHEELDOWN, point.x, point.y);
+            g_pInput->OnMouse(INPUTMOUSE_WHEELDOWN, point.x, point.y);
         return -1;
     }
     case WM_DEVICECHANGE: {

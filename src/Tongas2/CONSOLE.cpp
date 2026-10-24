@@ -5,7 +5,7 @@
 #include "Tongas2/APP.h"
 #include "Tongas2/APPOPTIONS.h"
 #include "Tongas2/APPWINDOW.h"
-#include "Tongas2/AUDIO.h"
+#include "Tongas2/GUI.h"
 #include "Tongas2/CMDMGR.h"
 #include "Tongas2/CONSOLE.h"
 #include "Tongas2/FIXEDWSTRING.h"
@@ -147,7 +147,7 @@ bool CONSOLE::OnHotKey(const int &key)
         return true;
     }
     if (key == 'P') {
-        g_pAudio->Pause(true);
+        g_pGui->Pause(true);
         return true;
     }
     if (key == 'C') {

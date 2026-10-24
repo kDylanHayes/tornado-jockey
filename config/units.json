@@ -2154,6 +2154,21 @@
       "complete": true
     },
     {
+      "name": "Tongas2/GUI",
+      "ranges": [
+        "0x0048c620-0x0048e7af",
+        "0x00609bb0-0x00609dff",
+        "0x00667628-0x00667a03",
+        "0x006b9bc0-0x006b9d5f"
+      ],
+      "target": "build/target/Tongas2/GUI.obj",
+      "source": "src/Tongas2/GUI.cpp",
+      "category": "engine",
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z"
+      }
+    },
+    {
       "name": "Tongas2/FILELOADER",
       "ranges": [
         "0x004ce290-0x004ce59d",

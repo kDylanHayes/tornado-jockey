@@ -132,7 +132,7 @@ public:
     virtual void SetLayer(int layer);
     virtual void SetFrame(int frame) { m_frame = frame; }
     virtual void SetSize(V2 size) { SetScale(size.x, size.y, 1.0f); }
-    virtual void SetScreenSize(V2 size) { SetScale(size.x, size.y, 1.0f); }
+    virtual void SetScreenSize(float width, float height) { SetScale(width, height, 1.0f); }
     virtual V2 GetScreenSize() { return V2(m_scale.x, m_scale.y); }
 
     void CreateMesh();

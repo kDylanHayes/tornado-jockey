@@ -27,7 +27,8 @@ public:
     virtual void Virtual11() {}
     // Seconds since the last call.
     virtual float GetElapsedTime();
-    virtual void Virtual13() = 0;
+    // Puts the mouse cursor at a point in the window, in pixels.
+    virtual void MoveCursor(int x, int y) = 0;
     virtual void Virtual14() = 0;
     virtual bool GetWireframe() = 0;
     virtual void SetWireframe(bool on) = 0;

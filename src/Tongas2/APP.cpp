@@ -7,7 +7,7 @@
 #include "Tongas2/APPOPTIONS.h"
 #include "Tongas2/APPWINDOW.h"
 #include "Tongas2/DRM.h"
-#include "Tongas2/GUI.h"
+#include "Tongas2/INPUT.h"
 #include "Tongas2/LOG.h"
 #include "Tongas2/RESOURCE.h"
 #include "Tongas2/SCREENSHOT.h"
@@ -97,14 +97,14 @@ void APP::Start()
 void APP::SetResolution(int index)
 {
     m_pOptions->m_resolution = g_pDisplay->SetResolution(index);
-    g_pGui->SetMouseCapture(g_pGui->m_mouseCapture);
+    g_pInput->SetMouseCapture(g_pInput->m_mouseCapture);
 }
 
 void APP::SetFullscreen(bool on)
 {
     m_pOptions->m_fullscreen = on;
     g_pDisplay->SetFullscreen(on);
-    g_pGui->SetMouseCapture(g_pGui->m_mouseCapture);
+    g_pInput->SetMouseCapture(g_pInput->m_mouseCapture);
 }
 
 void APP::SetSound(bool on)

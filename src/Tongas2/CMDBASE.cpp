@@ -1,7 +1,7 @@
 #include <list>
 
 #include "Tongas2/CMDBASE.h"
-#include "Tongas2/AUDIO.h"
+#include "Tongas2/GUI.h"
 #include "Tongas2/CMDMGR.h"
 #include "Tongas2/CWSTRING.h"
 #include "Tongas2/KERNELCOMMANDS.h"
@@ -87,7 +87,7 @@ static CMDBASE *GetObject(RESHANDLE handle)
     case 3:
         return g_pResources->GetMaster(handle);
     case 4:
-        return g_pAudio->GetObject(handle);
+        return g_pGui->GetObject(handle);
     }
     return 0;
 }
