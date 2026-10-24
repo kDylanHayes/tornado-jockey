@@ -51,6 +51,12 @@ public:
 class INPUT
 {
 public:
+    virtual ~INPUT();
+    // Opens the input devices.
+    virtual void Init();
+    // Reads them for the frame.
+    virtual void Update();
+
     // Passes the mouse to the window (through the window's slot 14) or not.
     // Inferred: while it isn't, a button let go outside the window sends no
     // message, so moving the mouse lets go of it.
@@ -60,7 +66,7 @@ public:
     // Whether a mouse button is held down: 0 left, 1 right, 2 middle.
     bool IsButtonDown(int button) { return (m_buttons >> button & 1) != 0; }
 
-    char m_0[0x1498];
+    char m_4[0x1494];
     // Counts the clicks, as far as the GUI can tell.
     int m_clicks;
     char m_149c[4];
@@ -73,5 +79,8 @@ public:
 };
 
 extern INPUT *g_pInput;
+
+// Makes the input system; the input plugin points it at its own.
+extern INPUT *(*g_pfnCreateInput)();
 
 #endif

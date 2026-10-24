@@ -464,12 +464,22 @@
 0x0048e500 ??0GUI@@QAE@XZ function 0x227
 0x0048e730 ??_GGUI@@UAEPAXI@Z function 0x1e
 0x0048e750 ?CreateGui@@YAPAVGUI@@XZ function 0x59
-0x0048e8d0 ?Update@TIMER@@QAEXM@Z function
-0x0048ea00 ?SetPaused@TIMER@@QAEX_N@Z function
+0x0048e7b0 ??1TIMER@@UAE@XZ function 0x11d
+0x0048e8d0 ?Update@TIMER@@QAEXM@Z function 0x12b
+0x0048ea00 ?SetPaused@TIMER@@QAEX_N@Z function 0xa
+0x0048ea10 ?StartGame@TIMER@@QAEXXZ function 0x47
+0x0048ea60 ?QuitGame@TIMER@@QAEXXZ function 0xb6
+0x0048eb20 ?SetSpeed@TIMER@@QAEXM@Z function 0xa
+0x0048eb30 ?SetSteps@TIMER@@QAEXH@Z function 0xa
+0x0048eb40 ?SetMaxDt@TIMER@@QAEXM@Z function 0xa
+0x0048eb50 ?CreateTimer@@YAPAVTIMER@@XZ function 0x4b
+0x0048eba0 ??_GTIMER@@UAEPAXI@Z function 0x1e
+0x0048ebc0 ?Start@TIMER@@UAEXXZ function 0x223
 0x0048ee10 ?RegisterCommands@GAME@@SAXXZ function
 0x0048ef70 ??_9@$BGE@AE function
 0x0048f110 ?RegisterCommands@DRM@@SAXXZ function
 0x0048f400 ?RegisterCommands@SCENE@@SAXXZ function
+0x0048f5b0 ?Init@ACTORS@@QAE_NXZ function
 0x0048f710 ?ToggleHelpers@ACTORS@@QAEXXZ function 0xb
 0x0048f8b0 ?IsValidHash@?$SAFEINDEX@VRESOURCEMASTER@@$0CAAA@$0PL@$03@@QAE_NH@Z function 0x17
 0x0048faf0 ??_9@$BEM@AE function
@@ -477,6 +487,7 @@
 0x004908f0 ?GetActor@ACTORS@@QAEPAVWTACTOR@@URESHANDLE@@@Z function
 0x00490930 ?FindActor@ACTORS@@QAEPAVWTACTOR@@PBD@Z function
 0x00490df0 ?Remove@ACTORS@@QAEXURESHANDLE@@@Z function
+0x00491340 ?Update@ACTORS@@QAEXXZ function
 0x00491c70 ?OnMouse@INPUT@@QAEXHHH@Z function
 0x00492150 ?OnKey@INPUT@@QAEXIH@Z function
 0x004922f0 ?SetMouseCapture@INPUT@@QAEX_N@Z function 0x1f
@@ -508,6 +519,7 @@
 0x00498b10 ?Virtual79@ACTOR@@UAEXXZ function
 0x00498ba0 ?SetPosition@ACTOR@@UAEXABUV3@@@Z function
 0x00498bc0 ?Virtual93@ACTOR@@UAEXXZ function
+0x00498c10 ?Step@WTACTOR@@QAEXXZ function
 0x00498cc0 ?Virtual86@ACTOR@@UAEPAV1@H@Z function
 0x00498d00 ?Virtual106@ACTOR@@UAEXXZ function
 0x00498eb0 ?Virtual51@ACTOR@@UAEXXZ function
@@ -1739,6 +1751,7 @@
 0x004ce5b0 ??1SCREENCAPTURE@@UAE@XZ function 0x7
 0x004ce8a0 ?Save@SCREENCAPTURE@@QAEXPBDPAUHWND__@@HHUV2@@22@Z function
 0x004cea40 ??0SCREENSHOT@@QAE@XZ function 0x31
+0x004cfcd0 ??0GUIBEHAVIORS@@QAE@XZ function
 0x004d2ec0 ?HashString@@YAHPBDH@Z function
 0x004d4610 ?PointAt@ANG@@QAEXABUV3@@@Z function
 0x004d4ca0 ?Build@FRUSTUM@@QAEXABUMATRIX@@0@Z function
@@ -3584,6 +3597,7 @@
 0x005e9e98 __ehhandler$?Execute@GUI@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function
 0x005e9ed1 __ehhandler$??0GUI@@QAE@XZ function
 0x005e9eeb __ehhandler$?CreateGui@@YAPAVGUI@@XZ function
+0x005e9f0e __ehhandler$?Start@TIMER@@UAEXXZ function
 0x005ea738 __ehhandler$??0CAMERA@@QAE@XZ function
 0x005ea75b __ehhandler$?CreateCamera@@YAPAVCAMERA@@XZ function
 0x005ea778 __ehhandler$?Reset@CAMERA@@UAEXXZ function
@@ -3630,6 +3644,8 @@
 0x005fa588 __ehhandler$??1FILELOADERWKZ@@UAE@XZ function
 0x00609bb0 _$E1 function 0x79
 0x00609c30 _$E3 function 0x1c4
+0x00609e00 _$E1 function 0xc
+0x00609e10 _$E4 function 0xc
 0x0060c9a0 _$E1 function 0xb1
 0x0060ca60 _$E3 function 0x105
 0x0060cb70 _$E5 function 0xc
@@ -3694,6 +3710,8 @@
 0x006160a0 _$E1 function 0xc
 0x006160b0 _$E4 function 0x13d
 0x006541f0 _$E1 function 0x1d
+0x006543a0 _$E2 function 0x24
+0x006543d0 _$E5 function 0x24
 0x00654470 _$E6 function 0x24
 0x006544a0 _$E9 function 0x24
 0x006544d0 _$E12 function 0x24
@@ -3721,6 +3739,7 @@
 0x00656250 __imp__GetExitCodeProcess@8 data 0x4
 0x006562a0 __imp__ShellExecuteExA@4 data 0x4
 0x006562ac __imp__ScreenToClient@8 data 0x4
+0x006562b8 __imp__GetForegroundWindow@0 data 0x4
 0x006562ec __imp__wsprintfA data 0x4
 0x006563c0 __imp__GetSystemMetrics@4 data 0x4
 0x006563c4 __imp__MessageBoxA@16 data
@@ -4060,6 +4079,10 @@
 0x0066793c ??_C@_0BA@PODDKBAI@LoadingProgress?$AA@ data 0x10
 0x0066794c ??_C@_03DACHGFGH@Fps?$AA@ data 0x4
 0x00667950 _s_TypeNames_2 data 0xb4
+0x00667a04 ??_7TIMER@@6B@ data 0x8
+0x00667a0c ??_C@_0DL@JDHEPAAI@ERROR?$CB?$CB?$CB?5trying?5to?5start?5a?5game?5@ data 0x3b
+0x00667a48 ??_C@_0CH@CEEJEEPC@ERROR?$CB?$CB?$CB?5trying?5to?5quit?5from?5no?5@ data 0x27
+0x00667a70 ??_C@_04LLJCPOLH@Init?$AA@ data 0x5
 0x00667ec8 __real@c3340000 data
 0x00667ecc __real@c3b40000 data
 0x00667ed8 ??_C@_0CM@OCPNAOAO@SAFEINDEX?3FreePos?$DO?5Invalid?5delet@ data 0x2c
@@ -5228,15 +5251,19 @@
 0x006b9bc8 ?s_commands@GUI@@2PAUCMDENTRY@@A data 0x80
 0x006b9c48 ?s_properties@GUI@@2PAUPROPENTRY@@A data
 0x006b9d60 ?g_pfnCreateTimer@@3P6APAVTIMER@@XZA data 0x4
+0x006b9d68 ?g_pfnCreateGame@@3P6APAVGAME@@XZA data 0x4
 0x006b9dd0 ?s_properties@GAME@@2PAUPROPENTRY@@A data
 0x006b9e08 ?g_pfnCreateDrm@@3P6APAVDRM@@XZA data 0x4
 0x006b9e50 ?s_properties@DRM@@2PAUPROPENTRY@@A data
+0x006b9e88 ?g_pfnCreateActors@@3P6APAVACTORS@@XZA data 0x4
 0x006b9e90 ?s_factoryId@ACTOR@@2HA data 0x4
 0x006b9e94 ?s_factoryId@CAMERA@@2HA data 0x4
 0x006b9e98 ?s_factoryId@SPAWNER@@2HA data 0x4
 0x006b9e9c ?s_factoryId@TRIGGER@@2HA data 0x4
 0x006b9f40 ?s_properties@SCENE@@2PAUPROPENTRY@@A data
+0x006b9fb0 ?g_pfnCreateInput@@3P6APAVINPUT@@XZA data 0x4
 0x006ba110 ?s_properties@GUICONTROL@@2PAUPROPENTRY@@A data
+0x006ba340 ?g_pfnCreateScriptRoot@@3P6APAVCMDBASE@@XZA data 0x4
 0x006ba808 ?s_properties@KERNELCOMMANDS@@2PAUPROPENTRY@@A data
 0x006bab00 ?s_properties@ACTOR@@2PAUPROPENTRY@@A data
 0x006bba70 ?s_properties@GUIGROUP@@2PAUPROPENTRY@@A data
@@ -5402,6 +5429,8 @@
 0x006d09b8 ?g_pDisplay@@3PAVAPPWINDOW@@A data 0x4
 0x006d09bc ?g_pGui@@3PAVGUI@@A data 0x4
 0x006d09c0 ?g_pTimer@@3PAVTIMER@@A data 0x4
+0x006d09c4 ?g_startHooks@@3UTIMERHOOKS@@A data 0x8
+0x006d09cc ?g_shutdownHooks@@3UTIMERHOOKS@@A data 0x8
 0x006d09d4 ?g_pGame@@3PAVGAME@@A data 0x4
 0x006d09d8 ?g_pDrm@@3PAVDRM@@A data 0x4
 0x006d15e0 ?g_pActors@@3PAVACTORS@@A data 0x4
@@ -5482,7 +5511,9 @@
 0x009eed20 ?s_commands@CURVEMASTER@@2PAUCMDENTRY@@A data 0x20
 0x009eed40 ?s_commands@TEXTMASTER@@2PAUCMDENTRY@@A data 0x20
 0x009eed60 ?s_commands@SHADERMASTER@@2PAUCMDENTRY@@A data 0x20
+0x009eede0 ?g_pValueManager@@3PAVCMDBASE@@A data 0x4
 0x009eede8 _s_line data 0x10000
+0x009fede8 ?g_pGuiBehaviors@@3PAVGUIBEHAVIORS@@A data 0x4
 0x00a0f288 _s_format_id data
 0x00a0f28c _s_format_id data
 0x00a0f290 ?unknown_tag@?1??getTagFieldName@TagLib@@QAEPBDW4MDMODEL@2@G@Z@4PADA data

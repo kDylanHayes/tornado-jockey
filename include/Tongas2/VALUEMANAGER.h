@@ -51,4 +51,7 @@ public:
 // Makes the value manager.
 extern CMDBASE *(*g_pfnCreateValueManager)();
 
+// The value manager.
+extern CMDBASE *g_pValueManager;
+
 #endif

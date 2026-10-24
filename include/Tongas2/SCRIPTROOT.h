@@ -27,4 +27,7 @@ public:
     virtual SRESULT Unpause(CMDCALL *call);
 };
 
+// Makes the script root; the game points it at its own.
+extern CMDBASE *(*g_pfnCreateScriptRoot)();
+
 #endif
