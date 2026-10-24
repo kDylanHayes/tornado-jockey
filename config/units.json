@@ -2131,6 +2131,18 @@
       "complete": true
     },
     {
+      "name": "Tongas2/APPWINDOW",
+      "ranges": [
+        "0x0048bd70-0x0048c61f",
+        "0x006674b0-0x00667627",
+        "0x006b9bbc-0x006b9bbf"
+      ],
+      "target": "build/target/Tongas2/APPWINDOW.obj",
+      "source": "src/Tongas2/APPWINDOW.cpp",
+      "category": "engine",
+      "complete": true
+    },
+    {
       "name": "Tongas2/FILELOADER",
       "ranges": [
         "0x004ce290-0x004ce59d",

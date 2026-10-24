@@ -5,7 +5,7 @@
 
 #include "Tongas2/APP.h"
 #include "Tongas2/APPOPTIONS.h"
-#include "Tongas2/DISPLAY.h"
+#include "Tongas2/APPWINDOW.h"
 #include "Tongas2/DRM.h"
 #include "Tongas2/GUI.h"
 #include "Tongas2/LOG.h"
@@ -67,7 +67,7 @@ void APP::Init(HINSTANCE instance)
     g_pDrm = g_pfnCreateDrm();
     g_pDrm->m_instance = instance;
     g_pDrm->Init();
-    g_pDisplay = g_pfnCreateDisplay();
+    g_pDisplay = g_pfnCreateAppWindow();
     g_pDisplay->m_instance = instance;
     g_pDisplay->Create();
     g_pTimer = g_pfnCreateTimer();
@@ -97,14 +97,14 @@ void APP::Start()
 void APP::SetResolution(int index)
 {
     m_pOptions->m_resolution = g_pDisplay->SetResolution(index);
-    g_pGui->SetWideScreen(g_pGui->m_wideScreen);
+    g_pGui->SetMouseCapture(g_pGui->m_mouseCapture);
 }
 
 void APP::SetFullscreen(bool on)
 {
     m_pOptions->m_fullscreen = on;
     g_pDisplay->SetFullscreen(on);
-    g_pGui->SetWideScreen(g_pGui->m_wideScreen);
+    g_pGui->SetMouseCapture(g_pGui->m_mouseCapture);
 }
 
 void APP::SetSound(bool on)
