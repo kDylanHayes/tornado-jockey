@@ -77,8 +77,8 @@ UNICODESTRING_MANAGER::UNICODESTRING_MANAGER()
         page[PAGESIZE - 2] = 0;
         m_used[i] = false;
     }
-    m_8014 = 0;
-    m_d018 = 0;
+    m_next = 0;
+    m_usedPagesCount = 0;
     InitTables();
 }
 
@@ -106,9 +106,9 @@ void UNICODESTRING_MANAGER::Defrag()
             free = i;
     }
     m_cache[0].m_index = -1;
-    m_cache[0].m_count = 1;
+    m_cache[0].m_state = CACHE::EMPTY;
     m_cache[1].m_index = -1;
-    m_cache[1].m_count = 1;
+    m_cache[1].m_state = CACHE::EMPTY;
 }
 
 void UNICODESTRING::FromAnsi(const char *text)

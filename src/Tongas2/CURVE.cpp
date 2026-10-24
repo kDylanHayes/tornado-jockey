@@ -96,7 +96,7 @@ void CURVEMASTER::SetShaderHandle(const RESHANDLE &handle)
 void CURVEMASTER::SetTexture(const SRTEXTURE &texture)
 {
     m_texture = texture;
-    SetShaderHandle(g_pSHADER->GetHandle(texture.name));
+    SetShaderHandle(g_pSHADER->GetHandle(texture.name.m_buf));
 }
 
 CURVE::CURVE(CURVEMASTER *master, const RESHANDLE &handle)

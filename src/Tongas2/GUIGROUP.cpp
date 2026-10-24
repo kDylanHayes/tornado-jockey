@@ -43,7 +43,7 @@ CMDENTRY GUIGROUPMASTER::s_commands[] = {
 };
 
 PROPENTRY GUIGROUPMASTER::s_properties[] = {
-    { "TimeSpace", 0, 1, (int)s_timeSpaces, PROP_FIELD(GUIGROUPMASTER, m_timeSpace), false, 1, PROP_SETTER(GUIGROUPMASTER, SetTimeSpace) },
+    { "TimeSpace", 0, 1, s_timeSpaces, PROP_FIELD(GUIGROUPMASTER, m_timeSpace), false, 1, PROP_SETTER(GUIGROUPMASTER, SetTimeSpace) },
     { "OnActivateCommand", 0, 8, 0, PROP_FIELD(GUIGROUPMASTER, m_onActivateCommand), false, 1, PROP_SETTER(GUIGROUPMASTER, SetOnActivateCommand) },
     { "OnDeactivateCommand", 0, 8, 0, PROP_FIELD(GUIGROUPMASTER, m_onDeactivateCommand), false, 1, PROP_SETTER(GUIGROUPMASTER, SetOnDeactivateCommand) },
     { "OnStepCommand", 0, 8, 0, PROP_FIELD(GUIGROUPMASTER, m_onStepCommand), false, 1, PROP_SETTER(GUIGROUPMASTER, SetOnStepCommand) },
@@ -69,7 +69,7 @@ PROPENTRY GUIGROUPMASTER::s_properties[] = {
     { "ControlOpacity", 0, 3, 0, PROP_FIELD(GUIGROUPMASTER, m_controlOpacity), false, GUIGROUP_MAX_CONTROLS, PROP_SETTER(GUIGROUPMASTER, SetControlOpacity) },
     { "ControlVisible", 0, 2, 0, PROP_FIELD(GUIGROUPMASTER, m_controlVisible), false, GUIGROUP_MAX_CONTROLS, PROP_SETTER(GUIGROUPMASTER, SetControlVisible) },
     { "ControlEnabled", 0, 2, 0, PROP_FIELD(GUIGROUPMASTER, m_controlEnabled), false, GUIGROUP_MAX_CONTROLS, PROP_SETTER(GUIGROUPMASTER, SetControlEnabled) },
-    { "Behavior", 0, 1, (int)s_behaviors, PROP_FIELD(GUIGROUPMASTER, m_behaviors), false, GUIGROUP_MAX_CONTROLS, PROP_SETTER(GUIGROUPMASTER, SetBehavior) },
+    { "Behavior", 0, 1, s_behaviors, PROP_FIELD(GUIGROUPMASTER, m_behaviors), false, GUIGROUP_MAX_CONTROLS, PROP_SETTER(GUIGROUPMASTER, SetBehavior) },
     { "BehaviorParams", 0, 7, 0, PROP_FIELD(GUIGROUPMASTER, m_behaviorParams), false, GUIGROUP_MAX_CONTROLS, PROP_SETTER(GUIGROUPMASTER, SetBehaviorParams) },
     { "GroupCommand", 0, 7, 0, PROP_FIELD(GUIGROUPMASTER, m_groupCommands), false, GUIGROUP_MAX_COMMANDS, PROP_SETTER(GUIGROUPMASTER, SetGroupCommand) },
     { 0, 0, 15, 0, 0, false },

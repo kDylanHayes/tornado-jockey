@@ -41,7 +41,7 @@ public:
             *this = other.c_str();
         return *this;
     }
-    bool operator!=(const CSTRING &other) const { return strcmp(c_str(), other.c_str()) != 0; }
+    bool operator!=(const CSTRING &other) const { return strcmp(c_str(), other.c_str()) ? true : false; }
 
     const char *c_str() const { return m_str ? m_str : ""; }
     int Length() const { return !m_str ? 0 : (int)strlen(m_str); }

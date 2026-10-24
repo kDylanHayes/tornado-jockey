@@ -16,6 +16,11 @@
 //    When analysis typed a short string as a pointer ("PNG\0" reads as
 //    0x00474e50) the pointer is cleared; the delinker emits no relocation
 //    to it otherwise.
+// 4. Pointers in data to strings that analysis missed: a command table's
+//    names ("set" reads as the pointer 0x00746573, so it isn't a string to
+//    analysis, and the table entry pointing at it isn't typed either). Short
+//    strings typed as pointers that data points at become strings, and
+//    undefined aligned words holding a string's address become pointers.
 // Usage: run as a -preScript before DelinkUnit.java (see tools/delink.py).
 //@category TornadoJockey
 
@@ -56,6 +61,27 @@ public class FixReferences extends HeadlessScript {
 		return ended && b[0] != 0;
 	}
 
+	// A pointer to a string, or to a short string typed as a pointer: a
+	// command table whose first name pointer reads as text ("xff").
+	private boolean pointsAtString(Address a) throws Exception {
+		Address value = toAddr(currentProgram.getMemory().getInt(a) & 0xffffffffL);
+		if (!currentProgram.getMemory().contains(value)) {
+			return false;
+		}
+		return isString(value);
+	}
+
+	// A string, a short string typed as a pointer, or bytes named as a
+	// string literal in symbols.txt that analysis left undefined.
+	private boolean isString(Address value) throws Exception {
+		Data d = getDataAt(value);
+		if (d != null && (d.hasStringValue() || looksLikeString(value))) {
+			return true;
+		}
+		ghidra.program.model.symbol.Symbol sym = getSymbolAt(value);
+		return sym != null && (sym.getName().startsWith("??_C@_") || sym.getName().startsWith("s_"));
+	}
+
 	@Override
 	public void run() throws Exception {
 		ReferenceManager refs = currentProgram.getReferenceManager();
@@ -77,7 +103,7 @@ public class FixReferences extends HeadlessScript {
 						}
 					}
 				}
-				if (!indexed && disp != null && looksLikeString(disp)) {
+				if (!indexed && disp != null && looksLikeString(disp) && !pointsAtString(disp)) {
 					clearListing(disp, disp.add(3));
 					cleared++;
 				}
@@ -120,6 +146,39 @@ public class FixReferences extends HeadlessScript {
 		println("Re-pointed " + fixed + " indexed operand references");
 		println("Added " + added + " references from immediates into data");
 		println("Cleared " + cleared + " short strings typed as pointers");
+
+		int strings = 0;
+		int pointers = 0;
+		for (MemoryBlock block : currentProgram.getMemory().getBlocks()) {
+			if (block.isExecute() || !block.isInitialized()) {
+				continue;
+			}
+			long start = (block.getStart().getOffset() + 3) & ~3L;
+			for (long off = start; off + 4 <= block.getEnd().getOffset() + 1; off += 4) {
+				Address at = toAddr(off);
+				Address value = toAddr(currentProgram.getMemory().getInt(at) & 0xffffffffL);
+				if (!currentProgram.getMemory().contains(value) || value.equals(at)) {
+					continue;
+				}
+				if (looksLikeString(value) && getDataContaining(at) != null && getDataContaining(at).isPointer()) {
+					clearListing(value, value.add(3));
+					createAsciiString(value);
+					strings++;
+				}
+				if (!isString(value)) {
+					continue;
+				}
+				Data here = getDataContaining(at);
+				if (here == null || !here.isDefined()) {
+					if (refs.getReferencesFrom(at).length == 0) {
+						createData(at, ghidra.program.model.data.PointerDataType.dataType);
+						pointers++;
+					}
+				}
+			}
+		}
+		println("Made " + strings + " short strings pointed to from data strings");
+		println("Typed " + pointers + " words in data holding a string's address as pointers");
 
 		String[] args = getScriptArgs();
 		if (args.length == 0 || !Files.exists(Paths.get(args[0]))) {

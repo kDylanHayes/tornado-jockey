@@ -28,12 +28,12 @@ CMDENTRY CPRIMITIVE3MASTER::s_commands[] = {
 };
 
 PROPENTRY CPRIMITIVE3MASTER::s_properties[] = {
-    { "PrimitiveType", 0, 1, (int)s_types, PROP_FIELD(CPRIMITIVE3MASTER, m_primitiveType), false, 1, PROP_SETTER(CPRIMITIVE3MASTER, SetPrimitiveType) },
+    { "PrimitiveType", 0, 1, s_types, PROP_FIELD(CPRIMITIVE3MASTER, m_primitiveType), false, 1, PROP_SETTER(CPRIMITIVE3MASTER, SetPrimitiveType) },
     { "CollisionMask", 0, 0, 0, PROP_FIELD(CPRIMITIVE3MASTER, m_collisionMask), false, 1, PROP_SETTER(CPRIMITIVE3MASTER, SetCollisionMask) },
     { "CollisionGroup", 0, 0, 0, PROP_FIELD(CPRIMITIVE3MASTER, m_collisionGroup), false, 1, PROP_SETTER(CPRIMITIVE3MASTER, SetCollisionGroup) },
     { "RegisterInManager", 0, 2, 0, PROP_FIELD(CPRIMITIVE3MASTER, m_registerInManager), false, 1, PROP_SETTER(CPRIMITIVE3MASTER, SetRegisterInManager) },
     { "BoxColor", 0, 13, 0, PROP_FIELD(CPRIMITIVE3MASTER, m_boxColor), false, 1, PROP_SETTER(CPRIMITIVE3MASTER, SetBoxColor) },
-    { "CollisionTest", 0, 1, (int)s_spaces, PROP_FIELD(CPRIMITIVE3MASTER, m_collisionTest), false, 1, PROP_SETTER(CPRIMITIVE3MASTER, SetCollisionTest) },
+    { "CollisionTest", 0, 1, s_spaces, PROP_FIELD(CPRIMITIVE3MASTER, m_collisionTest), false, 1, PROP_SETTER(CPRIMITIVE3MASTER, SetCollisionTest) },
     { 0, 0, 15, 0, 0, false },
 };
 

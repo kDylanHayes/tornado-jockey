@@ -102,4 +102,9 @@ Things learned while matching engine code with `/O2`:
 - **Implicit conversions run later.** `SetCommand(i, "")` builds the `STRING` temporary after the other arguments are evaluated, where `SetCommand(i, STRING(""))` builds it first.
 - **CRT names.** The game calls `_strdup`, `_stricmp` and `_strnicmp`, which link to `__strdup` and so on.
 - **Tables in headers.** A `static const` table defined in a header is emitted in every file that includes it, under the static name `_s_TypeNames`, which is why `SRESULT`'s type names appear twice in `.rdata`.
+- **Declared but never defined.** `FIXEDSTRING::operator+=` is only declared in the header: the exe calls its one out-of-line copy everywhere, and with the body visible VC7.1 inlined it into `CMDBASE::DumpProperties`.
+- **Early return for a null check.** `CWSTRING::Length()` is `if (!m_str) return 0; return wcslen(m_str);`: the compiler then returns the null pointer already in `eax` as the 0, as the exe does, where the ternary adds an `xor eax, eax`.
+- **The frame size tells how many temporaries there are.** In `CMDBASE::SetAttributeEval` the setter branch builds a `CWSTRING`, `FIXEDWSTRING` and so on from the value, but the branch without a setter assigns the raw text to the field. Building the temporary in both made the frame 0x630 bytes bigger than the exe's.
+- **Loop conditions are tested in order.** `for (i = 0; i < 1 && i < count; i++)` tests `count` at the top and `i < 1` at the bottom, as `CMDBASE::DumpProperties` does; the other order tests both at the bottom.
+- **A base class's members come before the vtable pointer too.** `CMDCONTEXT`'s constructor zeroes two members, then stores its vtable pointer, so those two belong to an inline base class constructor (whose own vtable store the compiler drops).
 - **No Platform SDK.** The Toolkit has no `windows.h`; `include/windows.h` is a minimal stand-in with the SDK's declarations. Add to it as units need more.

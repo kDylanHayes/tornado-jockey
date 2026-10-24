@@ -4,6 +4,8 @@
 #ifndef TONGAS2_UNICODESTRING_H
 #define TONGAS2_UNICODESTRING_H
 
+#include <stdarg.h>
+
 #include "Tongas2/LOG.h"
 #include "Tongas2/STRING.h"
 
@@ -45,7 +47,7 @@ public:
         }
         return true;
     }
-    wchar_t *GetPointer(int page)
+    wchar_t *GetPointer(const int &page)
     {
         if (CheckIndex(page))
             // Steps in wide characters, so twice the page size.
@@ -55,26 +57,188 @@ public:
         return 0;
     }
 
+    // A stack of pages that were freed, to hand out again first.
     struct CACHE
     {
-        CACHE() : m_index(-1), m_count(1) {}
+        enum
+        {
+            SOME,
+            EMPTY,
+            FULL
+        };
 
-        char m_data[0x4000];
+        CACHE() : m_index(-1), m_state(EMPTY) {}
+
+        bool IsEmpty() const { return m_state == EMPTY; }
+        int Pop()
+        {
+            int index = m_index;
+            if (index == 0)
+                m_state = EMPTY;
+            int page = m_pages[index];
+            m_index = index - 1;
+            return page;
+        }
+        void Push(int page)
+        {
+            m_state = SOME;
+            if (m_index == NUMPAGES - 2)
+                m_state = FULL;
+            m_pages[++m_index] = page;
+        }
+
+        int m_pages[NUMPAGES];
         int m_index;
-        int m_count;
+        int m_state;
     };
+
+    // Takes count free pages in a row for owner and gives the first, or
+    // NUMPAGES if there aren't enough even after a Defrag. Single pages and
+    // pairs come from the caches first.
+    int FindAndAllocatePages(const int &count, UNICODESTRING *owner)
+    {
+        while (count <= NUMPAGES - m_usedPagesCount) {
+            if (count == 1) {
+                while (!m_cache[0].IsEmpty()) {
+                    int page = m_cache[0].Pop();
+                    if (!m_used[page]) {
+                        m_used[page] = true;
+                        m_owners[page] = owner;
+                        m_usedPagesCount++;
+                        return page;
+                    }
+                }
+                // Each pair gives one page and leaves the other cached.
+                while (!m_cache[1].IsEmpty()) {
+                    int page = m_cache[1].Pop();
+                    m_cache[0].Push(page + 1);
+                    if (!m_used[page]) {
+                        m_used[page] = true;
+                        m_owners[page] = owner;
+                        m_usedPagesCount++;
+                        return page;
+                    }
+                }
+            }
+            if (count == 2) {
+                while (!m_cache[1].IsEmpty()) {
+                    int page = m_cache[1].Pop();
+                    if (!m_used[page] && !m_used[page + 1]) {
+                        m_used[page] = true;
+                        m_used[page + 1] = true;
+                        m_owners[page] = owner;
+                        m_owners[page + 1] = owner;
+                        m_usedPagesCount += 2;
+                        return page;
+                    }
+                }
+            }
+            // Pages never used yet.
+            if (m_next + count < NUMPAGES) {
+                int page = m_next;
+                for (int i = 0; i < count; i++) {
+                    m_used[page + i] = true;
+                    m_owners[page + i] = owner;
+                }
+                m_next += count;
+                m_usedPagesCount += count;
+                return page;
+            }
+            int run = 0;
+            for (int i = 0; i < NUMPAGES; i++) {
+                if (!m_used[i]) {
+                    run++;
+                    if (run == count) {
+                        int page = i - run + 1;
+                        for (int j = 0; j < count; j++) {
+                            m_used[page + j] = true;
+                            m_owners[page + j] = owner;
+                        }
+                        m_usedPagesCount += count;
+                        return page;
+                    }
+                } else
+                    run = 0;
+            }
+            if (g_pLog)
+                g_pLog->Error("UNICODESTRING_MANAGER::FindAndAllocatePages>Error: There is no space to allocate %d pages, num pages: %d, m_usedPagesCount: %d", count, NUMPAGES, m_usedPagesCount);
+            Defrag();
+        }
+        return NUMPAGES;
+    }
 
     static char s_decode[128];
     static char s_encode[64];
 
     CACHE m_cache[2];
-    int m_8014;
+    // The first page never used.
+    int m_next;
     bool m_used[NUMPAGES];
     UNICODESTRING *m_owners[NUMPAGES];
-    int m_d018;
+    int m_usedPagesCount;
     wchar_t m_pages[NUMPAGES][PAGESIZE / 2];
 };
 
 extern UNICODESTRING_MANAGER g_UnicodeStringManager;
+
+// STRING's, here because it logs.
+inline void STRING::Format(const char *format, ...)
+{
+    char text[0x4000];
+    va_list args;
+    va_start(args, format);
+    if (_vsnprintf(text, 0x3fff, format, args) == -1) {
+        text[0x3fff] = 0;
+        if (g_pLog)
+            g_pLog->Error("ERROR!! - Tried to write more than %d chars to a string, it was truncated!", 0x4000);
+    }
+    *this = text;
+}
+
+inline void UNICODESTRING::Reserve(const int &size)
+{
+    int pages = size / 256 + 1;
+    if (pages > m_pages) {
+        UNICODESTRING old;
+        if (m_pages > 0) {
+            if (Length() > 0)
+                old = m_buf;
+            ((STRINGMANAGER *)&g_UnicodeStringManager)->Free(m_block, m_pages);
+        }
+        m_pages = pages;
+        m_block = g_UnicodeStringManager.FindAndAllocatePages(m_pages, this);
+        m_buf = g_UnicodeStringManager.GetPointer(m_block);
+        if (old.Length() > 0)
+            wcscpy(m_buf, old.c_str());
+        else
+            m_buf[0] = 0;
+    }
+}
+
+inline void UNICODESTRING::operator=(const wchar_t *text)
+{
+    if (!text) {
+        Free();
+        return;
+    }
+    int size = wcslen(text);
+    if (size > 0) {
+        size++;
+        Reserve(size);
+        if (m_block >= 0) {
+            wcscpy(m_buf, text);
+            m_lengthValid = false;
+            return;
+        }
+    }
+    Free();
+}
+
+inline void UNICODESTRING::operator=(const UNICODESTRING &other)
+{
+    int length = const_cast<UNICODESTRING &>(other).Length();
+    Reserve(length);
+    *this = other.c_str();
+}
 
 #endif

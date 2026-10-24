@@ -227,7 +227,7 @@ PROPENTRY PATHMASTER::s_properties[] = {
     { "StartEditingMode", 0, 2, 0, PROP_FIELD(PATHMASTER, m_startEditingMode), false, 1, PROP_SETTER(PATHMASTER, SetStartEditingMode) },
     { "StopEditingMode", 0, 2, 0, PROP_FIELD(PATHMASTER, m_stopEditingMode), false, 1, PROP_SETTER(PATHMASTER, SetStopEditingMode) },
     { "TotalLength", 0, 3, 0, PROP_FIELD(PATHMASTER, m_totalLength), false, 1, PROP_SETTER(PATHMASTER, SetTotalLength) },
-    { "Curvature", 0, 1, (int)s_curvatureNames, PROP_FIELD(PATHMASTER, m_curvature), false, 1, PROP_SETTER(PATHMASTER, SetCurvature) },
+    { "Curvature", 0, 1, s_curvatureNames, PROP_FIELD(PATHMASTER, m_curvature), false, 1, PROP_SETTER(PATHMASTER, SetCurvature) },
     { "IsFixedPath", 0, 2, 0, PROP_FIELD(PATHMASTER, m_isFixedPath), false, 1, PROP_SETTER(PATHMASTER, SetIsFixedPath) },
     { "IsLinear", 0, 2, 0, PROP_FIELD(PATHMASTER, m_isLinear), false, 1, PROP_SETTER(PATHMASTER, SetIsLinear) },
     { "IsParamLength", 0, 2, 0, PROP_FIELD(PATHMASTER, m_isParamLength), false, 1, PROP_SETTER(PATHMASTER, SetIsParamLength) },

@@ -20,7 +20,7 @@ PROPENTRY LIGHTMASTER::s_properties[] = {
     { "Color", 0, 13, 0, PROP_FIELD(LIGHTMASTER, m_color), false, 1, PROP_SETTER(LIGHTMASTER, SetColor) },
     { "Specular", 0, 13, 0, PROP_FIELD(LIGHTMASTER, m_specular), false, 1, PROP_SETTER(LIGHTMASTER, SetSpecular) },
     { "Ambient", 0, 13, 0, PROP_FIELD(LIGHTMASTER, m_ambient), false, 1, PROP_SETTER(LIGHTMASTER, SetAmbient) },
-    { "Type", 0, 1, (int)s_lightTypes, PROP_FIELD(LIGHTMASTER, m_type), false, 1, PROP_SETTER(LIGHTMASTER, SetType) },
+    { "Type", 0, 1, s_lightTypes, PROP_FIELD(LIGHTMASTER, m_type), false, 1, PROP_SETTER(LIGHTMASTER, SetType) },
     { "LightMask", 0, 0, 0, PROP_FIELD(LIGHTMASTER, m_lightMask), false, 1, PROP_SETTER(LIGHTMASTER, SetLightMask) },
     { "Range", 0, 3, 0, PROP_FIELD(LIGHTMASTER, m_range), false, 1, PROP_SETTER(LIGHTMASTER, SetRange) },
     { "Attenuation0", 0, 3, 0, PROP_FIELD(LIGHTMASTER, m_attenuation0), false, 1, PROP_SETTER(LIGHTMASTER, SetAttenuation0) },

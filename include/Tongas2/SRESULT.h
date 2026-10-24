@@ -5,6 +5,7 @@
 #include <string.h>
 #include <wchar.h>
 
+#include "Tongas2/FIXEDSTRING.h"
 #include "Tongas2/MATHS.h"
 
 #define SRESULT_MAX_STRING 512
@@ -42,9 +43,12 @@ inline V2 operator-(const V2 &a, const V2 &b)
     return V2(a.x - b.x, a.y - b.y);
 }
 
+// A color, each channel 0-255.
 struct RGB
 {
-    float r, g, b;
+    RGB() { r = g = b = 0; }
+
+    int r, g, b;
 };
 
 // Euler angles and the rotation matrix, each rebuilt from the other when
@@ -155,25 +159,18 @@ bool operator!=(const ANG &a, const ANG &b);
 
 struct SRTEXTURE
 {
-    char name[SRESULT_MAX_STRING];
+    FIXEDSTRING<SRESULT_MAX_STRING> name;
     int index;
 
-    SRTEXTURE()
-    {
-        name[0] = 0;
-        name[SRESULT_MAX_STRING - 1] = 0;
-        index = 0;
-    }
+    SRTEXTURE() { index = 0; }
     SRTEXTURE(const SRTEXTURE &other)
     {
-        name[0] = 0;
-        name[SRESULT_MAX_STRING - 1] = 0;
-        memcpy(name, other.name, sizeof(name));
+        memcpy(&name, &other.name, sizeof(name));
         index = other.index;
     }
     SRTEXTURE &operator=(const SRTEXTURE &other)
     {
-        memcpy(name, other.name, sizeof(name));
+        memcpy(&name, &other.name, sizeof(name));
         index = other.index;
         return *this;
     }
@@ -207,10 +204,46 @@ public:
         m_type = SRT_NOTSET;
         m_value.i = 0;
     }
-    SRESULT(bool value)
+    SRESULT(const bool &value)
     {
         SetType(SRT_BOOL);
         m_value.b = value;
+    }
+    SRESULT(const int &value)
+    {
+        SetType(SRT_INT);
+        m_value.i = value;
+    }
+    SRESULT(const float &value)
+    {
+        SetType(SRT_FLOAT);
+        m_value.f = value;
+    }
+    // SetType makes the larger types' storage.
+    SRESULT(const V3 &value)
+    {
+        SetType(SRT_V3);
+        *m_value.v3 = value;
+    }
+    SRESULT(const V2 &value)
+    {
+        SetType(SRT_V2);
+        *m_value.v2 = value;
+    }
+    SRESULT(const ANG &value)
+    {
+        SetType(SRT_ANG);
+        *m_value.ang = value;
+    }
+    SRESULT(const SRTEXTURE &value)
+    {
+        SetType(SRT_TEXTURE);
+        *m_value.tex = value;
+    }
+    SRESULT(const RGB &value)
+    {
+        SetType(SRT_RGB);
+        *m_value.rgb = value;
     }
     SRESULT(const SRESULT &other)
     {
