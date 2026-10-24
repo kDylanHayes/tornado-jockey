@@ -29,6 +29,23 @@ enum GUIMOUSEEVENT
     GUIMOUSE_WHEELDOWN = 15,
 };
 
+// Something the GUI passes keys to, highest priority first, until one takes
+// them. Placeholder names apart from GUI's.
+class GUIKEYLISTENER
+{
+public:
+    // Adds itself to the GUI's listeners.
+    GUIKEYLISTENER();
+    virtual ~GUIKEYLISTENER();
+    // Each true if it took the key.
+    virtual bool OnKeyDown(unsigned int key) { return false; }
+    virtual bool OnKeyUp(unsigned int key) { return false; }
+    virtual bool OnChar(unsigned int c) { return false; }
+
+    // Moves itself among the GUI's listeners.
+    void SetPriority(int priority);
+};
+
 class GUI
 {
 public:

@@ -14,7 +14,12 @@
 #define FALSE 0
 #define NO_ERROR 0L
 
+// FreeImage.h declares the SDK's basic types itself, with BOOL as long,
+// unless windows.h came first; a file that needs both includes FreeImage.h
+// first.
+#ifndef _WINDOWS_
 typedef int BOOL;
+#endif
 typedef unsigned char BYTE;
 typedef unsigned short WORD;
 typedef unsigned long DWORD;

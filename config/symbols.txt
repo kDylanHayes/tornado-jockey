@@ -351,6 +351,21 @@
 0x0048a6d0 ?LoadScript@CMDMGR@@QAE_NXZ function
 0x0048a8b0 ?Update@CMDMGR@@QAEXXZ function 0x1bc
 0x0048aa70 ??_GCMDMGR@@UAEPAXI@Z function
+0x0048aab0 ??1CONSOLE@@UAE@XZ function 0xb
+0x0048aac0 ?GetFont@CONSOLE@@UAEPBDXZ function 0x6
+0x0048aad0 ?GetScale@CONSOLE@@UAE?AUV2@@XZ function 0x14
+0x0048aaf0 ?GetLineHeight@CONSOLE@@UAEMXZ function 0x7
+0x0048ab00 ?Enable@CONSOLE@@QAEXXZ function 0x1e
+0x0048ab20 ?Show@CONSOLE@@QAEX_N@Z function 0x282
+0x0048adb0 ??_GCONSOLE@@UAEPAXI@Z function 0x1e
+0x0048add0 ?OnChar@CONSOLE@@UAE_NI@Z function 0x47
+0x0048ae20 ?SelectHistory@CONSOLE@@QAEXH@Z function 0x58
+0x0048ae80 ??0CONSOLE@@QAE@XZ function 0xc3
+0x0048af50 ?OnHotKey@CONSOLE@@UAE_NABH@Z function 0x1fa
+0x0048b150 ?Update@CONSOLE@@QAEXXZ function 0x2d6
+0x0048b430 ?CreateConsole@@YAPAVCONSOLE@@XZ function 0x59
+0x0048b490 ?Run@CONSOLE@@QAAXPBDZZ function 0x17b
+0x0048b610 ?OnKeyDown@CONSOLE@@UAE_NI@Z function 0x175
 0x0048b790 ?GetScreenSize@APP@@UAEXXZ function 0x1b
 0x0048b7b0 ?Frame@APP@@QAEXM@Z function 0x39
 0x0048b7f0 ?Init@APP@@QAEXPAUHINSTANCE__@@@Z function 0xe9
@@ -382,6 +397,7 @@
 0x0048c5d0 ?GetResolution@APPWINDOW@@UAEHXZ function 0x27
 0x0048c600 ??_GAPPWINDOW@@UAEPAXI@Z function 0x1f
 0x0048c620 ?RegisterCommands@GUI@@SAXXZ function
+0x0048c790 ?Pause@AUDIO@@QAEX_N@Z function
 0x0048c820 ?GetObject@AUDIO@@QAEPAVCMDBASE@@ABURESHANDLE@@@Z function
 0x0048c930 ?UpdateListener@AUDIO@@QAEXXZ function
 0x0048cd40 ??_9@$BFM@AE function
@@ -394,6 +410,7 @@
 0x0048ef70 ??_9@$BGE@AE function
 0x0048f110 ?RegisterCommands@DRM@@SAXXZ function
 0x0048f400 ?RegisterCommands@SCENE@@SAXXZ function
+0x0048f710 ?ToggleHelpers@ACTORS@@QAEXXZ function 0xb
 0x0048f8b0 ?IsValidHash@?$SAFEINDEX@VRESOURCEMASTER@@$0CAAA@$0PL@$03@@QAE_NH@Z function 0x17
 0x0048faf0 ??_9@$BEM@AE function
 0x0048fd50 ?OnScriptLoaded@ACTORS@@QAEXXZ function 0x70
@@ -404,6 +421,9 @@
 0x00492150 ?OnKey@GUI@@QAEXIH@Z function
 0x004922f0 ?SetMouseCapture@GUI@@QAEX_N@Z function 0x1f
 0x00492480 ?Virtual13@CMDBASE@@UAEXXZ function
+0x004927a0 ?SetPriority@GUIKEYLISTENER@@QAEXH@Z function 0x1a
+0x004928f0 ??0GUIKEYLISTENER@@QAE@XZ function 0x1f
+0x00492910 ??1GUIKEYLISTENER@@UAE@XZ function 0x19
 0x004929f0 ?RegisterCommands@GUICONTROL@@SAXXZ function
 0x00492d50 ?GetScaleFactor@SCREENDECAL@@UAE?AUV3@@XZ function 0x14
 0x00493400 ?Virtual138@ACTOR@@UAEXXZ function
@@ -1646,6 +1666,9 @@
 0x004ce500 ??1FILELOADER@@UAE@XZ function 0x50
 0x004ce550 ?CreateFileLoader@@YAPAVFILELOADER@@XZ function 0x23
 0x004ce580 ??_GFILELOADER@@UAEPAXI@Z function 0x1e
+0x004ce5a0 ??0SCREENCAPTURE@@QAE@XZ function 0x9
+0x004ce5b0 ??1SCREENCAPTURE@@UAE@XZ function 0x7
+0x004ce8a0 ?Save@SCREENCAPTURE@@QAEXPBDPAUHWND__@@HHUV2@@22@Z function
 0x004cea40 ??0SCREENSHOT@@QAE@XZ function 0x31
 0x004d2ec0 ?HashString@@YAHPBDH@Z function
 0x004d4610 ?PointAt@ANG@@QAEXABUV3@@@Z function
@@ -3478,6 +3501,10 @@
 0x005e9938 __ehhandler$??0sentry@?$basic_ostream@DU?$char_traits@D@std@@@std@@QAE@AAV12@@Z function
 0x005e9958 __ehhandler$??$?6U?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@PBD@Z function
 0x005e997b __ehhandler$?CreateLog@@YAPAVLOG@@XZ function
+0x005e9ce8 __ehhandler$??0CONSOLE@@QAE@XZ function
+0x005e9d0b __ehhandler$?OnHotKey@CONSOLE@@UAE_NABH@Z function
+0x005e9d2b __ehhandler$?CreateConsole@@YAPAVCONSOLE@@XZ function
+0x005e9d48 __ehhandler$?Run@CONSOLE@@QAAXPBDZZ function
 0x005e9d81 __ehhandler$??0APP@@QAE@XZ function
 0x005e9d9b __ehhandler$??1APP@@UAE@XZ function
 0x005e9dbb __ehhandler$?CreateApp@@YAPAVAPP@@XZ function
@@ -3668,6 +3695,7 @@
 0x0065a5e8 ??_C@_04HDOCAJNK@?$CFs?$CFs?$AA@ data 0x5
 0x0065a708 __real@3ccccccd data 0x4
 0x0065aa84 __real@3fc00000 data
+0x0065abe8 ??_C@_04DJCABLIL@?$CFs?$CFc?$AA@ data 0x5
 0x0065abf8 ??_C@_02DKCKIIND@?$CFs?$AA@ data 0x3
 0x0065b0f8 __real@3c23d70a data
 0x0065b110 __real@3fe0000000000000 data
@@ -3911,7 +3939,14 @@
 0x0066721c ??_C@_0CL@LHMDKM@CMDMGR?3LoadScript?$DO?5Error?5in?5scri@ data 0x2b
 0x00667248 ??_C@_03JBJLGPFL@end?$AA@ data 0x4
 0x0066724c ??_C@_0DO@HBLPAEFC@CMDMGR?3LoadScript?$DO?5Error?5loading@ data 0x3e
-0x00667384 ??_C@_01KDCPPGHE@r?$AA@ data
+0x00667290 _s_TypeNames data 0xb4
+0x00667344 ??_7CONSOLE@@6B@ data 0x24
+0x00667368 ??_C@_0P@EPFLCBFO@TEXT?3whitefont?$AA@ data 0xf
+0x00667378 ??_C@_0M@PPBGLKCI@scr?$CF03d?4jpg?$AA@ data 0xc
+0x00667384 ??_C@_01KDCPPGHE@r?$AA@ data 0x2
+0x00667388 ??_C@_0M@NGAKIDKJ@scr?$CF03d?4png?$AA@ data 0xc
+0x00667394 ??_C@_0DD@BAONHJDM@FPS?3?$CF?41f?5POLYS?3?$CFd?5RENDERCOUNT?3?$CFd@ data 0x33
+0x006673c8 ??_C@_04LNGKAPAF@?$DO?5?$CFs?$AA@ data 0x5
 0x006673d0 _s_TypeNames data 0xb4
 0x00667484 ??_C@_01KMDKNFGN@?1?$AA@ data 0x2
 0x00667488 ??_7APP@@6B@ data 0x14
@@ -5082,6 +5117,7 @@
 0x006b9ba8 ?s_classId@CAMERA@@2HA data 0x4
 0x006b9bac ?s_classId@SPAWNER@@2HA data 0x4
 0x006b9bb0 ?s_classId@TRIGGER@@2HA data 0x4
+0x006b9bb4 ?g_pfnCreateConsole@@3P6APAVCONSOLE@@XZA data 0x4
 0x006b9bb8 ?g_pfnCreateApp@@3P6APAVAPP@@XZA data 0x4
 0x006b9bbc ?g_pfnCreateAppWindow@@3P6APAVAPPWINDOW@@XZA data 0x4
 0x006b9c48 ?s_properties@GUI@@2PAUPROPENTRY@@A data
@@ -5253,6 +5289,8 @@
 0x006ccc98 ?g_classNames@@3PAY0BO@DA data
 0x006d0898 ?g_classCount@@3HA data 0x4
 0x006d089c ?g_classRegistrars@@3V?$CALLBACKLIST@P6AXXZ@@A data 0x8
+0x006d08a4 ?g_pConsole@@3PAVCONSOLE@@A data 0x4
+0x006d08a8 _s_screenshotIndex data 0x4
 0x006d08b0 ?g_basePath@@3PADA data
 0x006d09b4 ?g_pApp@@3PAVAPP@@A data 0x4
 0x006d09b8 ?g_pDisplay@@3PAVAPPWINDOW@@A data 0x4

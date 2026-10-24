@@ -2119,6 +2119,17 @@
       "category": "engine"
     },
     {
+      "name": "Tongas2/CONSOLE",
+      "ranges": [
+        "0x0048aab0-0x0048b78f",
+        "0x00667290-0x006673cf",
+        "0x006b9bb4-0x006b9bb7"
+      ],
+      "target": "build/target/Tongas2/CONSOLE.obj",
+      "source": "src/Tongas2/CONSOLE.cpp",
+      "category": "engine"
+    },
+    {
       "name": "Tongas2/APP",
       "ranges": [
         "0x0048b790-0x0048bd6f",

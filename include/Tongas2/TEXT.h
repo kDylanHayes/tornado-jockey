@@ -157,6 +157,11 @@ public:
     void SetBullet(wchar_t c);
     void ClearBullet();
     void SetText(const wchar_t *text);
+    void SetScreenPosition(float x, float y)
+    {
+        m_screenPosition.x = x;
+        m_screenPosition.y = y;
+    }
     // Wraps lines longer than width, or not if it is -1.
     void SetWrapWidth(float width);
 

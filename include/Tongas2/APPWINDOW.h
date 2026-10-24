@@ -29,12 +29,13 @@ public:
     virtual float GetElapsedTime();
     virtual void Virtual13() = 0;
     virtual void Virtual14() = 0;
-    virtual void Virtual15() = 0;
-    virtual void Virtual16() = 0;
+    virtual bool GetWireframe() = 0;
+    virtual void SetWireframe(bool on) = 0;
     virtual void SetFrameRate(int rate);
-    virtual void Virtual18() = 0;
-    virtual void Virtual19() = 0;
-    virtual void Virtual20() = 0;
+    // What the last frames drew.
+    virtual float GetFps() = 0;
+    virtual int GetRenderCount() = 0;
+    virtual int GetPolyCount() = 0;
     virtual void SetFullscreen(bool on) = 0;
     virtual void Virtual22() = 0;
     virtual void Virtual23() = 0;
