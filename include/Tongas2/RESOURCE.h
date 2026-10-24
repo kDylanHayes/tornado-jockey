@@ -192,6 +192,8 @@ public:
     void Remove(RESHANDLE handle);
     // Tells each actor the map's command script has run.
     void OnScriptLoaded();
+    // Shows or hides the collision shapes' helper models.
+    void ToggleHelpers();
 };
 extern ACTORS *g_pActors;
 

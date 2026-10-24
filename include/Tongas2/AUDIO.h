@@ -12,6 +12,8 @@ public:
     // The sound object with a handle.
     CMDBASE *GetObject(const RESHANDLE &handle);
     void UpdateListener();
+    // Pauses the game's sounds, or carries on with them. Placeholder name.
+    void Pause(bool on);
 };
 
 extern AUDIO *g_pAudio;
