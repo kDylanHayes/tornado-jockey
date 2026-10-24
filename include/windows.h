@@ -222,6 +222,7 @@ WINBASEAPI BOOL WINAPI SetConsoleTextAttribute(HANDLE hConsoleOutput, WORD wAttr
 WINUSERAPI int WINAPI MessageBoxA(HWND hWnd, LPCSTR lpText, LPCSTR lpCaption, UINT uType);
 WINUSERAPI int WINAPI GetSystemMetrics(int nIndex);
 WINUSERAPI BOOL WINAPI ScreenToClient(HWND hWnd, LPPOINT lpPoint);
+WINUSERAPI HWND WINAPI GetForegroundWindow(void);
 WINUSERAPI int WINAPIV wsprintfA(LPSTR, LPCSTR, ...);
 }
 

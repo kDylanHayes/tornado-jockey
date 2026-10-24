@@ -77,4 +77,13 @@ public:
     GUICONTROL *m_parent;
 };
 
+// Defined elsewhere: the behaviors controls can have (BLINK, GROW, TRAVEL
+// and the rest), by name.
+class GUIBEHAVIORS
+{
+public:
+    GUIBEHAVIORS();
+};
+extern GUIBEHAVIORS *g_pGuiBehaviors;
+
 #endif

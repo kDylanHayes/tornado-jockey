@@ -21,7 +21,7 @@ class GAME
 {
 public:
     virtual void Virtual00();
-    virtual void Virtual01();
+    virtual ~GAME();
     virtual void Virtual02();
     virtual void Virtual03();
     virtual void Virtual04();
@@ -64,6 +64,9 @@ public:
     static PROPENTRY s_properties[];
 };
 extern GAME *g_pGame;
+
+// Makes the game; the game points it at its own.
+extern GAME *(*g_pfnCreateGame)();
 
 // Defined in another unit; each name is 30 characters, indexed by class id.
 extern char g_classNames[][30];
@@ -197,6 +200,13 @@ struct CONTACT;
 class ACTORS
 {
 public:
+    virtual void Virtual00();
+    virtual ~ACTORS();
+
+    // Runs the actor start-up functions; false when it has already run.
+    bool Init();
+    // Steps the actors for a frame.
+    void Update();
     WTACTOR *GetActor(RESHANDLE handle);
     // The actor with a name, or 0.
     WTACTOR *FindActor(const char *name);
@@ -208,6 +218,9 @@ public:
     void ToggleHelpers();
 };
 extern ACTORS *g_pActors;
+
+// Makes the actor list; the game points it at its own.
+extern ACTORS *(*g_pfnCreateActors)();
 
 // Defined elsewhere: the bone or point of an actor an object is attached to.
 class TAG
@@ -222,6 +235,9 @@ public:
 class WTACTOR : public RESOURCE
 {
 public:
+    // Steps the actor for a frame.
+    void Step();
+
     virtual void Virtual29();
     virtual void Virtual30();
     virtual void Virtual31();

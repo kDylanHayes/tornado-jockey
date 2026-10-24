@@ -2169,6 +2169,20 @@
       }
     },
     {
+      "name": "Tongas2/TIMER",
+      "ranges": [
+        "0x0048e7b0-0x0048edef",
+        "0x00609e00-0x00609e1f",
+        "0x006543a0-0x006543ff",
+        "0x00667a04-0x00667a77",
+        "0x006b9d60-0x006b9d63",
+        "0x006d09c0-0x006d09d3"
+      ],
+      "target": "build/target/Tongas2/TIMER.obj",
+      "source": "src/Tongas2/TIMER.cpp",
+      "category": "engine"
+    },
+    {
       "name": "Tongas2/FILELOADER",
       "ranges": [
         "0x004ce290-0x004ce59d",
