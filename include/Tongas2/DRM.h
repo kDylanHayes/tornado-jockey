@@ -13,6 +13,8 @@ public:
     virtual void Init();
     // Runs once a frame.
     virtual void Update();
+    virtual void Virtual21();
+    virtual void Virtual22();
 
     static int s_classId;
     static PROPENTRY s_properties[];

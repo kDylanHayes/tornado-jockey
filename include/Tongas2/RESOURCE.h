@@ -8,6 +8,7 @@
 #include "Tongas2/CMDBASE.h"
 #include "Tongas2/CSTRING.h"
 #include "Tongas2/FIXEDSTRING.h"
+#include "Tongas2/GAME.h"
 #include "Tongas2/MATHS.h"
 #include "Tongas2/SAFEINDEX.h"
 
@@ -15,58 +16,6 @@ class RESOURCE;
 class RESOURCEMANAGER;
 class OBJECT;
 
-// Placeholder for the object at 0x6d09d4; only slots 24, 25 and 34 are used
-// so far.
-class GAME
-{
-public:
-    virtual void Virtual00();
-    virtual ~GAME();
-    virtual void Virtual02();
-    virtual void Virtual03();
-    virtual void Virtual04();
-    virtual void Virtual05();
-    virtual void Virtual06();
-    virtual void Virtual07();
-    virtual void Virtual08();
-    virtual void Virtual09();
-    virtual void Virtual10();
-    virtual void Virtual11();
-    virtual void Virtual12();
-    virtual void Virtual13();
-    virtual void Virtual14();
-    virtual void Virtual15();
-    virtual void Virtual16();
-    virtual void Virtual17();
-    virtual void Virtual18();
-    virtual void Virtual19();
-    virtual void Virtual20();
-    virtual void Virtual21();
-    virtual void Virtual22();
-    virtual void Virtual23();
-    // Whether a game is being played. Placeholder name.
-    virtual bool IsPlaying();
-    virtual bool Virtual25();
-    virtual void Virtual26();
-    virtual void Virtual27();
-    virtual void Virtual28();
-    virtual void Virtual29();
-    virtual void Virtual30();
-    virtual void Virtual31();
-    virtual void Virtual32();
-    virtual void Virtual33();
-    // The game was paused. Placeholder name.
-    virtual void OnPaused();
-
-    static void RegisterCommands();
-
-    static int s_classId;
-    static PROPENTRY s_properties[];
-};
-extern GAME *g_pGame;
-
-// Makes the game; the game points it at its own.
-extern GAME *(*g_pfnCreateGame)();
 
 // Defined in another unit; each name is 30 characters, indexed by class id.
 extern char g_classNames[][30];
@@ -207,6 +156,8 @@ public:
     bool Init();
     // Steps the actors for a frame.
     void Update();
+    // Removes all the actors.
+    void RemoveAll();
     WTACTOR *GetActor(RESHANDLE handle);
     // The actor with a name, or 0.
     WTACTOR *FindActor(const char *name);
