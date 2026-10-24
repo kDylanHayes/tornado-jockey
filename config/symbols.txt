@@ -367,6 +367,20 @@
 0x0048bc50 ?ParseArg@APP@@UAE_NPBD@Z function 0x93
 0x0048bcf0 ?CreateApp@@YAPAVAPP@@XZ function 0x59
 0x0048bd50 ??_GAPP@@UAEPAXI@Z function 0x1e
+0x0048bd70 ?CreateAppWindow@@YAPAVAPPWINDOW@@XZ function 0x1a
+0x0048bd90 ??0APPWINDOW@@QAE@XZ function 0x36
+0x0048bdd0 ?GetElapsedTime@APPWINDOW@@UAEMXZ function 0x7
+0x0048bde0 ??1APPWINDOW@@UAE@XZ function 0x7
+0x0048bdf0 ?SetFrameRate@APPWINDOW@@UAEXH@Z function 0xa
+0x0048be00 ?FirstDriveFromMask@@YADK@Z function 0x17
+0x0048be20 ?WndProc@APPWINDOW@@UAEJPAUHWND__@@IIJ@Z function 0x70a
+0x0048c530 ?SetSize@APPWINDOW@@UAEXHH@Z function 0x35
+0x0048c570 ?FixHeight@APPWINDOW@@UAEXPAM@Z function 0xe
+0x0048c580 ?Virtual33@APPWINDOW@@UAEXPAM@Z function 0xe
+0x0048c590 ?FixY@APPWINDOW@@UAEXPAM@Z function 0x1a
+0x0048c5b0 ?UnfixY@APPWINDOW@@UAEXPAM@Z function 0x1a
+0x0048c5d0 ?GetResolution@APPWINDOW@@UAEHXZ function 0x27
+0x0048c600 ??_GAPPWINDOW@@UAEPAXI@Z function 0x1f
 0x0048c620 ?RegisterCommands@GUI@@SAXXZ function
 0x0048c820 ?GetObject@AUDIO@@QAEPAVCMDBASE@@ABURESHANDLE@@@Z function
 0x0048c930 ?UpdateListener@AUDIO@@QAEXXZ function
@@ -386,7 +400,9 @@
 0x004908f0 ?GetActor@ACTORS@@QAEPAVWTACTOR@@URESHANDLE@@@Z function
 0x00490930 ?FindActor@ACTORS@@QAEPAVWTACTOR@@PBD@Z function
 0x00490df0 ?Remove@ACTORS@@QAEXURESHANDLE@@@Z function
-0x004922f0 ?SetWideScreen@GUI@@QAEX_N@Z function 0x1f
+0x00491c70 ?OnMouse@GUI@@QAEXHHH@Z function
+0x00492150 ?OnKey@GUI@@QAEXIH@Z function
+0x004922f0 ?SetMouseCapture@GUI@@QAEX_N@Z function 0x1f
 0x00492480 ?Virtual13@CMDBASE@@UAEXXZ function
 0x004929f0 ?RegisterCommands@GUICONTROL@@SAXXZ function
 0x00492d50 ?GetScaleFactor@SCREENDECAL@@UAE?AUV3@@XZ function 0x14
@@ -3599,6 +3615,7 @@
 0x00656210 __imp__Sleep@4 data 0x4
 0x00656250 __imp__GetExitCodeProcess@8 data 0x4
 0x006562a0 __imp__ShellExecuteExA@4 data 0x4
+0x006562ac __imp__ScreenToClient@8 data 0x4
 0x006562ec __imp__wsprintfA data 0x4
 0x006563c0 __imp__GetSystemMetrics@4 data 0x4
 0x006563c4 __imp__MessageBoxA@16 data
@@ -3901,6 +3918,9 @@
 0x0066749c ??_C@_06CLBNJNOB@?9level?$AA@ data 0x7
 0x006674a4 ??_C@_02FCBLCILD@?5?$DN?$AA@ data 0x3
 0x006674a8 ??_C@_04KPOKBEGI@?9map?$AA@ data 0x5
+0x006674b0 _s_TypeNames data 0xb4
+0x00667564 ??_C@_0CA@CLPEAOCF@No?5default?5plugin?5for?5APPWINDOW?$AA@ data 0x20
+0x00667588 ??_7APPWINDOW@@6B@ data 0xa0
 0x00667ec8 __real@c3340000 data
 0x00667ecc __real@c3b40000 data
 0x00667ed8 ??_C@_0CM@OCPNAOAO@SAFEINDEX?3FreePos?$DO?5Invalid?5delet@ data 0x2c
@@ -5063,7 +5083,7 @@
 0x006b9bac ?s_classId@SPAWNER@@2HA data 0x4
 0x006b9bb0 ?s_classId@TRIGGER@@2HA data 0x4
 0x006b9bb8 ?g_pfnCreateApp@@3P6APAVAPP@@XZA data 0x4
-0x006b9bbc ?g_pfnCreateDisplay@@3P6APAVDISPLAY@@XZA data 0x4
+0x006b9bbc ?g_pfnCreateAppWindow@@3P6APAVAPPWINDOW@@XZA data 0x4
 0x006b9c48 ?s_properties@GUI@@2PAUPROPENTRY@@A data
 0x006b9d60 ?g_pfnCreateTimer@@3P6APAVTIMER@@XZA data 0x4
 0x006b9dd0 ?s_properties@GAME@@2PAUPROPENTRY@@A data
@@ -5235,7 +5255,7 @@
 0x006d089c ?g_classRegistrars@@3V?$CALLBACKLIST@P6AXXZ@@A data 0x8
 0x006d08b0 ?g_basePath@@3PADA data
 0x006d09b4 ?g_pApp@@3PAVAPP@@A data 0x4
-0x006d09b8 ?g_pDisplay@@3PAVDISPLAY@@A data 0x4
+0x006d09b8 ?g_pDisplay@@3PAVAPPWINDOW@@A data 0x4
 0x006d09bc ?g_pAudio@@3PAVAUDIO@@A data 0x4
 0x006d09c0 ?g_pTimer@@3PAVTIMER@@A data 0x4
 0x006d09d4 ?g_pGame@@3PAVGAME@@A data 0x4

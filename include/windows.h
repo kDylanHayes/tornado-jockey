@@ -39,6 +39,42 @@ typedef struct HKEY__ *HKEY;
 typedef HKEY *PHKEY;
 typedef DWORD ACCESS_MASK;
 typedef ACCESS_MASK REGSAM;
+typedef UINT WPARAM;
+typedef LONG LPARAM;
+typedef LONG LRESULT;
+
+typedef struct tagPOINT {
+    LONG x;
+    LONG y;
+} POINT, *LPPOINT;
+
+#define LOWORD(l) ((WORD)((DWORD)(l) & 0xffff))
+#define HIWORD(l) ((WORD)((DWORD)(l) >> 16))
+#define GET_X_LPARAM(lp) ((int)(short)LOWORD(lp))
+#define GET_Y_LPARAM(lp) ((int)(short)HIWORD(lp))
+#define GET_WHEEL_DELTA_WPARAM(wParam) ((short)HIWORD(wParam))
+
+#define WM_CLOSE 0x0010
+#define WM_KEYDOWN 0x0100
+#define WM_KEYUP 0x0101
+#define WM_CHAR 0x0102
+#define WM_SYSKEYDOWN 0x0104
+#define WM_SYSKEYUP 0x0105
+#define WM_MOUSEMOVE 0x0200
+#define WM_LBUTTONDOWN 0x0201
+#define WM_LBUTTONUP 0x0202
+#define WM_LBUTTONDBLCLK 0x0203
+#define WM_RBUTTONDOWN 0x0204
+#define WM_RBUTTONUP 0x0205
+#define WM_RBUTTONDBLCLK 0x0206
+#define WM_MBUTTONDOWN 0x0207
+#define WM_MBUTTONUP 0x0208
+#define WM_MBUTTONDBLCLK 0x0209
+#define WM_MOUSEWHEEL 0x020A
+#define WM_DEVICECHANGE 0x0219
+#define MK_LBUTTON 0x0001
+#define MK_RBUTTON 0x0002
+#define MK_MBUTTON 0x0010
 
 #define HKEY_LOCAL_MACHINE ((HKEY)(ULONG)0x80000002)
 #define KEY_QUERY_VALUE 0x0001
@@ -180,6 +216,7 @@ WINBASEAPI BOOL WINAPI GetConsoleScreenBufferInfo(HANDLE hConsoleOutput,
 WINBASEAPI BOOL WINAPI SetConsoleTextAttribute(HANDLE hConsoleOutput, WORD wAttributes);
 WINUSERAPI int WINAPI MessageBoxA(HWND hWnd, LPCSTR lpText, LPCSTR lpCaption, UINT uType);
 WINUSERAPI int WINAPI GetSystemMetrics(int nIndex);
+WINUSERAPI BOOL WINAPI ScreenToClient(HWND hWnd, LPPOINT lpPoint);
 WINUSERAPI int WINAPIV wsprintfA(LPSTR, LPCSTR, ...);
 }
 

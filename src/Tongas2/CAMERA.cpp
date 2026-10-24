@@ -1,6 +1,6 @@
 #include "Tongas2/CAMERA.h"
 #include "Tongas2/CSTRING.h"
-#include "Tongas2/DISPLAY.h"
+#include "Tongas2/APPWINDOW.h"
 #include "Tongas2/TIMER.h"
 #include "Tongas2/TOKENS.h"
 

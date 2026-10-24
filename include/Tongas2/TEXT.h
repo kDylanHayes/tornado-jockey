@@ -9,7 +9,7 @@
 #define TONGAS2_TEXT_H
 
 #include "Tongas2/DECAL.h"
-#include "Tongas2/DISPLAY.h"
+#include "Tongas2/APPWINDOW.h"
 #include "Tongas2/DYNAMICARRAY.h"
 #include "Tongas2/EMITTER.h"
 #include "Tongas2/RESOURCE.h"

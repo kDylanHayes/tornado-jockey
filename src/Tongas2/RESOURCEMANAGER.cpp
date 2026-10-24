@@ -1,6 +1,6 @@
 #include "Tongas2/RESOURCES.h"
 #include "Tongas2/APP.h"
-#include "Tongas2/DISPLAY.h"
+#include "Tongas2/APPWINDOW.h"
 #include "Tongas2/FILELOADER.h"
 #include "Tongas2/LOG.h"
 #include "Tongas2/STRING.h"
