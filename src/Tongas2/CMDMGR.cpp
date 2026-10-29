@@ -523,7 +523,7 @@ bool CMDMGR::LoadScript()
     if (!m_loaded)
         m_loaded = true;
     g_pScene->OnScriptLoaded();
-    g_StringManager.Check();
+    g_StringManager.Defrag();
     return true;
 }
 

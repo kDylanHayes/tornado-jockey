@@ -2269,6 +2269,19 @@
       }
     },
     {
+      "name": "Tongas2/STRINGMANAGER",
+      "ranges": [
+        "0x004937d0-0x004939ef",
+        "0x0060a5d0-0x0060a5ef",
+        "0x00654460-0x0065446f",
+        "0x00668618-0x0066861b",
+        "0x006d2708-0x007df723"
+      ],
+      "target": "build/target/Tongas2/STRINGMANAGER.obj",
+      "source": "src/Tongas2/STRINGMANAGER.cpp",
+      "category": "engine"
+    },
+    {
       "name": "Tongas2/FILELOADER",
       "ranges": [
         "0x004ce290-0x004ce59d",
