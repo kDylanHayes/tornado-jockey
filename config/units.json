@@ -2200,6 +2200,22 @@
       }
     },
     {
+      "name": "Tongas2/DRM",
+      "ranges": [
+        "0x0048f110-0x0048f27f",
+        "0x00609ec0-0x00609f4f",
+        "0x00667bf8-0x00667d2b",
+        "0x006b9e08-0x006b9e87",
+        "0x006d09d8-0x006d09db"
+      ],
+      "target": "build/target/Tongas2/DRM.obj",
+      "source": "src/Tongas2/DRM.cpp",
+      "category": "engine",
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z"
+      }
+    },
+    {
       "name": "Tongas2/FILELOADER",
       "ranges": [
         "0x004ce290-0x004ce59d",

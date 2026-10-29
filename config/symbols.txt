@@ -491,6 +491,9 @@
 0x0048f020 ?Load@GAME@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0x6e
 0x0048f090 ?Execute@GAME@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function 0x73
 0x0048f110 ?RegisterCommands@DRM@@SAXXZ function
+0x0048f150 ?Decode@DRM@@QAEXPBD0HHPAD@Z function
+0x0048f190 ??0DRM@@QAE@XZ function
+0x0048f220 ?CreateDrm@@YAPAVDRM@@XZ function
 0x0048f400 ?RegisterCommands@SCENE@@SAXXZ function
 0x0048f5b0 ?Init@ACTORS@@QAE_NXZ function
 0x0048f710 ?ToggleHelpers@ACTORS@@QAEXXZ function 0xb
@@ -3615,6 +3618,7 @@
 0x005e9f0e __ehhandler$?Start@TIMER@@UAEXXZ function
 0x005e9f28 __ehhandler$??1GAME@@UAE@XZ function
 0x005e9f48 __ehhandler$?Execute@GAME@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function
+0x005e9f6b __ehhandler$?CreateDrm@@YAPAVDRM@@XZ function
 0x005ea738 __ehhandler$??0CAMERA@@QAE@XZ function
 0x005ea75b __ehhandler$?CreateCamera@@YAPAVCAMERA@@XZ function
 0x005ea778 __ehhandler$?Reset@CAMERA@@UAEXXZ function
@@ -3665,6 +3669,8 @@
 0x00609e10 _$E4 function 0xc
 0x00609e20 _$E1 function 0x5d
 0x00609e80 _$E3 function 0x3c
+0x00609ec0 _$E1 function
+0x00609f10 _$E3 function 0x3c
 0x0060c9a0 _$E1 function 0xb1
 0x0060ca60 _$E3 function 0x105
 0x0060cb70 _$E5 function 0xc
@@ -4108,6 +4114,10 @@
 0x00667b34 ??_C@_0BL@HGLMNANM@No?5default?5plugin?5for?5GAME?$AA@ data 0x1b
 0x00667b50 ??_7GAME@@6B@ data 0x98
 0x00667be8 ??_C@_0O@DAAJFKHA@ExportStrings?$AA@ data 0xe
+0x00667bf8 ??_C@_0L@BBCLKALL@IsUnlocked?$AA@ data 0xb
+0x00667c08 _s_TypeNames data 0xb4
+0x00667cc0 ??_7DRM@@6B@ data 0x68
+0x00667d28 ??_C@_03ONNJOJGD@drm?$AA@ data 0x4
 0x00667ec8 __real@c3340000 data
 0x00667ecc __real@c3b40000 data
 0x00667ed8 ??_C@_0CM@OCPNAOAO@SAFEINDEX?3FreePos?$DO?5Invalid?5delet@ data 0x2c
@@ -5280,7 +5290,8 @@
 0x006b9d70 ?s_commands@GAME@@2PAUCMDENTRY@@A data 0x60
 0x006b9dd0 ?s_properties@GAME@@2PAUPROPENTRY@@A data 0x38
 0x006b9e08 ?g_pfnCreateDrm@@3P6APAVDRM@@XZA data 0x4
-0x006b9e50 ?s_properties@DRM@@2PAUPROPENTRY@@A data
+0x006b9e10 ?s_commands@DRM@@2PAUCMDENTRY@@A data 0x40
+0x006b9e50 ?s_properties@DRM@@2PAUPROPENTRY@@A data 0x38
 0x006b9e88 ?g_pfnCreateActors@@3P6APAVACTORS@@XZA data 0x4
 0x006b9e90 ?s_factoryId@ACTOR@@2HA data 0x4
 0x006b9e94 ?s_factoryId@CAMERA@@2HA data 0x4
