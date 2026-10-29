@@ -164,7 +164,7 @@ GUICONTROL::GUICONTROL(const RESHANDLE &master, GUIGROUP *parent)
     m_behavior = 0;
     m_behaviorParams = "";
     m_parent = parent;
-    m_54 = -1;
+    m_slot = -1;
     m_closed = false;
     m_behaviorObject = 0;
     m_master = master;

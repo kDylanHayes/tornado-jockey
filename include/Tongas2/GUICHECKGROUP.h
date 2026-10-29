@@ -39,13 +39,18 @@ public:
 };
 
 // The GUI check group objects, defined elsewhere; only what CMDMGR needs so far.
-class GUICHECKGROUP
+class GUICHECKGROUP : public GUIGROUP
 {
 public:
+    // Defined in another unit.
+    GUICHECKGROUP(const RESHANDLE &master, GUIGROUP *parent);
+
     static void RegisterCommands();
 
     static int s_classId;
     static PROPENTRY s_properties[];
+
+    char m_140[0xc];
 };
 
 #endif

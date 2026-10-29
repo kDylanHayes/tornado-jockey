@@ -2375,11 +2375,23 @@
         "0x004980f0-0x0049e0af",
         "0x0060aa70-0x0060c4ef",
         "0x00668b9c-0x00669a0b",
-        "0x006ba840-0x006bb387",
+        "0x006ba840-0x006bb8c7",
         "0x007df728-0x007df737"
       ],
       "target": "build/target/Tongas2/ACTOR.obj",
       "source": "src/Tongas2/ACTOR.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/GUIGROUPCONTROL",
+      "ranges": [
+        "0x0049e0b0-0x004a0c3f",
+        "0x0060c4f0-0x0060c68f",
+        "0x00669a0c-0x00669e7f",
+        "0x006bb8c8-0x006bbaa7"
+      ],
+      "target": "build/target/Tongas2/GUIGROUPCONTROL.obj",
+      "source": "src/Tongas2/GUIGROUPCONTROL.cpp",
       "category": "engine"
     }
   ]

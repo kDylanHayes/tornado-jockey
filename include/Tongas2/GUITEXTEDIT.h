@@ -46,13 +46,18 @@ public:
 };
 
 // The GUI text edit objects, defined elsewhere; only what CMDMGR needs so far.
-class GUITEXTEDIT
+class GUITEXTEDIT : public GUITEXT
 {
 public:
+    // Defined in another unit.
+    GUITEXTEDIT(const RESHANDLE &master, GUIGROUP *parent);
+
     static void RegisterCommands();
 
     static int s_classId;
     static PROPENTRY s_properties[];
+
+    char m_8650[0x8018];
 };
 
 #endif

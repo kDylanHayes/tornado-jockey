@@ -45,6 +45,11 @@ inline V2 operator-(const V2 &a, const V2 &b)
     return V2(a.x - b.x, a.y - b.y);
 }
 
+inline V2 operator+(const V2 &a, const V2 &b)
+{
+    return V2(a.x + b.x, a.y + b.y);
+}
+
 // A color, each channel 0-255.
 struct RGB
 {

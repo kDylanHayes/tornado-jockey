@@ -34,6 +34,12 @@ inline V2 operator*(const V2 &v, const float &f)
     return V2(v.x * f, v.y * f);
 }
 
+// Each component times the other's.
+inline V2 operator*(const V2 &a, const V2 &b)
+{
+    return V2(a.x * b.x, a.y * b.y);
+}
+
 // Defined elsewhere: v divided by f, or zero when f is.
 V2 operator/(const V2 &v, const float &f);
 
@@ -140,8 +146,10 @@ public:
     virtual void SetTopZSort(int zsort) { m_topZSort = zsort; }
     // The highest zsort of the controls in it that take the mouse.
     virtual int GetTopZSort() { return m_topZSort; }
-    virtual void Virtual33(int a, int b, int c, int d) {}
-    virtual void Virtual34(int a, int b, int c, int d) {}
+    // Finds the control under the point with the highest top zsort,
+    // starting from *zsort.
+    virtual void FindTopAt(V2 point, GUICONTROL **hit, int *zsort) {}
+    virtual void Virtual34(V2 point, GUICONTROL **hit, int *zsort) {}
     // The move command: moves to a point over a time.
     virtual SRESULT Move(CMDCALL *call);
     // The moverel command: moves by an offset over a time.
@@ -195,7 +203,8 @@ public:
     int m_behavior;
     CSTRING m_behaviorParams;
     int m_topZSort;
-    int m_54;
+    // The control's slot in its group's template, or -1.
+    int m_slot;
     GUIGROUP *m_parent;
     RESHANDLE m_master;
     bool m_closed;
@@ -211,7 +220,6 @@ public:
     float m_fadeTime;
     float m_fadeOpacity;
     float m_fadeTarget;
-    int m_9c;
 };
 
 // Defined elsewhere: the behaviors controls can have (BLINK, GROW, TRAVEL
