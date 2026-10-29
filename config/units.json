@@ -1816,7 +1816,7 @@
         "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z",
         "?SetFileName@SCREENDECALMASTER@@UAEXABVCSTRING@@@Z": "?SetFileName@BONEDMODELMASTER@@UAEXABVCSTRING@@@Z",
         "?IsLoaded@SCREENDECAL@@UAE_NXZ": "?IsLoaded@BONEDMODELRESOURCE@@UAE_NXZ",
-        "?SetDescription@RESOURCEMASTER@@UAEXABH@Z": "?Virtual77@BONEDMODELRESOURCE@@UAEXH@Z"
+        "?SetDescription@RESOURCEMASTER@@UAEXABH@Z": "?PauseAnimation@BONEDMODELRESOURCE@@UAEX_N@Z"
       }
     },
     {
@@ -2368,6 +2368,19 @@
       "source": "src/wt/WTCRYPT.cpp",
       "category": "sdk",
       "complete": true
+    },
+    {
+      "name": "Tongas2/ACTOR",
+      "ranges": [
+        "0x004980f0-0x0049e0af",
+        "0x0060aa70-0x0060c4ef",
+        "0x00668b9c-0x00669a0b",
+        "0x006ba840-0x006bb387",
+        "0x007df728-0x007df737"
+      ],
+      "target": "build/target/Tongas2/ACTOR.obj",
+      "source": "src/Tongas2/ACTOR.cpp",
+      "category": "engine"
     }
   ]
 }

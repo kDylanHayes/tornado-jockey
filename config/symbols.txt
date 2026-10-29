@@ -65,50 +65,50 @@
 0x00408e00 ??_9@$BCDA@AE function
 0x00408e10 ??_9@$BCDE@AE function
 0x00408e30 ?FromEuler@MATRIX@@QAEXMMM@Z function
-0x00408fa0 ?Virtual30@ACTOR@@UAEXXZ function
-0x00408fc0 ?Virtual31@ACTOR@@UAEXXZ function
-0x00408fd0 ?Virtual34@ACTOR@@UAEXXZ function
-0x00408fe0 ?Virtual35@ACTOR@@UAEXXZ function
-0x00409000 ?Virtual37@ACTOR@@UAEXXZ function
-0x00409020 ?Virtual38@ACTOR@@UAEXXZ function
-0x00409030 ?Virtual39@ACTOR@@UAEXXZ function
-0x00409040 ?Virtual40@ACTOR@@UAEXXZ function
-0x00409050 ?Virtual41@ACTOR@@UAEXXZ function
-0x00409060 ?Virtual44@ACTOR@@UAEXXZ function
-0x00409070 ?Virtual45@ACTOR@@UAEXXZ function
-0x00409080 ?Virtual46@ACTOR@@UAEXXZ function
-0x004090a0 ?Virtual47@ACTOR@@UAEXXZ function
-0x004090c0 ?Virtual48@ACTOR@@UAEXXZ function
-0x004090e0 ?Virtual49@ACTOR@@UAEXXZ function
-0x00409100 ?Virtual50@ACTOR@@UAEXXZ function
-0x00409110 ?Virtual52@ACTOR@@UAEXXZ function
-0x00409120 ?Virtual53@ACTOR@@UAEXXZ function
-0x00409130 ?Virtual54@ACTOR@@UAEXXZ function
-0x00409140 ?Virtual55@ACTOR@@UAEXXZ function
-0x00409150 ?Virtual56@ACTOR@@UAEXXZ function
-0x00409160 ?Virtual58@ACTOR@@UAEXXZ function
-0x00409170 ?Virtual60@ACTOR@@UAEXXZ function
-0x00409190 ?Virtual61@ACTOR@@UAEXXZ function
-0x004091b0 ?Virtual62@ACTOR@@UAEXXZ function
-0x004091c0 ?Virtual63@ACTOR@@UAEXXZ function
-0x004091d0 ?Virtual64@ACTOR@@UAEXXZ function
-0x004091e0 ?Virtual65@ACTOR@@UAEXXZ function
-0x004091f0 ?Virtual66@ACTOR@@UAEXXZ function
-0x00409200 ?Virtual76@ACTOR@@UAEXXZ function
-0x00409210 ?Virtual77@ACTOR@@UAEXXZ function
-0x00409220 ?Virtual80@ACTOR@@UAEXXZ function
-0x00409230 ?Virtual81@ACTOR@@UAEXXZ function
-0x00409240 ?Virtual82@ACTOR@@UAEXXZ function
-0x00409250 ?Virtual83@ACTOR@@UAEXXZ function
+0x00408fa0 ?SetColliderColor@ACTOR@@UAEXABURGB@@@Z function
+0x00408fc0 ?SetShowCollider@ACTOR@@UAEXAB_N@Z function
+0x00408fd0 ?SetAttachBoneResId@ACTOR@@UAEXABH@Z function
+0x00408fe0 ?SetAttachPos@ACTOR@@UAEXABUV3@@@Z function
+0x00409000 ?SetAttachScale@ACTOR@@UAEXABUV3@@@Z function
+0x00409020 ?SetAttachOpacity@ACTOR@@UAEXABM@Z function
+0x00409030 ?SetAttachZSort@ACTOR@@UAEXABH@Z function
+0x00409040 ?SetActivation@ACTOR@@UAEXABH@Z function
+0x00409050 ?SetDeactivation@ACTOR@@UAEXABH@Z function
+0x00409060 ?SetOnActivateRunInEditor@ACTOR@@UAEXAB_N@Z function
+0x00409070 ?SetBehavior@ACTOR@@UAEXABH@Z function
+0x00409080 ?SetVel@ACTOR@@UAEXABUV3@@@Z function
+0x004090a0 ?SetAngVel@ACTOR@@UAEXABUV3@@@Z function
+0x004090c0 ?SetAngAceleration@ACTOR@@UAEXABUV3@@@Z function
+0x004090e0 ?SetAceleration@ACTOR@@UAEXABUV3@@@Z function
+0x00409100 ?SetPanSounds@ACTOR@@UAEXAB_N@Z function
+0x00409110 ?SetMoveWithScreenY@ACTOR@@UAEXAB_N@Z function
+0x00409120 ?SetPreviewBehavior@ACTOR@@UAEXAB_N@Z function
+0x00409130 ?SetRotateToMove@ACTOR@@UAEXAB_N@Z function
+0x00409140 ?SetForcedCamDist@ACTOR@@UAEXABM@Z function
+0x00409150 ?SetForceInScreen@ACTOR@@UAEXAB_N@Z function
+0x00409160 ?SetPathBehavior@ACTOR@@UAEXABH@Z function
+0x00409170 ?SetVectorUp@ACTOR@@UAEXABUV3@@@Z function
+0x00409190 ?SetVectorForward@ACTOR@@UAEXABUV3@@@Z function
+0x004091b0 ?SetLoop@ACTOR@@UAEXAB_N@Z function
+0x004091c0 ?SetFlowAngle@ACTOR@@UAEXABM@Z function
+0x004091d0 ?SetFlowRadius@ACTOR@@UAEXABM@Z function
+0x004091e0 ?SetPathRelativePos@ACTOR@@UAEXAB_N@Z function
+0x004091f0 ?SetAlsoLineal@ACTOR@@UAEXAB_N@Z function
+0x00409200 ?SetOpacity@ACTOR@@UAEXABM@Z function
+0x00409210 ?SetStartFirstAnim@ACTOR@@UAEXAB_N@Z function
+0x00409220 ?SetAnimSpeed@ACTOR@@UAEXABM@Z function
+0x00409230 ?SetLightMask@ACTOR@@UAEXABH@Z function
+0x00409240 ?SetCheckRenderFrustrum@ACTOR@@UAEXAB_N@Z function
+0x00409250 ?SetRenderNotifications@ACTOR@@UAEXAB_N@Z function
 0x00409260 ?GetPosition@ACTOR@@UAE?AUV3@@XZ function
 0x00409280 ?GetAngles@ACTOR@@UAE?AUANG@@XZ function
 0x004092a0 ?GetScale@ACTOR@@UAE?AUV3@@XZ function
 0x004092d0 ?Virtual08@ACTOR@@UAEHXZ function
 0x00409300 ?GetDirection@ANG@@QAE?AUV3@@XZ function
 0x00409350 ?GetUpPoint@ANG@@QAE?AUV3@@XZ function 0x42
-0x004093a0 ?Virtual42@ACTOR@@UAEXXZ function
-0x004093b0 ?Virtual94@ACTOR@@UAEXXZ function
-0x00409400 ?Virtual95@ACTOR@@UAEXXZ function
+0x004093a0 ?SetOnActivate@ACTOR@@UAEXABVCSTRING@@@Z function
+0x004093b0 ?GetDirection@ACTOR@@UAE?AUV3@@XZ function
+0x00409400 ?GetUp@ACTOR@@UAE?AUV3@@XZ function
 0x00409450 ?Virtual96@ACTOR@@UAEXXZ function
 0x00409720 ??_9@$BCDM@AE function
 0x00409730 ??_9@$BCEA@AE function
@@ -118,7 +118,9 @@
 0x00409b00 ??_9@$BCGA@AE function
 0x0040a150 ?RotateAxis@MATRIX@@QAEXMUV3@@@Z function
 0x0040a760 ??K@YA?AUV2@@ABU0@ABM@Z function
+0x0040a8a0 ??H@YA?AUV3@@ABU0@0@Z function
 0x0040a8d0 ??G@YA?AUV3@@ABU0@0@Z function
+0x0040a900 ??D@YA?AUV3@@ABU0@0@Z function
 0x0040a930 ??D@YA?AUV3@@ABU0@ABM@Z function
 0x0040ad20 ?RotateY@MATRIX@@QAEXM@Z function
 0x0040add0 ?Clear@?$DYNAMICARRAY@UFONTCHAR@@@@QAEXXZ function 0x3a
@@ -156,7 +158,7 @@
 0x00426af0 ?GetEulerZ@ANG@@QAEMXZ function
 0x00426b20 ?GetEuler@ANG@@QAEXPAM00@Z function
 0x00432860 ?SetMaxCommands@TRIGGER@@UAEXABH@Z function 0xf
-0x00434430 ?Rotate@TRANSFORM@@QAEXABUMATRIX@@@Z function
+0x00434430 ?Rotate@ANG@@QAEXABUMATRIX@@@Z function
 0x00434ea0 ?Transform@ANG@@QAE?AUV3@@U2@@Z function
 0x004381b0 ?_Tidy@?$deque@GV?$allocator@G@std@@@std@@IAEXXZ function
 0x0043c8a0 ??_9@$BII@AE function
@@ -226,13 +228,13 @@
 0x004435a0 ?_Lrotate@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@IAEXPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@2@@Z function
 0x00443640 ?_Rrotate@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@IAEXPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@2@@Z function
 0x004436a0 ?_Inc@const_iterator@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@QAEXXZ function
-0x00443700 ?GetAxes@TRANSFORM@@QAEXPAUV3@@0@Z function
+0x00443700 ?GetAxes@ANG@@QAEXPAUV3@@0@Z function
 0x00443780 ?_Buynode@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@2@XZ function
 0x00443800 ??1SOUNDMASTER@@UAE@XZ function
 0x00443870 ?SetForceDuplicates@SCREENDECALMASTER@@UAEXAB_N@Z function 0xc
 0x004438b0 ?SetLoop@DECALMASTER@@UAEXAB_N@Z function
-0x004438e0 ?Virtual26@ACTOR@@UAEXAB_N@Z function
-0x004438f0 ?Virtual29@ACTOR@@UAEXXZ function
+0x004438e0 ?SetIsTemplate@ACTOR@@UAEXAB_N@Z function
+0x004438f0 ?SetColliderColorOverride@ACTOR@@UAEXAB_N@Z function
 0x00443cb0 ?erase@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@QAE?AViterator@12@V312@0@Z function
 0x00443d70 ??0SOUNDMANAGER@@QAE@XZ function
 0x00443e00 ?CreateMaster@SOUNDMANAGER@@UAEPAVRESOURCEMASTER@@PBD@Z function
@@ -709,29 +711,40 @@
 0x004977e0 ?Not@KERNELCOMMANDS@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0x114
 0x00497900 ?LogVal@KERNELCOMMANDS@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0x5c5
 0x00497ed0 ?Delay@KERNELCOMMANDS@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0x214
-0x004980f0 ??9@YA_NABUV3@@0@Z function
+0x004980f0 ??9@YA_NABUV3@@0@Z function 0x3c
+0x00498130 ?Set@BOXCORNERS@@QAEXABUV3@@@Z function
+0x004981d0 ?Set@BOXCORNERS@@QAEXABM00@Z function
+0x00498270 ?Move@BOXCORNERS@@QAEXABUV3@@@Z function
 0x00498350 ?RegisterCommands@ACTOR@@SAXXZ function
-0x00498390 ?Virtual89@ACTOR@@UAEX_N@Z function
-0x004984c0 ?Virtual114@ACTOR@@UAEXXZ function
-0x00498510 ?Virtual112@ACTOR@@UAEXXZ function
-0x00498560 ?Virtual116@ACTOR@@UAEXXZ function
-0x00498610 ?Virtual73@ACTOR@@UAEXXZ function
-0x00498690 ?Virtual74@ACTOR@@UAEXXZ function
-0x00498710 ?Virtual69@ACTOR@@UAEXXZ function
-0x004987c0 ?Virtual70@ACTOR@@UAEXXZ function
-0x00498860 ?Virtual71@ACTOR@@UAEXXZ function
-0x00498910 ?Virtual72@ACTOR@@UAEXXZ function
+0x00498390 ?SetActive@ACTOR@@UAEX_N@Z function
+0x00498470 ?GetBoxTop@ACTOR@@QAEXPAUV3@@0@Z function
+0x004984b0 ?GetBox@ACTOR@@QAEPAUBOXCORNERS@@XZ function
+0x004984c0 ?PlayResourceAnimation@ACTOR@@UAEXHPBD_NM@Z function
+0x00498510 ?SetResourceFrame@ACTOR@@UAEXHPBDM@Z function
+0x00498560 ?BlendResourceAnimation@ACTOR@@UAEXHPBDM_NM@Z function
+0x004985c0 ?ReleaseResource@ACTOR@@QAEXH@Z function
+0x00498610 ?SetResourcesZSort@ACTOR@@UAEXABH0@Z function
+0x00498690 ?SetResourcesSpecific@ACTOR@@UAEXABH0@Z function
+0x00498710 ?SetResourcesPos@ACTOR@@UAEXABHABUV3@@@Z function
+0x004987c0 ?SetResourcesAng@ACTOR@@UAEXABHABUANG@@@Z function
+0x00498860 ?SetResourcesScale@ACTOR@@UAEXABHABUV3@@@Z function
+0x00498910 ?SetResourcesOpacity@ACTOR@@UAEXABHABM@Z function
 0x00498990 ?GetSize@ACTOR@@UAE?AUV3@@XZ function
-0x004989d0 ?Virtual78@ACTOR@@UAEXXZ function
-0x00498b10 ?Virtual79@ACTOR@@UAEXXZ function
+0x004989d0 ?SetOccludingBox@ACTOR@@UAEXABUV3@@@Z function
+0x00498a10 ?UpdateOccludingBox@ACTOR@@QAEXXZ function 0xf3
+0x00498b10 ?SetZSort@ACTOR@@UAEXABH@Z function
+0x00498b20 ?RotateToMove@ACTOR@@QAEXXZ function 0x7c
 0x00498ba0 ?SetPosition@ACTOR@@UAEXABUV3@@@Z function
-0x00498bc0 ?Virtual93@ACTOR@@UAEXXZ function
-0x00498c10 ?Step@WTACTOR@@QAEXXZ function
-0x00498cc0 ?Virtual86@ACTOR@@UAEPAV1@H@Z function
-0x00498d00 ?Virtual106@ACTOR@@UAEXXZ function
+0x00498bc0 ?SetRotation@ACTOR@@UAEXABUMATRIX@@@Z function
+0x00498c10 ?Step@ACTOR@@QAEXXZ function
+0x00498cc0 ?Clone@ACTOR@@UAEPAV1@PAV1@@Z function
+0x00498d00 ?OnScriptLoaded@ACTOR@@UAEXXZ function
+0x00498d20 ?UpdateAttachTag@ACTOR@@QAE_NXZ function 0x14d
 0x00498e70 ?AttachTo@ACTOR@@QAEXABURESHANDLE@@@Z function
-0x00498eb0 ?Virtual51@ACTOR@@UAEXXZ function
-0x00498ec0 ?Virtual27@ACTOR@@UAEXXZ function
+0x00498eb0 ?SetMoveWithScreenZ@ACTOR@@UAEXAB_N@Z function
+0x00498ec0 ?SetFrozen@ACTOR@@UAEXAB_N@Z function
+0x00498ed0 ?FindResourceCopy@ACTOR@@QAEPAVRESOURCE@@H@Z function
+0x00498f30 ?ChangeResourceMaterial@ACTOR@@QAE_NHPBD0@Z function
 0x00499000 ?Link01@ACTOR@@UAE?AUV2@@XZ function
 0x00499020 ?Link03@ACTOR@@UAE?AUV2@@XZ function
 0x00499040 ?Link11@ACTOR@@UAEMXZ function
@@ -743,54 +756,97 @@
 0x004990d0 ?Link13@ACTOR@@UAEXXZ function
 0x004990e0 ?Link14@ACTOR@@UAEMXZ function
 0x004990f0 ?Virtual09@ACTOR@@UAEPAXPBD@Z function
+0x00499190 ??_9@$BBPM@AE function
+0x004991a0 ??_9@$BBLM@AE function
+0x004991b0 ??_9@$BCAA@AE function
+0x004991c0 ??_9@$BCAE@AE function
+0x004991d0 ??_9@$BBME@AE function
+0x004991e0 ??_9@$BCCI@AE function
+0x004991f0 ??_9@$BCAI@AE function
+0x00499200 ??_9@$BCAM@AE function
+0x00499210 ??_9@$BBKM@AE function
+0x00499220 ??_9@$BBMM@AE function
+0x00499230 ??_9@$BBOM@AE function
+0x00499240 ??_9@$BCBA@AE function
+0x00499250 ??_9@$BBPA@AE function
+0x00499260 ??_9@$BBLE@AE function
+0x00499270 ??_9@$BCBE@AE function
+0x00499280 ??_9@$BBPE@AE function
+0x00499290 ??_9@$BBNE@AE function
+0x004992a0 ??_9@$BCBI@AE function
+0x004992b0 ??_9@$BBLI@AE function
+0x004992c0 ??_9@$BBPI@AE function
 0x004992d0 ?IsZero@ANG@@QAE_NXZ function
-0x00499330 ??0BOXCORNERS@@QAE@XZ function
+0x00499330 ??0BOXCORNERS@@QAE@XZ function 0x95
 0x004993d0 ?UpdateVisibility@ACTOR@@QAEXXZ function
-0x00499520 ?Virtual105@ACTOR@@UAEXXZ function
-0x004999d0 ?Virtual108@ACTOR@@UAEXXZ function
-0x00499a70 ?Virtual23@ACTOR@@UAEXXZ function
-0x00499ac0 ?Virtual32@ACTOR@@UAEXXZ function
-0x00499b60 ?Virtual33@ACTOR@@UAEXXZ function
+0x00499520 ?Stop@ACTOR@@UAEXXZ function
+0x00499630 ?ClearResources@ACTOR@@QAEXXZ function 0x235
+0x00499870 ?CreateResource@ACTOR@@QAEXJ@Z function
+0x004999d0 ?AttachResource@ACTOR@@UAEXH@Z function
+0x00499a70 ?SetDirection@ACTOR@@UAEXABUV3@@0@Z function
+0x00499ac0 ?SetAttachTo@ACTOR@@UAEXABVCSTRING@@@Z function
+0x00499b60 ?SetAttachBone@ACTOR@@UAEXABVCSTRING@@@Z function
 0x00499bc0 ?Link08@ACTOR@@UAEXABUV3@@0@Z function
-0x00499c10 ?Virtual57@ACTOR@@UAEXXZ function
-0x00499c40 ?Virtual84@ACTOR@@UAEXXZ function
-0x00499c80 ?Virtual135@ACTOR@@UAEXXZ function
-0x00499e60 ?Virtual88@ACTOR@@UAEXXZ function
-0x00499ea0 ?Virtual131@ACTOR@@UAEXXZ function
-0x00499ee0 ?Update@ACTOR@@UAEXXZ function
-0x0049a5a0 ?Virtual130@ACTOR@@UAEXXZ function
-0x0049a5e0 ?Virtual113@ACTOR@@UAEXXZ function
-0x0049a6b0 ?Virtual111@ACTOR@@UAEXXZ function
-0x0049a780 ?Virtual124@ACTOR@@UAEXXZ function
-0x0049a850 ?Virtual115@ACTOR@@UAEXXZ function
-0x0049a950 ?Virtual117@ACTOR@@UAEXXZ function
-0x0049aa90 ?Virtual107@ACTOR@@UAEXXZ function
-0x0049aad0 ?Virtual68@ACTOR@@UAEXXZ function
-0x0049abb0 ?Virtual109@ACTOR@@UAEXXZ function
-0x0049ac20 ?Virtual110@ACTOR@@UAEXXZ function
-0x0049acd0 ?Virtual128@ACTOR@@UAEXXZ function
+0x00499c10 ?SetPathName@ACTOR@@UAEXABVCSTRING@@@Z function
+0x00499c40 ?SetActorResourcesTemplate@ACTOR@@UAEXABVCSTRING@@@Z function
+0x00499c80 ?ApplyResourcesTemplate@ACTOR@@UAEXPAVACTORRESOURCESMASTER@@@Z function 0x1db
+0x00499e60 ?Activate@ACTOR@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function
+0x00499ea0 ?Deactivate@ACTOR@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function
+0x00499ee0 ?Update@ACTOR@@UAEXXZ function 0x6b4
+0x0049a5a0 ?ClearBehaviors@ACTOR@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function
+0x0049a5e0 ?PlayAnimation@ACTOR@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function
+0x0049a6b0 ?SetAnimationFrame@ACTOR@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function
+0x0049a780 ?StopAnimation@ACTOR@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function
+0x0049a850 ?BlendAnimation@ACTOR@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function
+0x0049a950 ?PauseAnimation@ACTOR@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0x131
+0x0049aa90 ?ResetResources@ACTOR@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function
+0x0049aad0 ?SetResources@ACTOR@@UAEXABHABVCSTRING@@@Z function
+0x0049abb0 ?ActivateResource@ACTOR@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function
+0x0049ac20 ?DeactivateResource@ACTOR@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function
+0x0049acd0 ?Fade@ACTOR@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function
 0x0049adc0 ?SetAngles@ACTOR@@UAEXABUANG@@@Z function
-0x0049ae90 ?Virtual36@ACTOR@@UAEXXZ function
-0x0049aec0 ?Virtual98@ACTOR@@UAEXXZ function
-0x0049afc0 ?Virtual97@ACTOR@@UAEXXZ function
-0x0049b0f0 ?Virtual99@ACTOR@@UAEXXZ function
-0x0049b1e0 ?Virtual123@ACTOR@@UAEXXZ function
-0x0049b220 ?Virtual100@ACTOR@@UAEXXZ function
-0x0049b290 ?Virtual133@ACTOR@@UAEXXZ function
-0x0049b390 ?Virtual134@ACTOR@@UAEXXZ function
-0x0049b440 ?Link07@ACTOR@@UAEXPAUV3@@H@Z function
-0x0049b500 ?Virtual121@ACTOR@@UAEXXZ function
-0x0049bed0 ?Virtual126@ACTOR@@UAEXXZ function
-0x0049bfa0 ?Virtual127@ACTOR@@UAEXXZ function
+0x0049adf0 ?GetMatrix@ACTOR@@QAE?AUMATRIX@@XZ function
+0x0049ae30 ?GetInverseMatrix@ACTOR@@QAE?AUMATRIX@@XZ function
+0x0049ae90 ?SetAttachAng@ACTOR@@UAEXABUANG@@@Z function
+0x0049aec0 ?WorldToLocal@ACTOR@@UAE?AUV3@@U2@@Z function 0xf3
+0x0049afc0 ?LocalToWorld@ACTOR@@UAE?AUV3@@U2@@Z function 0x12d
+0x0049b0f0 ?LocalToWorldDir@ACTOR@@UAE?AUV3@@U2@@Z function
+0x0049b1e0 ?Remove@ACTOR@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function
+0x0049b220 ?Dump@ACTOR@@UAEXXZ function
+0x0049b290 ?SetSpeed@ACTOR@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0xf1
+0x0049b390 ?ChangeResourceMaterialCommand@ACTOR@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function
+0x0049b440 ?Link07@ACTOR@@UAEXPAUV3@@0@Z function
+0x0049b500 ?FollowPath@ACTOR@@UAEXXZ function 0x93f
+0x0049be40 ?_Buynode@?$list@UCONTACT@@V?$allocator@UCONTACT@@@std@@@std@@IAEPAU_Node@?$_List_nod@UCONTACT@@V?$allocator@UCONTACT@@@std@@@2@XZ function
+0x0049be60 ?clear@?$list@UCONTACT@@V?$allocator@UCONTACT@@@std@@@std@@QAEXXZ function
+0x0049bea0 ?_Buynode@?$list@UCONTACT@@V?$allocator@UCONTACT@@@std@@@std@@IAEPAU_Node@?$_List_nod@UCONTACT@@V?$allocator@UCONTACT@@@std@@@2@PAU342@0ABUCONTACT@@@Z function
+0x0049bed0 ?CreateFX@ACTOR@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function
+0x0049bfa0 ?CreateTagFX@ACTOR@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function
 0x0049c150 ?SetName@ACTOR@@UAEXABVCSTRING@@@Z function
-0x0049c1f0 ?Virtual104@ACTOR@@UAEXXZ function
-0x0049c310 ?Virtual75@ACTOR@@UAEXXZ function
-0x0049c910 ?Virtual132@ACTOR@@UAEXXZ function
+0x0049c1f0 ?Start@ACTOR@@UAEXXZ function
+0x0049c310 ?SetResourcesBoneAttach@ACTOR@@UAEXABHABVCSTRING@@@Z function
+0x0049c570 ?MakeFX@ACTOR@@QAE?AURESHANDLE@@PBDU2@UV3@@UANG@@V?$FIXEDSTRING@$0CAA@@@@Z function 0x397
+0x0049c910 ?SetLight@ACTOR@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function
+0x0049caf0 ??1?$list@UCONTACT@@V?$allocator@UCONTACT@@@std@@@std@@QAE@XZ function
+0x0049cb10 ??1BEHAVIORLIST@@UAE@XZ function
+0x0049cb70 ??_GBEHAVIORLIST@@UAEPAXI@Z function
 0x0049cb90 ??1ACTOR@@UAE@XZ function
-0x0049cfa0 ?Virtual125@ACTOR@@UAEXXZ function
+0x0049cec0 ?GetClassId@ACTOR@@UAEHXZ function
+0x0049ced0 ?GetParentClassId@ACTOR@@UAEHXZ function
+0x0049cee0 ?GetClassName@ACTOR@@UAEPBDXZ function
+0x0049cef0 ?GetParentFactoryId@ACTOR@@UAEHXZ function
+0x0049cf00 ?GetFactoryFlags@ACTOR@@UAEHXZ function
+0x0049cf10 ??_EACTOR@@WBM@AEPAXI@Z function
+0x0049cf20 ?Execute@ACTOR@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function
+0x0049cfa0 ?AttachFX@ACTOR@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0x21a
+0x0049d1c0 ??_GACTOR@@UAEPAXI@Z function
+0x0049d1e0 ?_Xlen@?$vector@PAVBEHAVIOR@@V?$allocator@PAVBEHAVIOR@@@std@@@std@@IBEXXZ function
+0x0049d250 ?_Incsize@?$list@UCONTACT@@V?$allocator@UCONTACT@@@std@@@std@@IAEXI@Z function
+0x0049d2f0 ?_Insert_n@?$vector@PAVBEHAVIOR@@V?$allocator@PAVBEHAVIOR@@@std@@@std@@IAEXViterator@12@IABQAVBEHAVIOR@@@Z function
 0x0049d4d0 ??0ACTOR@@QAE@XZ function
 0x0049df00 ?OnContact@ACTOR@@UAEXPAUCONTACT@@@Z function
-0x0049dfc0 ?Virtual129@ACTOR@@UAEXXZ function
+0x0049df70 ?Add@BEHAVIORLIST@@QAEXPAVBEHAVIOR@@@Z function
+0x0049dfc0 ?AddBehavior@ACTOR@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0xe5
 0x0049e430 ?RegisterCommands@GUIGROUP@@SAXXZ function
 0x0049e800 ?Find@GUIGROUP@@QAEPAXPBD@Z function
 0x0049e870 ?FindControl@GUIGROUP@@QAEPAVGUICONTROL@@PBD@Z function
@@ -1316,8 +1372,8 @@
 0x004b50f0 ??_GTRIGGER@@UAEPAXI@Z function 0x1e
 0x004b5110 ?SetCommand@TRIGGER@@UAEXABHABVSTRING@@@Z function 0x82
 0x004b51a0 ?RegisterCommands@SPAWNER@@SAXXZ function 0x3f
-0x004b51e0 ?Virtual101@SPAWNER@@UAEXXZ function 0x2f
-0x004b5210 ?Virtual104@SPAWNER@@UAEXXZ function 0x92
+0x004b51e0 ?Place@SPAWNER@@UAEXXZ function 0x2f
+0x004b5210 ?Start@SPAWNER@@UAEXXZ function 0x92
 0x004b52b0 ?Clone@SPAWNER@@SAPAVACTOR@@PAV2@UV3@@@Z function 0x8f
 0x004b5340 ?SetEnabled@SPAWNER@@UAEXAB_N@Z function 0x27
 0x004b5370 ?ResetSpawning@SPAWNER@@QAEXXZ function 0xc8
@@ -1339,7 +1395,7 @@
 0x004b5600 ??_ESPAWNER@@WBM@AEPAXI@Z function 0x8
 0x004b5610 ?Update@SPAWNER@@UAEXXZ function 0x185
 0x004b57a0 ?Reset@SPAWNER@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0x41
-0x004b57f0 ?Virtual106@SPAWNER@@UAEXXZ function 0x7f
+0x004b57f0 ?OnScriptLoaded@SPAWNER@@UAEXXZ function 0x7f
 0x004b5870 ?Execute@SPAWNER@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function 0x7a
 0x004b58f0 ?SetTargetCommand@SPAWNER@@UAEXABVSTRING@@@Z function 0xb
 0x004b5900 ??0SPAWNER@@QAE@XZ function 0x1d2
@@ -1622,7 +1678,7 @@
 0x004bbac0 ?CreateCopy@SCREENDECALMASTER@@UAEPAVRESOURCE@@ABURESHANDLE@@@Z function 0x69
 0x004bbb30 ?Execute@SCREENDECALMASTER@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function 0x73
 0x004bbbb0 ?Start@BONEDMODELRESOURCE@@UAEXXZ function 0x13c
-0x004bbcf0 ?Virtual70@BONEDMODELRESOURCE@@UAE_NHH@Z function 0x5
+0x004bbcf0 ?ChangeMaterial@BONEDMODELRESOURCE@@UAE_NPBD0@Z function 0x5
 0x004bbd00 ?GetBounds@BONEDMODELRESOURCE@@UAEXPAUV3@@0@Z function 0xb3
 0x004bbdc0 ?GetScaleFactor@BONEDMODELRESOURCE@@UAE?AUV3@@XZ function 0xd1
 0x004bbea0 ?SetSpeed@BONEDMODELRESOURCE@@QAEXABM@Z function 0xf
@@ -1968,6 +2024,7 @@
 0x004d24d0 ?Dump@OCTREE@@QAEXPAUFRUSTUM@@@Z function
 0x004d2b10 ??0OCTREE@@QAE@UV3@@0H@Z function
 0x004d2bb0 ?Clear@OCTREE@@QAEXXZ function
+0x004d2ca0 ?RemoveMember@PVSNODE@@QAEXPAVACTOR@@@Z function
 0x004d2d50 ?Update@ONENODE@@QAEXPAUFRUSTUM@@@Z function
 0x004d2d90 ?Dump@ONENODE@@QAEXPAUFRUSTUM@@@Z function
 0x004d2dc0 ?Clear@ONENODE@@QAEXXZ function
@@ -5546,6 +5603,7 @@
 0x006ba340 ?g_pfnCreateScriptRoot@@3P6APAVCMDBASE@@XZA data 0x4
 0x006ba348 ?s_commands@KERNELCOMMANDS@@2PAUCMDENTRY@@A data 0x4c0
 0x006ba808 ?s_properties@KERNELCOMMANDS@@2PAUPROPENTRY@@A data 0x38
+0x006ba840 ?s_commands@ACTOR@@2PAUCMDENTRY@@A data 0x2c0
 0x006bab00 ?s_properties@ACTOR@@2PAUPROPENTRY@@A data
 0x006bba70 ?s_properties@GUIGROUP@@2PAUPROPENTRY@@A data
 0x006bbaa8 ?g_pfnCreateCameraLens@@3P6APAVCAMERALENS@@XZA data 0x4
@@ -5727,6 +5785,8 @@
 0x006d2700 ?g_pInput@@3PAVINPUT@@A data 0x4
 0x006d2708 ?g_StringManager@@3VSTRINGMANAGER@@A data 0x10d01c
 0x007df724 ?g_pScriptRoot@@3PAVCMDBASE@@A data 0x4
+0x007df728 ?s_zero@?1??Update@ACTOR@@UAEXXZ@4UV3@@A data 0xc
+0x007df734 ?$S5@?1??Update@ACTOR@@UAEXXZ@4IA data 0x4
 0x007df738 ?g_pCamera@@3PAVWTACTOR@@A data 0x4
 0x007df740 ?s_managerNames@RESOURCES@@2PAY0BO@DA data 0xf00
 0x007e0640 ?g_pGUIGROUP@@3PAVRESOURCEMANAGER@@A data 0x4
@@ -5765,6 +5825,7 @@
 0x007e0cc0 ?s_onSetLevel@RESOURCES@@2V?$CALLBACKLIST@P6AXXZ@@A data 0x8
 0x007e0cc8 ?s_steps@?3??Find@?$SAFEINDEX@VRESOURCE@@$0IAAA@$0CDJ@$02@@QAEPAVRESOURCE@@PBD@Z@4HA data 0x4
 0x007e0ccc ?s_steps@?3??Find@?$SAFEINDEX@VRESOURCEMASTER@@$0CAAA@$0PL@$03@@QAEPAVRESOURCEMASTER@@PBD@Z@4HA data 0x4
+0x007e0cd0 ?g_zero@@3UV3@@A data 0xc
 0x007e0ce0 ?liOldSystemTime@?1??GetCpuUsage@SYSMONITOR@@QAEHXZ@4T_LARGE_INTEGER@@A data 0x8
 0x007e0ce8 ?liOldIdleTime@?1??GetCpuUsage@SYSMONITOR@@QAEHXZ@4T_LARGE_INTEGER@@A data 0x8
 0x007e0cf0 ?s_commands@DECALMASTER@@2PAUCMDENTRY@@A data 0x20

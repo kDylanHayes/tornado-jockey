@@ -101,15 +101,18 @@ public:
     // -(n + 1) to loop it.
     virtual void SetFrame(int frame) { m_animation = frame; }
 
-    virtual bool Virtual70(int a, int b);
+    // Swaps material from for to on the model; whether it could.
+    virtual bool ChangeMaterial(const char *from, const char *to);
     virtual void Virtual71() {}
     // The master's bounds, scaled.
     virtual void GetBounds(V3 *min, V3 *max);
-    virtual void Virtual73() = 0;
+    // Shows a frame of an animation.
+    virtual void SetAnimationFrame(const char *animation, float frame) = 0;
     virtual void PlayAnimation(void *animation, int once, float speed) = 0;
-    virtual void Virtual75() = 0;
+    // Blends into an animation.
+    virtual void BlendAnimation(const char *animation, float blend, bool loop, float speed) = 0;
     virtual void StopAnimation() {}
-    virtual void Virtual77(int a) {}
+    virtual void PauseAnimation(bool pause) {}
     virtual void RestartAnimation() {}
     virtual int Virtual79(int a) { return -1; }
     virtual void *GetAnimation(int *index) { return 0; }

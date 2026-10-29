@@ -233,7 +233,7 @@ void SCENE::OnScriptLoaded()
     ACTOR *actor = m_actors.GetFirst(&i);
     while (i != -1) {
         if (actor)
-            actor->Virtual106();
+            actor->OnScriptLoaded();
         actor = m_actors.GetNext(&i);
     }
 }
@@ -244,10 +244,10 @@ void SCENE::DumpActors(int which)
         int i;
         ACTOR *actor = m_actors.GetFirst(&i);
         while (i != -1) {
-            if (actor && actor->m_9a0) {
+            if (actor && actor->m_active) {
                 if (g_pLog)
                     actor->GetFactoryId();
-                actor->Virtual100();
+                actor->Dump();
             }
             actor = m_actors.GetNext(&i);
         }
@@ -257,7 +257,7 @@ void SCENE::DumpActors(int which)
             if (actor) {
                 if (g_pLog)
                     actor->GetFactoryId();
-                actor->Virtual100();
+                actor->Dump();
             }
         }
     }
@@ -270,7 +270,7 @@ ACTOR *SCENE::PickActor(float x, float y, bool activeOnly, int classId)
     int i;
     ACTOR *actor = m_actors.GetFirst(&i);
     while (i != -1) {
-        if (actor && (actor->m_9a0 && !actor->m_91 || !activeOnly)) {
+        if (actor && (actor->m_active && !actor->m_frozen || !activeOnly)) {
             if (FindCommonClass(actor->GetFactoryId(), classId) == classId) {
                 V2 screen(0.0f, 0.0f);
                 ((CAMERA *)g_pCamera)->WorldToScreen(actor->m_position, &screen);
@@ -337,7 +337,7 @@ void SCENE::Reset()
     ACTOR *actor = m_actors.GetFirst(&i);
     while (i != -1) {
         if (actor) {
-            actor->Virtual89(false);
+            actor->SetActive(false);
             m_actors.Remove(actor->m_handle);
         }
         actor = m_actors.GetNext(&i);
@@ -369,7 +369,7 @@ void SCENE::RemoveAll()
     ACTOR *actor = m_actors.GetFirst(&i);
     while (i != -1) {
         if (actor) {
-            actor->Virtual89(false);
+            actor->SetActive(false);
             m_actors.Remove(actor->m_handle);
         }
         actor = m_actors.GetNext(&i);
@@ -426,7 +426,7 @@ void SCENE::Remove(RESHANDLE handle)
                 m_numPendingRemoves++;
                 return;
             }
-            actor->Virtual89(false);
+            actor->SetActive(false);
             actors.Remove(actor->m_handle);
         }
     }
@@ -439,7 +439,7 @@ void SCENE::MessageSpawned(RESHANDLE spawner, STRING message)
         return;
     int i;
     for (ACTOR *actor = m_actors.GetFirst(&i); i != -1; actor = m_actors.GetNext(&i)) {
-        if (actor && actor->m_9a0 && !actor->m_90 && actor->m_spawner.serial == spawner.serial
+        if (actor && actor->m_active && !actor->m_isTemplate && actor->m_spawner.serial == spawner.serial
             && actor->m_spawner.index == spawner.index && actor->m_spawner.kind == spawner.kind) {
             command.Format("msg %s (%s)", actor->m_name.c_str(), message.c_str());
             g_pCmdMgr->Run(command, RESHANDLE());
@@ -472,24 +472,24 @@ void SCENE::Update()
     }
     actor = m_actors.GetFirst(&i);
     while (i != -1) {
-        if (actor && !actor->m_90) {
-            if (!actor->m_9a0) {
-                switch (actor->m_128) {
+        if (actor && !actor->m_isTemplate) {
+            if (!actor->m_active) {
+                switch (actor->m_activation) {
                 case 0:
-                    if (actor->m_a08 <= 0)
-                        actor->Virtual89(true);
+                    if (actor->m_activations <= 0)
+                        actor->SetActive(true);
                     break;
                 case 1:
-                    actor->Virtual89(true);
+                    actor->SetActive(true);
                     break;
                 case 2:
-                    if (CanUpdate(actor) && actor->m_cbd)
-                        actor->Virtual89(true);
+                    if (CanUpdate(actor) && actor->m_inView)
+                        actor->SetActive(true);
                     break;
                 }
             } else {
-                if (actor->m_12c == 0 && !actor->m_cbd)
-                    actor->Virtual89(false);
+                if (actor->m_deactivation == 0 && !actor->m_inView)
+                    actor->SetActive(false);
             }
         }
         actor = m_actors.GetNext(&i);
@@ -499,13 +499,13 @@ void SCENE::Update()
     BeginUpdate();
     actor = m_actors.GetFirst(&i);
     while (i != -1) {
-        if (actor && !actor->m_90) {
+        if (actor && !actor->m_isTemplate) {
             if (g_pGame) {
                 g_pGame->Virtual22(actor);
-                if (actor->m_cbc)
+                if (actor->m_removeRequested)
                     g_pScene->Remove(actor->m_handle);
-            } else if (actor->m_9a0) {
-                ((WTACTOR *)actor)->Step();
+            } else if (actor->m_active) {
+                actor->Step();
             }
         }
         actor = m_actors.GetNext(&i);

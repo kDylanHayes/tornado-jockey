@@ -36,24 +36,24 @@ void SPAWNER::RegisterCommands()
     RegisterClassName(s_commands, "SPAWNER", "ACTOR");
 }
 
-void SPAWNER::Virtual104()
+void SPAWNER::Start()
 {
-    ACTOR::Virtual104();
+    ACTOR::Start();
     if (m_waitOnFirst)
         PickDelay();
 }
 
 ACTOR *SPAWNER::Clone(ACTOR *tmpl, V3 position)
 {
-    ACTOR *copy = tmpl->Virtual86(0);
+    ACTOR *copy = tmpl->Clone(0);
     if (copy) {
         if (copy->GetFactoryId() != tmpl->GetFactoryId()) {
             g_pScene->Remove(copy->m_handle);
         } else {
             copy->SetPosition(position);
-            copy->Virtual101();
-            copy->Virtual26(false);
-            copy->Virtual89(true);
+            copy->Place();
+            copy->SetIsTemplate(false);
+            copy->SetActive(true);
             return copy;
         }
     }
@@ -118,9 +118,9 @@ void SPAWNER::Update()
     }
 }
 
-void SPAWNER::Virtual106()
+void SPAWNER::OnScriptLoaded()
 {
-    ACTOR::Virtual106();
+    ACTOR::OnScriptLoaded();
     FindTemplates();
     ACTOR *tmpl = (ACTOR *)g_pScene->GetActor(m_templates[0]);
     if (tmpl)
@@ -181,7 +181,7 @@ ACTOR *SPAWNER::Spawn()
         MATRIX m;
         m.Identity();
         m.RotateY(m_angle);
-        actor->m_transform.Rotate(m);
+        actor->m_angles.Rotate(m);
     }
     if (m_useRandomAngle) {
         float angle = m_randomAngleRange.y > m_randomAngleRange.x
@@ -190,7 +190,7 @@ ACTOR *SPAWNER::Spawn()
         MATRIX m;
         m.Identity();
         m.RotateY(angle);
-        actor->m_13c = actor->m_13c * m;
+        actor->m_vel = actor->m_vel * m;
     }
     m_angle += m_angleDelta;
     return actor;

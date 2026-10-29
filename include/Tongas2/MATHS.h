@@ -21,6 +21,7 @@ struct V3
     V3 Transform(const MATRIX &m) const;
     bool IsZero() const { return x == 0.0f && y == 0.0f && z == 0.0f; }
     float Length() const { return (float)sqrt(x * x + y * y + z * z); }
+    float LengthSq() const { return x * x + y * y + z * z; }
     // Defined elsewhere: how far o is.
     float Distance(const V3 &o) const;
 
@@ -143,6 +144,7 @@ MATRIX operator/(const MATRIX &m, float s);
 // The point transformed by m, as V3::Transform.
 V3 operator*(const V3 &v, const MATRIX &m);
 bool operator!=(const V3 &a, const V3 &b);
+bool operator==(const V3 &a, const V3 &b);
 
 // Whether the segment a-b touches the box with the given center, rotation and
 // full extents.

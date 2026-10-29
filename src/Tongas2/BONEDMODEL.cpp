@@ -54,7 +54,7 @@ void BONEDMODELRESOURCE::Start()
     }
 }
 
-bool BONEDMODELRESOURCE::Virtual70(int a, int b)
+bool BONEDMODELRESOURCE::ChangeMaterial(const char *from, const char *to)
 {
     return false;
 }
