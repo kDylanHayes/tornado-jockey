@@ -163,7 +163,7 @@ bool GUI::IsSelectable(GUICONTROL *control, const V2 &mouse)
 {
     if (control->GetClassId() != GUIGROUP::s_classId && control->GetClassId() != GUICHECKBOX::s_classId)
         return false;
-    return control->IsVisible() && control->IsEnabled() && control->IsActive()
+    return control->IsEnabled() && control->IsVisible() && ((GUIGROUP *)control)->IsActive()
         && ((GUIGROUP *)control)->m_master->m_selectableWithKeyboard
         && ((GUIGROUP *)control)->IsMouseOver(mouse.x, mouse.y);
 }
@@ -175,7 +175,7 @@ bool GUI::IsSelectableElsewhere(GUICONTROL *control, const V2 &mouse)
         top = m_screen->GetMouseZSort(-1);
     if (control->GetClassId() != GUIGROUP::s_classId && control->GetClassId() != GUICHECKBOX::s_classId)
         return false;
-    return control->m_zsort > top && control->IsVisible() && control->IsEnabled() && control->IsActive()
+    return control->m_topZSort > top && control->IsEnabled() && control->IsVisible() && ((GUIGROUP *)control)->IsActive()
         && ((GUIGROUP *)control)->m_master->m_selectableWithKeyboard
         && !((GUIGROUP *)control)->IsMouseOver(mouse.x, mouse.y);
 }
@@ -192,7 +192,7 @@ bool GUI::ClickSelected()
     V2 mouse(g_pInput->m_mouse.x, g_pInput->m_mouse.y);
     for (int i = 0; i < m_nextFree && i < GUI_MAX_CONTROLS; i++) {
         if (m_controls[i] && IsSelectable(m_controls[i], mouse)) {
-            m_controls[i]->Click();
+            ((GUIGROUP *)m_controls[i])->Click();
             return true;
         }
     }
@@ -490,8 +490,8 @@ void GUI::OpenScreen(RESHANDLE master)
     m_screen->SetSize(V2(1.0f, 1.0f));
     m_screen->SetOpacity(1.0f);
     m_screen->SetZSort(GetScreenZSort());
-    m_screen->Virtual25(true);
-    m_screen->Virtual26(true);
+    m_screen->SetVisible(true);
+    m_screen->SetEnabled(true);
     OnScreenOpened();
 }
 

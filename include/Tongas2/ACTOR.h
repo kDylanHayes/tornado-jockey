@@ -6,6 +6,7 @@
 #ifndef TONGAS2_ACTOR_H
 #define TONGAS2_ACTOR_H
 
+#include "Tongas2/ACTORLINK.h"
 #include "Tongas2/CMDBASE.h"
 #include "Tongas2/MATHS.h"
 #include "Tongas2/SAFEINDEX.h"
@@ -17,31 +18,6 @@ extern char g_classNames[][30];
 
 // Defined elsewhere: per factory id, the factory's flags.
 extern int g_factoryFlags[];
-
-// Defined elsewhere: the second interface actors have. ACTOR's overrides
-// of it take this pointing at it.
-class ACTORLINK
-{
-public:
-    virtual ~ACTORLINK();
-    virtual void Link01() = 0;
-    virtual void Link02() = 0;
-    virtual void Link03() = 0;
-    virtual void Link04() = 0;
-    virtual void Link05() = 0;
-    virtual void Link06() = 0;
-    virtual void Link07() = 0;
-    virtual void Link08() = 0;
-    virtual void Link09() = 0;
-    virtual void Link10() = 0;
-    virtual void Link11() = 0;
-    virtual void Link12() = 0;
-    virtual void Link13() = 0;
-    virtual void Link14() = 0;
-
-    int m_4;
-    int m_8;
-};
 
 // Defined elsewhere: a position and rotation.
 class TRANSFORM
@@ -200,20 +176,20 @@ public:
     // The actor touched another on the screen.
     virtual void OnCollide(ACTOR *other);
 
-    virtual void Link01();
-    virtual void Link02();
-    virtual void Link03();
-    virtual void Link04();
-    virtual void Link05();
-    virtual void Link06();
-    virtual void Link07();
-    virtual void Link08();
-    virtual void Link09();
-    virtual void Link10();
-    virtual void Link11();
-    virtual void Link12();
+    virtual V2 Link01();
+    virtual void Link02(const V2 &position);
+    virtual V2 Link03();
+    virtual void Link04(const V2 &size);
+    virtual V3 Link05();
+    virtual void Link06(const V3 &position);
+    virtual void Link07(V3 *out, int unused);
+    virtual void Link08(const V3 &position, const V3 &direction);
+    virtual V3 Link09();
+    virtual void Link10(const V3 &scale);
+    virtual float Link11();
+    virtual void Link12(float opacity);
     virtual void Link13();
-    virtual void Link14();
+    virtual float Link14();
 
     // Works out whether the actor is in view, for the scene's update.
     void UpdateVisibility();

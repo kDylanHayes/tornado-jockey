@@ -126,14 +126,29 @@ public:
     bool IsMouseOver(float x, float y);
     // Places the controls again.
     void UpdateLayout();
+    // Takes a control out of the group.
+    void RemoveControl(GUICONTROL *control);
+
+    // The control was clicked.
+    virtual void Click();
+    virtual void Virtual44();
+    virtual void Virtual45();
+    virtual void Virtual46();
+    virtual void Virtual47();
+    virtual void Virtual48();
+    virtual void Virtual49();
+    virtual void Virtual50();
+    virtual void Virtual51();
+    virtual void Virtual52();
+    virtual void Virtual53();
+    virtual void Virtual54();
+    virtual void Virtual55();
+    // Whether the control can take the mouse now.
+    virtual bool IsActive();
 
     static int s_classId;
     static PROPENTRY s_properties[];
 
-    char m_5c[0xc];
-    // Set once the group has closed.
-    bool m_closed;
-    char m_69[0x37];
     GUIGROUPMASTER *m_master;
     char m_a4[0x9c];
 };
