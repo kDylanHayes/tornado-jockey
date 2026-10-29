@@ -43,6 +43,8 @@ public:
     void Debug(const char *format, float x, float y, float z) {}
     // Compiled out of the release build too.
     void Trace(const char *text) {}
+    // Writes a value LogVal gives it; compiled out.
+    void Value(const char *format, ...) {}
 
     char m_text[0x200];
     char m_message[0x200];

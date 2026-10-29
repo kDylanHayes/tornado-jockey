@@ -13,7 +13,7 @@
 #include "Tongas2/GUIGROUP.h"
 #include "Tongas2/LOG.h"
 #include "Tongas2/RESOURCES.h"
-#include "Tongas2/SCRIPTROOT.h"
+#include "Tongas2/KERNELCOMMANDS.h"
 #include "Tongas2/SOUND.h"
 #include "Tongas2/TIMER.h"
 
@@ -100,7 +100,7 @@ void GUI::Pause(bool toggle)
         if (g_pTimer->m_paused) {
             if (toggle) {
                 CMDCALL call;
-                ((SCRIPTROOT *)g_pScriptRoot)->Unpause(&call);
+                ((KERNELCOMMANDS *)g_pScriptRoot)->ContinueGame(&call);
             }
         } else {
             g_pTimer->SetPaused(true);

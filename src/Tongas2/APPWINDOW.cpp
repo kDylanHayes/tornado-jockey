@@ -7,7 +7,7 @@
 #include "Tongas2/CMDMGR.h"
 #include "Tongas2/INPUT.h"
 #include "Tongas2/LOG.h"
-#include "Tongas2/SCRIPTROOT.h"
+#include "Tongas2/KERNELCOMMANDS.h"
 
 APPWINDOW *CreateAppWindow();
 
@@ -169,11 +169,11 @@ long APPWINDOW::WndProc(HWND__ *window, unsigned int message, unsigned int wPara
         switch (wParam) {
         case DBT_DEVICEARRIVAL:
             if (volume->dbcv_devicetype == DBT_DEVTYP_VOLUME && (volume->dbcv_flags & DBTF_MEDIA) && g_pScriptRoot)
-                ((SCRIPTROOT *)g_pScriptRoot)->OnMediaArrived(FirstDriveFromMask(volume->dbcv_unitmask));
+                ((KERNELCOMMANDS *)g_pScriptRoot)->OnMediaArrived(FirstDriveFromMask(volume->dbcv_unitmask));
             break;
         case DBT_DEVICEREMOVECOMPLETE:
             if (volume->dbcv_devicetype == DBT_DEVTYP_VOLUME && (volume->dbcv_flags & DBTF_MEDIA) && g_pScriptRoot) {
-                ((SCRIPTROOT *)g_pScriptRoot)->OnMediaRemoved(FirstDriveFromMask(volume->dbcv_unitmask));
+                ((KERNELCOMMANDS *)g_pScriptRoot)->OnMediaRemoved(FirstDriveFromMask(volume->dbcv_unitmask));
                 return -1;
             }
             break;

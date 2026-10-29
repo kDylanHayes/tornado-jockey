@@ -193,6 +193,8 @@ public:
 
     // Works out whether the actor is in view, for the scene's update.
     void UpdateVisibility();
+    // Attaches it to the actor with the handle. Defined elsewhere.
+    void AttachTo(const RESHANDLE &parent);
 
     static void RegisterCommands();
 
