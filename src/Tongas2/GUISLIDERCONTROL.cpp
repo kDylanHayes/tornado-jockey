@@ -13,6 +13,19 @@
 
 #include <string.h>
 
+// What FIXEDSTRING's operator= does, inline: the exe inlines it here and
+// calls it elsewhere. Kept out of FIXEDSTRING.h, since adding to the class
+// there changes the code other units get.
+inline void AssignText(FIXEDSTRING<0x200> &string, const char *text)
+{
+    if (!text) {
+        string.m_buf[0] = '\0';
+        return;
+    }
+    strncpy(string.m_buf, text, 0x1ff);
+    string.m_buf[0x1ff] = '\0';
+}
+
 CMDENTRY GUISLIDER::s_commands[] = {
     { 0, 0, 0, 0, 0 },
 };
@@ -52,7 +65,7 @@ GUISLIDER::GUISLIDER(const RESHANDLE &master, GUIGROUP *parent) : GUIGROUP(maste
             g_pLog->Error("SLIDER is associated with a VISUAL not binded to a variable! (maybe index %d not correct?)", bar);
         return;
     }
-    m_setCommand.Assign(m_visualMaster->m_bindProgressBar[bar].c_str());
+    AssignText(m_setCommand, m_visualMaster->m_bindProgressBar[bar].c_str());
     char *field = strrchr(m_setCommand, '.');
     if (!field)
         field = m_setCommand;

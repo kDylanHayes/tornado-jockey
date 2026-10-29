@@ -26,17 +26,6 @@ public:
     // Out of line; defined in another unit.
     FIXEDSTRING &operator=(const char *text);
 
-    // What operator= does, inline: the exe inlines it in some places and
-    // calls it in others.
-    void Assign(const char *text)
-    {
-        if (!text) {
-            m_buf[0] = '\0';
-            return;
-        }
-        strncpy(m_buf, text, N - 1);
-        m_buf[N - 1] = '\0';
-    }
     void Set(const char *text)
     {
         strncpy(m_buf, text, N - 1);
