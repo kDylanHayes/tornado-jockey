@@ -31,10 +31,10 @@ void SCREENDECAL::SetPosition(V3 position)
     m_onScreen = false;
 }
 
-void SCREENDECAL::SetScreenPosition(float x, float y)
+void SCREENDECAL::SetScreenPosition(V2 position)
 {
-    m_screenPosition.x = x;
-    m_screenPosition.y = y;
+    m_screenPosition.x = position.x;
+    m_screenPosition.y = position.y;
     m_onScreen = true;
 }
 
