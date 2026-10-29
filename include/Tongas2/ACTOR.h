@@ -329,7 +329,7 @@ public:
     // Releases the copies and clears the resource properties.
     void ClearResources();
     // Makes resource i's copy.
-    void CreateResource(int i);
+    void CreateResource(long i);
     // The rotation and its inverse.
     MATRIX GetMatrix();
     MATRIX GetInverseMatrix();

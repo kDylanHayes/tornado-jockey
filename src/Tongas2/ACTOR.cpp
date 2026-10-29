@@ -670,7 +670,7 @@ void ACTOR::Stop()
 
 void ACTOR::ClearResources()
 {
-    for (int i = 0; i < ACTOR_MAX_RESOURCES; i++) {
+    for (long i = 0; i < ACTOR_MAX_RESOURCES; i++) {
         ReleaseResource(i);
         SetResources(i, CSTRING());
         SetResourcesZSort(i, 0);
@@ -683,13 +683,14 @@ void ACTOR::ClearResources()
     m_numResources = 0;
 }
 
-void ACTOR::CreateResource(int i)
+void ACTOR::CreateResource(long i)
 {
-    if (m_copies[i].IsValid())
+    RESHANDLE &handle = m_copies[i];
+    if (handle.IsValid())
         ReleaseResource(i);
     OBJECT *copy = (OBJECT *)g_pResources->GetResource(m_masters[i]);
     if (copy) {
-        m_copies[i] = copy->m_handle;
+        handle = copy->m_handle;
         AttachResource(i);
         copy->SetOffsetV(m_resourcesPos[i]);
         copy->SetRelAngles(m_resourcesAng[i]);
@@ -763,7 +764,7 @@ void ACTOR::SetActorResourcesTemplate(const CSTRING &name)
 
 void ACTOR::ApplyResourcesTemplate(ACTORRESOURCESMASTER *master)
 {
-    for (int i = 0; i < ACTOR_MAX_RESOURCES; i++) {
+    for (long i = 0; i < ACTOR_MAX_RESOURCES; i++) {
         m_template = master;
         SetResources(i, master->m_resources[i].c_str());
         SetResourcesPos(i, master->m_pos[i]);

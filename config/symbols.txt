@@ -777,11 +777,11 @@
 0x004992b0 ??_9@$BBLI@AE function
 0x004992c0 ??_9@$BBPI@AE function
 0x004992d0 ?IsZero@ANG@@QAE_NXZ function
-0x00499330 ??0BOXCORNERS@@QAE@XZ function
+0x00499330 ??0BOXCORNERS@@QAE@XZ function 0x95
 0x004993d0 ?UpdateVisibility@ACTOR@@QAEXXZ function
 0x00499520 ?Stop@ACTOR@@UAEXXZ function
 0x00499630 ?ClearResources@ACTOR@@QAEXXZ function 0x235
-0x00499870 ?CreateResource@ACTOR@@QAEXH@Z function
+0x00499870 ?CreateResource@ACTOR@@QAEXJ@Z function
 0x004999d0 ?AttachResource@ACTOR@@UAEXH@Z function
 0x00499a70 ?SetDirection@ACTOR@@UAEXABUV3@@0@Z function
 0x00499ac0 ?SetAttachTo@ACTOR@@UAEXABVCSTRING@@@Z function
