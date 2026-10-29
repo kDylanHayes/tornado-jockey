@@ -307,7 +307,7 @@ bool RESOURCEMANAGER::IsListLoaded()
                 if (memcmp(text, "end", 3) == 0) {
                     free(text);
                     m_loader->Close();
-                    g_StringManager.Check();
+                    g_StringManager.Defrag();
                     PrepareMasters();
                     m_loaded = true;
                     return true;
@@ -341,7 +341,7 @@ bool RESOURCEMANAGER::IsListLoaded()
     m_loader->Close();
     PrepareMasters();
     m_loaded = true;
-    g_StringManager.Check();
+    g_StringManager.Defrag();
     return m_loaded;
 }
 

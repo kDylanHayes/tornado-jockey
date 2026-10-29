@@ -650,7 +650,9 @@
 0x00493500 ?SetBehavior@GUICONTROL@@UAEXABH@Z function 0x1a0
 0x004936a0 ?SetBehaviorParams@GUICONTROL@@UAEXABVCSTRING@@@Z function 0x88
 0x00493730 ?GParent@GUICONTROL@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0x91
-0x00493860 ?Check@STRINGMANAGER@@QAEXXZ function
+0x004937d0 ??_GSTRINGMANAGER@@UAEPAXI@Z function 0x1f
+0x004937f0 ??0STRINGMANAGER@@QAE@XZ function 0x6d
+0x00493860 ?Defrag@STRINGMANAGER@@QAEXXZ function 0x187
 0x00493f20 ?RegisterCommands@KERNELCOMMANDS@@SAXXZ function
 0x004980f0 ??9@YA_NABUV3@@0@Z function
 0x00498350 ?RegisterCommands@ACTOR@@SAXXZ function
@@ -3828,6 +3830,7 @@
 0x00609f60 _$E4 function
 0x00609f70 _$E7 function
 0x0060a080 _$E9 function
+0x0060a5d0 _$E1 function 0x16
 0x0060c9a0 _$E1 function 0xb1
 0x0060ca60 _$E3 function 0x105
 0x0060cb70 _$E5 function 0xc
@@ -3896,6 +3899,7 @@
 0x006543d0 _$E5 function 0x24
 0x00654400 _$E2 function
 0x00654430 _$E5 function
+0x00654460 _$E2 function 0xb
 0x00654470 _$E6 function 0x24
 0x006544a0 _$E9 function 0x24
 0x006544d0 _$E12 function 0x24
@@ -4309,6 +4313,7 @@
 0x006685f8 ??_C@_07DOAOMMKG@Enabled?$AA@ data 0x8
 0x00668608 ??_C@_05ODPICHEP@ZSort?$AA@ data 0x6
 0x00668610 ??_C@_04EBKMHHBE@Size?$AA@ data 0x5
+0x00668618 ??_7STRINGMANAGER@@6B@ data 0x4
 0x0066861c ??_C@_06HBNONAG@create?$AA@ data 0x7
 0x006686dc ??_C@_03MEPDGFMA@var?$AA@ data 0x4
 0x006686ec ??_C@_09BMHMPIHG@resources?$AA@ data 0xa
@@ -5659,7 +5664,7 @@
 0x006d26f4 ?g_actorUpdateHooks@@3UTIMERHOOKS@@A data 0x8
 0x006d26fc ?s_steps@?3??Find@?$SAFEINDEX@VACTOR@@$0BDII@$0PL@$00@@QAEPAVACTOR@@PBD@Z@4HA data 0x4
 0x006d2700 ?g_pInput@@3PAVINPUT@@A data 0x4
-0x006d2708 ?g_StringManager@@3VSTRINGMANAGER@@A data
+0x006d2708 ?g_StringManager@@3VSTRINGMANAGER@@A data 0x10d01c
 0x007df724 ?g_pScriptRoot@@3PAVCMDBASE@@A data 0x4
 0x007df738 ?g_pCamera@@3PAVWTACTOR@@A data 0x4
 0x007df740 ?s_managerNames@RESOURCES@@2PAY0BO@DA data 0xf00

@@ -8,6 +8,11 @@
 
 #include "Tongas2/FIXEDSTRING.h"
 
+class STRING;
+
+// The pool STRING buffers come from: 0x1000 pages of 0x100 bytes, laid out
+// like UNICODESTRING_MANAGER's (UNICODESTRING.h). Placeholder names apart
+// from the class name, which its log messages give.
 class STRINGMANAGER
 {
 public:
@@ -19,8 +24,44 @@ public:
 #else
     void Free(int &block, int &pages);
 #endif
-    // Checks the pool for errors.
-    void Check();
+    // Moves the used pages down over the free ones.
+    void Defrag();
+
+    // Only STRINGMANAGER.cpp sees the layout: FX's code comes out
+    // different when it sees the destructor and the members too.
+#ifdef STRINGMANAGER_LAYOUT
+    STRINGMANAGER();
+    virtual ~STRINGMANAGER() {}
+
+    // Defined in STRINGMANAGER.cpp.
+    bool CheckIndex(int page);
+    char *GetPointer(const int &page);
+
+    // A stack of pages that were freed, to hand out again first.
+    struct CACHE
+    {
+        enum
+        {
+            SOME,
+            EMPTY,
+            FULL
+        };
+
+        CACHE() : m_index(-1), m_state(EMPTY) {}
+
+        int m_pages[0x1000];
+        int m_index;
+        int m_state;
+    };
+
+    CACHE m_cache[2];
+    // The first page never used.
+    int m_next;
+    bool m_used[0x1000];
+    STRING *m_owners[0x1000];
+    int m_usedPagesCount;
+    char m_pages[0x1000][0x100];
+#endif
 };
 
 extern STRINGMANAGER g_StringManager;
