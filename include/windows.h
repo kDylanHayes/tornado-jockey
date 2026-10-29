@@ -13,6 +13,10 @@
 #define TRUE 1
 #define FALSE 0
 #define NO_ERROR 0L
+#define CF_TEXT 1
+#define CF_UNICODETEXT 13
+#define VK_RETURN 0x0D
+#define VK_CONTROL 0x11
 
 // FreeImage.h declares the SDK's basic types itself, with BOOL as long,
 // unless windows.h came first; a file that needs both includes FreeImage.h
@@ -224,6 +228,11 @@ WINUSERAPI int WINAPI GetSystemMetrics(int nIndex);
 WINUSERAPI BOOL WINAPI ScreenToClient(HWND hWnd, LPPOINT lpPoint);
 WINUSERAPI HWND WINAPI GetForegroundWindow(void);
 WINUSERAPI int WINAPIV wsprintfA(LPSTR, LPCSTR, ...);
+WINUSERAPI BOOL WINAPI OpenClipboard(HWND hWndNewOwner);
+WINUSERAPI BOOL WINAPI CloseClipboard(void);
+WINUSERAPI HANDLE WINAPI GetClipboardData(UINT uFormat);
+WINBASEAPI LPVOID WINAPI GlobalLock(HANDLE hMem);
+WINBASEAPI BOOL WINAPI GlobalUnlock(HANDLE hMem);
 }
 
 SHSTDAPI_(BOOL) ShellExecuteExA(LPSHELLEXECUTEINFOA lpExecInfo);

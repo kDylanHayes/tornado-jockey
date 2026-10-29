@@ -45,19 +45,60 @@ public:
     bool m_dontAllowStartSpaces[GUITEXT_MAX];
 };
 
-// The GUI text edit objects, defined elsewhere; only what CMDMGR needs so far.
-class GUITEXTEDIT : public GUITEXT
+// The GUI text box control: GUI text the player types into while it has
+// the input, showing each value through its template's separators mask
+// with a blinking caret, and running the template's Enter command.
+// Placeholder names apart from the class name, properties and commands.
+class GUITEXTEDIT : public GUITEXT, public INPUTLISTENER
 {
 public:
-    // Defined in another unit.
     GUITEXTEDIT(const RESHANDLE &master, GUIGROUP *parent);
+    virtual ~GUITEXTEDIT();
 
     static void RegisterCommands();
 
+    virtual int GetClassId() { return s_classId; }
+    virtual int GetParentClassId() { return g_classParents[s_classId]; }
+    virtual const char *GetClassName() { return g_classNames[s_classId]; }
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args)
+    {
+        return (this->*(SRESULT (GUITEXTEDIT::*)(TOKENS **))command->func)(args);
+    }
+    virtual int Virtual19() { return 3; }
+    // Blinks the caret.
+    virtual void Update();
+    // Shows the value through the separators mask, with the caret.
+    virtual void SetText(const int &i, const FIXEDWSTRING<0x200> &text);
+    // Binds the texts to the values once asked.
+    virtual FIXEDSTRING<0x200> GetBindVar(int i);
+
+    // The property's setter.
+    virtual void SetValue(const int &i, const FIXEDWSTRING<0x200> &value) { m_values[i] = value; }
+    // The script commands.
+    virtual SRESULT DoneInput(CMDCALL *call);
+    virtual SRESULT Length(CMDCALL *call);
+    virtual SRESULT IsEmpty(CMDCALL *call);
+
+    virtual bool OnKeyDown(unsigned int key);
+    virtual bool OnChar(unsigned int c);
+
+    // Types c into the value being edited, if it is allowed and fits.
+    void AddChar(wchar_t c);
+    // Types the clipboard's text.
+    void Paste();
+
     static int s_classId;
+    static CMDENTRY s_commands[];
     static PROPENTRY s_properties[];
 
-    char m_8650[0x8018];
+    FIXEDWSTRING<0x200> m_values[GUITEXT_MAX];
+    GUITEXTEDITMASTER *m_editMaster;
+    // Once the texts show the values.
+    bool m_bound;
+    float m_blinkTime;
+    bool m_caretOn;
+    // The value being edited.
+    int m_active;
 };
 
 #endif

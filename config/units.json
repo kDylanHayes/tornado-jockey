@@ -2419,6 +2419,18 @@
       "category": "engine"
     },
     {
+      "name": "Tongas2/GUITEXTEDITCONTROL",
+      "ranges": [
+        "0x004ca290-0x004caddf",
+        "0x00615de0-0x00615f0f",
+        "0x00671eb8-0x0067212f",
+        "0x006c13b8-0x006c14a7"
+      ],
+      "target": "build/target/Tongas2/GUITEXTEDITCONTROL.obj",
+      "source": "src/Tongas2/GUITEXTEDITCONTROL.cpp",
+      "category": "engine"
+    },
+    {
       "name": "Tongas2/GUITEXTCONTROL",
       "ranges": [
         "0x004cade0-0x004cc87f",

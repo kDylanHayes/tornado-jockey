@@ -176,7 +176,7 @@ public:
     GUITEXTMASTER *m_textMaster;
     RESHANDLE m_copies[GUITEXT_MAX];
     // The bound values the texts show.
-    SRESULT m_values[GUITEXT_MAX];
+    SRESULT m_boundValues[GUITEXT_MAX];
 };
 
 #endif
