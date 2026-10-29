@@ -189,7 +189,7 @@ bool GUI::MoveMouseTo(GUICONTROL *control)
 
 bool GUI::ClickSelected()
 {
-    V2 mouse = g_pInput->m_mouse;
+    V2 mouse(g_pInput->m_mouse.x, g_pInput->m_mouse.y);
     for (int i = 0; i < m_nextFree && i < GUI_MAX_CONTROLS; i++) {
         if (m_controls[i] && IsSelectable(m_controls[i], mouse)) {
             m_controls[i]->Click();
@@ -314,7 +314,7 @@ GUICONTROL *GUI::FindNext(const int &direction)
     float behindDistance = 0.0f;
     GUICONTROL *other = 0;
     float otherDistance = 10000000.0f;
-    V2 mouse = g_pInput->m_mouse;
+    V2 mouse(g_pInput->m_mouse.x, g_pInput->m_mouse.y);
     for (int i = 0; i < m_nextFree && i < GUI_MAX_CONTROLS; i++) {
         if (m_controls[i] && IsSelectableElsewhere(m_controls[i], mouse)) {
             float distance;
@@ -484,7 +484,7 @@ void GUI::OpenScreen(RESHANDLE master)
 {
     CloseScreen();
     ((CAMERA *)g_pCamera)->StopJitter();
-    m_openClicks = g_pInput->m_clicks + 1;
+    m_openPriority = g_pInput->m_topPriority + 1;
     m_screen = new GUIGROUP(master, 0);
     m_screen->SetPosition(V2(0.5f, 0.5f));
     m_screen->SetSize(V2(1.0f, 1.0f));

@@ -154,8 +154,9 @@ public:
     int m_freeList[GUI_MAX_CONTROLS];
     int m_numFree;
     int m_count;
-    // The input system's click count when the screen opened.
-    int m_openClicks;
+    // One above the input system's top listener priority when the screen
+    // opened.
+    int m_openPriority;
     GUIGROUP *m_screen;
     // The black screen decal, the opacity it fades to and the time left.
     RESHANDLE m_black;

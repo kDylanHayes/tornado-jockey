@@ -2238,6 +2238,21 @@
       }
     },
     {
+      "name": "Tongas2/INPUT",
+      "ranges": [
+        "0x00491760-0x004929ef",
+        "0x00668168-0x006682af",
+        "0x006b9fb0-0x006ba00f",
+        "0x006d2700-0x006d2703"
+      ],
+      "target": "build/target/Tongas2/INPUT.obj",
+      "source": "src/Tongas2/INPUT.cpp",
+      "category": "engine",
+      "symbol_mappings": {
+        "?Virtual13@CMDBASE@@UAEXXZ": "??_9@$BBA@AE"
+      }
+    },
+    {
       "name": "Tongas2/FILELOADER",
       "ranges": [
         "0x004ce290-0x004ce59d",

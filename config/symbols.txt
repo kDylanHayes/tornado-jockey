@@ -557,13 +557,54 @@
 0x00491660 ?RenameActor@SCENE@@QAEXURESHANDLE@@PBD@Z function
 0x00491680 ?CreateActor@SCENE@@QAEPAVACTOR@@H@Z function
 0x004916f0 ?CreateActor@SCENE@@QAEPAVACTOR@@PBD@Z function 0x62
-0x00491c70 ?OnMouse@INPUT@@QAEXHHH@Z function
-0x00492150 ?OnKey@INPUT@@QAEXIH@Z function
+0x00491760 ?Activate@JOY@@QAEX_N@Z function 0x58
+0x004917c0 ?DispatchMouse@INPUT@@QAEXHUMOUSESTATE@@@Z function 0x123
+0x004918f0 ?DispatchKey@INPUT@@QAEXHI@Z function 0xff
+0x004919f0 ??0INPUT@@QAE@XZ function 0xa7
+0x00491aa0 ?Update@INPUT@@UAEXXZ function 0x1c3
+0x00491c70 ?OnMouse@INPUT@@QAEXHHH@Z function 0x4dc
+0x00492150 ?OnKey@INPUT@@QAEXIH@Z function 0x86
+0x004921e0 ?IsKeyDown@INPUT@@QAE_NH@Z function 0x14
+0x00492200 ?UpdateTopPriority@INPUT@@QAEXXZ function 0xec
 0x004922f0 ?SetMouseCapture@INPUT@@QAEX_N@Z function 0x1f
-0x00492480 ?Virtual13@CMDBASE@@UAEXXZ function
+0x00492310 ?IsJoyActive@INPUT@@QAE_NH@Z function 0x2a
+0x00492340 ?IsJoyButtonReleased@INPUT@@QAE_NHI@Z function 0x47
+0x00492390 ?ActivateJoy@INPUT@@QAEXH_N@Z function 0x44
+0x004923e0 ??_9@$BBM@AE function 0x5
+0x004923f0 ??_9@$BCA@AE function 0x5
+0x00492400 ??_9@$BCE@AE function 0x5
+0x00492410 ??_9@$B3AE function 0x5
+0x00492420 ??_9@$BEI@AE function 0x5
+0x00492430 ??_9@$BCI@AE function 0x5
+0x00492440 ??_9@$B7AE function 0x5
+0x00492450 ??_9@$BCM@AE function 0x5
+0x00492460 ??_9@$BM@AE function 0x5
+0x00492470 ??_9@$BDA@AE function 0x5
+0x00492480 ?Virtual13@CMDBASE@@UAEXXZ function 0x5
+0x00492490 ??_9@$BDE@AE function 0x5
+0x004924a0 ??_9@$BBE@AE function 0x5
+0x004924b0 ??_9@$BDI@AE function 0x5
+0x004924c0 ?CreateInput@@YAPAVINPUT@@XZ function 0x1b
+0x004924e0 ??0JOY@@QAE@XZ function 0x43
+0x00492530 ??1JOY@@QAE@XZ function 0x4a
+0x00492580 ?AddMouseListener@INPUT@@QAEXPAVMOUSELISTENER@@H@Z function 0x78
+0x00492600 ?RemoveMouseListener@INPUT@@QAEXPAVMOUSELISTENER@@@Z function 0x3e
+0x00492640 ?AddKeyListener@INPUT@@QAEXPAVINPUTLISTENER@@H@Z function 0x78
+0x004926c0 ?RemoveKeyListener@INPUT@@QAEXPAVINPUTLISTENER@@@Z function 0x3e
+0x00492700 ??_GJOY@@QAEPAXI@Z function 0x5e
+0x00492760 ?SetPriority@MOUSELISTENER@@QAEXH@Z function 0x1a
+0x00492780 ?Unregister@MOUSELISTENER@@QAEXXZ function 0x13
 0x004927a0 ?SetPriority@INPUTLISTENER@@QAEXH@Z function 0x1a
+0x004927c0 ??1INPUT@@UAE@XZ function 0x3e
+0x00492800 ?SetNumJoys@INPUT@@QAEXH@Z function 0x92
+0x004928a0 ??0MOUSELISTENER@@QAE@XZ function 0x1f
+0x004928c0 ?OnMouseMove@MOUSELISTENER@@UAE_NUMOUSESTATE@@@Z function 0x5
+0x004928d0 ??1MOUSELISTENER@@UAE@XZ function 0x19
 0x004928f0 ??0INPUTLISTENER@@QAE@XZ function 0x1f
 0x00492910 ??1INPUTLISTENER@@UAE@XZ function 0x19
+0x00492930 ??_GINPUT@@UAEPAXI@Z function 0x52
+0x00492990 ??_GMOUSELISTENER@@UAEPAXI@Z function 0x2f
+0x004929c0 ??_GINPUTLISTENER@@UAEPAXI@Z function 0x2f
 0x004929f0 ?RegisterCommands@GUICONTROL@@SAXXZ function
 0x00492c90 ?IsVisible@GUICONTROL@@QAE_NXZ function
 0x00492cb0 ?IsEnabled@GUICONTROL@@QAE_NXZ function
@@ -4201,6 +4242,11 @@
 0x006680a0 ??_C@_04HGGBINEM@?$CFs?$CFd?$AA@ data 0x5
 0x006680b4 ??_C@_0CK@FBJPJPNG@SAFEINDEX?3?3Insert?$DO?5ERROR?$CB?$CB?$CB?5Tabl@ data 0x2a
 0x006680e0 ??_C@_0DA@JIDJBGHL@SAFEINDEX?3?3New?$DO?5ERROR?5Invalid?5di@ data 0x30
+0x00668168 _s_TypeNames data 0xb4
+0x0066821c ??_7INPUT@@6B@ data 0x10
+0x0066822c ??_C@_0CE@EEMGMPHD@INPUT?3?3ActivateJoy?5?9?5Invalid?5joy@ data 0x24
+0x00668250 ??_7MOUSELISTENER@@6B@ data 0x4c
+0x0066829c ??_7INPUTLISTENER@@6B@ data 0x10
 0x0066849c ??_C@_09GMGDLAAH@TimeSpace?$AA@ data 0xa
 0x006685d4 ??_C@_0P@FHAKPFLB@BehaviorParams?$AA@ data 0xf
 0x006685e4 ??_C@_08GEFGIKPN@Behavior?$AA@ data 0x9
@@ -5373,6 +5419,8 @@
 0x006b9ea0 ?s_commands@SCENE@@2PAUCMDENTRY@@A data 0xa0
 0x006b9f40 ?s_properties@SCENE@@2PAUPROPENTRY@@A data 0x70
 0x006b9fb0 ?g_pfnCreateInput@@3P6APAVINPUT@@XZA data 0x4
+0x006b9fb8 _s_mouseHandlers data 0x48
+0x006ba000 _s_keyHandlers data 0x10
 0x006ba110 ?s_properties@GUICONTROL@@2PAUPROPENTRY@@A data
 0x006ba340 ?g_pfnCreateScriptRoot@@3P6APAVCMDBASE@@XZA data 0x4
 0x006ba808 ?s_properties@KERNELCOMMANDS@@2PAUPROPENTRY@@A data
