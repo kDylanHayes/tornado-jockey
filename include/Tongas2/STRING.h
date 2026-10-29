@@ -92,6 +92,18 @@ public:
         Reserve(strlen(text) + 1);
         *this = text;
     }
+    STRING(const STRING &other)
+    {
+        m_block = -1;
+        m_pages = 0;
+        m_buf = 0;
+        m_length = 0;
+        m_lengthValid = true;
+        if (const_cast<STRING &>(other).Length() > 0) {
+            Reserve(const_cast<STRING &>(other).Length() + 1);
+            *this = other.c_str();
+        }
+    }
     virtual ~STRING() throw()
     {
         if (m_pages > 0)

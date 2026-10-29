@@ -43,6 +43,11 @@ public:
     void Debug(const char *format, float x, float y, float z) {}
     // Compiled out of the release build too.
     void Trace(const char *text) {}
+#ifdef LOG_VALUE
+    // Writes a value LogVal gives it; compiled out. Only KERNELCOMMANDS
+    // declares it, since declaring it everywhere moves registers in CPRIMITIVE3.
+    void Value(const char *format, ...) {}
+#endif
 
     char m_text[0x200];
     char m_message[0x200];

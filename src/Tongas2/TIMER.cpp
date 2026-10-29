@@ -13,7 +13,7 @@
 #include "Tongas2/INPUT.h"
 #include "Tongas2/LOG.h"
 #include "Tongas2/RESOURCES.h"
-#include "Tongas2/SCRIPTROOT.h"
+#include "Tongas2/KERNELCOMMANDS.h"
 #include "Tongas2/SYSMONITOR.h"
 #include "Tongas2/TIMER.h"
 #include "Tongas2/VALUEMANAGER.h"

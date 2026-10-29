@@ -2282,6 +2282,18 @@
       "category": "engine"
     },
     {
+      "name": "Tongas2/KERNELCOMMANDS",
+      "ranges": [
+        "0x004939f0-0x004980ef",
+        "0x0060a5f0-0x0060aa6f",
+        "0x0066861c-0x00668b9b",
+        "0x006ba340-0x006ba83f"
+      ],
+      "target": "build/target/Tongas2/KERNELCOMMANDS.obj",
+      "source": "src/Tongas2/KERNELCOMMANDS.cpp",
+      "category": "engine"
+    },
+    {
       "name": "Tongas2/FILELOADER",
       "ranges": [
         "0x004ce290-0x004ce59d",

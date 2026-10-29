@@ -177,6 +177,8 @@ struct SRTEXTURE
         index = other.index;
         return *this;
     }
+    // Defined in KERNELCOMMANDS.cpp.
+    bool operator==(const SRTEXTURE &other) const;
 };
 
 // Indexed by SRESULTTYPE. Defined here, so every unit that includes this
