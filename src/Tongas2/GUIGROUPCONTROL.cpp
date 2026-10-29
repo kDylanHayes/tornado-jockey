@@ -130,7 +130,9 @@ GUICONTROL *GUIGROUP::AddControl(int slot, const RESHANDLE &master)
             g_pLog->Error("GUIGROUP::AddControl - Tried to create invalid control");
         return 0;
     }
-    GUICONTROL *control = s_createControl[resource->m_manager->m_id - g_pGUIGROUP->m_id + 8](master, this);
+    // The type counts from GUIGROUP, the last of the GUI types.
+    int type = resource->m_manager->m_id - g_pGUIGROUP->m_id;
+    GUICONTROL *control = s_createControl[type + 8](master, this);
     if (!control) {
         if (g_pLog)
             g_pLog->Error("GUIGROUP::AddControl - Tried to create invalid control!");
@@ -231,8 +233,7 @@ int GUIGROUP::GetMouseZSort(int min)
     if (m_master->m_fullScreenInputBlocker && m_topZSort > min)
         min = m_topZSort;
     for (int i = 0; i < m_controlCount; i++) {
-        GUICONTROL *control = m_controls[i];
-        if (control && !control->m_closed && control->GetClassId() == s_classId
+        if (m_controls[i] && !m_controls[i]->m_closed && m_controls[i]->GetClassId() == s_classId
             && m_controls[i]->IsEnabled() && m_controls[i]->IsVisible()
             && ((GUIGROUP *)m_controls[i])->m_master->m_fullScreenInputBlocker) {
             int zsort = ((GUIGROUP *)m_controls[i])->GetMouseZSort(min);
@@ -337,9 +338,8 @@ bool GUIGROUP::OnMouseMove(MOUSESTATE state)
 void GUIGROUP::UpdateLayout()
 {
     for (int i = 0; i < m_controlCount; i++) {
-        GUICONTROL *control = m_controls[i];
-        if (control && !control->m_closed) {
-            if (control->Virtual19() == 1)
+        if (m_controls[i] && !m_controls[i]->m_closed) {
+            if (m_controls[i]->Virtual19() == 1)
                 m_controls[i]->SetPosition(m_controls[i]->m_position);
             else if (m_controls[i]->Virtual19() == 8)
                 ((GUIGROUP *)m_controls[i])->UpdateLayout();
@@ -356,9 +356,8 @@ void GUIGROUP::SetTopZSortAll(int zsort)
 {
     SetTopZSort(zsort);
     for (int i = 0; i < m_controlCount; i++) {
-        GUICONTROL *control = m_controls[i];
-        if (control && !control->m_closed) {
-            if (control->GetClassId() == s_classId)
+        if (m_controls[i] && !m_controls[i]->m_closed) {
+            if (m_controls[i]->GetClassId() == s_classId)
                 ((GUIGROUP *)m_controls[i])->SetTopZSortAll(zsort + 1);
             else
                 m_controls[i]->SetTopZSort(zsort + 1);
@@ -380,9 +379,8 @@ int GUIGROUP::GetTopZSort()
 {
     int top = m_topZSort;
     for (int i = 0; i < m_controlCount; i++) {
-        GUICONTROL *control = m_controls[i];
-        if (control && !control->m_closed) {
-            int zsort = control->GetTopZSort();
+        if (m_controls[i] && !m_controls[i]->m_closed) {
+            int zsort = m_controls[i]->GetTopZSort();
             if (zsort > top)
                 top = zsort;
         }
@@ -475,7 +473,10 @@ SRESULT GUIGROUP::MouseOverCommand(CMDCALL *call)
 {
     if (!m_mouseOver) {
         g_pGui->PlayMouseOver();
-        g_pGui->SetSound(m_master && m_master->m_onMouseOverSound.Length() > 0 ? m_master->m_onMouseOverSound.c_str() : 0);
+        if (m_master && m_master->m_onMouseOverSound.Length() > 0)
+            g_pGui->SetSound(m_master->m_onMouseOverSound.c_str());
+        else
+            g_pGui->SetSound(0);
         g_pCmdMgr->Run(m_master->m_onMouseOver, m_handle);
         m_mouseOver = true;
     }
@@ -504,12 +505,12 @@ void GUIGROUP::DumpControls(int depth)
         indent += " ";
     if (g_pLog)
         g_pLog->Value("%s%s", (char *)indent, g_classNames[GetClassId()]);
+    depth++;
     indent += " ";
     for (int j = 0; j < m_controlCount; j++) {
-        GUICONTROL *control = m_controls[j];
-        if (control && !control->m_closed) {
-            if (control->GetClassId() == s_classId)
-                ((GUIGROUP *)m_controls[j])->DumpControls(depth + 1);
+        if (m_controls[j] && !m_controls[j]->m_closed) {
+            if (m_controls[j]->GetClassId() == s_classId)
+                ((GUIGROUP *)m_controls[j])->DumpControls(depth);
             else if (g_pLog)
                 g_pLog->Value("%s%s", (char *)indent, g_classNames[m_controls[j]->GetClassId()]);
         }
@@ -580,7 +581,8 @@ SRESULT GUIGROUP::AddControlCommand(CMDCALL *call)
 bool GUIGROUP::RunGroupCommand(int i)
 {
     if (i >= 0 && i < GUIGROUP_MAX_COMMANDS && IsEnabled() && IsVisible() && m_master->m_groupCommands[i].Length() >= 1) {
-        g_pCmdMgr->Run(STRING(m_master->m_groupCommands[i].c_str()), m_handle);
+        STRING command(m_master->m_groupCommands[i].c_str());
+        g_pCmdMgr->Run(command, m_handle);
         return true;
     }
     return false;
@@ -589,8 +591,10 @@ bool GUIGROUP::RunGroupCommand(int i)
 SRESULT GUIGROUP::EvalGroupCommand(int i)
 {
     if (i >= 0 && i < GUIGROUP_MAX_COMMANDS) {
-        if (IsEnabled() && IsVisible() && m_master->m_groupCommands[i].Length() >= 1)
-            return g_pCmdMgr->Evaluate(STRING(m_master->m_groupCommands[i].c_str()), m_handle);
+        if (IsEnabled() && IsVisible() && m_master->m_groupCommands[i].Length() >= 1) {
+            STRING command(m_master->m_groupCommands[i].c_str());
+            return g_pCmdMgr->Evaluate(command, m_handle);
+        }
         return SRESULT(false);
     }
     return SRESULT(false);
@@ -607,27 +611,23 @@ void GUIGROUP::DeleteRemoved()
     }
 }
 
-inline void GUIGROUP_Activate(GUIGROUP *group)
-{
-    if (!group->m_activated) {
-        group->m_activated = true;
-        if (group->m_master->m_onActivateCommand.Length())
-            g_pCmdMgr->Run(group->m_master->m_onActivateCommand, group->m_handle);
-    }
-}
-
 void GUIGROUP::Update()
 {
-    GUIGROUP_Activate(this);
+    if (!m_activated) {
+        m_activated = true;
+        if (m_master->m_onActivateCommand.Length())
+            g_pCmdMgr->Run(m_master->m_onActivateCommand, m_handle);
+    }
     GUICONTROL::Update();
     for (int i = 0; i < m_controlCount; i++) {
-        GUICONTROL *control = m_controls[i];
-        if (control && !control->m_closed)
-            control->Update();
+        if (m_controls[i] && !m_controls[i]->m_closed)
+            m_controls[i]->Update();
     }
     DeleteRemoved();
-    if (m_hasStepCommand)
-        g_pCmdMgr->Run(STRING(m_master->m_onStepCommand.c_str()), m_handle);
+    if (m_hasStepCommand) {
+        STRING command(m_master->m_onStepCommand.c_str());
+        g_pCmdMgr->Run(command, m_handle);
+    }
 }
 
 SRESULT GUIGROUP::RunCmd(CMDCALL *call)
@@ -642,7 +642,11 @@ SRESULT GUIGROUP::EvalCmd(CMDCALL *call)
 
 GUIGROUP::~GUIGROUP()
 {
-    GUIGROUP_Activate(this);
+    if (!m_activated) {
+        m_activated = true;
+        if (m_master->m_onActivateCommand.Length())
+            g_pCmdMgr->Run(m_master->m_onActivateCommand, m_handle);
+    }
     if (m_master->m_onDeactivateCommand.Length())
         g_pCmdMgr->Run(m_master->m_onDeactivateCommand, m_handle);
     for (int i = 0; i < m_controlCount; i++) {
