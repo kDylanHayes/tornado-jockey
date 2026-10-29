@@ -227,6 +227,31 @@ public:
         return 0;
     }
 
+    // The first item and its slot, or 0 and -1.
+    T *GetFirst(int *index)
+    {
+        for (int i = 0; i < N; i++) {
+            if (m_items[i]) {
+                *index = i;
+                return m_items[i];
+            }
+        }
+        *index = -1;
+        return 0;
+    }
+    // The item after the one in slot *index, and its slot, or 0 and -1.
+    T *GetNext(int *index)
+    {
+        for (int i = *index + 1; i < N; i++) {
+            if (m_items[i]) {
+                *index = i;
+                return m_items[i];
+            }
+        }
+        *index = -1;
+        return 0;
+    }
+
     T *Get(const RESHANDLE &h)
     {
         int i = h.index;

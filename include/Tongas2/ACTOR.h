@@ -8,11 +8,12 @@
 
 #include "Tongas2/CMDBASE.h"
 #include "Tongas2/MATHS.h"
-#include "Tongas2/RESOURCE.h"
 #include "Tongas2/SAFEINDEX.h"
 #include "Tongas2/SRESULT.h"
 
 struct CONTACT;
+
+extern char g_classNames[][30];
 
 // Defined elsewhere: per factory id, the factory's flags.
 extern int g_factoryFlags[];
@@ -214,6 +215,9 @@ public:
     virtual void Link13();
     virtual void Link14();
 
+    // Works out whether the actor is in view, for the scene's update.
+    void UpdateVisibility();
+
     static void RegisterCommands();
 
     static int s_classId;
@@ -223,16 +227,29 @@ public:
     V3 m_position;
     TRANSFORM m_transform;
     V3 m_scale;
-    char m_90[0x13c - 0x90];
+    bool m_90;
+    bool m_91;
+    char m_92[0x128 - 0x92];
+    int m_128;
+    int m_12c;
+    char m_130[0x13c - 0x130];
     V3 m_13c;
     char m_148[0x998 - 0x148];
     bool m_998;
-    char m_999[0x9a1 - 0x999];
+    char m_999[0x99c - 0x999];
+    // The actor's slot in the scene's list of screen actors, or -1.
+    int m_screenIndex;
+    bool m_9a0;
     bool m_9a1;
-    char m_9a2[0xa78 - 0x9a2];
+    char m_9a2[0xa08 - 0x9a2];
+    int m_a08;
+    char m_a0c[0xa78 - 0xa0c];
     // The spawner that made the actor.
     RESHANDLE m_spawner;
-    char m_a84[0xccc - 0xa84];
+    char m_a84[0xcbc - 0xa84];
+    bool m_cbc;
+    bool m_cbd;
+    char m_cbe[0xccc - 0xcbe];
 };
 
 #endif

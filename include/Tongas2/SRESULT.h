@@ -49,6 +49,7 @@ inline V2 operator-(const V2 &a, const V2 &b)
 struct RGB
 {
     RGB() { r = g = b = 0; }
+    RGB(int r_, int g_, int b_) { r = r_; g = g_; b = b_; }
 
     int r, g, b;
 };

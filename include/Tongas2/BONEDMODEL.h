@@ -89,7 +89,7 @@ public:
     virtual void Virtual30()
     {
         if (m_parent.IsValid()) {
-            WTACTOR *parent = g_pActors->GetActor(m_parent);
+            WTACTOR *parent = g_pScene->GetActor(m_parent);
             if (parent)
                 m_speed = parent->m_988;
         }

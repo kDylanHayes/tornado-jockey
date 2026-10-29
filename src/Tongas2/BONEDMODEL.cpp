@@ -24,7 +24,7 @@ void BONEDMODELRESOURCE::Start()
 {
     bool restart = false;
     if (m_parent.IsValid()) {
-        WTACTOR *parent = g_pActors->GetActor(m_parent);
+        WTACTOR *parent = g_pScene->GetActor(m_parent);
         if (parent) {
             if (parent->m_974)
                 restart = true;

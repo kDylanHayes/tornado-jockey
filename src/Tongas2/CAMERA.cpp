@@ -2,6 +2,7 @@
 #include "Tongas2/CSTRING.h"
 #include "Tongas2/APPWINDOW.h"
 #include "Tongas2/GUI.h"
+#include "Tongas2/RESOURCE.h"
 #include "Tongas2/TIMER.h"
 #include "Tongas2/TOKENS.h"
 

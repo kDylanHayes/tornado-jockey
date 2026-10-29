@@ -10,6 +10,8 @@
 
 extern char g_classNames[][30];
 
+class ACTOR;
+
 class GAME : public CMDBASE
 {
 public:
@@ -33,7 +35,7 @@ public:
     // The Load command: closes the console and loads the map with the name.
     virtual SRESULT Load(CMDCALL *call);
     virtual void LoadMap(const char *name) = 0;
-    virtual void Virtual22();
+    virtual void Virtual22(ACTOR *actor);
     virtual bool Virtual23() { return !Virtual26(); }
     // Whether a game is being played. Placeholder name.
     virtual bool IsPlaying() { return Virtual25(); }

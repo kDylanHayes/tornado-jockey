@@ -36,7 +36,7 @@ void OBJECT::UpdateAngles()
 void OBJECT::Update()
 {
     if (m_parent.IsValid()) {
-        WTACTOR *parent = g_pActors->GetActor(m_parent);
+        WTACTOR *parent = g_pScene->GetActor(m_parent);
         if (parent && parent->m_placed) {
             FollowParent(parent);
         } else {

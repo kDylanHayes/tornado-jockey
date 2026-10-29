@@ -48,7 +48,7 @@ ACTOR *SPAWNER::Clone(ACTOR *tmpl, V3 position)
     ACTOR *copy = tmpl->Virtual86(0);
     if (copy) {
         if (copy->GetFactoryId() != tmpl->GetFactoryId()) {
-            g_pActors->Remove(copy->m_handle);
+            g_pScene->Remove(copy->m_handle);
         } else {
             copy->SetPosition(position);
             copy->Virtual101();
@@ -73,7 +73,7 @@ void SPAWNER::ResetSpawning()
 void SPAWNER::FindTemplates()
 {
     for (int i = 0; i < SPAWNER_MAX_TEMPLATES; i++) {
-        ACTOR *actor = (ACTOR *)g_pActors->FindActor(m_names[i]);
+        ACTOR *actor = (ACTOR *)g_pScene->FindActor(m_names[i]);
         if (!actor) {
             m_numTemplates = i;
             return;
@@ -122,7 +122,7 @@ void SPAWNER::Virtual106()
 {
     ACTOR::Virtual106();
     FindTemplates();
-    ACTOR *tmpl = (ACTOR *)g_pActors->GetActor(m_templates[0]);
+    ACTOR *tmpl = (ACTOR *)g_pScene->GetActor(m_templates[0]);
     if (tmpl)
         m_size = tmpl->GetSize();
     else
@@ -154,7 +154,7 @@ SPAWNER::SPAWNER()
 ACTOR *SPAWNER::Spawn()
 {
     int i = m_numTemplates > 1 && m_numTemplates - 1 > 0 ? rand() % m_numTemplates : 0;
-    ACTOR *tmpl = (ACTOR *)g_pActors->GetActor(m_templates[i]);
+    ACTOR *tmpl = (ACTOR *)g_pScene->GetActor(m_templates[i]);
     if (!tmpl) {
         if (g_pLog)
             g_pLog->Error("COuld not spawn from NULL template! %s", m_name.c_str());
