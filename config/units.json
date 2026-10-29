@@ -2415,6 +2415,17 @@
       "target": "build/target/Tongas2/GUICHECKGROUPCONTROL.obj",
       "source": "src/Tongas2/GUICHECKGROUPCONTROL.cpp",
       "category": "engine"
+    },
+    {
+      "name": "Tongas2/GUISLIDERCONTROL",
+      "ranges": [
+        "0x004c63e0-0x004c6aef",
+        "0x006710c0-0x006713e7",
+        "0x009eed80-0x009eed9f"
+      ],
+      "target": "build/target/Tongas2/GUISLIDERCONTROL.obj",
+      "source": "src/Tongas2/GUISLIDERCONTROL.cpp",
+      "category": "engine"
     }
   ]
 }

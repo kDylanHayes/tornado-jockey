@@ -136,9 +136,22 @@ struct CAPSULE3
     float m_30;
 };
 
-// Not made by this unit; its layout is not known.
+// A segment between two points, with the way from the first to the second
+// and its length.
 struct SEGMENT3
 {
+    SEGMENT3(const V3 &start_, const V3 &end_) : start(start_), end(end_), dir(0.0f, 0.0f, 0.0f) { Update(); }
+
+    // Works out the way and the length again. Defined elsewhere.
+    void Update();
+    // Where the point is along it, 0 at the start and 1 at the end, and how
+    // far it is from it when distance isn't null. Defined elsewhere.
+    float Project(const V3 &point, float *distance);
+
+    V3 start;
+    V3 end;
+    V3 dir;
+    float length;
 };
 
 // Defined elsewhere: whether two shapes touch, with the points of contact,
