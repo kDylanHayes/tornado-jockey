@@ -78,19 +78,87 @@ public:
     int m_specific[GUIGENERIC_MAX];
 };
 
-// The GUI generic objects, defined elsewhere; only what CMDMGR needs so far.
+// A GUI element made from a GUIGENERICMASTER: up to 32 objects (models,
+// decals) placed in the world in front of the camera at the template's
+// screen positions and depths, scaled and turned with the control, and
+// placed again whenever the camera moves.
 class GUIGENERIC : public GUICONTROL
 {
 public:
-    // Defined in another unit.
     GUIGENERIC(const RESHANDLE &master, GUIGROUP *parent);
+    virtual ~GUIGENERIC();
 
     static void RegisterCommands();
 
+    virtual int GetClassId() { return s_classId; }
+    virtual int GetParentClassId() { return g_classParents[s_classId]; }
+    virtual const char *GetClassName() { return g_classNames[s_classId]; }
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args)
+    {
+        return (this->*(SRESULT (GUIGENERIC::*)(TOKENS **))command->func)(args);
+    }
+    virtual int Virtual19() { return 1; }
+    virtual int Virtual20() { return 0; }
+    virtual void SetPosition(const V2 &position);
+    virtual void SetSize(const V2 &size);
+    virtual void SetZSort(const int &zsort);
+    virtual void SetOpacity(const float &opacity);
+    virtual void Update();
+
+    // The properties' setters: each object's angles, turning speed, scale,
+    // screen position and depth.
+    virtual void SetAng(const int &i, const ANG &ang)
+    {
+        m_ang[i] = ang;
+        m_cameraDirection = m_cameraUp;
+    }
+    virtual void SetAngVel(const int &i, const V3 &angVel) { m_angVel[i] = angVel; }
+    virtual void SetScale(const int &i, const V3 &scale)
+    {
+        m_scale[i] = scale;
+        SetSize(m_size);
+    }
+    virtual void SetScreenPos(const int &i, const V2 &pos)
+    {
+        m_screenPos[i] = pos;
+        m_cameraPos = V3(-1.0f, -1.0f, -1.0f);
+    }
+    virtual void SetScreenPosZ(const int &i, const float &z)
+    {
+        m_screenPosZ[i] = z;
+        m_cameraPos = V3(-1.0f, -1.0f, -1.0f);
+    }
+    // The script commands.
+    virtual SRESULT ActorShowPart(CMDCALL *call);
+    virtual SRESULT PlayAnimation(CMDCALL *call);
+    virtual SRESULT BlendAnimation(CMDCALL *call);
+
+    // Turns the objects: those attached to a bone by their own angles, the
+    // others by theirs and the camera's.
+    void UpdateAngles();
+    // Plays or blends into an animation on one of the objects.
+    void PlayResourceAnimation(int i, const char *animation, bool loop, float speed);
+    void BlendResourceAnimation(int i, const char *animation, float blend, bool loop, float speed);
+
     static int s_classId;
+    static CMDENTRY s_commands[];
     static PROPENTRY s_properties[];
 
-    char m_9c[0x10ac];
+    GUIGENERICANG m_ang[GUIGENERIC_MAX];
+    GUIGENERICV3 m_angVel[GUIGENERIC_MAX];
+    GUIGENERICV3 m_scale[GUIGENERIC_MAX];
+    GUIGENERICPOS2 m_screenPos[GUIGENERIC_MAX];
+    float m_screenPosZ[GUIGENERIC_MAX];
+    // Where the camera was, which way it looked and its field of view when
+    // the objects were last placed.
+    V3 m_cameraPos;
+    V3 m_cameraDirection;
+    V3 m_cameraUp;
+    float m_cameraFov;
+    GUIGENERICMASTER *m_genericMaster;
+    RESHANDLE m_handles[GUIGENERIC_MAX];
+    // The object each one is attached to a bone of, or -1.
+    int m_attach[GUIGENERIC_MAX];
 };
 
 #endif

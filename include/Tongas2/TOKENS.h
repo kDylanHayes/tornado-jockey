@@ -16,8 +16,13 @@ public:
         m_count = 0;
         m_parsed = false;
     }
+#ifdef TOKENS_INLINE_DTOR
+    // A few units were built seeing the destructor inline.
+    ~TOKENS() { m_string.Free(); }
+#else
     // Defined elsewhere.
     ~TOKENS();
+#endif
 
     // Joins tokens first..last into one, separated by sep.
     bool Merge(int first, int last, char sep);
