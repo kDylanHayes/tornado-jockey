@@ -847,15 +847,71 @@
 0x0049df00 ?OnContact@ACTOR@@UAEXPAUCONTACT@@@Z function
 0x0049df70 ?Add@BEHAVIORLIST@@QAEXPAVBEHAVIOR@@@Z function
 0x0049dfc0 ?AddBehavior@ACTOR@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0xe5
-0x0049e430 ?RegisterCommands@GUIGROUP@@SAXXZ function
-0x0049e800 ?Find@GUIGROUP@@QAEPAXPBD@Z function
-0x0049e870 ?FindControl@GUIGROUP@@QAEPAVGUICONTROL@@PBD@Z function
-0x0049e900 ?GetMouseZSort@GUIGROUP@@QAEHH@Z function
-0x0049ea20 ?IsMouseOver@GUIGROUP@@QAE_NMM@Z function
-0x0049ee20 ?UpdateLayout@GUIGROUP@@QAEXXZ function
-0x0049f720 ?AddGroup@GUIGROUP@@QAEPAV1@PBD@Z function
-0x004a0650 ??0GUIGROUP@@QAE@ABURESHANDLE@@PAV0@@Z function
-0x004a0bb0 ?RemoveControl@GUIGROUP@@QAEXPAVGUICONTROL@@@Z function
+0x0049e0b0 ?CreateGUICONTROL@@YAPAVGUICONTROL@@ABURESHANDLE@@PAVGUIGROUP@@@Z function 0x63
+0x0049e120 ?CreateGUICHECKGROUP@@YAPAVGUICONTROL@@ABURESHANDLE@@PAVGUIGROUP@@@Z function 0x63
+0x0049e190 ?CreateGUICHECKBOX@@YAPAVGUICONTROL@@ABURESHANDLE@@PAVGUIGROUP@@@Z function 0x63
+0x0049e200 ?CreateGUITEXT@@YAPAVGUICONTROL@@ABURESHANDLE@@PAVGUIGROUP@@@Z function 0x63
+0x0049e270 ?CreateGUITEXTEDIT@@YAPAVGUICONTROL@@ABURESHANDLE@@PAVGUIGROUP@@@Z function 0x63
+0x0049e2e0 ?CreateGUIVISUAL@@YAPAVGUICONTROL@@ABURESHANDLE@@PAVGUIGROUP@@@Z function 0x63
+0x0049e350 ?CreateGUIGENERIC@@YAPAVGUICONTROL@@ABURESHANDLE@@PAVGUIGROUP@@@Z function 0x63
+0x0049e3c0 ?CreateGUISLIDER@@YAPAVGUICONTROL@@ABURESHANDLE@@PAVGUIGROUP@@@Z function 0x63
+0x0049e430 ?RegisterCommands@GUIGROUP@@SAXXZ function 0x3f
+0x0049e470 ?CloseSlot@GUIGROUP@@QAEXH@Z function 0x17
+0x0049e490 ?AddControl@GUIGROUP@@QAEPAVGUICONTROL@@HABURESHANDLE@@@Z function 0x10d
+0x0049e5a0 ?SetPosition@GUIGROUP@@UAEXABUV2@@@Z function 0x91
+0x0049e640 ?SetSize@GUIGROUP@@UAEXABUV2@@@Z function 0x91
+0x0049e6e0 ?SetZSort@GUIGROUP@@UAEXABH@Z function 0x6f
+0x0049e750 ?SetOpacity@GUIGROUP@@UAEXABM@Z function 0xa3
+0x0049e800 ?Find@GUIGROUP@@QAEPAXPBD@Z function 0x6c
+0x0049e870 ?FindControl@GUIGROUP@@QAEPAVGUICONTROL@@PBD@Z function 0x87
+0x0049e900 ?GetMouseZSort@GUIGROUP@@QAEHH@Z function 0x9c
+0x0049e9a0 ?GetMouseArea@GUIGROUP@@UAEXPAM000@Z function 0x7c
+0x0049ea20 ?IsMouseOver@GUIGROUP@@QAE_NMM@Z function 0x85
+0x0049eab0 ?OnLeftUp@GUIGROUP@@UAE_NUMOUSESTATE@@@Z function 0x73
+0x0049eb30 ?OnLeftDown@GUIGROUP@@UAE_NUMOUSESTATE@@@Z function 0x6c
+0x0049eba0 ?OnLeftDrag@GUIGROUP@@UAE_NUMOUSESTATE@@@Z function 0x5e
+0x0049ec00 ?Click@GUIGROUP@@UAEXXZ function 0x8b
+0x0049ec90 ?OnMouseMove@GUIGROUP@@UAE_NUMOUSESTATE@@@Z function 0x186
+0x0049ee20 ?UpdateLayout@GUIGROUP@@QAEXXZ function 0x5e
+0x0049ee80 ?IsActive@GUIGROUP@@UAE_NXZ function 0x55
+0x0049eee0 ?SetTopZSortAll@GUIGROUP@@QAEXH@Z function 0x65
+0x0049ef50 ?SetTopZSort@GUIGROUP@@UAEXH@Z function 0x61
+0x0049efc0 ?GetTopZSort@GUIGROUP@@UAEHXZ function 0x52
+0x0049f020 ?FindTopAt@GUIGROUP@@UAEXUV2@@PAPAVGUICONTROL@@PAH@Z function 0xa4
+0x0049f0d0 ?Virtual34@GUIGROUP@@UAEXUV2@@PAPAVGUICONTROL@@PAH@Z function 0x7f
+0x0049f150 ?AddControl@GUIGROUP@@QAEPAVGUICONTROL@@ABURESHANDLE@@@Z function 0x78
+0x0049f1d0 ?OverrideControl@GUIGROUP@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0x100
+0x0049f2d0 ?ReloadControl@GUIGROUP@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0x1b6
+0x0049f490 ?ClickCommand@GUIGROUP@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0x3b
+0x0049f4d0 ?MouseOverCommand@GUIGROUP@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0xb9
+0x0049f590 ?MouseOutCommand@GUIGROUP@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0x62
+0x0049f600 ?SetOnTopPriority@GUIGROUP@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0x49
+0x0049f650 ?DumpControls@GUIGROUP@@QAEXH@Z function 0xc4
+0x0049f720 ?AddGroup@GUIGROUP@@QAEPAV1@PBD@Z function 0xb4
+0x0049f7e0 ?DumpControlsCommand@GUIGROUP@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0x3a
+0x0049f820 ?ReplaceControl@GUIGROUP@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0x21a
+0x0049fa40 ?AddControlCommand@GUIGROUP@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0x27b
+0x0049fcc0 ?RunGroupCommand@GUIGROUP@@QAE_NH@Z function 0xd2
+0x0049fda0 ?EvalGroupCommand@GUIGROUP@@QAE?AVSRESULT@@H@Z function 0xeb
+0x0049fe90 ?DeleteRemoved@GUIGROUP@@QAEXXZ function 0x7e
+0x0049ff10 ?Update@GUIGROUP@@UAEXXZ function 0x188
+0x004a00a0 ?RunCmd@GUIGROUP@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0x6d
+0x004a0110 ?EvalCmd@GUIGROUP@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function 0x4f
+0x004a0160 ??1GUIGROUP@@UAE@XZ function 0x18a
+0x004a02f0 ?GetClassId@GUIGROUP@@UAEHXZ function 0x6
+0x004a0300 ?GetParentClassId@GUIGROUP@@UAEHXZ function 0xd
+0x004a0310 ?GetClassName@GUIGROUP@@UAEPBDXZ function 0xe
+0x004a0320 ?Virtual19@GUIGROUP@@UAEHXZ function 0x6
+0x004a0330 ??_EGUIGROUP@@WBM@AEPAXI@Z function 0x8
+0x004a0340 ??_EGUIGROUP@@WJM@AEPAXI@Z function 0xb
+0x004a0350 ?Virtual09@GUIGROUP@@UAEPAXPBD@Z function 0x5
+0x004a0360 ?Execute@GUIGROUP@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function 0x7a
+0x004a03e0 ?_Xlen@?$vector@PAVGUICONTROL@@V?$allocator@PAVGUICONTROL@@@std@@@std@@IBEXXZ function 0x69
+0x004a0450 ??_GGUIGROUP@@UAEPAXI@Z function 0x1e
+0x004a0470 ?_Insert_n@?$vector@PAVGUICONTROL@@V?$allocator@PAVGUICONTROL@@@std@@@std@@IAEXViterator@12@IABQAVGUICONTROL@@@Z function 0x1e0
+0x004a0650 ??0GUIGROUP@@QAE@ABURESHANDLE@@PAV0@@Z function 0x4ec
+0x004a0b40 ?CreateGUIGROUPCONTROL@@YAPAVGUICONTROL@@ABURESHANDLE@@PAVGUIGROUP@@@Z function 0x63
+0x004a0bb0 ?RemoveControl@GUIGROUP@@QAEXPAVGUICONTROL@@@Z function 0x86
 0x004a0c40 ?Ortho@MATRIX@@QAEXMMMM@Z function
 0x004a0dc0 ?Adjoint@MATRIX@@QAE?AU1@XZ function
 0x004a0e30 ??K@YA?AUMATRIX@@ABU0@M@Z function
@@ -1959,12 +2015,19 @@
 0x004c6300 ?CreateCopy@SHADERMASTER@@UAEPAVRESOURCE@@ABURESHANDLE@@@Z function
 0x004c6360 ?Execute@SHADERMASTER@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function
 0x004c63e0 ?RegisterCommands@GUISLIDER@@SAXXZ function
+0x004c65c0 ??0GUISLIDER@@QAE@ABURESHANDLE@@PAVGUIGROUP@@@Z function
 0x004c6b20 ?RegisterCommands@GUIGENERIC@@SAXXZ function
+0x004c7ac0 ??0GUIGENERIC@@QAE@ABURESHANDLE@@PAVGUIGROUP@@@Z function
 0x004c8320 ?RegisterCommands@GUICHECKBOX@@SAXXZ function
+0x004c8360 ??0GUICHECKBOX@@QAE@ABURESHANDLE@@PAVGUIGROUP@@@Z function
 0x004c8670 ?RegisterCommands@GUICHECKGROUP@@SAXXZ function
+0x004c86b0 ??0GUICHECKGROUP@@QAE@ABURESHANDLE@@PAVGUIGROUP@@@Z function
 0x004c89c0 ?RegisterCommands@GUIVISUAL@@SAXXZ function
+0x004c9c80 ??0GUIVISUAL@@QAE@ABURESHANDLE@@PAVGUIGROUP@@@Z function
 0x004ca290 ?RegisterCommands@GUITEXTEDIT@@SAXXZ function
+0x004ca5d0 ??0GUITEXTEDIT@@QAE@ABURESHANDLE@@PAVGUIGROUP@@@Z function
 0x004cade0 ?RegisterCommands@GUITEXT@@SAXXZ function
+0x004cc330 ??0GUITEXT@@QAE@ABURESHANDLE@@PAVGUIGROUP@@@Z function
 0x004cc880 ?RegisterCommands@VALUEMANAGER@@SAXXZ function 0x3f
 0x004cc8c0 ?_Max@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@KAPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@PAU342@@Z function
 0x004cc8e0 ?_Buynode@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@$0A@@std@@@2@XZ function
@@ -4451,7 +4514,32 @@
 0x006698e4 ??_C@_06PADBOGCF@AngVel?$AA@ data 0x7
 0x00669a00 ??_C@_05MAGIBEFI@Scale?$AA@ data 0x6
 0x00669a08 ??_C@_03JFOGAEPB@Ang?$AA@ data 0x4
+0x00669a0c ??_C@_0L@HDBEGCMP@addControl?$AA@ data 0xb
+0x00669acc ??_C@_0CE@HDOBFEDI@GUIGROUP?3?3AddControl?5?9?5Invalid?5s@ data 0x24
+0x00669af0 ??_C@_0DI@NADPHBAB@GUIGROUP?3?3AddControl?5?9?5Tried?5to?5@ data 0x38
+0x00669b28 ??_C@_0DH@BDAOOGLL@GUIGROUP?3?3AddControl?5?9?5Tried?5to?5@ data 0x37
+0x00669b60 ??_C@_0CN@OMGGCFIO@GUIGROUP?3?3AddControl?5?9?5Max?5contr@ data 0x2d
+0x00669b90 ??_C@_0CJ@JLLJHGGF@GUIGROUP?3?3OverrideControl?5?9?5Inva@ data 0x29
+0x00669bbc ??_C@_0CD@DFEMPBB@Could?5not?5add?5control?5to?5reload?5@ data 0x23
+0x00669be0 ??_C@_0DC@LDILINHN@Could?5not?5find?5control?5?$CFs?5that?5s@ data 0x32
+0x00669c14 ??_C@_01CLKCMJKC@?5?$AA@ data 0x2
+0x00669c18 ??_C@_0CH@MFPBAAD@Could?5not?5add?5control?5to?5replace@ data 0x27
+0x00669c40 ??_C@_0BP@PPOBCGLF@Could?5not?5add?5control?5?$CFs?5?$CFs?5?$CFs?$AA@ data 0x1f
+0x00669c60 ??_7GUIGROUP@@6B@ data
+0x00669cac ??_7GUIGROUP@@6BACTORLINK@@@ data
+0x00669ce8 ??_7GUIGROUP@@6BCMDBASE@@@ data
+0x00669dcc ??_C@_0BF@GBFPJGEM@Control?5not?5found?5?$CFs?$AA@ data 0x15
+0x00669de4 ??_C@_0BI@JFBFNMON@Gui?5group?5has?5no?5master?$AA@ data 0x18
+0x00669dfc ??_C@_0BA@MHAFMFAO@OverrideControl?$AA@ data 0x10
+0x00669e0c ??_C@_0N@FMDJFDDC@DumpControls?$AA@ data 0xd
 0x00669e1c ??_C@_0BB@BKBHDPNK@SetOnTopPriority?$AA@ data 0x11
+0x00669e30 ??_C@_07CDENEOLO@EvalCmd?$AA@ data 0x8
+0x00669e38 ??_C@_06GDALIMEC@RunCmd?$AA@ data 0x7
+0x00669e40 ??_C@_08IHMKJLOK@MouseOut?$AA@ data 0x9
+0x00669e4c ??_C@_09FCAALMCA@MouseOver?$AA@ data 0xa
+0x00669e58 ??_C@_05BGCJMGHI@click?$AA@ data 0x6
+0x00669e60 ??_C@_0O@EIPCHFIK@reloadControl?$AA@ data 0xe
+0x00669e70 ??_C@_0P@LOPAIIK@replaceControl?$AA@ data 0xf
 0x00669e80 ??_C@_06NJLEAOMD@jitter?$AA@ data 0x7
 0x00669e88 _s_TypeNames data 0xb4
 0x00669f3c ??_7CAMERA@@6BACTORLINK@@@ data 0x3c
@@ -5605,6 +5693,8 @@
 0x006ba808 ?s_properties@KERNELCOMMANDS@@2PAUPROPENTRY@@A data 0x38
 0x006ba840 ?s_commands@ACTOR@@2PAUCMDENTRY@@A data 0x2c0
 0x006bab00 ?s_properties@ACTOR@@2PAUPROPENTRY@@A data
+0x006bb8c8 _s_createControl data 0x24
+0x006bb8f0 ?s_commands@GUIGROUP@@2PAUCMDENTRY@@A data 0x180
 0x006bba70 ?s_properties@GUIGROUP@@2PAUPROPENTRY@@A data
 0x006bbaa8 ?g_pfnCreateCameraLens@@3P6APAVCAMERALENS@@XZA data 0x4
 0x006bbaac ?g_pfnCreateCamera@@3P6APAVCAMERA@@XZA data 0x4

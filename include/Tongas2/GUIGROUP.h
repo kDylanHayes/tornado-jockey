@@ -7,10 +7,13 @@
 
 #include "Tongas2/CSTRING.h"
 #include "Tongas2/GUICONTROL.h"
+#include "Tongas2/INPUT.h"
 #include "Tongas2/RESOURCE.h"
 #include "Tongas2/RESOURCES.h"
 #include "Tongas2/SRESULT.h"
 #include "Tongas2/STRING.h"
+
+#include <vector>
 
 #define GUIGROUP_MAX_CONTROLS 32
 #define GUIGROUP_MAX_COMMANDS 4
@@ -103,54 +106,108 @@ public:
     CSTRING m_groupCommands[GUIGROUP_MAX_COMMANDS];
 };
 
-// A GUI screen or panel made from a GUIGROUPMASTER, with the controls in
-// it. Defined elsewhere; only what other units need so far.
-class GUIGROUP : public GUICONTROL
+// A GUI screen or panel made from a GUIGROUPMASTER, with up to 32 controls
+// in it, which it places, sizes and fades with itself. Its mouse area runs
+// the template's click, mouse over and mouse out commands.
+class GUIGROUP : public GUICONTROL, public MOUSELISTENER
 {
 public:
     GUIGROUP(const RESHANDLE &master, GUIGROUP *parent);
+    virtual ~GUIGROUP();
 
     static void RegisterCommands();
 
+    virtual int GetClassId() { return s_classId; }
+    virtual int GetParentClassId() { return g_classParents[s_classId]; }
+    virtual const char *GetClassName() { return g_classNames[s_classId]; }
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args)
+    {
+        return (this->*(SRESULT (GUIGROUP::*)(TOKENS **))command->func)(args);
+    }
+    virtual void *Virtual09(const char *name) { return Find(name); }
+    virtual int Virtual19() { return 8; }
+    virtual void SetPosition(const V2 &position);
+    virtual void SetSize(const V2 &size);
+    virtual void SetZSort(const int &zsort);
+    virtual void SetOpacity(const float &opacity);
+    virtual void Update();
+    virtual void SetTopZSort(int zsort);
+    // The highest top zsort of it and its controls.
+    virtual int GetTopZSort();
+    virtual void FindTopAt(V2 point, GUICONTROL **hit, int *zsort);
+    virtual void Virtual34(V2 point, GUICONTROL **hit, int *zsort);
+
+    // The control was clicked: runs the template's OnClick.
+    virtual void Click();
+    // The script commands.
+    virtual SRESULT ClickCommand(CMDCALL *call);
+    virtual SRESULT MouseOverCommand(CMDCALL *call);
+    virtual SRESULT MouseOutCommand(CMDCALL *call);
+    virtual SRESULT AddControlCommand(CMDCALL *call);
+    virtual SRESULT ReplaceControl(CMDCALL *call);
+    virtual SRESULT ReloadControl(CMDCALL *call);
+    virtual SRESULT RunCmd(CMDCALL *call);
+    virtual SRESULT EvalCmd(CMDCALL *call);
+    virtual SRESULT SetOnTopPriority(CMDCALL *call);
+    virtual SRESULT DumpControlsCommand(CMDCALL *call);
+    virtual SRESULT OverrideControl(CMDCALL *call);
+    // The mouse area's edges on the screen.
+    virtual void GetMouseArea(float *left, float *right, float *top, float *bottom);
+    // Whether the control can take the mouse now.
+    virtual bool IsActive();
+
+    virtual bool OnMouseMove(MOUSESTATE state);
+    virtual bool OnLeftDown(MOUSESTATE state);
+    virtual bool OnLeftUp(MOUSESTATE state);
+    virtual bool OnLeftDrag(MOUSESTATE state);
+
+    // Closes the control in the slot, if there is one.
+    void CloseSlot(int slot);
+    // Makes a control from the template and puts it in the slot.
+    GUICONTROL *AddControl(int slot, const RESHANDLE &master);
+    // Makes a control from the template and puts it in the first free slot.
+    GUICONTROL *AddControl(const RESHANDLE &master);
     // Makes a group from the template with the name ("GGRP:name") and puts
     // it in this one; the wide-screen one ("name_WideScreen") when the
     // screen calls for it and there is one.
     GUIGROUP *AddGroup(const char *name);
     // The object a script names, among the controls.
     void *Find(const char *name);
-    // The control with the name.
+    // The control with the name, here or in the groups in this one.
     GUICONTROL *FindControl(const char *name);
-    // The highest zsort of the controls that take the mouse, over min.
+    // The highest zsort of the groups that block the input, over min.
     int GetMouseZSort(int min);
     // Whether the point is in the mouse area.
     bool IsMouseOver(float x, float y);
     // Places the controls again.
     void UpdateLayout();
-    // Takes a control out of the group.
+    // Sets the top zsort of it and, one higher, of everything in it.
+    void SetTopZSortAll(int zsort);
+    // Logs the controls, indented by depth.
+    void DumpControls(int depth);
+    // Runs or evaluates one of the template's group commands.
+    bool RunGroupCommand(int i);
+    SRESULT EvalGroupCommand(int i);
+    // Deletes the controls taken out since the last update.
+    void DeleteRemoved();
+    // Takes a control out of the group; it is deleted on the next update.
     void RemoveControl(GUICONTROL *control);
 
-    // The control was clicked.
-    virtual void Click();
-    virtual void Virtual44();
-    virtual void Virtual45();
-    virtual void Virtual46();
-    virtual void Virtual47();
-    virtual void Virtual48();
-    virtual void Virtual49();
-    virtual void Virtual50();
-    virtual void Virtual51();
-    virtual void Virtual52();
-    virtual void Virtual53();
-    virtual void Virtual54();
-    virtual void Virtual55();
-    // Whether the control can take the mouse now.
-    virtual bool IsActive();
-
     static int s_classId;
+    static CMDENTRY s_commands[];
     static PROPENTRY s_properties[];
 
     GUIGROUPMASTER *m_master;
-    char m_a4[0x9c];
+    bool m_mouseOver;
+    // The left button went down on it.
+    bool m_pressed;
+    int m_controlCount;
+    GUICONTROL *m_controls[GUIGROUP_MAX_CONTROLS];
+    std::vector<GUICONTROL *> m_removed;
+    // The template has an OnStepCommand.
+    bool m_hasStepCommand;
+    // The OnActivateCommand has run.
+    bool m_activated;
 };
 
 #endif

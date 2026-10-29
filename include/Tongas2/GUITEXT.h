@@ -6,6 +6,7 @@
 #define TONGAS2_GUITEXT_H
 
 #include "Tongas2/CSTRING.h"
+#include "Tongas2/GUICONTROL.h"
 #include "Tongas2/CWSTRING.h"
 #include "Tongas2/RESOURCE.h"
 #include "Tongas2/RESOURCES.h"
@@ -94,13 +95,18 @@ public:
 };
 
 // The GUI text objects, defined elsewhere; only what CMDMGR needs so far.
-class GUITEXT
+class GUITEXT : public GUICONTROL
 {
 public:
+    // Defined in another unit.
+    GUITEXT(const RESHANDLE &master, GUIGROUP *parent);
+
     static void RegisterCommands();
 
     static int s_classId;
     static PROPENTRY s_properties[];
+
+    char m_9c[0x85b4];
 };
 
 #endif

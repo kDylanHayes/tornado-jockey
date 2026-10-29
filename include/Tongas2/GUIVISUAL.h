@@ -6,6 +6,7 @@
 #define TONGAS2_GUIVISUAL_H
 
 #include "Tongas2/CSTRING.h"
+#include "Tongas2/GUICONTROL.h"
 #include "Tongas2/RESOURCE.h"
 #include "Tongas2/RESOURCES.h"
 #include "Tongas2/SRESULT.h"
@@ -80,13 +81,18 @@ public:
 };
 
 // The GUI visual objects, defined elsewhere; only what CMDMGR needs so far.
-class GUIVISUAL
+class GUIVISUAL : public GUICONTROL
 {
 public:
+    // Defined in another unit.
+    GUIVISUAL(const RESHANDLE &master, GUIGROUP *parent);
+
     static void RegisterCommands();
 
     static int s_classId;
     static PROPENTRY s_properties[];
+
+    char m_9c[0x8704];
 };
 
 #endif

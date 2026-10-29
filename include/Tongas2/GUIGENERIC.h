@@ -5,6 +5,7 @@
 #define TONGAS2_GUIGENERIC_H
 
 #include "Tongas2/CSTRING.h"
+#include "Tongas2/GUICONTROL.h"
 #include "Tongas2/MATHS.h"
 #include "Tongas2/RESOURCE.h"
 #include "Tongas2/RESOURCES.h"
@@ -78,13 +79,18 @@ public:
 };
 
 // The GUI generic objects, defined elsewhere; only what CMDMGR needs so far.
-class GUIGENERIC
+class GUIGENERIC : public GUICONTROL
 {
 public:
+    // Defined in another unit.
+    GUIGENERIC(const RESHANDLE &master, GUIGROUP *parent);
+
     static void RegisterCommands();
 
     static int s_classId;
     static PROPENTRY s_properties[];
+
+    char m_9c[0x10ac];
 };
 
 #endif

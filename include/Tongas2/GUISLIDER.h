@@ -36,13 +36,18 @@ public:
 };
 
 // The GUI slider objects, defined elsewhere; only what CMDMGR needs so far.
-class GUISLIDER
+class GUISLIDER : public GUIGROUP
 {
 public:
+    // Defined in another unit.
+    GUISLIDER(const RESHANDLE &master, GUIGROUP *parent);
+
     static void RegisterCommands();
 
     static int s_classId;
     static PROPENTRY s_properties[];
+
+    char m_140[0x208];
 };
 
 #endif

@@ -34,13 +34,18 @@ public:
 };
 
 // The GUI check box objects, defined elsewhere; only what CMDMGR needs so far.
-class GUICHECKBOX
+class GUICHECKBOX : public GUIGROUP
 {
 public:
+    // Defined in another unit.
+    GUICHECKBOX(const RESHANDLE &master, GUIGROUP *parent);
+
     static void RegisterCommands();
 
     static int s_classId;
     static PROPENTRY s_properties[];
+
+    char m_140[0xc];
 };
 
 #endif
