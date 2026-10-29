@@ -81,7 +81,7 @@ static CMDBASE *GetObject(RESHANDLE handle)
 {
     switch (handle.kind) {
     case 1:
-        return g_pActors->GetActor(handle);
+        return g_pScene->GetActor(handle);
     case 2:
         return g_pResources->GetResource(handle);
     case 3:

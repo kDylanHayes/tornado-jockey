@@ -195,7 +195,7 @@ bool DECAL::IsLoaded()
         SHADER *shader = (SHADER *)g_pResources->GetResource(Master()->m_shaderHandle);
         if (!shader) {
             if (m_parent.IsValid())
-                g_pActors->GetActor(m_parent);
+                g_pScene->GetActor(m_parent);
             return true;
         }
         m_master->SetGroupMask(shader->m_master->m_groupMask);

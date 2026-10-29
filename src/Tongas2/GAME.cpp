@@ -43,7 +43,7 @@ void GAME::Virtual27()
 
 void GAME::ClearActors()
 {
-    g_pActors->RemoveAll();
+    g_pScene->RemoveAll();
 }
 
 void GAME::Resume()
@@ -60,7 +60,7 @@ GAME::GAME()
 
 GAME::~GAME()
 {
-    g_pActors->RemoveAll();
+    g_pScene->RemoveAll();
 }
 
 SRESULT GAME::Load(CMDCALL *call)

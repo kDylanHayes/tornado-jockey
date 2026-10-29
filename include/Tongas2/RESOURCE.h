@@ -145,33 +145,6 @@ public:
 class WTACTOR;
 struct CONTACT;
 
-// Defined elsewhere: finds the actor with a handle.
-class ACTORS
-{
-public:
-    virtual void Virtual00();
-    virtual ~ACTORS();
-
-    // Runs the actor start-up functions; false when it has already run.
-    bool Init();
-    // Steps the actors for a frame.
-    void Update();
-    // Removes all the actors.
-    void RemoveAll();
-    WTACTOR *GetActor(RESHANDLE handle);
-    // The actor with a name, or 0.
-    WTACTOR *FindActor(const char *name);
-    // Removes the actor with a handle.
-    void Remove(RESHANDLE handle);
-    // Tells each actor the map's command script has run.
-    void OnScriptLoaded();
-    // Shows or hides the collision shapes' helper models.
-    void ToggleHelpers();
-};
-extern ACTORS *g_pActors;
-
-// Makes the actor list; the game points it at its own.
-extern ACTORS *(*g_pfnCreateActors)();
 
 // Defined elsewhere: the bone or point of an actor an object is attached to.
 class TAG
@@ -460,5 +433,8 @@ public:
     RESHANDLE m_attached;
     bool m_3fc;
 };
+
+#include "Tongas2/ACTOR.h"
+#include "Tongas2/SCENE.h"
 
 #endif

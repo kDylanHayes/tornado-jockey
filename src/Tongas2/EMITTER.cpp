@@ -554,7 +554,7 @@ void PARTICLE::Update(const float &dt)
         V3 force(0.0f, 0.0f, 0.0f);
         float dist;
         if (master->m_emittedBehavior == EMITTERMASTER::BEHAVIOR_DRAGFORCE) {
-            WTACTOR *actor = g_pActors->FindActor(master->m_extForceActorName);
+            WTACTOR *actor = g_pScene->FindActor(master->m_extForceActorName);
             if (actor) {
                 float frameDt = g_pTimer->m_dt;
                 force = (actor->GetWorldPosition() - actor->m_lastPosition) / frameDt;
@@ -577,13 +577,13 @@ void PARTICLE::Update(const float &dt)
                 force = (side.Normalized() + force.Normalized()) * 0.5f * force.Length();
             }
         } else if (master->m_emittedBehavior == EMITTERMASTER::BEHAVIOR_MAGNETICFIELD) {
-            WTACTOR *actor = g_pActors->FindActor(master->m_extForceActorName);
+            WTACTOR *actor = g_pScene->FindActor(master->m_extForceActorName);
             if (actor)
                 force = actor->GetWorldPosition() - resource->GetPosition();
             dist = force.Length();
         }
         if (m_attached) {
-            WTACTOR *parent = g_pActors->GetActor(m_emitter->m_parent);
+            WTACTOR *parent = g_pScene->GetActor(m_emitter->m_parent);
             if (parent)
                 force = parent->WorldToLocal(force);
         }

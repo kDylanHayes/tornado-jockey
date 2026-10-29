@@ -522,7 +522,7 @@ bool CMDMGR::LoadScript()
     m_loader->Close();
     if (!m_loaded)
         m_loaded = true;
-    g_pActors->OnScriptLoaded();
+    g_pScene->OnScriptLoaded();
     g_StringManager.Check();
     return true;
 }

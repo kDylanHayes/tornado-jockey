@@ -9,6 +9,13 @@
 // shuts down.
 struct TIMERHOOK
 {
+    TIMERHOOK()
+    {
+        next = 0;
+        prev = 0;
+        func = 0;
+    }
+
     TIMERHOOK *prev;
     TIMERHOOK *next;
     void (*func)();

@@ -326,7 +326,7 @@ bool CPRIMITIVE3MANAGER::Collide(PRIMITIVE3 *a, PRIMITIVE3 *b, CONTACT *ca, CONT
 
 void CPRIMITIVE3RESOURCE::ShowHelper(const bool &show, int i)
 {
-    WTACTOR *actor = g_pActors->GetActor(m_parent);
+    WTACTOR *actor = g_pScene->GetActor(m_parent);
     bool visible = show;
     if (actor)
         visible &= actor->m_a8;
@@ -584,8 +584,8 @@ void CPRIMITIVE3MANAGER::TestScreen(CPRIMITIVE3RESOURCE *a, CPRIMITIVE3RESOURCE 
     if (hit) {
         a->m_hit = true;
         b->m_hit = true;
-        WTACTOR *actorA = g_pActors->GetActor(a->GetParent());
-        WTACTOR *actorB = g_pActors->GetActor(b->GetParent());
+        WTACTOR *actorA = g_pScene->GetActor(a->GetParent());
+        WTACTOR *actorB = g_pScene->GetActor(b->GetParent());
         if (actorA)
             actorA->OnCollide(actorB);
         if (actorB)
@@ -676,8 +676,8 @@ void CPRIMITIVE3MANAGER::UpdateCollisions()
         if (!contact) {
             if (g_pLog)
                 g_pLog->Error("null contact");
-        } else if (contact->self && g_pActors) {
-            WTACTOR *actor = g_pActors->GetActor(contact->self->m_parent);
+        } else if (contact->self && g_pScene) {
+            WTACTOR *actor = g_pScene->GetActor(contact->self->m_parent);
             if (actor)
                 actor->OnContact(contact);
         }

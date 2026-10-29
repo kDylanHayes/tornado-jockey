@@ -33,7 +33,7 @@ TIMER::~TIMER()
     SAFE_DELETE(g_pGame)
     SAFE_DELETE(g_pConsole)
     SAFE_DELETE(g_pGui)
-    SAFE_DELETE(g_pActors)
+    SAFE_DELETE(g_pScene)
     SAFE_DELETE(g_pValueManager)
     SAFE_DELETE(g_pScriptRoot)
     SAFE_DELETE(g_pCmdMgr)
@@ -71,7 +71,7 @@ void TIMER::Update(float dt)
         if (g_pGame)
             g_pGame->Update();
         g_pCamera->Step();
-        g_pActors->Update();
+        g_pScene->Update();
         g_pGui->Update();
         g_pResources->Update();
         m_wasPaused = m_paused;
@@ -150,8 +150,8 @@ void TIMER::Start()
     g_pScriptRoot = g_pfnCreateScriptRoot();
     g_pValueManager = g_pfnCreateValueManager();
     g_pGui = g_pfnCreateGui();
-    g_pActors = g_pfnCreateActors();
-    g_pActors->Init();
+    g_pScene = g_pfnCreateScene();
+    g_pScene->Init();
     g_pConsole = g_pfnCreateConsole();
     g_pConsole->Enable();
     g_pApp->m_monitor->Update();

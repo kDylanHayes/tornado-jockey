@@ -131,6 +131,8 @@
 0x0040bb70 ?GetMatrix@ANG@@QAE?AUMATRIX@@XZ function
 0x0040bbb0 ?SetParent@OBJECT@@QAEXURESHANDLE@@@Z function
 0x0040db30 ??4STRING@@QAEAAV0@ABV0@@Z function 0x65
+0x0040ee80 ?GetFirst@?$SAFEINDEX@VACTOR@@$0BDII@$0PL@$00@@QAEPAVACTOR@@PAH@Z function
+0x0040eec0 ?GetNext@?$SAFEINDEX@VACTOR@@$0BDII@$0PL@$00@@QAEPAVACTOR@@PAH@Z function
 0x0040f230 ??D@YA?AUV3@@ABMABU0@@Z function
 0x0040f260 ?Distance@V3@@QBEMABU1@@Z function
 0x00410340 ?Normalized@V2@@QBE?AU1@XZ function
@@ -494,18 +496,67 @@
 0x0048f150 ?Decode@DRM@@QAEXPBD0HHPAD@Z function
 0x0048f190 ??0DRM@@QAE@XZ function
 0x0048f220 ?CreateDrm@@YAPAVDRM@@XZ function
+0x0048f280 ?CreateACTOR@@YAPAVACTOR@@XZ function
+0x0048f2e0 ?CreateCAMERA@@YAPAVACTOR@@XZ function
+0x0048f340 ?CreateTRIGGER@@YAPAVACTOR@@XZ function
+0x0048f3a0 ?CreateSPAWNER@@YAPAVACTOR@@XZ function
 0x0048f400 ?RegisterCommands@SCENE@@SAXXZ function
-0x0048f5b0 ?Init@ACTORS@@QAE_NXZ function
-0x0048f710 ?ToggleHelpers@ACTORS@@QAEXXZ function 0xb
-0x0048f8b0 ?IsValidHash@?$SAFEINDEX@VRESOURCEMASTER@@$0CAAA@$0PL@$03@@QAE_NH@Z function 0x17
+0x0048f440 ?LoadActorsInformation@SCENE@@SAXXZ function
+0x0048f5b0 ?Init@SCENE@@QAE_NXZ function
+0x0048f600 ?PVSDump@SCENE@@QAEXXZ function
+0x0048f660 ?LoadMap@SCENE@@QAEXPBD@Z function
+0x0048f670 ?AddScreenActor@SCENE@@QAEHPAVACTOR@@@Z function
+0x0048f6c0 ?RemoveScreenActor@SCENE@@QAEXPAVACTOR@@@Z function 0x4e
+0x0048f710 ?ToggleHelpers@SCENE@@QAEXXZ function 0xb
+0x0048f720 ?CanUpdate@SCENE@@UAE_NPAVACTOR@@@Z function 0x20
+0x0048f740 ?SetFogColor@SCENE@@UAEXABURGB@@@Z function
+0x0048f760 ?Clear@?$SAFEINDEX@VACTOR@@$0BDII@$0PL@$00@@QAEXXZ function
+0x0048f7d0 ??1?$LIFO@URESHANDLE@@$0BDII@@@UAE@XZ function
+0x0048f800 ??1?$LIFO@PAVACTOR@@$0BDII@@@UAE@XZ function
+0x0048f830 ??_G?$LIFO@URESHANDLE@@$0BDII@@@UAEPAXI@Z function
+0x0048f870 ??_G?$LIFO@PAVACTOR@@$0BDII@@@UAEPAXI@Z function
+0x0048f8b0 ?IsValidHash@?$SAFEINDEX@VACTOR@@$0BDII@$0PL@$00@@QAE_NH@Z function
+0x0048f8d0 ?GetFreePos@?$SAFEINDEX@VACTOR@@$0BDII@$0PL@$00@@QAEHXZ function
+0x0048f910 ?FreePos@?$SAFEINDEX@VACTOR@@$0BDII@$0PL@$00@@QAEXH_N@Z function
+0x0048f9e0 ??0?$LIFO@URESHANDLE@@$0BDII@@@QAE@XZ function
+0x0048fa40 ?Push@?$LIFO@URESHANDLE@@$0BDII@@@QAE_NABURESHANDLE@@@Z function
+0x0048faa0 ?Push@?$LIFO@PAVACTOR@@$0BDII@@@QAE_NABQAVACTOR@@@Z function
 0x0048faf0 ??_9@$BEM@AE function
-0x0048fd50 ?OnScriptLoaded@ACTORS@@QAEXXZ function 0x70
-0x00490860 ?RemoveAll@ACTORS@@QAEXXZ function
-0x004908f0 ?GetActor@ACTORS@@QAEPAVWTACTOR@@URESHANDLE@@@Z function
-0x00490930 ?FindActor@ACTORS@@QAEPAVWTACTOR@@PBD@Z function
-0x00490a10 ?ExportStrings@GAME@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function
-0x00490df0 ?Remove@ACTORS@@QAEXURESHANDLE@@@Z function
-0x00491340 ?Update@ACTORS@@QAEXXZ function
+0x0048fb00 ??_9@$BGM@AE function
+0x0048fb10 ?DestroyPVS@SCENE@@QAEXXZ function
+0x0048fb60 ?CreatePVS@SCENE@@QAEXPBD0@Z function
+0x0048fce0 ?PVSAddMember@SCENE@@QAEXPAVACTOR@@@Z function
+0x0048fd50 ?OnScriptLoaded@SCENE@@QAEXXZ function 0x70
+0x0048fdc0 ?DumpActors@SCENE@@QAEXH@Z function
+0x0048fec0 ?PickActor@SCENE@@QAEPAVACTOR@@MM_NH@Z function
+0x00490020 ??0?$SAFEINDEX@VACTOR@@$0BDII@$0PL@$00@@QAE@XZ function
+0x00490140 ??1?$SAFEINDEX@VACTOR@@$0BDII@$0PL@$00@@UAE@XZ function
+0x00490240 ?Find@?$SAFEINDEX@VACTOR@@$0BDII@$0PL@$00@@QAEPAVACTOR@@PBD@Z function
+0x00490300 ?Remove@?$SAFEINDEX@VACTOR@@$0BDII@$0PL@$00@@QAEXABURESHANDLE@@@Z function
+0x004903c0 ??_G?$SAFEINDEX@VACTOR@@$0BDII@$0PL@$00@@UAEPAXI@Z function
+0x004903e0 ?DirectChangeName@?$SAFEINDEX@VACTOR@@$0BDII@$0PL@$00@@QAEXABURESHANDLE@@PBD@Z function
+0x004904e0 ??0SCENE@@QAE@XZ function
+0x004906a0 ?DumpPVS@SCENE@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function
+0x004906e0 ?CreatePVS@SCENE@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function
+0x00490760 ?Reset@SCENE@@QAEXXZ function
+0x00490860 ?RemoveAll@SCENE@@QAEXXZ function
+0x004908f0 ?GetActor@SCENE@@QAEPAVWTACTOR@@URESHANDLE@@@Z function
+0x00490930 ?FindActor@SCENE@@QAEPAVWTACTOR@@PBD@Z function
+0x00490940 ?TestCmd@SCENE@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function
+0x004909d0 ?ToggleCollisions@SCENE@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function
+0x00490a10 ?Virtual22@SCENE@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function
+0x00490a50 ?New@?$SAFEINDEX@VACTOR@@$0BDII@$0PL@$00@@QAE_NPAPAVACTOR@@HPAHPAURESHANDLE@@@Z function
+0x00490d00 ?CreateScene@@YAPAVSCENE@@XZ function
+0x00490d60 ??1SCENE@@UAE@XZ function
+0x00490df0 ?Remove@SCENE@@QAEXURESHANDLE@@@Z function 0x9e
+0x00490e90 ?MessageSpawned@SCENE@@QAEXURESHANDLE@@VSTRING@@@Z function 0x1ea
+0x00491080 ?Insert@?$SAFEINDEX@VACTOR@@$0BDII@$0PL@$00@@QAE?AURESHANDLE@@PAPAVACTOR@@H@Z function
+0x00491210 ?ChangeName@?$SAFEINDEX@VACTOR@@$0BDII@$0PL@$00@@QAEXAAURESHANDLE@@PBDH@Z function
+0x00491320 ??_GSCENE@@UAEPAXI@Z function
+0x00491340 ?Update@SCENE@@QAEXXZ function 0x31d
+0x00491660 ?RenameActor@SCENE@@QAEXURESHANDLE@@PBD@Z function
+0x00491680 ?CreateActor@SCENE@@QAEPAVACTOR@@H@Z function
+0x004916f0 ?CreateActor@SCENE@@QAEPAVACTOR@@PBD@Z function 0x62
 0x00491c70 ?OnMouse@INPUT@@QAEXHHH@Z function
 0x00492150 ?OnKey@INPUT@@QAEXIH@Z function
 0x004922f0 ?SetMouseCapture@INPUT@@QAEX_N@Z function 0x1f
@@ -555,6 +606,7 @@
 0x004990f0 ?Virtual09@ACTOR@@UAEPAXPBD@Z function
 0x004992d0 ?IsZero@ANG@@QAE_NXZ function
 0x00499330 ??0BOXCORNERS@@QAE@XZ function
+0x004993d0 ?UpdateVisibility@ACTOR@@QAEXXZ function
 0x00499520 ?Virtual105@ACTOR@@UAEXXZ function
 0x004999d0 ?Virtual108@ACTOR@@UAEXXZ function
 0x00499a70 ?Virtual23@ACTOR@@UAEXXZ function
@@ -1770,6 +1822,16 @@
 0x004ce8a0 ?Save@SCREENCAPTURE@@QAEXPBDPAUHWND__@@HHUV2@@22@Z function
 0x004cea40 ??0SCREENSHOT@@QAE@XZ function 0x31
 0x004cfcd0 ??0GUIBEHAVIORS@@QAE@XZ function
+0x004d2460 ??1OCTREE@@QAE@XZ function
+0x004d2480 ?AddMember@OCTREE@@QAEXPAVACTOR@@@Z function
+0x004d24b0 ?Update@OCTREE@@QAEXPAUFRUSTUM@@@Z function
+0x004d24d0 ?Dump@OCTREE@@QAEXPAUFRUSTUM@@@Z function
+0x004d2b10 ??0OCTREE@@QAE@UV3@@0H@Z function
+0x004d2bb0 ?Clear@OCTREE@@QAEXXZ function
+0x004d2d50 ?Update@ONENODE@@QAEXPAUFRUSTUM@@@Z function
+0x004d2d90 ?Dump@ONENODE@@QAEXPAUFRUSTUM@@@Z function
+0x004d2dc0 ?Clear@ONENODE@@QAEXXZ function
+0x004d2e40 ??0ONENODE@@QAE@XZ function
 0x004d2ec0 ?HashString@@YAHPBDH@Z function
 0x004d4610 ?PointAt@ANG@@QAEXABUV3@@@Z function
 0x004d4ca0 ?Build@FRUSTUM@@QAEXABUMATRIX@@0@Z function
@@ -3671,6 +3733,10 @@
 0x00609e80 _$E3 function 0x3c
 0x00609ec0 _$E1 function
 0x00609f10 _$E3 function 0x3c
+0x00609f50 _$E1 function
+0x00609f60 _$E4 function
+0x00609f70 _$E7 function
+0x0060a080 _$E9 function
 0x0060c9a0 _$E1 function 0xb1
 0x0060ca60 _$E3 function 0x105
 0x0060cb70 _$E5 function 0xc
@@ -3737,6 +3803,8 @@
 0x006541f0 _$E1 function 0x1d
 0x006543a0 _$E2 function 0x24
 0x006543d0 _$E5 function 0x24
+0x00654400 _$E2 function
+0x00654430 _$E5 function
 0x00654470 _$E6 function 0x24
 0x006544a0 _$E9 function 0x24
 0x006544d0 _$E12 function 0x24
@@ -4118,6 +4186,9 @@
 0x00667c08 _s_TypeNames data 0xb4
 0x00667cc0 ??_7DRM@@6B@ data 0x68
 0x00667d28 ??_C@_03ONNJOJGD@drm?$AA@ data 0x4
+0x00667d2c ??_C@_07CCJCOENN@testCmd?$AA@ data
+0x00667d38 _s_TypeNames data 0xb4
+0x00667df0 _s_pvsTypes data 0x78
 0x00667ec8 __real@c3340000 data
 0x00667ecc __real@c3b40000 data
 0x00667ed8 ??_C@_0CM@OCPNAOAO@SAFEINDEX?3FreePos?$DO?5Invalid?5delet@ data 0x2c
@@ -4125,6 +4196,7 @@
 0x00667f34 ??_C@_0BP@MIFJHLDG@LIFO?3?3Push?$DO?5Error?5?9?5Table?5full?$AA@ data 0x1f
 0x00667f60 ??_C@_0FC@BEJMAJLI@SAFEINDEX?3?3?5ALERT?$CB?$CB?$CB?$CB?5?9?5MAX?5WHIL@ data 0x52
 0x00667fb4 ??_C@_0DN@CLCKHOGN@SAFEINDEX?3?3DirectChangeName?$DO?5ERR@ data 0x3d
+0x00668000 ??_7SCENE@@6B@ data 0x70
 0x00668070 ??_C@_0CP@PMFMMKEI@SAFEINDEX?3?3New?$DO?5ERROR?5Ivalid?5dis@ data 0x2f
 0x006680a0 ??_C@_04HGGBINEM@?$CFs?$CFd?$AA@ data 0x5
 0x006680b4 ??_C@_0CK@FBJPJPNG@SAFEINDEX?3?3Insert?$DO?5ERROR?$CB?$CB?$CB?5Tabl@ data 0x2a
@@ -5292,12 +5364,14 @@
 0x006b9e08 ?g_pfnCreateDrm@@3P6APAVDRM@@XZA data 0x4
 0x006b9e10 ?s_commands@DRM@@2PAUCMDENTRY@@A data 0x40
 0x006b9e50 ?s_properties@DRM@@2PAUPROPENTRY@@A data 0x38
-0x006b9e88 ?g_pfnCreateActors@@3P6APAVACTORS@@XZA data 0x4
+0x006b9e88 ?g_pfnCreateScene@@3P6APAVSCENE@@XZA data 0x4
+0x006b9e8c ?g_rootFactoryId@@3HA data 0x4
 0x006b9e90 ?s_factoryId@ACTOR@@2HA data 0x4
 0x006b9e94 ?s_factoryId@CAMERA@@2HA data 0x4
 0x006b9e98 ?s_factoryId@SPAWNER@@2HA data 0x4
 0x006b9e9c ?s_factoryId@TRIGGER@@2HA data 0x4
-0x006b9f40 ?s_properties@SCENE@@2PAUPROPENTRY@@A data
+0x006b9ea0 ?s_commands@SCENE@@2PAUCMDENTRY@@A data 0xa0
+0x006b9f40 ?s_properties@SCENE@@2PAUPROPENTRY@@A data 0x70
 0x006b9fb0 ?g_pfnCreateInput@@3P6APAVINPUT@@XZA data 0x4
 0x006ba110 ?s_properties@GUICONTROL@@2PAUPROPENTRY@@A data
 0x006ba340 ?g_pfnCreateScriptRoot@@3P6APAVCMDBASE@@XZA data 0x4
@@ -5470,8 +5544,16 @@
 0x006d09cc ?g_shutdownHooks@@3UTIMERHOOKS@@A data 0x8
 0x006d09d4 ?g_pGame@@3PAVGAME@@A data 0x4
 0x006d09d8 ?g_pDrm@@3PAVDRM@@A data 0x4
-0x006d15e0 ?g_pActors@@3PAVACTORS@@A data 0x4
-0x006d24e8 ?g_factoryFlags@@3PAHA data
+0x006d09e0 ?g_factoryClassIds@@3PAHA data 0x200
+0x006d0be0 ?g_classFactoryIds@@3PAHA data 0x800
+0x006d13e0 ?g_factoryCreators@@3PAP6APAVACTOR@@XZA data 0x200
+0x006d15e0 ?g_pScene@@3PAVSCENE@@A data 0x4
+0x006d15e8 ?g_factoryNames@@3PAY0BO@DA data 0xf00
+0x006d24e8 ?g_factoryFlags@@3PAHA data 0x200
+0x006d26e8 ?g_numFactories@@3HA data 0x4
+0x006d26ec ?g_actorStartHooks@@3UTIMERHOOKS@@A data 0x8
+0x006d26f4 ?g_actorUpdateHooks@@3UTIMERHOOKS@@A data 0x8
+0x006d26fc ?s_steps@?3??Find@?$SAFEINDEX@VACTOR@@$0BDII@$0PL@$00@@QAEPAVACTOR@@PBD@Z@4HA data 0x4
 0x006d2700 ?g_pInput@@3PAVINPUT@@A data 0x4
 0x006d2708 ?g_StringManager@@3VSTRINGMANAGER@@A data
 0x007df724 ?g_pScriptRoot@@3PAVCMDBASE@@A data 0x4

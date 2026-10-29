@@ -1505,7 +1505,8 @@
       "category": "engine",
       "complete": false,
       "symbol_mappings": {
-        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z"
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z",
+        "?IsValidHash@?$SAFEINDEX@VACTOR@@$0BDII@$0PL@$00@@QAE_NH@Z": "?IsValidHash@?$SAFEINDEX@VRESOURCEMASTER@@$0CAAA@$0PL@$03@@QAE_NH@Z"
       }
     },
     {
@@ -2196,7 +2197,8 @@
       "category": "engine",
       "symbol_mappings": {
         "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z",
-        "??_9@$BGE@AE": "?IsPlaying@GAME@@UAE_NXZ"
+        "??_9@$BGE@AE": "?IsPlaying@GAME@@UAE_NXZ",
+        "?Virtual22@SCENE@@UAE?AVSRESULT@@PAUCMDCALL@@@Z": "?ExportStrings@GAME@@UAE?AVSRESULT@@PAUCMDCALL@@@Z"
       }
     },
     {
@@ -2212,7 +2214,27 @@
       "source": "src/Tongas2/DRM.cpp",
       "category": "engine",
       "symbol_mappings": {
-        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z"
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z",
+        "?Virtual22@SCENE@@UAE?AVSRESULT@@PAUCMDCALL@@@Z": "?IsUnlocked@DRM@@UAE?AVSRESULT@@PAUCMDCALL@@@Z"
+      }
+    },
+    {
+      "name": "Tongas2/SCENE",
+      "ranges": [
+        "0x0048f280-0x0049175f",
+        "0x00609f50-0x0060a07f",
+        "0x00654400-0x0065445f",
+        "0x00667d2c-0x00668167",
+        "0x006b9e88-0x006b9faf",
+        "0x006d09dc-0x006d26ff"
+      ],
+      "target": "build/target/Tongas2/SCENE.obj",
+      "source": "src/Tongas2/SCENE.cpp",
+      "category": "engine",
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z",
+        "?HashInsert@?$SAFEINDEX@VRESOURCEMASTER@@$0CAAA@$0PL@$03@@QAEXHHPAVRESOURCEMASTER@@@Z": "?HashInsert@?$SAFEINDEX@VACTOR@@$0BDII@$0PL@$00@@QAEXHHPAVACTOR@@@Z",
+        "?HashRemove@?$SAFEINDEX@VRESOURCEMASTER@@$0CAAA@$0PL@$03@@QAEXH@Z": "?HashRemove@?$SAFEINDEX@VACTOR@@$0BDII@$0PL@$00@@QAEXH@Z"
       }
     },
     {

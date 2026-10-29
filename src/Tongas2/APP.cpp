@@ -137,7 +137,7 @@ APP::APP()
     g_pLog = g_pfnCreateLog();
     m_pOptions = g_pfnCreateAppOptions();
     g_pTimer = 0;
-    g_pActors = 0;
+    g_pScene = 0;
     m_running = false;
     m_paused = false;
     m_2e = false;

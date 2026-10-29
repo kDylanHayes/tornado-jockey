@@ -151,7 +151,7 @@ bool CONSOLE::OnHotKey(const int &key)
         return true;
     }
     if (key == 'C') {
-        g_pActors->ToggleHelpers();
+        g_pScene->ToggleHelpers();
         return true;
     }
     if (key == 'W') {
