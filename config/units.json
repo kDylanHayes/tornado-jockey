@@ -2307,6 +2307,16 @@
       "complete": true
     },
     {
+      "name": "Tongas2/SCREENSHOT",
+      "ranges": [
+        "0x004ce5a0-0x004cea9f",
+        "0x00672560-0x00672603"
+      ],
+      "target": "build/target/Tongas2/SCREENSHOT.obj",
+      "source": "src/Tongas2/SCREENSHOT.cpp",
+      "category": "engine"
+    },
+    {
       "name": "Tongas2/FILELOADERWKZ",
       "ranges": [
         "0x005be7f0-0x005bebbc",

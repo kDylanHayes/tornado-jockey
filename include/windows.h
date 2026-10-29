@@ -8,6 +8,7 @@
 #define WINBASEAPI __declspec(dllimport)
 #define WINADVAPI __declspec(dllimport)
 #define WINUSERAPI __declspec(dllimport)
+#define WINGDIAPI __declspec(dllimport)
 #define SHSTDAPI_(type) extern "C" __declspec(dllimport) type __stdcall
 #define WINAPIV __cdecl
 #define TRUE 1
@@ -51,6 +52,30 @@ typedef ACCESS_MASK REGSAM;
 typedef UINT WPARAM;
 typedef LONG LPARAM;
 typedef LONG LRESULT;
+
+typedef struct HDC__ *HDC;
+typedef struct HBITMAP__ *HBITMAP;
+typedef void *HGDIOBJ;
+
+typedef struct tagRECT {
+    LONG left;
+    LONG top;
+    LONG right;
+    LONG bottom;
+} RECT, *LPRECT;
+
+typedef struct tagBITMAP {
+    LONG bmType;
+    LONG bmWidth;
+    LONG bmHeight;
+    LONG bmWidthBytes;
+    WORD bmPlanes;
+    WORD bmBitsPixel;
+    LPVOID bmBits;
+} BITMAP;
+
+#define SRCCOPY 0x00CC0020
+#define DIB_RGB_COLORS 0
 
 typedef struct tagPOINT {
     LONG x;
@@ -233,6 +258,18 @@ WINUSERAPI BOOL WINAPI CloseClipboard(void);
 WINUSERAPI HANDLE WINAPI GetClipboardData(UINT uFormat);
 WINBASEAPI LPVOID WINAPI GlobalLock(HANDLE hMem);
 WINBASEAPI BOOL WINAPI GlobalUnlock(HANDLE hMem);
+WINUSERAPI HDC WINAPI GetDC(HWND hWnd);
+WINUSERAPI int WINAPI ReleaseDC(HWND hWnd, HDC hDC);
+WINUSERAPI BOOL WINAPI GetClientRect(HWND hWnd, LPRECT lpRect);
+WINGDIAPI HDC WINAPI CreateCompatibleDC(HDC hdc);
+WINGDIAPI HBITMAP WINAPI CreateCompatibleBitmap(HDC hdc, int cx, int cy);
+WINGDIAPI HGDIOBJ WINAPI SelectObject(HDC hdc, HGDIOBJ h);
+WINGDIAPI BOOL WINAPI DeleteObject(HGDIOBJ ho);
+WINGDIAPI BOOL WINAPI DeleteDC(HDC hdc);
+WINGDIAPI BOOL WINAPI BitBlt(HDC hdc, int x, int y, int cx, int cy, HDC hdcSrc, int x1, int y1, DWORD rop);
+WINGDIAPI int WINAPI GetObjectA(HGDIOBJ h, int c, LPVOID pv);
+WINGDIAPI int WINAPI GetDIBits(HDC hdc, HBITMAP hbm, UINT start, UINT cLines, LPVOID lpvBits, struct tagBITMAPINFO *lpbmi,
+                               UINT usage);
 }
 
 SHSTDAPI_(BOOL) ShellExecuteExA(LPSHELLEXECUTEINFOA lpExecInfo);
