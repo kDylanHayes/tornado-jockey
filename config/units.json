@@ -2253,6 +2253,22 @@
       }
     },
     {
+      "name": "Tongas2/GUICONTROL",
+      "ranges": [
+        "0x004929f0-0x004937cf",
+        "0x0060a130-0x0060a5cf",
+        "0x006682b0-0x00668617",
+        "0x006ba010-0x006ba33f"
+      ],
+      "target": "build/target/Tongas2/GUICONTROL.obj",
+      "source": "src/Tongas2/GUICONTROL.cpp",
+      "category": "engine",
+      "symbol_mappings": {
+        "?Virtual138@ACTOR@@UAEXXZ": "?QueueBehaviorCommand@GUICONTROL@@UAE?AVSRESULT@@PAUCMDCALL@@@Z",
+        "?GetScaleFactor@SCREENDECAL@@UAE?AUV3@@XZ": "?Link09@GUICONTROL@@UAE?AUV3@@XZ"
+      }
+    },
+    {
       "name": "Tongas2/FILELOADER",
       "ranges": [
         "0x004ce290-0x004ce59d",
