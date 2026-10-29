@@ -2202,8 +2202,14 @@
 0x004ce580 ??_GFILELOADER@@UAEPAXI@Z function 0x1e
 0x004ce5a0 ??0SCREENCAPTURE@@QAE@XZ function 0x9
 0x004ce5b0 ??1SCREENCAPTURE@@UAE@XZ function 0x7
-0x004ce8a0 ?Save@SCREENCAPTURE@@QAEXPBDPAUHWND__@@HHUV2@@22@Z function
+0x004ce5c0 ??_GSCREENCAPTURE@@UAEPAXI@Z function 0x1f
+0x004ce5e0 ?Grab@SCREENCAPTURE@@QAEPAUFIBITMAP@@PAUHWND__@@UV2@@11@Z function 0x2b3
+0x004ce8a0 ?Save@SCREENCAPTURE@@QAEHPBDPAUHWND__@@HHUV2@@22@Z function 0x114
+0x004ce9c0 ??1?$DYNAMICARRAY@H@@UAE@XZ function 0x50
+0x004cea10 ??_G?$DYNAMICARRAY@H@@UAEPAXI@Z function 0x1e
+0x004cea30 ??1SCREENSHOT@@UAE@XZ function 0xe
 0x004cea40 ??0SCREENSHOT@@QAE@XZ function 0x31
+0x004cea80 ??_GSCREENSHOT@@UAEPAXI@Z function 0x1e
 0x004cfcd0 ??0GUIBEHAVIORS@@QAE@XZ function
 0x004d2460 ??1OCTREE@@QAE@XZ function
 0x004d2480 ?AddMember@OCTREE@@QAEXPAVACTOR@@@Z function
@@ -4222,7 +4228,17 @@
 0x00656004 __imp__RegOpenKeyExA@20 data 0x4
 0x00656008 __imp__RegQueryValueExA@24 data 0x4
 0x0065600c __imp__RegCloseKey@4 data 0x4
+0x00656048 __imp__GetDIBits@28 data 0x4
+0x00656054 __imp__GetObjectA@12 data 0x4
+0x0065605c __imp__BitBlt@36 data 0x4
+0x00656060 __imp__CreateCompatibleBitmap@12 data 0x4
+0x00656064 __imp__DeleteDC@4 data 0x4
+0x00656068 __imp__DeleteObject@4 data 0x4
+0x0065606c __imp__CreateCompatibleDC@4 data 0x4
+0x00656070 __imp__SelectObject@8 data 0x4
 0x00656094 __imp__CloseHandle@4 data 0x4
+0x006560ac __imp__GlobalUnlock@4 data 0x4
+0x006560b0 __imp__GlobalLock@4 data 0x4
 0x006560cc __imp__GetProcAddress@8 data 0x4
 0x006560d0 __imp__GetModuleHandleA@4 data 0x4
 0x006560f4 __imp__SetConsoleTextAttribute@8 data 0x4
@@ -4240,7 +4256,13 @@
 0x006562a0 __imp__ShellExecuteExA@4 data 0x4
 0x006562ac __imp__ScreenToClient@8 data 0x4
 0x006562b8 __imp__GetForegroundWindow@0 data 0x4
+0x006562c8 __imp__CloseClipboard@0 data 0x4
+0x006562cc __imp__GetClipboardData@4 data 0x4
+0x006562d0 __imp__OpenClipboard@4 data 0x4
 0x006562ec __imp__wsprintfA data 0x4
+0x00656368 __imp__ReleaseDC@8 data 0x4
+0x00656390 __imp__GetDC@4 data 0x4
+0x0065639c __imp__GetClientRect@8 data 0x4
 0x006563c0 __imp__GetSystemMetrics@4 data 0x4
 0x006563c4 __imp__MessageBoxA@16 data
 0x006564a0 ??_C@_0FN@NIKDIMLH@ERROR?$CB?$CB?5LoadRunnersInformation?$DOF@ data 0x5d
@@ -5291,6 +5313,13 @@
 0x0067251c ??_C@_05IEGMLJMJ@exist?$AA@ data 0x6
 0x00672524 ??_C@_06FOBLBEIN@delete?$AA@ data 0x7
 0x0067252c ??_7FILELOADER@@6B@ data 0x34
+0x00672560 ??_7SCREENCAPTURE@@6B@ data 0x4
+0x00672564 ??_C@_0DG@PEBKCJGF@COULD?5NOT?5RESCALE?5SCREENSHOT?5to?5@ data 0x36
+0x0067259c ??_C@_0CD@INGJBPDP@screenshot?5?9?5could?5not?5GetDIBits@ data 0x23
+0x006725c0 ??_C@_0BP@JPGLMHEL@UNKONWN?5FORMAT?5FOR?5SCREENSHOT?$CB?$AA@ data 0x1f
+0x006725e0 ??_C@_0BL@EJMHEIIL@COULD?5NOT?5SAVE?5SCREENSHOT?$CB?$AA@ data 0x1b
+0x006725fc ??_7?$DYNAMICARRAY@H@@6B@ data 0x4
+0x00672600 ??_7SCREENSHOT@@6B@ data 0x4
 0x00672810 __real@3f847ae147ae147b data
 0x006734c4 __real@358637bd data
 0x00679658 __real@3f50624dd2f1a9fc data
