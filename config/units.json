@@ -2407,6 +2407,18 @@
       "category": "engine"
     },
     {
+      "name": "Tongas2/GUIVISUALCONTROL",
+      "ranges": [
+        "0x004c89c0-0x004ca28f",
+        "0x00615bd0-0x00615ddf",
+        "0x00671c44-0x00671eb7",
+        "0x006c1260-0x006c13b7"
+      ],
+      "target": "build/target/Tongas2/GUIVISUALCONTROL.obj",
+      "source": "src/Tongas2/GUIVISUALCONTROL.cpp",
+      "category": "engine"
+    },
+    {
       "name": "Tongas2/GUICHECKBOXCONTROL",
       "ranges": [
         "0x004c8320-0x004c866f",

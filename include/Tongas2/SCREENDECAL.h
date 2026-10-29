@@ -75,7 +75,7 @@ public:
     virtual void SetPosition(V3 position);
     virtual void SetLayer(int layer) {}
 
-    void SetScreenPosition(float x, float y);
+    void SetScreenPosition(V2 position);
     V2 GetScreenPosition();
     void SetScreenSize(const V2 &size);
 
