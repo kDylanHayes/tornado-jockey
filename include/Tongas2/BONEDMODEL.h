@@ -108,7 +108,7 @@ public:
     virtual void GetBounds(V3 *min, V3 *max);
     // Shows a frame of an animation.
     virtual void SetAnimationFrame(const char *animation, float frame) = 0;
-    virtual void PlayAnimation(void *animation, int once, float speed) = 0;
+    virtual void PlayAnimation(void *animation, bool loop, float speed) = 0;
     // Blends into an animation.
     virtual void BlendAnimation(const char *animation, float blend, bool loop, float speed) = 0;
     virtual void StopAnimation() {}
@@ -125,6 +125,10 @@ public:
     virtual void Virtual87() {}
 
     void SetSpeed(const float &speed);
+    // Shows a part of the model, or hides it under a shader. Defined
+    // elsewhere; both are empty in this build.
+    void ShowPart(const char *part);
+    void HidePart(RESOURCE *shader, const char *part);
 
     bool m_400;
     int m_animation;
