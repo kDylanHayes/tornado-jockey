@@ -96,7 +96,7 @@ public:
     void PVSAddMember(ACTOR *actor);
     // Tells each actor the map's command script has run.
     void OnScriptLoaded();
-    // Calls Virtual100 on the active actors (-1) or the screen actors.
+    // Calls Dump on the active actors (-1) or the screen actors.
     void DumpActors(int which);
     // The active actor of the class nearest a point on the screen.
     ACTOR *PickActor(float x, float y, bool activeOnly, int classId);

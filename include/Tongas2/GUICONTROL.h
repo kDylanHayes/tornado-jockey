@@ -165,7 +165,7 @@ public:
     virtual void Link04(const V2 &size) { SetSize(size); }
     virtual V3 Link05() { return V3(0.0f, 0.0f, 0.0f); }
     virtual void Link06(const V3 &position) {}
-    virtual void Link07(V3 *out, int unused) {}
+    virtual void Link07(V3 *direction, V3 *up) {}
     virtual void Link08(const V3 &position, const V3 &direction) {}
     virtual V3 Link09() { return V3(1.0f, 1.0f, 1.0f); }
     virtual void Link10(const V3 &scale) {}

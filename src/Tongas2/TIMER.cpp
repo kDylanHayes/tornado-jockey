@@ -70,7 +70,7 @@ void TIMER::Update(float dt)
         g_pConsole->Update();
         if (g_pGame)
             g_pGame->Update();
-        g_pCamera->Step();
+        ((ACTOR *)g_pCamera)->Step();
         g_pScene->Update();
         g_pGui->Update();
         g_pResources->Update();

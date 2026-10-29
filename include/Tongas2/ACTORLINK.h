@@ -21,7 +21,7 @@ public:
     // The placement in the world, and the scale.
     virtual V3 Link05() = 0;
     virtual void Link06(const V3 &position) = 0;
-    virtual void Link07(V3 *out, int unused) = 0;
+    virtual void Link07(V3 *direction, V3 *up) = 0;
     // Turns to look along direction from position.
     virtual void Link08(const V3 &position, const V3 &direction) = 0;
     virtual V3 Link09() = 0;

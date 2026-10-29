@@ -398,7 +398,7 @@ void CAMERA::Virtual103()
 void CAMERA::SetAngles(const ANG &angles)
 {
     ACTOR::SetAngles(angles);
-    m_transform.GetAxes(&m_direction, &m_up);
+    m_angles.GetAxes(&m_direction, &m_up);
     m_lens->SetOrientation(m_direction, m_up);
 }
 

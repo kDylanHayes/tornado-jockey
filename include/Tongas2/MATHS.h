@@ -143,6 +143,7 @@ MATRIX operator/(const MATRIX &m, float s);
 // The point transformed by m, as V3::Transform.
 V3 operator*(const V3 &v, const MATRIX &m);
 bool operator!=(const V3 &a, const V3 &b);
+bool operator==(const V3 &a, const V3 &b);
 
 // Whether the segment a-b touches the box with the given center, rotation and
 // full extents.

@@ -11,14 +11,6 @@
 
 #define DEG2RAD(degrees) (0.017453292f * (degrees))
 
-// Defined elsewhere: the corners of a box, a unit cube until set.
-struct BOXCORNERS
-{
-    BOXCORNERS();
-
-    V3 corners[8];
-};
-
 // What the camera sees: its planes and corners.
 struct FRUSTUM
 {
@@ -171,7 +163,7 @@ public:
     virtual int GetFactoryFlags() { return g_factoryFlags[s_factoryId]; }
     virtual void SetPosition(const V3 &position);
     virtual void SetAngles(const ANG &angles);
-    virtual void Virtual101() { m_998 = true; }
+    virtual void Place() { m_placed = true; }
     virtual void Update();
     virtual void Virtual103();
 

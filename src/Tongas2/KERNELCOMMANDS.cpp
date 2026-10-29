@@ -291,10 +291,10 @@ SRESULT KERNELCOMMANDS::SpawnPos(CMDCALL *call)
         ACTOR *target = (ACTOR *)g_pScene->FindActor(call->tokens->GetToken(1));
         ACTOR *caller;
         if (target && (caller = (ACTOR *)g_pScene->GetActor(call->caller)) != 0) {
-            ACTOR *copy = target->Virtual86(0);
+            ACTOR *copy = target->Clone(0);
             copy->SetPosition(caller->GetPosition());
-            copy->Virtual101();
-            copy->m_998 = true;
+            copy->Place();
+            copy->m_placed = true;
             return SRESULT(true);
         }
     }
@@ -422,10 +422,10 @@ SRESULT KERNELCOMMANDS::Create(CMDCALL *call)
     if (!actor)
         return SRESULT(false);
     actor->Run(STRING(call->tokens->GetToken(2)));
-    actor->Virtual101();
-    actor->m_998 = true;
+    actor->Place();
+    actor->m_placed = true;
     if (!g_pGame)
-        actor->Virtual89(true);
+        actor->SetActive(true);
     return SRESULT(true);
 }
 
@@ -435,8 +435,8 @@ SRESULT KERNELCOMMANDS::CreateAttached(CMDCALL *call)
         ACTOR *actor = g_pScene->CreateActor(call->tokens->GetToken(1));
         if (actor) {
             actor->Run(STRING(call->tokens->GetToken(2)));
-            actor->Virtual101();
-            actor->m_998 = true;
+            actor->Place();
+            actor->m_placed = true;
             actor->AttachTo(call->caller);
             return SRESULT(true);
         }

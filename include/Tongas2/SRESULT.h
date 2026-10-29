@@ -141,12 +141,36 @@ struct ANG
     bool IsZero();
     // A point turned by the angles.
     V3 Transform(V3 point);
-    // Turns these angles by other.
+    // Turns these angles by other, or by a rotation matrix.
     void Rotate(const ANG &other);
+    void Rotate(const MATRIX &m);
+    // The forward and up axes of the rotation.
+    void GetAxes(V3 *forward, V3 *up);
+#ifdef ANG_INLINE_AXES
+    // ACTOR.cpp was built seeing these two inline; everywhere else they are
+    // out of line.
+    V3 GetDirection()
+    {
+        if (flags & MATRIX_DIRTY) {
+            matrix.FromEuler(euler.z, euler.y, euler.x);
+            flags &= ~MATRIX_DIRTY;
+        }
+        return V3(matrix._41 + matrix._31, matrix._42 + matrix._32, matrix._43 + matrix._33);
+    }
+    V3 GetUpPoint()
+    {
+        if (flags & MATRIX_DIRTY) {
+            matrix.FromEuler(euler.z, euler.y, euler.x);
+            flags &= ~MATRIX_DIRTY;
+        }
+        return V3(matrix._41 + matrix._21, matrix._42 + matrix._22, matrix._43 + matrix._23);
+    }
+#else
     // The direction the angles face.
     V3 GetDirection();
     // The translation plus the up axis of the matrix.
     V3 GetUpPoint();
+#endif
     // The translation plus the right axis of the matrix.
     V3 GetRightPoint();
     // Turns the angles to face a direction.

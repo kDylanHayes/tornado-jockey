@@ -57,14 +57,14 @@ public:
     virtual int GetFactoryId() { return s_factoryId; }
     virtual int GetParentFactoryId() { return ACTOR::s_factoryId; }
     virtual int GetFactoryFlags() { return g_factoryFlags[s_factoryId]; }
-    virtual void Virtual101()
+    virtual void Place()
     {
-        m_998 = true;
+        m_placed = true;
         ResetAngle();
     }
     virtual void Update();
-    virtual void Virtual104();
-    virtual void Virtual106();
+    virtual void Start();
+    virtual void OnScriptLoaded();
     virtual V3 GetSize() { return m_size; }
 
     virtual void SetWaitTime(const V2 &time) { m_waitTime = time; }
