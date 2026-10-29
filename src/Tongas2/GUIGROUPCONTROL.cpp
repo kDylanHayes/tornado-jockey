@@ -146,30 +146,28 @@ GUICONTROL *GUIGROUP::AddControl(int slot, const RESHANDLE &master)
 
 void GUIGROUP::SetPosition(const V2 &position)
 {
-    m_position = position;
+    m_position.x = position.x;
+    m_position.y = position.y;
     for (int i = 0; i < m_controlCount; i++) {
-        GUICONTROL *control = m_controls[i];
-        if (control && !control->m_closed) {
-            if (control->m_slot >= 0)
-                control->SetPosition(V2(m_master->m_controlPos[control->m_slot].x + position.x,
-                                        m_master->m_controlPos[control->m_slot].y + position.y));
+        if (m_controls[i] && !m_controls[i]->m_closed) {
+            if (m_controls[i]->m_slot >= 0)
+                m_controls[i]->SetPosition(m_master->m_controlPos[m_controls[i]->m_slot] + position);
             else
-                control->SetPosition(position);
+                m_controls[i]->SetPosition(position);
         }
     }
 }
 
 void GUIGROUP::SetSize(const V2 &size)
 {
-    m_size = size;
+    m_size.x = size.x;
+    m_size.y = size.y;
     for (int i = 0; i < m_controlCount; i++) {
-        GUICONTROL *control = m_controls[i];
-        if (control && !control->m_closed) {
-            if (control->m_slot >= 0)
-                control->SetSize(V2(m_master->m_controlSize[control->m_slot].x * size.x,
-                                    m_master->m_controlSize[control->m_slot].y * size.y));
+        if (m_controls[i] && !m_controls[i]->m_closed) {
+            if (m_controls[i]->m_slot >= 0)
+                m_controls[i]->SetSize(m_master->m_controlSize[m_controls[i]->m_slot] * size);
             else
-                control->SetSize(size);
+                m_controls[i]->SetSize(size);
         }
     }
 }
@@ -178,12 +176,11 @@ void GUIGROUP::SetZSort(const int &zsort)
 {
     m_zsort = zsort;
     for (int i = 0; i < m_controlCount; i++) {
-        GUICONTROL *control = m_controls[i];
-        if (control && !control->m_closed) {
-            if (control->m_slot >= 0)
-                control->SetZSort(m_master->m_controlZSort[control->m_slot] + zsort);
+        if (m_controls[i] && !m_controls[i]->m_closed) {
+            if (m_controls[i]->m_slot >= 0)
+                m_controls[i]->SetZSort(m_master->m_controlZSort[m_controls[i]->m_slot] + zsort);
             else
-                control->SetZSort(zsort);
+                m_controls[i]->SetZSort(zsort);
         }
     }
 }
@@ -191,14 +188,13 @@ void GUIGROUP::SetZSort(const int &zsort)
 void GUIGROUP::SetOpacity(const float &opacity)
 {
     m_opacity = opacity;
-    float shown = (m_enabled + 1.0f) * 0.5f * m_visible * opacity;
+    float shown = ((m_enabled + 1.0f) * 0.5f) * m_visible * opacity;
     for (int i = 0; i < m_controlCount; i++) {
-        GUICONTROL *control = m_controls[i];
-        if (control && !control->m_closed) {
-            if (control->m_slot >= 0)
-                control->SetOpacity(shown * m_master->m_controlOpacity[control->m_slot]);
+        if (m_controls[i] && !m_controls[i]->m_closed) {
+            if (m_controls[i]->m_slot >= 0)
+                m_controls[i]->SetOpacity(shown * m_master->m_controlOpacity[m_controls[i]->m_slot]);
             else
-                control->SetOpacity(shown);
+                m_controls[i]->SetOpacity(shown);
         }
     }
 }
@@ -247,15 +243,14 @@ int GUIGROUP::GetMouseZSort(int min)
     return min;
 }
 
-void GUIGROUP::GetMouseArea(float *left, float *right, float *top, float *bottom)
+void GUIGROUP::GetMouseArea(float *left, float *top, float *right, float *bottom)
 {
-    float halfWidth = m_size.x * m_master->m_mouseAreaSize.x * 0.5f;
-    float halfHeight = m_size.y * m_master->m_mouseAreaSize.y * 0.5f;
+    V2 half = m_size * m_master->m_mouseAreaSize * 0.5f;
     V2 offset = m_master->m_mouseAreaOffset;
-    *left = m_position.x - halfWidth + offset.x;
-    *right = offset.x + m_position.x + halfWidth;
-    *top = m_position.y - halfHeight + offset.y;
-    *bottom = offset.y + m_position.y + halfHeight;
+    *left = m_position.x - half.x + offset.x;
+    *right = offset.x + m_position.x + half.x;
+    *top = m_position.y - half.y + offset.y;
+    *bottom = offset.y + m_position.y + half.y;
 }
 
 bool GUIGROUP::IsMouseOver(float x, float y)
@@ -263,18 +258,13 @@ bool GUIGROUP::IsMouseOver(float x, float y)
     if (!IsVisible())
         return false;
     float left, right, top, bottom;
-    GetMouseArea(&left, &right, &top, &bottom);
+    GetMouseArea(&left, &top, &right, &bottom);
     return x >= left && x <= right && y >= top && y <= bottom;
-}
-
-inline bool GUIGROUP_BlocksInput(GUIGROUP *group)
-{
-    return group->IsEnabled() && group->IsVisible() && group->m_master->m_fullScreenInputBlocker;
 }
 
 bool GUIGROUP::OnLeftUp(MOUSESTATE state)
 {
-    if (GUIGROUP_BlocksInput(this))
+    if (IsEnabled() && IsVisible() && m_master->m_fullScreenInputBlocker)
         return true;
     if (IsMouseOver(state.x, state.y) && IsActive()) {
         if (m_pressed) {
@@ -289,7 +279,7 @@ bool GUIGROUP::OnLeftUp(MOUSESTATE state)
 bool GUIGROUP::OnLeftDown(MOUSESTATE state)
 {
     m_pressed = false;
-    if (GUIGROUP_BlocksInput(this))
+    if (IsEnabled() && IsVisible() && m_master->m_fullScreenInputBlocker)
         return true;
     if (IsMouseOver(state.x, state.y) && IsActive()) {
         m_pressed = true;
@@ -300,7 +290,7 @@ bool GUIGROUP::OnLeftDown(MOUSESTATE state)
 
 bool GUIGROUP::OnLeftDrag(MOUSESTATE state)
 {
-    if (GUIGROUP_BlocksInput(this))
+    if (IsEnabled() && IsVisible() && m_master->m_fullScreenInputBlocker)
         return true;
     if (IsMouseOver(state.x, state.y) && IsActive())
         return true;
@@ -311,14 +301,17 @@ void GUIGROUP::Click()
 {
     if (IsEnabled() && IsVisible()) {
         g_pGui->PlayClick();
-        g_pGui->SetSound(m_master && m_master->m_onMouseClickSound.Length() > 0 ? m_master->m_onMouseClickSound.c_str() : 0);
+        if (m_master && m_master->m_onMouseClickSound.Length() > 0)
+            g_pGui->SetSound(m_master->m_onMouseClickSound.c_str());
+        else
+            g_pGui->SetSound(0);
         g_pCmdMgr->Run(m_master->m_onClick, m_handle);
     }
 }
 
 bool GUIGROUP::OnMouseMove(MOUSESTATE state)
 {
-    if (GUIGROUP_BlocksInput(this))
+    if (IsEnabled() && IsVisible() && m_master->m_fullScreenInputBlocker)
         return true;
     if ((!IsEnabled() && !m_master->m_mouseOverOutWhenDisable) || !IsVisible())
         return false;
@@ -329,7 +322,10 @@ bool GUIGROUP::OnMouseMove(MOUSESTATE state)
         if (!m_mouseOver) {
             g_pGui->PlayMouseOver();
             g_pCmdMgr->Run(m_master->m_onMouseOver, m_handle);
-            g_pGui->SetSound(m_master && m_master->m_onMouseOverSound.Length() > 0 ? m_master->m_onMouseOverSound.c_str() : 0);
+            if (m_master && m_master->m_onMouseOverSound.Length() > 0)
+                g_pGui->SetSound(m_master->m_onMouseOverSound.c_str());
+            else
+                g_pGui->SetSound(0);
         }
     } else if (m_mouseOver) {
         g_pCmdMgr->Run(m_master->m_onMouseOut, m_handle);

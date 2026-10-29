@@ -152,7 +152,7 @@ public:
     virtual SRESULT DumpControlsCommand(CMDCALL *call);
     virtual SRESULT OverrideControl(CMDCALL *call);
     // The mouse area's edges on the screen.
-    virtual void GetMouseArea(float *left, float *right, float *top, float *bottom);
+    virtual void GetMouseArea(float *left, float *top, float *right, float *bottom);
     // Whether the control can take the mouse now.
     virtual bool IsActive();
 

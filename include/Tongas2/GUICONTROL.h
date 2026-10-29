@@ -34,6 +34,12 @@ inline V2 operator*(const V2 &v, const float &f)
     return V2(v.x * f, v.y * f);
 }
 
+// Each component times the other's.
+inline V2 operator*(const V2 &a, const V2 &b)
+{
+    return V2(a.x * b.x, a.y * b.y);
+}
+
 // Defined elsewhere: v divided by f, or zero when f is.
 V2 operator/(const V2 &v, const float &f);
 
