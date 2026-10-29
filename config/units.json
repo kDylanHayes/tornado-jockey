@@ -2393,6 +2393,28 @@
       "target": "build/target/Tongas2/GUIGROUPCONTROL.obj",
       "source": "src/Tongas2/GUIGROUPCONTROL.cpp",
       "category": "engine"
+    },
+    {
+      "name": "Tongas2/GUICHECKBOXCONTROL",
+      "ranges": [
+        "0x004c8320-0x004c866f",
+        "0x006717a8-0x006719f7",
+        "0x009eeda0-0x009eedbf"
+      ],
+      "target": "build/target/Tongas2/GUICHECKBOXCONTROL.obj",
+      "source": "src/Tongas2/GUICHECKBOXCONTROL.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/GUICHECKGROUPCONTROL",
+      "ranges": [
+        "0x004c8670-0x004c89bf",
+        "0x006719f8-0x00671c43",
+        "0x009eedc0-0x009eeddf"
+      ],
+      "target": "build/target/Tongas2/GUICHECKGROUPCONTROL.obj",
+      "source": "src/Tongas2/GUICHECKGROUPCONTROL.cpp",
+      "category": "engine"
     }
   ]
 }
