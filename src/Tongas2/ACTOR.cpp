@@ -1207,7 +1207,9 @@ void ACTOR::SetResourcesBoneAttach(const int &i, const CSTRING &bone)
         m_resourcesBoneAttach[i] = bone;
         OBJECT *copy = (OBJECT *)g_pResources->GetResource(m_copies[i]);
         if (copy) {
-            if (m_resourcesBoneAttach[i].Length() > 0) {
+            if (m_resourcesBoneAttach[i].Length() <= 0) {
+                copy->AttachTo(0, 0);
+            } else {
                 TOKENS tokens;
                 tokens.Split(STRING(bone.c_str()), ",");
                 int resource = atoi(tokens.GetToken(0));
@@ -1231,8 +1233,6 @@ void ACTOR::SetResourcesBoneAttach(const int &i, const CSTRING &bone)
                     tag = tokens.GetToken(1);
                 }
                 copy->AttachTo(target, tag);
-            } else {
-                copy->AttachTo(0, 0);
             }
         }
     } else if (g_pLog) {
