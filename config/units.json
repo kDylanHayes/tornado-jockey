@@ -2419,6 +2419,18 @@
       "category": "engine"
     },
     {
+      "name": "Tongas2/GUITEXTCONTROL",
+      "ranges": [
+        "0x004cade0-0x004cc87f",
+        "0x00615f10-0x0061609f",
+        "0x00672130-0x00672377",
+        "0x006c14a8-0x006c15cf"
+      ],
+      "target": "build/target/Tongas2/GUITEXTCONTROL.obj",
+      "source": "src/Tongas2/GUITEXTCONTROL.cpp",
+      "category": "engine"
+    },
+    {
       "name": "Tongas2/GUICHECKBOXCONTROL",
       "ranges": [
         "0x004c8320-0x004c866f",

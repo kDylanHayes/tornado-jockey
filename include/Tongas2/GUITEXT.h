@@ -8,6 +8,9 @@
 #include "Tongas2/CSTRING.h"
 #include "Tongas2/GUICONTROL.h"
 #include "Tongas2/CWSTRING.h"
+#include "Tongas2/FIXEDSTRING.h"
+#include "Tongas2/FIXEDWSTRING.h"
+#include "Tongas2/INPUT.h"
 #include "Tongas2/RESOURCE.h"
 #include "Tongas2/RESOURCES.h"
 #include "Tongas2/SRESULT.h"
@@ -94,19 +97,86 @@ public:
     GUITEXTCOLOR m_color[GUITEXT_MAX];
 };
 
-// The GUI text objects, defined elsewhere; only what CMDMGR needs so far.
-class GUITEXT : public GUICONTROL
+// The GUI text control: up to 32 TEXT copies from its template's fonts,
+// placed one under another or at their own positions, each showing its
+// template text formatted with the value of a bound variable, with click,
+// mouse over and mouse out commands. Placeholder names apart from the
+// class name, properties and commands.
+class GUITEXT : public GUICONTROL, public MOUSELISTENER
 {
 public:
-    // Defined in another unit.
     GUITEXT(const RESHANDLE &master, GUIGROUP *parent);
+    virtual ~GUITEXT();
 
     static void RegisterCommands();
 
+    virtual int GetClassId() { return s_classId; }
+    virtual int GetParentClassId() { return g_classParents[s_classId]; }
+    virtual const char *GetClassName() { return g_classNames[s_classId]; }
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args)
+    {
+        return (this->*(SRESULT (GUITEXT::*)(TOKENS **))command->func)(args);
+    }
+    virtual int Virtual19() { return 2; }
+    virtual void SetPosition(const V2 &position);
+    virtual void SetSize(const V2 &size);
+    virtual void SetZSort(const int &zsort);
+    virtual void SetOpacity(const float &opacity);
+    virtual void Update();
+    // Only listens to the mouse when the template checks it.
+    virtual void SetTopZSort(int zsort)
+    {
+        m_topZSort = zsort;
+        if (!m_textMaster->m_checkMouseMove && !m_textMaster->m_checkMouseClick)
+            Unregister();
+        else
+            SetPriority(zsort);
+    }
+    virtual void FindTopAt(V2 point, GUICONTROL **hit, int *zsort);
+
+    // The properties' setters.
+    virtual void SetText(const int &i, const FIXEDWSTRING<0x200> &text);
+    virtual void SetSlotOpacity(const int &i, const float &opacity)
+    {
+        m_slotOpacity[i] = opacity;
+        SetOpacity(m_opacity);
+    }
+    // The name of the variable or expression text i shows.
+    virtual FIXEDSTRING<0x200> GetBindVar(int i);
+    // The script commands.
+    virtual SRESULT ClickCommand(CMDCALL *call);
+    virtual SRESULT MouseOverCommand(CMDCALL *call);
+    virtual SRESULT MouseOutCommand(CMDCALL *call);
+
+    virtual bool OnMouseMove(MOUSESTATE state);
+    virtual bool OnLeftDown(MOUSESTATE state);
+    virtual bool OnLeftUp(MOUSESTATE state);
+
+    // If the point is inside text i.
+    bool HitTest(float x, float y, int i);
+    // Runs text i's click command.
+    void Click(int i);
+    // Formats text i with its bound value when the value changes, or always
+    // if forced, and runs its change command.
+    void UpdateText(int i, bool force);
+
     static int s_classId;
+    static CMDENTRY s_commands[];
     static PROPENTRY s_properties[];
 
-    char m_9c[0x85b4];
+    FIXEDWSTRING<0x200> m_texts[GUITEXT_MAX];
+    float m_slotOpacity[GUITEXT_MAX];
+    int m_8120;
+    float m_paragraphSpace;
+    int m_8128;
+    bool m_mouseOver[GUITEXT_MAX];
+    // The screen area each text covers.
+    GUITEXTV2 m_max[GUITEXT_MAX];
+    GUITEXTV2 m_min[GUITEXT_MAX];
+    GUITEXTMASTER *m_textMaster;
+    RESHANDLE m_copies[GUITEXT_MAX];
+    // The bound values the texts show.
+    SRESULT m_values[GUITEXT_MAX];
 };
 
 #endif
