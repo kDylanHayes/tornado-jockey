@@ -1046,7 +1046,9 @@ void ACTOR::Dump()
 SRESULT ACTOR::SetSpeed(CMDCALL *call)
 {
     float speed = (float)atof(call->tokens->GetToken(1));
-    SetVel(GetAngles().GetDirection() * speed);
+    V3 vel(GetAngles().GetDirection());
+    vel = vel * speed;
+    SetVel(vel);
     return SRESULT(true);
 }
 
