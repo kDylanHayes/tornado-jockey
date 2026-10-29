@@ -318,6 +318,8 @@ public:
     RESOURCE *FindResourceCopy(int managerId);
     // Pauses or resumes resource i's animation.
     void PauseResourceAnimation(int i, bool pause);
+    // Resource i's copy, or null.
+    RESOURCE *GetCopy(int i);
     // Fades the opacity from from to to over time seconds.
     void StartFade(float from, float to, float time);
     // Changes a material of resource i's model; whether it could.

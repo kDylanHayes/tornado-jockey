@@ -182,14 +182,30 @@ void BOXCORNERS::Set(const V3 &size)
     float x = size.x * 0.5f;
     float y = size.y * 0.5f;
     float z = size.z * 0.5f;
-    corners[0] = V3(-x, -y, z);
-    corners[1] = V3(x, -y, z);
-    corners[2] = V3(-x, -y, -z);
-    corners[3] = V3(x, -y, -z);
-    corners[4] = V3(-x, y, z);
-    corners[5] = V3(x, y, z);
-    corners[6] = V3(-x, y, -z);
-    corners[7] = V3(x, y, -z);
+    corners[0].x = -x;
+    corners[0].y = -y;
+    corners[0].z = z;
+    corners[1].x = x;
+    corners[1].y = -y;
+    corners[1].z = z;
+    corners[2].x = -x;
+    corners[2].y = -y;
+    corners[2].z = -z;
+    corners[3].x = x;
+    corners[3].y = -y;
+    corners[3].z = -z;
+    corners[4].x = -x;
+    corners[4].y = y;
+    corners[4].z = z;
+    corners[5].x = x;
+    corners[5].y = y;
+    corners[5].z = z;
+    corners[6].x = -x;
+    corners[6].y = y;
+    corners[6].z = -z;
+    corners[7].x = x;
+    corners[7].y = y;
+    corners[7].z = -z;
 }
 
 void BOXCORNERS::Set(const float &width, const float &height, const float &depth)
@@ -197,14 +213,30 @@ void BOXCORNERS::Set(const float &width, const float &height, const float &depth
     float x = width * 0.5f;
     float y = height * 0.5f;
     float z = depth * 0.5f;
-    corners[0] = V3(-x, -y, z);
-    corners[1] = V3(x, -y, z);
-    corners[2] = V3(-x, -y, -z);
-    corners[3] = V3(x, -y, -z);
-    corners[4] = V3(-x, y, z);
-    corners[5] = V3(x, y, z);
-    corners[6] = V3(-x, y, -z);
-    corners[7] = V3(x, y, -z);
+    corners[0].x = -x;
+    corners[0].y = -y;
+    corners[0].z = z;
+    corners[1].x = x;
+    corners[1].y = -y;
+    corners[1].z = z;
+    corners[2].x = -x;
+    corners[2].y = -y;
+    corners[2].z = -z;
+    corners[3].x = x;
+    corners[3].y = -y;
+    corners[3].z = -z;
+    corners[4].x = -x;
+    corners[4].y = y;
+    corners[4].z = z;
+    corners[5].x = x;
+    corners[5].y = y;
+    corners[5].z = z;
+    corners[6].x = -x;
+    corners[6].y = y;
+    corners[6].z = -z;
+    corners[7].x = x;
+    corners[7].y = y;
+    corners[7].z = -z;
 }
 
 void BOXCORNERS::Move(const V3 &offset)
@@ -600,20 +632,21 @@ void ACTOR::UpdateVisibility()
 {
     m_inView = false;
     if (m_activation == ACTORACTIVATION_USEOCCLUDINGBOX || m_deactivation == ACTORDEACTIVATION_USEOCCLUDINGBOX) {
-        V3 size = GetSize();
-        if (size.x * size.x + size.y * size.y + size.z * size.z < 0.25f) {
+        if (GetSize().LengthSq() < 0.25f) {
             UpdateOccludingBox();
-            size = GetSize();
-            if (size.x * size.x + size.y * size.y + size.z * size.z < 0.25f)
-                m_occludingBox = V3(2.0f, 2.0f, 2.0f);
+            if (GetSize().LengthSq() < 0.25f)
+            {
+                m_occludingBox.x = 2.0f;
+                m_occludingBox.y = 2.0f;
+                m_occludingBox.z = 2.0f;
+            }
         }
         m_box.Set(GetSize());
         m_box.Move(GetPosition());
     }
-    if (!m_node) {
-        if (m_activation == ACTORACTIVATION_USEOCCLUDINGBOX || m_deactivation == ACTORDEACTIVATION_USEOCCLUDINGBOX)
-            g_pScene->PVSAddMember(this);
-    } else if (m_activation != ACTORACTIVATION_USEOCCLUDINGBOX && m_deactivation != ACTORDEACTIVATION_USEOCCLUDINGBOX) {
+    if (!m_node && (m_activation == ACTORACTIVATION_USEOCCLUDINGBOX || m_deactivation == ACTORDEACTIVATION_USEOCCLUDINGBOX)) {
+        g_pScene->PVSAddMember(this);
+    } else if (m_node && m_activation != ACTORACTIVATION_USEOCCLUDINGBOX && m_deactivation != ACTORDEACTIVATION_USEOCCLUDINGBOX) {
         m_node->RemoveMember(this);
         m_node = 0;
     }
@@ -638,10 +671,7 @@ void ACTOR::Stop()
 void ACTOR::ClearResources()
 {
     for (int i = 0; i < ACTOR_MAX_RESOURCES; i++) {
-        OBJECT *copy = (OBJECT *)g_pResources->GetResource(m_copies[i]);
-        if (copy)
-            copy->Detach();
-        m_copies[i].Invalidate();
+        ReleaseResource(i);
         SetResources(i, CSTRING());
         SetResourcesZSort(i, 0);
         SetResourcesPos(i, V3(0.0f, 0.0f, 0.0f));
@@ -1125,19 +1155,25 @@ SRESULT ACTOR::CreateFX(CMDCALL *call)
     return SRESULT(true);
 }
 
+inline RESOURCE *ACTOR::GetCopy(int i)
+{
+    return g_pResources->GetResource(m_copies[i]);
+}
+
 SRESULT ACTOR::CreateTagFX(CMDCALL *call)
 {
-    WTACTOR *copy = (WTACTOR *)g_pResources->GetResource(m_copies[atol(call->tokens->GetToken(3))]);
+    WTACTOR *copy = (WTACTOR *)GetCopy(atoi(call->tokens->GetToken(3)));
     if (copy) {
         TAG *tag = copy->GetTag(call->tokens->GetToken(2));
-        if (tag) {
+        if (!tag) {
+            if (g_pLog)
+                g_pLog->Error("ERROR ACTOR::CreateTagFx> Tag not found");
+        } else {
             FIXEDSTRING<0x200> name(call->tokens->GetToken(1));
             g_pResources->CreateFromTemplate(name, tag->GetPosition(), m_zsort + 5);
             delete tag;
             return SRESULT(true);
         }
-        if (g_pLog)
-            g_pLog->Error("ERROR ACTOR::CreateTagFx> Tag not found");
     }
     return SRESULT(false);
 }
@@ -1403,10 +1439,12 @@ ACTOR::ACTOR()
 void ACTOR::OnContact(CONTACT *contact)
 {
     if (m_collectContacts) {
-        if (m_contacts.size() <= 100)
+        if (m_contacts.size() > 100) {
+            if (g_pLog)
+                g_pLog->Error("ERROR!!! MAX COLLISIONS DETECTED!!! ARE YOU CLEANING THE LIST!!??");
+        } else {
             m_contacts.push_back(*contact);
-        else if (g_pLog)
-            g_pLog->Error("ERROR!!! MAX COLLISIONS DETECTED!!! ARE YOU CLEANING THE LIST!!??");
+        }
     }
 }
 
