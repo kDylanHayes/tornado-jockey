@@ -193,7 +193,7 @@ void GUITEXT::UpdateText(int i, bool force)
             result.Assign(g_pCmdMgr->Evaluate(expression, m_handle));
         }
     }
-    SRESULT &last = m_values[i];
+    SRESULT &last = m_boundValues[i];
     if (result == last && !force)
         return;
     last.Assign(result);
