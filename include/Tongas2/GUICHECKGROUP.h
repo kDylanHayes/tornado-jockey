@@ -6,6 +6,8 @@
 
 #include "Tongas2/GUIGROUP.h"
 
+class GUICHECKBOX;
+
 class GUICHECKGROUPMASTER : public GUIGROUPMASTER
 {
 public:
@@ -39,18 +41,38 @@ public:
 };
 
 // The GUI check group objects, defined elsewhere; only what CMDMGR needs so far.
+// A check group: a GUI group whose check boxes it keeps between its
+// template's fewest and most checked.
 class GUICHECKGROUP : public GUIGROUP
 {
 public:
-    // Defined in another unit.
     GUICHECKGROUP(const RESHANDLE &master, GUIGROUP *parent);
+    virtual ~GUICHECKGROUP() {}
 
     static void RegisterCommands();
 
+    virtual int GetClassId() { return s_classId; }
+    virtual int GetParentClassId() { return g_classParents[s_classId]; }
+    virtual const char *GetClassName() { return g_classNames[s_classId]; }
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args)
+    {
+        return (this->*(SRESULT (GUICHECKGROUP::*)(TOKENS **))command->func)(args);
+    }
+    virtual int Virtual19() { return 6; }
+
+    // Whether the box may be checked or unchecked: checking one past the
+    // most allowed unchecks others, and unchecking stops at the fewest.
+    bool CanCheck(GUICHECKBOX *box, bool checked);
+
     static int s_classId;
+    static CMDENTRY s_commands[];
     static PROPENTRY s_properties[];
 
-    char m_140[0xc];
+    GUICHECKGROUPMASTER *m_groupMaster;
+    // How many of its boxes are checked.
+    int m_selected;
+    // It is unchecking boxes itself.
+    bool m_busy;
 };
 
 #endif

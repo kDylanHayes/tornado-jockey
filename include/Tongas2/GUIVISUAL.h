@@ -92,7 +92,9 @@ public:
     static int s_classId;
     static PROPENTRY s_properties[];
 
-    char m_9c[0x8704];
+    char m_9c[0x8180];
+    GUIVISUALMASTER *m_visualMaster;
+    char m_8220[0x580];
 };
 
 #endif
