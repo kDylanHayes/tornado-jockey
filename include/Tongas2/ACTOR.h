@@ -316,6 +316,10 @@ public:
     void AttachTo(const RESHANDLE &parent);
     // The copy made by the manager with the id.
     RESOURCE *FindResourceCopy(int managerId);
+    // Pauses or resumes resource i's animation.
+    void PauseResourceAnimation(int i, bool pause);
+    // Fades the opacity from from to to over time seconds.
+    void StartFade(float from, float to, float time);
     // Changes a material of resource i's model; whether it could.
     bool ChangeResourceMaterial(int i, const char *from, const char *to);
     // Works out whether the actor is in view, for the scene's update.

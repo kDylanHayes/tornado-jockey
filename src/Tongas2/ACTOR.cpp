@@ -230,25 +230,25 @@ void ACTOR::RegisterCommands()
 void ACTOR::SetActive(bool active)
 {
     m_lastAngles = ANG(-1.0f, -1.0f, -1.0f);
-    if (active) {
-        if (!m_active) {
-            if (!m_placed) {
-                Place();
-                m_placed = true;
-            }
-            if (!m_scriptLoaded) {
-                OnScriptLoaded();
-                m_scriptLoaded = true;
-            }
-            Start();
-            m_activations++;
-            m_active = true;
-            g_pScene->AddScreenActor(this);
+    if (!active) {
+        if (m_active) {
+            Stop();
+            m_active = false;
+            g_pScene->RemoveScreenActor(this);
         }
-    } else if (m_active) {
-        Stop();
-        m_active = false;
-        g_pScene->RemoveScreenActor(this);
+    } else if (!m_active) {
+        if (!m_placed) {
+            Place();
+            m_placed = true;
+        }
+        if (!m_scriptLoaded) {
+            OnScriptLoaded();
+            m_scriptLoaded = true;
+        }
+        Start();
+        m_activations++;
+        m_active = true;
+        g_pScene->AddScreenActor(this);
     }
 }
 
@@ -294,7 +294,7 @@ void ACTOR::ReleaseResource(int i)
 
 void ACTOR::SetResourcesZSort(const int &i, const int &zsort)
 {
-    if (i >= 0 && i < ACTOR_MAX_RESOURCES) {
+    if ((unsigned)i < ACTOR_MAX_RESOURCES) {
         m_resourcesZSort[i] = zsort;
         OBJECT *copy = (OBJECT *)g_pResources->GetResource(m_copies[i]);
         if (copy)
@@ -306,7 +306,7 @@ void ACTOR::SetResourcesZSort(const int &i, const int &zsort)
 
 void ACTOR::SetResourcesSpecific(const int &i, const int &specific)
 {
-    if (i >= 0 && i < ACTOR_MAX_RESOURCES) {
+    if ((unsigned)i < ACTOR_MAX_RESOURCES) {
         m_resourcesSpecific[i] = specific;
         OBJECT *copy = (OBJECT *)g_pResources->GetResource(m_copies[i]);
         if (copy)
@@ -318,7 +318,7 @@ void ACTOR::SetResourcesSpecific(const int &i, const int &specific)
 
 void ACTOR::SetResourcesPos(const int &i, const V3 &position)
 {
-    if (i >= 0 && i < ACTOR_MAX_RESOURCES) {
+    if ((unsigned)i < ACTOR_MAX_RESOURCES) {
         m_resourcesPos[i] = position;
         OBJECT *copy = (OBJECT *)g_pResources->GetResource(m_copies[i]);
         if (copy)
@@ -330,7 +330,7 @@ void ACTOR::SetResourcesPos(const int &i, const V3 &position)
 
 void ACTOR::SetResourcesAng(const int &i, const ANG &angles)
 {
-    if (i >= 0 && i < ACTOR_MAX_RESOURCES) {
+    if ((unsigned)i < ACTOR_MAX_RESOURCES) {
         m_resourcesAng[i] = angles;
         OBJECT *copy = (OBJECT *)g_pResources->GetResource(m_copies[i]);
         if (copy)
@@ -342,7 +342,7 @@ void ACTOR::SetResourcesAng(const int &i, const ANG &angles)
 
 void ACTOR::SetResourcesScale(const int &i, const V3 &scale)
 {
-    if (i >= 0 && i < ACTOR_MAX_RESOURCES) {
+    if ((unsigned)i < ACTOR_MAX_RESOURCES) {
         m_resourcesScale[i] = scale;
         OBJECT *copy = (OBJECT *)g_pResources->GetResource(m_copies[i]);
         if (copy)
@@ -354,7 +354,7 @@ void ACTOR::SetResourcesScale(const int &i, const V3 &scale)
 
 void ACTOR::SetResourcesOpacity(const int &i, const float &opacity)
 {
-    if (i >= 0 && i < ACTOR_MAX_RESOURCES) {
+    if ((unsigned)i < ACTOR_MAX_RESOURCES) {
         m_resourcesOpacity[i] = opacity;
         OBJECT *copy = (OBJECT *)g_pResources->GetResource(m_copies[i]);
         if (copy)
@@ -768,15 +768,32 @@ void ACTOR::Update()
     m_behaviors.Update();
     switch (m_behavior) {
     case ACTORBEHAVIOR_LINEAL:
-        SetPosition(m_position + m_vel * g_pTimer->m_dt);
-        m_vel += m_aceleration * g_pTimer->m_dt;
+        SetPosition(m_position + g_pTimer->GetDt() * m_vel);
+        m_vel += g_pTimer->GetDt() * m_aceleration;
         if (!m_angVel.IsZero()) {
             float x, y, z;
             m_angles.GetEuler(&x, &y, &z);
-            SetAngles(ANG(x + m_angVel.x * g_pTimer->m_dt, y + m_angVel.y * g_pTimer->m_dt, z + m_angVel.z * g_pTimer->m_dt));
+            V3 euler = V3(x, y, z) + m_angVel * g_pTimer->GetDt();
+            SetAngles(ANG(euler.x, euler.y, euler.z));
         }
-        m_angVel += m_angAceleration * g_pTimer->m_dt;
+        m_angVel += g_pTimer->GetDt() * m_angAceleration;
         break;
+    case ACTORBEHAVIOR_BONEATTACHED: {
+        ACTOR *parent;
+        if (m_attachParent.IsValid() && (parent = (ACTOR *)g_pScene->GetActor(m_attachParent)) != 0) {
+            parent->Step();
+            if (m_attachTag || UpdateAttachTag()) {
+                ANG angles = m_attachTag->GetAngles();
+                SetPosition(m_attachTag->GetPosition() + angles.Transform(m_attachPos));
+                if (!m_attachAng.IsZero())
+                    angles.Rotate(m_attachAng);
+                SetAngles(angles);
+            }
+        } else {
+            m_removeRequested = true;
+        }
+        break;
+    }
     case ACTORBEHAVIOR_ATTACHED: {
         ACTOR *parent;
         if (m_attachParent.IsValid() && (parent = (ACTOR *)g_pScene->GetActor(m_attachParent)) != 0) {
@@ -797,29 +814,14 @@ void ACTOR::Update()
         }
         break;
     }
-    case ACTORBEHAVIOR_BONEATTACHED: {
-        ACTOR *parent;
-        if (m_attachParent.IsValid() && (parent = (ACTOR *)g_pScene->GetActor(m_attachParent)) != 0) {
-            parent->Step();
-            if (m_attachTag || UpdateAttachTag()) {
-                ANG angles = m_attachTag->GetAngles();
-                SetPosition(m_attachTag->GetPosition() + angles.Transform(m_attachPos));
-                if (!m_attachAng.IsZero())
-                    angles.Rotate(m_attachAng);
-                SetAngles(angles);
-            }
-        } else {
-            m_removeRequested = true;
-        }
-        break;
-    }
     case ACTORBEHAVIOR_CAMERAATTACHED:
         if (g_pCamera) {
-            ACTOR *camera = (ACTOR *)g_pCamera;
-            camera->Step();
-            SetPosition(m_attachPos * camera->GetAngles().GetMatrix() + camera->m_position);
+            ((ACTOR *)g_pCamera)->Step();
+            V3 position = m_attachPos * ((ACTOR *)g_pCamera)->GetAngles().GetMatrix();
+            position += ((ACTOR *)g_pCamera)->m_position;
+            SetPosition(position);
             ANG angles(0.0f, 0.0f, 0.0f);
-            angles.SetMatrix(camera->GetAngles().GetMatrix() * m_attachAng.GetMatrix());
+            angles.SetMatrix(((ACTOR *)g_pCamera)->GetAngles().GetMatrix() * m_attachAng.GetMatrix());
             SetAngles(angles);
         }
         break;
@@ -880,14 +882,19 @@ SRESULT ACTOR::BlendAnimation(CMDCALL *call)
     return SRESULT(true);
 }
 
-SRESULT ACTOR::PauseAnimation(CMDCALL *call)
+inline void ACTOR::PauseResourceAnimation(int i, bool pause)
 {
-    bool pause = true;
-    if (call->tokens->m_count != 2)
-        pause = atol(call->tokens->GetToken(2)) != 0;
-    BONEDMODELRESOURCE *copy = (BONEDMODELRESOURCE *)g_pResources->GetResource(m_copies[atol(call->tokens->GetToken(1))]);
+    BONEDMODELRESOURCE *copy = (BONEDMODELRESOURCE *)g_pResources->GetResource(m_copies[i]);
     if (copy)
         copy->PauseAnimation(pause);
+}
+
+SRESULT ACTOR::PauseAnimation(CMDCALL *call)
+{
+    if (call->tokens->m_count == 2)
+        PauseResourceAnimation(atol(call->tokens->GetToken(1)), true);
+    else
+        PauseResourceAnimation(atol(call->tokens->GetToken(1)), atol(call->tokens->GetToken(2)) != 0);
     return SRESULT(true);
 }
 
@@ -899,7 +906,7 @@ SRESULT ACTOR::ResetResources(CMDCALL *call)
 
 void ACTOR::SetResources(const int &i, const CSTRING &name)
 {
-    if (i >= 0 && i < ACTOR_MAX_RESOURCES) {
+    if ((unsigned)i < ACTOR_MAX_RESOURCES) {
         ReleaseResource(i);
         m_resources[i] = name;
         m_masters[i] = g_pResources->GetHandle(name.c_str());
@@ -928,14 +935,17 @@ SRESULT ACTOR::DeactivateResource(CMDCALL *call)
     return SRESULT(true);
 }
 
-SRESULT ACTOR::Fade(CMDCALL *call)
+inline void ACTOR::StartFade(float from, float to, float time)
 {
-    float time = (float)atof(call->tokens->GetToken(3));
-    float to = (float)atof(call->tokens->GetToken(2));
-    float from = (float)atof(call->tokens->GetToken(1));
     m_fadeTime = time;
     SetOpacity(from);
     m_fadeTarget = to;
+}
+
+SRESULT ACTOR::Fade(CMDCALL *call)
+{
+    StartFade((float)atof(call->tokens->GetToken(1)), (float)atof(call->tokens->GetToken(2)),
+              (float)atof(call->tokens->GetToken(3)));
     return SRESULT(true);
 }
 
@@ -967,21 +977,27 @@ void ACTOR::SetAttachAng(const ANG &angles)
 
 V3 ACTOR::WorldToLocal(V3 point)
 {
-    point -= m_position;
-    V3 local = point.Transform(GetInverseMatrix());
-    return V3(local.x / m_scale.x, local.y / m_scale.y, local.z / m_scale.z);
+    V3 p = point - m_position;
+    p = p.Transform(GetInverseMatrix());
+    p.x /= m_scale.x;
+    p.y /= m_scale.y;
+    p.z /= m_scale.z;
+    return p;
 }
 
 V3 ACTOR::LocalToWorld(V3 point)
 {
-    point = point * m_scale;
-    return point.Transform(m_angles.GetMatrix()) + m_position;
+    V3 p = point * m_scale;
+    p = p.Transform(m_angles.GetMatrix());
+    p += m_position;
+    return p;
 }
 
 V3 ACTOR::LocalToWorldDir(V3 direction)
 {
-    direction = direction * m_scale;
-    return direction.Transform(m_angles.GetMatrix());
+    V3 p = direction * m_scale;
+    p = p.Transform(m_angles.GetMatrix());
+    return p;
 }
 
 SRESULT ACTOR::Remove(CMDCALL *call)
@@ -1094,9 +1110,10 @@ void ACTOR::FollowPath()
             if (!m_angVel.IsZero()) {
                 float x, y, z;
                 m_angles.GetEuler(&x, &y, &z);
-                SetAngles(ANG(x + m_angVel.x * g_pTimer->m_dt, y + m_angVel.y * g_pTimer->m_dt, z + m_angVel.z * g_pTimer->m_dt));
+                V3 euler = V3(x, y, z) + m_angVel * g_pTimer->GetDt();
+            SetAngles(ANG(euler.x, euler.y, euler.z));
             }
-            m_angVel += m_angAceleration * g_pTimer->m_dt;
+            m_angVel += g_pTimer->GetDt() * m_angAceleration;
         }
     }
 }
@@ -1147,14 +1164,14 @@ void ACTOR::Start()
 
 void ACTOR::SetResourcesBoneAttach(const int &i, const CSTRING &bone)
 {
-    if (i >= 0 && i < ACTOR_MAX_RESOURCES) {
+    if ((unsigned)i < ACTOR_MAX_RESOURCES) {
         m_resourcesBoneAttach[i] = bone;
         OBJECT *copy = (OBJECT *)g_pResources->GetResource(m_copies[i]);
         if (copy) {
             if (m_resourcesBoneAttach[i].Length() > 0) {
                 TOKENS tokens;
                 tokens.Split(STRING(bone.c_str()), ",");
-                int resource = atol(tokens.GetToken(0));
+                int resource = atoi(tokens.GetToken(0));
                 if (resource < 0)
                     resource = 0;
                 else if (resource > 15)
@@ -1175,9 +1192,9 @@ void ACTOR::SetResourcesBoneAttach(const int &i, const CSTRING &bone)
                     tag = tokens.GetToken(1);
                 }
                 copy->AttachTo(target, tag);
-                return;
+            } else {
+                copy->AttachTo(0, 0);
             }
-            copy->AttachTo(0, 0);
         }
     } else if (g_pLog) {
         g_pLog->Error("ACTOR::SetResourcesBoneAttach>Error: index %d out of range", i);

@@ -1816,7 +1816,7 @@
         "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z",
         "?SetFileName@SCREENDECALMASTER@@UAEXABVCSTRING@@@Z": "?SetFileName@BONEDMODELMASTER@@UAEXABVCSTRING@@@Z",
         "?IsLoaded@SCREENDECAL@@UAE_NXZ": "?IsLoaded@BONEDMODELRESOURCE@@UAE_NXZ",
-        "?SetDescription@RESOURCEMASTER@@UAEXABH@Z": "?PauseAnimation@BONEDMODELRESOURCE@@UAEXH@Z"
+        "?SetDescription@RESOURCEMASTER@@UAEXABH@Z": "?PauseAnimation@BONEDMODELRESOURCE@@UAEX_N@Z"
       }
     },
     {

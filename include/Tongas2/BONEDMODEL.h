@@ -112,7 +112,7 @@ public:
     // Blends into an animation.
     virtual void BlendAnimation(const char *animation, float blend, bool loop, float speed) = 0;
     virtual void StopAnimation() {}
-    virtual void PauseAnimation(int pause) {}
+    virtual void PauseAnimation(bool pause) {}
     virtual void RestartAnimation() {}
     virtual int Virtual79(int a) { return -1; }
     virtual void *GetAnimation(int *index) { return 0; }

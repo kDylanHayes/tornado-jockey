@@ -73,6 +73,7 @@ public:
     void SetSpeed(float speed);
     void SetSteps(int steps);
     void SetMaxDt(float dt);
+    float GetDt() const { return m_dt; }
 
     // The time since the game started, in seconds.
     float m_time;
