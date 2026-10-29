@@ -1,3 +1,4 @@
+#define LOG_VALUE
 #include "Tongas2/KERNELCOMMANDS.h"
 #include "Tongas2/ACTOR.h"
 #include "Tongas2/APP.h"
