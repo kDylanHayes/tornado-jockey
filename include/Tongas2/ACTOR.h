@@ -51,11 +51,14 @@ struct ZEROANG : ANG
 // The corners of a box centered on the origin, a unit cube until set.
 struct BOXCORNERS
 {
-    BOXCORNERS();
+    // Seen as not throwing: making one keeps no unwind state for it.
+    BOXCORNERS() throw();
 
     // Sets the box's full extents.
     void Set(const V3 &size);
     void Set(const float &x, const float &y, const float &z);
+    // Sets the box from min to max.
+    void Set(const V3 &min, const V3 &max);
     // Moves the box by offset.
     void Move(const V3 &offset);
 
