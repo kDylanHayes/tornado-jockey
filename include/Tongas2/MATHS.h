@@ -73,6 +73,11 @@ struct MATRIX
     void View(const V3 &eye, const V3 &at, const V3 &up);
     float Determinant();
     MATRIX Inverse();
+#ifdef FRUSTUM_MATHS
+    // SIMPLEMODEL.cpp alone was built seeing these: the point transformed
+    // by the matrix and divided by w.
+    V3 Project(const V3 &v) const;
+#endif
 
     void Identity()
     {
@@ -163,6 +168,17 @@ V3 TriangleNormal(const V3 &a, const V3 &b, const V3 &c);
 struct PLANE
 {
     PLANE() { a = b = c = d = 0.0f; }
+#ifdef FRUSTUM_MATHS
+    // The plane through three points.
+    PLANE(const V3 &p1, const V3 &p2, const V3 &p3)
+    {
+        a = 0.0f;
+        b = 0.0f;
+        c = 0.0f;
+        Set(p1, p2, p3);
+    }
+    void Set(const V3 &p1, const V3 &p2, const V3 &p3);
+#endif
     // Defined elsewhere: the plane through point, facing along normal.
     PLANE(const V3 &normal, const V3 &point);
     // Defined elsewhere: how far point is from the plane; where it is and
