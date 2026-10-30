@@ -9,6 +9,7 @@
 #include "Tongas2/CMDMGR.h"
 #include "Tongas2/CONSOLE.h"
 #include "Tongas2/GUI.h"
+#include "Tongas2/GUIBEHAVIORS.h"
 #include "Tongas2/GUICONTROL.h"
 #include "Tongas2/INPUT.h"
 #include "Tongas2/LOG.h"
