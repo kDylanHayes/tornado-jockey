@@ -57,13 +57,13 @@ OOBOX3::OOBOX3()
 }
 
 QUAD3::QUAD3()
-    : cornersDirty(true), planeDirty(true), center(0.0f, 0.0f, 0.0f), size(1.0f, 1.0f, 1.0f),
-      m_5c(0.0f, 0.0f, 0.0f), dirty(true)
+    : planeDirty(true), cornersDirty(true), center(0.0f, 0.0f, 0.0f), size(1.0f, 1.0f, 1.0f),
+      angles(0.0f, 0.0f, 0.0f)
 {
 }
 
 CAPSULE3::CAPSULE3()
-    : m_0(0), m_4(0), m_8(false), m_c(0.0f, 0.0f, 0.0f), m_18(0.0f, 0.0f, 1.0f), m_24(0.0f, 0.0f, 1.0f), m_30(0.0f)
+    : radius(0.0f), m_4(0), dirty(false), m_c(0.0f, 0.0f, 0.0f), m_18(0.0f, 0.0f, 1.0f), m_24(0.0f, 0.0f, 1.0f), m_30(0.0f)
 {
 }
 

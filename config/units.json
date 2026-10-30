@@ -2599,12 +2599,26 @@
       "name": "Tongas2/MESH",
       "ranges": [
         "0x004d51e0-0x004d561f",
-        "0x00673238-0x006734d7",
+        "0x00673238-0x006734bb",
         "0x006c180c-0x006c180f"
       ],
       "target": "build/target/Tongas2/MESH.obj",
       "source": "src/Tongas2/MESH.cpp",
       "category": "engine"
+    },
+    {
+      "name": "Tongas2/GEOMETRY",
+      "ranges": [
+        "0x004d5620-0x004da89f",
+        "0x00616230-0x0061624f",
+        "0x00654530-0x0065455f",
+        "0x006734bc-0x0067358f",
+        "0x009fedec-0x009fee07"
+      ],
+      "target": "build/target/Tongas2/GEOMETRY.obj",
+      "source": "src/Tongas2/GEOMETRY.cpp",
+      "category": "engine",
+      "cflags": "/nologo /c /O2 /Ob1 /MT /GX /W3"
     }
   ]
 }

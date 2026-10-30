@@ -158,8 +158,19 @@ struct ANG
     // The translation plus the up axis of the matrix.
     V3 GetUpPoint();
 #endif
+#ifdef ANG_INLINE_RIGHT
+    V3 GetRightPoint()
+    {
+        if (flags & MATRIX_DIRTY) {
+            matrix.FromEuler(euler.z, euler.y, euler.x);
+            flags &= ~MATRIX_DIRTY;
+        }
+        return V3(matrix._41 + matrix._11, matrix._42 + matrix._12, matrix._43 + matrix._13);
+    }
+#else
     // The translation plus the right axis of the matrix.
     V3 GetRightPoint();
+#endif
     // Turns the angles to face a direction.
     void PointAt(const V3 &direction);
 

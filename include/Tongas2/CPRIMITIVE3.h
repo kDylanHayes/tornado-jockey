@@ -72,6 +72,18 @@ struct PLANE3
 struct SPHERE3
 {
     SPHERE3() : center(0.0f, 0.0f, 0.0f), radius(0.0f), m_10(0.0f), dirty(false) {}
+#ifdef GEOMETRY_DEFINITIONS
+    V3 GetCenter() { return center; }
+    // The radius squared, worked out again when it changed.
+    float GetRadiusSq()
+    {
+        if (dirty) {
+            dirty = false;
+            m_10 = radius * radius;
+        }
+        return m_10;
+    }
+#endif
 
     V3 center;
     float radius;
@@ -90,6 +102,22 @@ struct OOBOX3
     void SetAngles(const ANG &angles);
     // The eight corners, brought up to date.
     V3 *GetCorners();
+#ifdef GEOMETRY_DEFINITIONS
+    V3 GetCenter() { return center; }
+    V3 GetSize() { return size; }
+    // The axes, as the translation plus each.
+    V3 GetUp();
+    V3 GetDirection();
+    V3 GetRight();
+    V3 GetAxis(int axis);
+    MATRIX GetMatrix();
+    PLANE *GetPlanes();
+    PLANE &Plane(int i) { return (PLANE &)planes[i]; }
+    void UpdateCorners();
+    void UpdatePlanes();
+    bool IntersectFace(int face, const V3 &a, const V3 &b, V3 *at);
+    void ClosestPoint(const V3 &point, V3 *from, V3 *to);
+#endif
 
     V3 center;
     V3 size;
@@ -109,32 +137,37 @@ struct QUAD3
     void SetCenter(const V3 &center);
     void SetSize(const V3 &size);
     void SetAngles(const ANG &angles);
+#ifdef GEOMETRY_DEFINITIONS
+    V3 GetCenter() { return center; }
+    V3 GetSize() { return size; }
+    V3 GetUp();
+    V3 GetDirection();
+    V3 GetRight();
+    void UpdateCorners();
+    // Brings the plane up to date.
+    void UpdatePlane()
+    {
+        if (planeDirty) {
+            if (cornersDirty)
+                UpdateCorners();
+            ((PLANE &)plane).Set(corners[0], corners[1], corners[3]);
+            planeDirty = false;
+        }
+    }
+    V3 GetNormal();
+    float PlaneDot(const V3 &point);
+    float Distance(const V3 &point, V3 *at, V3 *onPlane);
+    V3 Intersect(const V3 &a, const V3 &b, float *t);
+    V3 *GetCorners();
+#endif
 
     PLANE3 plane;
     PRIMV3 corners[4];
-    bool cornersDirty;
     bool planeDirty;
+    bool cornersDirty;
     V3 center;
     V3 size;
-    V3 m_5c;
-    char m_68[0x40];
-    bool dirty;
-};
-
-struct CAPSULE3
-{
-    CAPSULE3();
-
-    // Defined elsewhere.
-    void Set(const V3 &center, const float &radius, const float &height, const ANG &angles);
-
-    int m_0;
-    int m_4;
-    bool m_8;
-    V3 m_c;
-    V3 m_18;
-    V3 m_24;
-    float m_30;
+    ANG angles;
 };
 
 // A segment between two points, with the way from the first to the second
@@ -148,11 +181,56 @@ struct SEGMENT3
     // Where the point is along it, 0 at the start and 1 at the end, and how
     // far it is from it when distance isn't null. Defined elsewhere.
     float Project(const V3 &point, float *distance);
+#ifdef GEOMETRY_DEFINITIONS
+    void Set(const V3 &start_, const V3 &end_)
+    {
+        start = start_;
+        end = end_;
+        Update();
+    }
+    V3 GetStart() const { return start; }
+    V3 GetEnd() const { return end; }
+    // The way along it, made a unit vector.
+    V3 GetDirection() const
+    {
+        V3 d = dir;
+        d.Normalize();
+        return d;
+    }
+    // The squared distance to the point, and how far along the closest
+    // point is when t isn't null.
+    float DistanceSq(const V3 &point, float *t);
+    V3 PointAt(const float &t);
+    float Distance(const V3 &point, float *t);
+    float SqrDistance(const SEGMENT3 &other, V3 *pa, V3 *pb);
+    // Defined in another unit: the squared distance to the box.
+    float SqrDistance(OOBOX3 *box);
+#endif
 
     V3 start;
     V3 end;
     V3 dir;
     float length;
+};
+
+struct CAPSULE3
+{
+    CAPSULE3();
+
+    // Defined elsewhere.
+    void Set(const V3 &center, const float &radius, const float &height, const ANG &angles);
+#ifdef GEOMETRY_DEFINITIONS
+    SEGMENT3 &GetSegmentRef() { return (SEGMENT3 &)m_c; }
+    SEGMENT3 GetSegment() { return (SEGMENT3 &)m_c; }
+#endif
+
+    float radius;
+    int m_4;
+    bool dirty;
+    V3 m_c;
+    V3 m_18;
+    V3 m_24;
+    float m_30;
 };
 
 // Defined elsewhere: whether two shapes touch, with the points of contact,

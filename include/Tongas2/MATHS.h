@@ -179,6 +179,10 @@ struct PLANE
     }
     void Set(const V3 &p1, const V3 &p2, const V3 &p3);
 #endif
+#ifdef GEOMETRY_DEFINITIONS
+    // Defined in another unit: where the segment a-b crosses the plane.
+    V3 Intersect(const V3 &a, const V3 &b, float *t);
+#endif
     // Defined elsewhere: the plane through point, facing along normal.
     PLANE(const V3 &normal, const V3 &point);
     // Defined elsewhere: how far point is from the plane; where it is and
