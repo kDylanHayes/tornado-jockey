@@ -1026,33 +1026,48 @@ V3 OOBOX3::GetAxis(int axis)
     return GetDirection();
 }
 
-// The point of the box closest to point, with the point and that one
-// written to the pointers that are set.
-void OOBOX3::ClosestPoint(const V3 &point, V3 *from, V3 *to)
+// The axes, as GetAxis has them.
+static inline V3 BoxAxis(ANG &angles, int axis)
 {
-    V3 d = point - center;
-    float along[3];
-    along[0] = 0.0f;
-    along[1] = 0.0f;
-    along[2] = 0.0f;
+    switch (axis) {
+    case 0:
+        return angles.GetRightPoint();
+    case 1:
+        return angles.GetUpPoint();
+    case 2:
+        return angles.GetDirection();
+    }
+    return angles.GetDirection();
+}
+
+// The squared distance from point to the box, with the point and the point
+// of the box closest to it written to the pointers that are set.
+float OOBOX3::ClosestPoint(const V3 &point, V3 *from, V3 *to)
+{
+    V3 diff = point - GetCenter();
+    float sqrDistance = 0.0f;
+    V3 closest(0.0f, 0.0f, 0.0f);
     int i;
     for (i = 0; i < 3; i++) {
-        V3 axis = i == 0 ? angles.GetRightPoint() : i == 1 ? angles.GetUpPoint() : angles.GetDirection();
-        along[i] = Dot(axis, d);
-        if (along[i] < -(&size.x)[i])
-            along[i] = -(&size.x)[i];
-        else if (along[i] > (&size.x)[i])
-            along[i] = (&size.x)[i];
+        (&closest.x)[i] = Dot(BoxAxis(angles, i), diff);
+        if ((&closest.x)[i] < -(&size.x)[i]) {
+            float delta = (&closest.x)[i] + (&size.x)[i];
+            sqrDistance += delta * delta;
+            (&closest.x)[i] = -(&size.x)[i];
+        } else if ((&closest.x)[i] > (&size.x)[i]) {
+            float delta = (&closest.x)[i] - (&size.x)[i];
+            sqrDistance += delta * delta;
+            (&closest.x)[i] = (&size.x)[i];
+        }
     }
     if (from)
         *from = point;
     if (to) {
         *to = center;
-        for (i = 0; i < 3; i++) {
-            V3 axis = i == 0 ? angles.GetRightPoint() : i == 1 ? angles.GetUpPoint() : angles.GetDirection();
-            *to += axis * along[i];
-        }
+        for (i = 0; i < 3; i++)
+            *to += BoxAxis(angles, i) * (&closest.x)[i];
     }
+    return sqrDistance;
 }
 
 V3 *OOBOX3::GetCorners()

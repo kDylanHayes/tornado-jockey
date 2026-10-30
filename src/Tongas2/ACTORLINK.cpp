@@ -140,24 +140,6 @@ public:
     INTERP<LINKV2> m_size;
 };
 
-// B2FolllowMaxPath and B2LookAtPath: defined elsewhere.
-class B2FOLLOWMAXPATH : public BEHAVIOR2
-{
-public:
-    virtual bool Init(const char *params);
-    virtual bool Update(float dt);
-
-    char m_10[0x14];
-};
-
-class B2LOOKATPATH : public BEHAVIOR2
-{
-public:
-    virtual bool Init(const char *params);
-    virtual bool Update(float dt);
-
-    char m_10[0x14];
-};
 
 void ACTORLINK::UpdateBehaviors(float dt)
 {

@@ -2456,21 +2456,29 @@
 0x004d9fc0 ?UpdatePlanes@OOBOX3@@QAEXXZ function 0xb4
 0x004da080 ?IntersectFace@OOBOX3@@QAE_NHABUV3@@0PAU2@@Z function 0x458
 0x004da4e0 ?GetAxis@OOBOX3@@QAE?AUV3@@H@Z function 0x34
-0x004da520 ?ClosestPoint@OOBOX3@@QAEXABUV3@@PAU2@1@Z function 0x299
+0x004da520 ?ClosestPoint@OOBOX3@@QAEMABUV3@@PAU2@1@Z function 0x299
 0x004da7c0 ?GetCorners@OOBOX3@@QAEPAUV3@@XZ function 0x17
 0x004da7e0 ?GetPlanes@OOBOX3@@QAEPAUPLANE@@XZ function 0x1a
 0x004da800 ?EaseInOut@@YAMM@Z function 0x4e
 0x004da850 ?EaseOvershoot@@YAMM@Z function 0x50
-0x004da8a0 ?Update@INTERPOLATEDGROWBEHAVIOR@@UAEXXZ function
-0x004da9a0 ?Update@GROWLOOPBEHAVIOR@@UAEXXZ function
-0x004daa30 ?Update@GROWRESLOOPBEHAVIOR@@UAEXXZ function
-0x004daad0 ?IsRunning@GROWRESLOOPBEHAVIOR@@UAE_NXZ function
-0x004dab40 ?Update@FADERESLOOPBEHAVIOR@@UAEXXZ function
-0x004dabc0 ?Init@B2FOLLOWMAXPATH@@UAE_NPBD@Z function
-0x004dac50 ?Update@B2FOLLOWMAXPATH@@UAE_NM@Z function
-0x004dad80 ?Init@B2LOOKATPATH@@UAE_NPBD@Z function
-0x004daec0 ?Update@B2LOOKATPATH@@UAE_NM@Z function
-0x004dc0e0 ?SqrDistance@SEGMENT3@@QAEMPAUOOBOX3@@@Z function
+0x004da8a0 ?Update@INTERPOLATEDGROWBEHAVIOR@@UAEXXZ function 0xfa
+0x004da9a0 ?Update@GROWLOOPBEHAVIOR@@UAEXXZ function 0x89
+0x004daa30 ?Update@GROWRESLOOPBEHAVIOR@@UAEXXZ function 0x9a
+0x004daad0 ?IsRunning@GROWRESLOOPBEHAVIOR@@UAE_NXZ function 0x65
+0x004dab40 ?Update@FADERESLOOPBEHAVIOR@@UAEXXZ function 0x7f
+0x004dabc0 ?Init@B2FOLLOWMAXPATH@@UAE_NPBD@Z function 0x8f
+0x004dac50 ?Update@B2FOLLOWMAXPATH@@UAE_NM@Z function 0x12f
+0x004dad80 ?Init@B2LOOKATPATH@@UAE_NPBD@Z function 0x41
+0x004dadd0 ?Orthonormalize@@YAXAAUV3@@ABU1@@Z function 0xed
+0x004daec0 ?Update@B2LOOKATPATH@@UAE_NM@Z function 0x15e
+0x004db020 ?Face@DISTSEGBOX@@QAEXHHHAAUV3@@ABU2@1AAM@Z function 0x671
+0x004db6a0 ?CaseNoZeros@DISTSEGBOX@@QAEXAAUV3@@ABU2@AAM@Z function 0xbd
+0x004db760 ?Case0@DISTSEGBOX@@QAEXHHHAAUV3@@ABU2@AAM@Z function 0x204
+0x004db970 ?Case00@DISTSEGBOX@@QAEXHHHAAUV3@@ABU2@AAM@Z function 0xe9
+0x004dba60 ?Case000@DISTSEGBOX@@QAEXAAUV3@@AAM@Z function 0x11a
+0x004dbb80 ?GetLineSquared@DISTSEGBOX@@QAEMXZ function 0x4e3
+0x004dc070 ?GetSquared@DISTSEGBOX@@QAEMXZ function 0x6d
+0x004dc0e0 ?SqrDistance@SEGMENT3@@QAEMPAUOOBOX3@@@Z function 0x54
 0x004ded00 ?IsLoaded@SCREENDECAL@@UAE_NXZ function 0x3
 0x004dfe20 ?SetDescription@RESOURCEMASTER@@UAEXABH@Z function
 0x004e7820 ?_Min@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@KAPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@PAU342@@Z function
@@ -5631,6 +5639,14 @@
 0x006734cc __real@40488312 data 0x4
 0x006734d0 __real@40088312 data 0x4
 0x006734d8 _s_TypeNames data 0xb4
+0x00673590 _s_TypeNames data 0xb4
+0x00673648 _s_TypeNames data 0xb4
+0x00673700 _s_TypeNames data 0xb4
+0x006737b8 _s_TypeNames data 0xb4
+0x0067386c ??_C@_0P@BEENDNPK@Path?5not?5found?$AA@ data 0xf
+0x0067387c ??_C@_05KDNLHNC@?$CFs?5?$CFf?$AA@ data 0x6
+0x00673884 ??_C@_0CD@DDAJOLBI@B2LookAtPath?3?3Set?5?9?5Path?5not?5fou@ data 0x23
+0x006738a8 _s_TypeNames data 0xb4
 0x00679658 __real@3f50624dd2f1a9fc data
 0x00679660 __real@bff0000000000000 data
 0x00679b3c ??_C@_03NAIKFGEJ@PNG?$AA@ data
