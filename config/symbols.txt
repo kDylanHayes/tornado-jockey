@@ -1228,6 +1228,7 @@
 0x004acb70 ?SetIsParamLength@PATHMASTER@@UAEXAB_N@Z function 0x1e
 0x004acb90 ?SetIsClosed@PATHMASTER@@UAEXAB_N@Z function 0x1e
 0x004acbb0 ?SetDeletePoint@PATHMASTER@@UAEXABHAB_N@Z function 0x32d
+0x004acee0 ?Intersect@PLANE@@QAE?AUV3@@ABU2@0PAM@Z function
 0x004acfa0 ?Distance@PLANE@@QAEMABUV3@@PAU2@1@Z function
 0x004ad030 ??D@YA?AUV3I@@ABMABU0@@Z function 0x40
 0x004ad070 ??H@YA?AUV3I@@ABU0@0@Z function 0x2d
@@ -2404,31 +2405,62 @@
 0x004d54a0 ??_GMESH@@UAEPAXI@Z function 0x1e
 0x004d54c0 ??_GMESHMASTER@@UAEPAXI@Z function 0x1e
 0x004d54e0 ?CreateMesh@MESHMANAGER@@UAE?AURESHANDLE@@U2@HPBD@Z function 0x139
-0x004d57c0 ?GetSaveFolder@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z function
-0x004d5f00 ?CreateFolder@@YAXABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z function
-0x004d6240 ?Project@SEGMENT3@@QAEMABUV3@@PAM@Z function
-0x004d6cf0 ?Update@SEGMENT3@@QAEXXZ function
-0x004d6d60 ?CollideQuadSegment@@YA_NPAUQUAD3@@PAUSEGMENT3@@PAUV3@@2PAM2@Z function
-0x004d7090 ?CollideSphereSegment@@YA_NPAUSPHERE3@@PAUSEGMENT3@@PAUV3@@2PAM2@Z function
-0x004d71a0 ?CollideCapsuleCapsule@@YA_NPAUCAPSULE3@@0PAUV3@@1PAM1@Z function
-0x004d7200 ?CollideCapsuleSphere@@YA_NPAUCAPSULE3@@PAUSPHERE3@@PAUV3@@2PAM2@Z function
-0x004d7270 ?CollideCapsuleBox@@YA_NPAUCAPSULE3@@PAUOOBOX3@@PAUV3@@2PAM2@Z function
-0x004d72c0 ?BoxInside@@YA_NABUV3@@000@Z function
-0x004d7330 ?CollideSphereSphere@@YA_NPAUSPHERE3@@0PAUV3@@1PAM@Z function
-0x004d76d0 ?CollideBoxBox@@YA_NPAUOOBOX3@@0PAUV3@@1PAM@Z function
-0x004d80f0 ?CollideSphereBox@@YA_NPAUSPHERE3@@PAUOOBOX3@@PAUV3@@2PAM@Z function
-0x004d83e0 ?CollideSphereQuad@@YA_NPAUSPHERE3@@PAUQUAD3@@PAUV3@@2PAM@Z function
-0x004d8680 ?CollideBoxSegment@@YA_NPAUOOBOX3@@PAUSEGMENT3@@PAUV3@@2PAM2@Z function
-0x004d8c00 ?CollideBoxQuad@@YA_NPAUOOBOX3@@PAUQUAD3@@PAUV3@@2PAMH@Z function
-0x004d9590 ?Set@CAPSULE3@@QAEXABUV3@@ABM1ABUANG@@@Z function
-0x004d96e0 ?SetCenter@QUAD3@@QAEXABUV3@@@Z function
-0x004d9730 ?SetSize@QUAD3@@QAEXABUV3@@@Z function
-0x004d9780 ?SetAngles@QUAD3@@QAEXABUANG@@@Z function
-0x004d9af0 ?SetCenter@OOBOX3@@QAEXABUV3@@@Z function
-0x004d9b50 ?SetSize@OOBOX3@@QAEXABUV3@@@Z function
-0x004d9bb0 ?SetAngles@OOBOX3@@QAEXABUANG@@@Z function
-0x004da7c0 ?GetCorners@OOBOX3@@QAEPAUV3@@XZ function
-0x004da800 ?EaseInOut@@YAMM@Z function
+0x004d5620 ?find@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBEIPBDII@Z function 0xc2
+0x004d56f0 ?find_last_of@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBEIPBDII@Z function 0x8d
+0x004d5780 ??$?8DU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PBD@Z function 0x31
+0x004d57c0 ?GetSaveFolder@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z function 0x32
+0x004d5800 ?replace@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@IIABV12@II@Z function 0x34d
+0x004d5b50 ?replace@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@IIPBDI@Z function 0x1d5
+0x004d5d30 ?GetExeFolder@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ function 0x87
+0x004d5dc0 ?FixSlashes@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV12@@Z function 0x12b
+0x004d5f00 ?CreateFolder@@YAXABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z function 0x1a9
+0x004d60c0 ?DistanceSq@SEGMENT3@@QAEMABUV3@@PAM@Z function 0x11b
+0x004d61e0 ?PointAt@SEGMENT3@@QAE?AUV3@@ABM@Z function 0x3e
+0x004d6220 ?Distance@SEGMENT3@@QAEMABUV3@@PAM@Z function 0x14
+0x004d6240 ?Project@SEGMENT3@@QAEMABUV3@@PAM@Z function 0xc7
+0x004d6310 ?SqrDistance@SEGMENT3@@QAEMABU1@PAUV3@@1@Z function 0x9d7
+0x004d6cf0 ?Update@SEGMENT3@@QAEXXZ function 0x62
+0x004d6d60 ?CollideQuadSegment@@YA_NPAUQUAD3@@PAUSEGMENT3@@PAUV3@@2PAM2@Z function 0x330
+0x004d7090 ?CollideSphereSegment@@YA_NPAUSPHERE3@@PAUSEGMENT3@@PAUV3@@2PAM2@Z function 0x107
+0x004d71a0 ?CollideCapsuleCapsule@@YA_NPAUCAPSULE3@@0PAUV3@@1PAM1@Z function 0x60
+0x004d7200 ?CollideCapsuleSphere@@YA_NPAUCAPSULE3@@PAUSPHERE3@@PAUV3@@2PAM2@Z function 0x6e
+0x004d7270 ?CollideCapsuleBox@@YA_NPAUCAPSULE3@@PAUOOBOX3@@PAUV3@@2PAM2@Z function 0x4e
+0x004d72c0 ?BoxInside@@YA_NABUV3@@000@Z function 0x63
+0x004d7330 ?CollideSphereSphere@@YA_NPAUSPHERE3@@0PAUV3@@1PAM@Z function 0x14c
+0x004d7480 ?GetUp@OOBOX3@@QAE?AUV3@@XZ function 0x43
+0x004d74d0 ?GetDirection@OOBOX3@@QAE?AUV3@@XZ function 0x43
+0x004d7520 ?GetRight@OOBOX3@@QAE?AUV3@@XZ function 0x43
+0x004d7570 ?GetMatrix@OOBOX3@@QAE?AUMATRIX@@XZ function 0x37
+0x004d75b0 ?GetUp@QUAD3@@QAE?AUV3@@XZ function 0x55
+0x004d7610 ?GetDirection@QUAD3@@QAE?AUV3@@XZ function 0x5b
+0x004d7670 ?GetRight@QUAD3@@QAE?AUV3@@XZ function 0x52
+0x004d76d0 ?CollideBoxBox@@YA_NPAUOOBOX3@@0PAUV3@@1PAM@Z function 0xa13
+0x004d80f0 ?CollideSphereBox@@YA_NPAUSPHERE3@@PAUOOBOX3@@PAUV3@@2PAM@Z function 0x2e5
+0x004d83e0 ?CollideSphereQuad@@YA_NPAUSPHERE3@@PAUQUAD3@@PAUV3@@2PAM@Z function 0x298
+0x004d8680 ?CollideBoxSegment@@YA_NPAUOOBOX3@@PAUSEGMENT3@@PAUV3@@2PAM2@Z function 0x57e
+0x004d8c00 ?CollideBoxQuad@@YA_NPAUOOBOX3@@PAUQUAD3@@PAUV3@@2PAMH@Z function 0x98f
+0x004d9590 ?Set@CAPSULE3@@QAEXABUV3@@ABM1ABUANG@@@Z function 0x146
+0x004d96e0 ?SetCenter@QUAD3@@QAEXABUV3@@@Z function 0x4c
+0x004d9730 ?SetSize@QUAD3@@QAEXABUV3@@@Z function 0x4c
+0x004d9780 ?SetAngles@QUAD3@@QAEXABUANG@@@Z function 0x2f
+0x004d97b0 ?UpdateCorners@QUAD3@@QAEXXZ function 0x1d5
+0x004d9990 ?GetNormal@QUAD3@@QAE?AUV3@@XZ function 0x47
+0x004d99e0 ?PlaneDot@QUAD3@@QAEMABUV3@@@Z function 0x4c
+0x004d9a30 ?Distance@QUAD3@@QAEMABUV3@@PAU2@1@Z function 0x47
+0x004d9a80 ?Intersect@QUAD3@@QAE?AUV3@@ABU2@0PAM@Z function 0x50
+0x004d9ad0 ?GetCorners@QUAD3@@QAEPAUV3@@XZ function 0x14
+0x004d9af0 ?SetCenter@OOBOX3@@QAEXABUV3@@@Z function 0x54
+0x004d9b50 ?SetSize@OOBOX3@@QAEXABUV3@@@Z function 0x52
+0x004d9bb0 ?SetAngles@OOBOX3@@QAEXABUANG@@@Z function 0x35
+0x004d9bf0 ?UpdateCorners@OOBOX3@@QAEXXZ function 0x3c7
+0x004d9fc0 ?UpdatePlanes@OOBOX3@@QAEXXZ function 0xb4
+0x004da080 ?IntersectFace@OOBOX3@@QAE_NHABUV3@@0PAU2@@Z function 0x458
+0x004da4e0 ?GetAxis@OOBOX3@@QAE?AUV3@@H@Z function 0x34
+0x004da520 ?ClosestPoint@OOBOX3@@QAEXABUV3@@PAU2@1@Z function 0x299
+0x004da7c0 ?GetCorners@OOBOX3@@QAEPAUV3@@XZ function 0x17
+0x004da7e0 ?GetPlanes@OOBOX3@@QAEPAUPLANE@@XZ function 0x1a
+0x004da800 ?EaseInOut@@YAMM@Z function 0x4e
+0x004da850 ?EaseOvershoot@@YAMM@Z function 0x50
 0x004da8a0 ?Update@INTERPOLATEDGROWBEHAVIOR@@UAEXXZ function
 0x004da9a0 ?Update@GROWLOOPBEHAVIOR@@UAEXXZ function
 0x004daa30 ?Update@GROWRESLOOPBEHAVIOR@@UAEXXZ function
@@ -2438,6 +2470,7 @@
 0x004dac50 ?Update@B2FOLLOWMAXPATH@@UAE_NM@Z function
 0x004dad80 ?Init@B2LOOKATPATH@@UAE_NPBD@Z function
 0x004daec0 ?Update@B2LOOKATPATH@@UAE_NM@Z function
+0x004dc0e0 ?SqrDistance@SEGMENT3@@QAEMPAUOOBOX3@@@Z function
 0x004ded00 ?IsLoaded@SCREENDECAL@@UAE_NXZ function 0x3
 0x004dfe20 ?SetDescription@RESOURCEMASTER@@UAEXABH@Z function
 0x004e7820 ?_Min@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@KAPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@PAU342@@Z function
@@ -2457,6 +2490,7 @@
 0x0054f1f0 ??1WTINFO@@QAE@XZ function
 0x00550520 ??0WTINFO@@QAE@_N@Z function
 0x00550e40 ?IsOpen@FILELOADER@@UAE_NXZ function 0xb
+0x00554320 ?GetUserFolder@@YI?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z function
 0x00555170 ??0CSTRING@@QAE@XZ function 0x9
 0x00559cc6 FMOD.DLL::_FSOUND_GetError@0 function 0x6
 0x00559ccc FMOD.DLL::_FSOUND_StopSound@4 function 0x6
@@ -4393,6 +4427,7 @@
 0x00615f90 _$E3 function
 0x006160a0 _$E1 function 0xc
 0x006160b0 _$E4 function 0x13d
+0x00616230 _$E1 function 0x18
 0x006541f0 _$E1 function 0x1d
 0x006543a0 _$E2 function 0x24
 0x006543d0 _$E5 function 0x24
@@ -4404,6 +4439,7 @@
 0x006544d0 _$E12 function 0x24
 0x00654500 _$E2 function 0xb
 0x00654510 _$E2 function 0x14
+0x00654530 _$E2 function 0x30
 0x006552c0 _$E2 function
 0x006553a0 _$E2 function 0x2e
 0x00656004 __imp__RegOpenKeyExA@20 data 0x4
@@ -4502,6 +4538,7 @@
 0x0065b110 __real@3fe0000000000000 data
 0x0065b11c __real@43b40000 data
 0x0065b13c __real@3e2aaaab data
+0x0065c114 __real@bf000000 data 0x4
 0x0065d088 ??_C@_09DAPGLLEF@Direction?$AA@ data 0xa
 0x0065d884 ??_C@_04KOACHJEN@Type?$AA@ data 0x5
 0x0065db8c ??_C@_0BC@KBDMBKEH@deque?$DMT?$DO?5too?5long?$AA@ data
@@ -5587,7 +5624,13 @@
 0x00673474 ??_C@_0BG@BCMIAFOC@no?5master?5for?5mesh?5?$CFs?$AA@ data 0x16
 0x0067348c ??_C@_08LEPLNHFC@?$CFs_?$CFd_?$CFs?$AA@ data 0x9
 0x00673498 ??_C@_0CB@NHKANKD@Error?5?9?5no?5shader?5to?5build?5mesh?$CB@ data 0x21
-0x006734c4 __real@358637bd data
+0x006734bc ??_C@_02CBLDBPFN@?1?1?$AA@ data 0x3
+0x006734c0 ??_C@_01KICIPPFI@?2?$AA@ data 0x2
+0x006734c4 __real@358637bd data 0x4
+0x006734c8 __real@3f7fffef data 0x4
+0x006734cc __real@40488312 data 0x4
+0x006734d0 __real@40088312 data 0x4
+0x006734d8 _s_TypeNames data 0xb4
 0x00679658 __real@3f50624dd2f1a9fc data
 0x00679660 __real@bff0000000000000 data
 0x00679b3c ??_C@_03NAIKFGEJ@PNG?$AA@ data
@@ -6455,6 +6498,7 @@
 0x009eede0 ?g_pValueManager@@3PAVCMDBASE@@A data 0x4
 0x009eede8 _s_line data 0x10000
 0x009fede8 ?g_pGuiBehaviors@@3PAVGUIBEHAVIORS@@A data 0x4
+0x009fedec ?g_exeFolder@@3V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@A data 0x1c
 0x00a0f288 _s_format_id data
 0x00a0f28c _s_format_id data
 0x00a0f290 ?unknown_tag@?1??getTagFieldName@TagLib@@QAEPBDW4MDMODEL@2@G@Z@4PADA data
