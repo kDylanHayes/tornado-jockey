@@ -912,7 +912,15 @@ V3 HEIGHTMAPDX8::GetGroundPoint(const V3 &point)
     else
         plane = GetFlatPlane(x, y);
     V3 other(g_forward.x + point.x, g_forward.y + point.y, g_forward.z + point.z);
-    return plane.Intersect(point, other, 0);
+    V3 ground = plane.Intersect(point, other, 0);
+    return ground;
+}
+
+static inline PLANE PlaneAt(HEIGHTMAPDX8 *heightmap, HEIGHTMAPDX8MASTER *master, int x, int y)
+{
+    if (x < 0 || y < 0 || x >= master->m_imageWidth || y >= master->m_imageHeight)
+        return heightmap->GetDefaultPlane();
+    return heightmap->GetFlatPlane(x, y);
 }
 
 V3 HEIGHTMAPDX8::GetNormal(const V3 &point)
@@ -920,12 +928,8 @@ V3 HEIGHTMAPDX8::GetNormal(const V3 &point)
     HEIGHTMAPDX8MASTER *master = Master();
     int x, y;
     PointToPixel(point, &x, &y);
-    PLANE plane;
-    if (x < 0 || y < 0 || x >= master->m_imageWidth || y >= master->m_imageHeight)
-        plane = GetDefaultPlane();
-    else
-        plane = GetFlatPlane(x, y);
-    V3 normal(plane.a, plane.b, plane.c);
+    PLANE plane = PlaneAt(this, master, x, y);
+    V3 &normal = *(V3 *)&plane;
     normal.Normalize();
     return normal;
 }
