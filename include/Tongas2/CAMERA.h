@@ -19,6 +19,9 @@ struct FRUSTUM
     // Defined elsewhere: the frustum of an inverted view-projection matrix,
     // turned by rotation.
     void Build(const MATRIX &inverseViewProj, const MATRIX &rotation);
+    // Defined elsewhere: whether box is inside the frustum (0), across
+    // its edge (1) or outside it (2).
+    int Classify(BOXCORNERS *box);
 
     PLANE m_planes[6];
     BOXCORNERS m_corners;

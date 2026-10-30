@@ -2328,6 +2328,26 @@
       "category": "engine"
     },
     {
+      "name": "Tongas2/OCTREE",
+      "ranges": [
+        "0x004d21a0-0x004d2c3f",
+        "0x00672860-0x00672947"
+      ],
+      "target": "build/target/Tongas2/OCTREE.obj",
+      "source": "src/Tongas2/OCTREE.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/PVSNODE",
+      "ranges": [
+        "0x004d2c40-0x004d2ebf",
+        "0x00672948-0x00672a0b"
+      ],
+      "target": "build/target/Tongas2/PVSNODE.obj",
+      "source": "src/Tongas2/PVSNODE.cpp",
+      "category": "engine"
+    },
+    {
       "name": "Tongas2/FILELOADERWKZ",
       "ranges": [
         "0x005be7f0-0x005bebbc",

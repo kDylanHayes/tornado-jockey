@@ -10,6 +10,7 @@
 #include "Tongas2/GUIBEHAVIORS.h"
 #include "Tongas2/LOG.h"
 #include "Tongas2/PATH.h"
+#include "Tongas2/PVS.h"
 #include "Tongas2/RESOURCE.h"
 #include "Tongas2/RESOURCES.h"
 #include "Tongas2/SCENE.h"
@@ -30,13 +31,6 @@ extern RESOURCEMANAGER *g_pPATH;
 extern RESOURCEMANAGER *g_pBONEDMODEL;
 // A vector at the origin.
 extern V3 g_zero;
-
-// Defined elsewhere: a node of the scene's visibility tree.
-class PVSNODE
-{
-public:
-    void RemoveMember(ACTOR *actor);
-};
 
 static const char s_behaviorNames[][30] = {
     "LINEAL",
@@ -614,7 +608,7 @@ bool ANG::IsZero()
     return GetEuler().IsZero();
 }
 
-BOXCORNERS::BOXCORNERS()
+BOXCORNERS::BOXCORNERS() throw()
 {
     Set(1.0f, 1.0f, 1.0f);
 }

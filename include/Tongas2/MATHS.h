@@ -12,7 +12,13 @@ struct V3
     float x, y, z;
 
     V3() {}
-    V3(float x_, float y_, float z_) : x(x_), y(y_), z(z_) {}
+    V3(const float &x_, const float &y_, const float &z_) : x(x_), y(y_), z(z_) {}
+    void Set(float x_, float y_, float z_)
+    {
+        x = x_;
+        y = y_;
+        z = z_;
+    }
 
     V3 &operator+=(const V3 &o) { x += o.x; y += o.y; z += o.z; return *this; }
     V3 &operator-=(const V3 &o) { x -= o.x; y -= o.y; z -= o.z; return *this; }

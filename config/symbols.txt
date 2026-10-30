@@ -2304,17 +2304,30 @@
 0x004d1fc0 ?Clear@BEHAVIORLIST@@QAEXXZ function 0xb1
 0x004d2080 ?Update@BEHAVIORLIST@@UAEXXZ function 0xa4
 0x004d2130 ?CreateTRAVELWANIM@@YAPAVBEHAVIOR@@ABURESHANDLE@@PAUCMDCALL@@@Z function 0x63
-0x004d2460 ??1OCTREE@@QAE@XZ function
-0x004d2480 ?AddMember@OCTREE@@QAEXPAVACTOR@@@Z function
-0x004d24b0 ?Update@OCTREE@@QAEXPAUFRUSTUM@@@Z function
-0x004d24d0 ?Dump@OCTREE@@QAEXPAUFRUSTUM@@@Z function
-0x004d2b10 ??0OCTREE@@QAE@UV3@@0H@Z function
-0x004d2bb0 ?Clear@OCTREE@@QAEXXZ function
-0x004d2ca0 ?RemoveMember@PVSNODE@@QAEXPAVACTOR@@@Z function
-0x004d2d50 ?Update@ONENODE@@QAEXPAUFRUSTUM@@@Z function
-0x004d2d90 ?Dump@ONENODE@@QAEXPAUFRUSTUM@@@Z function
-0x004d2dc0 ?Clear@ONENODE@@QAEXXZ function
-0x004d2e40 ??0ONENODE@@QAE@XZ function
+0x004d21a0 ?Set@BOXCORNERS@@QAEXABUV3@@0@Z function 0x94
+0x004d2240 ??1OCTREENODE@@UAE@XZ function 0x71
+0x004d22c0 ?Update@OCTREENODE@@QAEXPAUFRUSTUM@@_N@Z function 0xaf
+0x004d2370 ?Dump@OCTREENODE@@QAEXPAUFRUSTUM@@_NPAH222@Z function 0xe9
+0x004d2460 ??1OCTREE@@QAE@XZ function 0x19
+0x004d2480 ?AddMember@OCTREE@@QAEXPAVACTOR@@@Z function 0x28
+0x004d24b0 ?Update@OCTREE@@QAEXPAUFRUSTUM@@@Z function 0x16
+0x004d24d0 ?Dump@OCTREE@@QAEXPAUFRUSTUM@@@Z function 0x40
+0x004d2510 ??0OCTREENODE@@QAE@ABUV3@@0H@Z function 0x8f
+0x004d25a0 ??_GOCTREENODE@@UAEPAXI@Z function 0x1e
+0x004d25c0 ?AddMember@OCTREENODE@@UAEXPAVACTOR@@@Z function 0x548
+0x004d2b10 ??0OCTREE@@QAE@UV3@@0H@Z function 0x98
+0x004d2bb0 ?Clear@OCTREE@@QAEXXZ function 0x84
+0x004d2c40 ??0PVSNODE@@QAE@XZ function 0x10
+0x004d2c50 ?AddMember@PVSNODE@@UAEXPAVACTOR@@@Z function 0x48
+0x004d2ca0 ?RemoveMember@PVSNODE@@QAEXPAVACTOR@@@Z function 0x63
+0x004d2d10 ?Unlink@@YGXPAVACTOR@@@Z function 0x37
+0x004d2d50 ?Update@ONENODE@@QAEXPAUFRUSTUM@@@Z function 0x3a
+0x004d2d90 ?Dump@ONENODE@@QAEXPAUFRUSTUM@@@Z function 0x2e
+0x004d2dc0 ?Clear@ONENODE@@QAEXXZ function 0x31
+0x004d2e00 ??1PVSNODE@@UAE@XZ function 0x37
+0x004d2e40 ??0ONENODE@@QAE@XZ function 0x10
+0x004d2e50 ??_GONENODE@@UAEPAXI@Z function 0x4f
+0x004d2ea0 ??_GPVSNODE@@UAEPAXI@Z function 0x1e
 0x004d2ec0 ?HashString@@YAHPBDH@Z function
 0x004d3140 ?UpdateBehaviors@ACTORLINK@@QAEXM@Z function
 0x004d3590 ??0ACTORLINK@@QAE@XZ function
@@ -2326,6 +2339,7 @@
 0x004d4280 ??0GUIJITTER@@QAE@PAVGUICONTROL@@@Z function
 0x004d4570 ??0GUIBLINK@@QAE@PAVGUICONTROL@@@Z function
 0x004d4610 ?PointAt@ANG@@QAEXABUV3@@@Z function
+0x004d4b10 ?Classify@FRUSTUM@@QAEHPAUBOXCORNERS@@@Z function
 0x004d4ca0 ?Build@FRUSTUM@@QAEXABUMATRIX@@0@Z function
 0x004d57c0 ?GetSaveFolder@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z function
 0x004d5f00 ?CreateFolder@@YAXABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z function
@@ -2336,6 +2350,7 @@
 0x004d71a0 ?CollideCapsuleCapsule@@YA_NPAUCAPSULE3@@0PAUV3@@1PAM1@Z function
 0x004d7200 ?CollideCapsuleSphere@@YA_NPAUCAPSULE3@@PAUSPHERE3@@PAUV3@@2PAM2@Z function
 0x004d7270 ?CollideCapsuleBox@@YA_NPAUCAPSULE3@@PAUOOBOX3@@PAUV3@@2PAM2@Z function
+0x004d72c0 ?BoxInside@@YA_NABUV3@@000@Z function
 0x004d7330 ?CollideSphereSphere@@YA_NPAUSPHERE3@@0PAUV3@@1PAM@Z function
 0x004d76d0 ?CollideBoxBox@@YA_NPAUOOBOX3@@0PAUV3@@1PAM@Z function
 0x004d80f0 ?CollideSphereBox@@YA_NPAUSPHERE3@@PAUOOBOX3@@PAUV3@@2PAM@Z function
@@ -5456,6 +5471,11 @@
 0x0067283c ??_7ORBITBEHAVIOR@@6B@ data 0xc
 0x00672848 ??_7CHANGETEXTUREBEHAVIOR@@6B@ data 0xc
 0x00672854 ??_7TRAVELWANIMBEHAVIOR@@6B@ data 0xc
+0x00672860 _s_TypeNames data 0xb4
+0x00672914 ??_7OCTREENODE@@6B@ data 0x8
+0x00672948 _s_TypeNames data 0xb4
+0x006729fc ??_7PVSNODE@@6B@ data 0x8
+0x00672a04 ??_7ONENODE@@6B@ data 0x8
 0x006734c4 __real@358637bd data
 0x00679658 __real@3f50624dd2f1a9fc data
 0x00679660 __real@bff0000000000000 data
