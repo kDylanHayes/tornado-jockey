@@ -79,6 +79,13 @@ struct MATRIX
     V3 Project(const V3 &v) const;
 #endif
 
+    void Scaling(float x, float y, float z)
+    {
+        _11 = x; _12 = 0.0f; _13 = 0.0f; _14 = 0.0f;
+        _21 = 0.0f; _22 = y; _23 = 0.0f; _24 = 0.0f;
+        _31 = 0.0f; _32 = 0.0f; _33 = z; _34 = 0.0f;
+        _41 = 0.0f; _42 = 0.0f; _43 = 0.0f; _44 = 1.0f;
+    }
     void Identity()
     {
         _11 = 1.0f; _12 = 0.0f; _13 = 0.0f; _14 = 0.0f;

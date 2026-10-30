@@ -28,8 +28,10 @@ class LIGHTMANAGER : public RESOURCEMANAGER
 public:
     virtual void Init();
     virtual void Update();
-    // Defined by the renderer plugin.
-    virtual void Virtual08() = 0;
+    // Defined by the renderer plugin: a vertex's color lit by the lights in
+    // mask, from its own color and its normal, ambient the most each
+    // component may reach.
+    virtual void LightVertex(const LIGHTRGB &ambient, const V3I &color, const V3 &normal, int mask, LIGHTRGB &out) = 0;
     virtual void Virtual09() = 0;
     virtual void UpdateLights() = 0;
 

@@ -65,6 +65,14 @@ struct BOXCORNERS
     // Projects each corner by m.
     void Transform(const MATRIX &m);
 #endif
+#ifdef HEIGHTMAP_BOXES
+    // Defined in HEIGHTMAPDX8.cpp: each corner transformed by m.
+    void TransformAffine(const D3DXMATRIX &m);
+    // Raises the top corners to height and lowers the bottom ones to it.
+    void ExtendHeight(float height);
+    // The box around this one and other.
+    void Merge(const BOXCORNERS &other);
+#endif
 
     ZEROV3 corners[8];
 };
