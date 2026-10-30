@@ -61,6 +61,7 @@ struct ACCELERATION
 
     // Steps it; false once it has arrived.
     bool Update(float dt);
+    double GetValue() { return !m_running ? m_to : m_value; }
 
     double m_velocity;
     double m_distance;
@@ -261,17 +262,6 @@ public:
     float m_phase;
 };
 
-// The circle ORBIT goes round: its center and two axes across it.
-struct ORBITCIRCLE
-{
-    // Works out the axes across the circle from the axis through it.
-    void SetAxis(const V3 &axis);
-
-    V3 m_center;
-    V3 m_u;
-    V3 m_v;
-};
-
 // ORBIT: moves the actor round a circle, facing a point.
 class ORBITBEHAVIOR : public TIMEDBEHAVIOR
 {
@@ -283,14 +273,19 @@ public:
         Place();
     }
 
+    // Works out the axes across the circle from the axis through it.
+    void SetPlane(const V3 &center, const V3 &axis);
     // Places and turns the actor for the time.
     void Place();
 
     float m_period;
     float m_start;
     float m_radius;
-    ORBITCIRCLE m_circle;
-    V3 m_lookAt;
+    // The circle's center and two axes across it.
+    ZEROV3 m_center;
+    ZEROV3 m_u;
+    ZEROV3 m_v;
+    ZEROV3 m_lookAt;
 };
 
 // CHANGETEXTURE: never finished; it blinks an actor it never sets.

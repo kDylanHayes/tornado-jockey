@@ -37,6 +37,22 @@ ACCELERATION::ACCELERATION(const float &from, const float &to, const float &time
     m_velocity = 0.0;
 }
 
+V3ACCELERATION::V3ACCELERATION(V3 from, V3 to, float time)
+{
+    m_progress = ACCELERATION(0.0f, 1.0f, time);
+    m_to = to;
+    m_from = from;
+    m_current = from;
+}
+
+bool V3ACCELERATION::Update(float dt)
+{
+    bool running = m_progress.Update(dt);
+    float t = (float)(!m_progress.m_running ? m_progress.m_to : m_progress.m_value);
+    m_current = (m_to - m_from) * t + m_from;
+    return running;
+}
+
 bool ACCELERATION::Update(float dt)
 {
     if (!m_running)
@@ -86,22 +102,6 @@ bool ACCELERATION::Update(float dt)
         }
     }
     return true;
-}
-
-V3ACCELERATION::V3ACCELERATION(V3 from, V3 to, float time)
-{
-    m_progress = ACCELERATION(0.0f, 1.0f, time);
-    m_to = to;
-    m_from = from;
-    m_current = from;
-}
-
-bool V3ACCELERATION::Update(float dt)
-{
-    bool running = m_progress.Update(dt);
-    float t = (float)(m_progress.m_running ? m_progress.m_value : m_progress.m_to);
-    m_current = (m_to - m_from) * t + m_from;
-    return running;
 }
 
 GROWBEHAVIOR::GROWBEHAVIOR(const RESHANDLE &owner, CMDCALL *call) : TIMEDBEHAVIOR(owner, call)
@@ -170,9 +170,9 @@ FALLBEHAVIOR::~FALLBEHAVIOR()
 bool FALLBEHAVIOR::IsRunning()
 {
     ACTOR *actor = GetActor();
-    if (!actor)
-        return false;
-    return m_floor < actor->m_position.y;
+    if (actor)
+        return actor->m_position.y > m_floor;
+    return false;
 }
 
 FALLWFXBEHAVIOR::FALLWFXBEHAVIOR(const RESHANDLE &owner, CMDCALL *call) : FALLBEHAVIOR(owner, call)
@@ -210,8 +210,8 @@ void ORBITBEHAVIOR::Place()
     float angle = (m_start - m_time) / m_period * 360.0f * 0.017453292f;
     float s = (float)sin(angle);
     float c = (float)cos(angle);
-    actor->SetPosition((m_circle.m_u * c + m_circle.m_v * s) * m_radius + m_circle.m_center);
-    actor->m_angles.PointAt(m_lookAt + m_circle.m_center - actor->GetPosition());
+    actor->SetPosition((m_u * c + m_v * s) * m_radius + m_center);
+    actor->m_angles.PointAt(m_lookAt + m_center - actor->GetPosition());
 }
 
 INTERPOLATEDGROWBEHAVIOR::INTERPOLATEDGROWBEHAVIOR(const RESHANDLE &owner, CMDCALL *call) : TIMEDBEHAVIOR(owner, call)
@@ -382,7 +382,7 @@ static BEHAVIOR *CreateFALLWFX(const RESHANDLE &owner, CMDCALL *call)
     return new FALLWFXBEHAVIOR(owner, call);
 }
 
-void ORBITCIRCLE::SetAxis(const V3 &axis)
+void ORBITBEHAVIOR::SetPlane(const V3 &center, const V3 &axis)
 {
     if (fabs(axis.x) > fabs(axis.y)) {
         m_u.x = axis.z;
@@ -393,13 +393,10 @@ void ORBITCIRCLE::SetAxis(const V3 &axis)
         m_u.y = axis.z;
         m_u.z = -axis.y;
     }
-    m_v.x = m_u.z * axis.y - axis.z * m_u.y;
-    m_v.y = axis.z * m_u.x - m_u.z * axis.x;
-    m_v.z = axis.x * m_u.y - axis.y * m_u.x;
+    m_v = V3(m_u.z * axis.y - axis.z * m_u.y, axis.z * m_u.x - m_u.z * axis.x, axis.x * m_u.y - axis.y * m_u.x);
     m_u.Normalize();
     m_v.Normalize();
 }
-
 FADERESOURCEBEHAVIOR::FADERESOURCEBEHAVIOR(const RESHANDLE &owner, CMDCALL *call) : TIMEDBEHAVIOR(owner, call)
 {
     m_resource = atoi(call->tokens->GetToken(3));
@@ -507,11 +504,11 @@ ORBITBEHAVIOR::ORBITBEHAVIOR(const RESHANDLE &owner, CMDCALL *call) : TIMEDBEHAV
     m_start = m_time;
     m_period = (float)atof(call->tokens->GetToken(3));
     m_radius = (float)atof(call->tokens->GetToken(4));
-    sscanf(call->tokens->GetToken(5), "%f, %f, %f", &m_circle.m_center.x, &m_circle.m_center.y, &m_circle.m_center.z);
+    sscanf(call->tokens->GetToken(5), "%f, %f, %f", &m_center.x, &m_center.y, &m_center.z);
     V3 axis(0.0f, 0.0f, 0.0f);
     sscanf(call->tokens->GetToken(6), "%f, %f, %f", &axis.x, &axis.y, &axis.z);
     sscanf(call->tokens->GetToken(7), "%f, %f, %f", &m_lookAt.x, &m_lookAt.y, &m_lookAt.z);
-    m_circle.SetAxis(axis);
+    SetPlane(m_center, axis);
     Place();
 }
 
@@ -572,18 +569,18 @@ static BEHAVIOR *CreateORBIT(const RESHANDLE &owner, CMDCALL *call)
 void TRAVELWANIMBEHAVIOR::Start()
 {
     ACTOR *actor = GetActor();
-    if (!actor) {
+    if (actor) {
+        actor->SetBehavior(ACTORBEHAVIOR_LINEAL);
+        actor->SetAceleration(V3(0.0f, 0.0f, 0.0f));
+        actor->SetAngAceleration(V3(0.0f, 0.0f, 0.0f));
+        actor->SetVel(V3(0.0f, 0.0f, 0.0f));
+        actor->SetAngVel(V3(0.0f, 0.0f, 0.0f));
+        m_state = TURNING;
+        m_done = false;
+        Turn(m_target - actor->GetPosition());
+    } else {
         m_done = true;
-        return;
     }
-    actor->SetBehavior(ACTORBEHAVIOR_LINEAL);
-    actor->SetAceleration(V3(0.0f, 0.0f, 0.0f));
-    actor->SetAngAceleration(V3(0.0f, 0.0f, 0.0f));
-    actor->SetVel(V3(0.0f, 0.0f, 0.0f));
-    actor->SetAngVel(V3(0.0f, 0.0f, 0.0f));
-    m_state = TURNING;
-    m_done = false;
-    Turn(m_target - actor->GetPosition());
 }
 
 static BEHAVIOR *CreateCHANGETEXTURE(const RESHANDLE &owner, CMDCALL *call)
@@ -653,9 +650,11 @@ void TRAVELWANIMBEHAVIOR::Walk()
     if (actor) {
         actor->SetAngVel(V3(0.0f, 0.0f, 0.0f));
         m_state = WALKING;
-        V3 direction = m_target - actor->GetPosition();
+        V3 direction;
+        direction = m_target - actor->GetPosition();
         direction.Normalize();
-        actor->SetVel(direction * m_speed);
+        V3 velocity = direction;
+        actor->SetVel(velocity * m_speed);
         actor->BlendResourceAnimation(m_resource, m_walk.c_str(), 0.1f, true, 1.0f);
     }
 }
@@ -689,8 +688,7 @@ void BEHAVIORLIST::Clear()
             delete m_list[i];
             m_list[i] = 0;
         }
-        if (!m_list.empty())
-            m_list.pop_back();
+        m_list.pop_back();
     }
     m_list.clear();
 }
@@ -708,8 +706,7 @@ void BEHAVIORLIST::Update()
         } else {
             delete behavior;
             m_list[i] = m_list[m_list.size() - 1];
-            if (!m_list.empty())
-                m_list.pop_back();
+            m_list.pop_back();
             i--;
         }
     }
