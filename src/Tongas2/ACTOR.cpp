@@ -7,6 +7,7 @@
 #include "Tongas2/CPRIMITIVE3.h"
 #include "Tongas2/CSTRING.h"
 #include "Tongas2/FIXEDSTRING.h"
+#include "Tongas2/GUIBEHAVIORS.h"
 #include "Tongas2/LOG.h"
 #include "Tongas2/PATH.h"
 #include "Tongas2/RESOURCE.h"
@@ -36,16 +37,6 @@ class PVSNODE
 public:
     void RemoveMember(ACTOR *actor);
 };
-
-// Defined elsewhere: a behavior addBehavior can add, by name.
-struct BEHAVIORENTRY
-{
-    const char *name;
-    int hash;
-    BEHAVIOR *(*create)(const RESHANDLE &owner, CMDCALL *call);
-};
-
-BEHAVIORENTRY *FindBehavior(const char *name);
 
 static const char s_behaviorNames[][30] = {
     "LINEAL",
@@ -1453,7 +1444,7 @@ void ACTOR::OnContact(CONTACT *contact)
 
 SRESULT ACTOR::AddBehavior(CMDCALL *call)
 {
-    BEHAVIORENTRY *entry = FindBehavior(call->tokens->GetToken(1));
+    BEHAVIORENTRY *entry = g_pGuiBehaviors->Find(call->tokens->GetToken(1));
     if (entry) {
         m_behaviors.Add(entry->create(m_handle, call));
         return SRESULT(true);

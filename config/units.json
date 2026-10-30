@@ -2317,6 +2317,17 @@
       "category": "engine"
     },
     {
+      "name": "Tongas2/GUIBEHAVIORS",
+      "ranges": [
+        "0x004ceaa0-0x004d219f",
+        "0x00672604-0x0067285f",
+        "0x006c16e0-0x006c17b7"
+      ],
+      "target": "build/target/Tongas2/GUIBEHAVIORS.obj",
+      "source": "src/Tongas2/GUIBEHAVIORS.cpp",
+      "category": "engine"
+    },
+    {
       "name": "Tongas2/FILELOADERWKZ",
       "ranges": [
         "0x005be7f0-0x005bebbc",
