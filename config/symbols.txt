@@ -262,6 +262,7 @@
 0x0045446b ??2@YAPAXI@Z function 0x24
 0x0045450f ??_U@YAPAXI@Z function 0x5
 0x00456df2 _null_method function
+0x0046417d _D3DXPlaneFromPointNormal@12 function 0x6
 0x0046785e _emit_message function
 0x00468335 _png_get_PLTE function
 0x00468469 _png_do_swap function
@@ -2479,8 +2480,70 @@
 0x004dbb80 ?GetLineSquared@DISTSEGBOX@@QAEMXZ function 0x4e3
 0x004dc070 ?GetSquared@DISTSEGBOX@@QAEMXZ function 0x6d
 0x004dc0e0 ?SqrDistance@SEGMENT3@@QAEMPAUOOBOX3@@@Z function 0x54
+0x004dc140 ?CreateRENDERER@@YAPAVRENDERER@@XZ function 0x1a
+0x004dc160 ?Init@RENDERER@@QAE_NXZ function 0x7d
+0x004dc1e0 ?GetMaxTextureWidth@RENDERER@@QAEHXZ function 0x7
+0x004dc1f0 ?GetMaxTextureHeight@RENDERER@@QAEHXZ function 0x7
+0x004dc200 ?SetMipmapBias@RENDERER@@QAEXM@Z function 0x4e
+0x004dc250 ?ResetStates@RENDERER@@QAEXXZ function 0x233
+0x004dc490 ?GetCullMode@RENDERER@@QAEHXZ function 0x7
+0x004dc4a0 ?Set3020@RENDERER@@QAEXAB_N@Z function 0xf
+0x004dc4b0 ?GetLightPlane@RENDERER@@QAEPAUD3DXPLANE@@PAU2@H@Z function 0x69
+0x004dc520 ?SetFog@RENDERER@@QAEX_NUV3I@@MM@Z function 0x78
+0x004dc5a0 ?SetFogDirect@RENDERER@@QAEX_NUV3I@@MM@Z function 0x197
+0x004dc740 ?SetFogColor@RENDERER@@QAEXPBUV3I@@@Z function 0x28d
+0x004dc9d0 ?ApplyFog@RENDERER@@QAEXXZ function 0x1da
+0x004dcbb0 ?DrawTriangles@RENDERER@@QAE_NHHHH@Z function 0x4b
+0x004dcc00 ?SetTexCoordIndex@RENDERER@@QAEHHH@Z function 0x33
+0x004dcc40 ?GetCap@RENDERER@@QAEHH@Z function 0x1c
+0x004dcc60 ?SetLighting@RENDERER@@QAEX_N@Z function 0x26
+0x004dcc90 ?SetNormalizeNormals@RENDERER@@QAEX_N@Z function 0x49
+0x004dcce0 ??0?$LIST@VRENDERABLE@@@@QAE@XZ function 0x10
+0x004dccf0 ?Remove@?$LIST@VRENDERABLE@@@@QAEXPAVRENDERABLE@@@Z function 0x53
+0x004dcd50 ??0?$SAFETABLE@VVERTEXBUFFER@@$0BDII@$05@@QAE@XZ function 0x6d
+0x004dcdc0 ??1?$SAFETABLE@VVERTEXBUFFER@@$0BDII@$05@@UAE@XZ function 0x50
+0x004dce10 ?Clear@?$SAFETABLE@VVERTEXBUFFER@@$0BDII@$05@@QAEXXZ function 0x5d
+0x004dce70 ?GetFirst@?$SAFETABLE@VVERTEXBUFFER@@$0BDII@$05@@QAEPAPAVVERTEXBUFFER@@PAH@Z function 0x3d
+0x004dceb0 ?GetNext@?$SAFETABLE@VVERTEXBUFFER@@$0BDII@$05@@QAEPAPAVVERTEXBUFFER@@PAH@Z function 0x51
+0x004dcf10 ??0?$SAFETABLE@VINDEXBUFFER@@$0BDII@$06@@QAE@XZ function 0x6d
+0x004dcf80 ??1?$SAFETABLE@VINDEXBUFFER@@$0BDII@$06@@UAE@XZ function 0x50
+0x004dcfd0 ??_G?$SAFETABLE@VVERTEXBUFFER@@$0BDII@$05@@UAEPAXI@Z function 0x1e
+0x004dcff0 ??_G?$SAFETABLE@VINDEXBUFFER@@$0BDII@$06@@UAEPAXI@Z function 0x1e
+0x004dd010 ?FreePos@?$SAFETABLE@VVERTEXBUFFER@@$0BDII@$05@@QAEXH@Z function 0x76
+0x004dd090 ?Destroy@RENDERER@@QAEXXZ function 0x13d
+0x004dd1d0 ?DetectCaps@RENDERER@@UAE_NXZ function 0xa0
+0x004dd270 ?Insert@RENDERER@@QAEHPAVRENDERABLE@@H@Z function 0xca
+0x004dd340 ?Remove@RENDERER@@QAEXPAVRENDERABLE@@H@Z function 0xff
+0x004dd440 ?SetMode@RENDERER@@QAEXH@Z function 0x69
+0x004dd4b0 ?SetTongaShader@RENDERER@@QAEXURESHANDLE@@@Z function 0xd5
+0x004dd590 ?SetLight@RENDERER@@QAEXABUV3@@0@Z function 0x62
+0x004dd600 ??1?$LIST@VRENDERABLE@@@@UAE@XZ function 0x73
+0x004dd680 ?Insert@?$SAFETABLE@VVERTEXBUFFER@@$0BDII@$05@@QAE?AURESHANDLE@@ABQAVVERTEXBUFFER@@@Z function 0xc0
+0x004dd740 ?Get@?$SAFETABLE@VVERTEXBUFFER@@$0BDII@$05@@QAEPAPAVVERTEXBUFFER@@ABURESHANDLE@@@Z function 0x46
+0x004dd790 ?Insert@?$SAFETABLE@VINDEXBUFFER@@$0BDII@$06@@QAE?AURESHANDLE@@ABQAVINDEXBUFFER@@@Z function 0xc0
+0x004dd850 ??_G?$LIST@VRENDERABLE@@@@UAEPAXI@Z function 0x1e
+0x004dd870 ??0RENDERER@@QAE@XZ function 0x259
+0x004ddad0 ??1RENDERER@@UAE@XZ function 0xc9
+0x004ddba0 ?CreateVertexBuffer@RENDERER@@QAEPAVVERTEXBUFFER@@HPAURESHANDLE@@@Z function 0x93
+0x004ddc40 ?AddRefVertexBuffer@RENDERER@@QAEXABURESHANDLE@@@Z function 0x52
+0x004ddca0 ?GetVertexBuffer@RENDERER@@QAEPAVVERTEXBUFFER@@ABURESHANDLE@@@Z function 0x58
+0x004ddd00 ?ReleaseVertexBuffer@RENDERER@@QAEXABURESHANDLE@@@Z function 0x52
+0x004ddd60 ?CreateIndexBuffer@RENDERER@@QAEPAVINDEXBUFFER@@PAURESHANDLE@@@Z function 0x8a
+0x004dddf0 ?AddRefIndexBuffer@RENDERER@@QAEXABURESHANDLE@@@Z function 0x52
+0x004dde50 ?GetIndexBuffer@RENDERER@@QAEPAVINDEXBUFFER@@ABURESHANDLE@@@Z function 0x58
+0x004ddeb0 ?ReleaseIndexBuffer@RENDERER@@QAEXABURESHANDLE@@@Z function 0x52
+0x004ddf10 ?SetVertexBuffer@RENDERER@@QAE_NABURESHANDLE@@@Z function 0x99
+0x004ddfb0 ?SetIndexBuffer@RENDERER@@QAE_NABURESHANDLE@@H@Z function 0xca
+0x004de080 ?CollectBuffers@RENDERER@@QAEXXZ function 0x11e
+0x004de1a0 ??_GRENDERER@@UAEPAXI@Z function 0x1e
+0x004de1c0 ?Render@RENDERER@@QAEXXZ function 0x507
 0x004ded00 ?IsLoaded@SCREENDECAL@@UAE_NXZ function 0x3
 0x004dfe20 ?SetDescription@RESOURCEMASTER@@UAEXABH@Z function
+0x004e68e0 ?Validate@INDEXBUFFER@@QAEXXZ function
+0x004e6a60 ?Validate@VERTEXBUFFER@@QAEXXZ function
+0x004e6c40 ??0VERTEXBUFFER@@QAE@H@Z function
+0x004e6d20 ??0INDEXBUFFER@@QAE@XZ function
+0x004e7140 ?GetProjection@DX8CAMERA@@QAEPBU_D3DMATRIX@@XZ function
 0x004e7820 ?_Min@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@KAPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@PAU342@@Z function
 0x004e7ed0 ?_Buynode@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@PAU342@00ABU?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@2@D@Z function
 0x004eb950 ?IsCompressed@FILELOADER@@UAE_NXZ function 0x3
@@ -5647,6 +5710,29 @@
 0x0067387c ??_C@_05KDNLHNC@?$CFs?5?$CFf?$AA@ data 0x6
 0x00673884 ??_C@_0CD@DDAJOLBI@B2LookAtPath?3?3Set?5?9?5Path?5not?5fou@ data 0x23
 0x006738a8 _s_TypeNames data 0xb4
+0x00673960 ?g_capNames@@3QAY0BO@$$CBDA data 0xd2
+0x00673a34 ??_C@_0BP@IHHPKGLN@No?5default?5plugin?5for?5RENDERER?$AA@ data 0x1f
+0x00673a54 ??_C@_0DI@JMNAAEML@RENDERER?3?3Init?5?9?5Could?5not?5detec@ data 0x38
+0x00673a8c ??_C@_0DC@BBKKNGLD@RENDERER?3?3Init?5?9?5Could?5not?5creat@ data 0x32
+0x00673ac0 ??_C@_0DG@BPGBGDOD@RENDERER?3?3Init?5?9?5Could?5not?5do?5sp@ data 0x36
+0x00673af8 ??_7?$LIST@VRENDERABLE@@@@6B@ data 0x4
+0x00673afc ??_7?$SAFETABLE@VVERTEXBUFFER@@$0BDII@$05@@6B@ data 0x4
+0x00673b00 ??_7?$SAFETABLE@VINDEXBUFFER@@$0BDII@$06@@6B@ data 0x4
+0x00673b04 ??_C@_0CM@MDPONLNN@SAFETABLE?3FreePos?$DO?5Invalid?5delet@ data 0x2c
+0x00673b30 ??_C@_0CP@CHLHHOPD@SAFETABLE?3?3FreePos?$DO?5Error?5?9?5posi@ data 0x2f
+0x00673b60 ??_C@_0BK@NCKCAGGF@Not?5supported?5shader?5type?$AA@ data 0x1a
+0x00673b7c ??_C@_0CO@EKNHIECF@Error?5?9?5Invalid?5z?5sorting?3?$CFd?0?5fo@ data 0x2e
+0x00673bb0 ??_C@_0EL@NKFBKIDG@Error?5?9?5RENDERER?3?3Release?$DO?5Inval@ data 0x4b
+0x00673bfc ??_C@_0CO@MMFBJEDH@Error?5?9?5RENDERER?3?3SetTongaShader@ data 0x2e
+0x00673c2c ??_C@_0CK@MNKFJAKI@SAFETABLE?3?3Insert?$DO?5ERROR?$CB?$CB?$CB?5Tabl@ data 0x2a
+0x00673c58 ??_C@_0DK@EMAGENHF@RENDERER?3?3REDERER?$DO?5Global?5identi@ data 0x3a
+0x00673c94 ??_7RENDERER@@6B@ data 0x34
+0x00673cc8 ??_C@_0DK@CPJOLKGE@RENDERER?5DESTRUCTOR?5?9?5Did?5not?5ca@ data 0x3a
+0x00673d04 ??_C@_0DM@GLFPJPOC@RENDERER?3?3Render?5?9?5Don?8t?5render?0@ data 0x3c
+0x00673d40 ??_C@_0DB@CFPKKMIF@Error?5?9?5Renderer?5error?5when?5pres@ data 0x31
+0x00673d74 __real@44160000 data 0x4
+0x00673d78 ??_C@_0DA@KBNFONIM@RENDERER?3?3Render?5?9?5Don?8t?5render?0@ data 0x30
+0x00673da8 _s_TypeNames data 0xb4
 0x00679658 __real@3f50624dd2f1a9fc data
 0x00679660 __real@bff0000000000000 data
 0x00679b3c ??_C@_03NAIKFGEJ@PNG?$AA@ data
@@ -6334,6 +6420,7 @@
 0x006c17b8 ?g_zeroAngles@@3UANG@@A data 0x50
 0x006c1808 ?g_pfnCreateSIMPLEMODEL@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006c180c ?g_pfnCreateMESH@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006c1810 ?g_pfnCreateRENDERER@@3P6APAVRENDERER@@XZA data 0x4
 0x006c7074 _g_TagLib_XMPFieldName data
 0x006c7078 _g_TagLib_XMPFieldName data
 0x006c70c4 ?format_bytes@?1??FreeImage_TagDataWidth@@YAHG@Z@4PAHA data
@@ -6515,6 +6602,11 @@
 0x009eede8 _s_line data 0x10000
 0x009fede8 ?g_pGuiBehaviors@@3PAVGUIBEHAVIORS@@A data 0x4
 0x009fedec ?g_exeFolder@@3V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@A data 0x1c
+0x009fee08 ?g_pRenderer@@3PAVRENDERER@@A data 0x4
+0x009fee0c ?g_pIdentityMatrix@@3PAUD3DXMATRIX@@A data 0x4
+0x009fef38 ?g_pStats@@3PAUDX8STATS@@A data 0x4
+0x009fef40 ?g_numTriangles@@3HA data 0x4
+0x009fef44 ?g_9fef44@@3HA data 0x4
 0x00a0f288 _s_format_id data
 0x00a0f28c _s_format_id data
 0x00a0f290 ?unknown_tag@?1??getTagFieldName@TagLib@@QAEPBDW4MDMODEL@2@G@Z@4PADA data

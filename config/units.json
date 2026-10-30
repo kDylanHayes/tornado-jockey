@@ -2678,6 +2678,18 @@
       "target": "build/target/Tongas2/DISTSEGBOX.obj",
       "source": "src/Tongas2/DISTSEGBOX.cpp",
       "category": "engine"
+    },
+    {
+      "name": "Tongas2/RENDERER",
+      "ranges": [
+        "0x004dc140-0x004de6cf",
+        "0x00673960-0x00673e5f",
+        "0x006c1810-0x006c1813",
+        "0x009fee08-0x009fee0f"
+      ],
+      "target": "build/target/Tongas2/RENDERER.obj",
+      "source": "src/Tongas2/RENDERER.cpp",
+      "category": "engine"
     }
   ]
 }
