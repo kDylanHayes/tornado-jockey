@@ -27,28 +27,7 @@ enum SRESULTTYPE
     SRT_COUNT
 };
 
-struct V2
-{
-    float x, y;
-
-    V2() {}
-    V2(float x_, float y_) : x(x_), y(y_) {}
-    V2(const V2 &other) : x(other.x), y(other.y) {}
-
-    float Length() const { return (float)sqrt(x * x + y * y); }
-    // The vector scaled to length 1; zero stays zero. Defined elsewhere.
-    V2 Normalized() const;
-};
-
-inline V2 operator-(const V2 &a, const V2 &b)
-{
-    return V2(a.x - b.x, a.y - b.y);
-}
-
-inline V2 operator+(const V2 &a, const V2 &b)
-{
-    return V2(a.x + b.x, a.y + b.y);
-}
+#include "Tongas2/V2.h"
 
 // A color, each channel 0-255.
 struct RGB

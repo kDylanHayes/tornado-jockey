@@ -2348,6 +2348,16 @@
       "category": "engine"
     },
     {
+      "name": "Tongas2/ACTORLINK",
+      "ranges": [
+        "0x004d2ec0-0x004d37af",
+        "0x00672a0c-0x00672b7f"
+      ],
+      "target": "build/target/Tongas2/ACTORLINK.obj",
+      "source": "src/Tongas2/ACTORLINK.cpp",
+      "category": "engine"
+    },
+    {
       "name": "Tongas2/FILELOADERWKZ",
       "ranges": [
         "0x005be7f0-0x005bebbc",
