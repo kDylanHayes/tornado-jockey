@@ -1,3 +1,4 @@
+#define ANG_INLINE_DIRECTION
 #define HEIGHTMAP_BOXES
 #define FRUSTUM_MATHS
 #define GEOMETRY_DEFINITIONS
@@ -9,6 +10,7 @@
 #include "Tongas2/LIGHT.h"
 #include "Tongas2/LOG.h"
 #include "Tongas2/TOKENS.h"
+#include "Tongas2/V2.h"
 
 extern char g_basePath[];
 // The loop counter the original shares between its loops.
@@ -32,10 +34,9 @@ void BOXCORNERS::TransformAffine(const D3DXMATRIX &m)
 {
     for (int i = 0; i < 8; i++) {
         V3 &c = corners[i];
-        float x = c.x, y = c.y, z = c.z;
-        c.x = z * m._31 + x * m._11 + m._21 * y + m._41;
-        c.y = m._22 * y + m._12 * x + m._32 * z + m._42;
-        c.z = x * m._13 + m._33 * z + m._23 * y + m._43;
+        c = V3(m._21 * c.y + m._11 * c.x + m._31 * c.z + m._41,
+               m._22 * c.y + m._12 * c.x + m._32 * c.z + m._42,
+               m._23 * c.y + m._13 * c.x + m._33 * c.z + m._43);
     }
 }
 
@@ -151,25 +152,23 @@ void HEIGHTMAPDX8::CreateSubmesh(int x, int y, int layer)
     int index = (m_tilesX * y + x) * HEIGHTMAP_MAX_LAYERS + layer;
     SUBMESH *submesh = &m_submeshes[index];
     RESOURCE *shader = g_pRENDERSHADER->Find(Master()->m_renderShader[m_submeshes[index].m_shader].c_str());
-    if (!shader) {
-        if (g_pLog)
-            g_pLog->Error("Shader not found! --> SUBMESH NOT CREATED for tile %d %d %d", x, y, layer);
-        return;
-    }
-    g_pRENDERSHADER->Get(shader->m_handle);
-    if (!m_meshes[submesh->m_mesh]) {
-        if (g_pLog)
-            g_pLog->Error("INVALID MESH FOR SUBMESH!!");
-        return;
-    }
-    SUBMESHINDEX *tile = &m_indices[m_tilesX * y + x];
-    int id = m_meshes[submesh->m_mesh]->AddSubmesh(shader->m_handle, submesh->m_firstVertex, tile->m_numVertices, submesh->m_firstIndex, tile->m_numFaces, layer, 0);
-    submesh->m_submesh = id;
-    submesh->m_hasShader = true;
-    m_meshes[submesh->m_mesh]->ShowSubmesh(id, m_tileNodes[m_tilesX * y + x]->m_visible);
-    submesh->m_uvsDone = false;
-    m_uvsDone = false;
-    m_indicesDone = false;
+    if (shader) {
+        g_pRENDERSHADER->Get(shader->m_handle);
+        MESHDX8 *mesh = m_meshes[submesh->m_mesh];
+        if (!mesh) {
+            if (g_pLog)
+                g_pLog->Error("INVALID MESH FOR SUBMESH!!");
+            return;
+        }
+        SUBMESHINDEX *tile = &m_indices[m_tilesX * y + x];
+        submesh->m_submesh = mesh->AddSubmesh(shader->m_handle, submesh->m_firstVertex, tile->m_numVertices, submesh->m_firstIndex, tile->m_numFaces, layer, 0);
+        submesh->m_hasShader = true;
+        mesh->ShowSubmesh(submesh->m_submesh, m_tileNodes[m_tilesX * y + x]->m_visible);
+        submesh->m_uvsDone = false;
+        m_uvsDone = false;
+        m_indicesDone = false;
+    } else if (g_pLog)
+        g_pLog->Error("Shader not found! --> SUBMESH NOT CREATED for tile %d %d %d", x, y, layer);
 }
 
 void HEIGHTMAPDX8::UpdateIndices()
@@ -504,12 +503,11 @@ void QUADNODE::UpdateBox()
         if (m_children[i]) {
             if (m_children[i]->m_tile == -1)
                 m_children[i]->UpdateBox();
-            if (first)
-                m_box.Merge(m_children[i]->m_box);
-            else {
+            if (!first) {
                 first = true;
                 m_box = m_children[i]->m_box;
-            }
+            } else
+                m_box.Merge(m_children[i]->m_box);
         }
     }
 }
@@ -625,14 +623,14 @@ void HEIGHTMAPDX8::Reduce(SUBMESHINDEX *index, int tileX, int tileY, unsigned sh
     int ax = index->m_vertices[a] % side;
     int dy = index->m_vertices[d] / side;
     int dx = index->m_vertices[d] % side;
-    int baseY = points * tileY;
     int baseX = points * tileX;
+    int baseY = points * tileY;
     int midX = (dx + ax) / 2;
     int midY = (ay + dy) / 2;
     int gridWidth = master->m_gridWidth;
     int height = dy - ay;
     int width = dx - ax;
-    if (width >= 2 && height >= 2) {
+    if (width > 1 && height > 1) {
         int row = (ay + baseY) * gridWidth + baseX;
         bool flat = true;
         float h00 = m_positions[row + ax].z;
@@ -644,12 +642,13 @@ void HEIGHTMAPDX8::Reduce(SUBMESHINDEX *index, int tileX, int tileY, unsigned sh
         for (i = ay; i <= dy && flat; i++) {
             for (j = ax; j <= dx; j++) {
                 if ((j != ax || (i != ay && i != dy)) && (j != dx || (i != ay && i != dy))) {
+                    float z = m_positions[row + j].z;
                     float h;
-                    if (j + i > midY + midX)
-                        h = (h01 - h11) * (float)(dy - i) / (float)height + (h10 - h11) * (float)(dx - j) / (float)width + h11;
+                    if (i + j <= midY + midX)
+                        h = (h01 - h00) * (float)(j - ax) / (float)width + (h10 - h00) * (float)(i - ay) / (float)height + h00;
                     else
-                        h = (h10 - h00) * (float)(i - ay) / (float)height + (h01 - h00) * (float)(j - ax) / (float)width + h00;
-                    if (fabs(h - m_positions[row + j].z) > master->m_polyReductionTolerance) {
+                        h = (h10 - h11) * (float)(dx - j) / (float)width + (h01 - h11) * (float)(dy - i) / (float)height + h11;
+                    if (fabs(h - z) > master->m_polyReductionTolerance) {
                         flat = false;
                         break;
                     }
@@ -659,62 +658,19 @@ void HEIGHTMAPDX8::Reduce(SUBMESHINDEX *index, int tileX, int tileY, unsigned sh
         }
         if (flat) {
             for (int layer = 0; layer < HEIGHTMAP_MAX_LAYERS && flat; layer++) {
-                int ix = baseX + ax;
-                int cx = ix < 0 ? 0 : ix;
-                int imageWidth = master->m_imageWidth;
-                if (cx > imageWidth - 1)
-                    cx = imageWidth - 1;
-                int iy = baseY + ay;
-                int cy = iy < 0 ? 0 : iy;
-                int maxY = master->m_imageHeight - 1;
-                if (cy > maxY)
-                    cy = maxY;
-                unsigned char *alphas = master->m_alphas;
-                float a00 = (float)alphas[(imageWidth * cy + cx) * 8 + layer] * (1.0f / 255.0f);
-                int ix2 = dx + baseX;
-                cx = ix2 < 0 ? 0 : ix2;
-                if (cx > imageWidth - 1)
-                    cx = imageWidth - 1;
-                cy = iy < 0 ? 0 : iy;
-                if (cy > maxY)
-                    cy = maxY;
-                float a01 = (float)alphas[(imageWidth * cy + cx) * 8 + layer] * (1.0f / 255.0f);
-                cx = ix < 0 ? 0 : ix;
-                if (cx > imageWidth - 1)
-                    cx = imageWidth - 1;
-                int iy2 = baseY + dy;
-                cy = iy2 < 0 ? 0 : iy2;
-                if (cy > maxY)
-                    cy = maxY;
-                float a10 = (float)alphas[(imageWidth * cy + cx) * 8 + layer] * (1.0f / 255.0f);
-                cx = ix2 < 0 ? 0 : ix2;
-                if (cx > imageWidth - 1)
-                    cx = imageWidth - 1;
-                cy = iy2 < 0 ? 0 : iy2;
-                if (cy > maxY)
-                    cy = maxY;
-                float a11 = (float)alphas[(imageWidth * cy + cx) * 8 + layer] * (1.0f / 255.0f);
+                float a00 = master->GetAlpha(baseX + ax, baseY + ay, layer);
+                float a01 = master->GetAlpha(baseX + dx, baseY + ay, layer);
+                float a10 = master->GetAlpha(baseX + ax, baseY + dy, layer);
+                float a11 = master->GetAlpha(baseX + dx, baseY + dy, layer);
                 for (i = ay; i <= dy && flat; i++) {
                     for (j = ax; j <= dx; j++) {
                         if ((j != ax || (i != ay && i != dy)) && (j != dx || (i != ay && i != dy))) {
-                            int py = baseY + i;
-                            int px = j + baseX;
-                            int qx = px;
-                            if (qx < 0)
-                                qx = 0;
-                            if (qx > imageWidth - 1)
-                                qx = imageWidth - 1;
-                            int qy = py;
-                            if (qy < 0)
-                                qy = 0;
-                            if (qy > maxY)
-                                qy = maxY;
                             float alpha;
-                            if (j + i > midY + midX)
-                                alpha = (a10 - a11) * (float)(dx - j) / (float)width + (a01 - a11) * (float)(dy - i) / (float)height + a11;
-                            else
+                            if (i + j <= midY + midX)
                                 alpha = (a01 - a00) * (float)(j - ax) / (float)width + (a10 - a00) * (float)(i - ay) / (float)height + a00;
-                            if (fabs(alpha - (float)alphas[(imageWidth * qy + qx) * 8 + layer] * (1.0f / 255.0f)) > master->m_alphaReductionTolerance) {
+                            else
+                                alpha = (a10 - a11) * (float)(dx - j) / (float)width + (a01 - a11) * (float)(dy - i) / (float)height + a11;
+                            if (fabs(alpha - master->GetAlpha(j + baseX, baseY + i, layer)) > master->m_alphaReductionTolerance) {
                                 flat = false;
                                 break;
                             }
@@ -739,10 +695,10 @@ void HEIGHTMAPDX8::Reduce(SUBMESHINDEX *index, int tileX, int tileY, unsigned sh
             for (j = ax; j <= dx; j++) {
                 if ((j != ax || (i != ay && i != dy)) && (j != dx || (i != ay && i != dy))) {
                     float h;
-                    if (j + i > midY + midX)
-                        h = (h10 - h11) * (float)(dx - j) / (float)width + (h01 - h11) * (float)(dy - i) / (float)height + h11;
-                    else
+                    if (i + j <= midY + midX)
                         h = (h01 - h00) * (float)(j - ax) / (float)width + (h10 - h00) * (float)(i - ay) / (float)height + h00;
+                    else
+                        h = (h10 - h11) * (float)(dx - j) / (float)width + (h01 - h11) * (float)(dy - i) / (float)height + h11;
                     m_positions[(baseY + i) * gridWidth + j + baseX].z = h;
                 }
             }
@@ -835,14 +791,24 @@ void HEIGHTMAPDX8::UpdateNormals()
         return;
     m_verticesDone = false;
     m_colorsDone = false;
-    int gridWidth = Master()->m_gridWidth;
-    int gridHeight = Master()->m_gridHeight;
+    HEIGHTMAPDX8MASTER *master = Master();
+    int gridWidth = master->m_gridWidth;
+    int gridHeight = master->m_gridHeight;
+    V3 dx, dy, n;
     for (int y = 1; y < gridHeight - 1; y++) {
         for (int x = 1; x < gridWidth - 1; x++) {
-            V3 dx = m_positions[gridWidth * y + x + 1] - m_positions[gridWidth * y + x - 1];
-            V3 dy = m_positions[gridWidth * (y + 1) + x] - m_positions[gridWidth * (y - 1) + x];
-            V3 n(dy.z * dx.y - dy.y * dx.z, dx.z * dy.x - dy.z * dx.x, dy.y * dx.x - dx.y * dy.x);
-            m_normals[gridWidth * y + x] = n / n.Length();
+            dx = m_positions[gridWidth * y + x + 1] - m_positions[gridWidth * y + x - 1];
+            dy = m_positions[gridWidth * (y + 1) + x] - m_positions[gridWidth * (y - 1) + x];
+            n = V3(dy.z * dx.y - dy.y * dx.z, dx.z * dy.x - dy.z * dx.x, dy.y * dx.x - dx.y * dy.x);
+            float length = n.Length();
+            if (length != 0.0f) {
+                float inv = 1.0f / length;
+                n.x *= inv;
+                n.y *= inv;
+                n.z = inv * n.z;
+            } else
+                n.x = n.y = n.z = 0.0f;
+            m_normals[gridWidth * y + x] = n;
         }
     }
     m_normalsDone = true;
@@ -872,7 +838,7 @@ void HEIGHTMAPDX8::CullNode(QUADNODE *node)
     }
 }
 
-static inline V3 TransformPoint(const D3DXMATRIX &m, float x, float y, float z)
+static inline V3 TransformPoint(const D3DXMATRIX &m, const float &x, const float &y, const float &z)
 {
     return V3(m._11 * x + m._21 * y + m._31 * z + m._41,
               m._12 * x + m._22 * y + m._32 * z + m._42,
@@ -881,9 +847,10 @@ static inline V3 TransformPoint(const D3DXMATRIX &m, float x, float y, float z)
 
 PLANE HEIGHTMAPDX8::GetPlane()
 {
-    V3 a = TransformPoint(m_matrix, 0.0f, -1.0f, 0.0f);
-    V3 b = TransformPoint(m_matrix, 1.0f, 0.0f, 0.0f);
-    V3 c = TransformPoint(m_matrix, -1.0f, 0.0f, 0.0f);
+    V3 a, b, c;
+    a = TransformPoint(m_matrix, 0.0f, -1.0f, 0.0f);
+    b = TransformPoint(m_matrix, 1.0f, 0.0f, 0.0f);
+    c = TransformPoint(m_matrix, -1.0f, 0.0f, 0.0f);
     return PLANE(a, b, c);
 }
 
@@ -897,9 +864,10 @@ PLANE HEIGHTMAPDX8::GetDefaultPlane()
 
 PLANE HEIGHTMAPDX8::GetTrianglePlane(int x, int y)
 {
+    HEIGHTMAPDX8MASTER *master = Master();
     if (!m_positions)
         return GetPlane();
-    int gridWidth = Master()->m_gridWidth;
+    int gridWidth = master->m_gridWidth;
     V3 a = m_positions[gridWidth * y + x];
     V3 b = m_positions[gridWidth * y + 1 + x];
     V3 c = m_positions[(y + 1) * gridWidth + x];
@@ -915,9 +883,10 @@ PLANE HEIGHTMAPDX8::GetFlatPlane(int x, int y)
     if (!m_positions)
         return GetDefaultPlane();
     int gridWidth = master->m_gridWidth;
-    V3 a = m_positions[gridWidth * y + x];
-    V3 b = m_positions[gridWidth * y + x + 1];
-    V3 c = m_positions[(y + 1) * gridWidth + x];
+    V3 a, b, c;
+    a = m_positions[gridWidth * y + x];
+    b = m_positions[gridWidth * y + x + 1];
+    c = m_positions[(y + 1) * gridWidth + x];
     return PLANE(a, b, c);
 }
 
@@ -1010,12 +979,10 @@ HEIGHTMAPDX8::~HEIGHTMAPDX8()
 void HEIGHTMAPDX8::Stop()
 {
     FreeMeshes();
-    SetActive(true);
-    HEIGHTMAPDX8MANAGER *manager = (HEIGHTMAPDX8MANAGER *)g_pHEIGHTMAPDX8;
-    if (manager->m_editing.serial == m_handle.serial && manager->m_editing.index == m_handle.index && manager->m_editing.kind == m_handle.kind) {
-        manager->m_editing.serial = -1;
-        manager->m_editing.index = -1;
-    }
+    SetVisibility(1);
+    RESHANDLE *editing = &((HEIGHTMAPDX8MANAGER *)g_pHEIGHTMAPDX8)->m_editing;
+    if (*editing == m_handle)
+        editing->Invalidate();
 }
 
 void HEIGHTMAPDX8::BuildIndices()
@@ -1064,27 +1031,24 @@ void HEIGHTMAPDX8::UpdateMatrix()
     m_matrixDone = true;
 }
 
-MATRIX HEIGHTMAPDX8::GetOrientation(const V3 &point, const V3 &direction)
+ANG HEIGHTMAPDX8::GetOrientation(const V3 &point, const V3 &direction)
 {
     HEIGHTMAPDX8MASTER *master = Master();
     int x, y;
     PointToPixelWorld(point, &x, &y);
     PLANE plane;
-    if (x < 0 || y < 0 || x >= master->m_imageWidth || y >= master->m_imageHeight)
-        plane = GetPlane();
-    else
+    if (x >= 0 && y >= 0 && x < master->m_imageWidth && y < master->m_imageHeight)
         plane = GetTrianglePlane(x, y);
-    V3 normal(plane.a, plane.b, plane.c);
+    else
+        plane = GetPlane();
     V3 ahead = point + direction;
-    ANG angles = GetAngles();
-    MATRIX &m = angles.GetMatrix();
-    V3 up(m._31 + m._21 + plane.a, m._32 + m._22 + ahead.x, m._33 + m._23 + ahead.y);
-    V3 hit = plane.Intersect(normal, up, 0);
+    V3 up = GetAngles().GetDirection() + ahead;
+    V3 hit = plane.Intersect(ahead, up, 0);
     V3 forward = hit - point;
     forward.Normalize();
+    V3 normal(plane.a, plane.b, plane.c);
     normal.Normalize();
-    MATRIX result;
-    result.LookAt(normal, forward);
+    ANG result(normal, forward);
     return result;
 }
 
@@ -1398,6 +1362,21 @@ HEIGHTMAPDX8MASTER::~HEIGHTMAPDX8MASTER()
     FreeImages();
 }
 
+int HEIGHTMAPDX8MASTER::GetClassId()
+{
+    return s_classId;
+}
+
+int HEIGHTMAPDX8MASTER::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *HEIGHTMAPDX8MASTER::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
 void HEIGHTMAPDX8MASTER::SetTilesInfo(const STRING &info)
 {
     m_tilesInfo = info;
@@ -1603,11 +1582,11 @@ void HEIGHTMAPDX8::Load()
 
 void HEIGHTMAPDX8::Start()
 {
-    SetActive(true);
+    SetVisibility(1);
     Load();
-    HEIGHTMAPDX8MANAGER *manager = (HEIGHTMAPDX8MANAGER *)g_pHEIGHTMAPDX8;
-    if (manager->m_editing.serial < 0 || manager->m_editing.index < 0)
-        manager->m_editing = m_handle;
+    RESHANDLE &editing = ((HEIGHTMAPDX8MANAGER *)g_pHEIGHTMAPDX8)->m_editing;
+    if (!editing.IsValid())
+        editing = m_handle;
 }
 
 void HEIGHTMAPDX8::Update()
@@ -1658,14 +1637,14 @@ struct LITVERTEX
     V3 position;
     V3 normal;
     DWORD color;
-    float u, v;
+    V2 uv;
 };
 
 struct COLORVERTEX
 {
     V3 position;
     DWORD color;
-    float u, v;
+    V2 uv;
 };
 
 void HEIGHTMAPDX8::UpdateVertices()
@@ -1673,8 +1652,8 @@ void HEIGHTMAPDX8::UpdateVertices()
     if (m_verticesDone || !m_meshes)
         return;
     HEIGHTMAPDX8MASTER *master = Master();
-    int gridHeight = master->m_gridHeight;
     int side = master->m_pointsPerTile + 1;
+    int gridHeight = master->m_gridHeight;
     int gridWidth = master->m_gridWidth;
     char *vertices[HEIGHTMAP_MAX_MESHES];
     int i;
@@ -1706,30 +1685,30 @@ void HEIGHTMAPDX8::UpdateVertices()
                     continue;
                 } else if (!submesh->m_hasShader) {
                     RESOURCE *shader = g_pRENDERSHADER->Find(master->m_renderShader[submesh->m_shader].c_str());
-                    if (!shader) {
+                    if (shader) {
+                        g_pRENDERSHADER->Get(shader->m_handle);
+                        m_meshes[submesh->m_mesh]->SetSubmeshShader(submesh->m_submesh, shader->m_handle);
+                        submesh->m_hasShader = true;
+                    } else {
                         if (g_pLog)
                             g_pLog->Error("Shader not found! --> SUBMESH NOT UPDATED for tile %d %d %d", x, y, layer);
                         continue;
                     }
-                    g_pRENDERSHADER->Get(shader->m_handle);
-                    m_meshes[submesh->m_mesh]->SetSubmeshShader(submesh->m_submesh, shader->m_handle);
-                    submesh->m_hasShader = true;
                 }
                 int first = submesh->m_firstVertex;
                 if (m_colorsDone && submesh->m_uvsDone)
                     continue;
                 SUBMESHINDEX *index = &m_indices[m_tilesX * y + x];
                 char *out;
-                if (!master->m_vertexColorLighting && g_pResources->IsHighDetail())
+                if (!master->UseHardwareLighting())
                     out = vertices[submesh->m_mesh] + first * sizeof(LITVERTEX);
                 else
                     out = vertices[submesh->m_mesh] + first * sizeof(COLORVERTEX);
                 int points = master->m_pointsPerTile;
-                int baseY = points * y;
                 for (int v = 0; v < index->m_numVertices; v++) {
                     int point = index->m_vertices[v];
                     int px = points * x + point % side;
-                    int py = point / side + baseY;
+                    int py = point / side + points * y;
                     int cx = px < gridWidth - 2 ? px : gridWidth - 2;
                     int cy = py < gridHeight - 2 ? py : gridHeight - 2;
                     V3 normal = m_normals[py * gridWidth + px];
@@ -1737,7 +1716,7 @@ void HEIGHTMAPDX8::UpdateVertices()
                     int pixel = master->m_imageWidth * cy + cx;
                     V3I *color = &master->m_colors[pixel];
                     unsigned char alpha = (unsigned char)((unsigned int)master->m_alphas[pixel * HEIGHTMAP_MAX_LAYERS + layer] * m_layer / 0xff);
-                    if (!master->m_vertexColorLighting && g_pResources->IsHighDetail()) {
+                    if (!master->UseHardwareLighting()) {
                         LITVERTEX *vertex = (LITVERTEX *)out;
                         normal.x *= m_scale.x;
                         normal.y *= m_scale.y;
@@ -1748,13 +1727,14 @@ void HEIGHTMAPDX8::UpdateVertices()
                         out += sizeof(LITVERTEX);
                     } else {
                         COLORVERTEX *vertex = (COLORVERTEX *)out;
-                        ANG angles = m_angles;
-                        MATRIX &m = angles.GetMatrix();
-                        V3 world = normal * m;
-                        V3I lit;
-                        V3I ambient(0xff, 0xff, 0xff);
-                        ((LIGHTMANAGER *)g_pLIGHT)->Virtual08();
-                        vertex->color = (((alpha << 8) | (lit.x & 0xff)) << 8 | (lit.y & 0xff)) << 8 | (lit.z & 0xff);
+                        MATRIX m = m_angles.GetMatrix();
+                        normal = V3(m._11 * normal.x + m._21 * normal.y + m._31 * normal.z + m._41,
+                                    m._12 * normal.x + m._22 * normal.y + m._32 * normal.z + m._42,
+                                    m._13 * normal.x + m._23 * normal.y + m._33 * normal.z + m._43);
+                        LIGHTRGB lit = { 0, 0, 0 };
+                        LIGHTRGB ambient = { 0xff, 0xff, 0xff };
+                        ((LIGHTMANAGER *)g_pLIGHT)->LightVertex(ambient, *color, normal, m_1ac, lit);
+                        vertex->color = (((alpha << 8) | (lit.r & 0xff)) << 8 | (lit.g & 0xff)) << 8 | (lit.b & 0xff);
                         vertex->position = *position;
                         out += sizeof(COLORVERTEX);
                     }
@@ -1772,54 +1752,163 @@ void HEIGHTMAPDX8::UpdateVertices()
                 float h = (float)render->GetHeight();
                 float u0 = 0.5f * (1.0f / w);
                 float v0 = 1.0f / h * 0.5f;
-                float su = (float)points / (1.0f - 1.0f / w);
-                float sv = (float)points / (1.0f - 1.0f / h);
-                float n = (float)points;
-                bool lit = !master->m_vertexColorLighting && g_pResources->IsHighDetail();
-                float *uv = lit ? &((LITVERTEX *)(vertices[submesh->m_mesh] + first * sizeof(LITVERTEX)))->u
-                                : &((COLORVERTEX *)(vertices[submesh->m_mesh] + first * sizeof(COLORVERTEX)))->u;
-                int stride = lit ? sizeof(LITVERTEX) / 4 : sizeof(COLORVERTEX) / 4;
-                for (int k = 0; k < index->m_numVertices; k++) {
-                    int point = index->m_vertices[k];
-                    float px = (float)(point % side);
-                    float py = (float)(point / side);
-                    switch (submesh->m_orientation) {
-                    case 0:
-                        uv[0] = px / su + u0;
-                        uv[1] = py / sv + v0;
-                        break;
-                    case 1:
-                        uv[0] = (n - py) / sv + v0;
-                        uv[1] = px / su + u0;
-                        break;
-                    case 2:
-                        uv[0] = (n - px) / su + u0;
-                        uv[1] = (n - py) / sv + v0;
-                        break;
-                    case 3:
-                        uv[0] = py / sv + v0;
-                        uv[1] = (n - px) / su + u0;
-                        break;
-                    case 4:
-                        uv[0] = (n - px) / su + u0;
-                        uv[1] = py / sv + v0;
-                        break;
-                    case 5:
-                        uv[0] = py / sv + v0;
-                        uv[1] = px / su + u0;
-                        break;
-                    case 6:
-                        uv[0] = px / su + u0;
-                        uv[1] = (n - py) / sv + v0;
-                        break;
-                    case 7:
-                        uv[0] = (n - py) / sv + v0;
-                        uv[1] = (n - px) / su + u0;
-                        break;
+                float su = (float)master->m_pointsPerTile / (1.0f - 1.0f / w);
+                float sv = (float)master->m_pointsPerTile / (1.0f - 1.0f / h);
+                float n = (float)master->m_pointsPerTile;
+                switch (submesh->m_orientation) {
+                case 0:
+                    if (!master->UseHardwareLighting()) {
+                        LITVERTEX *vertex = (LITVERTEX *)(vertices[submesh->m_mesh] + first * sizeof(LITVERTEX));
+                        for (int k = 0; k < index->m_numVertices; k++) {
+                            int point = index->m_vertices[k];
+                            vertex->uv = V2((float)(point % side) / su + u0, (float)(point / side) / sv + v0);
+                            vertex++;
+                            submesh->m_uvsDone = true;
+                        }
+                    } else {
+                        COLORVERTEX *vertex = (COLORVERTEX *)(vertices[submesh->m_mesh] + first * sizeof(COLORVERTEX));
+                        for (int k = 0; k < index->m_numVertices; k++) {
+                            int point = index->m_vertices[k];
+                            vertex->uv = V2((float)(point % side) / su + u0, (float)(point / side) / sv + v0);
+                            vertex++;
+                            submesh->m_uvsDone = true;
+                        }
                     }
-                    uv += stride;
+                    break;
+                case 1:
+                    if (!master->UseHardwareLighting()) {
+                        LITVERTEX *vertex = (LITVERTEX *)(vertices[submesh->m_mesh] + first * sizeof(LITVERTEX));
+                        for (int k = 0; k < index->m_numVertices; k++) {
+                            int point = index->m_vertices[k];
+                            vertex->uv = V2((n - (float)(point / side)) / sv + v0, (float)(point % side) / su + u0);
+                            vertex++;
+                            submesh->m_uvsDone = true;
+                        }
+                    } else {
+                        COLORVERTEX *vertex = (COLORVERTEX *)(vertices[submesh->m_mesh] + first * sizeof(COLORVERTEX));
+                        for (int k = 0; k < index->m_numVertices; k++) {
+                            int point = index->m_vertices[k];
+                            vertex->uv = V2((n - (float)(point / side)) / sv + v0, (float)(point % side) / su + u0);
+                            vertex++;
+                            submesh->m_uvsDone = true;
+                        }
+                    }
+                    break;
+                case 2:
+                    if (!master->UseHardwareLighting()) {
+                        LITVERTEX *vertex = (LITVERTEX *)(vertices[submesh->m_mesh] + first * sizeof(LITVERTEX));
+                        for (int k = 0; k < index->m_numVertices; k++) {
+                            int point = index->m_vertices[k];
+                            vertex->uv = V2((n - (float)(point % side)) / su + u0, (n - (float)(point / side)) / sv + v0);
+                            vertex++;
+                            submesh->m_uvsDone = true;
+                        }
+                    } else {
+                        COLORVERTEX *vertex = (COLORVERTEX *)(vertices[submesh->m_mesh] + first * sizeof(COLORVERTEX));
+                        for (int k = 0; k < index->m_numVertices; k++) {
+                            int point = index->m_vertices[k];
+                            vertex->uv = V2((n - (float)(point % side)) / su + u0, (n - (float)(point / side)) / sv + v0);
+                            vertex++;
+                            submesh->m_uvsDone = true;
+                        }
+                    }
+                    break;
+                case 3:
+                    if (!master->UseHardwareLighting()) {
+                        LITVERTEX *vertex = (LITVERTEX *)(vertices[submesh->m_mesh] + first * sizeof(LITVERTEX));
+                        for (int k = 0; k < index->m_numVertices; k++) {
+                            int point = index->m_vertices[k];
+                            vertex->uv = V2((float)(point / side) / sv + v0, (n - (float)(point % side)) / su + u0);
+                            vertex++;
+                            submesh->m_uvsDone = true;
+                        }
+                    } else {
+                        COLORVERTEX *vertex = (COLORVERTEX *)(vertices[submesh->m_mesh] + first * sizeof(COLORVERTEX));
+                        for (int k = 0; k < index->m_numVertices; k++) {
+                            int point = index->m_vertices[k];
+                            vertex->uv = V2((float)(point / side) / sv + v0, (n - (float)(point % side)) / su + u0);
+                            vertex++;
+                            submesh->m_uvsDone = true;
+                        }
+                    }
+                    break;
+                case 4:
+                    if (!master->UseHardwareLighting()) {
+                        LITVERTEX *vertex = (LITVERTEX *)(vertices[submesh->m_mesh] + first * sizeof(LITVERTEX));
+                        for (int k = 0; k < index->m_numVertices; k++) {
+                            int point = index->m_vertices[k];
+                            vertex->uv = V2((n - (float)(point % side)) / su + u0, (float)(point / side) / sv + v0);
+                            vertex++;
+                            submesh->m_uvsDone = true;
+                        }
+                    } else {
+                        COLORVERTEX *vertex = (COLORVERTEX *)(vertices[submesh->m_mesh] + first * sizeof(COLORVERTEX));
+                        for (int k = 0; k < index->m_numVertices; k++) {
+                            int point = index->m_vertices[k];
+                            vertex->uv = V2((n - (float)(point % side)) / su + u0, (float)(point / side) / sv + v0);
+                            vertex++;
+                            submesh->m_uvsDone = true;
+                        }
+                    }
+                    break;
+                case 5:
+                    if (!master->UseHardwareLighting()) {
+                        LITVERTEX *vertex = (LITVERTEX *)(vertices[submesh->m_mesh] + first * sizeof(LITVERTEX));
+                        for (int k = 0; k < index->m_numVertices; k++) {
+                            int point = index->m_vertices[k];
+                            vertex->uv = V2((float)(point / side) / sv + v0, (float)(point % side) / su + u0);
+                            vertex++;
+                            submesh->m_uvsDone = true;
+                        }
+                    } else {
+                        COLORVERTEX *vertex = (COLORVERTEX *)(vertices[submesh->m_mesh] + first * sizeof(COLORVERTEX));
+                        for (int k = 0; k < index->m_numVertices; k++) {
+                            int point = index->m_vertices[k];
+                            vertex->uv = V2((float)(point / side) / sv + v0, (float)(point % side) / su + u0);
+                            vertex++;
+                            submesh->m_uvsDone = true;
+                        }
+                    }
+                    break;
+                case 6:
+                    if (!master->UseHardwareLighting()) {
+                        LITVERTEX *vertex = (LITVERTEX *)(vertices[submesh->m_mesh] + first * sizeof(LITVERTEX));
+                        for (int k = 0; k < index->m_numVertices; k++) {
+                            int point = index->m_vertices[k];
+                            vertex->uv = V2((float)(point % side) / su + u0, (n - (float)(point / side)) / sv + v0);
+                            vertex++;
+                            submesh->m_uvsDone = true;
+                        }
+                    } else {
+                        COLORVERTEX *vertex = (COLORVERTEX *)(vertices[submesh->m_mesh] + first * sizeof(COLORVERTEX));
+                        for (int k = 0; k < index->m_numVertices; k++) {
+                            int point = index->m_vertices[k];
+                            vertex->uv = V2((float)(point % side) / su + u0, (n - (float)(point / side)) / sv + v0);
+                            vertex++;
+                            submesh->m_uvsDone = true;
+                        }
+                    }
+                    break;
+                case 7:
+                    if (!master->UseHardwareLighting()) {
+                        LITVERTEX *vertex = (LITVERTEX *)(vertices[submesh->m_mesh] + first * sizeof(LITVERTEX));
+                        for (int k = 0; k < index->m_numVertices; k++) {
+                            int point = index->m_vertices[k];
+                            vertex->uv = V2((n - (float)(point / side)) / sv + v0, (n - (float)(point % side)) / su + u0);
+                            vertex++;
+                            submesh->m_uvsDone = true;
+                        }
+                    } else {
+                        COLORVERTEX *vertex = (COLORVERTEX *)(vertices[submesh->m_mesh] + first * sizeof(COLORVERTEX));
+                        for (int k = 0; k < index->m_numVertices; k++) {
+                            int point = index->m_vertices[k];
+                            vertex->uv = V2((n - (float)(point / side)) / sv + v0, (n - (float)(point % side)) / su + u0);
+                            vertex++;
+                            submesh->m_uvsDone = true;
+                        }
+                    }
+                    break;
                 }
-                submesh->m_uvsDone = true;
             }
         }
     }

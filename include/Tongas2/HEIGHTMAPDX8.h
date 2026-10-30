@@ -161,6 +161,19 @@ public:
     void LoadImages();
     // Tells the copies to make their meshes again.
     void FreeCopiesMeshes();
+    // A layer's alpha at a pixel, clamped to the image.
+    float GetAlpha(int x, int y, int layer)
+    {
+        if (x < 0)
+            x = 0;
+        if (x > m_imageWidth - 1)
+            x = m_imageWidth - 1;
+        if (y < 0)
+            y = 0;
+        if (y > m_imageHeight - 1)
+            y = m_imageHeight - 1;
+        return (float)m_alphas[(m_imageWidth * y + x) * HEIGHTMAP_MAX_LAYERS + layer] * (1.0f / 255.0f);
+    }
 
     static int s_classId;
     static CMDENTRY s_commands[];
@@ -267,7 +280,7 @@ public:
     void BuildIndices();
     void UpdateMatrix();
     void UpdateVertices();
-    MATRIX GetOrientation(const V3 &point, const V3 &direction);
+    ANG GetOrientation(const V3 &point, const V3 &direction);
     void ParseTilesInfo(int tilesX, int tilesY, const STRING &info);
     void Load();
 
