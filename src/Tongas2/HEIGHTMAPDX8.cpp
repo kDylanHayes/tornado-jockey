@@ -992,14 +992,15 @@ void HEIGHTMAPDX8::Stop()
 
 void HEIGHTMAPDX8::BuildIndices()
 {
-    int points = Master()->m_pointsPerTile;
+    int side = Master()->m_pointsPerTile + 1;
     int levels = 0;
-    int side = points + 1;
     for (int n = side; n > 1; n >>= 1)
         levels++;
     for (; levels > 0; levels--) {
-        if (m_indices)
+        if (m_indices) {
             delete[] m_indices;
+            m_indices = 0;
+        }
         m_indices = new SUBMESHINDEX[m_tilesX * m_tilesY];
         for (int y = 0; y < m_tilesY; y++) {
             for (int x = 0; x < m_tilesX; x++) {
@@ -1011,8 +1012,8 @@ void HEIGHTMAPDX8::BuildIndices()
                 index->m_maxVertices = maxVertices;
                 index->m_maxFaces = maxFaces;
                 unsigned short first = index->AddVertex(0);
-                unsigned short b = index->AddVertex(points);
-                unsigned short c = index->AddVertex(points * side);
+                unsigned short b = index->AddVertex(side - 1);
+                unsigned short c = index->AddVertex((side - 1) * side);
                 unsigned short d = index->AddVertex(side * side - 1);
                 Reduce(index, x, y, first, b, c, d);
                 index->Shrink();
