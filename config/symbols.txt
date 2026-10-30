@@ -2390,6 +2390,20 @@
 0x004d50b0 ??0SIMPLEMODEL@@QAE@PAVSIMPLEMODELMASTER@@ABURESHANDLE@@@Z function 0x92
 0x004d5150 ??_GSIMPLEMODEL@@UAEPAXI@Z function 0x1e
 0x004d5170 ?CreateCopy@SIMPLEMODELMASTER@@UAEPAVRESOURCE@@ABURESHANDLE@@@Z function 0x69
+0x004d51e0 ?CreateMESH@@YAPAVRESOURCEMANAGER@@XZ function 0x1a
+0x004d5200 ??0MESHMASTER@@QAE@PAVRESOURCEMANAGER@@PBD@Z function 0x31
+0x004d5240 ?GetCopiesPerBatch@MESHMASTER@@UAEHXZ function 0x1f
+0x004d5260 ?AcquireShader@MESHMASTER@@QAEXXZ function 0x5d
+0x004d52c0 ?ReleaseShader@MESHMASTER@@QAEXXZ function 0x5d
+0x004d5320 ??0MESH@@QAE@PAVMESHMASTER@@ABURESHANDLE@@@Z function 0x27
+0x004d5350 ?SetVertices@MESH@@UAEXPAUDECALVERTEX@@HPBFH@Z function 0x3
+0x004d5360 ??1MESH@@UAE@XZ function 0xb
+0x004d5370 ??1MESHMASTER@@UAE@XZ function 0x56
+0x004d53d0 ?SetShader@MESHMASTER@@QAEXABURESHANDLE@@@Z function 0x4a
+0x004d5420 ?CreateCopy@MESHMASTER@@UAEPAVRESOURCE@@ABURESHANDLE@@@Z function 0x7a
+0x004d54a0 ??_GMESH@@UAEPAXI@Z function 0x1e
+0x004d54c0 ??_GMESHMASTER@@UAEPAXI@Z function 0x1e
+0x004d54e0 ?CreateMesh@MESHMANAGER@@UAE?AURESHANDLE@@U2@HPBD@Z function 0x139
 0x004d57c0 ?GetSaveFolder@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z function
 0x004d5f00 ?CreateFolder@@YAXABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z function
 0x004d6240 ?Project@SEGMENT3@@QAEMABUV3@@PAM@Z function
@@ -5564,6 +5578,15 @@
 0x0067307c ??_C@_04BLNGBHFO@WTMD?$AA@ data 0x5
 0x00673088 ??_7SIMPLEMODELMASTER@@6B@ data 0x88
 0x00673110 ??_7SIMPLEMODEL@@6B@ data 0x124
+0x00673238 _s_TypeNames data 0xb4
+0x006732ec ??_C@_0CC@IPMCABMJ@No?5default?5plugin?5for?5MESHMANAGE@ data 0x22
+0x00673310 ??_7MESHMASTER@@6B@ data 0x90
+0x006733a0 ??_C@_0CC@HOAAAKGD@mesh?5?$CFs?5COULD?5NOT?5acquire?5shader@ data 0x22
+0x006733c4 ??_C@_0CC@DBNIBHCO@mesh?5?$CFs?5COULD?5NOT?5release?5shader@ data 0x22
+0x006733e8 ??_7MESH@@6B@ data 0x8c
+0x00673474 ??_C@_0BG@BCMIAFOC@no?5master?5for?5mesh?5?$CFs?$AA@ data 0x16
+0x0067348c ??_C@_08LEPLNHFC@?$CFs_?$CFd_?$CFs?$AA@ data 0x9
+0x00673498 ??_C@_0CB@NHKANKD@Error?5?9?5no?5shader?5to?5build?5mesh?$CB@ data 0x21
 0x006734c4 __real@358637bd data
 0x00679658 __real@3f50624dd2f1a9fc data
 0x00679660 __real@bff0000000000000 data

@@ -38,6 +38,12 @@ struct DECALUV
 class MESH : public RESOURCE
 {
 public:
+#ifdef MESH_DEFINITIONS
+    // MESH.cpp alone was built seeing this.
+    MESH(class MESHMASTER *master, const RESHANDLE &handle);
+    virtual ~MESH() {}
+    virtual bool IsLoaded() { return true; }
+#endif
     virtual void SetColor(const V3 &color);
     virtual void SetPosition(const V3 &position);
     virtual void SetScale(const V3 &scale);
