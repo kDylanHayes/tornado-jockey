@@ -139,6 +139,10 @@ public:
         return m_length;
     }
 
+#ifdef STRING_FREE_OUTOFLINE
+    // The GUI behaviors were built seeing it out of line.
+    void Free();
+#else
     void Free()
     {
         if (m_block >= 0)
@@ -149,6 +153,7 @@ public:
         m_length = 0;
         m_lengthValid = true;
     }
+#endif
 
     char *m_buf;
     int m_block;

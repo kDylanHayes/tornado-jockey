@@ -1,5 +1,6 @@
 #include "Tongas2/GUICONTROL.h"
 #include "Tongas2/GUI.h"
+#include "Tongas2/GUIBEHAVIOR.h"
 #include "Tongas2/GUIGROUP.h"
 #include "Tongas2/TIMER.h"
 #include "Tongas2/TOKENS.h"

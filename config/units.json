@@ -2358,6 +2358,56 @@
       "category": "engine"
     },
     {
+      "name": "Tongas2/GUIBEHAVIOR",
+      "ranges": [
+        "0x004d37b0-0x004d3a9f",
+        "0x00672b80-0x00672c67"
+      ],
+      "target": "build/target/Tongas2/GUIBEHAVIOR.obj",
+      "source": "src/Tongas2/GUIBEHAVIOR.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/GUISIZE",
+      "ranges": [
+        "0x004d3aa0-0x004d3d7f",
+        "0x00672c68-0x00672d37"
+      ],
+      "target": "build/target/Tongas2/GUISIZE.obj",
+      "source": "src/Tongas2/GUISIZE.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/GUIFADE",
+      "ranges": [
+        "0x004d3d80-0x004d3f4f",
+        "0x00672d38-0x00672e07"
+      ],
+      "target": "build/target/Tongas2/GUIFADE.obj",
+      "source": "src/Tongas2/GUIFADE.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/GUIJITTER",
+      "ranges": [
+        "0x004d3f50-0x004d431f",
+        "0x00672e08-0x00672ed7"
+      ],
+      "target": "build/target/Tongas2/GUIJITTER.obj",
+      "source": "src/Tongas2/GUIJITTER.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/GUIBLINK",
+      "ranges": [
+        "0x004d4320-0x004d460f",
+        "0x00672ed8-0x00672fa7"
+      ],
+      "target": "build/target/Tongas2/GUIBLINK.obj",
+      "source": "src/Tongas2/GUIBLINK.cpp",
+      "category": "engine"
+    },
+    {
       "name": "Tongas2/FILELOADERWKZ",
       "ranges": [
         "0x005be7f0-0x005bebbc",

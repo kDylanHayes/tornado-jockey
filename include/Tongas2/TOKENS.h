@@ -19,6 +19,9 @@ public:
 #ifdef TOKENS_INLINE_DTOR
     // A few units were built seeing the destructor inline.
     ~TOKENS() { m_string.Free(); }
+#elif defined(TOKENS_INLINE_DTOR_CLEAR)
+    // And the GUI behaviors saw it clearing the string.
+    ~TOKENS() throw() { m_string = (const char *)0; }
 #else
     // Defined elsewhere.
     ~TOKENS();

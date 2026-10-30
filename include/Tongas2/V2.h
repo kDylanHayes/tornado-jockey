@@ -27,9 +27,12 @@ inline V2 operator+(const V2 &a, const V2 &b)
     return V2(a.x + b.x, a.y + b.y);
 }
 
+// The GUI behaviors were built seeing their own (GUIBEHAVIOR.h).
+#ifndef V2_GUIBEHAVIOR
 inline V2 operator*(const V2 &v, const float &f)
 {
     return V2(v.x * f, v.y * f);
 }
+#endif
 
 #endif

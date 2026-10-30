@@ -35,61 +35,14 @@ inline V2 operator*(const V2 &a, const V2 &b)
     return V2(a.x * b.x, a.y * b.y);
 }
 
-// Defined elsewhere: v divided by f, or zero when f is.
+// v divided by f, or zero when f is. The GUI behaviors were built seeing
+// it inline (GUIBEHAVIOR.h); everywhere else it is out of line.
+#ifndef V2_GUIBEHAVIOR
 V2 operator/(const V2 &v, const float &f);
+#endif
 
-// The behaviors a control can have, made when its Behavior is set.
-// Defined elsewhere.
-class GUIBEHAVIOR
-{
-public:
-    virtual ~GUIBEHAVIOR();
-    // Steps the behavior.
-    virtual void Update();
-    virtual void Virtual02();
-    // Reads the control's BehaviorParams.
-    virtual void SetParams(char *params);
-};
-
-class GUIJITTER : public GUIBEHAVIOR
-{
-public:
-    GUIJITTER(GUICONTROL *control);
-
-    char m_4[0x38];
-};
-
-class GUIFADE : public GUIBEHAVIOR
-{
-public:
-    GUIFADE(GUICONTROL *control);
-
-    char m_4[0x2c];
-};
-
-class GUISIZE : public GUIBEHAVIOR
-{
-public:
-    GUISIZE(GUICONTROL *control);
-
-    char m_4[0x38];
-};
-
-class GUIBLINK : public GUIBEHAVIOR
-{
-public:
-    GUIBLINK(GUICONTROL *control);
-
-    char m_4[0x2c];
-};
-
-class GUIDIEFADE : public GUIBEHAVIOR
-{
-public:
-    GUIDIEFADE(GUICONTROL *control);
-
-    char m_4[0x18];
-};
+// The control's behavior (GUIBEHAVIOR.h).
+class GUIBEHAVIOR;
 
 // The values of a control's Behavior.
 enum GUIBEHAVIORTYPE
