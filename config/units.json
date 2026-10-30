@@ -2592,8 +2592,19 @@
         "?Update@BONEDMODELRESOURCE@@UAEXXZ": "?Update@SIMPLEMODEL@@UAEXXZ",
         "?IsLoaded@SCREENDECAL@@UAE_NXZ": "?IsLoaded@SIMPLEMODEL@@UAE_NXZ",
         "?GetScaleFactor@DECAL@@UAE?AUV3@@XZ": "?GetScaleFactor@SIMPLEMODEL@@UAE?AUV3@@XZ",
-        "LAB_004d5350": "?Virtual71@SIMPLEMODEL@@UAEXHHHH@Z"
+        "?SetVertices@MESH@@UAEXPAUDECALVERTEX@@HPBFH@Z": "?Virtual71@SIMPLEMODEL@@UAEXHHHH@Z"
       }
+    },
+    {
+      "name": "Tongas2/MESH",
+      "ranges": [
+        "0x004d51e0-0x004d561f",
+        "0x00673238-0x006734d7",
+        "0x006c180c-0x006c180f"
+      ],
+      "target": "build/target/Tongas2/MESH.obj",
+      "source": "src/Tongas2/MESH.cpp",
+      "category": "engine"
     }
   ]
 }
