@@ -2401,7 +2401,7 @@
       "name": "Tongas2/GUIBLINK",
       "ranges": [
         "0x004d4320-0x004d460f",
-        "0x00672ed8-0x00672fa7"
+        "0x00672ed8-0x00672fa3"
       ],
       "target": "build/target/Tongas2/GUIBLINK.obj",
       "source": "src/Tongas2/GUIBLINK.cpp",
@@ -2575,6 +2575,25 @@
       "target": "build/target/Tongas2/GUISLIDERCONTROL.obj",
       "source": "src/Tongas2/GUISLIDERCONTROL.cpp",
       "category": "engine"
+    },
+    {
+      "name": "Tongas2/SIMPLEMODEL",
+      "ranges": [
+        "0x004d4610-0x004d51df",
+        "0x00672fa4-0x00673237",
+        "0x006c17b8-0x006c180b"
+      ],
+      "target": "build/target/Tongas2/SIMPLEMODEL.obj",
+      "source": "src/Tongas2/SIMPLEMODEL.cpp",
+      "category": "engine",
+      "symbol_mappings": {
+        "??_EDECALMANAGER@@UAEPAXI@Z": "??_ESIMPLEMODELMANAGER@@UAEPAXI@Z",
+        "??_ECPRIMITIVE3MASTER@@UAEPAXI@Z": "??_ESIMPLEMODELMASTER@@UAEPAXI@Z",
+        "?Update@BONEDMODELRESOURCE@@UAEXXZ": "?Update@SIMPLEMODEL@@UAEXXZ",
+        "?IsLoaded@SCREENDECAL@@UAE_NXZ": "?IsLoaded@SIMPLEMODEL@@UAE_NXZ",
+        "?GetScaleFactor@DECAL@@UAE?AUV3@@XZ": "?GetScaleFactor@SIMPLEMODEL@@UAE?AUV3@@XZ",
+        "LAB_004d5350": "?Virtual71@SIMPLEMODEL@@UAEXHHHH@Z"
+      }
     }
   ]
 }

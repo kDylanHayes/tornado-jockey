@@ -61,6 +61,10 @@ struct BOXCORNERS
     void Set(const V3 &min, const V3 &max);
     // Moves the box by offset.
     void Move(const V3 &offset);
+#ifdef FRUSTUM_MATHS
+    // Projects each corner by m.
+    void Transform(const MATRIX &m);
+#endif
 
     ZEROV3 corners[8];
 };

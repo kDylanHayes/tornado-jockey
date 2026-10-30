@@ -130,9 +130,9 @@ struct ANG
     void Rotate(const MATRIX &m);
     // The forward and up axes of the rotation.
     void GetAxes(V3 *forward, V3 *up);
-#ifdef ANG_INLINE_AXES
-    // ACTOR.cpp was built seeing these two inline; everywhere else they are
-    // out of line.
+#if defined(ANG_INLINE_AXES) || defined(ANG_INLINE_DIRECTION)
+    // ACTOR.cpp was built seeing these two inline, SIMPLEMODEL.cpp only
+    // GetDirection; everywhere else they are out of line.
     V3 GetDirection()
     {
         if (flags & MATRIX_DIRTY) {
@@ -141,6 +141,11 @@ struct ANG
         }
         return V3(matrix._41 + matrix._31, matrix._42 + matrix._32, matrix._43 + matrix._33);
     }
+#else
+    // The direction the angles face.
+    V3 GetDirection();
+#endif
+#ifdef ANG_INLINE_AXES
     V3 GetUpPoint()
     {
         if (flags & MATRIX_DIRTY) {
@@ -150,8 +155,6 @@ struct ANG
         return V3(matrix._41 + matrix._21, matrix._42 + matrix._22, matrix._43 + matrix._23);
     }
 #else
-    // The direction the angles face.
-    V3 GetDirection();
     // The translation plus the up axis of the matrix.
     V3 GetUpPoint();
 #endif
