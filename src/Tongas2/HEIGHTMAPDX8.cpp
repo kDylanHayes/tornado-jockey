@@ -514,9 +514,6 @@ void QUADNODE::UpdateBox()
 
 HEIGHTMAPDX8MANAGER::HEIGHTMAPDX8MANAGER()
 {
-    m_editing.serial = -1;
-    m_editing.index = -1;
-    m_editing.kind = 0;
     SafeSprintf(m_fileName, "HEIGHTMAPDX8.txt");
     m_8 = false;
     m_18 = true;
@@ -547,13 +544,17 @@ void HEIGHTMAPDX8::FreeMeshes()
             }
         }
     }
-    if (m_positions)
+    if (m_positions) {
         delete[] m_positions;
-    if (m_normals)
+        m_positions = 0;
+    }
+    if (m_normals) {
         delete[] m_normals;
+        m_normals = 0;
+    }
     if (m_indices) {
         delete[] m_indices;
-        return;
+        m_indices = 0;
     }
     m_loaded = false;
     for (int i = 0; i < HEIGHTMAP_MAX_MESHES; i++) {
@@ -980,9 +981,9 @@ void HEIGHTMAPDX8::Stop()
 {
     FreeMeshes();
     SetVisibility(1);
-    RESHANDLE *editing = &((HEIGHTMAPDX8MANAGER *)g_pHEIGHTMAPDX8)->m_editing;
-    if (*editing == m_handle)
-        editing->Invalidate();
+    HEIGHTMAPDX8MANAGER *manager = (HEIGHTMAPDX8MANAGER *)g_pHEIGHTMAPDX8;
+    if (manager->m_editing == m_handle)
+        manager->m_editing.Invalidate();
 }
 
 void HEIGHTMAPDX8::BuildIndices()
@@ -1380,16 +1381,12 @@ const char *HEIGHTMAPDX8MASTER::GetClassName()
 void HEIGHTMAPDX8MASTER::SetTilesInfo(const STRING &info)
 {
     m_tilesInfo = info;
-    RESOURCE *copy;
-    for (copy = m_used; copy;) {
-        HEIGHTMAPDX8 *heightmap = (HEIGHTMAPDX8 *)copy;
-        copy = copy->m_next;
-        heightmap->FreeMeshes();
-    }
-    for (copy = m_used; copy;) {
-        HEIGHTMAPDX8 *heightmap = (HEIGHTMAPDX8 *)copy;
-        copy = copy->m_next;
-        heightmap->FreeTiles();
+    FreeCopiesMeshes();
+    RESOURCE *copy = m_used;
+    while (copy) {
+        RESOURCE *next = copy->m_next;
+        ((HEIGHTMAPDX8 *)copy)->FreeTiles();
+        copy = next;
     }
 }
 
