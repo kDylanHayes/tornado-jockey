@@ -43,16 +43,6 @@ static inline const char *TypeName(int type)
     return type >= 0 && type < PRIMITIVE3_NONE ? s_types[type] : "Not valid primitive";
 }
 
-void LISTNODE::Append(LISTNODE *node)
-{
-    if (next) {
-        next->Append(node);
-    } else {
-        next = node;
-        node->prev = this;
-    }
-}
-
 void PLANE3::Set(const V3 &normal, const V3 &point)
 {
     n = normal;

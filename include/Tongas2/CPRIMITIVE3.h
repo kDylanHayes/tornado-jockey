@@ -11,6 +11,7 @@
 
 #include "Tongas2/DECAL.h"
 #include "Tongas2/DYNAMICARRAY.h"
+#include "Tongas2/LIST.h"
 #include "Tongas2/RESOURCE.h"
 #include "Tongas2/RESOURCES.h"
 #include "Tongas2/SRESULT.h"
@@ -257,72 +258,6 @@ struct CONTACT
     CPRIMITIVE3RESOURCE *other;
     PRIMV3 normal;
 };
-
-// A link of an intrusive list.
-struct LISTNODE
-{
-    LISTNODE() : next(0), prev(0) {}
-    // Puts node after the last of this one's.
-    void Append(LISTNODE *node);
-
-    LISTNODE *next;
-    LISTNODE *prev;
-};
-
-// The items that are in it, linked through their LISTNODE base.
-template <class T>
-class LIST
-{
-public:
-    LIST() : m_head(0) {}
-    virtual ~LIST();
-
-    // The item after node's, or 0.
-    static T *Next(LISTNODE *node) { return static_cast<T *>(node->next); }
-    // Puts item at the front.
-    void Add(T *item);
-    void Remove(T *item);
-
-    T *m_head;
-};
-
-template <class T>
-LIST<T>::~LIST()
-{
-    T *item = m_head;
-    while (item) {
-        T *next = static_cast<T *>(item->next);
-        Remove(item);
-        delete item;
-        item = next;
-    }
-}
-
-template <class T>
-void LIST<T>::Add(T *item)
-{
-    if (m_head)
-        item->Append(m_head);
-    m_head = item;
-}
-
-template <class T>
-void LIST<T>::Remove(T *item)
-{
-    if (m_head == item)
-        m_head = static_cast<T *>(item->next);
-    if (item->prev) {
-        item->prev->next = item->next;
-        if (item->next) {
-            item->next->prev = item->prev;
-            item->next = 0;
-        }
-        item->prev = 0;
-    } else if (item->next) {
-        item->next->prev = 0;
-        item->next = 0;
-    }
-}
 
 // Told when the registered primitives change.
 class CPRIMITIVE3LISTENER

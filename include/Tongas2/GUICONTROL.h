@@ -29,11 +29,6 @@ struct GUICONTROLV2 : V2
     }
 };
 
-inline V2 operator*(const V2 &v, const float &f)
-{
-    return V2(v.x * f, v.y * f);
-}
-
 // Each component times the other's.
 inline V2 operator*(const V2 &a, const V2 &b)
 {

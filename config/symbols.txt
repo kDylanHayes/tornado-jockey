@@ -2328,11 +2328,26 @@
 0x004d2e40 ??0ONENODE@@QAE@XZ function 0x10
 0x004d2e50 ??_GONENODE@@UAEPAXI@Z function 0x4f
 0x004d2ea0 ??_GPVSNODE@@UAEPAXI@Z function 0x1e
-0x004d2ec0 ?HashString@@YAHPBDH@Z function
-0x004d3140 ?UpdateBehaviors@ACTORLINK@@QAEXM@Z function
-0x004d3590 ??0ACTORLINK@@QAE@XZ function
-0x004d35b0 ??1ACTORLINK@@UAE@XZ function
-0x004d35d0 ?QueueBehavior@ACTORLINK@@QAEXPBD0@Z function
+0x004d2ec0 ?HashString@@YAHPBDH@Z function 0x57
+0x004d2f20 ?Init@B2DIE@@UAE_NPBD@Z function 0x24
+0x004d2f50 ?Update@B2DIE@@UAE_NM@Z function 0x29
+0x004d2f80 ?Add@?$LIST@VBEHAVIOR2@@@@QAEXPAVBEHAVIOR2@@@Z function 0x42
+0x004d2fd0 ?Update@?$INTERP@M@@QAE_NM@Z function 0x54
+0x004d3030 ??0?$INTERP@ULINKV2@@@@QAE@ABULINKV2@@0M@Z function 0x67
+0x004d30a0 ?Update@?$INTERP@ULINKV2@@@@QAE_NM@Z function 0x99
+0x004d3140 ?UpdateBehaviors@ACTORLINK@@QAEXM@Z function 0xa3
+0x004d31f0 ??0B2SCALE2TO@@QAE@XZ function 0x29
+0x004d3220 ?Init@B2FADETO@@UAE_NPBD@Z function 0xac
+0x004d32d0 ?Update@B2FADETO@@UAE_NM@Z function 0x86
+0x004d3360 ?Init@B2SCALE2TO@@UAE_NPBD@Z function 0x8d
+0x004d33f0 ?Update@B2SCALE2TO@@UAE_NM@Z function 0x75
+0x004d3470 ??1?$LIST@VBEHAVIOR2@@@@UAE@XZ function 0x76
+0x004d34f0 ?Clear@?$LIST@VBEHAVIOR2@@@@QAEXXZ function 0x75
+0x004d3570 ??_G?$LIST@VBEHAVIOR2@@@@UAEPAXI@Z function 0x1e
+0x004d3590 ??0ACTORLINK@@QAE@XZ function 0x17
+0x004d35b0 ??1ACTORLINK@@UAE@XZ function 0x19
+0x004d35d0 ?QueueBehavior@ACTORLINK@@QAEXPBD0@Z function 0x1be
+0x004d3790 ??_GACTORLINK@@UAEPAXI@Z function 0x1e
 0x004d3970 ??0GUIDIEFADE@@QAE@PAVGUICONTROL@@@Z function
 0x004d3ce0 ??0GUISIZE@@QAE@PAVGUICONTROL@@@Z function
 0x004d3ee0 ??0GUIFADE@@QAE@PAVGUICONTROL@@@Z function
@@ -2371,6 +2386,10 @@
 0x004daa30 ?Update@GROWRESLOOPBEHAVIOR@@UAEXXZ function
 0x004daad0 ?IsRunning@GROWRESLOOPBEHAVIOR@@UAE_NXZ function
 0x004dab40 ?Update@FADERESLOOPBEHAVIOR@@UAEXXZ function
+0x004dabc0 ?Init@B2FOLLOWMAXPATH@@UAE_NPBD@Z function
+0x004dac50 ?Update@B2FOLLOWMAXPATH@@UAE_NM@Z function
+0x004dad80 ?Init@B2LOOKATPATH@@UAE_NPBD@Z function
+0x004daec0 ?Update@B2LOOKATPATH@@UAE_NM@Z function
 0x004ded00 ?IsLoaded@SCREENDECAL@@UAE_NXZ function 0x3
 0x004dfe20 ?SetDescription@RESOURCEMASTER@@UAEXABH@Z function
 0x004e7820 ?_Min@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@KAPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@PAU342@@Z function
@@ -5476,6 +5495,24 @@
 0x00672948 _s_TypeNames data 0xb4
 0x006729fc ??_7PVSNODE@@6B@ data 0x8
 0x00672a04 ??_7ONENODE@@6B@ data 0x8
+0x00672a0c ??_7?$LIST@VBEHAVIOR2@@@@6B@ data 0x4
+0x00672a10 ??_7B2FADETO@@6B@ data 0x8
+0x00672a18 ??_7B2SCALE2TO@@6B@ data 0x8
+0x00672a20 ??_7B2DIE@@6B@ data 0x8
+0x00672a28 ??_7B2FOLLOWMAXPATH@@6B@ data 0x8
+0x00672a30 ??_7B2LOOKATPATH@@6B@ data 0x8
+0x00672a38 ??_C@_08GJNPJIKN@?$CFf?0?$CFf?0?$CFf?$AA@ data 0x9
+0x00672a44 ??_C@_0BD@ENJIJJBP@?$CI?$CFf?0?$CFf?$CJ?0?$CI?$CFf?0?$CFf?$CJ?0?$CFf?$AA@ data 0x13
+0x00672a58 ??_7ACTORLINK@@6B@ data 0x3c
+0x00672a94 ??_C@_0DD@GKIEMPEK@Error?5?9?5QueueBehavior?5could?5not?5@ data 0x33
+0x00672ac8 ??_C@_0BK@HNMIHBAF@Behavior?3?$CFs?5not?5reconized?$AA@ data 0x1a
+0x00672ae4 ??_C@_0N@BADHFMNP@B2LookAtPath?$AA@ data 0xd
+0x00672af4 ??_C@_0BB@JBBGNJNM@B2FolllowMaxPath?$AA@ data 0x11
+0x00672b08 ??_C@_05JMLGLOPK@B2Die?$AA@ data 0x6
+0x00672b10 ??_C@_0L@LDDGNHLA@B2Scale2To?$AA@ data 0xb
+0x00672b1c ??_C@_0DA@MKLHGFOG@Error?5?9?5QueueBehavior?5could?5not?5@ data 0x30
+0x00672b4c ??_C@_08CDJDCPNE@B2FadeTo?$AA@ data 0x9
+0x00672b58 ??_C@_0CG@IPMJLPAP@Try?5to?5queue?5behavior2?5with?5null@ data 0x26
 0x006734c4 __real@358637bd data
 0x00679658 __real@3f50624dd2f1a9fc data
 0x00679660 __real@bff0000000000000 data

@@ -1,12 +1,16 @@
 // The second interface actors and GUI controls have, at 0x1c in both: their
 // placement on the screen and in the world, their opacity, and the queue of
-// behaviors they run. Defined elsewhere; the overrides take this pointing
-// at it. Placeholder names.
+// behaviors they run, which scripts add by name (B2FadeTo and the rest). The
+// overrides take this pointing at it. Placeholder names apart from the
+// behaviors' script names.
 #ifndef TONGAS2_ACTORLINK_H
 #define TONGAS2_ACTORLINK_H
 
+#include "Tongas2/LIST.h"
 #include "Tongas2/MATHS.h"
-#include "Tongas2/SRESULT.h"
+#include "Tongas2/V2.h"
+
+class BEHAVIOR2;
 
 class ACTORLINK
 {
@@ -37,8 +41,19 @@ public:
     // Steps the behaviors.
     void UpdateBehaviors(float dt);
 
-    int m_4;
-    int m_8;
+    LIST<BEHAVIOR2> m_behaviors;
+};
+
+// A behavior on the queue: it reads its parameters from text and is
+// stepped until Update says it is done, then deleted.
+class BEHAVIOR2 : public LISTNODE
+{
+public:
+    // False if the parameters can't be used.
+    virtual bool Init(const char *params) = 0;
+    virtual bool Update(float dt) = 0;
+
+    ACTORLINK *m_owner;
 };
 
 #endif
