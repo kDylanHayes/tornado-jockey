@@ -56,4 +56,35 @@ public:
     ACTORLINK *m_owner;
 };
 
+class PATHMASTER;
+
+// B2FolllowMaxPath: moves from point to point of a path, taking the same
+// time over each segment. Defined in B2PATH.cpp.
+class B2FOLLOWMAXPATH : public BEHAVIOR2
+{
+public:
+    virtual bool Init(const char *params);
+    virtual bool Update(float dt);
+
+    // The time left on this segment, and over the whole path.
+    float m_time;
+    float m_duration;
+    PATHMASTER *m_path;
+    int m_numPoints;
+    int m_index;
+};
+
+// B2LookAtPath: turns to look at the point of a path as far along it as
+// the owner's progress.
+class B2LOOKATPATH : public BEHAVIOR2
+{
+public:
+    virtual bool Init(const char *params);
+    virtual bool Update(float dt);
+
+    char m_10[0x8];
+    PATHMASTER *m_path;
+    char m_1c[0x8];
+};
+
 #endif

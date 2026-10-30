@@ -116,7 +116,8 @@ struct OOBOX3
     void UpdateCorners();
     void UpdatePlanes();
     bool IntersectFace(int face, const V3 &a, const V3 &b, V3 *at);
-    void ClosestPoint(const V3 &point, V3 *from, V3 *to);
+    // The squared distance from the point, and the closest points.
+    float ClosestPoint(const V3 &point, V3 *from, V3 *to);
 #endif
 
     V3 center;
@@ -190,6 +191,7 @@ struct SEGMENT3
     }
     V3 GetStart() const { return start; }
     V3 GetEnd() const { return end; }
+    V3 GetDir() const { return dir; }
     // The way along it, made a unit vector.
     V3 GetDirection() const
     {

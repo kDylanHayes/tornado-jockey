@@ -2619,6 +2619,65 @@
       "source": "src/Tongas2/GEOMETRY.cpp",
       "category": "engine",
       "cflags": "/nologo /c /O2 /Ob1 /MT /GX /W3"
+    },
+    {
+      "name": "Tongas2/BEHAVIORGROW",
+      "ranges": [
+        "0x004da8a0-0x004da99f",
+        "0x00673590-0x00673647"
+      ],
+      "target": "build/target/Tongas2/BEHAVIORGROW.obj",
+      "source": "src/Tongas2/BEHAVIORGROW.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/BEHAVIORGROWLOOP",
+      "ranges": [
+        "0x004da9a0-0x004daa2f",
+        "0x00673648-0x006736ff"
+      ],
+      "target": "build/target/Tongas2/BEHAVIORGROWLOOP.obj",
+      "source": "src/Tongas2/BEHAVIORGROWLOOP.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/BEHAVIORGROWRESLOOP",
+      "ranges": [
+        "0x004daa30-0x004dab3f",
+        "0x00673700-0x006737b7"
+      ],
+      "target": "build/target/Tongas2/BEHAVIORGROWRESLOOP.obj",
+      "source": "src/Tongas2/BEHAVIORGROWRESLOOP.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/BEHAVIORFADERESLOOP",
+      "ranges": [
+        "0x004dab40-0x004dabbf",
+        "0x006737b8-0x0067386b"
+      ],
+      "target": "build/target/Tongas2/BEHAVIORFADERESLOOP.obj",
+      "source": "src/Tongas2/BEHAVIORFADERESLOOP.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/B2PATH",
+      "ranges": [
+        "0x004dabc0-0x004db01f",
+        "0x0067386c-0x0067395f"
+      ],
+      "target": "build/target/Tongas2/B2PATH.obj",
+      "source": "src/Tongas2/B2PATH.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/DISTSEGBOX",
+      "ranges": [
+        "0x004db020-0x004dc13f"
+      ],
+      "target": "build/target/Tongas2/DISTSEGBOX.obj",
+      "source": "src/Tongas2/DISTSEGBOX.cpp",
+      "category": "engine"
     }
   ]
 }
