@@ -5,6 +5,7 @@
 #include "Tongas2/APPWINDOW.h"
 #include "Tongas2/LOG.h"
 #include "Tongas2/RENDERER.h"
+#include "Tongas2/RENDERSHADER.h"
 #include "Tongas2/RESOURCES.h"
 
 // The capabilities GetCap reads, by index.
@@ -51,16 +52,9 @@ public:
     const D3DMATRIX *GetProjection();
 };
 
-struct DX8STATS
-{
-    char m_000[0x224];
-    int m_numTriangles;
-};
-
 // Defined in the plugin.
 extern int g_numTriangles;
 extern int g_9fef44;
-extern DX8STATS *g_pStats;
 
 static RENDERER *CreateRENDERER()
 {
@@ -601,7 +595,7 @@ void RENDERER::Render()
     }
     m_shader.Invalidate();
     m_shaderChanges = 0;
-    g_pStats->m_numTriangles = 0;
+    g_pRENDERSHADER->m_numTriangles = 0;
     g_9fef44 = 0;
     IDirect3DDevice8 *device = GetDevice();
     DX8CAMERA *camera = *(DX8CAMERA **)((char *)g_pCamera + 0xda4);
@@ -657,7 +651,7 @@ void RENDERER::Render()
     }
     SetLighting(false);
     device->EndScene();
-    ((DX8WINDOW *)g_pDisplay)->m_numTriangles = g_pStats->m_numTriangles + m_shaderChanges;
+    ((DX8WINDOW *)g_pDisplay)->m_numTriangles = g_pRENDERSHADER->m_numTriangles + m_shaderChanges;
     HRESULT result = device->Present(0, 0, 0, 0);
     if (result == D3DERR_DEVICELOST)
         Restore();

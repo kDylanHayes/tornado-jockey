@@ -2537,16 +2537,120 @@
 0x004de080 ?CollectBuffers@RENDERER@@QAEXXZ function 0x11e
 0x004de1a0 ??_GRENDERER@@UAEPAXI@Z function 0x1e
 0x004de1c0 ?Render@RENDERER@@QAEXXZ function 0x507
+0x004de6d0 ?TransformAffine@BOXCORNERS@@QAEXABUD3DXMATRIX@@@Z function 0x362
+0x004dea40 ?ExtendHeight@BOXCORNERS@@QAEXM@Z function 0xab
+0x004deaf0 ??1QUADNODE@@QAE@XZ function 0x2f
+0x004deb20 ??0SUBMESHINDEX@@QAE@XZ function 0x1a
+0x004deb40 ??1SUBMESHINDEX@@QAE@XZ function 0x33
+0x004deb80 ?Shrink@SUBMESHINDEX@@QAEXXZ function 0xbf
+0x004dec40 ?CopyFaces@SUBMESHINDEX@@QAEXPAGG@Z function 0x4e
+0x004dec90 ?AddVertex@SUBMESHINDEX@@QAEGG@Z function 0x63
 0x004ded00 ?IsLoaded@SCREENDECAL@@UAE_NXZ function 0x3
+0x004ded10 ?SetLayer@HEIGHTMAPDX8@@UAEXH@Z function 0x53
+0x004ded70 ?CreateSubmesh@HEIGHTMAPDX8@@QAEXHHH@Z function 0x159
+0x004deed0 ?UpdateIndices@HEIGHTMAPDX8@@QAEXXZ function 0x15a
+0x004df030 ?UpdatePositions@HEIGHTMAPDX8@@QAEXXZ function 0x7eb
+0x004df820 ?ShowTile@HEIGHTMAPDX8@@QAEXH_N@Z function 0x8c
+0x004df8b0 ?HideNode@HEIGHTMAPDX8@@QAEXPAUQUADNODE@@@Z function 0x4b
+0x004df900 ?PointToPixel@HEIGHTMAPDX8@@QAEXABUV3@@PAH1@Z function 0x92
+0x004df9a0 ?PointToTile@HEIGHTMAPDX8@@QAEXABUV3@@PAH1@Z function 0x9d
+0x004dfa40 ?GetHeight@HEIGHTMAPDX8@@QAEMABUV3@@PAU2@@Z function 0x315
+0x004dfd60 ?RegisterCommands@HEIGHTMAPDX8MASTER@@SAXXZ function 0x3f
+0x004dfda0 ?FreeImages@HEIGHTMAPDX8MASTER@@QAEXXZ function 0x83
 0x004dfe20 ?SetDescription@RESOURCEMASTER@@UAEXABH@Z function
+0x004dfe30 ?SetDeleteShader@HEIGHTMAPDX8MASTER@@UAEXAB_N@Z function 0xf
+0x004dfe40 ?SetShaderActiveForEditing@HEIGHTMAPDX8MASTER@@UAEXABHAB_N@Z function 0x16
+0x004dfe60 ?UseHardwareLighting@HEIGHTMAPDX8MASTER@@QAE_NXZ function 0x25
+0x004dfe90 ?UpdateLighting@HEIGHTMAPDX8MASTER@@QAEXXZ function 0x76
+0x004dff10 ?Init@HEIGHTMAPDX8MANAGER@@UAEXXZ function 0x28
+0x004dff40 ?Update@HEIGHTMAPDX8MANAGER@@UAEXXZ function 0x16
+0x004dff60 ?Merge@BOXCORNERS@@QAEXABU1@@Z function 0x1d1
+0x004e0140 ?UpdateBox@QUADNODE@@QAEXXZ function 0x5f
+0x004e01a0 ??0HEIGHTMAPDX8MANAGER@@QAE@XZ function 0x44
+0x004e01f0 ?GetTypeCode@HEIGHTMAPDX8MANAGER@@UAEPBDXZ function 0x6
+0x004e0200 ?CreateHEIGHTMAPDX8@@YAPAVRESOURCEMANAGER@@XZ function 0x59
+0x004e0260 ?FreeMeshes@HEIGHTMAPDX8@@QAEXXZ function 0x12c
+0x004e0390 ?FreeTiles@HEIGHTMAPDX8@@QAEXXZ function 0x8a
+0x004e0420 ?BuildQuadtree@HEIGHTMAPDX8@@QAEPAUQUADNODE@@HHHH@Z function 0x18d
+0x004e05b0 ?Reduce@HEIGHTMAPDX8@@QAEXPAUSUBMESHINDEX@@HHGGGG@Z function 0xd8f
+0x004e1340 ?AllocMesh@HEIGHTMAPDX8@@QAEPAVMESHDX8@@PAH00HH_N@Z function 0x291
+0x004e15e0 ?UpdateBoxes@HEIGHTMAPDX8@@QAEXXZ function 0xa9
+0x004e1690 ?UpdateNormals@HEIGHTMAPDX8@@QAEXXZ function 0x239
+0x004e18d0 ?CullNode@HEIGHTMAPDX8@@QAEXPAUQUADNODE@@@Z function 0x9b
+0x004e1970 ?GetPlane@HEIGHTMAPDX8@@QAE?AUPLANE@@XZ function 0x1db
+0x004e1b50 ?GetDefaultPlane@HEIGHTMAPDX8@@QAE?AUPLANE@@XZ function 0x79
+0x004e1bd0 ?GetTrianglePlane@HEIGHTMAPDX8@@QAE?AUPLANE@@HH@Z function 0x140
+0x004e1d10 ?GetFlatPlane@HEIGHTMAPDX8@@QAE?AUPLANE@@HH@Z function 0xd3
+0x004e1df0 ?PointToPixelWorld@HEIGHTMAPDX8@@QAEXABUV3@@PAH1@Z function 0x33
+0x004e1e30 ?PointToTileWorld@HEIGHTMAPDX8@@QAEXABUV3@@PAH1@Z function 0x33
+0x004e1e70 ?GetGroundPoint@HEIGHTMAPDX8@@QAE?AUV3@@ABU2@@Z function 0xf4
+0x004e1f70 ?GetNormal@HEIGHTMAPDX8@@QAE?AUV3@@ABU2@@Z function 0x9f
+0x004e2010 ?Prepare@HEIGHTMAPDX8MASTER@@UAEXXZ function 0x5
+0x004e2020 ?SetPointsPerTile@HEIGHTMAPDX8MASTER@@UAEXABH@Z function 0x14
+0x004e2040 ?SetFileName@HEIGHTMAPDX8MASTER@@UAEXABVCSTRING@@@Z function 0x1e
+0x004e2060 ?SetFileNameColors@HEIGHTMAPDX8MASTER@@UAEXABVCSTRING@@@Z function 0x1e
+0x004e2080 ?SetLayerAlphaMap@HEIGHTMAPDX8MASTER@@UAEXABHABVCSTRING@@@Z function 0x25
+0x004e20b0 ?SetFileNameUserColors@HEIGHTMAPDX8MASTER@@UAEXABVCSTRING@@@Z function 0x1e
+0x004e20d0 ??1HEIGHTMAPDX8@@UAE@XZ function 0x7d
+0x004e2150 ?Stop@HEIGHTMAPDX8@@UAEXXZ function 0x4a
+0x004e21a0 ?BuildIndices@HEIGHTMAPDX8@@QAEXXZ function 0x264
+0x004e2410 ?UpdateMatrix@HEIGHTMAPDX8@@QAEXXZ function 0x114
+0x004e2530 ?UpdateVertices@HEIGHTMAPDX8@@QAEXXZ function 0x131a
+0x004e3850 ?GetOrientation@HEIGHTMAPDX8@@QAE?AUMATRIX@@ABUV3@@0@Z function 0x1e7
+0x004e3a40 ??1HEIGHTMAPDX8MASTER@@UAE@XZ function 0x10e
+0x004e3b50 ?SetRenderPassesFlags@HEIGHTMAPDX8MASTER@@UAEXABH@Z function 0xf
+0x004e3b60 ?SetLayerVisible@HEIGHTMAPDX8MASTER@@UAEXABHAB_N@Z function 0x16
+0x004e3b80 ?SetEditingLayer@HEIGHTMAPDX8MASTER@@UAEXABH@Z function 0xf
+0x004e3b90 ?SetEditingOrientationRandom@HEIGHTMAPDX8MASTER@@UAEXAB_N@Z function 0xf
+0x004e3ba0 ?LoadImage@@YAPAUFIBITMAP@@PBD@Z function 0x172
+0x004e3d20 ?LoadImages@HEIGHTMAPDX8MASTER@@QAEXXZ function 0x861
+0x004e4590 ?SetRenderShader@HEIGHTMAPDX8MASTER@@UAEXABHABVCSTRING@@@Z function 0x74
+0x004e4610 ?SetZeroValue@HEIGHTMAPDX8MASTER@@UAEXABH@Z function 0x26
+0x004e4640 ?SetPolyReductionTolerance@HEIGHTMAPDX8MASTER@@UAEXABM@Z function 0x26
+0x004e4670 ?SetAlphaReductionTolerance@HEIGHTMAPDX8MASTER@@UAEXABM@Z function 0x26
+0x004e46a0 ?SetVertexColorLighting@HEIGHTMAPDX8MASTER@@UAEXAB_N@Z function 0x32
+0x004e46e0 ?SetAspectRatioModifier@HEIGHTMAPDX8MASTER@@UAEXABM@Z function 0x26
+0x004e4710 ?SetMaxHeight@HEIGHTMAPDX8MASTER@@UAEXABM@Z function 0x26
+0x004e4740 ?UpdateCopies@HEIGHTMAPDX8MASTER@@UAEXXZ function 0x77
+0x004e47c0 ?Execute@HEIGHTMAPDX8MASTER@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function 0x73
+0x004e4840 ??0HEIGHTMAPDX8@@QAE@PAVRESOURCEMASTER@@ABURESHANDLE@@@Z function 0x12b
+0x004e4970 ??_GHEIGHTMAPDX8@@UAEPAXI@Z function 0x1e
+0x004e4990 ??0HEIGHTMAPDX8MASTER@@QAE@PAVRESOURCEMANAGER@@PBD@Z function 0x2a3
+0x004e4c40 ??_GHEIGHTMAPDX8MASTER@@UAEPAXI@Z function 0x1e
+0x004e4c60 ?SetTilesInfo@HEIGHTMAPDX8MASTER@@UAEXABVSTRING@@@Z function 0x48
+0x004e4cb0 ?CreateCopy@HEIGHTMAPDX8MASTER@@UAEPAVRESOURCE@@ABURESHANDLE@@@Z function 0x69
+0x004e4d20 ?CreateMaster@HEIGHTMAPDX8MANAGER@@UAEPAVRESOURCEMASTER@@PBD@Z function 0x69
+0x004e4d90 ?ParseTilesInfo@HEIGHTMAPDX8@@QAEXHHABVSTRING@@@Z function 0x9ab
+0x004e5740 ?Load@HEIGHTMAPDX8@@QAEXXZ function 0x3e3
+0x004e5b30 ?Start@HEIGHTMAPDX8@@UAEXXZ function 0x44
+0x004e5b80 ?Update@HEIGHTMAPDX8@@UAEXXZ function 0x1cb
 0x004e68e0 ?Validate@INDEXBUFFER@@QAEXXZ function
 0x004e6a60 ?Validate@VERTEXBUFFER@@QAEXXZ function
 0x004e6c40 ??0VERTEXBUFFER@@QAE@H@Z function
 0x004e6d20 ??0INDEXBUFFER@@QAE@XZ function
 0x004e7140 ?GetProjection@DX8CAMERA@@QAEPBU_D3DMATRIX@@XZ function
+0x004e7720 ?SetLightMask@MESHDX8@@QAEXH@Z function
+0x004e7730 ?SetLit@MESHDX8@@QAEX_N@Z function
+0x004e7760 ?SetMatrix@MESHDX8@@QAEXPBUD3DXMATRIX@@@Z function
 0x004e7820 ?_Min@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@KAPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@PAU342@@Z function
+0x004e7a50 ?LockVertices@MESHDX8@@QAEPAXHH@Z function
+0x004e7a90 ?UnlockVertices@MESHDX8@@QAEXXZ function
+0x004e7ad0 ?LockIndices@MESHDX8@@QAEPAXHH@Z function
+0x004e7b10 ?UnlockIndices@MESHDX8@@QAEXXZ function
+0x004e7d80 ?Create@MESHDX8@@QAEXHHHH@Z function
 0x004e7ed0 ?_Buynode@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@PAU342@00ABU?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@2@D@Z function
+0x004e80f0 ?ShowSubmesh@MESHDX8@@QAEXH_N@Z function
+0x004e8bd0 ?RemoveSubmesh@MESHDX8@@QAEXH@Z function
+0x004e98b0 ??0MESHDX8@@QAE@XZ function
+0x004e9c30 ?AddSubmesh@MESHDX8@@QAEHABURESHANDLE@@HHHHHH@Z function
+0x004e9d00 ?SetSubmeshShader@MESHDX8@@QAEXHABURESHANDLE@@@Z function
+0x004ea100 ?Get@RENDERSHADERMANAGER@@QAEPAVRENDERSHADER@@URESHANDLE@@@Z function
+0x004ea140 ?GetWidth@RENDERSHADER@@QAEIXZ function
+0x004ea180 ?GetHeight@RENDERSHADER@@QAEIXZ function
+0x004ea1c0 ?HasAlpha@RENDERSHADERMASTER@@QAE_NXZ function
+0x004eb580 ?Find@RENDERSHADERMANAGER@@QAEPAVRESOURCE@@PBD@Z function
 0x004eb950 ?IsCompressed@FILELOADER@@UAE_NXZ function 0x3
+0x004ebb00 ??0HEIGHTMAPTEMP@@QAE@XZ function
 0x004ecf10 ?SetUserFolder@SCREENDECALMASTER@@UAEXAB_N@Z function 0xc
 0x004ecf20 ?SetCorrectSizeInWidescreen@SCREENDECALMASTER@@UAEXAB_N@Z function 0xc
 0x004ede40 ?Virtual81@BONEDMODELRESOURCE@@UAEHXZ function 0x3
@@ -5733,6 +5837,53 @@
 0x00673d74 __real@44160000 data 0x4
 0x00673d78 ??_C@_0DA@KBNFONIM@RENDERER?3?3Render?5?9?5Don?8t?5render?0@ data 0x30
 0x00673da8 _s_TypeNames data 0xb4
+0x00673e60 _s_orientations data 0x10e
+0x00673f70 ??_C@_0CK@DNPJFLOD@MAX?5FACES?5ACHIEVED?5IN?5AN?5OPTIMIZ@ data 0x2a
+0x00673f9c ??_C@_0CK@BCENBLHL@MAX?5VERTS?5ACHIEVED?5IN?5AN?5OPTIMIZ@ data 0x2a
+0x00673fc8 ??_C@_0DM@JFMEKKAD@Shader?5not?5found?$CB?5?9?9?$DO?5SUBMESH?5NO@ data 0x3c
+0x00674004 ??_C@_0BL@IFMMDBIO@INVALID?5MESH?5FOR?5SUBMESH?$CB?$CB?$AA@ data 0x1b
+0x00674020 ??_C@_0CC@KDKNPHPF@could?5not?5lock?5face?5buffer?5?$CFd?$CB?5?$CF@ data 0x22
+0x00674044 ??_C@_0BD@OOHJIBBB@HEIGHTMAPDX8MASTER?$AA@ data 0x13
+0x00674058 ??_C@_0BB@FJEAKJOB@HEIGHTMAPDX8?4txt?$AA@ data 0x11
+0x0067406c ??_7HEIGHTMAPDX8MANAGER@@6B@ data 0x20
+0x0067408c ??_C@_04PDMDCBCJ@HMAP?$AA@ data 0x5
+0x00674094 ??_C@_0CF@PIGCEK@max?5meshes?5for?5heightmap?5reached@ data 0x25
+0x006740c0 ??_7HEIGHTMAPDX8@@6B@ data 0x118
+0x006741d8 ??_C@_0FD@HJLILKPM@Shader?5not?5found?3?5?8?$CFs?8?5?$CI?$CFd?$CJ?$CB?5?9?9?$DO@ data 0x53
+0x0067422c ??_C@_0DM@BBALGPLA@Shader?5not?5found?$CB?5?9?9?$DO?5SUBMESH?5NO@ data 0x3c
+0x00674268 ??_C@_0CE@IAKFOGKG@could?5not?5lock?5vertex?5buffer?5?$CFd?$CB@ data 0x24
+0x00674290 ??_7HEIGHTMAPDX8MASTER@@6B@ data 0xe8
+0x00674378 ??_C@_0DL@NCGOPHIE@Unsupported?5heightmap?5image?5form@ data 0x3b
+0x006743b4 ??_C@_0CA@FGKNINDG@Could?5not?5load?5heightmap?5image?$CB?$AA@ data 0x20
+0x006743d8 ??_C@_0FC@NEEAINFP@there?5must?5be?5at?5least?5one?5layer@ data 0x52
+0x0067442c ??_C@_0CB@KOHPLFOG@invalid?5shader?5idx?5tile?5?$CFd?5?$CFd?5?$CFd@ data 0x21
+0x00674450 ??_C@_0CF@NNPMOMHI@invalid?5shader?5idx?5tile?5?$CFd?5?$CFd?5?$CFd@ data 0x25
+0x00674478 ??_C@_0EG@LMEKCLID@invalid?5number?5of?5layers?5in?5heig@ data 0x46
+0x006744c0 ??_C@_02OJDBNLEE@?5?7?$AA@ data 0x3
+0x006744c4 ??_C@_03EBKIKENI@?$DL?6?$AN?$AA@ data 0x4
+0x006744c8 ??_C@_0BP@LGEAMFMC@error?5creating?5mesh?$CB?$CB?5?$CFd?5?$CFd?5?$CFd?$AA@ data 0x1f
+0x006744e8 ??_C@_0DN@MOFKJKIF@DID?5NOT?5CREATE?5ENOUGH?5VERTEX?5BUF@ data 0x3d
+0x00674528 ??_C@_0BJ@BDMBEOLH@EditingOrientationRandom?$AA@ data 0x19
+0x00674544 ??_C@_0BD@JAEALGCE@EditingOrientation?$AA@ data 0x13
+0x00674558 ??_C@_0N@ENBMNPLD@EditingLayer?$AA@ data 0xd
+0x00674568 ??_C@_09KPBDFFGP@TilesInfo?$AA@ data 0xa
+0x00674574 ??_C@_0BH@BNKAGKEG@ShaderActiveForEditing?$AA@ data 0x17
+0x0067458c ??_C@_0N@NAJDPMJO@DeleteShader?$AA@ data 0xd
+0x0067459c ??_C@_0N@FECEPCFB@LayerVisible?$AA@ data 0xd
+0x006745ac ??_C@_0M@HEGNDKCO@ShowCorners?$AA@ data 0xc
+0x006745b8 ??_C@_0N@LOBKDJGG@RenderShader?$AA@ data 0xd
+0x006745c8 ??_C@_0M@LCEHIKMK@CheckUnused?$AA@ data 0xc
+0x006745d4 ??_C@_0O@BBNFMONF@LayerAlphaMap?$AA@ data 0xe
+0x006745e4 ??_C@_0BE@NCFCCPFP@VertexColorLighting?$AA@ data 0x14
+0x006745f8 ??_C@_0BH@IPNKPDFJ@PolyReductionTolerance?$AA@ data 0x17
+0x00674610 ??_C@_0BI@OALJMBOD@AlphaReductionTolerance?$AA@ data 0x18
+0x00674628 ??_C@_09HCPJCHPH@ZeroValue?$AA@ data 0xa
+0x00674634 ??_C@_09FDAFFNEA@MaxHeight?$AA@ data 0xa
+0x00674640 ??_C@_0BE@OFMDHIBF@AspectRatioModifier?$AA@ data 0x14
+0x00674654 ??_C@_0O@LJKBDDPB@PointsPerTile?$AA@ data 0xe
+0x00674664 ??_C@_0BD@IMMNOGDF@FileNameUserColors?$AA@ data 0x13
+0x00674678 ??_C@_0P@KJIDPHLB@FileNameColors?$AA@ data 0xf
+0x00674688 _s_TypeNames data 0xb4
 0x00679658 __real@3f50624dd2f1a9fc data
 0x00679660 __real@bff0000000000000 data
 0x00679b3c ??_C@_03NAIKFGEJ@PNG?$AA@ data
@@ -6342,6 +6493,7 @@
 0x006bbcc0 ?s_commands@RESOURCES@@2PAUCMDENTRY@@A data 0xc0
 0x006bbd80 ?s_properties@RESOURCES@@2PAUPROPENTRY@@A data 0xa8
 0x006bbe28 ?g_up@@3UV3@@A data 0xc
+0x006bbe34 ?g_forward@@3UV3@@A data 0xc
 0x006bbe58 ?g_pfnCreateAppOptions@@3P6APAVAPPOPTIONS@@XZA data 0x4
 0x006bbe60 ?s_corners@DECAL@@2PAY02MA data 0x30
 0x006bbe90 ?s_indices@DECAL@@2PAFA data 0xc
@@ -6421,6 +6573,10 @@
 0x006c1808 ?g_pfnCreateSIMPLEMODEL@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006c180c ?g_pfnCreateMESH@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
 0x006c1810 ?g_pfnCreateRENDERER@@3P6APAVRENDERER@@XZA data 0x4
+0x006c1818 _s_codes data 0x42
+0x006c185c ?g_pfnCreateHEIGHTMAPDX8@@3P6APAVRESOURCEMANAGER@@XZA data 0x4
+0x006c1860 ?s_properties@HEIGHTMAPDX8MASTER@@2PAUPROPENTRY@@A data 0x578
+0x006c2364 ?s_classId@HEIGHTMAPDX8MASTER@@2HA data 0x4
 0x006c7074 _g_TagLib_XMPFieldName data
 0x006c7078 _g_TagLib_XMPFieldName data
 0x006c70c4 ?format_bytes@?1??FreeImage_TagDataWidth@@YAHG@Z@4PAHA data
@@ -6604,7 +6760,10 @@
 0x009fedec ?g_exeFolder@@3V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@A data 0x1c
 0x009fee08 ?g_pRenderer@@3PAVRENDERER@@A data 0x4
 0x009fee0c ?g_pIdentityMatrix@@3PAUD3DXMATRIX@@A data 0x4
-0x009fef38 ?g_pStats@@3PAUDX8STATS@@A data 0x4
+0x009fee10 _s_codeValues data 0x100
+0x009fef10 ?s_commands@HEIGHTMAPDX8MASTER@@2PAUCMDENTRY@@A data 0x20
+0x009fef30 ?g_pHEIGHTMAPDX8@@3PAVRESOURCEMANAGER@@A data 0x4
+0x009fef38 ?g_pRENDERSHADER@@3PAVRENDERSHADERMANAGER@@A data 0x4
 0x009fef40 ?g_numTriangles@@3HA data 0x4
 0x009fef44 ?g_9fef44@@3HA data 0x4
 0x00a0f288 _s_format_id data

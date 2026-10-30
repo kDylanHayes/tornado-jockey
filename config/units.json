@@ -2690,6 +2690,22 @@
       "target": "build/target/Tongas2/RENDERER.obj",
       "source": "src/Tongas2/RENDERER.cpp",
       "category": "engine"
+    },
+    {
+      "name": "Tongas2/HEIGHTMAPDX8",
+      "ranges": [
+        "0x004de6d0-0x004e5d4f",
+        "0x00616250-0x00616b9f",
+        "0x00673e60-0x0067473b",
+        "0x006c1818-0x006c1dd7",
+        "0x009fee10-0x009fef2f"
+      ],
+      "target": "build/target/Tongas2/HEIGHTMAPDX8.obj",
+      "source": "src/Tongas2/HEIGHTMAPDX8.cpp",
+      "category": "engine",
+      "symbol_mappings": {
+        "?IsLoaded@SCREENDECAL@@UAE_NXZ": "?IsLoaded@HEIGHTMAPDX8@@UAE_NXZ"
+      }
     }
   ]
 }
