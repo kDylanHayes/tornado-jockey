@@ -14,8 +14,8 @@
 #define RANDOM(min, max) \
     ((max) > (min) ? ((max) - (min)) * (float)rand() * (1.0f / RAND_MAX) + (min) : (min))
 #define RANDOMINT(a, b)                                                            \
-    ((b) > (a) ? (a) - (int)((float)rand() * (float)((b) - (a) + 1) * (-1.0f / 32768.0f)) \
-               : (b) - (int)((float)rand() * (float)((a) - (b) + 1) * (-1.0f / 32768.0f)))
+    ((b) > (a) ? (a) - (int)((double)rand() * ((b) - (a) + 1) * (-1.0f / 32768.0f)) \
+               : (b) - (int)((double)rand() * ((a) - (b) + 1) * (-1.0f / 32768.0f)))
 
 static const char s_directionNames[][30] = {
     "FW",
@@ -71,7 +71,7 @@ void EMITTER::StartEmitting()
 {
     EMITTERMASTER *master = Master();
     m_emitting = true;
-    m_emitTime = master->m_timeToLive.Random();
+    m_emitTime = RANDOM(master->m_timeToLive.min, master->m_timeToLive.max);
     m_nextEmit = 0.0f;
     ClearPixelsUsed();
     m_numEmitted = 0;
@@ -106,7 +106,7 @@ void EMITTER::Virtual31()
 void EMITTER::NextEmitTime()
 {
     EMITTERMASTER *master = Master();
-    float rate = master->m_rate.Random() * m_rateScale;
+    float rate = RANDOM(master->m_rate.min, master->m_rate.max) * m_rateScale;
     float perSecond = g_pResources->GetDetailScale() * rate;
     if (perSecond < 0.0001f)
         perSecond = 0.0001f;
@@ -541,222 +541,222 @@ void PARTICLE::Update(const float &dt)
     EMITTERMASTER *master = m_emitter->Master();
     float retime = master->m_pathRetimeFactor;
     OBJECT *resource = (OBJECT *)g_pResources->GetResource(m_resource);
-    if (!resource) {
-        // Gone: let the emitter kill the particle.
-        m_age = m_life + 1.0f;
+    if (resource) {
+        float radius = 0.0f;
+
+        if (master->m_emittedBehavior == EMITTERMASTER::BEHAVIOR_DRAGFORCE ||
+            master->m_emittedBehavior == EMITTERMASTER::BEHAVIOR_MAGNETICFIELD) {
+            // The pull of the force actor, and how far away it is.
+            V3 force(0.0f, 0.0f, 0.0f);
+            float dist;
+            if (master->m_emittedBehavior == EMITTERMASTER::BEHAVIOR_DRAGFORCE) {
+                WTACTOR *actor = g_pScene->FindActor(master->m_extForceActorName);
+                if (actor) {
+                    float frameDt = g_pTimer->m_dt;
+                    force = (actor->GetWorldPosition() - actor->m_lastPosition) / frameDt;
+                    if (master->m_accelerationAir != 0.0f) {
+                        float t = g_pTimer->m_dt;
+                        m_velocity += t * (master->m_accelerationAir * m_velocity);
+                    }
+                    V3 actorPos = actor->GetWorldPosition();
+                    V3 d = resource->GetPosition() - actorPos;
+                    dist = d.Length();
+                    V3 n = force.Normalized();
+                    float dot = d.x * n.x + d.y * n.y + d.z * n.z;
+                    V3 proj = dot * force.Normalized();
+                    V3 perp = d - proj;
+                    V3 side;
+                    if (dot < 0.0f)
+                        side = perp * -1.0f - proj;
+                    else
+                        side = perp + proj;
+                    force = (side.Normalized() + force.Normalized()) * 0.5f * force.Length();
+                }
+            } else if (master->m_emittedBehavior == EMITTERMASTER::BEHAVIOR_MAGNETICFIELD) {
+                WTACTOR *actor = g_pScene->FindActor(master->m_extForceActorName);
+                if (actor)
+                    force = actor->GetWorldPosition() - resource->GetPosition();
+                dist = force.Length();
+            }
+            if (m_attached) {
+                WTACTOR *parent = g_pScene->GetActor(m_emitter->m_parent);
+                if (parent)
+                    force = parent->WorldToLocal(force);
+            }
+            if (master->m_emittedBehavior == EMITTERMASTER::BEHAVIOR_DRAGFORCE) {
+                if (dist > master->m_extDistanceMax) {
+                    force = V3(0.0f, 0.0f, 0.0f);
+                } else if (dist < master->m_extDistanceMin) {
+                    force = force * master->m_extForce;
+                } else {
+                    float range = master->m_extDistanceMax - master->m_extDistanceMin;
+                    force = force * (master->m_extDistanceMax - dist) / range * master->m_extForce;
+                }
+                m_velocity += force * dt;
+                float maxSpeed = force.Length();
+                if (m_velocity.Length() > maxSpeed)
+                    m_velocity = maxSpeed * m_velocity.Normalized();
+            } else if (master->m_emittedBehavior == EMITTERMASTER::BEHAVIOR_MAGNETICFIELD) {
+                if (dist > master->m_extDistanceMax) {
+                    force = V3(0.0f, 0.0f, 0.0f);
+                } else if (dist < master->m_extDistanceMin) {
+                    force = force.Normalized() * master->m_extForce;
+                } else {
+                    float range = master->m_extDistanceMax - master->m_extDistanceMin;
+                    float k = master->m_extDistanceMax - dist;
+                    force = k * force.Normalized() / range * master->m_extForce;
+                }
+                m_velocity += force * dt;
+            }
+        }
+
+        if (master->m_emittedBehavior == EMITTERMASTER::BEHAVIOR_FORCE ||
+            master->m_emittedBehavior == EMITTERMASTER::BEHAVIOR_DRAGFORCE ||
+            master->m_emittedBehavior == EMITTERMASTER::BEHAVIOR_MAGNETICFIELD) {
+            V3 step = m_velocity * dt;
+            float ex, ey, ez;
+            if (!m_attached) {
+                V3 p = step * m_emitter->GetScale();
+                resource->SetPosition(p + resource->GetPosition());
+                resource->GetAngles().GetEuler(&ex, &ey, &ez);
+            } else {
+                m_offset += step * m_emitter->GetSize();
+                resource->SetOffsetV(m_emitter->GetOffset() + m_offset);
+                resource->GetRelAngles().GetEuler(&ex, &ey, &ez);
+            }
+            ex += dt * master->m_angSpd.GetEuler().x;
+            ey += master->m_angSpd.GetEuler().y * dt;
+            ez += master->m_angSpd.GetEuler().z * dt;
+            if (!m_attached)
+                resource->SetRotation(ex, ey, ez);
+            else
+                resource->SetRelRotation(ex, ey, ez);
+            m_velocity += master->m_force * dt;
+        } else if (master->m_emittedBehavior == EMITTERMASTER::BEHAVIOR_PATHFLOW) {
+            if (!master->m_path) {
+                master->m_path = (PATHMASTER *)g_pPATH->GetMaster(master->m_pathName.c_str());
+                if (!master->m_path) {
+                    if (g_pLog)
+                        g_pLog->Error("%s error loading path %s!", master->m_name.c_str(), master->m_pathName.c_str());
+                    return;
+                }
+            }
+            V3 position(0.0f, 0.0f, 0.0f);
+            V3 direction(0.0f, 0.0f, 0.0f);
+            V3 up(0.0f, 0.0f, 0.0f);
+            float roll = 0.0f;
+            master->m_path->GetPoint(m_age / m_life + m_pathOffset, &position, &direction, &up, &radius, &roll);
+            up.Normalize();
+            direction.Normalize();
+            float dot = up.x * direction.x + up.y * direction.y + up.z * direction.z;
+            up = up - direction * dot;
+            up.Normalize();
+            float angle = (roll + m_pathAngle) * 0.017453292f;
+            V3 out = up.Rotate(direction, angle);
+            V3 p = out * (radius * m_pathRadius) + position;
+            float ex, ey, ez;
+            if (!m_attached) {
+                resource->SetPosition(p);
+                resource->GetAngles().GetEuler(&ex, &ey, &ez);
+            } else {
+                resource->SetOffsetV(p);
+                resource->GetRelAngles().GetEuler(&ex, &ey, &ez);
+            }
+            ex += master->m_angSpd.GetEulerX() * dt * retime;
+            ey += master->m_angSpd.GetEulerY() * dt * retime;
+            ez += master->m_angSpd.GetEulerZ() * dt * retime;
+            if (!m_attached)
+                resource->SetRotation(ex, ey, ez);
+            else
+                resource->SetRelRotation(ex, ey, ez);
+        }
+
+        // Speeding up or slowing down for the first accelTime seconds.
+        if (m_accel != 0.0f && master->m_accelTime > 0.0f && m_age <= master->m_accelTime) {
+            float speed = m_velocity.Length() + m_distance * m_accel * dt;
+            if (speed <= 0.0f) {
+                speed = 0.0f;
+                m_accel = 0.0f;
+            }
+            m_velocity = speed * m_velocity.Normalized();
+        }
+
+        // Size, alpha and colour, from birth through midlife to death.
+        V3I color;
+        float size, alpha;
+        if (master->m_useMidlife) {
+            if (m_age < m_midLife) {
+                float t = m_age / m_midLife;
+                float u = 1.0f - t;
+                size = u * m_size + t * m_midSize;
+                alpha = u * m_alpha + t * m_midAlpha;
+                color = u * m_color + t * m_midColor;
+            } else if (m_20 && m_midDuration <= 0.0f) {
+                float t = (m_age - m_midLife) / (m_life - m_midLife);
+                float u = 1.0f - t;
+                size = u * m_midSize + t * m_deathSize;
+                alpha = u * m_midAlpha + t * m_deathAlpha;
+                color = u * m_midColor + t * m_deathColor;
+            } else {
+                size = m_midSize;
+                alpha = m_midAlpha;
+                m_20 = true;
+                m_midDuration -= retime * dt;
+                color = m_midColor;
+                m_midLife = m_age;
+            }
+        } else {
+            float t = m_age / m_life;
+            float u = 1.0f - t;
+            size = u * m_size + t * m_deathSize;
+            alpha = u * m_alpha + t * m_deathAlpha;
+            color = u * m_color + t * m_deathColor;
+        }
+        if (master->m_changeColorInTime && (!master->m_pictureLoaded || !master->m_usePictureColor)) {
+            if (g_pDECAL->m_id == resource->GetManagerId())
+                ((DECAL *)resource)->SetColor((const V3 &)color);
+        }
+        if (master->m_emittedBehavior == EMITTERMASTER::BEHAVIOR_PATHFLOW) {
+            size *= master->m_pathScaleFactor;
+            if (master->m_pathAdjustSize)
+                size *= radius;
+            if (master->m_pathOpacity) {
+                float t = m_age / m_life;
+                if (t < master->m_pathOpacityRange.x)
+                    alpha = 0.0f;
+                if (master->m_pathOpacityRange.x <= t && t < master->m_pathOpacityRange.y)
+                    alpha = (t - master->m_pathOpacityRange.x) / (master->m_pathOpacityRange.y - master->m_pathOpacityRange.x) * alpha;
+                if (master->m_pathOpacityRange.z <= t && t < 1.0f)
+                    alpha = (t - master->m_pathOpacityRange.z) / (1.0f - master->m_pathOpacityRange.z) * alpha;
+            }
+        }
+        if (!m_attached) {
+            resource->SetScaleV(size * m_emitter->GetScale());
+            resource->SetAlpha(m_emitter->GetAlpha() * alpha);
+        } else {
+            resource->SetScaleFactorV(size * m_emitter->GetSize());
+            resource->SetAlphaFactor(m_emitter->GetAlphaFactor() * alpha);
+        }
+        if (master->m_rotateToMove && !m_velocity.IsZero()) {
+            ANG angles(0.0f, 0.0f, 0.0f);
+            if (!m_attached) {
+                angles = resource->GetAngles();
+                angles.PointAt(m_velocity.Normalized());
+                resource->SetAngles(angles);
+            } else {
+                angles = resource->GetRelAngles();
+                angles.PointAt(m_velocity.Normalized());
+                resource->SetRelAngles(angles);
+            }
+        }
+        if (master->m_emittedBehavior != EMITTERMASTER::BEHAVIOR_PATHFLOW)
+            m_age = m_age + dt;
+        else
+            m_age += retime * dt;
         return;
     }
-    float radius = 0.0f;
-
-    if (master->m_emittedBehavior == EMITTERMASTER::BEHAVIOR_DRAGFORCE ||
-        master->m_emittedBehavior == EMITTERMASTER::BEHAVIOR_MAGNETICFIELD) {
-        // The pull of the force actor, and how far away it is.
-        V3 force(0.0f, 0.0f, 0.0f);
-        float dist;
-        if (master->m_emittedBehavior == EMITTERMASTER::BEHAVIOR_DRAGFORCE) {
-            WTACTOR *actor = g_pScene->FindActor(master->m_extForceActorName);
-            if (actor) {
-                float frameDt = g_pTimer->m_dt;
-                force = (actor->GetWorldPosition() - actor->m_lastPosition) / frameDt;
-                if (master->m_accelerationAir != 0.0f) {
-                    float t = g_pTimer->m_dt;
-                    m_velocity += t * (master->m_accelerationAir * m_velocity);
-                }
-                V3 actorPos = actor->GetWorldPosition();
-                V3 d = resource->GetPosition() - actorPos;
-                dist = d.Length();
-                V3 n = force.Normalized();
-                float dot = d.x * n.x + d.y * n.y + d.z * n.z;
-                V3 proj = dot * force.Normalized();
-                V3 perp = d - proj;
-                V3 side;
-                if (dot < 0.0f)
-                    side = perp * -1.0f - proj;
-                else
-                    side = perp + proj;
-                force = (side.Normalized() + force.Normalized()) * 0.5f * force.Length();
-            }
-        } else if (master->m_emittedBehavior == EMITTERMASTER::BEHAVIOR_MAGNETICFIELD) {
-            WTACTOR *actor = g_pScene->FindActor(master->m_extForceActorName);
-            if (actor)
-                force = actor->GetWorldPosition() - resource->GetPosition();
-            dist = force.Length();
-        }
-        if (m_attached) {
-            WTACTOR *parent = g_pScene->GetActor(m_emitter->m_parent);
-            if (parent)
-                force = parent->WorldToLocal(force);
-        }
-        if (master->m_emittedBehavior == EMITTERMASTER::BEHAVIOR_DRAGFORCE) {
-            if (dist > master->m_extDistanceMax) {
-                force = V3(0.0f, 0.0f, 0.0f);
-            } else if (dist < master->m_extDistanceMin) {
-                force = force * master->m_extForce;
-            } else {
-                float range = master->m_extDistanceMax - master->m_extDistanceMin;
-                force = force * (master->m_extDistanceMax - dist) / range * master->m_extForce;
-            }
-            m_velocity += force * dt;
-            float maxSpeed = force.Length();
-            if (m_velocity.Length() > maxSpeed)
-                m_velocity = maxSpeed * m_velocity.Normalized();
-        } else if (master->m_emittedBehavior == EMITTERMASTER::BEHAVIOR_MAGNETICFIELD) {
-            if (dist > master->m_extDistanceMax) {
-                force = V3(0.0f, 0.0f, 0.0f);
-            } else if (dist < master->m_extDistanceMin) {
-                force = force.Normalized() * master->m_extForce;
-            } else {
-                float range = master->m_extDistanceMax - master->m_extDistanceMin;
-                float k = master->m_extDistanceMax - dist;
-                force = k * force.Normalized() / range * master->m_extForce;
-            }
-            m_velocity += force * dt;
-        }
-    }
-
-    if (master->m_emittedBehavior == EMITTERMASTER::BEHAVIOR_FORCE ||
-        master->m_emittedBehavior == EMITTERMASTER::BEHAVIOR_DRAGFORCE ||
-        master->m_emittedBehavior == EMITTERMASTER::BEHAVIOR_MAGNETICFIELD) {
-        V3 step = m_velocity * dt;
-        float ex, ey, ez;
-        if (!m_attached) {
-            V3 p = step * m_emitter->GetScale();
-            resource->SetPosition(p + resource->GetPosition());
-            resource->GetAngles().GetEuler(&ex, &ey, &ez);
-        } else {
-            m_offset += step * m_emitter->GetSize();
-            resource->SetOffsetV(m_emitter->GetOffset() + m_offset);
-            resource->GetRelAngles().GetEuler(&ex, &ey, &ez);
-        }
-        ex += dt * master->m_angSpd.GetEuler().x;
-        ey += master->m_angSpd.GetEuler().y * dt;
-        ez += master->m_angSpd.GetEuler().z * dt;
-        if (!m_attached)
-            resource->SetRotation(ex, ey, ez);
-        else
-            resource->SetRelRotation(ex, ey, ez);
-        m_velocity += master->m_force * dt;
-    } else if (master->m_emittedBehavior == EMITTERMASTER::BEHAVIOR_PATHFLOW) {
-        if (!master->m_path) {
-            master->m_path = (PATHMASTER *)g_pPATH->GetMaster(master->m_pathName.c_str());
-            if (!master->m_path) {
-                if (g_pLog)
-                    g_pLog->Error("%s error loading path %s!", master->m_name.c_str(), master->m_pathName.c_str());
-                return;
-            }
-        }
-        V3 position(0.0f, 0.0f, 0.0f);
-        V3 direction(0.0f, 0.0f, 0.0f);
-        V3 up(0.0f, 0.0f, 0.0f);
-        float roll = 0.0f;
-        master->m_path->GetPoint(m_age / m_life + m_pathOffset, &position, &direction, &up, &radius, &roll);
-        up.Normalize();
-        direction.Normalize();
-        float dot = up.x * direction.x + up.y * direction.y + up.z * direction.z;
-        up = up - direction * dot;
-        up.Normalize();
-        float angle = (roll + m_pathAngle) * 0.017453292f;
-        V3 out = up.Rotate(direction, angle);
-        V3 p = out * (radius * m_pathRadius) + position;
-        float ex, ey, ez;
-        if (!m_attached) {
-            resource->SetPosition(p);
-            resource->GetAngles().GetEuler(&ex, &ey, &ez);
-        } else {
-            resource->SetOffsetV(p);
-            resource->GetRelAngles().GetEuler(&ex, &ey, &ez);
-        }
-        ex += master->m_angSpd.GetEulerX() * dt * retime;
-        ey += master->m_angSpd.GetEulerY() * dt * retime;
-        ez += master->m_angSpd.GetEulerZ() * dt * retime;
-        if (!m_attached)
-            resource->SetRotation(ex, ey, ez);
-        else
-            resource->SetRelRotation(ex, ey, ez);
-    }
-
-    // Speeding up or slowing down for the first accelTime seconds.
-    if (m_accel != 0.0f && master->m_accelTime > 0.0f && m_age <= master->m_accelTime) {
-        float speed = m_velocity.Length() + m_distance * m_accel * dt;
-        if (speed <= 0.0f) {
-            speed = 0.0f;
-            m_accel = 0.0f;
-        }
-        m_velocity = speed * m_velocity.Normalized();
-    }
-
-    // Size, alpha and colour, from birth through midlife to death.
-    V3I color;
-    float size, alpha;
-    if (master->m_useMidlife) {
-        if (m_age < m_midLife) {
-            float t = m_age / m_midLife;
-            float u = 1.0f - t;
-            size = u * m_size + t * m_midSize;
-            alpha = u * m_alpha + t * m_midAlpha;
-            color = u * m_color + t * m_midColor;
-        } else if (m_20 && m_midDuration <= 0.0f) {
-            float t = (m_age - m_midLife) / (m_life - m_midLife);
-            float u = 1.0f - t;
-            size = u * m_midSize + t * m_deathSize;
-            alpha = u * m_midAlpha + t * m_deathAlpha;
-            color = u * m_midColor + t * m_deathColor;
-        } else {
-            size = m_midSize;
-            alpha = m_midAlpha;
-            m_20 = true;
-            m_midDuration -= retime * dt;
-            color = m_midColor;
-            m_midLife = m_age;
-        }
-    } else {
-        float t = m_age / m_life;
-        float u = 1.0f - t;
-        size = u * m_size + t * m_deathSize;
-        alpha = u * m_alpha + t * m_deathAlpha;
-        color = u * m_color + t * m_deathColor;
-    }
-    if (master->m_changeColorInTime && (!master->m_pictureLoaded || !master->m_usePictureColor)) {
-        if (g_pDECAL->m_id == resource->GetManagerId())
-            ((DECAL *)resource)->SetColor((const V3 &)color);
-    }
-    if (master->m_emittedBehavior == EMITTERMASTER::BEHAVIOR_PATHFLOW) {
-        size *= master->m_pathScaleFactor;
-        if (master->m_pathAdjustSize)
-            size *= radius;
-        if (master->m_pathOpacity) {
-            float t = m_age / m_life;
-            if (t < master->m_pathOpacityRange.x)
-                alpha = 0.0f;
-            if (master->m_pathOpacityRange.x <= t && t < master->m_pathOpacityRange.y)
-                alpha = (t - master->m_pathOpacityRange.x) / (master->m_pathOpacityRange.y - master->m_pathOpacityRange.x) * alpha;
-            if (master->m_pathOpacityRange.z <= t && t < 1.0f)
-                alpha = (t - master->m_pathOpacityRange.z) / (1.0f - master->m_pathOpacityRange.z) * alpha;
-        }
-    }
-    if (!m_attached) {
-        resource->SetScaleV(size * m_emitter->GetScale());
-        resource->SetAlpha(m_emitter->GetAlpha() * alpha);
-    } else {
-        resource->SetScaleFactorV(size * m_emitter->GetSize());
-        resource->SetAlphaFactor(m_emitter->GetAlphaFactor() * alpha);
-    }
-    if (master->m_rotateToMove && !m_velocity.IsZero()) {
-        ANG angles(0.0f, 0.0f, 0.0f);
-        if (!m_attached) {
-            angles = resource->GetAngles();
-            angles.PointAt(m_velocity.Normalized());
-            resource->SetAngles(angles);
-        } else {
-            angles = resource->GetRelAngles();
-            angles.PointAt(m_velocity.Normalized());
-            resource->SetRelAngles(angles);
-        }
-    }
-    if (master->m_emittedBehavior != EMITTERMASTER::BEHAVIOR_PATHFLOW)
-        m_age += dt;
-    else
-        m_age += retime * dt;
+    // Gone: let the emitter kill the particle.
+    m_age = m_life + 1.0f;
 }
 
 EMITTER::EMITTER(EMITTERMASTER *master, const RESHANDLE &handle)
@@ -780,8 +780,10 @@ void EMITTER::Virtual30()
 EMITTER::~EMITTER()
 {
     KillParticles();
-    if (m_pixelUsed)
+    if (m_pixelUsed) {
         delete[] m_pixelUsed;
+        m_pixelUsed = 0;
+    }
 }
 
 void EMITTER::Stop()
@@ -868,40 +870,41 @@ EMITTERMASTER::EMITTERMASTER(RESOURCEMANAGER *manager, const char *name)
 
 FIBITMAP *EMITTERMASTER::LoadImage(const char *name)
 {
-    if (!name)
-        return 0;
-    int length = strlen(name);
-    if (!length)
-        return 0;
-    FIBITMAP *bitmap = 0;
-    FIXEDSTRING<0x200> path;
-    SafeSprintf(path, "%s%s%s", g_basePath, "data/art/", name);
-    _strlwr(path);
-    path.Replace('/', '\\');
-    FILELOADER *file = g_pfnCreateFileLoader();
-    if (!file->Open(path)) {
-        if (g_pLog)
-            g_pLog->Error("Could not open file %s", (char *)path);
-        delete file;
-        return 0;
+    if (name) {
+        int length = strlen(name);
+        if (length) {
+            FIBITMAP *bitmap = 0;
+            FIXEDSTRING<0x200> path;
+            SafeSprintf(path, "%s%s%s", g_basePath, "data/art/", name);
+            _strlwr(path);
+            path.Replace('/', '\\');
+            FILELOADER *file = g_pfnCreateFileLoader();
+            if (!file->Open(path)) {
+                if (g_pLog)
+                    g_pLog->Error("Could not open file %s", (char *)path);
+                delete file;
+                return 0;
+            }
+            FIMEMORY *memory = FreeImage_OpenMemory((BYTE *)file->GetData(), file->GetSize());
+            FREE_IMAGE_FORMAT format = FreeImage_GetFileTypeFromMemory(memory, 0);
+            if (format == 1 || format == 0)
+                bitmap = FreeImage_LoadFromMemory(format, memory, 2);
+            else if (g_pLog)
+                g_pLog->Error("Unsupported emitter image format, must be JPG or PNG! %s", (char *)path);
+            FreeImage_CloseMemory(memory);
+            file->Close();
+            delete file;
+            if (!bitmap)
+                return 0;
+            if (FreeImage_GetBPP(bitmap) != 24 && FreeImage_GetBPP(bitmap) != 32) {
+                FIBITMAP *old = bitmap;
+                bitmap = FreeImage_ConvertTo24Bits(bitmap);
+                FreeImage_Unload(old);
+            }
+            return bitmap;
+        }
     }
-    FIMEMORY *memory = FreeImage_OpenMemory((BYTE *)file->GetData(), file->GetSize());
-    FREE_IMAGE_FORMAT format = FreeImage_GetFileTypeFromMemory(memory, 0);
-    if (format == 1 || format == 0)
-        bitmap = FreeImage_LoadFromMemory(format, memory, 2);
-    else if (g_pLog)
-        g_pLog->Error("Unsupported emitter image format, must be JPG or PNG! %s", (char *)path);
-    FreeImage_CloseMemory(memory);
-    file->Close();
-    delete file;
-    if (!bitmap)
-        return 0;
-    if (FreeImage_GetBPP(bitmap) != 24 && FreeImage_GetBPP(bitmap) != 32) {
-        FIBITMAP *converted = FreeImage_ConvertTo24Bits(bitmap);
-        FreeImage_Unload(bitmap);
-        bitmap = converted;
-    }
-    return bitmap;
+    return 0;
 }
 
 void EMITTERMASTER::LoadPicture()
@@ -936,12 +939,8 @@ void EMITTERMASTER::LoadPicture()
             RGBQUAD color;
             FreeImage_GetPixelColor(bitmap, x, m_pictureHeight - y - 1, &color);
             if (color.rgbRed || color.rgbGreen || color.rgbBlue) {
-                EMITPIXEL &pixel = pixels[m_numPixels];
-                pixel.u = (float)x / (float)(m_pictureWidth - 1);
-                pixel.v = (float)y / (float)(m_pictureHeight - 1);
-                pixels[m_numPixels].color.x = color.rgbRed;
-                pixels[m_numPixels].color.y = color.rgbGreen;
-                pixels[m_numPixels].color.z = color.rgbBlue;
+                *(V2 *)&pixels[m_numPixels].u = V2(x / (double)(m_pictureWidth - 1), y / (double)(m_pictureHeight - 1));
+                pixels[m_numPixels].color = V3I(color.rgbRed, color.rgbGreen, color.rgbBlue);
                 m_numPixels++;
             }
         }
@@ -1037,17 +1036,17 @@ PARTICLE::PARTICLE(EMITTER *emitter)
         resource->SetRelLayer(emitter->GetRelLayer());
     }
 
-    m_size = master->m_birthSize.Random();
-    m_alpha = master->m_birthAlpha.Random();
+    m_size = RANDOM(master->m_birthSize.min, master->m_birthSize.max);
+    m_alpha = RANDOM(master->m_birthAlpha.min, master->m_birthAlpha.max);
     m_color.x = RANDOMINT(master->m_birthColor1.x, master->m_birthColor2.x);
     m_color.y = RANDOMINT(master->m_birthColor1.y, master->m_birthColor2.y);
     m_color.z = RANDOMINT(master->m_birthColor1.z, master->m_birthColor2.z);
-    m_deathSize = master->m_deathSize.Random();
-    m_deathAlpha = master->m_deathAlpha.Random();
+    m_deathSize = RANDOM(master->m_deathSize.min, master->m_deathSize.max);
+    m_deathAlpha = RANDOM(master->m_deathAlpha.min, master->m_deathAlpha.max);
     m_deathColor.x = RANDOMINT(master->m_deathColor1.x, master->m_deathColor2.x);
     m_deathColor.y = RANDOMINT(master->m_deathColor1.y, master->m_deathColor2.y);
     m_deathColor.z = RANDOMINT(master->m_deathColor1.z, master->m_deathColor2.z);
-    m_life = master->m_life.Random();
+    m_life = RANDOM(master->m_life.min, master->m_life.max);
     if (!m_attached) {
         resource->SetScaleV(emitter->GetScale() * m_size);
         resource->SetAlpha(emitter->GetAlpha() * m_alpha);
@@ -1056,24 +1055,24 @@ PARTICLE::PARTICLE(EMITTER *emitter)
         resource->SetAlphaFactor(emitter->GetAlphaFactor() * m_alpha);
     }
     if (master->m_useMidlife) {
-        m_midSize = master->m_midSize.Random();
-        m_midAlpha = master->m_midAlpha.Random();
-        m_midLife = master->m_midLife.Random();
-        m_midDuration = master->m_midDuration.Random();
+        m_midSize = RANDOM(master->m_midSize.min, master->m_midSize.max);
+        m_midAlpha = RANDOM(master->m_midAlpha.min, master->m_midAlpha.max);
+        m_midLife = RANDOM(master->m_midLife.min, master->m_midLife.max);
+        m_midDuration = RANDOM(master->m_midDuration.min, master->m_midDuration.max);
         m_midColor.x = RANDOMINT(master->m_midColor1.x, master->m_midColor2.x);
         m_midColor.y = RANDOMINT(master->m_midColor1.y, master->m_midColor2.y);
         m_midColor.z = RANDOMINT(master->m_midColor1.z, master->m_midColor2.z);
     }
     m_age = 0.0f;
-    m_accel = master->m_accelRange.Random();
+    m_accel = RANDOM(master->m_accelRange.min, master->m_accelRange.max);
     m_distance = 1.0f;
 
     // Which way the particle heads.
     ANG angles(0.0f, 0.0f, 0.0f);
-    float speed = master->m_speedRange.Random();
+    float speed = RANDOM(master->m_speedRange.min, master->m_speedRange.max);
     switch (master->m_emitDirection) {
     case EMITTERMASTER::DIRECTION_FW: {
-        float angle = master->m_angRange.Random();
+        float angle = RANDOM(master->m_angRange.min, master->m_angRange.max);
         angles = ANG(0.0f, angle, (float)rand() * (360.0f / RAND_MAX) - 180.0f);
         if (!master->m_pictureLoaded) {
             m_velocity = angles.Transform(V3(0.0f, 0.0f, speed));
@@ -1087,7 +1086,7 @@ PARTICLE::PARTICLE(EMITTER *emitter)
         break;
     }
     case EMITTERMASTER::DIRECTION_UP: {
-        float angle = master->m_angRange.Random();
+        float angle = RANDOM(master->m_angRange.min, master->m_angRange.max);
         angles = ANG((float)rand() * (360.0f / RAND_MAX) - 180.0f, 0.0f, angle);
         if (!master->m_pictureLoaded) {
             m_velocity = angles.Transform(V3(0.0f, speed, 0.0f));
@@ -1124,12 +1123,12 @@ PARTICLE::PARTICLE(EMITTER *emitter)
         facing.PointAt(m_velocity.Normalized());
         resource->SetAngles(facing);
     } else {
-        resource->SetRotation(master->m_birthYaw.Random(), master->m_birthPitch.Random(), master->m_birthRoll.Random());
+        resource->SetRotation(RANDOM(master->m_birthYaw.min, master->m_birthYaw.max), RANDOM(master->m_birthPitch.min, master->m_birthPitch.max), RANDOM(master->m_birthRoll.min, master->m_birthRoll.max));
     }
     m_20 = false;
-    m_pathRadius = master->m_pathRelativeRadius.Random();
+    m_pathRadius = RANDOM(master->m_pathRelativeRadius.min, master->m_pathRelativeRadius.max);
     m_pathAngle = (float)rand() * (360.0f / RAND_MAX);
-    m_pathOffset = master->m_pathOffset.Random();
+    m_pathOffset = RANDOM(master->m_pathOffset.min, master->m_pathOffset.max);
     resource->SetActive(true);
     if (g_pBONEDMODEL->m_id == resource->GetManagerId()) {
         ((BONEDMODEL *)resource)->Virtual78();

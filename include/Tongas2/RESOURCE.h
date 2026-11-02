@@ -316,6 +316,9 @@ class OBJECT : public RESOURCE
 public:
     // Defined elsewhere.
     OBJECT(RESOURCEMASTER *master, RESHANDLE handle);
+    // Defined elsewhere: complains when still following a parent, and
+    // deletes the tag.
+    virtual ~OBJECT();
     // Stops following the parent and the tag it was attached to.
     void Detach()
     {
