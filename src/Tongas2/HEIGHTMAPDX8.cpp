@@ -673,12 +673,13 @@ void HEIGHTMAPDX8::Reduce(SUBMESHINDEX *index, int tileX, int tileY, unsigned sh
             for (i = ay; i <= dy && flat; i++) {
                 for (j = ax; j <= dx; j++) {
                     if ((j != ax || (i != ay && i != dy)) && (j != dx || (i != ay && i != dy))) {
+                        float value = master->GetAlpha(j + baseX, baseY + i, layer);
                         float alpha;
                         if (i + j <= midY + midX)
                             alpha = (a01 - a00) * (float)(j - ax) / (float)width + (a10 - a00) * (float)(i - ay) / (float)height + a00;
                         else
                             alpha = (a10 - a11) * (float)(dx - j) / (float)width + (a01 - a11) * (float)(dy - i) / (float)height + a11;
-                        if (fabs(alpha - master->GetAlpha(j + baseX, baseY + i, layer)) > master->m_alphaReductionTolerance) {
+                        if (fabs(alpha - value) > master->m_alphaReductionTolerance) {
                             flat = false;
                             break;
                         }
