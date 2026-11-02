@@ -205,27 +205,33 @@ void HEIGHTMAPDX8::UpdatePositions()
     m_colorsDone = false;
     float tileSize = master->m_aspectRatioModifier * master->m_aspect;
     float maxHeight = master->m_maxHeight;
-    int gridHeight = master->m_gridHeight;
     int points = master->m_pointsPerTile;
+    int gridHeight = master->m_gridHeight;
     float offset = tileSize * -0.5f;
     int gridWidth = master->m_gridWidth;
-    int x, y, px, py;
-    for (y = 0, py = 0; y < m_tilesY; y++, py += points) {
-        for (x = 0, px = 0; x < m_tilesX; x++, px += points) {
-            V3 min = V3(1.0f, 0.0f, 0.0f) * (float)px / (float)(gridWidth - 1) + V3(-0.5f, offset, 0.0f)
+    int x, y;
+    for (y = 0; y < m_tilesY; y++) {
+        for (x = 0; x < m_tilesX; x++) {
+            int px = x * points, py = y * points;
+            V3 min, max;
+            min = V3(1.0f, 0.0f, 0.0f) * (float)px / (float)(gridWidth - 1) + V3(-0.5f, offset, 0.0f)
                 + V3(0.0f, tileSize, 0.0f) * (float)py / (float)(gridHeight - 1);
-            V3 max = V3(1.0f, 0.0f, 0.0f) * (float)(px + points) / (float)(gridWidth - 1) + V3(-0.5f, offset, 0.0f)
-                + V3(0.0f, tileSize, 0.0f) * (float)(py + points) / (float)(gridHeight - 1);
+            px += points;
+            py += points;
+            max = V3(1.0f, 0.0f, 0.0f) * (float)px / (float)(gridWidth - 1) + V3(-0.5f, offset, 0.0f)
+                + V3(0.0f, tileSize, 0.0f) * (float)py / (float)(gridHeight - 1);
             m_tileBoxes[m_tilesX * y + x].Set(min, max);
         }
     }
     for (y = 0; y < gridHeight; y++) {
         for (x = 0; x < gridWidth; x++) {
+            V3 base;
+            base = V3(1.0f, 0.0f, 0.0f) * (float)x / (float)(gridWidth - 1) + V3(-0.5f, offset, 0.0f)
+                + V3(0.0f, tileSize, 0.0f) * (float)y / (float)(gridHeight - 1);
+            float h = ((float)master->m_heights[master->m_gridWidth * y + x] - master->m_zeroValue) / (255 - master->m_zeroValue);
+            base = V3(0.0f, 0.0f, maxHeight) * h + base;
             V3 &p = m_positions[gridWidth * y + x];
-            float h = ((float)master->m_heights[master->m_gridWidth * y + x] - (float)master->m_zeroValue) / (float)(255 - master->m_zeroValue);
-            p = V3(0.0f, 0.0f, maxHeight) * h
-                + (V3(1.0f, 0.0f, 0.0f) * (float)x / (float)(gridWidth - 1) + V3(-0.5f, offset, 0.0f)
-                    + V3(0.0f, tileSize, 0.0f) * (float)y / (float)(gridHeight - 1));
+            p = base;
             int tileY = y / points;
             int tileX = x / points;
             if (y % points == 0) {
