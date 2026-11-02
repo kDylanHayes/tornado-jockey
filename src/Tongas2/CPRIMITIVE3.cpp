@@ -249,7 +249,7 @@ void CPRIMITIVE3MASTER::SetPrimitiveType(const int &type)
 }
 
 // Whether p is inside the quad a, b, c, d: the edges it crosses going right.
-static int PointInQuad(const V2 &a, const V2 &b, const V2 &c, const V2 &d, const V2 &p)
+int PointInQuad(const V2 &a, const V2 &b, const V2 &c, const V2 &d, const V2 &p)
 {
     bool inside = false;
     if (((a.y <= p.y && p.y < d.y) || (d.y <= p.y && p.y < a.y)) && p.x < (d.x - a.x) * (p.y - a.y) / (d.y - a.y) + a.x)
