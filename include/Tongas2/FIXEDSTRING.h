@@ -31,6 +31,12 @@ public:
         strncpy(m_buf, text, N - 1);
         m_buf[N - 1] = '\0';
     }
+    // The first n characters of text.
+    void SetLength(const char *text, unsigned n)
+    {
+        memcpy(m_buf, text, n);
+        m_buf[n] = '\0';
+    }
     void Replace(char from, char to)
     {
         for (int i = 0; i < N; i++) {

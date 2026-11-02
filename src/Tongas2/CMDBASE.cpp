@@ -286,8 +286,7 @@ CMDBASE *CMDBASE::FindObject(const char *path, RESHANDLE caller)
         unsigned n = dot - path;
         if (n > 0x7f)
             n = 0x7f;
-        memcpy(name.m_buf, path, n);
-        name.m_buf[n] = 0;
+        name.SetLength(path, n);
         path = name.m_buf;
         dot++;
     }
