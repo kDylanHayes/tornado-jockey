@@ -770,7 +770,10 @@ MESHDX8 *HEIGHTMAPDX8::AllocMesh(int *mesh, int *firstVertex, int *firstIndex, i
         return m_meshes[0];
     }
     MESHDX8 *newMesh = new MESHDX8;
-    newMesh->Create(master->UseHardwareLighting() ? 1 : 3, m_meshVertices[m_numMeshes], m_meshIndices[m_numMeshes], 1);
+    if (master->UseHardwareLighting())
+        newMesh->Create(1, m_meshVertices[m_numMeshes], m_meshIndices[m_numMeshes], 1);
+    else
+        newMesh->Create(3, m_meshVertices[m_numMeshes], m_meshIndices[m_numMeshes], 1);
     newMesh->SetVisibility(m_19c);
     newMesh->m_passes = master->m_renderPassesFlags;
     newMesh->SetLightMask(m_1ac);
@@ -995,9 +998,8 @@ void HEIGHTMAPDX8::Stop()
 {
     FreeMeshes();
     SetVisibility(1);
-    HEIGHTMAPDX8MANAGER *manager = (HEIGHTMAPDX8MANAGER *)g_pHEIGHTMAPDX8;
-    if (manager->m_editing == m_handle)
-        manager->m_editing.Invalidate();
+    if (((HEIGHTMAPDX8MANAGER *)g_pHEIGHTMAPDX8)->m_editing == m_handle)
+        ((HEIGHTMAPDX8MANAGER *)g_pHEIGHTMAPDX8)->m_editing.Invalidate();
 }
 
 void HEIGHTMAPDX8::BuildIndices()
@@ -1239,10 +1241,10 @@ void HEIGHTMAPDX8MASTER::SetRenderShader(const int &index, const CSTRING &name)
 {
     m_renderShader[index] = name;
     RESOURCEMASTER *shader = g_pRENDERSHADER->GetMaster(name.c_str());
-    if (!shader)
-        m_shaderHasAlpha[index] = true;
-    else
+    if (shader)
         m_shaderHasAlpha[index] = ((RENDERSHADERMASTER *)shader)->HasAlpha();
+    else
+        m_shaderHasAlpha[index] = true;
     FreeCopiesMeshes();
 }
 
