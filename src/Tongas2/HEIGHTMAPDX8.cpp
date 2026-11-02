@@ -331,8 +331,8 @@ float HEIGHTMAPDX8::GetHeight(const V3 &point, V3 *normal)
 {
     HEIGHTMAPDX8MASTER *master = Master();
     V3 a(0.0f, 0.0f, 0.0f);
-    V3 b(0.0f, 0.0f, 0.0f);
     V3 c(0.0f, 0.0f, 0.0f);
+    V3 b(0.0f, 0.0f, 0.0f);
     V3 local = WorldToLocal(point);
     float fx = (local.x + 0.5f) * (float)master->m_imageWidth;
     float fy = (local.y / (master->m_aspectRatioModifier * master->m_aspect) + 0.5f) * (float)master->m_imageHeight;
@@ -342,7 +342,7 @@ float HEIGHTMAPDX8::GetHeight(const V3 &point, V3 *normal)
     int y = (int)fy;
     if (x < 0 || x >= master->m_imageWidth || y < 0 || y >= master->m_imageHeight || !m_positions)
         return 0.0f;
-    if (v + u < 1.0f) {
+    if (v + u <= 1.0f) {
         b = m_positions[master->m_gridWidth * y + x];
         a = m_positions[master->m_gridWidth * y + 1 + x];
         c = m_positions[(y + 1) * master->m_gridWidth + x];
