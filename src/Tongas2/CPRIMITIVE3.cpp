@@ -558,7 +558,7 @@ void CPRIMITIVE3MANAGER::TestScreen(CPRIMITIVE3RESOURCE *a, CPRIMITIVE3RESOURCE 
         float radius = a->m_primitive.GetSphere()->radius;
         ((CAMERA *)g_pCamera)->WorldToScreen(a->m_primitive.GetSphere()->center, &center);
         V3 offset = radius * a->GetAngles().GetRightPoint();
-        ((CAMERA *)g_pCamera)->WorldToScreen(a->m_primitive.GetSphere()->center + offset, &edge);
+        ((CAMERA *)g_pCamera)->WorldToScreen(V3(a->m_primitive.GetSphere()->center) + offset, &edge);
         hit = (center - point).Length() < (edge - center).Length();
     } else if (b->IsType(PRIMITIVE3_SPHERE)) {
         PRIMV2 center;
@@ -568,7 +568,7 @@ void CPRIMITIVE3MANAGER::TestScreen(CPRIMITIVE3RESOURCE *a, CPRIMITIVE3RESOURCE 
         float radius = b->m_primitive.GetSphere()->radius;
         ((CAMERA *)g_pCamera)->WorldToScreen(b->m_primitive.GetSphere()->center, &center);
         V3 offset = radius * b->GetAngles().GetRightPoint();
-        ((CAMERA *)g_pCamera)->WorldToScreen(b->m_primitive.GetSphere()->center + offset, &edge);
+        ((CAMERA *)g_pCamera)->WorldToScreen(V3(b->m_primitive.GetSphere()->center) + offset, &edge);
         hit = (center - point).Length() < (edge - center).Length();
     }
     if (hit) {
