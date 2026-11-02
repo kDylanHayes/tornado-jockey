@@ -1070,42 +1070,43 @@ ANG HEIGHTMAPDX8::GetOrientation(const V3 &point, const V3 &direction)
     return result;
 }
 
-FIBITMAP *__stdcall LoadImage(const char *name)
+FIBITMAP *HEIGHTMAPDX8MASTER::LoadImage(const char *name)
 {
-    if (!name)
-        return 0;
-    int length = strlen(name);
-    if (!length)
-        return 0;
-    FIBITMAP *bitmap = 0;
-    FIXEDSTRING<0x200> path;
-    SafeSprintf(path, "%s%s%s", g_basePath, "data/art/", name);
-    _strlwr(path);
-    path.Replace('/', '\\');
-    FILELOADER *loader = g_pfnCreateFileLoader();
-    if (!loader->Open(path)) {
-        if (g_pLog)
-            g_pLog->Error("Could not open file %s", (const char *)path);
-        delete loader;
-        return 0;
+    if (name) {
+        int length = strlen(name);
+        if (length) {
+            FIBITMAP *bitmap = 0;
+            FIXEDSTRING<0x200> path;
+            SafeSprintf(path, "%s%s%s", g_basePath, "data/art/", name);
+            _strlwr(path);
+            path.Replace('/', '\\');
+            FILELOADER *loader = g_pfnCreateFileLoader();
+            if (!loader->Open(path)) {
+                if (g_pLog)
+                    g_pLog->Error("Could not open file %s", (const char *)path);
+                delete loader;
+                return 0;
+            }
+            FIMEMORY *memory = FreeImage_OpenMemory((BYTE *)loader->GetData(), loader->GetSize());
+            FREE_IMAGE_FORMAT format = FreeImage_GetFileTypeFromMemory(memory, 0);
+            if (format == FIF_ICO || format == FIF_BMP)
+                bitmap = FreeImage_LoadFromMemory(format, memory, 2);
+            else if (g_pLog)
+                g_pLog->Error("Unsupported heightmap image format, must be JPG or PNG! %s", (const char *)path);
+            FreeImage_CloseMemory(memory);
+            loader->Close();
+            delete loader;
+            if (!bitmap)
+                return 0;
+            if (FreeImage_GetBPP(bitmap) != 24 && FreeImage_GetBPP(bitmap) != 32) {
+                FIBITMAP *old = bitmap;
+                bitmap = FreeImage_ConvertTo24Bits(bitmap);
+                FreeImage_Unload(old);
+            }
+            return bitmap;
+        }
     }
-    FIMEMORY *memory = FreeImage_OpenMemory((BYTE *)loader->GetData(), loader->GetSize());
-    FREE_IMAGE_FORMAT format = FreeImage_GetFileTypeFromMemory(memory, 0);
-    if (format == FIF_ICO || format == FIF_BMP)
-        bitmap = FreeImage_LoadFromMemory(format, memory, 2);
-    else if (g_pLog)
-        g_pLog->Error("Unsupported heightmap image format, must be JPG or PNG! %s", (const char *)path);
-    FreeImage_CloseMemory(memory);
-    loader->Close();
-    delete loader;
-    if (!bitmap)
-        return 0;
-    FIBITMAP *result = bitmap;
-    if (FreeImage_GetBPP(bitmap) != 24 && FreeImage_GetBPP(bitmap) != 32) {
-        result = FreeImage_ConvertTo24Bits(bitmap);
-        FreeImage_Unload(bitmap);
-    }
-    return result;
+    return 0;
 }
 
 inline void HEIGHTMAPDX8MASTER::FreeCopiesMeshes()

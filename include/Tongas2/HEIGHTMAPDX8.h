@@ -158,6 +158,8 @@ public:
     bool UseHardwareLighting();
     // Works out the lighting mode, and tells the shaders whether they are lit.
     void UpdateLighting();
+    // The picture in data/art/, as 24 or 32 bits a pixel.
+    struct FIBITMAP *LoadImage(const char *name);
     // Loads the images.
     void LoadImages();
     // Tells the copies to make their meshes again.
