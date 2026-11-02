@@ -54,6 +54,7 @@ public:
 
     char m_04[0xc];
     int m_passes;
+    char m_14[0xe0 - 0x14];
 };
 
 // Each tile's grid, cut down: its vertices, as indices into the full grid,
