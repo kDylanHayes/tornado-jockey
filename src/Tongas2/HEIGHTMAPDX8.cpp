@@ -1070,7 +1070,7 @@ ANG HEIGHTMAPDX8::GetOrientation(const V3 &point, const V3 &direction)
     return result;
 }
 
-static FIBITMAP *LoadImage(const char *name)
+FIBITMAP *__stdcall LoadImage(const char *name)
 {
     if (!name)
         return 0;
@@ -1085,7 +1085,7 @@ static FIBITMAP *LoadImage(const char *name)
     FILELOADER *loader = g_pfnCreateFileLoader();
     if (!loader->Open(path)) {
         if (g_pLog)
-            g_pLog->Error("Could not open file %s", &length);
+            g_pLog->Error("Could not open file %s", (const char *)path);
         delete loader;
         return 0;
     }
@@ -1094,7 +1094,7 @@ static FIBITMAP *LoadImage(const char *name)
     if (format == FIF_ICO || format == FIF_BMP)
         bitmap = FreeImage_LoadFromMemory(format, memory, 2);
     else if (g_pLog)
-        g_pLog->Error("Unsupported heightmap image format, must be JPG or PNG! %s", &length);
+        g_pLog->Error("Unsupported heightmap image format, must be JPG or PNG! %s", (const char *)path);
     FreeImage_CloseMemory(memory);
     loader->Close();
     delete loader;
@@ -1134,8 +1134,8 @@ void HEIGHTMAPDX8MASTER::LoadImages()
     m_tilesY = m_imageHeight / m_pointsPerTile;
     m_emptyLayers = new unsigned char[m_tilesY * m_tilesX * HEIGHTMAP_MAX_LAYERS];
     memset(m_emptyLayers, 1, m_tilesY * m_tilesX * HEIGHTMAP_MAX_LAYERS);
-    int height = m_tilesY * m_pointsPerTile;
     int width = m_tilesX * m_pointsPerTile;
+    int height = m_tilesY * m_pointsPerTile;
     m_imageHeight = height;
     m_imageWidth = width;
     m_aspect = (float)height / (float)width;
@@ -1147,7 +1147,7 @@ void HEIGHTMAPDX8MASTER::LoadImages()
         for (x = 0; x < m_imageWidth; x++) {
             RGBQUAD color;
             FreeImage_GetPixelColor(bitmap, x, m_imageHeight - y - 1, &color);
-            m_heightImage[m_imageWidth * y + x] = (color.rgbBlue + color.rgbRed + color.rgbGreen) / 3;
+            m_heightImage[m_imageWidth * y + x] = (color.rgbBlue + color.rgbRed + color.rgbGreen) / 3u;
             V3I &c = m_colors[m_imageWidth * y + x];
             c.x = 0xff;
             c.y = 0xff;
@@ -1192,7 +1192,7 @@ void HEIGHTMAPDX8MASTER::LoadImages()
             for (x = 0; x < m_imageWidth; x++) {
                 RGBQUAD color;
                 FreeImage_GetPixelColor(bitmap, x, m_imageHeight - y - 1, &color);
-                m_alphas[(m_imageWidth * y + x) * HEIGHTMAP_MAX_LAYERS + layer] = (color.rgbBlue + color.rgbRed + color.rgbGreen) / 3;
+                m_alphas[(m_imageWidth * y + x) * HEIGHTMAP_MAX_LAYERS + layer] = (color.rgbBlue + color.rgbRed + color.rgbGreen) / 3u;
             }
         }
         for (int tileY = 0; tileY < m_tilesY; tileY++) {
