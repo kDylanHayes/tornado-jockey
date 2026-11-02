@@ -780,8 +780,10 @@ void EMITTER::Virtual30()
 EMITTER::~EMITTER()
 {
     KillParticles();
-    if (m_pixelUsed)
+    if (m_pixelUsed) {
         delete[] m_pixelUsed;
+        m_pixelUsed = 0;
+    }
 }
 
 void EMITTER::Stop()
