@@ -663,24 +663,22 @@ void HEIGHTMAPDX8::Reduce(SUBMESHINDEX *index, int tileX, int tileY, unsigned sh
             }
             row += gridWidth;
         }
-        if (flat) {
-            for (int layer = 0; layer < HEIGHTMAP_MAX_LAYERS && flat; layer++) {
-                float a00 = master->GetAlpha(baseX + ax, baseY + ay, layer);
-                float a01 = master->GetAlpha(baseX + dx, baseY + ay, layer);
-                float a10 = master->GetAlpha(baseX + ax, baseY + dy, layer);
-                float a11 = master->GetAlpha(baseX + dx, baseY + dy, layer);
-                for (i = ay; i <= dy && flat; i++) {
-                    for (j = ax; j <= dx; j++) {
-                        if ((j != ax || (i != ay && i != dy)) && (j != dx || (i != ay && i != dy))) {
-                            float alpha;
-                            if (i + j <= midY + midX)
-                                alpha = (a01 - a00) * (float)(j - ax) / (float)width + (a10 - a00) * (float)(i - ay) / (float)height + a00;
-                            else
-                                alpha = (a10 - a11) * (float)(dx - j) / (float)width + (a01 - a11) * (float)(dy - i) / (float)height + a11;
-                            if (fabs(alpha - master->GetAlpha(j + baseX, baseY + i, layer)) > master->m_alphaReductionTolerance) {
-                                flat = false;
-                                break;
-                            }
+        for (int layer = 0; flat && layer < HEIGHTMAP_MAX_LAYERS; layer++) {
+            float a00 = master->GetAlpha(baseX + ax, baseY + ay, layer);
+            float a01 = master->GetAlpha(baseX + dx, baseY + ay, layer);
+            float a10 = master->GetAlpha(baseX + ax, baseY + dy, layer);
+            float a11 = master->GetAlpha(baseX + dx, baseY + dy, layer);
+            for (i = ay; i <= dy && flat; i++) {
+                for (j = ax; j <= dx; j++) {
+                    if ((j != ax || (i != ay && i != dy)) && (j != dx || (i != ay && i != dy))) {
+                        float alpha;
+                        if (i + j <= midY + midX)
+                            alpha = (a01 - a00) * (float)(j - ax) / (float)width + (a10 - a00) * (float)(i - ay) / (float)height + a00;
+                        else
+                            alpha = (a10 - a11) * (float)(dx - j) / (float)width + (a01 - a11) * (float)(dy - i) / (float)height + a11;
+                        if (fabs(alpha - master->GetAlpha(j + baseX, baseY + i, layer)) > master->m_alphaReductionTolerance) {
+                            flat = false;
+                            break;
                         }
                     }
                 }
@@ -711,22 +709,26 @@ void HEIGHTMAPDX8::Reduce(SUBMESHINDEX *index, int tileX, int tileY, unsigned sh
             }
         }
     }
-    if (index->m_numFaces < index->m_maxFaces) {
+    if (index->m_numFaces >= index->m_maxFaces) {
+        if (g_pLog)
+            g_pLog->Error("MAX FACES ACHIEVED IN AN OPTIMIZED TILE!!");
+    } else {
         unsigned short f = index->m_numFaces * 3;
-        index->m_faces[f] = a;
-        index->m_faces[(unsigned short)(f + 1)] = b;
-        index->m_faces[(unsigned short)(f + 2)] = c;
-        index->m_numFaces++;
-    } else if (g_pLog)
-        g_pLog->Error("MAX FACES ACHIEVED IN AN OPTIMIZED TILE!!");
-    if (index->m_numFaces < index->m_maxFaces) {
-        unsigned short f = index->m_numFaces * 3;
+        index->m_faces[f++] = a;
+        index->m_faces[f++] = b;
         index->m_faces[f] = c;
-        index->m_faces[(unsigned short)(f + 1)] = b;
-        index->m_faces[(unsigned short)(f + 2)] = d;
         index->m_numFaces++;
-    } else if (g_pLog)
-        g_pLog->Error("MAX FACES ACHIEVED IN AN OPTIMIZED TILE!!");
+    }
+    if (index->m_numFaces >= index->m_maxFaces) {
+        if (g_pLog)
+            g_pLog->Error("MAX FACES ACHIEVED IN AN OPTIMIZED TILE!!");
+    } else {
+        unsigned short f = index->m_numFaces * 3;
+        index->m_faces[f++] = c;
+        index->m_faces[f++] = b;
+        index->m_faces[f] = d;
+        index->m_numFaces++;
+    }
 }
 
 MESHDX8 *HEIGHTMAPDX8::AllocMesh(int *mesh, int *firstVertex, int *firstIndex, int vertices, int faces, bool count)
