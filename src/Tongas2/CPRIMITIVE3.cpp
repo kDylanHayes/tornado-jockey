@@ -249,7 +249,7 @@ void CPRIMITIVE3MASTER::SetPrimitiveType(const int &type)
 }
 
 // Whether p is inside the quad a, b, c, d: the edges it crosses going right.
-static int PointInQuad(const V2 &a, const V2 &b, const V2 &c, const V2 &d, const V2 &p)
+int PointInQuad(const V2 &a, const V2 &b, const V2 &c, const V2 &d, const V2 &p)
 {
     bool inside = false;
     if (((a.y <= p.y && p.y < d.y) || (d.y <= p.y && p.y < a.y)) && p.x < (d.x - a.x) * (p.y - a.y) / (d.y - a.y) + a.x)
@@ -558,7 +558,7 @@ void CPRIMITIVE3MANAGER::TestScreen(CPRIMITIVE3RESOURCE *a, CPRIMITIVE3RESOURCE 
         float radius = a->m_primitive.GetSphere()->radius;
         ((CAMERA *)g_pCamera)->WorldToScreen(a->m_primitive.GetSphere()->center, &center);
         V3 offset = radius * a->GetAngles().GetRightPoint();
-        ((CAMERA *)g_pCamera)->WorldToScreen(a->m_primitive.GetSphere()->center + offset, &edge);
+        ((CAMERA *)g_pCamera)->WorldToScreen(V3(a->m_primitive.GetSphere()->center) + offset, &edge);
         hit = (center - point).Length() < (edge - center).Length();
     } else if (b->IsType(PRIMITIVE3_SPHERE)) {
         PRIMV2 center;
@@ -568,7 +568,7 @@ void CPRIMITIVE3MANAGER::TestScreen(CPRIMITIVE3RESOURCE *a, CPRIMITIVE3RESOURCE 
         float radius = b->m_primitive.GetSphere()->radius;
         ((CAMERA *)g_pCamera)->WorldToScreen(b->m_primitive.GetSphere()->center, &center);
         V3 offset = radius * b->GetAngles().GetRightPoint();
-        ((CAMERA *)g_pCamera)->WorldToScreen(b->m_primitive.GetSphere()->center + offset, &edge);
+        ((CAMERA *)g_pCamera)->WorldToScreen(V3(b->m_primitive.GetSphere()->center) + offset, &edge);
         hit = (center - point).Length() < (edge - center).Length();
     }
     if (hit) {
