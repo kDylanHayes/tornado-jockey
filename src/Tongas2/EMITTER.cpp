@@ -868,40 +868,41 @@ EMITTERMASTER::EMITTERMASTER(RESOURCEMANAGER *manager, const char *name)
 
 FIBITMAP *EMITTERMASTER::LoadImage(const char *name)
 {
-    if (!name)
-        return 0;
-    int length = strlen(name);
-    if (!length)
-        return 0;
-    FIBITMAP *bitmap = 0;
-    FIXEDSTRING<0x200> path;
-    SafeSprintf(path, "%s%s%s", g_basePath, "data/art/", name);
-    _strlwr(path);
-    path.Replace('/', '\\');
-    FILELOADER *file = g_pfnCreateFileLoader();
-    if (!file->Open(path)) {
-        if (g_pLog)
-            g_pLog->Error("Could not open file %s", (char *)path);
-        delete file;
-        return 0;
+    if (name) {
+        int length = strlen(name);
+        if (length) {
+            FIBITMAP *bitmap = 0;
+            FIXEDSTRING<0x200> path;
+            SafeSprintf(path, "%s%s%s", g_basePath, "data/art/", name);
+            _strlwr(path);
+            path.Replace('/', '\\');
+            FILELOADER *file = g_pfnCreateFileLoader();
+            if (!file->Open(path)) {
+                if (g_pLog)
+                    g_pLog->Error("Could not open file %s", (char *)path);
+                delete file;
+                return 0;
+            }
+            FIMEMORY *memory = FreeImage_OpenMemory((BYTE *)file->GetData(), file->GetSize());
+            FREE_IMAGE_FORMAT format = FreeImage_GetFileTypeFromMemory(memory, 0);
+            if (format == 1 || format == 0)
+                bitmap = FreeImage_LoadFromMemory(format, memory, 2);
+            else if (g_pLog)
+                g_pLog->Error("Unsupported emitter image format, must be JPG or PNG! %s", (char *)path);
+            FreeImage_CloseMemory(memory);
+            file->Close();
+            delete file;
+            if (!bitmap)
+                return 0;
+            if (FreeImage_GetBPP(bitmap) != 24 && FreeImage_GetBPP(bitmap) != 32) {
+                FIBITMAP *old = bitmap;
+                bitmap = FreeImage_ConvertTo24Bits(bitmap);
+                FreeImage_Unload(old);
+            }
+            return bitmap;
+        }
     }
-    FIMEMORY *memory = FreeImage_OpenMemory((BYTE *)file->GetData(), file->GetSize());
-    FREE_IMAGE_FORMAT format = FreeImage_GetFileTypeFromMemory(memory, 0);
-    if (format == 1 || format == 0)
-        bitmap = FreeImage_LoadFromMemory(format, memory, 2);
-    else if (g_pLog)
-        g_pLog->Error("Unsupported emitter image format, must be JPG or PNG! %s", (char *)path);
-    FreeImage_CloseMemory(memory);
-    file->Close();
-    delete file;
-    if (!bitmap)
-        return 0;
-    if (FreeImage_GetBPP(bitmap) != 24 && FreeImage_GetBPP(bitmap) != 32) {
-        FIBITMAP *converted = FreeImage_ConvertTo24Bits(bitmap);
-        FreeImage_Unload(bitmap);
-        bitmap = converted;
-    }
-    return bitmap;
+    return 0;
 }
 
 void EMITTERMASTER::LoadPicture()
@@ -936,12 +937,8 @@ void EMITTERMASTER::LoadPicture()
             RGBQUAD color;
             FreeImage_GetPixelColor(bitmap, x, m_pictureHeight - y - 1, &color);
             if (color.rgbRed || color.rgbGreen || color.rgbBlue) {
-                EMITPIXEL &pixel = pixels[m_numPixels];
-                pixel.u = (float)x / (float)(m_pictureWidth - 1);
-                pixel.v = (float)y / (float)(m_pictureHeight - 1);
-                pixels[m_numPixels].color.x = color.rgbRed;
-                pixels[m_numPixels].color.y = color.rgbGreen;
-                pixels[m_numPixels].color.z = color.rgbBlue;
+                *(V2 *)&pixels[m_numPixels].u = V2(x / (double)(m_pictureWidth - 1), y / (double)(m_pictureHeight - 1));
+                pixels[m_numPixels].color = V3I(color.rgbRed, color.rgbGreen, color.rgbBlue);
                 m_numPixels++;
             }
         }
