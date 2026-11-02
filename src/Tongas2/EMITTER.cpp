@@ -71,7 +71,7 @@ void EMITTER::StartEmitting()
 {
     EMITTERMASTER *master = Master();
     m_emitting = true;
-    m_emitTime = master->m_timeToLive.Random();
+    m_emitTime = RANDOM(master->m_timeToLive.min, master->m_timeToLive.max);
     m_nextEmit = 0.0f;
     ClearPixelsUsed();
     m_numEmitted = 0;
@@ -106,7 +106,7 @@ void EMITTER::Virtual31()
 void EMITTER::NextEmitTime()
 {
     EMITTERMASTER *master = Master();
-    float rate = master->m_rate.Random() * m_rateScale;
+    float rate = RANDOM(master->m_rate.min, master->m_rate.max) * m_rateScale;
     float perSecond = g_pResources->GetDetailScale() * rate;
     if (perSecond < 0.0001f)
         perSecond = 0.0001f;
@@ -1034,17 +1034,17 @@ PARTICLE::PARTICLE(EMITTER *emitter)
         resource->SetRelLayer(emitter->GetRelLayer());
     }
 
-    m_size = master->m_birthSize.Random();
-    m_alpha = master->m_birthAlpha.Random();
+    m_size = RANDOM(master->m_birthSize.min, master->m_birthSize.max);
+    m_alpha = RANDOM(master->m_birthAlpha.min, master->m_birthAlpha.max);
     m_color.x = RANDOMINT(master->m_birthColor1.x, master->m_birthColor2.x);
     m_color.y = RANDOMINT(master->m_birthColor1.y, master->m_birthColor2.y);
     m_color.z = RANDOMINT(master->m_birthColor1.z, master->m_birthColor2.z);
-    m_deathSize = master->m_deathSize.Random();
-    m_deathAlpha = master->m_deathAlpha.Random();
+    m_deathSize = RANDOM(master->m_deathSize.min, master->m_deathSize.max);
+    m_deathAlpha = RANDOM(master->m_deathAlpha.min, master->m_deathAlpha.max);
     m_deathColor.x = RANDOMINT(master->m_deathColor1.x, master->m_deathColor2.x);
     m_deathColor.y = RANDOMINT(master->m_deathColor1.y, master->m_deathColor2.y);
     m_deathColor.z = RANDOMINT(master->m_deathColor1.z, master->m_deathColor2.z);
-    m_life = master->m_life.Random();
+    m_life = RANDOM(master->m_life.min, master->m_life.max);
     if (!m_attached) {
         resource->SetScaleV(emitter->GetScale() * m_size);
         resource->SetAlpha(emitter->GetAlpha() * m_alpha);
@@ -1053,24 +1053,24 @@ PARTICLE::PARTICLE(EMITTER *emitter)
         resource->SetAlphaFactor(emitter->GetAlphaFactor() * m_alpha);
     }
     if (master->m_useMidlife) {
-        m_midSize = master->m_midSize.Random();
-        m_midAlpha = master->m_midAlpha.Random();
-        m_midLife = master->m_midLife.Random();
-        m_midDuration = master->m_midDuration.Random();
+        m_midSize = RANDOM(master->m_midSize.min, master->m_midSize.max);
+        m_midAlpha = RANDOM(master->m_midAlpha.min, master->m_midAlpha.max);
+        m_midLife = RANDOM(master->m_midLife.min, master->m_midLife.max);
+        m_midDuration = RANDOM(master->m_midDuration.min, master->m_midDuration.max);
         m_midColor.x = RANDOMINT(master->m_midColor1.x, master->m_midColor2.x);
         m_midColor.y = RANDOMINT(master->m_midColor1.y, master->m_midColor2.y);
         m_midColor.z = RANDOMINT(master->m_midColor1.z, master->m_midColor2.z);
     }
     m_age = 0.0f;
-    m_accel = master->m_accelRange.Random();
+    m_accel = RANDOM(master->m_accelRange.min, master->m_accelRange.max);
     m_distance = 1.0f;
 
     // Which way the particle heads.
     ANG angles(0.0f, 0.0f, 0.0f);
-    float speed = master->m_speedRange.Random();
+    float speed = RANDOM(master->m_speedRange.min, master->m_speedRange.max);
     switch (master->m_emitDirection) {
     case EMITTERMASTER::DIRECTION_FW: {
-        float angle = master->m_angRange.Random();
+        float angle = RANDOM(master->m_angRange.min, master->m_angRange.max);
         angles = ANG(0.0f, angle, (float)rand() * (360.0f / RAND_MAX) - 180.0f);
         if (!master->m_pictureLoaded) {
             m_velocity = angles.Transform(V3(0.0f, 0.0f, speed));
@@ -1084,7 +1084,7 @@ PARTICLE::PARTICLE(EMITTER *emitter)
         break;
     }
     case EMITTERMASTER::DIRECTION_UP: {
-        float angle = master->m_angRange.Random();
+        float angle = RANDOM(master->m_angRange.min, master->m_angRange.max);
         angles = ANG((float)rand() * (360.0f / RAND_MAX) - 180.0f, 0.0f, angle);
         if (!master->m_pictureLoaded) {
             m_velocity = angles.Transform(V3(0.0f, speed, 0.0f));
@@ -1121,12 +1121,12 @@ PARTICLE::PARTICLE(EMITTER *emitter)
         facing.PointAt(m_velocity.Normalized());
         resource->SetAngles(facing);
     } else {
-        resource->SetRotation(master->m_birthYaw.Random(), master->m_birthPitch.Random(), master->m_birthRoll.Random());
+        resource->SetRotation(RANDOM(master->m_birthYaw.min, master->m_birthYaw.max), RANDOM(master->m_birthPitch.min, master->m_birthPitch.max), RANDOM(master->m_birthRoll.min, master->m_birthRoll.max));
     }
     m_20 = false;
-    m_pathRadius = master->m_pathRelativeRadius.Random();
+    m_pathRadius = RANDOM(master->m_pathRelativeRadius.min, master->m_pathRelativeRadius.max);
     m_pathAngle = (float)rand() * (360.0f / RAND_MAX);
-    m_pathOffset = master->m_pathOffset.Random();
+    m_pathOffset = RANDOM(master->m_pathOffset.min, master->m_pathOffset.max);
     resource->SetActive(true);
     if (g_pBONEDMODEL->m_id == resource->GetManagerId()) {
         ((BONEDMODEL *)resource)->Virtual78();
