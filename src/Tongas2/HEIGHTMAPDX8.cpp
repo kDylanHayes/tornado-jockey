@@ -1434,15 +1434,16 @@ void HEIGHTMAPDX8::ParseTilesInfo(int tilesX, int tilesY, const STRING &info)
     m_submeshes = new SUBMESH[m_tilesY * m_tilesX * HEIGHTMAP_MAX_LAYERS];
     memset(m_submeshes, 0, m_tilesY * m_tilesX * HEIGHTMAP_MAX_LAYERS * sizeof(SUBMESH));
     for (i = 0; i < m_tilesY * m_tilesX * HEIGHTMAP_MAX_LAYERS; i++) {
-        m_submeshes[i].m_shader = i % HEIGHTMAP_MAX_LAYERS == 0 ? 0 : -1;
+        if (i % HEIGHTMAP_MAX_LAYERS == 0)
+            m_submeshes[i].m_shader = 0;
+        else
+            m_submeshes[i].m_shader = -1;
         m_submeshes[i].m_submesh = -1;
         m_submeshes[i].m_mesh = -1;
     }
     HEIGHTMAPDX8MASTER *master = Master();
     m_numSubmeshes = 0;
-    TOKENS rows;
-    TOKENS cols;
-    TOKENS cell;
+    TOKENS rows, cols, cell;
     rows.Split(info, ";\n\r");
     for (int y = 0; y < (rows.m_count < m_tilesY ? rows.m_count : m_tilesY); y++) {
         cols.Split(STRING(rows.GetToken(y)), ",");
@@ -1452,10 +1453,10 @@ void HEIGHTMAPDX8::ParseTilesInfo(int tilesX, int tilesY, const STRING &info)
             if (cell.m_count == 1) {
                 const char *codes = cols.GetToken(x);
                 layers = strlen(codes) / 2;
-                if (layers == 0 || layers > HEIGHTMAP_MAX_LAYERS) {
+                if (layers < 1 || layers > HEIGHTMAP_MAX_LAYERS) {
                     if (g_pLog)
                         g_pLog->Error("invalid number of layers in heightmap info for tile %d %d (%d layers)", y, x, layers);
-                    if (layers == 0)
+                    if (layers < 1)
                         layers = 1;
                     else if (layers > HEIGHTMAP_MAX_LAYERS)
                         layers = HEIGHTMAP_MAX_LAYERS;
@@ -1473,7 +1474,7 @@ void HEIGHTMAPDX8::ParseTilesInfo(int tilesX, int tilesY, const STRING &info)
                             g_pLog->Error("invalid shader idx tile %d %d %d: %d", y, x, layer, shader);
                         if (shader < -1)
                             shader = -1;
-                        else if (shader >= HEIGHTMAP_MAX_SHADERS)
+                        else if (shader > HEIGHTMAP_MAX_SHADERS - 1)
                             shader = HEIGHTMAP_MAX_SHADERS - 1;
                     }
                     if (shader >= 0) {
@@ -1498,8 +1499,8 @@ void HEIGHTMAPDX8::ParseTilesInfo(int tilesX, int tilesY, const STRING &info)
                 last = 0;
                 for (layer = 0; layer < layers; layer++) {
                     SUBMESH *submesh = &m_submeshes[(m_tilesX * y + x) * HEIGHTMAP_MAX_LAYERS + layer];
-                    int shader = atol(cell.GetToken(layer * 2));
-                    submesh->m_orientation = (char)atol(cell.GetToken(layer * 2 + 1));
+                    int shader = atoi(cell.GetToken(layer * 2));
+                    submesh->m_orientation = (char)atoi(cell.GetToken(layer * 2 + 1));
                     if (layer == 0 && shader < 0)
                         count--;
                     if (shader < -1 || shader >= HEIGHTMAP_MAX_SHADERS) {
@@ -1507,7 +1508,7 @@ void HEIGHTMAPDX8::ParseTilesInfo(int tilesX, int tilesY, const STRING &info)
                             g_pLog->Error("invalid shader idx tile %d %d %d", y, x, layer);
                         if (shader < -1)
                             shader = -1;
-                        else if (shader >= HEIGHTMAP_MAX_SHADERS)
+                        else if (shader > HEIGHTMAP_MAX_SHADERS - 1)
                             shader = HEIGHTMAP_MAX_SHADERS - 1;
                     }
                     if (shader >= 0) {

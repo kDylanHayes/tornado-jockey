@@ -94,6 +94,13 @@ struct SUBMESH
 // The quadtree the tiles are culled with.
 struct QUADNODE
 {
+    QUADNODE()
+    {
+        for (int i = 0; i < 4; i++)
+            m_children[i] = 0;
+        m_tile = -1;
+        m_visible = false;
+    }
     ~QUADNODE();
     // The box around the children's boxes.
     void UpdateBox();
