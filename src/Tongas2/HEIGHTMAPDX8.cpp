@@ -1202,7 +1202,7 @@ void HEIGHTMAPDX8MASTER::LoadImages()
                 for (int i = 0; i < m_pointsPerTile; i++, row++) {
                     unsigned char *alpha = &m_alphas[(m_imageWidth * row + m_pointsPerTile * tileX) * HEIGHTMAP_MAX_LAYERS + layer];
                     for (int j = 0; j < m_pointsPerTile; j++, alpha += HEIGHTMAP_MAX_LAYERS) {
-                        if (*alpha != 0xff) {
+                        if (*alpha < 0xff) {
                             m_emptyLayers[(m_tilesX * tileY + tileX) * HEIGHTMAP_MAX_LAYERS + layer] = 0;
                             i = m_pointsPerTile;
                             break;
@@ -1213,8 +1213,8 @@ void HEIGHTMAPDX8MASTER::LoadImages()
         }
         FreeImage_Unload(bitmap);
     }
-    m_gridWidth = m_imageWidth + 1;
     m_gridHeight = m_imageHeight + 1;
+    m_gridWidth = m_imageWidth + 1;
     m_heights = new unsigned char[m_gridWidth * m_gridHeight];
     m_heights[0] = m_heightImage[0];
     m_heights[(m_gridHeight - 1) * m_gridWidth] = m_heightImage[(m_imageHeight - 1) * m_imageWidth];
@@ -1222,17 +1222,17 @@ void HEIGHTMAPDX8MASTER::LoadImages()
     m_heights[m_gridWidth * m_gridHeight - 1] = m_heightImage[m_imageWidth * m_imageHeight - 1];
     int i;
     for (i = 1; i < m_gridWidth - 1; i++) {
-        m_heights[i] = (m_heightImage[i - 1] + m_heightImage[i]) >> 1;
+        m_heights[i] = (m_heightImage[i - 1] + m_heightImage[i]) / 2u;
         unsigned char *last = &m_heightImage[(m_imageHeight - 1) * m_imageWidth + i];
-        m_heights[(m_gridHeight - 1) * m_gridWidth + i] = (last[-1] + last[0]) >> 1;
+        m_heights[(m_gridHeight - 1) * m_gridWidth + i] = (last[-1] + last[0]) / 2u;
     }
     for (i = 1; i < m_gridHeight - 1; i++) {
-        m_heights[m_gridWidth * i] = (m_heightImage[m_imageWidth * i] + m_heightImage[(i - 1) * m_imageWidth]) >> 1;
-        m_heights[m_gridWidth * (i + 1) - 1] = (m_heightImage[m_imageWidth * i - 1] + m_heightImage[(i + 1) * m_imageWidth - 1]) >> 1;
+        m_heights[m_gridWidth * i] = (m_heightImage[m_imageWidth * i] + m_heightImage[(i - 1) * m_imageWidth]) / 2u;
+        m_heights[m_gridWidth * (i + 1) - 1] = (m_heightImage[m_imageWidth * i - 1] + m_heightImage[(i + 1) * m_imageWidth - 1]) / 2u;
         for (int j = 1; j < m_gridWidth - 1; j++) {
             unsigned char *p = &m_heightImage[m_imageWidth * i + j];
             unsigned char *q = &m_heightImage[(i - 1) * m_imageWidth + j];
-            m_heights[m_gridWidth * i + j] = (p[-1] + q[-1] + q[0] + p[0]) >> 2;
+            m_heights[m_gridWidth * i + j] = (p[-1] + q[-1] + q[0] + p[0]) / 4u;
         }
     }
     FreeCopiesMeshes();
