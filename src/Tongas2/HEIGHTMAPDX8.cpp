@@ -82,10 +82,14 @@ SUBMESHINDEX::SUBMESHINDEX()
 
 SUBMESHINDEX::~SUBMESHINDEX()
 {
-    if (m_faces)
+    if (m_faces) {
         delete[] m_faces;
-    if (m_vertices)
+        m_faces = 0;
+    }
+    if (m_vertices) {
         delete[] m_vertices;
+        m_vertices = 0;
+    }
 }
 
 void SUBMESHINDEX::Shrink()
@@ -395,9 +399,7 @@ void HEIGHTMAPDX8MASTER::FreeImages()
 
 bool HEIGHTMAPDX8MASTER::UseHardwareLighting()
 {
-    if (!m_vertexColorLighting && g_pResources->IsHighDetail())
-        return false;
-    return true;
+    return m_vertexColorLighting || !g_pResources->IsHighDetail();
 }
 
 void HEIGHTMAPDX8MASTER::UpdateLighting()
