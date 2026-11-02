@@ -468,40 +468,40 @@ void HEIGHTMAPDX8MANAGER::Update()
 
 void BOXCORNERS::Merge(const BOXCORNERS &other)
 {
-    V3 min, max;
-    min.x = corners[0].x < other.corners[0].x ? corners[0].x : other.corners[0].x;
-    min.y = corners[0].y < other.corners[0].y ? corners[0].y : other.corners[0].y;
-    min.z = corners[0].z < other.corners[0].z ? corners[0].z : other.corners[0].z;
-    max.x = corners[0].x > other.corners[0].x ? corners[0].x : other.corners[0].x;
-    max.y = corners[0].y > other.corners[0].y ? corners[0].y : other.corners[0].y;
-    max.z = corners[0].z > other.corners[0].z ? corners[0].z : other.corners[0].z;
+    V3 bounds[2];
+    bounds[0].x = corners[0].x < other.corners[0].x ? corners[0].x : other.corners[0].x;
+    bounds[0].y = corners[0].y < other.corners[0].y ? corners[0].y : other.corners[0].y;
+    bounds[0].z = corners[0].z < other.corners[0].z ? corners[0].z : other.corners[0].z;
+    bounds[1].x = corners[0].x > other.corners[0].x ? corners[0].x : other.corners[0].x;
+    bounds[1].y = corners[0].y > other.corners[0].y ? corners[0].y : other.corners[0].y;
+    bounds[1].z = corners[0].z > other.corners[0].z ? corners[0].z : other.corners[0].z;
     for (int i = 1; i < 8; i++) {
-        if (corners[i].x <= min.x)
-            min.x = corners[i].x;
-        if (corners[i].y <= min.y)
-            min.y = corners[i].y;
-        if (corners[i].z <= min.z)
-            min.z = corners[i].z;
-        if (max.x <= corners[i].x)
-            max.x = corners[i].x;
-        if (max.y <= corners[i].y)
-            max.y = corners[i].y;
-        if (max.z <= corners[i].z)
-            max.z = corners[i].z;
-        if (other.corners[i].x <= min.x)
-            min.x = other.corners[i].x;
-        if (other.corners[i].y <= min.y)
-            min.y = other.corners[i].y;
-        if (other.corners[i].z <= min.z)
-            min.z = other.corners[i].z;
-        if (max.x <= other.corners[i].x)
-            max.x = other.corners[i].x;
-        if (max.y <= other.corners[i].y)
-            max.y = other.corners[i].y;
-        if (max.z <= other.corners[i].z)
-            max.z = other.corners[i].z;
+        if (!(bounds[0].x < corners[i].x))
+            bounds[0].x = corners[i].x;
+        if (!(bounds[0].y < corners[i].y))
+            bounds[0].y = corners[i].y;
+        if (!(bounds[0].z < corners[i].z))
+            bounds[0].z = corners[i].z;
+        if (!(bounds[1].x > corners[i].x))
+            bounds[1].x = corners[i].x;
+        if (!(bounds[1].y > corners[i].y))
+            bounds[1].y = corners[i].y;
+        if (!(bounds[1].z > corners[i].z))
+            bounds[1].z = corners[i].z;
+        if (!(bounds[0].x < other.corners[i].x))
+            bounds[0].x = other.corners[i].x;
+        if (!(bounds[0].y < other.corners[i].y))
+            bounds[0].y = other.corners[i].y;
+        if (!(bounds[0].z < other.corners[i].z))
+            bounds[0].z = other.corners[i].z;
+        if (!(bounds[1].x > other.corners[i].x))
+            bounds[1].x = other.corners[i].x;
+        if (!(bounds[1].y > other.corners[i].y))
+            bounds[1].y = other.corners[i].y;
+        if (!(bounds[1].z > other.corners[i].z))
+            bounds[1].z = other.corners[i].z;
     }
-    Set(min, max);
+    Set(bounds[0], bounds[1]);
 }
 
 void QUADNODE::UpdateBox()
@@ -1613,7 +1613,7 @@ void HEIGHTMAPDX8::Update()
         m_matrixDone = false;
         m_verticesDone = false;
     }
-    if (GetAngles() != m_134) {
+    if (m_angles != m_134) {
         m_134 = m_angles;
         m_matrixDone = false;
     }
