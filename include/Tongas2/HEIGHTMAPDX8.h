@@ -94,6 +94,13 @@ struct SUBMESH
 // The quadtree the tiles are culled with.
 struct QUADNODE
 {
+    QUADNODE()
+    {
+        for (int i = 0; i < 4; i++)
+            m_children[i] = 0;
+        m_tile = -1;
+        m_visible = false;
+    }
     ~QUADNODE();
     // The box around the children's boxes.
     void UpdateBox();
@@ -158,6 +165,8 @@ public:
     bool UseHardwareLighting();
     // Works out the lighting mode, and tells the shaders whether they are lit.
     void UpdateLighting();
+    // The picture in data/art/, as 24 or 32 bits a pixel.
+    struct FIBITMAP *LoadImage(const char *name);
     // Loads the images.
     void LoadImages();
     // Tells the copies to make their meshes again.

@@ -1070,42 +1070,43 @@ ANG HEIGHTMAPDX8::GetOrientation(const V3 &point, const V3 &direction)
     return result;
 }
 
-static FIBITMAP *LoadImage(const char *name)
+FIBITMAP *HEIGHTMAPDX8MASTER::LoadImage(const char *name)
 {
-    if (!name)
-        return 0;
-    int length = strlen(name);
-    if (!length)
-        return 0;
-    FIBITMAP *bitmap = 0;
-    FIXEDSTRING<0x200> path;
-    SafeSprintf(path, "%s%s%s", g_basePath, "data/art/", name);
-    _strlwr(path);
-    path.Replace('/', '\\');
-    FILELOADER *loader = g_pfnCreateFileLoader();
-    if (!loader->Open(path)) {
-        if (g_pLog)
-            g_pLog->Error("Could not open file %s", &length);
-        delete loader;
-        return 0;
+    if (name) {
+        int length = strlen(name);
+        if (length) {
+            FIBITMAP *bitmap = 0;
+            FIXEDSTRING<0x200> path;
+            SafeSprintf(path, "%s%s%s", g_basePath, "data/art/", name);
+            _strlwr(path);
+            path.Replace('/', '\\');
+            FILELOADER *loader = g_pfnCreateFileLoader();
+            if (!loader->Open(path)) {
+                if (g_pLog)
+                    g_pLog->Error("Could not open file %s", (const char *)path);
+                delete loader;
+                return 0;
+            }
+            FIMEMORY *memory = FreeImage_OpenMemory((BYTE *)loader->GetData(), loader->GetSize());
+            FREE_IMAGE_FORMAT format = FreeImage_GetFileTypeFromMemory(memory, 0);
+            if (format == FIF_ICO || format == FIF_BMP)
+                bitmap = FreeImage_LoadFromMemory(format, memory, 2);
+            else if (g_pLog)
+                g_pLog->Error("Unsupported heightmap image format, must be JPG or PNG! %s", (const char *)path);
+            FreeImage_CloseMemory(memory);
+            loader->Close();
+            delete loader;
+            if (!bitmap)
+                return 0;
+            if (FreeImage_GetBPP(bitmap) != 24 && FreeImage_GetBPP(bitmap) != 32) {
+                FIBITMAP *old = bitmap;
+                bitmap = FreeImage_ConvertTo24Bits(bitmap);
+                FreeImage_Unload(old);
+            }
+            return bitmap;
+        }
     }
-    FIMEMORY *memory = FreeImage_OpenMemory((BYTE *)loader->GetData(), loader->GetSize());
-    FREE_IMAGE_FORMAT format = FreeImage_GetFileTypeFromMemory(memory, 0);
-    if (format == FIF_ICO || format == FIF_BMP)
-        bitmap = FreeImage_LoadFromMemory(format, memory, 2);
-    else if (g_pLog)
-        g_pLog->Error("Unsupported heightmap image format, must be JPG or PNG! %s", &length);
-    FreeImage_CloseMemory(memory);
-    loader->Close();
-    delete loader;
-    if (!bitmap)
-        return 0;
-    FIBITMAP *result = bitmap;
-    if (FreeImage_GetBPP(bitmap) != 24 && FreeImage_GetBPP(bitmap) != 32) {
-        result = FreeImage_ConvertTo24Bits(bitmap);
-        FreeImage_Unload(bitmap);
-    }
-    return result;
+    return 0;
 }
 
 inline void HEIGHTMAPDX8MASTER::FreeCopiesMeshes()
@@ -1134,8 +1135,8 @@ void HEIGHTMAPDX8MASTER::LoadImages()
     m_tilesY = m_imageHeight / m_pointsPerTile;
     m_emptyLayers = new unsigned char[m_tilesY * m_tilesX * HEIGHTMAP_MAX_LAYERS];
     memset(m_emptyLayers, 1, m_tilesY * m_tilesX * HEIGHTMAP_MAX_LAYERS);
-    int height = m_tilesY * m_pointsPerTile;
     int width = m_tilesX * m_pointsPerTile;
+    int height = m_tilesY * m_pointsPerTile;
     m_imageHeight = height;
     m_imageWidth = width;
     m_aspect = (float)height / (float)width;
@@ -1147,7 +1148,7 @@ void HEIGHTMAPDX8MASTER::LoadImages()
         for (x = 0; x < m_imageWidth; x++) {
             RGBQUAD color;
             FreeImage_GetPixelColor(bitmap, x, m_imageHeight - y - 1, &color);
-            m_heightImage[m_imageWidth * y + x] = (color.rgbBlue + color.rgbRed + color.rgbGreen) / 3;
+            m_heightImage[m_imageWidth * y + x] = (color.rgbBlue + color.rgbRed + color.rgbGreen) / 3u;
             V3I &c = m_colors[m_imageWidth * y + x];
             c.x = 0xff;
             c.y = 0xff;
@@ -1192,7 +1193,7 @@ void HEIGHTMAPDX8MASTER::LoadImages()
             for (x = 0; x < m_imageWidth; x++) {
                 RGBQUAD color;
                 FreeImage_GetPixelColor(bitmap, x, m_imageHeight - y - 1, &color);
-                m_alphas[(m_imageWidth * y + x) * HEIGHTMAP_MAX_LAYERS + layer] = (color.rgbBlue + color.rgbRed + color.rgbGreen) / 3;
+                m_alphas[(m_imageWidth * y + x) * HEIGHTMAP_MAX_LAYERS + layer] = (color.rgbBlue + color.rgbRed + color.rgbGreen) / 3u;
             }
         }
         for (int tileY = 0; tileY < m_tilesY; tileY++) {
@@ -1201,7 +1202,7 @@ void HEIGHTMAPDX8MASTER::LoadImages()
                 for (int i = 0; i < m_pointsPerTile; i++, row++) {
                     unsigned char *alpha = &m_alphas[(m_imageWidth * row + m_pointsPerTile * tileX) * HEIGHTMAP_MAX_LAYERS + layer];
                     for (int j = 0; j < m_pointsPerTile; j++, alpha += HEIGHTMAP_MAX_LAYERS) {
-                        if (*alpha != 0xff) {
+                        if (*alpha < 0xff) {
                             m_emptyLayers[(m_tilesX * tileY + tileX) * HEIGHTMAP_MAX_LAYERS + layer] = 0;
                             i = m_pointsPerTile;
                             break;
@@ -1212,8 +1213,8 @@ void HEIGHTMAPDX8MASTER::LoadImages()
         }
         FreeImage_Unload(bitmap);
     }
-    m_gridWidth = m_imageWidth + 1;
     m_gridHeight = m_imageHeight + 1;
+    m_gridWidth = m_imageWidth + 1;
     m_heights = new unsigned char[m_gridWidth * m_gridHeight];
     m_heights[0] = m_heightImage[0];
     m_heights[(m_gridHeight - 1) * m_gridWidth] = m_heightImage[(m_imageHeight - 1) * m_imageWidth];
@@ -1221,17 +1222,17 @@ void HEIGHTMAPDX8MASTER::LoadImages()
     m_heights[m_gridWidth * m_gridHeight - 1] = m_heightImage[m_imageWidth * m_imageHeight - 1];
     int i;
     for (i = 1; i < m_gridWidth - 1; i++) {
-        m_heights[i] = (m_heightImage[i - 1] + m_heightImage[i]) >> 1;
+        m_heights[i] = (m_heightImage[i - 1] + m_heightImage[i]) / 2u;
         unsigned char *last = &m_heightImage[(m_imageHeight - 1) * m_imageWidth + i];
-        m_heights[(m_gridHeight - 1) * m_gridWidth + i] = (last[-1] + last[0]) >> 1;
+        m_heights[(m_gridHeight - 1) * m_gridWidth + i] = (last[-1] + last[0]) / 2u;
     }
     for (i = 1; i < m_gridHeight - 1; i++) {
-        m_heights[m_gridWidth * i] = (m_heightImage[m_imageWidth * i] + m_heightImage[(i - 1) * m_imageWidth]) >> 1;
-        m_heights[m_gridWidth * (i + 1) - 1] = (m_heightImage[m_imageWidth * i - 1] + m_heightImage[(i + 1) * m_imageWidth - 1]) >> 1;
+        m_heights[m_gridWidth * i] = (m_heightImage[m_imageWidth * i] + m_heightImage[(i - 1) * m_imageWidth]) / 2u;
+        m_heights[m_gridWidth * (i + 1) - 1] = (m_heightImage[m_imageWidth * i - 1] + m_heightImage[(i + 1) * m_imageWidth - 1]) / 2u;
         for (int j = 1; j < m_gridWidth - 1; j++) {
             unsigned char *p = &m_heightImage[m_imageWidth * i + j];
             unsigned char *q = &m_heightImage[(i - 1) * m_imageWidth + j];
-            m_heights[m_gridWidth * i + j] = (p[-1] + q[-1] + q[0] + p[0]) >> 2;
+            m_heights[m_gridWidth * i + j] = (p[-1] + q[-1] + q[0] + p[0]) / 4u;
         }
     }
     FreeCopiesMeshes();
@@ -1433,15 +1434,16 @@ void HEIGHTMAPDX8::ParseTilesInfo(int tilesX, int tilesY, const STRING &info)
     m_submeshes = new SUBMESH[m_tilesY * m_tilesX * HEIGHTMAP_MAX_LAYERS];
     memset(m_submeshes, 0, m_tilesY * m_tilesX * HEIGHTMAP_MAX_LAYERS * sizeof(SUBMESH));
     for (i = 0; i < m_tilesY * m_tilesX * HEIGHTMAP_MAX_LAYERS; i++) {
-        m_submeshes[i].m_shader = i % HEIGHTMAP_MAX_LAYERS == 0 ? 0 : -1;
+        if (i % HEIGHTMAP_MAX_LAYERS == 0)
+            m_submeshes[i].m_shader = 0;
+        else
+            m_submeshes[i].m_shader = -1;
         m_submeshes[i].m_submesh = -1;
         m_submeshes[i].m_mesh = -1;
     }
     HEIGHTMAPDX8MASTER *master = Master();
     m_numSubmeshes = 0;
-    TOKENS rows;
-    TOKENS cols;
-    TOKENS cell;
+    TOKENS rows, cols, cell;
     rows.Split(info, ";\n\r");
     for (int y = 0; y < (rows.m_count < m_tilesY ? rows.m_count : m_tilesY); y++) {
         cols.Split(STRING(rows.GetToken(y)), ",");
@@ -1451,10 +1453,10 @@ void HEIGHTMAPDX8::ParseTilesInfo(int tilesX, int tilesY, const STRING &info)
             if (cell.m_count == 1) {
                 const char *codes = cols.GetToken(x);
                 layers = strlen(codes) / 2;
-                if (layers == 0 || layers > HEIGHTMAP_MAX_LAYERS) {
+                if (layers < 1 || layers > HEIGHTMAP_MAX_LAYERS) {
                     if (g_pLog)
                         g_pLog->Error("invalid number of layers in heightmap info for tile %d %d (%d layers)", y, x, layers);
-                    if (layers == 0)
+                    if (layers < 1)
                         layers = 1;
                     else if (layers > HEIGHTMAP_MAX_LAYERS)
                         layers = HEIGHTMAP_MAX_LAYERS;
@@ -1472,7 +1474,7 @@ void HEIGHTMAPDX8::ParseTilesInfo(int tilesX, int tilesY, const STRING &info)
                             g_pLog->Error("invalid shader idx tile %d %d %d: %d", y, x, layer, shader);
                         if (shader < -1)
                             shader = -1;
-                        else if (shader >= HEIGHTMAP_MAX_SHADERS)
+                        else if (shader > HEIGHTMAP_MAX_SHADERS - 1)
                             shader = HEIGHTMAP_MAX_SHADERS - 1;
                     }
                     if (shader >= 0) {
@@ -1497,8 +1499,8 @@ void HEIGHTMAPDX8::ParseTilesInfo(int tilesX, int tilesY, const STRING &info)
                 last = 0;
                 for (layer = 0; layer < layers; layer++) {
                     SUBMESH *submesh = &m_submeshes[(m_tilesX * y + x) * HEIGHTMAP_MAX_LAYERS + layer];
-                    int shader = atol(cell.GetToken(layer * 2));
-                    submesh->m_orientation = (char)atol(cell.GetToken(layer * 2 + 1));
+                    int shader = atoi(cell.GetToken(layer * 2));
+                    submesh->m_orientation = (char)atoi(cell.GetToken(layer * 2 + 1));
                     if (layer == 0 && shader < 0)
                         count--;
                     if (shader < -1 || shader >= HEIGHTMAP_MAX_SHADERS) {
@@ -1506,7 +1508,7 @@ void HEIGHTMAPDX8::ParseTilesInfo(int tilesX, int tilesY, const STRING &info)
                             g_pLog->Error("invalid shader idx tile %d %d %d", y, x, layer);
                         if (shader < -1)
                             shader = -1;
-                        else if (shader >= HEIGHTMAP_MAX_SHADERS)
+                        else if (shader > HEIGHTMAP_MAX_SHADERS - 1)
                             shader = HEIGHTMAP_MAX_SHADERS - 1;
                     }
                     if (shader >= 0) {
