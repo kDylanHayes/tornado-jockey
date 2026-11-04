@@ -17,6 +17,7 @@ what our compiled object produces for the same symbol.
 |---|---|---|---|
 | `0x004c6790` | `Tongas2/GUISLIDERCONTROL` | `?SetValueAt@GUISLIDER@@QAEXMM@Z` | 16 bytes at the function's prologue; code resumes at +16 |
 | `0x004c8ec0` | `Tongas2/GUIVISUALCONTROL` | `?SetVisualOpacity@GUIVISUAL@@UAEXABHABM@Z` | 6 bytes at the function's prologue; code resumes at +6 |
+| `0x004c8eb5` | `Tongas2/GUIVISUALCONTROL` | `?SetOpacity@GUIVISUAL@@UAEXABM@Z` (+0x105) | 9 bytes at the function's tail: the loop's branch displacement and the whole epilogue. The run is contiguous with the `SetVisualOpacity` one above, so the two sites are one 17-byte watermark (`0x004c8eb5`-`0x004c8ec5`) |
 | `0x004cb5da` | `Tongas2/GUITEXTCONTROL` | `?Execute@GUITEXT@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z` (+74) | 16 bytes mid-function; code resumes at +90 |
 | `0x0048e33d` | `Tongas2/GUI` | `??1GUI@@UAE@XZ` (+77) | 16 bytes mid-function; code resumes at +93 |
 | `0x004d0426` | `Tongas2/GUIBEHAVIORS` | `?Update@ACCELERATION@@QAE_NM@Z` (+0x156) | 16 bytes mid-function (Ghidra reports overlapping instructions there) |
@@ -35,7 +36,7 @@ Data is patched too, in the GUI tables the initializers fill:
 | `0x00667150`, `0x0066c0d8` | `Tongas2/CMDMGR`, `Tongas2/RESOURCE` | `.rdata` string/table bytes | reported by those units' workers |
 | `0x00673827` | `Tongas2/BEHAVIORFADERESLOOP` | 16 bytes inside its `_s_TypeNames` copy | reported by the behavior worker |
 
-`SetValueAt`, `SetVisualOpacity`, `GUITEXT::Execute`, `GUI::~GUI`,
+`SetValueAt`, `SetVisualOpacity`, `SetOpacity`, `GUITEXT::Execute`, `GUI::~GUI`,
 `ACCELERATION::Update`, `GUIGROUP::MouseOverCommand`, `GUICONTROL::MoveRel`,
 `GUIGENERICCONTROL`'s `_$E3` and the two GUI tables above therefore never
 reach 100%, and the units that own them (`GUISLIDERCONTROL`,
