@@ -474,6 +474,17 @@ def split(coff: Coff, base: int | None = None, sizes: dict | None = None,
         bounds = []
         for n, start in enumerate(starts):
             end = starts[n + 1] if n + 1 < len(starts) else len(data)
+            # The linker's zero alignment padding after the symbol this part
+            # ends with is in the section, so drop it the way the int3 padding
+            # is dropped from code.
+            if not is_code and data_sizes:
+                inside = [struct.unpack_from("<I", rec, 8)[0] for _, rec in syms
+                          if start <= struct.unpack_from("<I", rec, 8)[0] < end]
+                last_size = data_sizes.get(names.get(max(inside), "")) if inside else None
+                if last_size is not None:
+                    last = max(inside) + last_size
+                    if last < end and end - last < 4 and not any(data[last:end]):
+                        end = last
             body_end = end
             known = sizes.get(names.get(start, "")) if sizes else None
             if is_code and known is not None and start + known <= end:
