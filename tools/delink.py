@@ -197,7 +197,8 @@ def main() -> int:
         # in a call that never returns keeps the int3 the compiler put after it.
         unit_sizes = base_function_sizes(ours) if ours is not None and ours.is_file() else {}
         unit_sizes.update({n: sz for n, a, sz in sizes if any(lo <= a <= hi for lo, hi in spans)})
-        split.main_path(ROOT / unit["target"], base=base_addr, ours=ours, sizes=unit_sizes)
+        split.main_path(ROOT / unit["target"], base=base_addr, ours=ours, sizes=unit_sizes,
+                        data_sizes={n: sz for n, a, sz in sized if any(lo <= a <= hi for lo, hi in spans)})
         fix_data_symbols.main_path(ROOT / unit["target"],
                                    {n: a for n, a in variables if any(lo <= a <= hi for lo, hi in spans)},
                                    [v for v in sized if not any(lo <= v[1] <= hi for lo, hi in spans)])

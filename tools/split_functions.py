@@ -296,9 +296,12 @@ def sync_undefined_refs(coff: Coff, base: Coff) -> int:
         if target_name in names and len(names) == 1:
             continue
         # Folded code: several of our names meet here, the target uses it more
-        # than once, it is an exception handler, or the function is ours.
+        # than once, it is an exception handler, the function is ours, or it
+        # is a vector deleting destructor (a weak external the class names).
         if not (len(names) > 1 or uses.get(symidx, 0) > 1
-                or target_name.startswith("__ehhandler$") or names <= defined):
+                or target_name.startswith("__ehhandler$") or names <= defined
+                or (target_name.startswith(("??_E", "??_G"))
+                    and all(n.startswith("??_E") for n in names))):
             continue
         for secno, sec in enumerate(coff.sections, 1):
             base_secno = base_sections.get(primary_name(coff, secno))
@@ -323,10 +326,12 @@ def base_by_index(base: Coff, index: int):
 
 
 def split(coff: Coff, base: int | None = None, sizes: dict | None = None,
-          follows: set | None = None) -> int:
+          follows: set | None = None, data_sizes: dict | None = None) -> int:
     """sizes: known function sizes by name; they decide where padding starts.
     follows: data symbols our compiler put after another one in the same
-    section (statics outside COMDATs); they don't start a section."""
+    section (statics outside COMDATs); they don't start a section.
+    data_sizes: known data symbol sizes; they end their section, so a label
+    analysis left after a vtable doesn't extend it."""
     by_index = {i: (rec, aux) for i, rec, aux in coff.symbols}
     split_count = 0
     for secno in range(1, len(coff.sections) + 1):
@@ -372,6 +377,9 @@ def split(coff: Coff, base: int | None = None, sizes: dict | None = None,
             known = sizes.get(names.get(start, "")) if sizes else None
             if is_code and known is not None and start + known <= end:
                 body_end = start + known
+            elif not is_code and data_sizes and names.get(start, "") in data_sizes \
+                    and start + data_sizes[names[start]] <= end:
+                body_end = start + data_sizes[names[start]]
             elif is_code and (base is None or (base + end) % 16 == 0):
                 while body_end > start and end - body_end < 15 and data[body_end - 1] == 0xCC:
                     body_end -= 1
@@ -441,16 +449,17 @@ def data_followers(coff: Coff) -> set:
     return names
 
 
-def main_path(src, dst=None, base=None, ours=None, sizes=None) -> int:
+def main_path(src, dst=None, base=None, ours=None, sizes=None, data_sizes=None) -> int:
     """base: exe address of the start of the object's code, if known.
-    ours: our compiled object, to take $L label names from."""
+    ours: our compiled object, to take $L label names from.
+    data_sizes: known data symbol sizes, which end their section."""
     with open(src, "rb") as f:
         coff = Coff(f.read())
     base_coff = None
     if ours is not None and ours.is_file():
         with open(ours, "rb") as f:
             base_coff = Coff(f.read())
-    n = split(coff, base, sizes, data_followers(base_coff) if base_coff else None)
+    n = split(coff, base, sizes, data_followers(base_coff) if base_coff else None, data_sizes)
     add_except_list(coff)
     if base_coff is not None:
         name_local_labels(coff, base_coff)
