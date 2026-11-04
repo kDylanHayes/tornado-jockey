@@ -2377,7 +2377,8 @@
       ],
       "target": "build/target/Tongas2/ACTORLINK.obj",
       "source": "src/Tongas2/ACTORLINK.cpp",
-      "category": "engine"
+      "category": "engine",
+      "complete": true
     },
     {
       "name": "Tongas2/GUIBEHAVIOR",
