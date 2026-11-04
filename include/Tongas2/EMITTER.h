@@ -311,11 +311,11 @@ public:
 
     void Reset()
     {
-        m_color = V3I();
         m_emitTime = 0.0f;
         m_nextEmit = 0.0f;
         m_emitting = false;
         m_rateScale = 1.0f;
+        m_color = V3I();
         m_429 = false;
         m_numParticles = 0;
         m_particles = 0;
