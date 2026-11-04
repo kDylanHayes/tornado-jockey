@@ -952,7 +952,7 @@ bool OOBOX3::IntersectFace(int face, const V3 &a, const V3 &b, V3 *at)
         UpdateCorners();
     if (planesDirty)
         UpdatePlanes();
-    PRIMV3 c[4];
+    V3 c0, c1, c2, c3;
     PLANE &plane = Plane(face);
     float da = a.x * plane.a + plane.b * a.y + Plane(face).c * a.z + plane.d;
     float db = plane.a * b.x + plane.b * b.y + plane.c * b.z + plane.d;
@@ -962,53 +962,53 @@ bool OOBOX3::IntersectFace(int face, const V3 &a, const V3 &b, V3 *at)
         return false;
     switch (face) {
     case 0:
-        c[0] = corners[0];
-        c[1] = corners[1];
-        c[2] = corners[2];
-        c[3] = corners[3];
+        c0 = corners[0];
+        c1 = corners[1];
+        c2 = corners[2];
+        c3 = corners[3];
         break;
     case 1:
-        c[0] = corners[4];
-        c[1] = corners[5];
-        c[2] = corners[6];
-        c[3] = corners[7];
+        c0 = corners[4];
+        c1 = corners[5];
+        c2 = corners[6];
+        c3 = corners[7];
         break;
     case 2:
-        c[0] = corners[2];
-        c[1] = corners[3];
-        c[2] = corners[6];
-        c[3] = corners[7];
+        c0 = corners[2];
+        c1 = corners[3];
+        c2 = corners[6];
+        c3 = corners[7];
         break;
     case 3:
-        c[0] = corners[0];
-        c[1] = corners[1];
-        c[2] = corners[4];
-        c[3] = corners[5];
+        c0 = corners[0];
+        c1 = corners[1];
+        c2 = corners[4];
+        c3 = corners[5];
         break;
     case 4:
-        c[0] = corners[0];
-        c[1] = corners[2];
-        c[2] = corners[4];
-        c[3] = corners[6];
+        c0 = corners[0];
+        c1 = corners[2];
+        c2 = corners[4];
+        c3 = corners[6];
         break;
     case 5:
-        c[0] = corners[1];
-        c[1] = corners[3];
-        c[2] = corners[5];
-        c[3] = corners[7];
+        c0 = corners[1];
+        c1 = corners[3];
+        c2 = corners[5];
+        c3 = corners[7];
         break;
     }
     V3 hit = plane.Intersect(a, b, 0);
     if (at)
         *at = hit;
-    if ((hit.x - c[0].x) * (c[1].x - c[0].x) + (hit.y - c[0].y) * (c[1].y - c[0].y) +
-                (hit.z - c[0].z) * (c[1].z - c[0].z) >= 0.0f &&
-        (hit.x - c[0].x) * (c[2].x - c[0].x) + (hit.y - c[0].y) * (c[2].y - c[0].y) +
-                (hit.z - c[0].z) * (c[2].z - c[0].z) >= 0.0f &&
-        (hit.x - c[3].x) * (c[1].x - c[3].x) + (hit.y - c[3].y) * (c[1].y - c[3].y) +
-                (hit.z - c[3].z) * (c[1].z - c[3].z) >= 0.0f &&
-        (hit.x - c[3].x) * (c[2].x - c[3].x) + (hit.y - c[3].y) * (c[2].y - c[3].y) +
-                (hit.z - c[3].z) * (c[2].z - c[3].z) >= 0.0f)
+    if ((hit.x - c0.x) * (c1.x - c0.x) + (hit.y - c0.y) * (c1.y - c0.y) +
+                (hit.z - c0.z) * (c1.z - c0.z) >= 0.0f &&
+        (hit.x - c0.x) * (c2.x - c0.x) + (hit.y - c0.y) * (c2.y - c0.y) +
+                (hit.z - c0.z) * (c2.z - c0.z) >= 0.0f &&
+        (hit.x - c3.x) * (c1.x - c3.x) + (hit.y - c3.y) * (c1.y - c3.y) +
+                (hit.z - c3.z) * (c1.z - c3.z) >= 0.0f &&
+        (hit.x - c3.x) * (c2.x - c3.x) + (hit.y - c3.y) * (c2.y - c3.y) +
+                (hit.z - c3.z) * (c2.z - c3.z) >= 0.0f)
         return true;
     return false;
 }
