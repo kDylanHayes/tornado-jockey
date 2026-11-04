@@ -489,7 +489,7 @@ SRESULT KERNELCOMMANDS::RandomDelay(CMDCALL *call)
 
 SRESULT KERNELCOMMANDS::If(CMDCALL *call)
 {
-    if (call->tokens->m_count < 5) {
+    if (call->tokens->m_count <= 4) {
         SRESULT result;
         result.Assign(g_pCmdMgr->Evaluate(STRING(call->tokens->GetToken(1)), call->caller));
         if (result.GetBool(false)) {
