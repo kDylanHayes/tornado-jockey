@@ -110,7 +110,7 @@ void HashCommands(CMDENTRY *commands);
 // Hashes a property table's names.
 void HashProperties(PROPENTRY *properties);
 // The index of name in an enum property's names, or -1.
-int FindEnum(const char (*names)[30], const char *name);
+int FindEnum(const char *name, const char (*names)[30]);
 // Records a class and its parent by name; compiled out of the release build.
 void RegisterClassName(CMDENTRY *commands, const char *name, const char *parent);
 
