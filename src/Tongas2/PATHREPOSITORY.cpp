@@ -99,10 +99,9 @@ void PATHREPOSITORYMASTER::SetFileName(const CSTRING &name)
     if (m_file.Length() <= 0)
         return;
 
-    FILE *file;
     STRING path;
     path.Format("%s%s%s", g_basePath, "data/art/", m_file.c_str());
-    file = fopen(path.c_str(), "rt");
+    FILE *file = fopen(path.c_str(), "rt");
     if (!file) {
         if (g_pLog)
             g_pLog->Error("PATHREPOSITYMASTER::SetFileName - file %s not found", path.c_str());
