@@ -56,7 +56,7 @@ public:
         if (!m_buf)
             return "";
         FIXEDSTRING<0x200> text;
-        int n = wcslen(m_buf) > 0x1ff ? 0x1ff : wcslen(m_buf);
+        int n = (int)wcslen(m_buf) > 0x1ff ? 0x1ff : (int)wcslen(m_buf);
         UNICODESTRING_MANAGER::Narrow(text, m_buf, n);
         return text;
     }

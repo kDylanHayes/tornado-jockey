@@ -235,7 +235,7 @@ GUIGENERIC::GUIGENERIC(const RESHANDLE &master, GUIGROUP *parent)
     for (g_i = 0; g_i < GUIGENERIC_MAX; g_i++)
         m_scale[g_i] = V3(1.0f, 1.0f, 1.0f);
     for (g_i = 0; g_i < GUIGENERIC_MAX; g_i++)
-        m_screenPos[g_i] = V2(0.0f, 0.0f);
+        m_screenPos[g_i] = GUIGENERICPOS2();
     for (g_i = 0; g_i < GUIGENERIC_MAX; g_i++)
         m_screenPosZ[g_i] = 1.0f;
     m_genericMaster = (GUIGENERICMASTER *)g_pResources->GetMaster(master);

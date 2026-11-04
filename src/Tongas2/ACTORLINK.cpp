@@ -31,7 +31,7 @@ int HashString(const char *str, int size)
 struct LINKV2 : V2
 {
     LINKV2() : V2(0.0f, 0.0f) {}
-    LINKV2 &operator=(const V2 &v) { V2::operator=(v); return *this; }
+    LINKV2(const V2 &v) : V2(v.x, v.y) {}
 };
 
 // A value moved from one end to the other at a steady rate over a time.
@@ -86,7 +86,7 @@ bool INTERP<T>::Update(float dt)
         m_value = m_to;
         return false;
     }
-    m_value = (m_to - m_from) * (m_elapsed / m_time) + m_from;
+    m_value = m_from + (m_to - m_from) * (m_elapsed / m_time);
     return true;
 }
 

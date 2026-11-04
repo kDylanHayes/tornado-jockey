@@ -157,9 +157,7 @@ PROPENTRY ACTOR::s_properties[] = {
 
 bool operator!=(const V3 &a, const V3 &b)
 {
-    if (a.x == b.x && a.y == b.y && a.z == b.z)
-        return false;
-    return true;
+    return a.x != b.x || a.y != b.y || a.z != b.z;
 }
 
 void BOXCORNERS::Set(const V3 &size)
@@ -735,7 +733,7 @@ void ACTOR::Link08(const V3 &position, const V3 &direction)
 
 void ACTOR::SetPathName(const CSTRING &name)
 {
-    if (m_pathName != name)
+    if (name != m_pathName)
         m_pathName = name;
 }
 
@@ -789,7 +787,9 @@ void ACTOR::Update()
         if (!m_angVel.IsZero()) {
             float x, y, z;
             m_angles.GetEuler(&x, &y, &z);
-            V3 euler = V3(x, y, z) + m_angVel * g_pTimer->GetDt();
+            V3 euler(x + m_angVel.x * g_pTimer->GetDt(),
+                     y + m_angVel.y * g_pTimer->GetDt(),
+                     z + m_angVel.z * g_pTimer->GetDt());
             SetAngles(ANG(euler.x, euler.y, euler.z));
         }
         m_angVel += g_pTimer->GetDt() * m_angAceleration;
@@ -927,7 +927,7 @@ void ACTOR::SetResources(const int &i, const CSTRING &name)
         m_resources[i] = name;
         m_masters[i] = g_pResources->GetHandle(name.c_str());
         if (m_masters[i].IsValid()) {
-            if ((unsigned)m_numResources < (unsigned)(i + 1))
+            if ((unsigned)(i + 1) > (unsigned)m_numResources)
                 m_numResources = i + 1;
             if (m_active)
                 CreateResource(i);
@@ -1128,7 +1128,9 @@ void ACTOR::FollowPath()
             if (!m_angVel.IsZero()) {
                 float x, y, z;
                 m_angles.GetEuler(&x, &y, &z);
-                V3 euler = V3(x, y, z) + m_angVel * g_pTimer->GetDt();
+                V3 euler(x + m_angVel.x * g_pTimer->GetDt(),
+                         y + m_angVel.y * g_pTimer->GetDt(),
+                         z + m_angVel.z * g_pTimer->GetDt());
             SetAngles(ANG(euler.x, euler.y, euler.z));
             }
             m_angVel += g_pTimer->GetDt() * m_angAceleration;
@@ -1169,8 +1171,9 @@ SRESULT ACTOR::CreateTagFX(CMDCALL *call)
 void ACTOR::SetName(const CSTRING &name)
 {
     if (name.Length() > 0 && g_pScene) {
-        FIXEDSTRING<0x200> newName;
-        newName.Set(name.c_str());
+        char newName[0x200];
+        strncpy(newName, name.c_str(), 0x1ff);
+        newName[0x1ff] = 0;
         g_pScene->RenameActor(m_handle, newName);
         m_name = m_path.c_str();
     }
@@ -1244,7 +1247,7 @@ RESHANDLE ACTOR::MakeFX(const char *name, RESHANDLE parent, V3 position, ANG ang
             if ((int)strlen(bone) > 0) {
                 TOKENS tokens;
                 tokens.Split(STRING(bone), ",");
-                int resource = atol(tokens.GetToken(0));
+                int resource = atoi(tokens.GetToken(0));
                 if (resource < 0)
                     resource = 0;
                 else if (resource > 15)

@@ -59,7 +59,7 @@ PROPENTRY *CMDBASE::FindProperty(const char *name, int classId)
     return 0;
 }
 
-int FindEnum(const char (*names)[30], const char *name)
+int FindEnum(const char *name, const char (*names)[30])
 {
     if (!names)
         return -1;
@@ -562,7 +562,7 @@ SRESULT CMDBASE::SetAttribute(CMDCALL *call)
             SET_PROP(int, atoi(token));
             break;
         case PROP_ENUM: {
-            int value = FindEnum(p->names, token);
+            int value = FindEnum(token, p->names);
             if (value < 0)
                 break;
             SET_PROP(int, value);
@@ -747,7 +747,7 @@ bool CMDBASE::SetAttributeEval(const char *name, int index, const char *expressi
     }
     switch (p->type) {
     case PROP_ENUM: {
-        int enumValue = FindEnum(p->names, value.GetString(""));
+        int enumValue = FindEnum(value.GetString(""), p->names);
         if (enumValue < 0)
             break;
         SET_PROP(int, enumValue);
@@ -845,7 +845,7 @@ void CMDBASE::DumpProperties()
         Virtual14();
     while (id != g_NONEClassId) {
         for (PROPENTRY *p = g_classProps[id]; p->name; p++) {
-            for (unsigned i = 0; i < 1 && i < (unsigned)p->count; i++) {
+            for (int i = 0; i < 1 && (unsigned)i < (unsigned)p->count; i++) {
                 FIXEDSTRING<0x200> line;
                 if ((unsigned)p->count > 1)
                     SafeSprintf(line, "prop:%s idx:%d value:", p->name, i);
