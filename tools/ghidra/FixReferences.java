@@ -145,6 +145,15 @@ public class FixReferences extends HeadlessScript {
 		return false;
 	}
 
+	// The exact address of a data symbol with a size in symbols.txt, such as
+	// the name array a property table points at. Analysis types a word as a
+	// pointer only when it points at a string or a function, so without this
+	// the delinker keeps the raw address of such a word and emits no
+	// relocation for it.
+	private boolean isSizedDataSymbol(Address value) {
+		return sizedData.containsKey(value.getOffset());
+	}
+
 	// The nearest preceding sized data symbol that strictly contains value.
 	private Long sizedBase(long value) {
 		Map.Entry<Long, Long> entry = sizedData.floorEntry(value);
@@ -314,9 +323,10 @@ public class FixReferences extends HeadlessScript {
 					createAsciiString(value);
 					strings++;
 				}
-				// A string's address, or a function's (a function pointer
-				// table or global that analysis didn't type).
-				if (!isString(value) && getFunctionAt(value) == null) {
+				// A string's address, a function's (a function pointer table
+				// or global that analysis didn't type), or a sized data
+				// symbol's (a property table's array pointer).
+				if (!isString(value) && !isSizedDataSymbol(value) && getFunctionAt(value) == null) {
 					continue;
 				}
 				Data here = getDataContaining(at);
@@ -333,7 +343,7 @@ public class FixReferences extends HeadlessScript {
 			}
 		}
 		println("Made " + strings + " short strings pointed to from data strings");
-		println("Typed " + pointers + " words in data holding a string's or function's address as pointers");
+		println("Typed " + pointers + " words in data holding a string's, function's or data symbol's address as pointers");
 
 		String[] args = getScriptArgs();
 		if (args.length == 0 || !Files.exists(Paths.get(args[0]))) {

@@ -1804,7 +1804,7 @@
       "ranges": [
         "0x004bbbb0-0x004bc3bf",
         "0x00613650-0x006137ef",
-        "0x0066eff8-0x0066f407",
+        "0x0066eff8-0x0066f3fb",
         "0x006bfca8-0x006bfd8f",
         "0x009ee078-0x009ee097"
       ],
@@ -1824,6 +1824,7 @@
       "ranges": [
         "0x004bc3c0-0x004be24f",
         "0x006137f0-0x00613f7f",
+        "0x0066f3fc-0x0066f407",
         "0x0066f408-0x0066f72f",
         "0x006bfd90-0x006c01f7",
         "0x009ee098-0x009ee0b7"
@@ -2042,7 +2043,8 @@
       "name": "Tongas2/SYSMONITOR",
       "ranges": [
         "0x004a7d00-0x004a7fab",
-        "0x0066a974-0x0066a9e8",
+        "0x0066a974-0x0066a9b4",
+        "0x0066a9c0-0x0066a9e8",
         "0x007e0ce0-0x007e0cef"
       ],
       "target": "build/target/Tongas2/SYSMONITOR.obj",

@@ -35,6 +35,7 @@ Data is patched too, in the GUI tables the initializers fill:
 | `0x00671060`, `0x00671070` | `Tongas2/SHADER` | string prefixes in `.rdata` | reported by the shader worker |
 | `0x00667150`, `0x0066c0d8` | `Tongas2/CMDMGR`, `Tongas2/RESOURCE` | `.rdata` string/table bytes | reported by those units' workers |
 | `0x00673827` | `Tongas2/BEHAVIORFADERESLOOP` | 16 bytes inside its `_s_TypeNames` copy | reported by the behavior worker |
+| `0x0066e89c` | `Tongas2/GUITEXTEDIT` | `??_7GUITEXTEDITMASTER@@6B@` +0xdc, four vtable slots | 16 bytes; they read as `0x158ac0b0`, `0xc1536606`, `0xf33b88d2`, `0x75bbe293`, a data watermark |
 
 More code watermarks found by comparing the exact-match residuals:
 
@@ -57,3 +58,8 @@ Everything else in those units can still match.
 The second table's owners (`GUIVISUAL`, `FX`, `APP`, `SOUND`, `GUITEXT`) stay
 partial on those initializers/destructors for the same reason; their remaining
 functions and data still match.
+
+`GUITEXTEDIT` is capped by the watermark in its vtable even though its code is
+byte-exact: objdiff compares a whole section name at once, so the 16 bytes
+keep its `.rdata` unmatched and the unit's data stays at 42.66%. The bytes
+after the run (`0x66e8ac`) are ordinary vtable pointers again.
