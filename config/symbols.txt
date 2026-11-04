@@ -4862,10 +4862,12 @@
 0x006654e0 ??_C@_0BM@PFCLLCBO@Incorrect?5IEND?5chunk?5length?$AA@ data
 0x006654fc ??_C@_0BB@BLPFHNNN@No?5image?5in?5file?$AA@ data
 0x00665510 ??_C@_0DI@KINMKNNO@Ignoring?5incorrect?5gAMA?5value?5wh@ data
+0x00665558 ??_C@_0BF@IMCFKHDJ@Duplicate?5gAMA?5chunk?$AA@ data 0x15
 0x00665570 ??_C@_0BI@JEEHFLME@Out?5of?5place?5gAMA?5chunk?$AA@ data
 0x00665588 ??_C@_0BI@POPIJBNN@Invalid?5gAMA?5after?5IDAT?$AA@ data
 0x006655a0 ??_C@_0BM@NIAHDFBB@Incorrect?5gAMA?5chunk?5length?$AA@ data
 0x006655bc ??_C@_0BJ@CCOIFGBO@Missing?5IHDR?5before?5gAMA?$AA@ data
+0x006655dc ??_C@_0BE@CEGOJHBA@Unknown?5sRGB?5intent?$AA@ data 0x14
 0x006655f0 ??_C@_0BF@EFDCKHOG@Duplicate?5sRGB?5chunk?$AA@ data
 0x00665608 ??_C@_0BI@FNFAFLBL@Out?5of?5place?5sRGB?5chunk?$AA@ data
 0x00665620 ??_C@_0BI@PGAMKAKH@Invalid?5sRGB?5after?5IDAT?$AA@ data
@@ -5119,6 +5121,7 @@
 0x0066861c ??_C@_06HBNONAG@create?$AA@ data 0x7
 0x00668628 _s_TypeNames data 0xb4
 0x006686dc ??_C@_03MEPDGFMA@var?$AA@ data 0x4
+0x006686e0 ??_C@_09DDLGPJLE@guiscreen?$AA@ data 0xa
 0x006686ec ??_C@_09BMHMPIHG@resources?$AA@ data 0xa
 0x006686f8 ??_7KERNELCOMMANDS@@6B@ data 0xec
 0x00668a90 ??_C@_03BDGOHNNK@add?$AA@ data 0x4
@@ -6049,6 +6052,7 @@
 0x00680690 __real@40d4f8b51eb851ec data
 0x00680698 __real@3ee4f8b588e368f1 data
 0x006806a0 __real@41dfffffffc00000 data
+0x006806a8 ??_C@_0BA@FODJPOMI@Setting?5gamma?$DN0?$AA@ data 0x10
 0x006806b8 ??_C@_0BL@OOPLOBFJ@Limiting?5gamma?5to?521474?483?$AA@ data
 0x006806d4 ??_C@_0BP@BJIADBMD@Setting?5negative?5gamma?5to?5zero?$AA@ data
 0x006806f4 ??_C@_0CJ@HIIPIHBM@Insufficient?5memory?5for?5hIST?5chu@ data
@@ -6069,6 +6073,7 @@
 0x006808e0 __real@3fe3333340000000 data
 0x006808e8 __real@3fc3333340000000 data
 0x006808f0 __real@3faeb851e0000000 data
+0x006808f8 ??_C@_0CN@LIEAHFGD@Insufficient?5memory?5to?5process?5i@ data 0x2d
 0x00680928 ??_C@_0CL@FFBJCBGI@Insufficient?5memory?5to?5process?5i@ data
 0x00680954 ??_C@_0BN@MLELJANO@No?5memory?5for?5sPLT?5palettes?4?$AA@ data
 0x00680974 ??_C@_0CI@ICGKPKMD@Out?5of?5memory?5processing?5unknown@ data
@@ -6139,6 +6144,7 @@
 0x00681248 ??_C@_0CD@IEHDBPFI@Invalid?5cHRM?5green?5point?5specifi@ data
 0x0068126c ??_C@_0CC@NIHKPHAB@Invalid?5cHRM?5blue?5point?5specifie@ data
 0x00681290 __real@3fe999999999999a data
+0x00681298 ??_C@_0CH@JCFDIEK@Can?8t?5write?5tRNS?5with?5an?5alpha?5c@ data 0x27
 0x006812c0 ??_C@_0EA@JIMPJFKJ@Ignoring?5attempt?5to?5write?516?9bit@ data
 0x00681300 ??_C@_0EA@GMIFOPEM@Ignoring?5attempt?5to?5write?5tRNS?5c@ data
 0x00681340 ??_C@_0CP@PFJBFCBG@Invalid?5number?5of?5transparent?5co@ data
@@ -6875,21 +6881,21 @@
 0x00a0fec4 _iFlags data
 0x00a0fec8 _mTriMeshPos data
 0x00a0fed8 _iStride data
-0x00a0fedc _vE0 data
+0x00a0fedc _vE0 data 0x10
 0x00a0feec _mTriMeshRot data
 0x00a0ff1c _fBestrt data
-0x00a0ff20 _vE2 data
+0x00a0ff20 _vE2 data 0x10
 0x00a0ff30 _vCapsuleRadius data
-0x00a0ff34 _vV1 data
-0x00a0ff44 _vV0 data
-0x00a0ff54 _vCapsuleAxis data
+0x00a0ff34 _vV1 data 0x10
+0x00a0ff44 _vV0 data 0x10
+0x00a0ff54 _vCapsuleAxis data 0x10
 0x00a0ff64 _fCapsuleSize data
-0x00a0ff68 _vV2 data
+0x00a0ff68 _vV2 data 0x10
 0x00a0ff78 _vNormal data
-0x00a0ff88 _vCapsulePosition data
-0x00a0ff98 _mCapsuleRotation data
-0x00a0ffc8 _vE1 data
-0x00a0ffd8 _gLocalContacts data
+0x00a0ff88 _vCapsulePosition data 0x10
+0x00a0ff98 _mCapsuleRotation data 0x30
+0x00a0ffc8 _vE1 data 0x10
+0x00a0ffd8 _gLocalContacts data 0x500
 0x00a104d8 _fBestDepth data
 0x00a104dc _fBestCenter data
 0x00a104e0 _iBestAxis data
@@ -6898,24 +6904,24 @@
 0x00a104f8 ?ColCache@?1??dCollideTTL@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z@4UBVTCache@Opcode@@A data
 0x00a10508 ?$S1@?1??dCollideTTL@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z@4IA data
 0x00a1050c _ContactGeoms data
-0x00a10510 _vHullBoxPos data
-0x00a10520 _mHullBoxRot data
+0x00a10510 _vHullBoxPos data 0x10
+0x00a10520 _mHullBoxRot data 0x30
 0x00a10550 _iFlags data
 0x00a10554 _iStride data
-0x00a10558 _vE0 data
+0x00a10558 _vE0 data 0x10
 0x00a10568 _vN data
-0x00a10578 _vE2 data
+0x00a10578 _vE2 data 0x10
 0x00a10588 _Geom1 data
 0x00a1058c _vBoxHalfSize data
 0x00a1059c _vHullDstPos data
-0x00a105ac _vBestNormal data
-0x00a105bc _vE1 data
+0x00a105ac _vBestNormal data 0x10
+0x00a105bc _vE1 data 0x10
 0x00a105cc _Geom2 data
 0x00a105d0 _fBestDepth data
 0x00a105d4 _iBestAxis data
 0x00a105d8 _iExitAxis data
 0x00a105dc _ctContacts data
-0x00a105e0 ?VertexCache@MeshInterface@Opcode@@0PAVPoint@IceMaths@@A data
+0x00a105e0 ?VertexCache@MeshInterface@Opcode@@0PAVPoint@IceMaths@@A data 0x24
 0x00a10604 ?mNbContainers@Container@IceCore@@0IA data
 0x00a10608 ?mUsedRam@Container@IceCore@@0IA data
 0x00a11294 ?g_pWkz@@3PAVWKZ@@A data 0x4

@@ -64,6 +64,16 @@
 #
 # Found by the commands pass (byte-checked):
 0x4894e9-0x4894f6   Tongas2/CMDMGR              ?RegisterEngineClasses@@YAXXZ                            code  observed
+#
+# Found by the exact-match gap pass (byte-checked against orig/Tornado.exe;
+# each run is opaque bytes that overwrite the real code, and the analysis
+# loses the relocations of the real code around it):
+0x4ba3d8-0x4ba3e6   Tongas2/GUIVISUAL           ??0GUIVISUALMASTER@@QAE@PAVRESOURCEMANAGER@@PBD@Z     code  observed
+0x4bcafb-0x4bcb0b   Tongas2/FX                  ??0FXMASTER@@QAE@PAVRESOURCEMANAGER@@PBD@Z            code  observed
+0x48bc18-0x48bc27   Tongas2/APP                 ??1APP@@UAE@XZ                                        code  observed
+0x4b2e68-0x4b2e77   Tongas2/SOUND               ?EnableSounds@SOUNDMANAGER@@QAEX_N@Z                  code  observed
+0x613337-0x61334b   Tongas2/GUITEXT             _$E3                                                  code  observed
+#
 # Lengths observed so far are 7-19 bytes (16 typical). No fixed address
 # stride or modulus was found: starts include 0x4846ab, 0x486dd0, 0x4894f3,
 # 0x48e349, 0x490a62, 0x49f542, 0x4a1c65, 0x4a438a, 0x4a6aaf, 0x4a91d3,
