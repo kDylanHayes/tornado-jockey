@@ -13,6 +13,7 @@ import sys
 import tempfile
 from pathlib import Path
 
+import fix_data_icf
 import fix_data_symbols
 import split_functions as split
 from find_objects import Coff
@@ -202,6 +203,8 @@ def main() -> int:
         fix_data_symbols.main_path(ROOT / unit["target"],
                                    {n: a for n, a in variables if any(lo <= a <= hi for lo, hi in spans)},
                                    [v for v in sized if not any(lo <= v[1] <= hi for lo, hi in spans)])
+        if ours is not None and ours.is_file():
+            fix_data_icf.main_path(ROOT / unit["target"], ours)
     if returncode != 0 or missing or "SCRIPT ERROR" in log_text:
         return 1
     print(f"Delinked {len(selected)} unit(s)")

@@ -53,6 +53,32 @@ After delinking, `tools/split_functions.py` splits each function into its own se
 
 Target objects are derived from the game, so they stay in `build/` and are never committed.
 
+## ICF data relocations
+
+The original link used `/OPT:ICF`, so identical virtual functions share one
+address and a target vtable may relocate several slots against the same symbol
+name. Our object files keep a distinct symbol per virtual, and objdiff compares
+**data** relocations by name (`symbol_mappings` only applies to code operands),
+so those slots never pair.
+
+`tools/fix_data_icf.py` closes that gap. For every vtable symbol both objects
+name, it walks the target's relocations in that symbol and rewrites each one to
+the base object's symbol name at the same offset, adding undefined external
+symbols for names the target lacks and copying the base's relocation type and
+four-byte addend. It also trims a dedicated vtable section when split_functions
+kept trailing zero padding past the base symbol's extent. COFF is rebuilt in
+place: everything before the symbol table keeps its offsets, and only the
+symbol and string tables are re-emitted. `tools/delink.py` runs it after
+`fix_data_symbols.py`; it is idempotent and can be run standalone with
+`py tools\fix_data_icf.py <unit>`.
+
+It only handles vtable (`??_7...@@6B@`) symbols. Other data differences, and
+sections whose non-vtable bytes genuinely differ from the image, still have to
+be matched from source or recorded in `config/image_patches.txt` /
+`config/icf_exceptions.txt`. Data measures are all-or-nothing per section, so a
+unit only reaches 100% data once every remaining symbol in that section also
+matches.
+
 ## Placing library code
 
 For code built from upstream source (zlib, libpng...), compile the source first, then let the tools find it and copy names over:
