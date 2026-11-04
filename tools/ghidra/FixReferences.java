@@ -26,6 +26,8 @@
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Map;
+import java.util.TreeMap;
 
 import ghidra.app.util.headless.HeadlessScript;
 import ghidra.program.model.address.Address;
@@ -102,9 +104,68 @@ public class FixReferences extends HeadlessScript {
 		return sym != null && (sym.getName().startsWith("??_C@_") || sym.getName().startsWith("s_"));
 	}
 
+	// Data symbols from symbols.txt with a size, by address: the delinker
+	// loses the addend of a reference into the middle of a symbol (it names
+	// the containing symbol with addend 0), so those become offset
+	// references instead.
+	private final TreeMap<Long, Long> sizedData = new TreeMap<>();
+
+	private void loadSymbolSizes(String path) throws Exception {
+		for (String line : Files.readAllLines(Paths.get(path))) {
+			line = line.strip();
+			if (line.isEmpty() || line.startsWith("#")) {
+				continue;
+			}
+			String[] parts = line.split("\\s+");
+			if (parts.length < 4 || !parts[2].equals("data")) {
+				continue;
+			}
+			try {
+				long addr = Long.decode(parts[0]);
+				long size = Long.decode(parts[3]);
+				if (size > 0) {
+					sizedData.put(addr, size);
+				}
+			}
+			catch (NumberFormatException e) {
+				// A size that isn't a plain number; leave it out.
+			}
+		}
+	}
+
+	// A user-named symbol whose own address is exactly this one
+	// (SymbolTable.getSymbols also returns symbols whose data covers the
+	// address, and analysis leaves DAT_ labels at unnamed addresses).
+	private boolean hasExactSymbol(Address a) {
+		for (Symbol s : currentProgram.getSymbolTable().getSymbols(a)) {
+			if (s.getAddress().equals(a) && s.getSource() == SourceType.USER_DEFINED) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	// The nearest preceding sized data symbol that strictly contains value.
+	private Long sizedBase(long value) {
+		Map.Entry<Long, Long> entry = sizedData.floorEntry(value);
+		for (int tries = 0; entry != null && tries < 4; tries++) {
+			long base = entry.getKey();
+			if (base < value && value < base + entry.getValue()) {
+				return base;
+			}
+			entry = sizedData.lowerEntry(base);
+		}
+		return null;
+	}
+
 	@Override
 	public void run() throws Exception {
 		ReferenceManager refs = currentProgram.getReferenceManager();
+		String[] scriptArgs = getScriptArgs();
+		if (scriptArgs.length > 1 && Files.exists(Paths.get(scriptArgs[1]))) {
+			loadSymbolSizes(scriptArgs[1]);
+		}
+		println("Loaded " + sizedData.size() + " sized data symbols");
 		int fixed = 0;
 		int added = 0;
 		int cleared = 0;
@@ -122,6 +183,36 @@ public class FixReferences extends HeadlessScript {
 						if (currentProgram.getMemory().contains(a)) {
 							disp = a;
 						}
+					}
+					else if (obj instanceof Address a && currentProgram.getMemory().contains(a)) {
+						// An absolute memory operand ([0x6bbe38]) reports its
+						// address object, not a scalar.
+						disp = a;
+					}
+				}
+				if (disp != null && !hasExactSymbol(disp)) {
+					// A reference into the middle of a sized data symbol: the
+					// delinker names the containing symbol with addend 0 and
+					// loses the offset (g_forward.y read as g_forward). An
+					// offset reference keeps it.
+					MemoryBlock block = currentProgram.getMemory().getBlock(disp);
+					Long base = sizedBase(disp.getUnsignedOffset());
+					if (block != null && !block.isExecute() && base != null) {
+						RefType type = RefType.DATA;
+						for (Reference ref : ins.getOperandReferences(op)) {
+							if (ref.getToAddress().equals(disp)) {
+								type = ref.getReferenceType();
+							}
+						}
+						for (Reference ref : ins.getOperandReferences(op)) {
+							if (ref.getToAddress().equals(disp)) {
+								refs.delete(ref);
+							}
+						}
+						refs.addOffsetMemReference(ins.getAddress(), toAddr(base), true,
+							disp.getUnsignedOffset() - base, type, SourceType.USER_DEFINED, op);
+						fixed++;
+						continue;
 					}
 				}
 				if (!indexed && disp != null && looksLikeString(disp) && !pointsAtString(disp)) {

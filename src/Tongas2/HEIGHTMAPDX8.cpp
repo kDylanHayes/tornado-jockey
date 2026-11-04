@@ -456,7 +456,7 @@ PROPENTRY HEIGHTMAPDX8MASTER::s_properties[] = {
 void HEIGHTMAPDX8MANAGER::Init()
 {
     RESOURCEMANAGER::Init();
-    for (int i = 0; i < 0x41; i++)
+    for (int i = 0; i <= 0x40; i++)
         s_codeValues[s_codes[i]] = (char)i - 1;
 }
 

@@ -110,6 +110,11 @@ def main() -> int:
             bname, is_func = base.get(key, (None, False))
             m = AUTO_NAME.match(tname)
             if bname and (m or tname == bname) and not bname.startswith("$"):
+                # Only when our function has the target's length: in a
+                # function we do not reproduce yet the offsets differ and
+                # the base relocation at this offset is unrelated.
+                if len(base_code.get(func, b"")) != len(target_code.get(func, b"")):
+                    continue
                 addr = int(m.group(1), 16) if m else None
                 if rtype == DIR32 and faddr is not None and func in base_code:
                     # The exe holds symbol + addend; our object holds the
@@ -129,7 +134,11 @@ def main() -> int:
     path = ROOT / "config" / "symbols.txt"
     lines = path.read_text().splitlines()
     header = [l for l in lines if l.startswith("#")]
-    body = {int(l.split()[0], 16): l for l in lines if l and not l.startswith("#")}
+    entries = [(int(l.split()[0], 16), l) for l in lines if l and not l.startswith("#")]
+    existing = {addr for addr, _ in entries}
+    # Keep every line: several symbols can share an address (identical
+    # functions the linker folded), and rewriting through a dict would drop
+    # all but the last.
 
     # A data name placed where no reference points (an earlier run that
     # ignored addends) is moved to where the references do point. Statics
@@ -138,19 +147,25 @@ def main() -> int:
     for addr, (name, _) in found.items():
         found_at.setdefault(name, set()).add(addr)
     moved = 0
-    for addr, line in list(body.items()):
+    kept = []
+    for addr, line in entries:
         parts = line.split()
         if parts[1] in found_at and addr not in found_at[parts[1]] and parts[2:3] == ["data"]:
-            del body[addr]
             moved += 1
+            continue
+        kept.append((addr, line))
+    entries = kept
+    existing = {addr for addr, _ in entries}
 
     added = 0
     for addr, (name, is_func) in found.items():
-        if addr in body:
+        if addr in existing:
             continue
-        body[addr] = f"0x{addr:08x} {name} {'function' if is_func else 'data'}"
+        entries.append((addr, f"0x{addr:08x} {name} {'function' if is_func else 'data'}"))
+        existing.add(addr)
         added += 1
-    path.write_text("\n".join(header + [body[a] for a in sorted(body)]) + "\n")
+    entries.sort(key=lambda e: e[0])
+    path.write_text("\n".join(header + [line for _, line in entries]) + "\n")
     print(f"Added {added} names to config/symbols.txt ({moved} moved)")
 
     path = ROOT / "config" / "norefs.txt"

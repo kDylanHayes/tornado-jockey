@@ -196,6 +196,7 @@ def main() -> int:
         "-scriptPath", str(ROOT / "tools" / "ghidra"),
         "-preScript", "ApplySymbols.java", str(ROOT / "config" / "symbols.txt"),
         "-preScript", "FixReferences.java", str(ROOT / "config" / "norefs.txt"),
+        str(ROOT / "config" / "symbols.txt"),
         "-preScript", "FixJumpTables.java",
         "-postScript", "DelinkUnit.java",
     ]
