@@ -35,8 +35,9 @@ int PARTICLE::PickPixel(EMITTERMASTER *master, EMITTER *emitter)
 {
     int left = emitter->m_numPixels - emitter->m_numEmitted % emitter->m_numPixels;
     int n;
+    float fleft = (float)left;
     if (left > 1)
-        n = 1 - (int)((float)rand() * (float)left * (-1.0f / 32768.0f));
+        n = 1 - (int)((float)rand() * fleft * (-1.0f / 32768.0f));
     else
         n = 1;
     bool pass = ((emitter->m_numEmitted / emitter->m_numPixels) & 1) != 0;
