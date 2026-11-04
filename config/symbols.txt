@@ -910,7 +910,7 @@
 0x004a0340 ??_EGUIGROUP@@WJM@AEPAXI@Z function 0xb
 0x004a0350 ?Virtual09@GUIGROUP@@UAEPAXPBD@Z function 0x5
 0x004a0360 ?Execute@GUIGROUP@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function 0x7a
-0x004a03e0 ?_Xlen@?$vector@PAVGUICONTROL@@V?$allocator@PAVGUICONTROL@@@std@@@std@@IBEXXZ function 0x69
+0x004a03e0 ?_Xlen@?$vector@PAVGUICONTROL@@V?$allocator@PAVGUICONTROL@@@std@@@std@@IBEXXZ function
 0x004a0450 ??_GGUIGROUP@@UAEPAXI@Z function 0x1e
 0x004a0470 ?_Insert_n@?$vector@PAVGUICONTROL@@V?$allocator@PAVGUICONTROL@@@std@@@std@@IAEXViterator@12@IABQAVGUICONTROL@@@Z function 0x1e0
 0x004a0650 ??0GUIGROUP@@QAE@ABURESHANDLE@@PAV0@@Z function 0x4ec
