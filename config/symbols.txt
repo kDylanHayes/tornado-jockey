@@ -4475,6 +4475,13 @@
 0x005e9f28 __ehhandler$??1GAME@@UAE@XZ function
 0x005e9f48 __ehhandler$?Execute@GAME@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function
 0x005e9f6b __ehhandler$?CreateDrm@@YAPAVDRM@@XZ function
+0x005ea618 __ehhandler$?AddControlCommand@GUIGROUP@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function
+0x005ea638 __ehhandler$?Update@GUIGROUP@@UAEXXZ function
+0x005ea68f __ehhandler$??1GUIGROUP@@UAE@XZ function
+0x005ea6a8 __ehhandler$?Execute@GUIGROUP@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function
+0x005ea6c8 __ehhandler$?_Xlen@?$vector@PAVGUICONTROL@@V?$allocator@PAVGUICONTROL@@@std@@@std@@IBEXXZ function
+0x005ea704 __ehhandler$??0GUIGROUP@@QAE@ABURESHANDLE@@PAV0@@Z function
+0x005ea71b __ehhandler$?CreateGUIGROUPCONTROL@@YAPAVGUICONTROL@@ABURESHANDLE@@PAVGUIGROUP@@@Z function
 0x005ea738 __ehhandler$??0CAMERA@@QAE@XZ function
 0x005ea75b __ehhandler$?CreateCamera@@YAPAVCAMERA@@XZ function
 0x005ea778 __ehhandler$?Reset@CAMERA@@UAEXXZ function
