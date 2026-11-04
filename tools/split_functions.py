@@ -289,15 +289,18 @@ def sync_undefined_refs(coff: Coff, base: Coff) -> int:
         if entry is None:
             continue
         base_secno, base_size = entry
-        if base_size != sec_size(sec):
-            continue
+        same_size = base_size == sec_size(sec)
         for vaddr, symidx, _rtype in sec["relocs"]:
             rec = by_index.get(symidx)
             if rec is None or struct.unpack_from("<h", rec, 12)[0] != 0:
                 continue
             name = base_name(base_secno, vaddr)
-            if name is not None:
-                ours.setdefault(symidx, set()).add(name)
+            # An exception handler is always pushed from the same offset at
+            # the top of its function, so its name is safe to copy even when
+            # the two functions differ from there on.
+            if name is None or (not same_size and not name.startswith("__ehhandler$")):
+                continue
+            ours.setdefault(symidx, set()).add(name)
     changed = 0
     uses = {}
     for sec in coff.sections:
@@ -316,7 +319,9 @@ def sync_undefined_refs(coff: Coff, base: Coff) -> int:
         # name is one our object never mentions (the address stands for an
         # empty function the linker folded into another unit's).
         if not (len(names) > 1 or uses.get(symidx, 0) > 1
-                or target_name.startswith("__ehhandler$") or names <= defined
+                or target_name.startswith("__ehhandler$")
+                or all(n.startswith("__ehhandler$") for n in names)
+                or names <= defined
                 or target_name not in ours_names
                 or (target_name.startswith(("??_E", "??_G"))
                     and all(n.startswith("??_E") for n in names))):
@@ -326,13 +331,14 @@ def sync_undefined_refs(coff: Coff, base: Coff) -> int:
             if entry is None:
                 continue
             base_secno, base_size = entry
-            if base_size != sec_size(sec):
-                continue
+            same_size = base_size == sec_size(sec)
             for reloc in sec["relocs"]:
                 if reloc[1] != symidx:
                     continue
                 name = base_name(base_secno, reloc[0])
                 if name is None or name == target_name:
+                    continue
+                if not same_size and not name.startswith("__ehhandler$"):
                     continue
                 reloc[1] = undefined_symbol(coff, name)
                 changed += 1
@@ -359,6 +365,57 @@ def sync_undefined_refs(coff: Coff, base: Coff) -> int:
                     and name[4:] == target_name[4:]):
                 reloc[1] = undefined_symbol(coff, name)
                 changed += 1
+    return changed
+
+
+def sync_local_refs(coff: Coff, base: Coff) -> int:
+    """Give the target the local-table relocations our object has.
+
+    A compiler-generated table in a function's code section (a switch's case
+    table) is read with an absolute address, and our object carries a
+    relocation to its $L label for it. Ghidra leaves references into
+    executable memory alone, so the same operand can stay a bare number in
+    the target, and objdiff pairs the instruction with neither side's symbol.
+    Where our object has such a reference and the target does not, copy it
+    (the label names were already synced by name_local_labels)."""
+    base_secs = {}
+    for secno in range(1, len(base.sections) + 1):
+        name = primary_name(base, secno)
+        if name is not None:
+            base_secs[name] = secno
+    changed = 0
+    for secno in range(1, len(coff.sections) + 1):
+        sec = coff.sections[secno - 1]
+        if not sec["chars"] & IMAGE_SCN_CNT_CODE:
+            continue
+        bsecno = base_secs.get(primary_name(coff, secno))
+        if bsecno is None:
+            continue
+        bsec = base.sections[bsecno - 1]
+        if len(bsec["data"]) != len(sec["data"]):
+            continue
+        have = {r[0] for r in sec["relocs"]}
+        by_name = {}
+        for i, rec, _ in coff.symbols:
+            if struct.unpack_from("<h", rec, 12)[0] == secno:
+                by_name.setdefault(coff.name(rec), i)
+        for vaddr, symidx, rtype in bsec["relocs"]:
+            rec = base_by_index(base, symidx)
+            if struct.unpack_from("<h", rec, 12)[0] <= 0 or vaddr in have:
+                continue
+            name = base.name(rec)
+            index = by_name.get(name) if name.startswith("$L") else None
+            if index is None:
+                continue
+            if rtype == IMAGE_REL_I386_DIR32:
+                # The addend is the value the relocation overwrites: copy the
+                # one our object stores, so both sides read it the same way.
+                struct.pack_into("<i", sec["data"], vaddr,
+                                 struct.unpack_from("<i", bsec["data"], vaddr)[0])
+            sec["relocs"].append([vaddr, index, rtype])
+            have.add(vaddr)
+            changed += 1
+        sec["relocs"].sort(key=lambda r: r[0])
     return changed
 
 
@@ -509,6 +566,7 @@ def main_path(src, dst=None, base=None, ours=None, sizes=None, data_sizes=None) 
     if base_coff is not None:
         name_local_labels(coff, base_coff)
         sync_undefined_refs(coff, base_coff)
+        sync_local_refs(coff, base_coff)
     # objdiff treats any other label in code as the start of a symbol (and
     # hangs on one in the middle of a jump table, "PTR_caseD_2_0055cd38+3");
     # it skips LAB_ labels.
