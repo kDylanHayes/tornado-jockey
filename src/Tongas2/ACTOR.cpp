@@ -787,9 +787,10 @@ void ACTOR::Update()
         if (!m_angVel.IsZero()) {
             float x, y, z;
             m_angles.GetEuler(&x, &y, &z);
-            V3 euler(x + m_angVel.x * g_pTimer->GetDt(),
-                     y + m_angVel.y * g_pTimer->GetDt(),
-                     z + m_angVel.z * g_pTimer->GetDt());
+            V3 euler;
+            euler.x = x + m_angVel.x * g_pTimer->GetDt();
+            euler.y = y + m_angVel.y * g_pTimer->GetDt();
+            euler.z = z + m_angVel.z * g_pTimer->GetDt();
             SetAngles(ANG(euler.x, euler.y, euler.z));
         }
         m_angVel += g_pTimer->GetDt() * m_angAceleration;
@@ -1061,9 +1062,9 @@ void ACTOR::FollowPath()
         }
     }
     if (m_pathBehavior != ACTORPATH_PATHFINDER && m_behavior == ACTORBEHAVIOR_PATH) {
+        float speed = m_vel.Length();
         m_lastVel = m_vel;
         float dt = g_pTimer->m_dt;
-        float speed = m_vel.Length();
         V3 position(2.0f, 2.0f, 2.0f);
         V3 direction(0.0f, 0.0f, 0.0f);
         V3 up(0.0f, 0.0f, 0.0f);
@@ -1128,9 +1129,10 @@ void ACTOR::FollowPath()
             if (!m_angVel.IsZero()) {
                 float x, y, z;
                 m_angles.GetEuler(&x, &y, &z);
-                V3 euler(x + m_angVel.x * g_pTimer->GetDt(),
-                         y + m_angVel.y * g_pTimer->GetDt(),
-                         z + m_angVel.z * g_pTimer->GetDt());
+                V3 euler;
+                euler.x = x + m_angVel.x * g_pTimer->GetDt();
+                euler.y = y + m_angVel.y * g_pTimer->GetDt();
+                euler.z = z + m_angVel.z * g_pTimer->GetDt();
             SetAngles(ANG(euler.x, euler.y, euler.z));
             }
             m_angVel += g_pTimer->GetDt() * m_angAceleration;
