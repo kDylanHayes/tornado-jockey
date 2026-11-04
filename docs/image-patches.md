@@ -22,7 +22,9 @@ workers and are listed at their reported start address.
 There is no fixed length or alignment. A range can cover more than one symbol
 (the SHADER strings are an example), and `DECAL::GetShaderHandle` is not a
 watermark — it is a wrong symbol size in the target object, tracked as a normal
-matching issue.
+matching issue. `RESOURCES::Insert` has two nearby sites: the real 17-byte
+watermark at `0x4a6aaf-0x4a6abf` (listed) and an analysis-only instruction
+overlap at `0x4a6af5` (not a watermark, not listed).
 
 A separate, fixable issue is the delinker putting relocations on short strings
 whose bytes read as an address (`"set"` is `0x00746573`). That is handled in
