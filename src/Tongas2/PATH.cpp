@@ -180,10 +180,10 @@ void PATHMASTER::UpdateCopies()
 
 float PATHMASTER::ArcParam(int segment, float u)
 {
-    if (u < m_arcLength[segment][0])
-        return u / m_arcLength[segment][0] * 0.125f;
     int lo = 0;
     int hi = 7;
+    if (u < m_arcLength[segment][0])
+        return u / m_arcLength[segment][0] * 0.125f;
     do {
         int mid = (int)((hi + lo) * 0.5f);
         if (m_arcLength[segment][mid] < u)
