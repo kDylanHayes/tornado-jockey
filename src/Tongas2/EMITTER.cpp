@@ -227,19 +227,18 @@ PARTICLE::~PARTICLE()
 
 void EMITTER::KillParticles()
 {
-    PARTICLE *particle = m_particles;
-    while (particle) {
-        PARTICLE *next = particle->m_next;
+    PARTICLE *next;
+    for (PARTICLE *particle = m_particles; particle; particle = next) {
+        next = particle->m_next;
         if (particle->m_prev)
-            particle->m_prev->m_next = next;
+            particle->m_prev->m_next = particle->m_next;
         else
-            m_particles = next;
+            m_particles = particle->m_next;
         if (particle->m_next)
             particle->m_next->m_prev = particle->m_prev;
         delete particle;
         m_numParticles--;
         Master()->m_numParticles--;
-        particle = next;
     }
 }
 
@@ -1207,9 +1206,9 @@ void EMITTER::Update()
             Virtual20();
             return;
         }
-        PARTICLE *particle = m_particles;
-        while (particle) {
-            PARTICLE *next = particle->m_next;
+        PARTICLE *next;
+        for (PARTICLE *particle = m_particles; particle; particle = next) {
+            next = particle->m_next;
             particle->Update(dt);
             if (particle->m_age > particle->m_life) {
                 if (particle->m_prev)
