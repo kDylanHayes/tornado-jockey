@@ -19,6 +19,9 @@
 0x004d526d-0x004d527f  Tongas2/MESH             MESHMASTER::AcquireShader body (opaque from 0x4d526e; 0x4d5280 resumes a call)
 0x004dc7dd-0x004dc7f0  Tongas2/RENDERER         RENDERER::SetFogColor mid-function (0x4dc7f1 resumes a call)
 0x004d2b48-0x004d2b5a  Tongas2/OCTREE            code watermark in the unit's .text
+0x004846a9-0x004846bc  Tongas2/CMDBASE           CMDBASE::GetShortStringAttribute code watermark (between two valid epilogues)
+0x004894f3-0x00489507  Tongas2/CMDMGR            RegisterEngineClasses code watermark (valid push/mov-with-reloc before and after)
+0x004c406b-0x004c407a  Tongas2/TEXT              TEXT::Update code watermark (after "lea ecx,[esp+0x88]")
 0x00667150-0x0066715e  Tongas2/CMDMGR            head of ??_C@_0CF@MLNDBCPD@scripting?5object?5without?5base?5ty@ ("t without base type??" survives)
 0x0066c0d8-0x0066c0e7  Tongas2/RESOURCE          tail of ??_C@_0M@OHKMKKDH@Description?$AA@ and head of ??_C@_09DLCDDHDM@MinCopies?$AA@
 0x00671060-0x0067106f  Tongas2/SHADER            one 16-byte string slot in the shader-name table
