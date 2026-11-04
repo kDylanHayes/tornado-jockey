@@ -4661,6 +4661,8 @@
 0x006563c0 __imp__GetSystemMetrics@4 data 0x4
 0x006563c4 __imp__MessageBoxA@16 data
 0x006564a0 ??_C@_0FN@NIKDIMLH@ERROR?$CB?$CB?5LoadRunnersInformation?$DOF@ data 0x5d
+0x006567f8 ??_C@_0EB@FMJMEFDD@STRING_MANAGER?3?3CheckIndex?$DOError@ data 0x41
+0x00656840 ??_C@_0EK@JOFKGEMO@STRING_MANAGER?3?3GetPointer?$DOError@ data 0x4a
 0x0065688c ??_7STRING@@6B@ data
 0x00656890 ??_C@_00CNPNBAHC@?$AA@ data 0x1
 0x00656894 __real@3f800000 data
