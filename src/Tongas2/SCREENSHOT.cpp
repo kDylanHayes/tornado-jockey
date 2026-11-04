@@ -1,3 +1,7 @@
+#include <new>
+
+#include <new>
+
 // Screenshots, grabbed from the window with GDI and saved with FreeImage.
 // Placeholder file name.
 #include "lib/freeimage/FreeImage.h"
