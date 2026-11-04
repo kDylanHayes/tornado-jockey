@@ -17,17 +17,16 @@ void GUIDIEFADE::Update()
 {
     GUIBEHAVIOR::Update();
     if (m_left > 0.0f) {
-        GUICONTROL *control = m_control;
-        if (control->m_timeSpace == 1)
+        if (m_control->m_timeSpace == 1)
             m_left -= g_pTimer->m_soundDt;
         else
             m_left -= g_pTimer->m_dt;
         if (m_left <= 0.0f) {
-            control->SetOpacity(0.0f);
+            m_control->SetOpacity(0.0f);
             m_control->Close();
             m_left = 0.0f;
         } else if (m_left <= m_fadeTime) {
-            control->SetOpacity(m_left / m_fadeTime);
+            m_control->SetOpacity(m_left / m_fadeTime);
         }
     }
 }

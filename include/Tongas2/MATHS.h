@@ -26,7 +26,11 @@ struct V3
     // The point transformed by m, translation included.
     V3 Transform(const MATRIX &m) const;
     bool IsZero() const { return x == 0.0f && y == 0.0f && z == 0.0f; }
+#ifdef V3_LENGTH_OUTOFLINE
+    float Length() const;
+#else
     float Length() const { return (float)sqrt(x * x + y * y + z * z); }
+#endif
     float LengthSq() const { return x * x + y * y + z * z; }
     // Defined elsewhere: how far o is.
     float Distance(const V3 &o) const;
