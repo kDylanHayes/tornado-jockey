@@ -131,15 +131,34 @@ public class FixReferences extends HeadlessScript {
 				if (!indexed || disp == null) {
 					continue;
 				}
+				boolean memoryRef = false;
 				for (Reference ref : refs.getReferencesFrom(ins.getAddress(), op)) {
 					if (!ref.isMemoryReference() || ref.getReferenceType().isFlow() ||
 						ref.getToAddress().equals(disp)) {
+						if (ref.isMemoryReference() && ref.getToAddress().equals(disp)) {
+							memoryRef = true;
+						}
 						continue;
 					}
 					RefType type = ref.getReferenceType();
 					refs.delete(ref);
 					refs.addMemoryReference(ins.getAddress(), disp, type, SourceType.USER_DEFINED, op);
 					fixed++;
+					memoryRef = true;
+				}
+				if (!memoryRef) {
+					// A scaled index can leave no reference at all on the
+					// displacement ([eax*4 + g_classParents]); add one when
+					// symbols.txt names a variable there, so the delinker
+					// relocates the instruction the way the compiler did.
+					MemoryBlock block = currentProgram.getMemory().getBlock(disp);
+					ghidra.program.model.symbol.Symbol sym = getSymbolAt(disp);
+					if (block != null && block.isInitialized() && !block.isExecute() &&
+						sym != null && sym.getSource() == SourceType.USER_DEFINED) {
+						refs.addMemoryReference(ins.getAddress(), disp, RefType.DATA,
+							SourceType.USER_DEFINED, op);
+						added++;
+					}
 				}
 			}
 		}

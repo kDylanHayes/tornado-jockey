@@ -271,7 +271,12 @@ def split(coff: Coff, base: int | None = None, sizes: dict | None = None,
             end = starts[n + 1] if n + 1 < len(starts) else len(data)
             body_end = end
             known = sizes.get(names.get(start, "")) if sizes else None
-            if is_code and known is not None and start + known <= end:
+            if known is not None and start + known <= end and (
+                    is_code or not any(start + known <= v < end for v in later)):
+                # A size from symbols.txt (or our object) is the truth: the
+                # linker's alignment padding after it isn't part of the item.
+                # A data size is only used when nothing else starts or refers
+                # inside the part it would cut off.
                 body_end = start + known
             elif is_code and (base is None or (base + end) % 16 == 0):
                 while body_end > start and end - body_end < 15 and data[body_end - 1] == 0xCC:

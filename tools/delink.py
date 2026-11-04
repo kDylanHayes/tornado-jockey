@@ -8,6 +8,7 @@ project created by tools/analyze.py.
 import argparse
 import json
 import os
+import struct
 import subprocess
 import sys
 import tempfile
@@ -84,6 +85,109 @@ POSIX_COMMAND_LIMIT = 100_000  # ARG_MAX is much larger, but stay well clear
 def command_size(args: list[str]) -> int:
     """Rough rendered length of an argument list (quoting and separators)."""
     return sum(len(arg) + 3 for arg in args)
+
+
+def apply_symbol_mappings(path: Path, mappings: dict) -> int:
+    """Give referenced, undefined symbols the names our object uses.
+
+    objdiff pairs code relocations through the unit's symbol_mappings, but it
+    compares a data section's relocations by the names the target object
+    carries, so a vtable slot the linker folded onto another unit's identical
+    function stays unmatched however the mapping reads. Renaming the target's
+    undefined symbol (the fold target lives outside this unit, so it has no
+    body here) makes both sides agree. Defined symbols are left alone: objdiff
+    already pairs those.
+    """
+    if not mappings:
+        return 0
+    coff = split.Coff(path.read_bytes())
+    by_index = {i: rec for i, rec, _ in coff.symbols}
+    taken = {coff.name(rec) for _, rec, _ in coff.symbols}
+    renamed = 0
+    for sec in coff.sections:
+        for rel in sec["relocs"]:
+            rec = by_index.get(rel[1])
+            if rec is None:
+                continue
+            name = coff.name(rec)
+            if name in mappings and mappings[name] not in taken:
+                coff.set_name(rec, mappings[name])
+                taken.add(mappings[name])
+                renamed += 1
+    if renamed:
+        path.write_bytes(coff.write())
+    return renamed
+
+
+def sync_data_relocations(path: Path, ours: Path) -> int:
+    """Name a data relocation the way our object names it, per offset.
+
+    Several identical empty virtuals fold to one address, so the target names
+    every vtable slot after one survivor and objdiff can never pair them with
+    our distinct names. Where a data symbol exists on both sides with the same
+    size, each target relocation that points outside the unit takes our name
+    for that offset (a new undefined symbol, so the other slots keep theirs).
+    """
+    coff = split.Coff(path.read_bytes())
+    base = Coff(ours)
+    by_index = {i: rec for i, rec, _ in coff.symbols}
+
+    base_data = {}
+    for s in base.symbols:
+        if s["section"] <= 0 or s["type"] == 0x20:
+            continue
+        info = base.sections[s["section"] - 1]
+        if info["flags"] & 0x20:
+            continue
+        relocs = {}
+        for vaddr, symidx, _typ in info["relocs"]:
+            tgt = base.by_index.get(symidx)
+            if tgt is not None:
+                relocs[vaddr] = tgt["name"]
+        base_data.setdefault(s["name"], (info["size"], relocs))
+
+    owners = {}
+    for rec_index, rec, _ in coff.symbols:
+        secno = struct.unpack_from("<h", rec, 12)[0]
+        if secno > 0:
+            owners.setdefault(secno - 1, []).append(rec_index)
+
+    made = {}
+    synced = 0
+    for si, sec in enumerate(coff.sections):
+        if not sec["chars"] & 0xC0:  # not initialized or uninitialized data
+            continue
+        name = None
+        for rec_index in owners.get(si, []):
+            candidate = coff.name(by_index[rec_index])
+            if candidate not in (".rdata", ".data", ".bss"):
+                name = candidate
+                break
+        if name is None or name not in base_data:
+            continue
+        size, base_relocs = base_data[name]
+        if size != len(sec["data"]):
+            continue
+        for rel in sec["relocs"]:
+            want = base_relocs.get(rel[0])
+            if not want:
+                continue
+            rec = by_index.get(rel[1])
+            if rec is None:
+                continue
+            if coff.name(rec) == want:
+                continue
+            new_index = made.get(want)
+            if new_index is None:
+                new_index = coff.add_symbol(want, 0, 0, 0, 2)
+                made[want] = new_index
+                by_index[new_index] = coff.symbols[-1][1]
+            rel[1] = new_index
+            synced += 1
+    if synced:
+        path.write_bytes(coff.write())
+    return synced
+
 
 
 def unit_args(unit: dict) -> list[str]:
@@ -197,10 +301,16 @@ def main() -> int:
         # in a call that never returns keeps the int3 the compiler put after it.
         unit_sizes = base_function_sizes(ours) if ours is not None and ours.is_file() else {}
         unit_sizes.update({n: sz for n, a, sz in sizes if any(lo <= a <= hi for lo, hi in spans)})
+        # Data sizes too: symbols.txt's size cuts the linker's alignment
+        # padding off the item, the way it does for functions.
+        unit_sizes.update({n: sz for n, a, sz in sized if any(lo <= a <= hi for lo, hi in spans)})
         split.main_path(ROOT / unit["target"], base=base_addr, ours=ours, sizes=unit_sizes)
         fix_data_symbols.main_path(ROOT / unit["target"],
                                    {n: a for n, a in variables if any(lo <= a <= hi for lo, hi in spans)},
                                    [v for v in sized if not any(lo <= v[1] <= hi for lo, hi in spans)])
+        apply_symbol_mappings(ROOT / unit["target"], unit.get("symbol_mappings", {}))
+        if ours is not None and ours.is_file():
+            sync_data_relocations(ROOT / unit["target"], ours)
     if returncode != 0 or missing or "SCRIPT ERROR" in log_text:
         return 1
     print(f"Delinked {len(selected)} unit(s)")
