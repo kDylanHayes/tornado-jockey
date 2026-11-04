@@ -1,0 +1,24 @@
+# Linker-ICF exceptions: target vtable slots whose relocation names were
+# collapsed by /OPT:ICF. objdiff compares data relocations by symbol name, and
+# a one-to-one symbol_mappings entry cannot express one target name used by
+# several base symbols, so these units cannot reach 100% data. This is a
+# target-object limitation, not a source problem: do not rewrite source to
+# mimic linker folding. Affected units stay partial.
+#
+# unit               vtable                         slot   VA         target relocation name
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODEL@@6B@            0x54   0x673164   ?term_source@@YAXPAUjpeg_decompress_struct@@@Z
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODEL@@6B@            0x58   0x673168   ?term_source@@YAXPAUjpeg_decompress_struct@@@Z
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODEL@@6B@            0x5c   0x67316c   ?term_source@@YAXPAUjpeg_decompress_struct@@@Z
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODEL@@6B@            0x70   0x673180   ?term_source@@YAXPAUjpeg_decompress_struct@@@Z
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODEL@@6B@            0x78   0x673188   ?term_source@@YAXPAUjpeg_decompress_struct@@@Z
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODEL@@6B@            0x88   0x673198   ?term_source@@YAXPAUjpeg_decompress_struct@@@Z
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODEL@@6B@            0x8c   0x67319c   ?term_source@@YAXPAUjpeg_decompress_struct@@@Z
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODEL@@6B@            0x80   0x673190   ?GetScaleFactor@DECAL@@UAE?AUV3@@XZ
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODEL@@6B@            0xa4   0x6731b4   ?GetScaleFactor@DECAL@@UAE?AUV3@@XZ
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODEL@@6B@            0x11c  0x67322c   ?SetVertices@MESH@@UAEXPAUDECALVERTEX@@HPBFH@Z
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODEL@@6B@            0x120  0x673230   ?SetVertices@MESH@@UAEXPAUDECALVERTEX@@HPBFH@Z
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODEL@@6B@            0x100  0x673210   ?SetDescription@RESOURCEMASTER@@UAEXABH@Z
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODELMASTER@@6B@      0x60   0x6730e8   ?SetDescription@RESOURCEMASTER@@UAEXABH@Z
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODELMASTER@@6B@      0x64   0x6730ec   ?SetDescription@RESOURCEMASTER@@UAEXABH@Z
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODELMANAGER@@6B@     0x08   0x673064   ??_EDECALMANAGER@@UAEPAXI@Z
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODELMASTER@@6B@      0x04   0x67308c   ??_ECPRIMITIVE3MASTER@@UAEPAXI@Z
