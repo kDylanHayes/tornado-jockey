@@ -126,21 +126,19 @@ float SEGMENT3::Project(const V3 &point, float *distance)
 // each when the pointers are set: Eberly's, with unit directions.
 float SEGMENT3::SqrDistance(const SEGMENT3 &other, V3 *pa, V3 *pb)
 {
-    const float fA00 = 1.0f;
-    const float fA11 = 1.0f;
     V3 kDiff = GetStart() - other.GetStart();
     V3 kDir1 = other.dir;
     float fA01 = -Dot(GetDirection(), kDir1);
     float fB0 = Dot(GetDirection(), kDiff);
     float fC = Dot(kDiff, kDiff);
-    float fDet = (float)fabs(fA00 * fA11 - fA01 * fA01);
+    float fDet = (float)fabs(1.0f - fA01 * fA01);
     float fB1, fS, fT, fSqrDist, fTmp;
 
     if (fDet >= 1e-06f) {
         // The segments are not parallel.
         fB1 = -Dot(other.GetDirection(), kDiff);
-        fS = fA01 * fB1 - fA11 * fB0;
-        fT = fA01 * fB0 - fA00 * fB1;
+        fS = fA01 * fB1 - fB0;
+        fT = fA01 * fB0 - fB1;
 
         if (fS >= 0.0f) {
             if (fS <= fDet) {
@@ -149,20 +147,20 @@ float SEGMENT3::SqrDistance(const SEGMENT3 &other, V3 *pa, V3 *pb)
                         float fInvDet = 1.0f / fDet;
                         fS *= fInvDet;
                         fT *= fInvDet;
-                        fSqrDist = fS * (fA00 * fS + fA01 * fT + 2.0f * fB0) +
-                                   fT * (fA01 * fS + fA11 * fT + 2.0f * fB1) + fC;
+                        fSqrDist = fS * (fS + fA01 * fT + 2.0f * fB0) +
+                                   fT * (fA01 * fS + fT + 2.0f * fB1) + fC;
                     } else {
                         fT = 1.0f;
                         fTmp = fA01 + fB0;
                         if (fTmp >= 0.0f) {
                             fS = 0.0f;
-                            fSqrDist = fA11 + 2.0f * fB1 + fC;
-                        } else if (-fTmp >= fA00) {
+                            fSqrDist = 1.0f + 2.0f * fB1 + fC;
+                        } else if (-fTmp >= 1.0f) {
                             fS = 1.0f;
-                            fSqrDist = fA00 + fA11 + fC + 2.0f * (fB1 + fTmp);
+                            fSqrDist = 1.0f + 1.0f + fC + 2.0f * (fB1 + fTmp);
                         } else {
-                            fS = -fTmp / fA00;
-                            fSqrDist = fTmp * fS + fA11 + 2.0f * fB1 + fC;
+                            fS = -fTmp / 1.0f;
+                            fSqrDist = fTmp * fS + 1.0f + 2.0f * fB1 + fC;
                         }
                     }
                 } else {
@@ -170,11 +168,11 @@ float SEGMENT3::SqrDistance(const SEGMENT3 &other, V3 *pa, V3 *pb)
                     if (fB0 >= 0.0f) {
                         fS = 0.0f;
                         fSqrDist = fC;
-                    } else if (-fB0 >= fA00) {
+                    } else if (-fB0 >= 1.0f) {
                         fS = 1.0f;
-                        fSqrDist = fA00 + 2.0f * fB0 + fC;
+                        fSqrDist = 1.0f + 2.0f * fB0 + fC;
                     } else {
-                        fS = -fB0 / fA00;
+                        fS = -fB0 / 1.0f;
                         fSqrDist = fB0 * fS + fC;
                     }
                 }
@@ -185,48 +183,48 @@ float SEGMENT3::SqrDistance(const SEGMENT3 &other, V3 *pa, V3 *pb)
                         fTmp = fA01 + fB1;
                         if (fTmp >= 0.0f) {
                             fT = 0.0f;
-                            fSqrDist = fA00 + 2.0f * fB0 + fC;
-                        } else if (-fTmp >= fA11) {
+                            fSqrDist = 1.0f + 2.0f * fB0 + fC;
+                        } else if (-fTmp >= 1.0f) {
                             fT = 1.0f;
-                            fSqrDist = fA00 + fA11 + fC + 2.0f * (fB0 + fTmp);
+                            fSqrDist = 1.0f + 1.0f + fC + 2.0f * (fB0 + fTmp);
                         } else {
-                            fT = -fTmp / fA11;
-                            fSqrDist = fTmp * fT + fA00 + 2.0f * fB0 + fC;
+                            fT = -fTmp / 1.0f;
+                            fSqrDist = fTmp * fT + 1.0f + 2.0f * fB0 + fC;
                         }
                     } else {
                         fTmp = fA01 + fB0;
-                        if (-fTmp <= fA00) {
+                        if (-fTmp <= 1.0f) {
                             fT = 1.0f;
                             if (fTmp >= 0.0f) {
                                 fS = 0.0f;
-                                fSqrDist = fA11 + 2.0f * fB1 + fC;
+                                fSqrDist = 1.0f + 2.0f * fB1 + fC;
                             } else {
-                                fS = -fTmp / fA00;
-                                fSqrDist = fTmp * fS + fA11 + 2.0f * fB1 + fC;
+                                fS = -fTmp / 1.0f;
+                                fSqrDist = fTmp * fS + 1.0f + 2.0f * fB1 + fC;
                             }
                         } else {
                             fS = 1.0f;
                             fTmp = fA01 + fB1;
                             if (fTmp >= 0.0f) {
                                 fT = 0.0f;
-                                fSqrDist = fA00 + 2.0f * fB0 + fC;
-                            } else if (-fTmp >= fA11) {
+                                fSqrDist = 1.0f + 2.0f * fB0 + fC;
+                            } else if (-fTmp >= 1.0f) {
                                 fT = 1.0f;
-                                fSqrDist = fA00 + fA11 + fC + 2.0f * (fB0 + fTmp);
+                                fSqrDist = 1.0f + 1.0f + fC + 2.0f * (fB0 + fTmp);
                             } else {
-                                fT = -fTmp / fA11;
-                                fSqrDist = fTmp * fT + fA00 + 2.0f * fB0 + fC;
+                                fT = -fTmp / 1.0f;
+                                fSqrDist = fTmp * fT + 1.0f + 2.0f * fB0 + fC;
                             }
                         }
                     }
                 } else {
-                    if (-fB0 < fA00) {
+                    if (-fB0 < 1.0f) {
                         fT = 0.0f;
                         if (fB0 >= 0.0f) {
                             fS = 0.0f;
                             fSqrDist = fC;
                         } else {
-                            fS = -fB0 / fA00;
+                            fS = -fB0 / 1.0f;
                             fSqrDist = fB0 * fS + fC;
                         }
                     } else {
@@ -234,13 +232,13 @@ float SEGMENT3::SqrDistance(const SEGMENT3 &other, V3 *pa, V3 *pb)
                         fTmp = fA01 + fB1;
                         if (fTmp >= 0.0f) {
                             fT = 0.0f;
-                            fSqrDist = fA00 + 2.0f * fB0 + fC;
-                        } else if (-fTmp >= fA11) {
+                            fSqrDist = 1.0f + 2.0f * fB0 + fC;
+                        } else if (-fTmp >= 1.0f) {
                             fT = 1.0f;
-                            fSqrDist = fA00 + fA11 + fC + 2.0f * (fB0 + fTmp);
+                            fSqrDist = 1.0f + 1.0f + fC + 2.0f * (fB0 + fTmp);
                         } else {
-                            fT = -fTmp / fA11;
-                            fSqrDist = fTmp * fT + fA00 + 2.0f * fB0 + fC;
+                            fT = -fTmp / 1.0f;
+                            fSqrDist = fTmp * fT + 1.0f + 2.0f * fB0 + fC;
                         }
                     }
                 }
@@ -252,34 +250,34 @@ float SEGMENT3::SqrDistance(const SEGMENT3 &other, V3 *pa, V3 *pb)
                     if (fB1 >= 0.0f) {
                         fT = 0.0f;
                         fSqrDist = fC;
-                    } else if (-fB1 >= fA11) {
+                    } else if (-fB1 >= 1.0f) {
                         fT = 1.0f;
-                        fSqrDist = fA11 + 2.0f * fB1 + fC;
+                        fSqrDist = 1.0f + 2.0f * fB1 + fC;
                     } else {
-                        fT = -fB1 / fA11;
+                        fT = -fB1 / 1.0f;
                         fSqrDist = fB1 * fT + fC;
                     }
                 } else {
                     fTmp = fA01 + fB0;
                     if (fTmp < 0.0f) {
                         fT = 1.0f;
-                        if (-fTmp >= fA00) {
+                        if (-fTmp >= 1.0f) {
                             fS = 1.0f;
-                            fSqrDist = fA00 + fA11 + fC + 2.0f * (fB1 + fTmp);
+                            fSqrDist = 1.0f + 1.0f + fC + 2.0f * (fB1 + fTmp);
                         } else {
-                            fS = -fTmp / fA00;
-                            fSqrDist = fTmp * fS + fA11 + 2.0f * fB1 + fC;
+                            fS = -fTmp / 1.0f;
+                            fSqrDist = fTmp * fS + 1.0f + 2.0f * fB1 + fC;
                         }
                     } else {
                         fS = 0.0f;
                         if (fB1 >= 0.0f) {
                             fT = 0.0f;
                             fSqrDist = fC;
-                        } else if (-fB1 >= fA11) {
+                        } else if (-fB1 >= 1.0f) {
                             fT = 1.0f;
-                            fSqrDist = fA11 + 2.0f * fB1 + fC;
+                            fSqrDist = 1.0f + 2.0f * fB1 + fC;
                         } else {
-                            fT = -fB1 / fA11;
+                            fT = -fB1 / 1.0f;
                             fSqrDist = fB1 * fT + fC;
                         }
                     }
@@ -287,11 +285,11 @@ float SEGMENT3::SqrDistance(const SEGMENT3 &other, V3 *pa, V3 *pb)
             } else {
                 if (fB0 < 0.0f) {
                     fT = 0.0f;
-                    if (-fB0 >= fA00) {
+                    if (-fB0 >= 1.0f) {
                         fS = 1.0f;
-                        fSqrDist = fA00 + 2.0f * fB0 + fC;
+                        fSqrDist = 1.0f + 2.0f * fB0 + fC;
                     } else {
-                        fS = -fB0 / fA00;
+                        fS = -fB0 / 1.0f;
                         fSqrDist = fB0 * fS + fC;
                     }
                 } else {
@@ -299,11 +297,11 @@ float SEGMENT3::SqrDistance(const SEGMENT3 &other, V3 *pa, V3 *pb)
                     if (fB1 >= 0.0f) {
                         fT = 0.0f;
                         fSqrDist = fC;
-                    } else if (-fB1 >= fA11) {
+                    } else if (-fB1 >= 1.0f) {
                         fT = 1.0f;
-                        fSqrDist = fA11 + 2.0f * fB1 + fC;
+                        fSqrDist = 1.0f + 2.0f * fB1 + fC;
                     } else {
-                        fT = -fB1 / fA11;
+                        fT = -fB1 / 1.0f;
                         fSqrDist = fB1 * fT + fC;
                     }
                 }
@@ -317,30 +315,30 @@ float SEGMENT3::SqrDistance(const SEGMENT3 &other, V3 *pa, V3 *pb)
                 fS = 0.0f;
                 fT = 0.0f;
                 fSqrDist = fC;
-            } else if (-fB0 <= fA00) {
-                fS = -fB0 / fA00;
+            } else if (-fB0 <= 1.0f) {
+                fS = -fB0 / 1.0f;
                 fT = 0.0f;
                 fSqrDist = fB0 * fS + fC;
             } else {
                 fB1 = -Dot(kDiff, kDir1.Normalized());
                 fS = 1.0f;
-                fTmp = fA00 + fB0;
+                fTmp = 1.0f + fB0;
                 if (-fTmp >= fA01) {
                     fT = 1.0f;
-                    fSqrDist = fA00 + fA11 + fC + 2.0f * (fA01 + fB0 + fB1);
+                    fSqrDist = 1.0f + 1.0f + fC + 2.0f * (fA01 + fB0 + fB1);
                 } else {
                     fT = -fTmp / fA01;
-                    fSqrDist = fA00 + 2.0f * fB0 + fC + fT * (fA11 * fT + 2.0f * (fA01 + fB1));
+                    fSqrDist = 1.0f + 2.0f * fB0 + fC + fT * (fT + 2.0f * (fA01 + fB1));
                 }
             }
         } else {
             // The directions form an acute angle.
-            if (-fB0 >= fA00) {
+            if (-fB0 >= 1.0f) {
                 fS = 1.0f;
                 fT = 0.0f;
-                fSqrDist = fA00 + 2.0f * fB0 + fC;
+                fSqrDist = 1.0f + 2.0f * fB0 + fC;
             } else if (fB0 <= 0.0f) {
-                fS = -fB0 / fA00;
+                fS = -fB0 / 1.0f;
                 fT = 0.0f;
                 fSqrDist = fB0 * fS + fC;
             } else {
@@ -348,10 +346,10 @@ float SEGMENT3::SqrDistance(const SEGMENT3 &other, V3 *pa, V3 *pb)
                 fS = 0.0f;
                 if (fB0 >= -fA01) {
                     fT = 1.0f;
-                    fSqrDist = fA11 + 2.0f * fB1 + fC;
+                    fSqrDist = 1.0f + 2.0f * fB1 + fC;
                 } else {
                     fT = -fB0 / fA01;
-                    fSqrDist = fC + fT * (2.0f * fB1 + fA11 * fT);
+                    fSqrDist = fC + fT * (2.0f * fB1 + fT);
                 }
             }
         }
@@ -952,7 +950,7 @@ bool OOBOX3::IntersectFace(int face, const V3 &a, const V3 &b, V3 *at)
         UpdateCorners();
     if (planesDirty)
         UpdatePlanes();
-    PRIMV3 c[4];
+    V3 c0, c1, c2, c3;
     PLANE &plane = Plane(face);
     float da = a.x * plane.a + plane.b * a.y + Plane(face).c * a.z + plane.d;
     float db = plane.a * b.x + plane.b * b.y + plane.c * b.z + plane.d;
@@ -962,53 +960,53 @@ bool OOBOX3::IntersectFace(int face, const V3 &a, const V3 &b, V3 *at)
         return false;
     switch (face) {
     case 0:
-        c[0] = corners[0];
-        c[1] = corners[1];
-        c[2] = corners[2];
-        c[3] = corners[3];
+        c0 = corners[0];
+        c1 = corners[1];
+        c2 = corners[2];
+        c3 = corners[3];
         break;
     case 1:
-        c[0] = corners[4];
-        c[1] = corners[5];
-        c[2] = corners[6];
-        c[3] = corners[7];
+        c0 = corners[4];
+        c1 = corners[5];
+        c2 = corners[6];
+        c3 = corners[7];
         break;
     case 2:
-        c[0] = corners[2];
-        c[1] = corners[3];
-        c[2] = corners[6];
-        c[3] = corners[7];
+        c0 = corners[2];
+        c1 = corners[3];
+        c2 = corners[6];
+        c3 = corners[7];
         break;
     case 3:
-        c[0] = corners[0];
-        c[1] = corners[1];
-        c[2] = corners[4];
-        c[3] = corners[5];
+        c0 = corners[0];
+        c1 = corners[1];
+        c2 = corners[4];
+        c3 = corners[5];
         break;
     case 4:
-        c[0] = corners[0];
-        c[1] = corners[2];
-        c[2] = corners[4];
-        c[3] = corners[6];
+        c0 = corners[0];
+        c1 = corners[2];
+        c2 = corners[4];
+        c3 = corners[6];
         break;
     case 5:
-        c[0] = corners[1];
-        c[1] = corners[3];
-        c[2] = corners[5];
-        c[3] = corners[7];
+        c0 = corners[1];
+        c1 = corners[3];
+        c2 = corners[5];
+        c3 = corners[7];
         break;
     }
     V3 hit = plane.Intersect(a, b, 0);
     if (at)
         *at = hit;
-    if ((hit.x - c[0].x) * (c[1].x - c[0].x) + (hit.y - c[0].y) * (c[1].y - c[0].y) +
-                (hit.z - c[0].z) * (c[1].z - c[0].z) >= 0.0f &&
-        (hit.x - c[0].x) * (c[2].x - c[0].x) + (hit.y - c[0].y) * (c[2].y - c[0].y) +
-                (hit.z - c[0].z) * (c[2].z - c[0].z) >= 0.0f &&
-        (hit.x - c[3].x) * (c[1].x - c[3].x) + (hit.y - c[3].y) * (c[1].y - c[3].y) +
-                (hit.z - c[3].z) * (c[1].z - c[3].z) >= 0.0f &&
-        (hit.x - c[3].x) * (c[2].x - c[3].x) + (hit.y - c[3].y) * (c[2].y - c[3].y) +
-                (hit.z - c[3].z) * (c[2].z - c[3].z) >= 0.0f)
+    if ((hit.x - c0.x) * (c1.x - c0.x) + (hit.y - c0.y) * (c1.y - c0.y) +
+                (hit.z - c0.z) * (c1.z - c0.z) >= 0.0f &&
+        (hit.x - c0.x) * (c2.x - c0.x) + (hit.y - c0.y) * (c2.y - c0.y) +
+                (hit.z - c0.z) * (c2.z - c0.z) >= 0.0f &&
+        (hit.x - c3.x) * (c1.x - c3.x) + (hit.y - c3.y) * (c1.y - c3.y) +
+                (hit.z - c3.z) * (c1.z - c3.z) >= 0.0f &&
+        (hit.x - c3.x) * (c2.x - c3.x) + (hit.y - c3.y) * (c2.y - c3.y) +
+                (hit.z - c3.z) * (c2.z - c3.z) >= 0.0f)
         return true;
     return false;
 }

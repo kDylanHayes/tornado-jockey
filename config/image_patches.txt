@@ -132,3 +132,13 @@
 0x005b8adf-0x005b8aee   lib/ode/lcp                            ?swapRowsAndCols@@YAXPAPAMHHHHH@Z                                      code  observed
 0x005bb207-0x005bb213   lib/ode/OPC_OptimizedTree              ?Build@AABBNoLeafTree@Opcode@@UAE_NPAVAABBTree@2@@Z                    code  observed
 0x005bd929-0x005bd938   lib/ode/fastldlt                       _dFactorLDLT                                                           code  observed
+#
+# Found by the terrain pass (byte-checked against orig/Tornado.exe). Both runs
+# are opaque bytes that overwrite the real code, and take the relocations of
+# the instructions they displaced with them. ShowHelper resumes at 0x4bf233
+# (mov [ecx+4],esi, the tail of the RESHANDLE copy) and LoadImages at
+# 0x4e3d5e (mov edi,eax):
+#   0x4bf221  30 d9 cc d6 98 5d 53 a7 df 9b 57 b9 47 b9 11 52 40 08
+#   0x4e3d4e  5c 69 68 4e 39 f8 8e d8 fa 43 86 a8 e9 8e ff ff
+0x4bf221-0x4bf232   Tongas2/CPRIMITIVE3         ?ShowHelper@CPRIMITIVE3RESOURCE@@QAEXAB_NH@Z           code  observed
+0x4e3d4e-0x4e3d5d   Tongas2/HEIGHTMAPDX8        ?LoadImages@HEIGHTMAPDX8MASTER@@QAEXXZ                 code  observed
