@@ -4751,6 +4751,7 @@
 0x006581b8 __real@40a00000 data
 0x00658234 __real@42652ee1 data
 0x00658288 __real@3ecccccd data
+0x00658794 ??_C@_08EOHIBGCM@FogColor?$AA@ data 0x9
 0x00658828 ??_C@_0FP@IEHJKMFK@ERROR?$CB?$CB?5SCENE?3?3LoadActorsInforma@ data
 0x00658c5c __real@43c80000 data
 0x0065925c __real@41a00000 data 0x4

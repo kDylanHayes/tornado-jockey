@@ -16,6 +16,7 @@
 0x671062-0x671071   Tongas2/SHADER              ??_C@_0O@EOICMLBP@AllowCompress?$AA@ (also           data  observed
 0x6c0290-0x6c029f   Tongas2/CPRIMITIVE3          ?s_properties@CPRIMITIVE3MASTER@@2PAUPROPENTRY@@A           data  observed
                                                 ??_C@_0M@MOHFMCHH@AllowResize?$AA@)
+0x6be290-0x6be29f   Tongas2/LIGHT               ?s_properties@LIGHTMASTER@@2PAUPROPENTRY@@A (+0x38)     data  observed
 #
 # Reported by the orchestrator / worker 8 (bytes not independently compared here):
 0x667150-0x66715f   Tongas2/CMDMGR              ??_C@_0CF@MLNDBCPD@scripting?5object?5without?5base?5@  data  reported

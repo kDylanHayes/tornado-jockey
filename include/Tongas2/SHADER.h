@@ -154,6 +154,10 @@ public:
     virtual int Virtual31() { return 0; }
     // The whole texture, for a shader without frames.
     virtual UVRECT GetFrame(int frame);
+
+    // The original lays a SHADER out in 0x34 bytes; without this word ours is
+    // 0x30, which shows up in SHADERMASTER::CreateCopy's allocation.
+    int m_frame;
 };
 
 #endif
