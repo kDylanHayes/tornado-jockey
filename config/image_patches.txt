@@ -1,0 +1,20 @@
+# Ranges in Tornado.exe whose bytes are opaque image watermarks / installer
+# patches. They are part of the 20bf7200 image, not decompiler artifacts.
+# Do not reproduce these bytes in source or data to force a match; the units
+# that overlap them stay partial. See docs/image-patches.md.
+#
+# start-end          unit                        symbol                                                  kind  source
+0x4a91d4-0x4a91e3   Tongas2/DECAL               ?SetPosition@DECAL@@UAEXUV3@@@Z                         code  observed
+0x4c1943-0x4c1955   Tongas2/POLYTRAIL           ?CreatePOLYTRAIL@@YAPAVRESOURCEMANAGER@@XZ              code  observed
+0x4d2b49-0x4d2b58   Tongas2/OCTREE              ??0OCTREE@@QAE@UV3@@0H@Z                                code  observed
+0x4d526e-0x4d527f   Tongas2/MESH                ?AcquireShader@MESHMASTER@@QAEXXZ                       code  observed
+0x4dc7dd-0x4dc7f4   Tongas2/RENDERER            ?SetFogColor@RENDERER@@QAEXPBUV3I@@@Z                   code  observed
+0x671062-0x671071   Tongas2/SHADER              ??_C@_0O@EOICMLBP@AllowCompress?$AA@ /                  data  observed
+                                                ??_C@_0M@MOHFMCHH@AllowResize?$AA@
+0x667150-0x66715f   Tongas2/CMDMGR              ??_C@_0CF@MLNDBCPD@scripting?5object?5without?5base?5@  data  reported
+0x66c0d8-0x66c0e7   Tongas2/RESOURCE            ??_C@_0M@OHKMKKDH@Description?$AA@                       data  reported
+0x673827-0x673836   Tongas2/BEHAVIORFADERESLOOP _s_TypeNames                                            data  reported
+#
+# Lengths observed so far are 13-19 bytes (16 typical). No fixed address
+# stride or modulus was found: the starts are 0x4a91d4, 0x4c1943, 0x4d2b49,
+# 0x4d526e, 0x4dc7dd, 0x667150, 0x66c0d8, 0x671062 and 0x673827.
