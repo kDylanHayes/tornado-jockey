@@ -291,15 +291,19 @@ def sync_undefined_refs(coff: Coff, base: Coff) -> int:
             uses[reloc[1]] = uses.get(reloc[1], 0) + 1
     defined = {base.name(base_by_index(base, i)) for i, rec, _ in base.symbols
                if struct.unpack_from("<h", rec, 12)[0] > 0}
+    ours_names = {base.name(rec) for _, rec, _ in base.symbols}
     for symidx, names in ours.items():
         target_name = coff.name(by_index[symidx])
         if target_name in names and len(names) == 1:
             continue
         # Folded code: several of our names meet here, the target uses it more
-        # than once, it is an exception handler, the function is ours, or it
-        # is a vector deleting destructor (a weak external the class names).
+        # than once, it is an exception handler, the function is ours, it is a
+        # vector deleting destructor (a weak external the class names), or the
+        # name is one our object never mentions (the address stands for an
+        # empty function the linker folded into another unit's).
         if not (len(names) > 1 or uses.get(symidx, 0) > 1
                 or target_name.startswith("__ehhandler$") or names <= defined
+                or target_name not in ours_names
                 or (target_name.startswith(("??_E", "??_G"))
                     and all(n.startswith("??_E") for n in names))):
             continue
@@ -313,6 +317,26 @@ def sync_undefined_refs(coff: Coff, base: Coff) -> int:
                 name = base_name(base_secno, reloc[0])
                 if name is None or name == target_name:
                     continue
+                reloc[1] = undefined_symbol(coff, name)
+                changed += 1
+    # An adjustor thunk jumps to the class's vector deleting destructor, whose
+    # weak external name MSVC writes; the exe holds the scalar destructor at
+    # that address, so the target names it ??_G. Point the jump at an
+    # undefined ??_E instead, as our object does.
+    for secno, sec in enumerate(coff.sections, 1):
+        if not sec["chars"] & IMAGE_SCN_CNT_CODE or not sec["relocs"]:
+            continue
+        base_secno = base_sections.get(primary_name(coff, secno))
+        if base_secno is None:
+            continue
+        for reloc in sec["relocs"]:
+            rec = by_index.get(reloc[1])
+            if rec is None or struct.unpack_from("<h", rec, 12)[0] <= 0:
+                continue
+            name = base_name(base_secno, reloc[0])
+            target_name = coff.name(rec)
+            if (name and name.startswith("??_E") and target_name.startswith("??_G")
+                    and name[4:] == target_name[4:]):
                 reloc[1] = undefined_symbol(coff, name)
                 changed += 1
     return changed

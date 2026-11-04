@@ -2552,7 +2552,8 @@
       ],
       "target": "build/target/Tongas2/GUICHECKBOXCONTROL.obj",
       "source": "src/Tongas2/GUICHECKBOXCONTROL.cpp",
-      "category": "engine"
+      "category": "engine",
+      "complete": true
     },
     {
       "name": "Tongas2/GUICHECKGROUPCONTROL",
@@ -2563,7 +2564,8 @@
       ],
       "target": "build/target/Tongas2/GUICHECKGROUPCONTROL.obj",
       "source": "src/Tongas2/GUICHECKGROUPCONTROL.cpp",
-      "category": "engine"
+      "category": "engine",
+      "complete": true
     },
     {
       "name": "Tongas2/GUISLIDERCONTROL",
