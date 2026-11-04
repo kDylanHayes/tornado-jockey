@@ -48,13 +48,19 @@ def fix(coff: split.Coff, variables: dict, externals=()) -> int:
     for i, rec, _ in coff.symbols:
         name = coff.name(rec)
         secno = struct.unpack_from("<h", rec, 12)[0]
-        if secno > 0 and name.startswith(("DAT_", "PTR_")) and not coff.sections[secno - 1]["chars"] & split.IMAGE_SCN_CNT_CODE:
+        if secno > 0 and not coff.sections[secno - 1]["chars"] & split.IMAGE_SCN_CNT_CODE:
             value = struct.unpack_from("<I", rec, 8)[0]
             owner = max((s for s in starts.get(secno, []) if s[0] <= value), default=None)
-            if owner is not None:
-                inside[i] = (owner[1], value - owner[0])
-            coff.set_name(rec, "LAB_" + name)
-            changed += 1
+            # Labels analysis/delinking left inside a named variable extend it
+            # or cut it at the label. The delinker names an interior reference
+            # "<owner>+<offset>"; hiding it keeps the variable's own extent.
+            interior = (owner is not None and value > owner[0]
+                        and name.startswith(coff.name(by_index[owner[1]]) + "+"))
+            if name.startswith(("DAT_", "PTR_")) or interior:
+                if owner is not None:
+                    inside[i] = (owner[1], value - owner[0])
+                coff.set_name(rec, "LAB_" + name)
+                changed += 1
     for sec in coff.sections:
         if (sec["name"].rstrip(b"\0") == b".data" and sec["data"] and not sec["relocs"]
                 and not any(sec["data"])):
