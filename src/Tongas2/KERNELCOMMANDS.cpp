@@ -72,7 +72,8 @@ PROPENTRY KERNELCOMMANDS::s_properties[] = {
 // Whether two vectors are the same.
 bool operator==(const V2 &a, const V2 &b)
 {
-    return a.x == b.x && a.y == b.y;
+    bool same = a.x == b.x && a.y == b.y;
+    return same;
 }
 
 // Defined in other units.
@@ -193,12 +194,13 @@ bool operator==(const ANG &a, const ANG &b)
     const V3 &ex = x.GetEuler();
     ANG y = b;
     const V3 &ey = y.GetEuler();
-    return ex.x == ey.x && ex.y == ey.y && ex.z == ey.z;
+    return ey.x == ex.x && ey.y == ex.y && ey.z == ex.z;
 }
 
 bool SRTEXTURE::operator==(const SRTEXTURE &other) const
 {
-    return !strcmp(name.m_buf, other.name.m_buf) && index == other.index;
+    bool same = !strcmp(name.m_buf, other.name.m_buf) && index == other.index;
+    return same;
 }
 
 // Whether the values are the same; values of different types are the same
@@ -208,7 +210,7 @@ bool operator==(const SRESULT &a, const SRESULT &b)
 {
     switch (a.GetType()) {
     case SRT_CHAR:
-        if (b.GetType() == SRT_CHAR && a.GetChar(0) == b.GetChar(0))
+        if (b.GetType() == SRT_CHAR && b.GetChar(0) == a.GetChar(0))
             return true;
         break;
     case SRT_INT:
@@ -487,7 +489,7 @@ SRESULT KERNELCOMMANDS::RandomDelay(CMDCALL *call)
 
 SRESULT KERNELCOMMANDS::If(CMDCALL *call)
 {
-    if (call->tokens->m_count < 5) {
+    if (call->tokens->m_count <= 4) {
         SRESULT result;
         result.Assign(g_pCmdMgr->Evaluate(STRING(call->tokens->GetToken(1)), call->caller));
         if (result.GetBool(false)) {
