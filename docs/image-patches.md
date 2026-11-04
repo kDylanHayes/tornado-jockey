@@ -123,3 +123,18 @@ alone, so the delinked object had no relocation there (`objdiff` saw the bare
 address against our `$L17986`). `split_functions.sync_local_refs` now copies
 the relocation our object has, and the unit matches 100%.
 
+A second pairing defect was visible in the OPC colliders. The delinker names
+the data symbol a reference lands in but drops the offset, so `VertexCache+4`
+came out as plain `VertexCache`. `FixReferences` already turns a reference
+into the middle of a *sized* data symbol into an offset reference, which keeps
+the addend; these arrays were declared `data` without a size. They now carry
+the sizes our objects give them (`MeshInterface::VertexCache` `0x24`, the ODE
+collision scratch vectors `0x10`, `_mHullBoxRot`/`_mCapsuleRotation` `0x30`,
+`_gLocalContacts` `0x500`), which makes the large `_Collide*`, `_RayStab`,
+`_SegmentStab`, `_cldTest*` and `dCollide*` routines pair operand for
+operand. Five libpng messages (`0x665558`, `0x6655dc`, `0x6806a8`, `0x6808f8`,
+`0x681298`) were named the same way: our literals reproduce them byte for
+byte. None of this moved the report (objdiff already counted argument
+mismatches as matched); it makes those functions 100% in `objdiff diff`.
+
+
