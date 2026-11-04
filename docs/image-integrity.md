@@ -19,11 +19,19 @@ what our compiled object produces for the same symbol.
 | `0x004c8ec0` | `Tongas2/GUIVISUALCONTROL` | `?SetVisualOpacity@GUIVISUAL@@UAEXABHABM@Z` | 6 bytes at the function's prologue; code resumes at +6 |
 | `0x004cb5da` | `Tongas2/GUITEXTCONTROL` | `?Execute@GUITEXT@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z` (+74) | 16 bytes mid-function; code resumes at +90 |
 | `0x0048e33d` | `Tongas2/GUI` | `??1GUI@@UAE@XZ` (+77) | 16 bytes mid-function; code resumes at +93 |
+| `0x004d0426` | `Tongas2/GUIBEHAVIORS` | `?Update@ACCELERATION@@QAE_NM@Z` (+0x156) | 16 bytes mid-function (Ghidra reports overlapping instructions there) |
+| `0x0049f540` | `Tongas2/GUIGROUPCONTROL` | `?MouseOverCommand@GUIGROUP@@UAE?AVSRESULT@@PAUCMDCALL@@@Z` (+112) | 18 bytes mid-function; code resumes at +130 |
+| `0x00493187` | `Tongas2/GUICONTROL` | `?MoveRel@GUICONTROL@@UAE?AVSRESULT@@PAUCMDCALL@@@Z` (+23) | 16 bytes in the function body; code resumes at +39 |
+| `0x00615a5a` | `Tongas2/GUIGENERICCONTROL` | `_$E3` (+522), the property-table initializer | 21 bytes mid-function; code resumes at +543 |
 | `0x004d2b48` | `Tongas2/OCTREE` | 16 bytes inside a function | reported by the octree worker |
 | `0x00671060`, `0x00671070` | `Tongas2/SHADER` | string prefixes in `.rdata` | reported by the shader worker |
 | `0x00667150`, `0x0066c0d8` | `Tongas2/CMDMGR`, `Tongas2/RESOURCE` | `.rdata` string/table bytes | reported by those units' workers |
 | `0x00673827` | `Tongas2/BEHAVIORFADERESLOOP` | 16 bytes inside its `_s_TypeNames` copy | reported by the behavior worker |
 
-`SetValueAt` and `SetVisualOpacity` therefore never reach 100%, and
-`GUISLIDERCONTROL` / `GUIVISUALCONTROL` stay partial. Everything else in
-those units can still match.
+`SetValueAt`, `SetVisualOpacity`, `GUITEXT::Execute`, `GUI::~GUI`,
+`ACCELERATION::Update`, `GUIGROUP::MouseOverCommand`, `GUICONTROL::MoveRel`
+and `GUIGENERICCONTROL`'s `_$E3` therefore never reach 100%, and the units
+that own them (`GUISLIDERCONTROL`, `GUIVISUALCONTROL`, `GUITEXTCONTROL`,
+`GUI`, `GUIBEHAVIORS`, `GUIGROUPCONTROL`, `GUICONTROL`,
+`GUIGENERICCONTROL`) stay partial. Everything else in those units can still
+match.
