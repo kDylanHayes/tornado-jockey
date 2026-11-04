@@ -39,6 +39,7 @@ import ghidra.program.model.symbol.RefType;
 import ghidra.program.model.symbol.Reference;
 import ghidra.program.model.symbol.ReferenceManager;
 import ghidra.program.model.symbol.SourceType;
+import ghidra.program.model.symbol.Symbol;
 
 public class FixReferences extends HeadlessScript {
 	// A pointer whose four bytes are printable text ending in NUL.
@@ -150,20 +151,6 @@ public class FixReferences extends HeadlessScript {
 				if (!indexed || disp == null) {
 					continue;
 				}
-				if (ins.getOperandReferences(op).length == 0) {
-					// An indexed read or write of a data address
-					// ([eax*4 + g_classParents]) that analysis left as a
-					// plain scalar: add the reference so the delinker
-					// relocates it.
-					MemoryBlock block = currentProgram.getMemory().getBlock(disp);
-					Function owner = getFunctionContaining(ins.getAddress());
-					boolean sameFunction = owner != null && owner.getBody().contains(disp);
-					if (block != null && block.isInitialized() && (!block.isExecute() || sameFunction)) {
-						refs.addMemoryReference(ins.getAddress(), disp, RefType.DATA,
-							SourceType.USER_DEFINED, op);
-						added++;
-					}
-				}
 				for (Reference ref : refs.getReferencesFrom(ins.getAddress(), op)) {
 					if (!ref.isMemoryReference() || ref.getReferenceType().isFlow() ||
 						ref.getToAddress().equals(disp)) {
@@ -173,6 +160,20 @@ public class FixReferences extends HeadlessScript {
 					refs.delete(ref);
 					refs.addMemoryReference(ins.getAddress(), disp, type, SourceType.USER_DEFINED, op);
 					fixed++;
+				}
+				if (ins.getOperandReferences(op).length == 0) {
+					// An indexed data operand (mov [eax*4 + table], ...) that
+					// analysis never referenced: the exe holds the named
+					// symbol's absolute address, but without a reference the
+					// delinker emits no relocation for it.
+					MemoryBlock block = currentProgram.getMemory().getBlock(disp);
+					Symbol sym = getSymbolAt(disp);
+					if (block != null && block.isInitialized() && !block.isExecute() &&
+						sym != null && sym.getSource() == SourceType.USER_DEFINED) {
+						refs.addMemoryReference(ins.getAddress(), disp, RefType.DATA,
+							SourceType.USER_DEFINED, op);
+						added++;
+					}
 				}
 			}
 		}

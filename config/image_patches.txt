@@ -4,10 +4,10 @@
 # that overlap them stay partial. See docs/image-patches.md.
 #
 # start-end          unit                        symbol                                                  kind  source
-0x4a91d4-0x4a91e3   Tongas2/DECAL               ?SetPosition@DECAL@@UAEXUV3@@@Z                         code  observed
-0x4c1943-0x4c1955   Tongas2/POLYTRAIL           ?CreatePOLYTRAIL@@YAPAVRESOURCEMANAGER@@XZ              code  observed
+0x4a91d3-0x4a91e3   Tongas2/DECAL               ?SetPosition@DECAL@@UAEXUV3@@@Z                         code  observed
+0x4c1942-0x4c1955   Tongas2/POLYTRAIL           ?CreatePOLYTRAIL@@YAPAVRESOURCEMANAGER@@XZ              code  observed
 0x4d2b49-0x4d2b58   Tongas2/OCTREE              ??0OCTREE@@QAE@UV3@@0H@Z                                code  observed
-0x4d526e-0x4d527f   Tongas2/MESH                ?AcquireShader@MESHMASTER@@QAEXXZ                       code  observed
+0x4d526d-0x4d527f   Tongas2/MESH                ?AcquireShader@MESHMASTER@@QAEXXZ                       code  observed
 0x4dc7dd-0x4dc7f4   Tongas2/RENDERER            ?SetFogColor@RENDERER@@QAEXPBUV3I@@@Z                   code  observed
 0x4da0b8-0x4da0c7   Tongas2/GEOMETRY            ?IntersectFace@OOBOX3@@QAE_NHABUV3@@0PAU2@@Z            code  observed
 0x490a62-0x490a71   Tongas2/SCENE               ?New@?$SAFEINDEX@VACTOR@@$0BDII@$0PL@$00@@QAE_NPAPAVACTOR@@HPAHPAURESHANDLE@@@Z  code  observed
