@@ -4765,6 +4765,7 @@
 0x00658794 ??_C@_08EOHIBGCM@FogColor?$AA@ data 0x9
 0x00658828 ??_C@_0FP@IEHJKMFK@ERROR?$CB?$CB?5SCENE?3?3LoadActorsInforma@ data
 0x00658c5c __real@43c80000 data
+0x00659234 ??_C@_0BK@MAIKPOAD@?$CFs?5error?5loading?5path?5?$CFs?$CB?$AA@ data 0x1c
 0x0065925c __real@41a00000 data 0x4
 0x00659264 __real@bf800000 data
 0x00659270 __real@38000100 data 0x4
@@ -5143,6 +5144,7 @@
 0x006686ec ??_C@_09BMHMPIHG@resources?$AA@ data 0xa
 0x006686f8 ??_7KERNELCOMMANDS@@6B@ data 0xec
 0x00668a90 ??_C@_03BDGOHNNK@add?$AA@ data 0x4
+0x00668ad4 ??_C@_08IOJEBIHA@createFX?$AA@ data 0x9
 0x00668b9c ??_C@_03FCCPIJGJ@Pos?$AA@ data 0x4
 0x00668ec8 ??_C@_0DG@BNHDHHAM@ACTOR?3?3SetResourcesZSort?$DOError?3?5@ data
 0x00668f00 ??_C@_0DJ@NDMOIIKC@ACTOR?3?3SetResourcesSpecific?$DOErro@ data
