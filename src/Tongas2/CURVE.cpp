@@ -196,12 +196,8 @@ void CURVE::AddMesh()
         mesh->SetVertices(m_vertices, m_numPoints * 2, s_indices, m_numPoints * 4 - 4);
         mesh->SetActive(true);
         m_lastLayer = -1;
-        m_lastPosition.x = -1.0f;
-        m_lastPosition.y = -1.0f;
-        m_lastPosition.z = -1.0f;
-        m_lastScale.x = -1.0f;
-        m_lastScale.y = -1.0f;
-        m_lastScale.z = -1.0f;
+        m_lastPosition.Set(-1.0f, -1.0f, -1.0f);
+        m_lastScale.Set(-1.0f, -1.0f, -1.0f);
         m_134 = ANG(-1.0f, -1.0f, -1.0f);
         m_meshCopy = mesh->m_handle;
     } else if (g_pLog) {
