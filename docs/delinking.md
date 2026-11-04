@@ -72,7 +72,9 @@ symbol and string tables are re-emitted. `tools/delink.py` runs it after
 `fix_data_symbols.py`; it is idempotent and can be run standalone with
 `py tools\fix_data_icf.py <unit>`.
 
-It only handles vtable (`??_7...@@6B@`) symbols. Other data differences, and
+It only handles vtable (`??_7...@@6B...`) symbols, including the
+multiple-inheritance secondary tables such as
+`??_7SPAWNER@@6BACTORLINK@@@`. Other data differences, and
 sections whose non-vtable bytes genuinely differ from the image, still have to
 be matched from source or recorded in `config/image_patches.txt` /
 `config/icf_exceptions.txt`. Data measures are all-or-nothing per section, so a
