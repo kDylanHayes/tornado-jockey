@@ -223,6 +223,105 @@ def name_local_labels(coff: Coff, base: Coff) -> int:
     return renamed
 
 
+def primary_name(coff: Coff, secno: int):
+    """The name of a section's main symbol (the one at offset 0)."""
+    best = None
+    for _, rec, _ in coff.symbols:
+        if struct.unpack_from("<h", rec, 12)[0] != secno:
+            continue
+        if struct.unpack_from("<I", rec, 8)[0] != 0:
+            continue
+        rank = (struct.unpack_from("<H", rec, 14)[0] != FUNCTION_TYPE,
+                rec[16] != IMAGE_SYM_CLASS_EXTERNAL)
+        if best is None or rank < best[0]:
+            best = (rank, coff.name(rec))
+    return best[1] if best else None
+
+
+def undefined_symbol(coff: Coff, name: str) -> int:
+    for i, rec, _ in coff.symbols:
+        if struct.unpack_from("<h", rec, 12)[0] == 0 and coff.name(rec) == name:
+            return i
+    return coff.add_symbol(name, 0, 0, 0, IMAGE_SYM_CLASS_EXTERNAL)
+
+
+def sync_undefined_refs(coff: Coff, base: Coff) -> int:
+    """Name a target's undefined references after the ones in our object.
+
+    The linker folds identical functions (/OPT:ICF) and shares one copy of
+    each exception handler, so one address stands for several names. A
+    delinked object can give that address only one undefined symbol, while
+    our object names the reference at every call site (`__ehhandler$...` for
+    each function with a handler, the empty function each vtable slot uses).
+    Where several of our names meet at one target symbol, or the target name
+    is an exception handler, the reference takes our name, so objdiff pairs
+    the call with the function in our object."""
+    by_index = {i: rec for i, rec, _ in coff.symbols}
+    base_sections = {}
+    for i, rec, _ in base.symbols:
+        secno = struct.unpack_from("<h", rec, 12)[0]
+        if secno > 0:
+            base_sections.setdefault(base.name(rec), secno)
+
+    def base_name(base_secno, offset):
+        for r in base.sections[base_secno - 1]["relocs"]:
+            if r[0] == offset:
+                return base.name(base_by_index(base, r[1]))
+        return None
+
+    # Undefined target symbol -> the names our object uses for it.
+    ours = {}
+    for secno, sec in enumerate(coff.sections, 1):
+        if not sec["relocs"]:
+            continue
+        base_secno = base_sections.get(primary_name(coff, secno))
+        if base_secno is None:
+            continue
+        for vaddr, symidx, _rtype in sec["relocs"]:
+            rec = by_index.get(symidx)
+            if rec is None or struct.unpack_from("<h", rec, 12)[0] != 0:
+                continue
+            name = base_name(base_secno, vaddr)
+            if name is not None:
+                ours.setdefault(symidx, set()).add(name)
+    changed = 0
+    uses = {}
+    for sec in coff.sections:
+        for reloc in sec["relocs"]:
+            uses[reloc[1]] = uses.get(reloc[1], 0) + 1
+    defined = {base.name(base_by_index(base, i)) for i, rec, _ in base.symbols
+               if struct.unpack_from("<h", rec, 12)[0] > 0}
+    for symidx, names in ours.items():
+        target_name = coff.name(by_index[symidx])
+        if target_name in names and len(names) == 1:
+            continue
+        # Folded code: several of our names meet here, the target uses it more
+        # than once, it is an exception handler, or the function is ours.
+        if not (len(names) > 1 or uses.get(symidx, 0) > 1
+                or target_name.startswith("__ehhandler$") or names <= defined):
+            continue
+        for secno, sec in enumerate(coff.sections, 1):
+            base_secno = base_sections.get(primary_name(coff, secno))
+            if base_secno is None:
+                continue
+            for reloc in sec["relocs"]:
+                if reloc[1] != symidx:
+                    continue
+                name = base_name(base_secno, reloc[0])
+                if name is None or name == target_name:
+                    continue
+                reloc[1] = undefined_symbol(coff, name)
+                changed += 1
+    return changed
+
+
+def base_by_index(base: Coff, index: int):
+    for i, rec, _ in base.symbols:
+        if i == index:
+            return rec
+    raise KeyError(index)
+
+
 def split(coff: Coff, base: int | None = None, sizes: dict | None = None,
           follows: set | None = None) -> int:
     """sizes: known function sizes by name; they decide where padding starts.
@@ -355,6 +454,7 @@ def main_path(src, dst=None, base=None, ours=None, sizes=None) -> int:
     add_except_list(coff)
     if base_coff is not None:
         name_local_labels(coff, base_coff)
+        sync_undefined_refs(coff, base_coff)
     # objdiff treats any other label in code as the start of a symbol (and
     # hangs on one in the middle of a jump table, "PTR_caseD_2_0055cd38+3");
     # it skips LAB_ labels.

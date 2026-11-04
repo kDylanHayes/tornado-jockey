@@ -2,6 +2,9 @@
 // table of their names, and the actors' list of them. The original file name
 // is not known.
 #define ANG_INLINE_AXES
+// TRAVELWANIMBEHAVIOR::Update calls V3::Length where the compiler would
+// otherwise inline it.
+#define V3_LENGTH_OUTOFLINE
 
 #include "Tongas2/BEHAVIORS.h"
 #include "Tongas2/GUIBEHAVIORS.h"
