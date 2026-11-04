@@ -131,6 +131,18 @@ public class FixReferences extends HeadlessScript {
 				if (!indexed || disp == null) {
 					continue;
 				}
+				if (refs.getReferencesFrom(ins.getAddress(), op).length == 0) {
+					// A store through a table (`mov [eax*4 + table], ecx`):
+					// analysis gives no reference, so the delinker would emit
+					// no relocation for it.
+					MemoryBlock block = currentProgram.getMemory().getBlock(disp);
+					if (block != null && block.isInitialized() && !block.isExecute()) {
+						refs.addMemoryReference(ins.getAddress(), disp, RefType.DATA,
+							SourceType.USER_DEFINED, op);
+						added++;
+					}
+					continue;
+				}
 				for (Reference ref : refs.getReferencesFrom(ins.getAddress(), op)) {
 					if (!ref.isMemoryReference() || ref.getReferenceType().isFlow() ||
 						ref.getToAddress().equals(disp)) {

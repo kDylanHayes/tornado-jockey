@@ -378,7 +378,8 @@ def split(coff: Coff, base: int | None = None, sizes: dict | None = None,
             if is_code and known is not None and start + known <= end:
                 body_end = start + known
             elif not is_code and data_sizes and names.get(start, "") in data_sizes \
-                    and start + data_sizes[names[start]] <= end:
+                    and start + data_sizes[names[start]] <= end \
+                    and not any(start + data_sizes[names[start]] <= v < end for v in later):
                 body_end = start + data_sizes[names[start]]
             elif is_code and (base is None or (base + end) % 16 == 0):
                 while body_end > start and end - body_end < 15 and data[body_end - 1] == 0xCC:
