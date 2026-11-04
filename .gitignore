@@ -24,3 +24,6 @@ __pycache__/
 *.lock~
 
 tools/vc71/
+
+# JVM crash logs from headless Ghidra runs
+hs_err_pid*.log
