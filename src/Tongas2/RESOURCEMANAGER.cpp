@@ -303,7 +303,8 @@ bool RESOURCEMANAGER::IsListLoaded()
         lineNumber++;
         char *text = m_loader->ReadLine();
         if (text) {
-            if (!strstr(text, "GVIS:dplogo") && strlen(text) != 0) {
+            char *found = strstr(text, "GVIS:dplogo");
+            if (!found && strlen(text) != 0) {
                 if (memcmp(text, "end", 3) == 0) {
                     free(text);
                     m_loader->Close();
