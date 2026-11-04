@@ -1071,8 +1071,9 @@ void ACTOR::FollowPath()
         V3 up(0.0f, 0.0f, 0.0f);
         float radius;
         float angle;
+        float step = dt / m_pathMaster->m_totalLength * speed;
         m_lastPathPos = m_pathPos;
-        m_pathPos += dt / m_pathMaster->m_totalLength * speed;
+        m_pathPos += step;
         if (!m_loop && m_pathPos > 1.0f)
             m_pathPos = 1.0f;
         m_pathMaster->RunCommands(m_lastPathPos, m_pathPos, m_handle);
