@@ -519,7 +519,7 @@ RESOURCE *ACTOR::FindResourceCopy(int managerId)
 bool ACTOR::ChangeResourceMaterial(int i, const char *from, const char *to)
 {
     // Never true: any index gets through.
-    if (i < 0 && i > 15) {
+    if (i < 0 && i >= 16) {
         if (g_pLog)
             g_pLog->Error("ACTOR::ChangeResourceMaterial - Invalid resource ID");
         return false;

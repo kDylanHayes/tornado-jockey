@@ -2599,7 +2599,6 @@
 0x004e21a0 ?BuildIndices@HEIGHTMAPDX8@@QAEXXZ function 0x264
 0x004e2410 ?UpdateMatrix@HEIGHTMAPDX8@@QAEXXZ function 0x114
 0x004e2530 ?UpdateVertices@HEIGHTMAPDX8@@QAEXXZ function 0x131a
-0x004e3828 __real@3f000000 data
 0x004e3850 ?GetOrientation@HEIGHTMAPDX8@@QAE?AUANG@@ABUV3@@0@Z function 0x1e7
 0x004e3a40 ??1HEIGHTMAPDX8MASTER@@UAE@XZ function 0xe0
 0x004e3b20 ?GetClassId@HEIGHTMAPDX8MASTER@@UAEHXZ function 0x6
@@ -4483,6 +4482,14 @@
 0x005e9fb6 __ehhandler$??1?$SAFEINDEX@VACTOR@@$0BDII@$0PL@$00@@UAE@XZ function
 0x005e9fcb __ehhandler$?CreateScene@@YAPAVSCENE@@XZ function
 0x005e9ff6 __ehhandler$??1SCENE@@UAE@XZ function
+0x005ea353 __ehhandler$?ClearResources@ACTOR@@QAEXXZ function
+0x005ea370 __ehhandler$?ApplyResourcesTemplate@ACTOR@@UAEXPAVACTORRESOURCESMASTER@@@Z function
+0x005ea400 __ehhandler$?SetLight@ACTOR@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function
+0x005ea41b __ehhandler$??1BEHAVIORLIST@@UAE@XZ function
+0x005ea50a __ehhandler$??1ACTOR@@UAE@XZ function
+0x005ea528 __ehhandler$?Execute@ACTOR@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function
+0x005ea548 __ehhandler$?_Incsize@?$list@UCONTACT@@V?$allocator@UCONTACT@@@std@@@std@@IAEXI@Z function
+0x005ea605 __ehhandler$??0ACTOR@@QAE@XZ function
 0x005ea618 __ehhandler$?AddControlCommand@GUIGROUP@@UAE?AVSRESULT@@PAUCMDCALL@@@Z function
 0x005ea638 __ehhandler$?Update@GUIGROUP@@UAEXXZ function
 0x005ea68f __ehhandler$??1GUIGROUP@@UAE@XZ function
@@ -4503,6 +4510,10 @@
 0x005ea99b __ehhandler$??0DECALMASTER@@QAE@PAVRESOURCEMANAGER@@PBD@Z function
 0x005ea9b8 __ehhandler$?Execute@DECALMASTER@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function
 0x005ea9db __ehhandler$?CreateMaster@DECALMANAGER@@UAEPAVRESOURCEMASTER@@PBD@Z function
+0x005eaab8 __ehhandler$??1EMITTER@@UAE@XZ function
+0x005eaae6 __ehhandler$?LoadPicture@EMITTERMASTER@@QAEXXZ function
+0x005eaaf8 __ehhandler$?Execute@EMITTERMASTER@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function
+0x005eab1b __ehhandler$?Emit@EMITTER@@QAEXXZ function
 0x005eac88 __ehhandler$??1TRIGGER@@UAE@XZ function
 0x005eaca8 __ehhandler$?Execute@TRIGGER@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function
 0x005eace0 __ehhandler$??0TRIGGER@@QAE@XZ function
@@ -4779,6 +4790,7 @@
 0x0065b110 __real@3fe0000000000000 data
 0x0065b11c __real@43b40000 data
 0x0065b13c __real@3e2aaaab data
+0x0065bbbc ??_C@_0BB@MOGOBHAF@list?$DMT?$DO?5too?5long?$AA@ data
 0x0065c114 __real@bf000000 data 0x4
 0x0065d088 ??_C@_09DAPGLLEF@Direction?$AA@ data 0xa
 0x0065d884 ??_C@_04KOACHJEN@Type?$AA@ data 0x5
@@ -5085,18 +5097,18 @@
 0x00667ec8 __real@c3340000 data
 0x00667ecc __real@c3b40000 data
 0x00667ed8 ??_C@_0CM@OCPNAOAO@SAFEINDEX?3FreePos?$DO?5Invalid?5delet@ data 0x2c
-0x00667f54 ??_C@_07DKACKEOF@OneNode?$AA@ data 0x8
-0x00667ff4 ??_C@_05ELCCFCFH@scene?$AA@ data 0x6
-0x00668110 ??_C@_0DH@FGFBGCPK@SCENE?3?3CreateActor?5?9?5Could?5creat@ data 0x37
 0x00667f04 ??_C@_0CP@MNDOJFFL@SAFEINDEX?3?3FreePos?$DO?5Error?5?9?5posi@ data 0x2f
 0x00667f34 ??_C@_0BP@MIFJHLDG@LIFO?3?3Push?$DO?5Error?5?9?5Table?5full?$AA@ data 0x1f
+0x00667f54 ??_C@_07DKACKEOF@OneNode?$AA@ data 0x8
 0x00667f60 ??_C@_0FC@BEJMAJLI@SAFEINDEX?3?3?5ALERT?$CB?$CB?$CB?$CB?5?9?5MAX?5WHIL@ data 0x52
 0x00667fb4 ??_C@_0DN@CLCKHOGN@SAFEINDEX?3?3DirectChangeName?$DO?5ERR@ data 0x3d
+0x00667ff4 ??_C@_05ELCCFCFH@scene?$AA@ data 0x6
 0x00668000 ??_7SCENE@@6B@ data 0x70
 0x00668070 ??_C@_0CP@PMFMMKEI@SAFEINDEX?3?3New?$DO?5ERROR?5Ivalid?5dis@ data 0x2f
 0x006680a0 ??_C@_04HGGBINEM@?$CFs?$CFd?$AA@ data 0x5
 0x006680b4 ??_C@_0CK@FBJPJPNG@SAFEINDEX?3?3Insert?$DO?5ERROR?$CB?$CB?$CB?5Tabl@ data 0x2a
 0x006680e0 ??_C@_0DA@JIDJBGHL@SAFEINDEX?3?3New?$DO?5ERROR?5Invalid?5di@ data 0x30
+0x00668110 ??_C@_0DH@FGFBGCPK@SCENE?3?3CreateActor?5?9?5Could?5creat@ data 0x37
 0x0066815c ??_C@_04MBNFPKFL@cols?$AA@ data 0x5
 0x00668168 _s_TypeNames data 0xb4
 0x0066821c ??_7INPUT@@6B@ data 0x10
@@ -5132,10 +5144,25 @@
 0x006686f8 ??_7KERNELCOMMANDS@@6B@ data 0xec
 0x00668a90 ??_C@_03BDGOHNNK@add?$AA@ data 0x4
 0x00668b9c ??_C@_03FCCPIJGJ@Pos?$AA@ data 0x4
+0x00668ec8 ??_C@_0DG@BNHDHHAM@ACTOR?3?3SetResourcesZSort?$DOError?3?5@ data
+0x00668f00 ??_C@_0DJ@NDMOIIKC@ACTOR?3?3SetResourcesSpecific?$DOErro@ data
+0x00668f3c ??_C@_0DE@DCANOM@ACTOR?3?3SetResourcesPos?$DOError?3?5in@ data
+0x00668f70 ??_C@_0DE@MLDALFFD@ACTOR?3?3SetResourcesAng?$DOError?3?5in@ data
+0x00668fa4 ??_C@_0DG@PLCDCAJE@ACTOR?3?3SetResourcesScale?$DOError?3?5@ data
+0x00668fdc ??_C@_0DI@LFLFNFLD@ACTOR?3?3SetResourcesOpacity?$DOError@ data
+0x00669080 ??_C@_0EA@DAAFFIFP@ACTOR?3?3ChangeResourceMaterial?5?9?5@ data
 0x006690c0 ??_C@_04IMHCLIFH@BNMD?$AA@ data 0x5
+0x006690c8 ??_C@_0DE@CFEMBPLM@ACTOR?3?3ChangeResourceMaterial?5?9?5@ data
+0x006690fc ??_C@_07CEMGIPEC@Nope?3?$CFs?$AA@ data
+0x00669104 ??_C@_0DG@JEAHFHPL@ACTOR?3?3FindObjectInMyContext?5?9?5I@ data
+0x0066913c ??_C@_05BPJICPHB@res?$CFd?$AA@ data
+0x00669144 ??_C@_0DE@ILFNDDAI@ACTOR?3?3SetAttachTo?$DO?5can?8t?5attach@ data
 0x00669178 ??_C@_0DB@HCLBNGEB@ACTOR?3?3SetResources?$DOError?3?5index@ data 0x31
+0x006691ac ??_C@_0CI@NGGJBHPH@ERROR?5ACTOR?3?3CreateTagFx?$DO?5Tag?5no@ data
 0x006691d4 ??_C@_01IHBHIGKO@?0?$AA@ data
 0x0066929c ??_7BEHAVIORLIST@@6B@ data 0x10
+0x00669568 ??_C@_0EC@EMHMPJKK@ERROR?$CB?$CB?$CB?5MAX?5COLLISIONS?5DETECTED@ data
+0x006695ac ??_C@_0BM@MGMBLHAE@Behavior?5not?5found?5?8?$CFs?8?5?4?4?4?$AA@ data
 0x00669710 ??_C@_09GJLAMLFE@LightMask?$AA@ data 0xa
 0x00669748 ??_C@_0BE@CPNEMOKM@ResourcesBoneAttach?$AA@ data 0x14
 0x0066975c ??_C@_0BC@IKMAGEBN@ResourcesSpecific?$AA@ data 0x12
@@ -5146,6 +5173,7 @@
 0x006697b4 ??_C@_0N@OKEAKACD@ResourcesPos?$AA@ data 0xd
 0x006697c4 ??_C@_09FDCBPLKG@Resources?$AA@ data 0xa
 0x00669810 ??_C@_04KLCPKPBE@Loop?$AA@ data 0x5
+0x0066987c ??_C@_0N@CDOJDKIB@RotateToMove?$AA@ data
 0x006698e4 ??_C@_06PADBOGCF@AngVel?$AA@ data 0x7
 0x00669a00 ??_C@_05MAGIBEFI@Scale?$AA@ data 0x6
 0x00669a08 ??_C@_03JFOGAEPB@Ang?$AA@ data 0x4
