@@ -24,6 +24,21 @@ section layout differs from the compiler's, not because the bytes are wrong.
   no exact data percentage: relocation names are not what blocks these
   sections.
 
+## RESOURCES and RESOURCE
+
+- **RESOURCES** (23.35% data): the base `.bss` is one 5516-byte section, while
+  the delinked target has a 3933-byte `.bss` plus a 1580-byte `.bss` whose
+  globals come from other translation units. `.data` and `.rdata` already pair;
+  the `.bss` split cannot: objdiff pairs data section-wise, and the target
+  section boundaries are fixed by the image.
+- **RESOURCE** (2.90% data): base has `.rdata` in 19 COMDAT sections and one
+  `.data` (336 bytes) plus `.bss` (64 bytes, both command tables). The target
+  groups `.rdata` differently and has `.data` 368 bytes (the master command
+  table sits after the property tables) plus `.bss` 32 bytes. The section
+  shapes do not pair, so the matching bytes are not credited. The
+  `?s_commands@RESOURCEMASTER` image entry also contains nonzero fields while
+  our source table is all-zero, so its bytes are not yet recovered.
+
 ## PATH and EMITTER
 
 Their `.data` sections include the property tables already recorded in
