@@ -283,7 +283,10 @@ float PATHMASTER::GetLinearLength(int segment)
 {
     int i = WrapIndex(segment);
     int next = NextIndex(i);
-    return (m_pos[next] - m_pos[i]).Length();
+    double dx = m_pos[next].x - m_pos[i].x;
+    double dy = m_pos[next].y - m_pos[i].y;
+    double dz = m_pos[next].z - m_pos[i].z;
+    return (float)sqrt(dx * dx + dy * dy + dz * dz);
 }
 
 float PATHMASTER::MeasureCurve(int segment)
