@@ -88,3 +88,38 @@ immediate and the ten bytes after it are replaced by non-code, and valid code
 resumes at `0x4894f7`. The same pattern later in the function is intact
 (`mov dword [ecx*4 + 0x6cbc90], 0x6be8d0`), so this is a patched span, not a
 delinker or FixReferences defect. The unit stays partial.
+
+## Libraries
+
+The third-party libraries carry the same runs. Comparing every library unit
+whose report still showed a gap (target object against our compiled object,
+relocation bytes masked) found one opaque run in each failing function, 9 to
+19 bytes and 16 in most, with no other byte differences (a run that lands on
+a boundary can show as a second, shorter span where the displaced code
+resumes). So every remaining library gap has this one cause: objdiff counts a
+whole function as unmatched once any instruction differs, and the run cannot
+be produced by any source or compiler flag.
+
+The sites are in `config/image_patches.txt`. Affected units and functions:
+
+| library | units (function hit) |
+|---|---|
+| zlib | `inffast` (`_inflate_fast`), `inflate` (`_updatewindow`) |
+| libpng | `pngset`, `pngread`, `pngrtran`, `pngwutil`, `pngwtran`, `pngrutil` |
+| libjpeg | `jdapimin`, `jdmainct`, `jddctmgr`, `jchuff`, `jcmaster` |
+| FreeImage | `BitmapAccess`, `Rescale`, `PluginJPEG`, `Exif`, `NNQuantizer` |
+| ODE | `ode`, `collision_trimesh`, `collision_std`, `joint`, `matrix`, `quickstep`, `collision_trimesh_ccylinder`, `collision_trimesh_trimesh`, `collision_trimesh_box`, `lcp`, `fastldlt`, `OPC_TreeCollider`, `OPC_OBBCollider`, `OPC_RayCollider`, `OPC_OptimizedTree` |
+
+Some runs straddle a symbol boundary. `hingeInit`'s `ret` at `0x59188f` is
+the first byte of a 19-byte run that also covers `sliderInit`'s prologue
+(`0x591890-0x5918a1`, which is why that function has no pair in objdiff), and
+one run at `0x5b3c95` covers the tail of `??_GOBBCollider` and the head of
+`OBBCollider::Collide`. Those ranges are listed separately in the config file.
+
+Not every library gap was a watermark. `TagLib::getFreeImageModel` reads a
+case table with `movzx eax, byte ptr [eax+0x566030]`; the table is a compiler
+`$L` label in `.text`, and Ghidra leaves references into executable memory
+alone, so the delinked object had no relocation there (`objdiff` saw the bare
+address against our `$L17986`). `split_functions.sync_local_refs` now copies
+the relocation our object has, and the unit matches 100%.
+
