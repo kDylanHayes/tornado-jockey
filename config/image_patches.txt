@@ -1,0 +1,20 @@
+# Image-integrity exceptions in the committed Tornado.exe (SHA-1 20bf7200...).
+#
+# A handful of 15-19 byte opaque blocks in the image overwrite otherwise
+# readable strings, flag-table copies or code. They are present in Tornado.exe
+# itself, not produced by the delinker, so genuine C++ source cannot reproduce
+# them. The affected data items and units stay partial: never mark a unit
+# complete while its data is below 100%.
+#
+# Format: <start>-<end>  <unit>  <what the block covers>
+# Ranges are inclusive virtual addresses.
+#
+# A readable suffix next to a patch is evidence for the original string; use
+# the suffix, not the opaque bytes, when writing source.
+0x004d2b48-0x004d2b5a  Tongas2/OCTREE            code watermark in the unit's .text
+0x00667150-0x0066715e  Tongas2/CMDMGR            head of ??_C@_0CF@MLNDBCPD@scripting?5object?5without?5base?5ty@ ("t without base type??" survives)
+0x0066c0d8-0x0066c0e7  Tongas2/RESOURCE          tail of ??_C@_0M@OHKMKKDH@Description?$AA@ and head of ??_C@_09DLCDDHDM@MinCopies?$AA@
+0x00671060-0x0067106f  Tongas2/SHADER            one 16-byte string slot in the shader-name table
+0x00671070-0x00671071  Tongas2/SHADER            head of the "lowResize" string slot ("lowResize" survives)
+0x00673827-0x00673836  Tongas2/BEHAVIORFADERESLOOP  V3/V2 rows inside its _s_TypeNames copy at 0x6737b8
+0x0067af76-0x0067af85  (unassigned data)          inside the _s_TypeNames copy at 0x67aee8
