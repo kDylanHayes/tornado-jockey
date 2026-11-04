@@ -1,27 +1,29 @@
-# Image-integrity patches
+# Image watermarks
 
-The committed target image (`orig/Tornado.exe`, SHA-1 `20bf7200...`) contains a
-few 15-24 byte blocks that overwrite otherwise readable `.rdata` strings,
-`_s_TypeNames` copies and code in several `.text` functions. They exist in the
-exe itself, not in the delinked target objects: the bytes are opaque in the
-file.
+The `20bf7200...` ISO-extracted `Tornado.exe` contains short opaque byte runs
+(13–19 bytes, 16 typical) in both `.text` and `.rdata`. They are part of the
+image itself: a fresh Ghidra analysis, the shared analysed project and the raw
+file all show the same bytes, and the decompiler turns them into nonsense
+(`cld`/`fild`/`ret 0xc945`, or string heads replaced by random bytes).
 
-They are treated as image-integrity exceptions, not decompilation targets.
-`config/image_patches.txt` lists every known block with its address range,
-owning unit and the symbol it covers.
+They look like installer/DRM watermarks rather than compiler output, so they
+cannot be recovered from source. Do not write them into C++ or fabricate data
+to make objdiff pass: units whose code or data overlaps a watermark stay
+partial.
 
-Rules:
+`../config/image_patches.txt` records every known range with its unit, symbol
+and kind. The starts are irregular — no fixed address stride or modulus was
+found — so new ones have to be identified from a target/base diff. Ranges
+marked `observed` came from byte-level target/base comparisons; `scan` ones
+came from a suspicious-disassembly sweep over all units (their exact end can
+include the code the watermark displaced); `reported` ones came from other
+workers and are listed at their reported start address.
 
-- Do not fabricate the opaque bytes in source, and do not rename symbols to
-  match them. That would not be the original C++.
-- A unit whose data includes a patch is left partial (its `complete` flag stays
-  off) even when all of its code matches.
-- Where a patch leaves a readable suffix, use that suffix as evidence for the
-  original string (for example `without base type`), not the random prefix.
-- Add newly found blocks to `config/image_patches.txt` with the same format.
+There is no fixed length or alignment. A range can cover more than one symbol
+(the SHADER strings are an example), and `DECAL::GetShaderHandle` is not a
+watermark — it is a wrong symbol size in the target object, tracked as a normal
+matching issue.
 
-The delinker itself can also relocate short strings whose four bytes happen to
-read as an address (for example `"set"` is `0x00746573`). That is a separate
-problem: list such locations in `config/norefs.txt`, and
-`tools/ghidra/FixReferences.java` types them as strings so the relocation
-synthesizer leaves them alone.
+A separate, fixable issue is the delinker putting relocations on short strings
+whose bytes read as an address (`"set"` is `0x00746573`). That is handled in
+`tools/ghidra/FixReferences.java` and `config/norefs.txt`, not by this list.

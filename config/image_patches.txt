@@ -1,36 +1,42 @@
-# Image-integrity exceptions in the committed Tornado.exe (SHA-1 20bf7200...).
+# Ranges in Tornado.exe whose bytes are opaque image watermarks / installer
+# patches. They are part of the 20bf7200 image, not decompiler artifacts.
+# Do not reproduce these bytes in source or data to force a match; the units
+# that overlap them stay partial. See docs/image-patches.md.
 #
-# A handful of 15-24 byte opaque blocks in the image overwrite otherwise
-# readable strings, flag-table copies or code. They are present in Tornado.exe
-# itself, not produced by the delinker, so genuine C++ source cannot reproduce
-# them. The affected data items and units stay partial: never mark a unit
-# complete while its data is below 100%.
+# start-end          unit                        symbol                                                  kind  source
+0x4a91d4-0x4a91e3   Tongas2/DECAL               ?SetPosition@DECAL@@UAEXUV3@@@Z                         code  observed
+0x4c1943-0x4c1955   Tongas2/POLYTRAIL           ?CreatePOLYTRAIL@@YAPAVRESOURCEMANAGER@@XZ              code  observed
+0x4d2b49-0x4d2b58   Tongas2/OCTREE              ??0OCTREE@@QAE@UV3@@0H@Z                                code  observed
+0x4d526e-0x4d527f   Tongas2/MESH                ?AcquireShader@MESHMASTER@@QAEXXZ                       code  observed
+0x4dc7dd-0x4dc7f4   Tongas2/RENDERER            ?SetFogColor@RENDERER@@QAEXPBUV3I@@@Z                   code  observed
+0x4da0b8-0x4da0c7   Tongas2/GEOMETRY            ?IntersectFace@OOBOX3@@QAE_NHABUV3@@0PAU2@@Z            code  observed
+0x490a62-0x490a71   Tongas2/SCENE               ?New@?$SAFEINDEX@VACTOR@@$0BDII@$0PL@$00@@QAE_NPAPAVACTOR@@HPAHPAURESHANDLE@@@Z  code  observed
+0x4a1c65-0x4a1c74   Tongas2/CAMERA              ?Reset@CAMERA@@UAEXXZ                                   code  observed
+0x4b7cb2-0x4b7cc1   Tongas2/LIGHT               ?Init@LIGHTMANAGER@@UAEXXZ                              code  observed
+0x671062-0x671071   Tongas2/SHADER              ??_C@_0O@EOICMLBP@AllowCompress?$AA@ (also           data  observed
+                                                ??_C@_0M@MOHFMCHH@AllowResize?$AA@)
 #
-# Format: <start>-<end>  <unit>  <what the block covers>
-# Ranges are inclusive virtual addresses. For code patches the range is the
-# opaque byte run; the containing function/instruction starts at the address
-# the finder reported (often one or two bytes earlier).
+# Reported by the orchestrator / worker 8 (bytes not independently compared here):
+0x667150-0x66715f   Tongas2/CMDMGR              ??_C@_0CF@MLNDBCPD@scripting?5object?5without?5base?5@  data  reported
+0x66c0d8-0x66c0e7   Tongas2/RESOURCE            ??_C@_0M@OHKMKKDH@Description?$AA@                       data  reported
+0x673827-0x673836   Tongas2/BEHAVIORFADERESLOOP _s_TypeNames                                            data  reported
 #
-# A readable suffix next to a patch is evidence for the original string; use
-# the suffix, not the opaque bytes, when writing source.
-0x004c1942-0x004c1956  Tongas2/POLYTRAIL        CreatePOLYTRAIL prologue: SEH handler + fs:[0] setup (opaque from 0x4c1943; 0x4c1957 resumes "push 0x224")
-0x004a91d3-0x004a91e3  Tongas2/DECAL            SetPosition tail ("mov edx,[ecx]" at 0x4a91d3; opaque from 0x4a91d5; ends at the function's last byte)
-0x004a438a-0x004a439a  Tongas2/RESOURCES         RESOURCES::GetManager code watermark (decompiler overlap at 0x4a439a/0x4a439e; valid code resumes 0x4a439b)
-0x004d526d-0x004d527f  Tongas2/MESH             MESHMASTER::AcquireShader body (opaque from 0x4d526e; 0x4d5280 resumes a call)
-0x004dc7dd-0x004dc7f0  Tongas2/RENDERER         RENDERER::SetFogColor mid-function (0x4dc7f1 resumes a call)
-0x004d2b48-0x004d2b5a  Tongas2/OCTREE            code watermark in the unit's .text
-0x004846a9-0x004846bc  Tongas2/CMDBASE           CMDBASE::GetShortStringAttribute code watermark (between two valid epilogues)
-0x004894f3-0x00489507  Tongas2/CMDMGR            RegisterEngineClasses code watermark (valid push/mov-with-reloc before and after)
-0x004c406b-0x004c407a  Tongas2/TEXT              TEXT::Update code watermark (after "lea ecx,[esp+0x88]")
-0x00667150-0x0066715e  Tongas2/CMDMGR            head of ??_C@_0CF@MLNDBCPD@scripting?5object?5without?5base?5ty@ ("t without base type??" survives)
-0x0066c0d8-0x0066c0e7  Tongas2/RESOURCE          tail of ??_C@_0M@OHKMKKDH@Description?$AA@ and head of ??_C@_09DLCDDHDM@MinCopies?$AA@
-0x00671060-0x0067106f  Tongas2/SHADER            one 16-byte string slot in the shader-name table
-0x00671070-0x00671071  Tongas2/SHADER            head of the "lowResize" string slot ("lowResize" survives)
-0x00673827-0x00673836  Tongas2/BEHAVIORFADERESLOOP  V3/V2 rows inside its _s_TypeNames copy at 0x6737b8
-0x0067af76-0x0067af85  (unassigned data)          inside the _s_TypeNames copy at 0x67aee8
+# Found by the suspicious-disassembly scan (opaque bytes checked in the exe;
+# ranges may include the adjacent code the watermark displaced):
+0x4b5592-0x4b559c   Tongas2/SPAWNER             ?SetUseSpawnerAngleScale@SPAWNER@@UAEXAB_N@Z            code  scan
+0x4c4071-0x4c407c   Tongas2/TEXT                ?Update@TEXT@@UAEXXZ                                    code  scan
+0x4846ab-0x4846b7   Tongas2/CMDBASE             ?GetShortStringAttribute@CMDBASE@@UAEXAAV?$FIXEDSTRING@$0CAA@@@PBDH@Z  code  scan
+0x486dd0-0x486de1   Tongas2/CMDBASE             ?SetAttribute@CMDBASE@@UAE?AVSRESULT@@PAUCMDCALL@@@Z     code  scan
+0x48e349-0x48e35b   Tongas2/GUI                 ??1GUI@@UAE@XZ                                          code  scan
+0x49f542-0x49f551   Tongas2/GUIGROUPCONTROL     ?MouseOverCommand@GUIGROUP@@UAE?AVSRESULT@@PAUCMDCALL@@@Z  code  scan
 #
-# Reported by the render worker but not confirmed as opaque bytes:
-#   DECAL ::GetShaderHandle tail. The image bytes at 0x4a8f40-0x4a8f64 decode
-#   as valid code (mov/add/mov/rep-style stores, "pop esi; ret 4"); treat the
-#   tail as a code-matching issue, not an image patch, unless a render target
-#   proves otherwise.
+# New block found by worker 8 after the scan (byte-level checked: a 17-byte
+# random run between valid instructions; the decompiler reports an overlap at
+# 0x4a439a/0x4a439e):
+0x4a438a-0x4a439a   Tongas2/RESOURCES           ?GetManager@RESOURCES@@QAEPAVRESOURCEMANAGER@@AAPBD@Z   code  observed
+#
+# Lengths observed so far are 7-19 bytes (16 typical). No fixed address
+# stride or modulus was found: starts include 0x4846ab, 0x486dd0, 0x48e349,
+# 0x490a62, 0x49f542, 0x4a1c65, 0x4a438a, 0x4a91d4, 0x4b5592, 0x4b7cb2,
+# 0x4c1943, 0x4c4071, 0x4d2b49, 0x4d526e, 0x4da0b8, 0x4dc7dd, 0x667150,
+# 0x66c0d8, 0x671062 and 0x673827.
