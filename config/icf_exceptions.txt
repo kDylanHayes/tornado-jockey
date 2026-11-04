@@ -5,6 +5,10 @@
 # target-object limitation, not a source problem: do not rewrite source to
 # mimic linker folding. Affected units stay partial.
 #
+# tools/fix_data_icf.py now rewrites those target relocations to the base
+# object's names during delinking; the entries below record why symbol
+# mappings alone were not enough and which slots were affected.
+#
 # unit               vtable                         slot   VA         target relocation name
 Tongas2/SIMPLEMODEL  ??_7SIMPLEMODEL@@6B@            0x54   0x673164   ?term_source@@YAXPAUjpeg_decompress_struct@@@Z
 Tongas2/SIMPLEMODEL  ??_7SIMPLEMODEL@@6B@            0x58   0x673168   ?term_source@@YAXPAUjpeg_decompress_struct@@@Z
