@@ -34,6 +34,17 @@
 0x49f542-0x49f551   Tongas2/GUIGROUPCONTROL     ?MouseOverCommand@GUIGROUP@@UAE?AVSRESULT@@PAUCMDCALL@@@Z  code  scan
 0x4c8eb5-0x4c8ec5   Tongas2/GUIVISUALCONTROL    ?SetOpacity@GUIVISUAL@@UAEXABM@Z (also SetVisualOpacity)  code  observed
 #
+# Byte-checked GUI ranges listed in docs/image-integrity.md that were not in
+# this file yet (0x48e33d and 0x49f540 already have scan entries above, from
+# the disassembly sweep):
+0x4c6790-0x4c679f   Tongas2/GUISLIDERCONTROL    ?SetValueAt@GUISLIDER@@QAEXMM@Z                         code  observed
+0x4cb5da-0x4cb5e9   Tongas2/GUITEXTCONTROL      ?Execute@GUITEXT@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z  code  observed
+0x4d0426-0x4d0435   Tongas2/GUIBEHAVIORS        ?Update@ACCELERATION@@QAE_NM@Z                          code  observed
+0x493187-0x493196   Tongas2/GUICONTROL          ?MoveRel@GUICONTROL@@UAE?AVSRESULT@@PAUCMDCALL@@@Z      code  observed
+0x615a5a-0x615a6e   Tongas2/GUIGENERICCONTROL   _$E3                                                    code  observed
+0x6c1290-0x6c129f   Tongas2/GUIVISUALCONTROL    ?s_commands@GUIVISUAL@@2PAUCMDENTRY@@A (+0x30)          data  observed
+0x6ba290-0x6ba29f   Tongas2/GUICONTROL          ?s_commands@GUICONTROL@@2PAUCMDENTRY@@A (+0x280) and ?s_properties@GUICONTROL@@2PAUPROPENTRY@@A (+0x180)  data  observed
+#
 # Found by the actors/gameplay pass (byte-checked against orig/Tornado.exe;
 # 0x4b558d is the tail of the run at 0x4b5590 and displaces the end of
 # SetWaitOnFirst):
