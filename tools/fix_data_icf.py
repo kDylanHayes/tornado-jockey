@@ -133,7 +133,10 @@ def rewrite(target: Path, base: Path) -> int:
 
     changed = 0
     for sym in t.symbols:
-        if not sym["name"].endswith("@@6B@"):
+        name = sym["name"]
+        # Primary vtables end in @@6B@; multiple inheritance gives secondary
+        # ones such as ??_7SPAWNER@@6BACTORLINK@@@, which also contain @@6B.
+        if not (name.startswith("??_7") and "@@6B" in name):
             continue
         if sym["section"] <= 0 or sym["section"] > len(t.sections):
             continue
