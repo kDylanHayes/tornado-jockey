@@ -650,19 +650,20 @@ void CPRIMITIVE3RESOURCE::Update()
 
 void CPRIMITIVE3MANAGER::UpdateCollisions()
 {
-    m_contacts.Clear();
-    for (CPRIMITIVE3RESOURCE *a = m_list.m_head; a && m_contacts.m_count < m_contacts.m_capacity; a = (CPRIMITIVE3RESOURCE *)a->next) {
+    DYNAMICARRAY<CONTACT> *contacts = &m_contacts;
+    contacts->Clear();
+    for (CPRIMITIVE3RESOURCE *a = m_list.m_head; a && contacts->m_count < contacts->m_capacity; a = (CPRIMITIVE3RESOURCE *)a->next) {
         for (CPRIMITIVE3RESOURCE *b = m_list.Next(a); b; b = (CPRIMITIVE3RESOURCE *)b->next) {
             if (a == b)
                 continue;
             if (a->Master()->m_collisionTest && b->Master()->m_collisionTest)
                 TestScreen(a, b);
             if (a->Master()->m_collisionTest != PRIMITIVE3_SCREEN && b->Master()->m_collisionTest != PRIMITIVE3_SCREEN)
-                Test(a, b, &m_contacts);
+                Test(a, b, contacts);
         }
     }
-    for (int i = m_contacts.First(); i != -1; i = m_contacts.Next(i)) {
-        CONTACT *contact = m_contacts.At(i);
+    for (int i = contacts->First(); i != -1; i = contacts->Next(i)) {
+        CONTACT *contact = contacts->At(i);
         if (!contact) {
             if (g_pLog)
                 g_pLog->Error("null contact");
