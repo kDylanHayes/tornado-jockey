@@ -1920,7 +1920,8 @@
       "source": "src/Tongas2/POLYTRAIL.cpp",
       "category": "engine",
       "symbol_mappings": {
-        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z"
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z",
+        "__ehhandler$?CreateCopy@POLYTRAILMASTER@@UAEPAVRESOURCE@@ABURESHANDLE@@@Z": "__ehhandler$?CreateMaster@POLYTRAILMANAGER@@UAEPAVRESOURCEMASTER@@PBD@Z"
       }
     },
     {
