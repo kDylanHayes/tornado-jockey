@@ -680,61 +680,65 @@ void PARTICLE::Update(const float &dt)
             m_velocity = speed * m_velocity.Normalized();
         }
 
-        // Size, alpha and colour, from birth through midlife to death.
-        V3I color;
-        float size, alpha;
-        if (master->m_useMidlife) {
-            if (m_age < m_midLife) {
-                float t = m_age / m_midLife;
-                float u = 1.0f - t;
-                size = u * m_size + t * m_midSize;
-                alpha = u * m_alpha + t * m_midAlpha;
-                color = u * m_color + t * m_midColor;
-            } else if (m_20 && m_midDuration <= 0.0f) {
-                float t = (m_age - m_midLife) / (m_life - m_midLife);
-                float u = 1.0f - t;
-                size = u * m_midSize + t * m_deathSize;
-                alpha = u * m_midAlpha + t * m_deathAlpha;
-                color = u * m_midColor + t * m_deathColor;
+        // Size, alpha and colour, from birth through midlife to death.  The
+        // values only live until the resource is scaled, so keeping them in
+        // this scope lets the facing ANG below reuse their bytes.
+        {
+            V3I color;
+            float size, alpha;
+            if (master->m_useMidlife) {
+                if (m_age < m_midLife) {
+                    float t = m_age / m_midLife;
+                    float u = 1.0f - t;
+                    size = u * m_size + t * m_midSize;
+                    alpha = u * m_alpha + t * m_midAlpha;
+                    color = u * m_color + t * m_midColor;
+                } else if (m_20 && m_midDuration <= 0.0f) {
+                    float t = (m_age - m_midLife) / (m_life - m_midLife);
+                    float u = 1.0f - t;
+                    size = u * m_midSize + t * m_deathSize;
+                    alpha = u * m_midAlpha + t * m_deathAlpha;
+                    color = u * m_midColor + t * m_deathColor;
+                } else {
+                    size = m_midSize;
+                    alpha = m_midAlpha;
+                    m_20 = true;
+                    m_midDuration -= retime * dt;
+                    color = m_midColor;
+                    m_midLife = m_age;
+                }
             } else {
-                size = m_midSize;
-                alpha = m_midAlpha;
-                m_20 = true;
-                m_midDuration -= retime * dt;
-                color = m_midColor;
-                m_midLife = m_age;
-            }
-        } else {
-            float t = m_age / m_life;
-            float u = 1.0f - t;
-            size = u * m_size + t * m_deathSize;
-            alpha = u * m_alpha + t * m_deathAlpha;
-            color = u * m_color + t * m_deathColor;
-        }
-        if (master->m_changeColorInTime && (!master->m_pictureLoaded || !master->m_usePictureColor)) {
-            if (g_pDECAL->m_id == resource->GetManagerId())
-                ((DECAL *)resource)->SetColor((const V3 &)color);
-        }
-        if (master->m_emittedBehavior == EMITTERMASTER::BEHAVIOR_PATHFLOW) {
-            size *= master->m_pathScaleFactor;
-            if (master->m_pathAdjustSize)
-                size *= radius;
-            if (master->m_pathOpacity) {
                 float t = m_age / m_life;
-                if (t < master->m_pathOpacityRange.x)
-                    alpha = 0.0f;
-                if (master->m_pathOpacityRange.x <= t && t < master->m_pathOpacityRange.y)
-                    alpha = (t - master->m_pathOpacityRange.x) / (master->m_pathOpacityRange.y - master->m_pathOpacityRange.x) * alpha;
-                if (master->m_pathOpacityRange.z <= t && t < 1.0f)
-                    alpha = (t - master->m_pathOpacityRange.z) / (1.0f - master->m_pathOpacityRange.z) * alpha;
+                float u = 1.0f - t;
+                size = u * m_size + t * m_deathSize;
+                alpha = u * m_alpha + t * m_deathAlpha;
+                color = u * m_color + t * m_deathColor;
             }
-        }
-        if (!m_attached) {
-            resource->SetScaleV(size * m_emitter->GetScale());
-            resource->SetAlpha(m_emitter->GetAlpha() * alpha);
-        } else {
-            resource->SetScaleFactorV(size * m_emitter->GetSize());
-            resource->SetAlphaFactor(m_emitter->GetAlphaFactor() * alpha);
+            if (master->m_changeColorInTime && (!master->m_pictureLoaded || !master->m_usePictureColor)) {
+                if (g_pDECAL->m_id == resource->GetManagerId())
+                    ((DECAL *)resource)->SetColor((const V3 &)color);
+            }
+            if (master->m_emittedBehavior == EMITTERMASTER::BEHAVIOR_PATHFLOW) {
+                size *= master->m_pathScaleFactor;
+                if (master->m_pathAdjustSize)
+                    size *= radius;
+                if (master->m_pathOpacity) {
+                    float t = m_age / m_life;
+                    if (t < master->m_pathOpacityRange.x)
+                        alpha = 0.0f;
+                    if (master->m_pathOpacityRange.x <= t && t < master->m_pathOpacityRange.y)
+                        alpha = (t - master->m_pathOpacityRange.x) / (master->m_pathOpacityRange.y - master->m_pathOpacityRange.x) * alpha;
+                    if (master->m_pathOpacityRange.z <= t && t < 1.0f)
+                        alpha = (t - master->m_pathOpacityRange.z) / (1.0f - master->m_pathOpacityRange.z) * alpha;
+                }
+            }
+            if (!m_attached) {
+                resource->SetScaleV(size * m_emitter->GetScale());
+                resource->SetAlpha(m_emitter->GetAlpha() * alpha);
+            } else {
+                resource->SetScaleFactorV(size * m_emitter->GetSize());
+                resource->SetAlphaFactor(m_emitter->GetAlphaFactor() * alpha);
+            }
         }
         if (master->m_rotateToMove && !m_velocity.IsZero()) {
             ANG angles(0.0f, 0.0f, 0.0f);
