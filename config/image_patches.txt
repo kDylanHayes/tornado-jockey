@@ -52,6 +52,7 @@
 0x4cdd00-0x4cdd0f   Tongas2/VALUEMANAGER        ?Delete@VALUEMANAGER@@UAE?AVSRESULT@@PAUCMDCALL@@@Z     code  observed
 0x4ab8fa-0x4ab908   Tongas2/PATH                ?GetCatmullRom@PATHMASTER@@QAE_NMPAUV3@@00PAM1@Z        code  observed
 0x6bc290-0x6bc29f   Tongas2/PATH                ?s_properties@PATHMASTER@@2PAUPROPENTRY@@A              data  observed
+0x49ce1b-0x49ce2b   Tongas2/ACTOR               ??1ACTOR@@UAE@XZ                                      code  observed
 0x60e4ed-0x60e4fc   Tongas2/EMITTER             _$E3                                                  code  observed
 0x6bd290-0x6bd29f   Tongas2/EMITTER             ?s_properties@EMITTERMASTER@@2PAUPROPENTRY@@A           data  observed
 #
@@ -69,3 +70,54 @@
 # 0x4b558d, 0x4b5592, 0x4b7cb2, 0x4c1942, 0x4c4071, 0x4c8eb5, 0x4cdd00, 0x4d2b49,
 # 0x4d526d, 0x4da0b8, 0x4dc7dd, 0x667150, 0x66c0d8, 0x671062, 0x673827,
 # 0x6bc290 and 0x6bd290.
+#
+# Found by the library exact-match pass (byte-checked target/base diff per
+# function; relocation bytes masked). Each range is one opaque run, so it
+# can start or end on a symbol boundary (hingeInit/sliderInit,
+# ??_GOBBCollider/Collide). A run of 16 bytes can leave a second short
+# span where the code it displaced resumes (TriBoxOverlap,
+# dCollideCCylinderCCylinder).
+0x0055bb61-0x0055bb70   lib/freeimage/BitmapAccess             ?erase@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@QAE?AViterator@12@V312@@Z code  observed
+0x0055e286-0x0055e296   lib/freeimage/Rescale                  _FreeImage_Rescale                                                     code  observed
+0x0055f78b-0x0055f79a   lib/freeimage/PluginJPEG               ?Load@@YAPAUFIBITMAP@@PAUFreeImageIO@@PAXHH1@Z                         code  observed
+0x005630d0-0x005630de   lib/freeimage/Exif                     ?processExifTag@@YAXPAUFIBITMAP@@PAUFITAG@@PADJW4MDMODEL@TagLib@@@Z    code  observed
+0x005657f5-0x00565804   lib/freeimage/NNQuantizer              ?inxsearch@NNQuantizer@@IAEHHHH@Z                                      code  observed
+0x00567f1a-0x00567f29   lib/libpng/pngset                      _png_set_oFFs                                                          code  observed
+0x0056a63f-0x0056a64e   lib/libpng/pngread                     _png_read_row                                                          code  observed
+0x0056cd64-0x0056cd73   lib/libpng/pngrtran                    _png_do_background                                                     code  observed
+0x0056f489-0x0056f498   lib/libpng/pngwutil                    _png_write_iTXt                                                        code  observed
+0x00571bae-0x00571bbd   lib/libpng/pngwtran                    _png_do_write_transformations                                          code  observed
+0x005742d4-0x005742de   lib/libpng/pngrutil                    _png_handle_tIME                                                       code  observed
+0x005769f8-0x00576a07   lib/libjpeg/jdapimin                   _jpeg_CreateDecompress                                                 code  observed
+0x0057911d-0x0057912c   lib/libjpeg/jdmainct                   _make_funny_pointers                                                   code  observed
+0x0057b842-0x0057b851   lib/libjpeg/jddctmgr                   _start_pass                                                            code  observed
+0x0057df67-0x0057df72   lib/libjpeg/jchuff                     _encode_mcu_gather                                                     code  observed
+0x0058068c-0x0058069b   lib/libjpeg/jcmaster                   _validate_script                                                       code  observed
+0x00582db1-0x00582dc0   lib/zlib/inflate                       _updatewindow                                                          code  observed
+0x005854d6-0x005854e5   lib/zlib/inffast                       _inflate_fast                                                          code  observed
+0x00587bfb-0x00587c07   lib/ode/ode                            _dWorldDestroy                                                         code  observed
+0x0058a320-0x0058a32f   lib/ode/collision_trimesh              ?Build@dxTriMeshData@@QAEXPBXHH0HH0_N@Z                                code  observed
+0x0058ca45-0x0058ca54   lib/ode/collision_std                  ?dCollideCCylinderCCylinder@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z      code  observed
+0x0058ca5a-0x0058ca5d   lib/ode/collision_std                  ?dCollideCCylinderCCylinder@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z      code  observed
+0x0058f16a-0x0058f179   lib/ode/collision_std                  ?dBoxBox@@YAHQBM00000QAMPAMPAHHPAUdContactGeom@@H@Z                    code  observed
+0x0059188f-0x005918a1   lib/ode/joint                     ?hingeInit@@YAXPAUdxJointHinge@@@Z (also sliderInit prologue)   code  observed
+0x00593fb4-0x00593fc3   lib/ode/joint                          ?universalGetInfo2@@YAXPAUdxJointUniversal@@PAUInfo2@dxJoint@@@Z       code  observed
+0x005966d9-0x005966e8   lib/ode/matrix                         _dLDLTRemove                                                           code  observed
+0x00598dfe-0x00598e0d   lib/ode/quickstep                      ?multiply_invM_JT@@YAXHHPAMPAH00@Z                                     code  observed
+0x0059b523-0x0059b532   lib/ode/collision_trimesh_ccylinder    ?_cldTestSeparatingAxesOfCapsule@@YAHAAY03$$CBM00@Z                    code  observed
+0x0059dc48-0x0059dc57   lib/ode/collision_trimesh_trimesh      ?ClipConvexPolygonAgainstPlane@@YAXQBMMAAULineContactSet@@@Z           code  observed
+0x005a036d-0x005a037c   lib/ode/collision_trimesh_trimesh      ?dCollideTTL@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z                     code  observed
+0x005a2a96-0x005a2aa1   lib/ode/collision_trimesh_box          ?_cldClipping@@YAXAAY03$$CBM00@Z                                       code  observed
+0x005a51b7-0x005a51c6   lib/ode/OPC_TreeCollider               ??DMatrix4x4@IceMaths@@QBE?AV01@ABV01@@Z                               code  observed
+0x005a78e0-0x005a78eb   lib/ode/OPC_TreeCollider               ?_CollideBoxTri@AABBTreeCollider@Opcode@@IAEXPBVAABBNoLeafNode@2@@Z    code  observed
+0x005aa001-0x005aa010   lib/ode/OPC_TreeCollider               ?_CollideBoxTri@AABBTreeCollider@Opcode@@IAEXPBVAABBQuantizedNoLeafNode@2@@Z code  observed
+0x005ac726-0x005ac735   lib/ode/OPC_TreeCollider               ?Collide@AABBTreeCollider@Opcode@@QAE_NAAUBVTCache@2@PBVMatrix4x4@IceMaths@@1@Z code  observed
+0x005aee4b-0x005aee5a   lib/ode/OPC_OBBCollider                ?TriBoxOverlap@OBBCollider@Opcode@@IAEHXZ                              code  observed
+0x005aee60-0x005aee61   lib/ode/OPC_OBBCollider                ?TriBoxOverlap@OBBCollider@Opcode@@IAEHXZ                              code  observed
+0x005b1570-0x005b157f   lib/ode/OPC_OBBCollider                ?_CollideNoPrimitiveTest@OBBCollider@Opcode@@IAEXPBVAABBQuantizedNode@2@@Z code  observed
+0x005b3c95-0x005b3c9d   lib/ode/OPC_OBBCollider                ??_GOBBCollider@Opcode@@UAEPAXI@Z                                      code  observed
+0x005b3ca0-0x005b3ca4   lib/ode/OPC_OBBCollider                ?Collide@OBBCollider@Opcode@@QAE_NAAUOBBCache@2@ABVOBB@IceMaths@@ABVModel@2@PBVMatrix4x4@5@3@Z code  observed
+0x005b63ba-0x005b63c9   lib/ode/OPC_RayCollider                ?_RayStab@RayCollider@Opcode@@IAEXPBVAABBNoLeafNode@2@@Z               code  observed
+0x005b8adf-0x005b8aee   lib/ode/lcp                            ?swapRowsAndCols@@YAXPAPAMHHHHH@Z                                      code  observed
+0x005bb207-0x005bb213   lib/ode/OPC_OptimizedTree              ?Build@AABBNoLeafTree@Opcode@@UAE_NPAVAABBTree@2@@Z                    code  observed
+0x005bd929-0x005bd938   lib/ode/fastldlt                       _dFactorLDLT                                                           code  observed
