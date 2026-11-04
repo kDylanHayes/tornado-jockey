@@ -72,17 +72,14 @@ bool SegmentInBox(const V3 &a, const V3 &b, const V3 &center, const MATRIX &m, c
 
 void CatmullRom(V3 *out, V3 p0, V3 p1, V3 p2, V3 p3, float t)
 {
-    // Declared in this order the compiler spills t2, as the original does.
-    float t3 = t * t * t;
-    float t2 = t * t;
-    *out = ((p1 * 2) + (p2 - p0) * t + (p0 * 2 - p1 * 5 + p2 * 4 - p3) * t2 + (p1 * 3 - p2 * 3 + p3 - p0) * t3) * 0.5f;
+    // t2 and t3 written out rather than named: the compiler then schedules the
+    // out-pointer load and the final stores as the original does.
+    *out = ((p1 * 2) + (p2 - p0) * t + (p0 * 2 - p1 * 5 + p2 * 4 - p3) * (t * t) + (p1 * 3 - p2 * 3 + p3 - p0) * (t * t * t)) * 0.5f;
 }
 
 void CatmullRomTangent(V3 *out, V3 p0, V3 p1, V3 p2, V3 p3, float t)
 {
-    float t2 = t * t * 3;
-    float t1 = t * 2;
-    *out = ((p2 - p0) + (p0 * 2 - p1 * 5 + p2 * 4 - p3) * t1 + (p1 * 3 - p2 * 3 + p3 - p0) * t2) * 0.5f;
+    *out = ((p2 - p0) + (p0 * 2 - p1 * 5 + p2 * 4 - p3) * (t * 2) + (p1 * 3 - p2 * 3 + p3 - p0) * (t * t * 3)) * 0.5f;
 }
 
 V3 TriangleNormal(const V3 &a, const V3 &b, const V3 &c)
