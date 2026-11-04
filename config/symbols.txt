@@ -5113,6 +5113,7 @@
 0x0066861c ??_C@_06HBNONAG@create?$AA@ data 0x7
 0x00668628 _s_TypeNames data 0xb4
 0x006686dc ??_C@_03MEPDGFMA@var?$AA@ data 0x4
+0x006686e0 ??_C@_09DDLGPJLE@guiscreen?$AA@ data 0xa
 0x006686ec ??_C@_09BMHMPIHG@resources?$AA@ data 0xa
 0x006686f8 ??_7KERNELCOMMANDS@@6B@ data 0xec
 0x00668a90 ??_C@_03BDGOHNNK@add?$AA@ data 0x4
