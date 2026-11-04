@@ -23,6 +23,7 @@
 0x667150-0x66715f   Tongas2/CMDMGR              ??_C@_0CF@MLNDBCPD@scripting?5object?5without?5base?5@  data  reported
 0x66c0d8-0x66c0e7   Tongas2/RESOURCE            ??_C@_0M@OHKMKKDH@Description?$AA@                       data  reported
 0x673827-0x673836   Tongas2/BEHAVIORFADERESLOOP _s_TypeNames                                            data  reported
+0x66e89c-0x66e8ab   Tongas2/GUITEXTEDIT        ??_7GUITEXTEDITMASTER@@6B@ (+0xdc)                      data  observed
 #
 # Found by the suspicious-disassembly scan (opaque bytes checked in the exe;
 # ranges may include the adjacent code the watermark displaced):
