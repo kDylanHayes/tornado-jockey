@@ -41,6 +41,7 @@
 0x4cdd00-0x4cdd0f   Tongas2/VALUEMANAGER        ?Delete@VALUEMANAGER@@UAE?AVSRESULT@@PAUCMDCALL@@@Z     code  observed
 0x4ab8fa-0x4ab908   Tongas2/PATH                ?GetCatmullRom@PATHMASTER@@QAE_NMPAUV3@@00PAM1@Z        code  observed
 0x6bc290-0x6bc29f   Tongas2/PATH                ?s_properties@PATHMASTER@@2PAUPROPENTRY@@A              data  observed
+0x49ce1b-0x49ce2b   Tongas2/ACTOR               ??1ACTOR@@UAE@XZ                                      code  observed
 0x60e4ed-0x60e4fc   Tongas2/EMITTER             _$E3                                                  code  observed
 0x6bd290-0x6bd29f   Tongas2/EMITTER             ?s_properties@EMITTERMASTER@@2PAUPROPENTRY@@A           data  observed
 #

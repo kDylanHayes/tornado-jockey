@@ -80,6 +80,16 @@ The run is 15 bytes, so the function and `Tongas2/PATH`'s code stay partial.
 The bytes there are opaque (`89 1b fb 96 cd e5 13 39 ...`), replacing a group
 of `s_properties` stores, so `_$E3` and `Tongas2/EMITTER`'s code stay partial.
 
+`ACTOR::~ACTOR` also contains a 17-byte run. The image has
+`f2 f0 3b 54 7b 04 05 d9 c7 d5 d0 3b 1f 2e 4f 06` where our object continues
+with the next `free`/member cleanup sequence:
+
+| range | unit | symbol |
+|---|---|---|
+| `0x49ce1b-0x49ce2b` | `Tongas2/ACTOR` | `??1ACTOR@@UAE@XZ` |
+
+The destructor and `Tongas2/ACTOR`'s code therefore stay partial.
+
 ## CMDMGR
 
 `?RegisterEngineClasses@@YAXXZ` (at `0x488aa0`) has a 14-byte run at
