@@ -1,0 +1,55 @@
+# Linker-ICF exceptions: target vtable slots whose relocation names were
+# collapsed by /OPT:ICF. objdiff compares data relocations by symbol name, and
+# a one-to-one symbol_mappings entry cannot express one target name used by
+# several base symbols, so these units cannot reach 100% data. This is a
+# target-object limitation, not a source problem: do not rewrite source to
+# mimic linker folding. Affected units stay partial.
+#
+# tools/fix_data_icf.py now rewrites those target relocations to the base
+# object's names during delinking; the entries below record why symbol
+# mappings alone were not enough and which slots were affected.
+#
+# unit               vtable                         slot   VA         target relocation name
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODEL@@6B@            0x54   0x673164   ?term_source@@YAXPAUjpeg_decompress_struct@@@Z
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODEL@@6B@            0x58   0x673168   ?term_source@@YAXPAUjpeg_decompress_struct@@@Z
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODEL@@6B@            0x5c   0x67316c   ?term_source@@YAXPAUjpeg_decompress_struct@@@Z
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODEL@@6B@            0x70   0x673180   ?term_source@@YAXPAUjpeg_decompress_struct@@@Z
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODEL@@6B@            0x78   0x673188   ?term_source@@YAXPAUjpeg_decompress_struct@@@Z
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODEL@@6B@            0x88   0x673198   ?term_source@@YAXPAUjpeg_decompress_struct@@@Z
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODEL@@6B@            0x8c   0x67319c   ?term_source@@YAXPAUjpeg_decompress_struct@@@Z
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODEL@@6B@            0x80   0x673190   ?GetScaleFactor@DECAL@@UAE?AUV3@@XZ
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODEL@@6B@            0xa4   0x6731b4   ?GetScaleFactor@DECAL@@UAE?AUV3@@XZ
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODEL@@6B@            0x11c  0x67322c   ?SetVertices@MESH@@UAEXPAUDECALVERTEX@@HPBFH@Z
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODEL@@6B@            0x120  0x673230   ?SetVertices@MESH@@UAEXPAUDECALVERTEX@@HPBFH@Z
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODEL@@6B@            0x100  0x673210   ?SetDescription@RESOURCEMASTER@@UAEXABH@Z
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODELMASTER@@6B@      0x60   0x6730e8   ?SetDescription@RESOURCEMASTER@@UAEXABH@Z
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODELMASTER@@6B@      0x64   0x6730ec   ?SetDescription@RESOURCEMASTER@@UAEXABH@Z
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODELMANAGER@@6B@     0x08   0x673064   ??_EDECALMANAGER@@UAEPAXI@Z
+Tongas2/SIMPLEMODEL  ??_7SIMPLEMODELMASTER@@6B@      0x04   0x67308c   ??_ECPRIMITIVE3MASTER@@UAEPAXI@Z
+#
+# Confirmed after the SIMPLEMODEL note; these units also cannot reach 100% data.
+Tongas2/CPRIMITIVE3 ??_7CPRIMITIVE3MASTER@@6B@      0x60  0x66f9b0  ?SetDescription@RESOURCEMASTER@@UAEXABH@Z
+Tongas2/CPRIMITIVE3 ??_7CPRIMITIVE3MASTER@@6B@      0x64  0x66f9b4  ?SetDescription@RESOURCEMASTER@@UAEXABH@Z
+Tongas2/CPRIMITIVE3 ??_7CPRIMITIVE3MASTER@@6B@      0x50  0x66f9a0  ?term_source@@YAXPAUjpeg_decompress_struct@@@Z
+Tongas2/CPRIMITIVE3 ??_7CPRIMITIVE3MASTER@@6B@      0x7c  0x66f9cc  ?term_source@@YAXPAUjpeg_decompress_struct@@@Z
+Tongas2/CPRIMITIVE3 ??_7CPRIMITIVE3RESOURCE@@6B@    0x24  0x66fab4  ?Virtual09@RESOURCE@@UAEPAXPBD@Z
+Tongas2/CPRIMITIVE3 ??_7CPRIMITIVE3RESOURCE@@6B@    0x10c 0x66fb9c  ?Virtual09@RESOURCE@@UAEPAXPBD@Z
+Tongas2/CPRIMITIVE3 ??_7CPRIMITIVE3RESOURCE@@6B@    0x54  0x66fae4  ?term_source@@YAXPAUjpeg_decompress_struct@@@Z
+Tongas2/CPRIMITIVE3 ??_7CPRIMITIVE3RESOURCE@@6B@    0x70  0x66fb00  ?term_source@@YAXPAUjpeg_decompress_struct@@@Z
+Tongas2/CPRIMITIVE3 ??_7CPRIMITIVE3RESOURCE@@6B@    0x78  0x66fb08  ?term_source@@YAXPAUjpeg_decompress_struct@@@Z
+Tongas2/CPRIMITIVE3 ??_7CPRIMITIVE3RESOURCE@@6B@    0x88  0x66fb18  ?term_source@@YAXPAUjpeg_decompress_struct@@@Z
+Tongas2/CPRIMITIVE3 ??_7CPRIMITIVE3RESOURCE@@6B@    0x8c  0x66fb1c  ?term_source@@YAXPAUjpeg_decompress_struct@@@Z
+Tongas2/HEIGHTMAPDX8 ??_7HEIGHTMAPDX8@@6B@           0x24  0x6740e4  ?Virtual09@RESOURCE@@UAEPAXPBD@Z
+Tongas2/HEIGHTMAPDX8 ??_7HEIGHTMAPDX8@@6B@           0x10c 0x6741cc  ?Virtual09@RESOURCE@@UAEPAXPBD@Z
+Tongas2/HEIGHTMAPDX8 ??_7HEIGHTMAPDX8@@6B@           0x54  0x674114  ?term_source@@YAXPAUjpeg_decompress_struct@@@Z
+Tongas2/HEIGHTMAPDX8 ??_7HEIGHTMAPDX8@@6B@           0x70  0x674130  ?term_source@@YAXPAUjpeg_decompress_struct@@@Z
+Tongas2/HEIGHTMAPDX8 ??_7HEIGHTMAPDX8@@6B@           0x78  0x674138  ?term_source@@YAXPAUjpeg_decompress_struct@@@Z
+Tongas2/HEIGHTMAPDX8 ??_7HEIGHTMAPDX8@@6B@           0x88  0x674148  ?term_source@@YAXPAUjpeg_decompress_struct@@@Z
+Tongas2/HEIGHTMAPDX8 ??_7HEIGHTMAPDX8@@6B@           0x8c  0x67414c  ?term_source@@YAXPAUjpeg_decompress_struct@@@Z
+Tongas2/HEIGHTMAPDX8 ??_7HEIGHTMAPDX8MASTER@@6B@     0x60  0x6742f0  ?SetDescription@RESOURCEMASTER@@UAEXABH@Z
+Tongas2/HEIGHTMAPDX8 ??_7HEIGHTMAPDX8MASTER@@6B@     0x64  0x6742f4  ?SetDescription@RESOURCEMASTER@@UAEXABH@Z
+Tongas2/HEIGHTMAPDX8 ??_7HEIGHTMAPDX8MASTER@@6B@     0xb4  0x674344  ?SetDescription@RESOURCEMASTER@@UAEXABH@Z
+Tongas2/HEIGHTMAPDX8 ??_7HEIGHTMAPDX8MASTER@@6B@     0xb8  0x674348  ?SetDescription@RESOURCEMASTER@@UAEXABH@Z
+Tongas2/HEIGHTMAPDX8 ??_7HEIGHTMAPDX8MASTER@@6B@     0xc0  0x674350  ?SetDescription@RESOURCEMASTER@@UAEXABH@Z
+Tongas2/HEIGHTMAPDX8 ??_7HEIGHTMAPDX8MASTER@@6B@     0xc8  0x674358  ?SetDescription@RESOURCEMASTER@@UAEXABH@Z
+Tongas2/HEIGHTMAPDX8 ??_7HEIGHTMAPDX8MASTER@@6B@     0xe0  0x674370  ?SetDescription@RESOURCEMASTER@@UAEXABH@Z

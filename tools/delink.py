@@ -14,6 +14,7 @@ import sys
 import tempfile
 from pathlib import Path
 
+import fix_data_icf
 import fix_data_symbols
 import split_functions as split
 from find_objects import Coff
@@ -310,6 +311,7 @@ def main() -> int:
                                    [v for v in sized if not any(lo <= v[1] <= hi for lo, hi in spans)])
         apply_symbol_mappings(ROOT / unit["target"], unit.get("symbol_mappings", {}))
         if ours is not None and ours.is_file():
+            fix_data_icf.main_path(ROOT / unit["target"], ours)
             sync_data_relocations(ROOT / unit["target"], ours)
     if returncode != 0 or missing or "SCRIPT ERROR" in log_text:
         return 1
