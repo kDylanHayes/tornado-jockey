@@ -21,8 +21,8 @@ FIBITMAP *SCREENCAPTURE::Grab(HWND window, V2 center, V2 size, V2 outSize)
     HDC memory = CreateCompatibleDC(dc);
     RECT rect;
     GetClientRect(window, &rect);
-    int width = rect.right - rect.left;
     int height = rect.bottom - rect.top;
+    int width = rect.right - rect.left;
     int x, y;
     if (size.x == 0.0f && size.y == 0.0f) {
         x = 0;

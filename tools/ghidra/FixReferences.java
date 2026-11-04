@@ -39,6 +39,7 @@ import ghidra.program.model.symbol.RefType;
 import ghidra.program.model.symbol.Reference;
 import ghidra.program.model.symbol.ReferenceManager;
 import ghidra.program.model.symbol.SourceType;
+import ghidra.program.model.symbol.Symbol;
 
 public class FixReferences extends HeadlessScript {
 	// A pointer whose four bytes are printable text ending in NUL.
@@ -49,6 +50,25 @@ public class FixReferences extends HeadlessScript {
 		}
 		byte[] b = new byte[4];
 		currentProgram.getMemory().getBytes(a, b);
+		boolean ended = false;
+		for (byte x : b) {
+			if (x == 0) {
+				ended = true;
+			}
+			else if (ended || x < 0x20 || x > 0x7e) {
+				return false;
+			}
+		}
+		return ended && b[0] != 0;
+	}
+
+	// Four bytes of printable text ending in NUL, whether or not analysis
+	// typed them as a pointer ("set\0" is the address 0x00746573).
+	private boolean bytesLookLikeString(Address a) throws Exception {
+		byte[] b = new byte[4];
+		if (currentProgram.getMemory().getBytes(a, b) != 4) {
+			return false;
+		}
 		boolean ended = false;
 		for (byte x : b) {
 			if (x == 0) {
@@ -141,6 +161,20 @@ public class FixReferences extends HeadlessScript {
 					refs.addMemoryReference(ins.getAddress(), disp, type, SourceType.USER_DEFINED, op);
 					fixed++;
 				}
+				if (ins.getOperandReferences(op).length == 0) {
+					// An indexed data operand (mov [eax*4 + table], ...) that
+					// analysis never referenced: the exe holds the named
+					// symbol's absolute address, but without a reference the
+					// delinker emits no relocation for it.
+					MemoryBlock block = currentProgram.getMemory().getBlock(disp);
+					Symbol sym = getSymbolAt(disp);
+					if (block != null && block.isInitialized() && !block.isExecute() &&
+						sym != null && sym.getSource() == SourceType.USER_DEFINED) {
+						refs.addMemoryReference(ins.getAddress(), disp, RefType.DATA,
+							SourceType.USER_DEFINED, op);
+						added++;
+					}
+				}
 			}
 		}
 		println("Re-pointed " + fixed + " indexed operand references");
@@ -207,6 +241,17 @@ public class FixReferences extends HeadlessScript {
 				for (Reference ref : refs.getReferencesFrom(loc)) {
 					refs.delete(ref);
 					removed++;
+				}
+				// A short string whose bytes read as an address ("set" is
+				// 0x00746573): leave it typed as a string so the relocation
+				// synthesizer does not put a relocation on its bytes.
+				if (bytesLookLikeString(loc)) {
+					try {
+						createAsciiString(loc, 4);
+					}
+					catch (Exception e) {
+						// Something else is defined in the word.
+					}
 				}
 				continue;
 			}

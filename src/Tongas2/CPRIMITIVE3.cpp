@@ -232,7 +232,7 @@ void CPRIMITIVE3MASTER::SetBoxColor(const V3I &color)
 
 void CPRIMITIVE3MASTER::SetPrimitiveType(const int &type)
 {
-    if (m_primitiveType != type) {
+    if (type != m_primitiveType) {
         m_primitiveType = type;
         RESOURCE *next;
         for (RESOURCE *copy = m_used; copy; copy = next) {

@@ -41,12 +41,16 @@ POLYTRAIL::POLYTRAIL(POLYTRAILMASTER *master, const RESHANDLE &handle)
     m_velocity.x = m_velocity.y = m_velocity.z = 0.0f;
 }
 
+// The original calls the out-of-line CURVE::Stop, which the linker turns
+// into a tail jump.
+#pragma inline_depth(0)
 void POLYTRAIL::Stop()
 {
     if (m_dying)
         Virtual20();
     CURVE::Stop();
 }
+#pragma inline_depth()
 
 void POLYTRAIL::PlacePoints()
 {

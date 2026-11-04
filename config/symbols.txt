@@ -1137,7 +1137,7 @@
 0x004a8e40 ?CreateMesh@DECAL@@QAEXXZ function 0x66
 0x004a8eb0 ?Init@DECAL@@UAEXXZ function 0x29
 0x004a8ee0 ?SetColor@DECAL@@QAEXABUV3@@@Z function 0x5c
-0x004a8f40 ?GetShaderHandle@DECAL@@QAE?AURESHANDLE@@XZ function 0x23
+0x004a8f40 ?GetShaderHandle@DECAL@@QAE?AURESHANDLE@@XZ function 0x24
 0x004a8f70 ?SetUV@DECAL@@QAEXMMMM@Z function 0xc5
 0x004a9040 ?UpdateAngles@DECAL@@UAEXXZ function 0x5
 0x004a9050 ?RegisterCommands@DECALMASTER@@SAXXZ function 0x3f
@@ -6846,3 +6846,64 @@
 0x00a10608 ?mUsedRam@Container@IceCore@@0IA data
 0x00a11294 ?g_pWkz@@3PAVWKZ@@A data 0x4
 0x00a12444 _MMXAvailable data
+0x00402770 ??4CSTRING@@QAEAAV0@PBD@Z function
+0x00406f50 ?_Copy@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@IAEXII@Z function
+0x00440060 ??1RESOURCE@@UAE@XZ function
+0x0045448f ?_Xran@_String_base@std@@QBEXXZ function
+0x004544cf ?_Xlen@_String_base@std@@QBEXXZ function
+0x004e3828 __real@3f000000 data
+0x00658144 ??_C@_0BJ@GAJIINGO@?$CI?$CFf?0?$CFf?0?$CFf?$CJ?5?$CI?$CFf?0?$CFf?0?$CFf?$CJ?5?$CFd?$AA@ data
+0x00658828 ??_C@_0FP@IEHJKMFK@ERROR?$CB?$CB?5SCENE?3?3LoadActorsInforma@ data
+0x00658c5c __real@43c80000 data
+0x00667e68 ??_C@_0BE@NGPNEKCG@already?5initted?$CB?$CB?$CB?$CB?$AA@ data
+0x00667e7c ??_C@_0CI@JHJCIHPH@SCENE?3?3PVSAddMember?5?9?5PVS?5not?5su@ data
+0x00667ea4 ??_C@_0CD@DLLLBKPD@SCENE?3?3PVSDump?5?9?5PVS?5not?5support@ data
+0x00667ed0 ??_7?$LIFO@URESHANDLE@@$0BDII@@@6B@ data
+0x00667ed4 ??_7?$LIFO@PAVACTOR@@$0BDII@@@6B@ data
+0x00667f54 ??_C@_07DKACKEOF@OneNode?$AA@ data
+0x00667f5c ??_7?$SAFEINDEX@VACTOR@@$0BDII@$0PL@$00@@6B@ data
+0x00667ff4 ??_C@_05ELCCFCFH@scene?$AA@ data
+0x006680a8 ?Format@STRING@@QAAXPBDZZ$SCENE function
+0x00668110 ??_C@_0DH@FGFBGCPK@SCENE?3?3CreateActor?5?9?5Could?5creat@ data
+0x00668148 ??_C@_07PGEILMHB@DumpPVS?$AA@ data
+0x00668150 ??_C@_09PBKMMNCK@CreatePVS?$AA@ data
+0x0067291c ??_C@_0CL@PCMKJJFM@PVSOctree?3?3AddMember?5?9?5parent?5no@ data
+0x005e9f96 __ehhandler$?CreatePVS@SCENE@@QAEXPBD0@Z function
+0x005e9fb6 __ehhandler$??1?$SAFEINDEX@VACTOR@@$0BDII@$0PL@$00@@UAE@XZ function
+0x005e9fcb __ehhandler$?CreateScene@@YAPAVSCENE@@XZ function
+0x005e9ff6 __ehhandler$??1SCENE@@UAE@XZ function
+0x005ea953 __ehhandler$??1DECALMASTER@@UAE@XZ function
+0x005ea968 __ehhandler$??0DECAL@@QAE@PAVDECALMASTER@@URESHANDLE@@@Z function
+0x005ea99b __ehhandler$??0DECALMASTER@@QAE@PAVRESOURCEMANAGER@@PBD@Z function
+0x005ea9b8 __ehhandler$?Execute@DECALMASTER@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function
+0x005ea9db __ehhandler$?CreateMaster@DECALMANAGER@@UAEPAVRESOURCEMASTER@@PBD@Z function
+0x005eafeb __ehhandler$?CreateCopy@LIGHTMASTER@@UAEPAVRESOURCE@@ABURESHANDLE@@@Z function
+0x005eb008 __ehhandler$?Execute@LIGHTMASTER@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function
+0x005eb99b __ehhandler$?CreateMaster@POLYTRAILMANAGER@@UAEPAVRESOURCEMASTER@@PBD@Z function
+0x005eb9b8 __ehhandler$?Execute@POLYTRAILMASTER@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function
+0x005ebb80 __ehhandler$??0SHADERMASTER@@QAE@PAVRESOURCEMANAGER@@PBD@Z function
+0x005ebbb0 __ehhandler$??1SHADERMASTER@@UAE@XZ function
+0x005ebbcb __ehhandler$?CreateCopy@SHADERMASTER@@UAEPAVRESOURCE@@ABURESHANDLE@@@Z function
+0x005ebbe8 __ehhandler$?Execute@SHADERMASTER@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function
+0x005ec308 __ehhandler$??1OCTREENODE@@UAE@XZ function
+0x005ec378 __ehhandler$?AddMember@OCTREENODE@@UAEXPAVACTOR@@@Z function
+0x005ec39b __ehhandler$??0OCTREE@@QAE@UV3@@0H@Z function
+0x005ec3bb __ehhandler$?Clear@OCTREE@@QAEXXZ function
+0x005ec40b __ehhandler$?CreateCopy@SIMPLEMODELMASTER@@UAEPAVRESOURCE@@ABURESHANDLE@@@Z function
+0x005ec428 __ehhandler$??1MESHMASTER@@UAE@XZ function
+0x005ec44b __ehhandler$?CreateCopy@MESHMASTER@@UAEPAVRESOURCE@@ABURESHANDLE@@@Z function
+0x005ec468 __ehhandler$?FixSlashes@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV12@@Z function
+0x005ec498 __ehhandler$?CreateFolder@@YAXABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z function
+0x005ec51b __ehhandler$??0RENDERER@@QAE@XZ function
+0x005ec59b __ehhandler$??1RENDERER@@UAE@XZ function
+0x005ec5bb __ehhandler$?CreateIndexBuffer@RENDERER@@QAEPAVINDEXBUFFER@@PAURESHANDLE@@@Z function
+0x005ec5db __ehhandler$?CreateMaster@HEIGHTMAPDX8MANAGER@@UAEPAVRESOURCEMASTER@@PBD@Z function
+0x005ec5fb __ehhandler$?AllocMesh@HEIGHTMAPDX8@@QAEPAVMESHDX8@@PAH00HH_N@Z function
+0x005ec618 __ehhandler$??1HEIGHTMAPDX8@@UAE@XZ function
+0x005ec63b __ehhandler$?LoadImages@HEIGHTMAPDX8MASTER@@QAEXXZ function
+0x005ec69a __ehhandler$??1HEIGHTMAPDX8MASTER@@UAE@XZ function
+0x005ec6b8 __ehhandler$?Execute@HEIGHTMAPDX8MASTER@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function
+0x005ec6d8 __ehhandler$??0HEIGHTMAPDX8@@QAE@PAVRESOURCEMASTER@@ABURESHANDLE@@@Z function
+0x005ec760 __ehhandler$??0HEIGHTMAPDX8MASTER@@QAE@PAVRESOURCEMANAGER@@PBD@Z function
+0x005ec7c8 __ehhandler$?ParseTilesInfo@HEIGHTMAPDX8@@QAEXHHABVSTRING@@@Z function
+0x005ec7f6 __ehhandler$?Load@HEIGHTMAPDX8@@QAEXXZ function
