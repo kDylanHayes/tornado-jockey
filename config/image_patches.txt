@@ -31,8 +31,23 @@
 0x48e349-0x48e35b   Tongas2/GUI                 ??1GUI@@UAE@XZ                                          code  scan
 0x49f542-0x49f551   Tongas2/GUIGROUPCONTROL     ?MouseOverCommand@GUIGROUP@@UAE?AVSRESULT@@PAUCMDCALL@@@Z  code  scan
 #
+# Found by the actors/gameplay pass (byte-checked against orig/Tornado.exe;
+# 0x4b558d is the tail of the run at 0x4b5590 and displaces the end of
+# SetWaitOnFirst):
+0x4b558d-0x4b559f   Tongas2/SPAWNER             ?SetWaitOnFirst@SPAWNER@@UAEXAB_N@Z (also SetUseSpawnerAngleScale)  code  observed
+0x4cdd00-0x4cdd0f   Tongas2/VALUEMANAGER        ?Delete@VALUEMANAGER@@UAE?AVSRESULT@@PAUCMDCALL@@@Z     code  observed
+0x6bc290-0x6bc29f   Tongas2/PATH                ?s_properties@PATHMASTER@@2PAUPROPENTRY@@A              data  observed
+0x6bd290-0x6bd29f   Tongas2/EMITTER             ?s_properties@EMITTERMASTER@@2PAUPROPENTRY@@A           data  observed
+#
+# Also found by worker 8 (RESOURCES::Insert has a second, analysis-only
+# instruction overlap at 0x4a6af5; that one is not a watermark):
+0x4a438a-0x4a439a   Tongas2/RESOURCES           ?GetManager@RESOURCES@@QAEPAVRESOURCEMANAGER@@AAPBD@Z   code  observed
+0x4a6aaf-0x4a6abf   Tongas2/RESOURCES           ?Insert@?$SAFEINDEX@VRESOURCE@@$0IAAA@$0CDJ@$02@@QAE?AURESHANDLE@@PAPAVRESOURCE@@H@Z  code  observed
+0x4894f3-0x489507   Tongas2/CMDMGR              ?RegisterEngineClasses@@YAXXZ                           code  scan
+#
 # Lengths observed so far are 7-19 bytes (16 typical). No fixed address
-# stride or modulus was found: starts include 0x4846ab, 0x486dd0, 0x48e349,
-# 0x490a62, 0x49f542, 0x4a1c65, 0x4a91d4, 0x4b5592, 0x4b7cb2, 0x4c1943,
-# 0x4c4071, 0x4d2b49, 0x4d526e, 0x4da0b8, 0x4dc7dd, 0x667150, 0x66c0d8,
-# 0x671062 and 0x673827.
+# stride or modulus was found: starts include 0x4846ab, 0x486dd0, 0x4894f3,
+# 0x48e349, 0x490a62, 0x49f542, 0x4a1c65, 0x4a438a, 0x4a6aaf, 0x4a91d3,
+# 0x4b558d, 0x4b5592, 0x4b7cb2, 0x4c1942, 0x4c4071, 0x4cdd00, 0x4d2b49,
+# 0x4d526d, 0x4da0b8, 0x4dc7dd, 0x667150, 0x66c0d8, 0x671062, 0x673827,
+# 0x6bc290 and 0x6bd290.

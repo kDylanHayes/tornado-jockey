@@ -232,12 +232,16 @@ def main() -> int:
         unit_sizes = base_function_sizes(ours) if ours is not None and ours.is_file() else {}
         unit_sizes.update({n: sz for n, a, sz in sizes if any(lo <= a <= hi for lo, hi in spans)})
         # Data sizes too: symbols.txt's size cuts the linker's alignment
-        # padding off the item, the way it does for functions.
-        unit_sizes.update({n: sz for n, a, sz in sized if any(lo <= a <= hi for lo, hi in spans)})
-        split.main_path(ROOT / unit["target"], base=base_addr, ours=ours, sizes=unit_sizes)
+        # padding off the item, the way it does for functions. split_functions
+        # takes these separately, because it may only trim data when no other
+        # symbol starts or refers inside the part the size would cut off.
+        data_sizes = {n: sz for n, a, sz in sized if any(lo <= a <= hi for lo, hi in spans)}
+        split.main_path(ROOT / unit["target"], base=base_addr, ours=ours, sizes=unit_sizes,
+                        data_sizes=data_sizes)
         fix_data_symbols.main_path(ROOT / unit["target"],
                                    {n: a for n, a in variables if any(lo <= a <= hi for lo, hi in spans)},
                                    [v for v in sized if not any(lo <= v[1] <= hi for lo, hi in spans)])
+        apply_symbol_mappings(ROOT / unit["target"], unit.get("symbol_mappings", {}))
         if ours is not None and ours.is_file():
             fix_data_icf.main_path(ROOT / unit["target"], ours)
     if returncode != 0 or missing or "SCRIPT ERROR" in log_text:
