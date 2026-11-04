@@ -399,7 +399,8 @@ void ACTOR::UpdateOccludingBox()
     for (int i = 0; i < m_numResources; i++) {
         OBJECT *copy = (OBJECT *)g_pResources->GetResource(m_copies[i]);
         if (copy) {
-            V3 size = copy->GetScaleFactor();
+            V3 size;
+            size = copy->GetScaleFactor();
             if (m_occludingBox.x < size.x)
                 m_occludingBox.x = size.x;
             if (m_occludingBox.y < size.y)
