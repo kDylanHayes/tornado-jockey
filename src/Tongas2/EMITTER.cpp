@@ -1066,52 +1066,56 @@ PARTICLE::PARTICLE(EMITTER *emitter)
     m_accel = RANDOM(master->m_accelRange.min, master->m_accelRange.max);
     m_distance = 1.0f;
 
-    // Which way the particle heads.
-    ANG angles(0.0f, 0.0f, 0.0f);
-    float speed = RANDOM(master->m_speedRange.min, master->m_speedRange.max);
-    switch (master->m_emitDirection) {
-    case EMITTERMASTER::DIRECTION_FW: {
-        float angle = RANDOM(master->m_angRange.min, master->m_angRange.max);
-        angles = ANG(0.0f, angle, (float)rand() * (360.0f / RAND_MAX) - 180.0f);
-        if (!master->m_pictureLoaded) {
-            m_velocity = angles.Transform(V3(0.0f, 0.0f, speed));
-        } else if (!m_attached) {
-            m_velocity = (pos - emitter->GetPosition()) * speed;
-            m_distance = (pos - emitter->GetPosition()).Length();
-        } else {
-            m_velocity = (pos - emitter->GetOffset()) * speed;
-            m_distance = (pos - emitter->GetOffset()).Length();
+    // Which way the particle heads. The angles are only needed here, so
+    // they live in a scope of their own and the compiler can reuse their
+    // bytes for the facing computed at the end.
+    {
+        ANG angles(0.0f, 0.0f, 0.0f);
+        float speed = RANDOM(master->m_speedRange.min, master->m_speedRange.max);
+        switch (master->m_emitDirection) {
+        case EMITTERMASTER::DIRECTION_FW: {
+            float angle = RANDOM(master->m_angRange.min, master->m_angRange.max);
+            angles = ANG(0.0f, angle, (float)rand() * (360.0f / RAND_MAX) - 180.0f);
+            if (!master->m_pictureLoaded) {
+                m_velocity = angles.Transform(V3(0.0f, 0.0f, speed));
+            } else if (!m_attached) {
+                m_velocity = (pos - emitter->GetPosition()) * speed;
+                m_distance = (pos - emitter->GetPosition()).Length();
+            } else {
+                m_velocity = (pos - emitter->GetOffset()) * speed;
+                m_distance = (pos - emitter->GetOffset()).Length();
+            }
+            break;
         }
-        break;
-    }
-    case EMITTERMASTER::DIRECTION_UP: {
-        float angle = RANDOM(master->m_angRange.min, master->m_angRange.max);
-        angles = ANG((float)rand() * (360.0f / RAND_MAX) - 180.0f, 0.0f, angle);
-        if (!master->m_pictureLoaded) {
-            m_velocity = angles.Transform(V3(0.0f, speed, 0.0f));
-        } else if (!m_attached) {
-            m_velocity = (pos - emitter->GetPosition()) * speed;
-            m_distance = (pos - emitter->GetPosition()).Length();
-        } else {
-            m_velocity = (pos - emitter->GetOffset()) * speed;
-            m_distance = (pos - emitter->GetOffset()).Length();
+        case EMITTERMASTER::DIRECTION_UP: {
+            float angle = RANDOM(master->m_angRange.min, master->m_angRange.max);
+            angles = ANG((float)rand() * (360.0f / RAND_MAX) - 180.0f, 0.0f, angle);
+            if (!master->m_pictureLoaded) {
+                m_velocity = angles.Transform(V3(0.0f, speed, 0.0f));
+            } else if (!m_attached) {
+                m_velocity = (pos - emitter->GetPosition()) * speed;
+                m_distance = (pos - emitter->GetPosition()).Length();
+            } else {
+                m_velocity = (pos - emitter->GetOffset()) * speed;
+                m_distance = (pos - emitter->GetOffset()).Length();
+            }
+            break;
         }
-        break;
-    }
-    }
+        }
 
-    if (master->m_emiterOffset != 0.0f) {
-        V3 offset = angles.Transform(V3(0.0f, master->m_emiterOffset, 0.0f));
-        if (!m_attached)
-            resource->SetPosition(emitter->GetAngles().Transform(offset) + resource->m_position);
-        else
-            resource->SetOffsetV(emitter->GetRelAngles().Transform(offset) + resource->m_position);
-    }
-    if (!master->m_pictureLoaded) {
-        if (!m_attached)
-            m_velocity = emitter->GetAngles().Transform(m_velocity);
-        else
-            m_velocity = emitter->GetRelAngles().Transform(m_velocity);
+        if (master->m_emiterOffset != 0.0f) {
+            V3 offset = angles.Transform(V3(0.0f, master->m_emiterOffset, 0.0f));
+            if (!m_attached)
+                resource->SetPosition(emitter->GetAngles().Transform(offset) + resource->m_position);
+            else
+                resource->SetOffsetV(emitter->GetRelAngles().Transform(offset) + resource->m_position);
+        }
+        if (!master->m_pictureLoaded) {
+            if (!m_attached)
+                m_velocity = emitter->GetAngles().Transform(m_velocity);
+            else
+                m_velocity = emitter->GetRelAngles().Transform(m_velocity);
+        }
     }
     if (master->m_rotateToMove) {
         ANG facing(0.0f, 0.0f, 0.0f);
