@@ -4710,6 +4710,7 @@
 0x0065a5e8 ??_C@_04HDOCAJNK@?$CFs?$CFs?$AA@ data 0x5
 0x0065a708 __real@3ccccccd data 0x4
 0x0065aa84 __real@3fc00000 data
+0x0065aae0 __real@3e000000 data 0x4
 0x0065abe8 ??_C@_04DJCABLIL@?$CFs?$CFc?$AA@ data 0x5
 0x0065abf8 ??_C@_02DKCKIIND@?$CFs?$AA@ data 0x3
 0x0065b0f8 __real@3c23d70a data

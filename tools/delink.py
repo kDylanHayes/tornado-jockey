@@ -8,6 +8,7 @@ project created by tools/analyze.py.
 import argparse
 import json
 import os
+import struct
 import subprocess
 import sys
 import tempfile
@@ -85,6 +86,38 @@ POSIX_COMMAND_LIMIT = 100_000  # ARG_MAX is much larger, but stay well clear
 def command_size(args: list[str]) -> int:
     """Rough rendered length of an argument list (quoting and separators)."""
     return sum(len(arg) + 3 for arg in args)
+
+
+def apply_symbol_mappings(path: Path, mappings: dict) -> int:
+    """Give referenced, undefined symbols the names our object uses.
+
+    objdiff pairs code relocations through the unit's symbol_mappings, but it
+    compares a data section's relocations by the names the target object
+    carries, so a vtable slot the linker folded onto another unit's identical
+    function stays unmatched however the mapping reads. Renaming the target's
+    undefined symbol (the fold target lives outside this unit, so it has no
+    body here) makes both sides agree. Defined symbols are left alone: objdiff
+    already pairs those.
+    """
+    if not mappings:
+        return 0
+    coff = split.Coff(path.read_bytes())
+    by_index = {i: rec for i, rec, _ in coff.symbols}
+    taken = {coff.name(rec) for _, rec, _ in coff.symbols}
+    renamed = 0
+    for sec in coff.sections:
+        for rel in sec["relocs"]:
+            rec = by_index.get(rel[1])
+            if rec is None:
+                continue
+            name = coff.name(rec)
+            if name in mappings and mappings[name] not in taken:
+                coff.set_name(rec, mappings[name])
+                taken.add(mappings[name])
+                renamed += 1
+    if renamed:
+        path.write_bytes(coff.write())
+    return renamed
 
 
 def unit_args(unit: dict) -> list[str]:
@@ -198,6 +231,9 @@ def main() -> int:
         # in a call that never returns keeps the int3 the compiler put after it.
         unit_sizes = base_function_sizes(ours) if ours is not None and ours.is_file() else {}
         unit_sizes.update({n: sz for n, a, sz in sizes if any(lo <= a <= hi for lo, hi in spans)})
+        # Data sizes too: symbols.txt's size cuts the linker's alignment
+        # padding off the item, the way it does for functions.
+        unit_sizes.update({n: sz for n, a, sz in sized if any(lo <= a <= hi for lo, hi in spans)})
         split.main_path(ROOT / unit["target"], base=base_addr, ours=ours, sizes=unit_sizes)
         fix_data_symbols.main_path(ROOT / unit["target"],
                                    {n: a for n, a in variables if any(lo <= a <= hi for lo, hi in spans)},

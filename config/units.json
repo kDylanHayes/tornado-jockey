@@ -2087,21 +2087,23 @@
       "name": "Tongas2/LOG",
       "ranges": [
         "0x00482cd0-0x004836af",
-        "0x00666478-0x00666677",
+        "0x00666478-0x0066666f",
         "0x006b91a4-0x006b91d7"
       ],
       "target": "build/target/Tongas2/LOG.obj",
       "source": "src/Tongas2/LOG.cpp",
       "category": "engine",
       "symbol_mappings": {
-        "?IsCompressed@FILELOADER@@UAE_NXZ": "?Virtual00@LOG@@UAE_NXZ"
-      }
+        "?IsCompressed@FILELOADER@@UAE_NXZ": "?Virtual00@LOG@@UAE_NXZ",
+        "__ehhandler$??0sentry@?$basic_ostream@DU?$char_traits@D@std@@@std@@QAE@AAV12@@Z": "__ehhandler$??1sentry@?$basic_ostream@DU?$char_traits@D@std@@@std@@QAE@XZ"
+      },
+      "complete": true
     },
     {
       "name": "Tongas2/CMDBASE",
       "ranges": [
         "0x004836b0-0x00488a7f",
-        "0x00666678-0x00666e1f",
+        "0x00666670-0x00666e1f",
         "0x006b91d8-0x006b92e7"
       ],
       "target": "build/target/Tongas2/CMDBASE.obj",
@@ -2198,8 +2200,13 @@
       "symbol_mappings": {
         "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z",
         "??_9@$BGE@AE": "?IsPlaying@GAME@@UAE_NXZ",
-        "?Virtual22@SCENE@@UAE?AVSRESULT@@PAUCMDCALL@@@Z": "?ExportStrings@GAME@@UAE?AVSRESULT@@PAUCMDCALL@@@Z"
-      }
+        "?Virtual22@SCENE@@UAE?AVSRESULT@@PAUCMDCALL@@@Z": "?ExportStrings@GAME@@UAE?AVSRESULT@@PAUCMDCALL@@@Z",
+        "??_9@$BGM@AE": "?Virtual28@GAME@@UAEXXZ",
+        "?SetDescription@RESOURCEMASTER@@UAEXABH@Z": "?Virtual22@GAME@@UAEXPAVACTOR@@@Z",
+        "?Virtual08@RESOURCES@@UAEHXZ": "?Virtual08@GAME@@UAEHXZ",
+        "?Virtual09@RESOURCE@@UAEPAXPBD@Z": "?Virtual09@GAME@@UAEPAXPBD@Z"
+      },
+      "complete": true
     },
     {
       "name": "Tongas2/DRM",
@@ -2215,8 +2222,17 @@
       "category": "engine",
       "symbol_mappings": {
         "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z",
-        "?Virtual22@SCENE@@UAE?AVSRESULT@@PAUCMDCALL@@@Z": "?IsUnlocked@DRM@@UAE?AVSRESULT@@PAUCMDCALL@@@Z"
-      }
+        "?Virtual22@SCENE@@UAE?AVSRESULT@@PAUCMDCALL@@@Z": "?IsUnlocked@DRM@@UAE?AVSRESULT@@PAUCMDCALL@@@Z",
+        "?IsLoaded@SCREENDECAL@@UAE_NXZ": "?Virtual25@DRM@@UAE_NXZ",
+        "?Virtual08@RESOURCES@@UAEHXZ": "?Virtual08@DRM@@UAEHXZ",
+        "?Virtual09@RESOURCE@@UAEPAXPBD@Z": "?Virtual09@DRM@@UAEPAXPBD@Z",
+        "FUN_00440040": "??_EDRM@@UAEPAXI@Z",
+        "FUN_00448580": "?Execute@DRM@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z",
+        "LAB_00448540": "?GetClassId@DRM@@UAEHXZ",
+        "LAB_00448550": "?GetParentClassId@DRM@@UAEHXZ",
+        "LAB_00448560": "?GetClassName@DRM@@UAEPBDXZ"
+      },
+      "complete": true
     },
     {
       "name": "Tongas2/SCENE",
@@ -2251,7 +2267,8 @@
       "category": "engine",
       "symbol_mappings": {
         "?Virtual13@CMDBASE@@UAEXXZ": "??_9@$BBA@AE"
-      }
+      },
+      "complete": true
     },
     {
       "name": "Tongas2/GUICONTROL",

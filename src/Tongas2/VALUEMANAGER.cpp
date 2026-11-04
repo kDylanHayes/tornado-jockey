@@ -37,7 +37,7 @@ SRESULT VALUEMANAGER::GetProperty(PROPENTRY *property, int index)
 bool VALUEMANAGER::Exists(const char *name)
 {
     std::map<std::string, SRESULT *>::iterator it = m_values.find(name);
-    return it != m_values.end();
+    return it != m_values.end() ? true : false;
 }
 
 PROPENTRY *VALUEMANAGER::FindProperty(const char *name, int classId)
