@@ -1,0 +1,48 @@
+# Ranges in Tornado.exe whose bytes are opaque image watermarks / installer
+# patches. They are part of the 20bf7200 image, not decompiler artifacts.
+# Do not reproduce these bytes in source or data to force a match; the units
+# that overlap them stay partial. See docs/image-patches.md.
+#
+# start-end          unit                        symbol                                                  kind  source
+0x4a91d4-0x4a91e3   Tongas2/DECAL               ?SetPosition@DECAL@@UAEXUV3@@@Z                         code  observed
+0x4c1943-0x4c1955   Tongas2/POLYTRAIL           ?CreatePOLYTRAIL@@YAPAVRESOURCEMANAGER@@XZ              code  observed
+0x4d2b49-0x4d2b58   Tongas2/OCTREE              ??0OCTREE@@QAE@UV3@@0H@Z                                code  observed
+0x4d526e-0x4d527f   Tongas2/MESH                ?AcquireShader@MESHMASTER@@QAEXXZ                       code  observed
+0x4dc7dd-0x4dc7f4   Tongas2/RENDERER            ?SetFogColor@RENDERER@@QAEXPBUV3I@@@Z                   code  observed
+0x4da0b8-0x4da0c7   Tongas2/GEOMETRY            ?IntersectFace@OOBOX3@@QAE_NHABUV3@@0PAU2@@Z            code  observed
+0x490a62-0x490a71   Tongas2/SCENE               ?New@?$SAFEINDEX@VACTOR@@$0BDII@$0PL@$00@@QAE_NPAPAVACTOR@@HPAHPAURESHANDLE@@@Z  code  observed
+0x4a1c65-0x4a1c74   Tongas2/CAMERA              ?Reset@CAMERA@@UAEXXZ                                   code  observed
+0x4b7cb2-0x4b7cc1   Tongas2/LIGHT               ?Init@LIGHTMANAGER@@UAEXXZ                              code  observed
+0x671062-0x671071   Tongas2/SHADER              ??_C@_0O@EOICMLBP@AllowCompress?$AA@ (also           data  observed
+                                                ??_C@_0M@MOHFMCHH@AllowResize?$AA@)
+#
+# Reported by the orchestrator / worker 8 (bytes not independently compared here):
+0x667150-0x66715f   Tongas2/CMDMGR              ??_C@_0CF@MLNDBCPD@scripting?5object?5without?5base?5@  data  reported
+0x66c0d8-0x66c0e7   Tongas2/RESOURCE            ??_C@_0M@OHKMKKDH@Description?$AA@                       data  reported
+0x673827-0x673836   Tongas2/BEHAVIORFADERESLOOP _s_TypeNames                                            data  reported
+#
+# Found by the suspicious-disassembly scan (opaque bytes checked in the exe;
+# ranges may include the adjacent code the watermark displaced):
+0x4b5592-0x4b559c   Tongas2/SPAWNER             ?SetUseSpawnerAngleScale@SPAWNER@@UAEXAB_N@Z            code  scan
+0x4c4071-0x4c407c   Tongas2/TEXT                ?Update@TEXT@@UAEXXZ                                    code  scan
+0x4846ab-0x4846b7   Tongas2/CMDBASE             ?GetShortStringAttribute@CMDBASE@@UAEXAAV?$FIXEDSTRING@$0CAA@@@PBDH@Z  code  scan
+0x486dd0-0x486de1   Tongas2/CMDBASE             ?SetAttribute@CMDBASE@@UAE?AVSRESULT@@PAUCMDCALL@@@Z     code  scan
+0x48e349-0x48e35b   Tongas2/GUI                 ??1GUI@@UAE@XZ                                          code  scan
+0x49f542-0x49f551   Tongas2/GUIGROUPCONTROL     ?MouseOverCommand@GUIGROUP@@UAE?AVSRESULT@@PAUCMDCALL@@@Z  code  scan
+#
+# New blocks found by worker 8 after the scan (byte-checked; the CMDMGR range
+# may include adjacent displaced code):
+0x4a438a-0x4a439a   Tongas2/RESOURCES           ?GetManager@RESOURCES@@QAEPAVRESOURCEMANAGER@@AAPBD@Z   code  observed
+0x4894f3-0x489507   Tongas2/CMDMGR              ?RegisterEngineClasses@@YAXXZ                           code  scan
+#
+# Found by the decompile-units worker (byte-checked against orig/Tornado.exe;
+# both are 16-byte runs that start on a 16-byte boundary, 0x4b558d is the tail
+# of the run at 0x4b5590 and displaces the end of SetWaitOnFirst):
+0x4b558d-0x4b559f   Tongas2/SPAWNER             ?SetWaitOnFirst@SPAWNER@@UAEXAB_N@Z (also SetUseSpawnerAngleScale)  code  observed
+0x4cdd00-0x4cdd0f   Tongas2/VALUEMANAGER        ?Delete@VALUEMANAGER@@UAE?AVSRESULT@@PAUCMDCALL@@@Z     code  observed
+#
+# Lengths observed so far are 7-19 bytes (16 typical). No fixed address
+# stride or modulus was found: starts include 0x4846ab, 0x486dd0, 0x48e349,
+# 0x4894f3, 0x490a62, 0x49f542, 0x4a1c65, 0x4a438a, 0x4a91d4, 0x4b5592, 0x4b7cb2,
+# 0x4c1943, 0x4c4071, 0x4d2b49, 0x4d526e, 0x4da0b8, 0x4dc7dd, 0x667150,
+# 0x66c0d8, 0x671062 and 0x673827.
