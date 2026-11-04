@@ -2672,31 +2672,34 @@
       "name": "Tongas2/BEHAVIORGROW",
       "ranges": [
         "0x004da8a0-0x004da99f",
-        "0x00673590-0x00673647"
+        "0x00673590-0x00673643"
       ],
       "target": "build/target/Tongas2/BEHAVIORGROW.obj",
       "source": "src/Tongas2/BEHAVIORGROW.cpp",
-      "category": "engine"
+      "category": "engine",
+      "complete": true
     },
     {
       "name": "Tongas2/BEHAVIORGROWLOOP",
       "ranges": [
         "0x004da9a0-0x004daa2f",
-        "0x00673648-0x006736ff"
+        "0x00673648-0x006736fb"
       ],
       "target": "build/target/Tongas2/BEHAVIORGROWLOOP.obj",
       "source": "src/Tongas2/BEHAVIORGROWLOOP.cpp",
-      "category": "engine"
+      "category": "engine",
+      "complete": true
     },
     {
       "name": "Tongas2/BEHAVIORGROWRESLOOP",
       "ranges": [
         "0x004daa30-0x004dab3f",
-        "0x00673700-0x006737b7"
+        "0x00673700-0x006737b3"
       ],
       "target": "build/target/Tongas2/BEHAVIORGROWRESLOOP.obj",
       "source": "src/Tongas2/BEHAVIORGROWRESLOOP.cpp",
-      "category": "engine"
+      "category": "engine",
+      "complete": true
     },
     {
       "name": "Tongas2/BEHAVIORFADERESLOOP",
