@@ -6847,3 +6847,6 @@
 0x00a10608 ?mUsedRam@Container@IceCore@@0IA data
 0x00a11294 ?g_pWkz@@3PAVWKZ@@A data 0x4
 0x00a12444 _MMXAvailable data
+0x00656f54 __real@3c340168 data 0x4
+0x0065925c __real@41a00000 data 0x4
+0x006597c8 __real@40c00000 data 0x4
