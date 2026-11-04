@@ -79,3 +79,11 @@ The run is 15 bytes, so the function and `Tongas2/PATH`'s code stay partial.
 
 The bytes there are opaque (`89 1b fb 96 cd e5 13 39 ...`), replacing a group
 of `s_properties` stores, so `_$E3` and `Tongas2/EMITTER`'s code stay partial.
+## CMDMGR
+
+`?RegisterEngineClasses@@YAXXZ` (at `0x488aa0`) has a 14-byte run at
+`0x4894e9-0x4894f6`: the `mov [edx*4 + g_classProps], offset s_properties`
+immediate and the ten bytes after it are replaced by non-code, and valid code
+resumes at `0x4894f7`. The same pattern later in the function is intact
+(`mov dword [ecx*4 + 0x6cbc90], 0x6be8d0`), so this is a patched span, not a
+delinker or FixReferences defect. The unit stays partial.
