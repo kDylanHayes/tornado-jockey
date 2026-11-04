@@ -30,13 +30,13 @@
 0x48e349-0x48e35b   Tongas2/GUI                 ??1GUI@@UAE@XZ                                          code  scan
 0x49f542-0x49f551   Tongas2/GUIGROUPCONTROL     ?MouseOverCommand@GUIGROUP@@UAE?AVSRESULT@@PAUCMDCALL@@@Z  code  scan
 #
-# New block found by worker 8 after the scan (byte-level checked: a 17-byte
-# random run between valid instructions; the decompiler reports an overlap at
-# 0x4a439a/0x4a439e):
+# New blocks found by worker 8 after the scan (byte-checked; the CMDMGR range
+# may include adjacent displaced code):
 0x4a438a-0x4a439a   Tongas2/RESOURCES           ?GetManager@RESOURCES@@QAEPAVRESOURCEMANAGER@@AAPBD@Z   code  observed
+0x4894f3-0x489507   Tongas2/CMDMGR              ?RegisterEngineClasses@@YAXXZ                           code  scan
 #
 # Lengths observed so far are 7-19 bytes (16 typical). No fixed address
 # stride or modulus was found: starts include 0x4846ab, 0x486dd0, 0x48e349,
-# 0x490a62, 0x49f542, 0x4a1c65, 0x4a438a, 0x4a91d4, 0x4b5592, 0x4b7cb2,
+# 0x4894f3, 0x490a62, 0x49f542, 0x4a1c65, 0x4a438a, 0x4a91d4, 0x4b5592, 0x4b7cb2,
 # 0x4c1943, 0x4c4071, 0x4d2b49, 0x4d526e, 0x4da0b8, 0x4dc7dd, 0x667150,
 # 0x66c0d8, 0x671062 and 0x673827.
