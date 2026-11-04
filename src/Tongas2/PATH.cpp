@@ -541,8 +541,13 @@ bool PATHMASTER::FindNearest(V3 point, int *segment, float *t)
 }
 
 PATHMASTER::PATHMASTER(RESOURCEMANAGER *manager, const char *name)
-    : RESOURCEMASTER(manager, name), m_numPoints(0), m_dirty(true), m_distance(), m_arcLength()
+    : RESOURCEMASTER(manager, name), m_numPoints(0), m_dirty(true)
 {
+    for (int i = 0; i < PATH_MAX_POINTS; i++)
+        m_distance[i] = 0.0f;
+    float *arcLength = &m_arcLength[0][0];
+    for (int i = 0; i < PATH_MAX_POINTS * PATH_ARC_STEPS; i++)
+        arcLength[i] = 0.0f;
     m_color.r = 255;
     m_color.g = 0;
     m_startEditingMode = false;
