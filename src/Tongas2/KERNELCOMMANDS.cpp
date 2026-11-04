@@ -86,15 +86,15 @@ bool operator>(const SRESULT &a, const SRESULT &b)
 {
     switch (a.GetType()) {
     case SRT_CHAR:
-        if (b.GetType() == SRT_CHAR && a.GetChar(0) > b.GetChar(0))
+        if (b.GetType() == SRT_CHAR && b.GetChar(0) < a.GetChar(0))
             return true;
         break;
     case SRT_INT:
-        if (b.GetType() == SRT_CHAR && a.GetInt(0) > b.GetChar(0))
+        if (b.GetType() == SRT_CHAR && b.GetChar(0) < a.GetInt(0))
             return true;
-        if (b.GetType() == SRT_INT && a.GetInt(0) > b.GetInt(0))
+        if (b.GetType() == SRT_INT && b.GetInt(0) < a.GetInt(0))
             return true;
-        if (b.GetType() == SRT_FLOAT && a.GetInt(0) > (int)b.GetFloat(0))
+        if (b.GetType() == SRT_FLOAT && (int)b.GetFloat(0) < a.GetInt(0))
             return true;
         return false;
     case SRT_STRING:
@@ -106,11 +106,11 @@ bool operator>(const SRESULT &a, const SRESULT &b)
             return true;
         break;
     case SRT_FLOAT:
-        if (b.GetType() == SRT_CHAR && a.GetFloat(0) > (float)b.GetChar(0))
+        if (b.GetType() == SRT_CHAR && (float)b.GetChar(0) < a.GetFloat(0))
             return true;
-        if (b.GetType() == SRT_INT && a.GetFloat(0) > (float)b.GetInt(0))
+        if (b.GetType() == SRT_INT && (float)b.GetInt(0) < a.GetFloat(0))
             return true;
-        if (b.GetType() == SRT_FLOAT && a.GetFloat(0) > b.GetFloat(0))
+        if (b.GetType() == SRT_FLOAT && b.GetFloat(0) < a.GetFloat(0))
             return true;
         break;
     }
@@ -122,15 +122,15 @@ bool operator<(const SRESULT &a, const SRESULT &b)
 {
     switch (a.GetType()) {
     case SRT_CHAR:
-        if (b.GetType() == SRT_CHAR && a.GetChar(0) < b.GetChar(0))
+        if (b.GetType() == SRT_CHAR && b.GetChar(0) > a.GetChar(0))
             return true;
         break;
     case SRT_INT:
-        if (b.GetType() == SRT_CHAR && a.GetInt(0) < b.GetChar(0))
+        if (b.GetType() == SRT_CHAR && b.GetChar(0) > a.GetInt(0))
             return true;
-        if (b.GetType() == SRT_INT && a.GetInt(0) < b.GetInt(0))
+        if (b.GetType() == SRT_INT && b.GetInt(0) > a.GetInt(0))
             return true;
-        if (b.GetType() == SRT_FLOAT && a.GetInt(0) < (int)b.GetFloat(0))
+        if (b.GetType() == SRT_FLOAT && (int)b.GetFloat(0) > a.GetInt(0))
             return true;
         return false;
     case SRT_STRING:
@@ -142,11 +142,11 @@ bool operator<(const SRESULT &a, const SRESULT &b)
             return true;
         break;
     case SRT_FLOAT:
-        if (b.GetType() == SRT_CHAR && a.GetFloat(0) < (float)b.GetChar(0))
+        if (b.GetType() == SRT_CHAR && (float)b.GetChar(0) > a.GetFloat(0))
             return true;
-        if (b.GetType() == SRT_INT && a.GetFloat(0) < (float)b.GetInt(0))
+        if (b.GetType() == SRT_INT && (float)b.GetInt(0) > a.GetFloat(0))
             return true;
-        if (b.GetType() == SRT_FLOAT && a.GetFloat(0) < b.GetFloat(0))
+        if (b.GetType() == SRT_FLOAT && b.GetFloat(0) > a.GetFloat(0))
             return true;
         break;
     }
