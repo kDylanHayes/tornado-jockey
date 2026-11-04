@@ -31,6 +31,7 @@
 0x486dd0-0x486de1   Tongas2/CMDBASE             ?SetAttribute@CMDBASE@@UAE?AVSRESULT@@PAUCMDCALL@@@Z     code  scan
 0x48e349-0x48e35b   Tongas2/GUI                 ??1GUI@@UAE@XZ                                          code  scan
 0x49f542-0x49f551   Tongas2/GUIGROUPCONTROL     ?MouseOverCommand@GUIGROUP@@UAE?AVSRESULT@@PAUCMDCALL@@@Z  code  scan
+0x4c8eb5-0x4c8ec5   Tongas2/GUIVISUALCONTROL    ?SetOpacity@GUIVISUAL@@UAEXABM@Z (also SetVisualOpacity)  code  observed
 #
 # Found by the actors/gameplay pass (byte-checked against orig/Tornado.exe;
 # 0x4b558d is the tail of the run at 0x4b5590 and displaces the end of
@@ -51,6 +52,6 @@
 # Lengths observed so far are 7-19 bytes (16 typical). No fixed address
 # stride or modulus was found: starts include 0x4846ab, 0x486dd0, 0x4894f3,
 # 0x48e349, 0x490a62, 0x49f542, 0x4a1c65, 0x4a438a, 0x4a6aaf, 0x4a91d3,
-# 0x4b558d, 0x4b5592, 0x4b7cb2, 0x4c1942, 0x4c4071, 0x4cdd00, 0x4d2b49,
+# 0x4b558d, 0x4b5592, 0x4b7cb2, 0x4c1942, 0x4c4071, 0x4c8eb5, 0x4cdd00, 0x4d2b49,
 # 0x4d526d, 0x4da0b8, 0x4dc7dd, 0x667150, 0x66c0d8, 0x671062, 0x673827,
 # 0x6bc290 and 0x6bd290.

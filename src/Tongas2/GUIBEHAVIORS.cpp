@@ -20,7 +20,7 @@ void BEHAVIOR::SetAngles(const V3 &angles)
 
 TIMEDBEHAVIOR::TIMEDBEHAVIOR(const RESHANDLE &owner, CMDCALL *call) : BEHAVIOR(owner)
 {
-    m_time = m_duration = (float)atof(call->tokens->GetToken(2));
+    m_duration = m_time = (float)atof(call->tokens->GetToken(2));
 }
 
 ACCELERATION::ACCELERATION(const float &from, const float &to, const float &time)
