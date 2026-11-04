@@ -131,6 +131,20 @@ public class FixReferences extends HeadlessScript {
 				if (!indexed || disp == null) {
 					continue;
 				}
+				if (ins.getOperandReferences(op).length == 0) {
+					// An indexed read or write of a data address
+					// ([eax*4 + g_classParents]) that analysis left as a
+					// plain scalar: add the reference so the delinker
+					// relocates it.
+					MemoryBlock block = currentProgram.getMemory().getBlock(disp);
+					Function owner = getFunctionContaining(ins.getAddress());
+					boolean sameFunction = owner != null && owner.getBody().contains(disp);
+					if (block != null && block.isInitialized() && (!block.isExecute() || sameFunction)) {
+						refs.addMemoryReference(ins.getAddress(), disp, RefType.DATA,
+							SourceType.USER_DEFINED, op);
+						added++;
+					}
+				}
 				for (Reference ref : refs.getReferencesFrom(ins.getAddress(), op)) {
 					if (!ref.isMemoryReference() || ref.getReferenceType().isFlow() ||
 						ref.getToAddress().equals(disp)) {
