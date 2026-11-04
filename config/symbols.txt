@@ -5103,16 +5103,24 @@
 0x0066822c ??_C@_0CE@EEMGMPHD@INPUT?3?3ActivateJoy?5?9?5Invalid?5joy@ data 0x24
 0x00668250 ??_7MOUSELISTENER@@6B@ data 0x4c
 0x0066829c ??_7INPUTLISTENER@@6B@ data 0x10
-0x006682b0 _s_TypeNames data 0xb4
-0x00668368 _s_behaviors data 0xd2
+0x006682b0 _s_TypeNames data 0xb8
+0x00668368 _s_behaviors data 0xd8
 0x00668440 _s_timeSpaces data 0x5a
 0x0066849c ??_C@_09GMGDLAAH@TimeSpace?$AA@ data 0xa
+0x006684a8 ??_C@_04HDMMNHEL@move?$AA@ data 0x5
 0x006684b0 ??_7GUICONTROL@@6BACTORLINK@@@ data
 0x006684f0 ??_7GUICONTROL@@6BCMDBASE@@@ data
+0x0066859c ??_C@_08NBHFHIMC@QueueBh2?$AA@ data 0x9
+0x006685a8 ??_C@_05LGELBCGM@Close?$AA@ data 0x6
+0x006685b0 ??_C@_07OJMDGLKG@gparent?$AA@ data 0x8
+0x006685b8 ??_C@_04PLGBOGHH@fade?$AA@ data 0x5
+0x006685c0 ??_C@_0L@MDKMLPBM@moveAndDie?$AA@ data 0xb
+0x006685cc ??_C@_07GGAGPKGG@moverel?$AA@ data 0x8
 0x006685d4 ??_C@_0P@FHAKPFLB@BehaviorParams?$AA@ data 0xf
 0x006685e4 ??_C@_08GEFGIKPN@Behavior?$AA@ data 0x9
 0x006685f0 ??_C@_07HABJELCE@Opacity?$AA@ data 0x8
 0x006685f8 ??_C@_07DOAOMMKG@Enabled?$AA@ data 0x8
+0x00668600 ??_C@_07MGEGCLJM@Visible?$AA@ data 0x8
 0x00668608 ??_C@_05ODPICHEP@ZSort?$AA@ data 0x6
 0x00668610 ??_C@_04EBKMHHBE@Size?$AA@ data 0x5
 0x00668618 ??_7STRINGMANAGER@@6B@ data 0x4
