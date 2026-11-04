@@ -53,3 +53,14 @@ Tongas2/HEIGHTMAPDX8 ??_7HEIGHTMAPDX8MASTER@@6B@     0xb8  0x674348  ?SetDescrip
 Tongas2/HEIGHTMAPDX8 ??_7HEIGHTMAPDX8MASTER@@6B@     0xc0  0x674350  ?SetDescription@RESOURCEMASTER@@UAEXABH@Z
 Tongas2/HEIGHTMAPDX8 ??_7HEIGHTMAPDX8MASTER@@6B@     0xc8  0x674358  ?SetDescription@RESOURCEMASTER@@UAEXABH@Z
 Tongas2/HEIGHTMAPDX8 ??_7HEIGHTMAPDX8MASTER@@6B@     0xe0  0x674370  ?SetDescription@RESOURCEMASTER@@UAEXABH@Z
+
+#
+# Shared / folded data in the GUI units (not vtable slots): objdiff pairs a
+# data symbol by name, so data the linker kept only once outside the unit has
+# no counterpart in the delinked target and keeps that unit's whole section
+# below 100% (matched_data counts a section only when all of it matches).
+#
+# unit                       symbol                          VA         reason
+Tongas2/GUI                  ??_R0?AVexception@@@8           0x6adee8   RTTI descriptor folded to one copy shared by every class that uses it (same for the logic_error/out_of_range/length_error descriptors our object defines); the only copy in the image is far outside GUI's ranges, so no target symbol exists.
+Tongas2/GUIGENERICCONTROL    s_Checked_0067179c              0x67179c   the image has a "Checked" string this unit's source never emits; the delinked target carries it unnamed and our object has no matching symbol.
+Tongas2/GUICONTROL           _s_timeSpaces                   0x668440   target extent 92 bytes vs our 90: two bytes of 4-byte alignment padding follow the 3x30 table. tools/split_functions.py only trims data by the size in config/symbols.txt for IMAGE_SYM_CLASS_EXTERNAL symbols and this array is static (making it extern collides with the other unit's _s_timeSpaces).
