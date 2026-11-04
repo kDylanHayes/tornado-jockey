@@ -652,8 +652,7 @@ void PARTICLE::Update(const float &dt)
             up = up - direction * dot;
             up.Normalize();
             float angle = (roll + m_pathAngle) * 0.017453292f;
-            V3 out = up.Rotate(direction, angle);
-            V3 p = out * (radius * m_pathRadius) + position;
+            V3 p = up.Rotate(direction, angle) * (radius * m_pathRadius) + position;
             float ex, ey, ez;
             if (!m_attached) {
                 resource->SetPosition(p);
