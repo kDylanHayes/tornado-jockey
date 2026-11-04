@@ -15,6 +15,7 @@
 # the suffix, not the opaque bytes, when writing source.
 0x004c1942-0x004c1956  Tongas2/POLYTRAIL        CreatePOLYTRAIL prologue: SEH handler + fs:[0] setup (opaque from 0x4c1943; 0x4c1957 resumes "push 0x224")
 0x004a91d3-0x004a91e3  Tongas2/DECAL            SetPosition tail ("mov edx,[ecx]" at 0x4a91d3; opaque from 0x4a91d5; ends at the function's last byte)
+0x004a438a-0x004a439a  Tongas2/RESOURCES         RESOURCES::GetManager code watermark (decompiler overlap at 0x4a439a/0x4a439e; valid code resumes 0x4a439b)
 0x004d526d-0x004d527f  Tongas2/MESH             MESHMASTER::AcquireShader body (opaque from 0x4d526e; 0x4d5280 resumes a call)
 0x004dc7dd-0x004dc7f0  Tongas2/RENDERER         RENDERER::SetFogColor mid-function (0x4dc7f1 resumes a call)
 0x004d2b48-0x004d2b5a  Tongas2/OCTREE            code watermark in the unit's .text
