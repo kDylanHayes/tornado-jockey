@@ -4,17 +4,18 @@
 
 CI can't measure progress: it would need `Tornado.exe` and the Visual C++ Toolkit, which can't be on GitHub. So the numbers are measured on a machine that has them (a maintainer's, or a Claude session with the project files) and committed. After merging matching work:
 
-```sh
+```bat
 git checkout main && git pull
-python3 tools/analyze.py            # only if config/symbols.txt changed a lot
-python3 tools/delink.py
-python3 configure.py --msvc tools/vc71 && ninja
-python3 tools/report.py
-python3 tools/progress.py build/report.json --record progress
+rem only if config/symbols.txt changed a lot
+py tools\analyze.py
+py tools\delink.py
+py configure.py --msvc tools\vc71 && ninja
+py tools\report.py
+py tools\progress.py build\report.json --record progress
 git checkout -b update-progress && git add progress && git commit -m "Update progress"
 ```
 
-`--record` saves the report to `progress/report.json` (without the per-function lists of placeholder units, to keep it small), adds an entry for the current commit to `progress/history.json`, and rewrites the page and badges. Merge that as a pull request.
+On Linux and macOS, use `python3` with `/` paths. `--record` saves the report to `progress/report.json` (without the per-function lists of placeholder units, to keep it small), adds an entry for the current commit to `progress/history.json`, and rewrites the page and badges. Merge that as a pull request.
 
 ## Progress page and badge
 
@@ -34,4 +35,4 @@ Everything lives in the repository, so nothing needs GitHub Pages or Actions:
 
 ## Tool versions
 
-The pipeline has been run with Ghidra 12.1.4 (`ghidra_12.1.4_PUBLIC_20260921.zip`), ghidra-delinker-extension 0.9.2 (`ghidra_12.1.4_PUBLIC_20260926_ghidra-delinker-extension.zip`) and objdiff-cli 3.8.2.
+The pipeline has been run with Ghidra 12.2 (`ghidra_12.2_PUBLIC_20261030.zip`), ghidra-delinker-extension 0.9.3 (`ghidra_12.2_PUBLIC_20261030_ghidra-delinker-extension.zip`), JDK 25 (Temurin) and objdiff-cli 3.8.2.

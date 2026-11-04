@@ -1,8 +1,9 @@
 {
   "name": "Tornado.exe",
   "version": "1.0.0.67",
-  "sha1": "71be8eb97a8fb0aa161af7a2af14bed63af2c6de",
+  "sha1": "20bf7200effe49d2dff295a3b6c546a5804e06bc",
   "size": 2949120,
+  "source": "ISO-extracted image from C:\\Users\\dill\\Documents\\decomp projects\\tj\\Tornado Jockey (the installer's Tornado-WT.exe payload). Differs from the old retail image (71be8eb97a8fb0aa161af7a2af14bed63af2c6de) in 18 bytes at VA 0x59188f, in lib/ode/joint (99.73% of that object); the old image is no longer available.",
   "image_base": "0x400000",
   "entry_point": "0x5c1839",
   "sections": [

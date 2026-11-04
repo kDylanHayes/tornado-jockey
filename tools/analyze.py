@@ -7,7 +7,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from delink import DEFAULT_PROJECT, ROOT, analyze_headless
+from delink import DEFAULT_PROJECT, PROJECT_FALLBACK, ROOT, analyze_headless
 
 
 def main() -> int:
@@ -19,6 +19,9 @@ def main() -> int:
     if args.ghidra is None:
         sys.exit("error: pass --ghidra or set GHIDRA_INSTALL_DIR")
 
+    if PROJECT_FALLBACK and args.project == DEFAULT_PROJECT:
+        print(f"note: {ROOT} is under a dot-prefixed folder, which Ghidra rejects; "
+              f"using {args.project}", file=sys.stderr)
     args.project.mkdir(parents=True, exist_ok=True)
     cmd = [
         str(analyze_headless(args.ghidra)), str(args.project), "TornadoJockey",

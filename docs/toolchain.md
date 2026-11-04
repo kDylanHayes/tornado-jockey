@@ -17,7 +17,17 @@ The Rich header in `Tornado.exe` lists the tools that produced each object file:
 
 ## Installing
 
-The toolkit is not redistributable, so this repository cannot include it. Get `VCToolkitSetup.exe` yourself (SHA-1 `50dc6cca1503f08a41d56816f3f1abcaf347b0bd`), then unpack it without running the installer (needs `msitools`):
+The toolkit is not redistributable, so this repository cannot include it. Get `VCToolkitSetup.exe` yourself (SHA-1 `50dc6cca1503f08a41d56816f3f1abcaf347b0bd`), then unpack it without running the installer. On Windows the extractor uses 7-Zip and the MSI tables; on Linux and macOS it uses `msiextract` from msitools. Nothing from the package is executed.
+
+On Windows:
+
+```bat
+py tools\extract_vctoolkit.py C:\path\to\VCToolkitSetup.exe tools\vc71
+tools\vc71\bin\cl.exe
+rem Microsoft (R) 32-bit C/C++ Optimizing Compiler Version 13.10.3077 for 80x86
+```
+
+On Linux or macOS:
 
 ```sh
 python3 tools/extract_vctoolkit.py /path/to/VCToolkitSetup.exe tools/vc71
@@ -25,15 +35,15 @@ wine tools/vc71/bin/cl.exe
 # Microsoft (R) 32-bit C/C++ Optimizing Compiler Version 13.10.3077 for 80x86
 ```
 
-`tools/vc71/` is git-ignored. On Windows you can also just run the installer.
+`tools/vc71/` is git-ignored. You can also run the installer normally and point `--msvc` at the folder that contains `bin\cl.exe`.
 
 Then configure the project with that folder:
 
-```sh
-python3 configure.py --msvc tools/vc71
+```bat
+py configure.py --msvc tools\vc71
 ```
 
-You can also set `TJ_MSVC` instead of passing `--msvc`. On Windows, pass `--wine ""`.
+You can also set `TJ_MSVC` instead of passing `--msvc`. On Linux and macOS `configure.py` runs the compiler through `wine` by default; on Windows it calls `cl.exe` directly, so no `--wine` is needed.
 
 The toolkit contains the compiler, linker, static CRT (`libcmt.lib`, `libcpmt.lib`) and the standard headers, which is everything needed to compile matching objects. DirectX 8 headers are not needed for most game code; when they are, declare what's needed in `include/` rather than depending on an SDK install.
 

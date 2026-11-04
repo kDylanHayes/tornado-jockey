@@ -6,10 +6,16 @@
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+import ghidra.app.cmd.disassemble.DisassembleCommand;
 import ghidra.app.util.headless.HeadlessScript;
 import ghidra.program.model.address.Address;
 import ghidra.program.model.address.AddressSet;
+import ghidra.program.model.address.AddressSetView;
 import ghidra.program.model.listing.Function;
 import ghidra.program.model.listing.Instruction;
 import ghidra.program.model.listing.Listing;
@@ -153,23 +159,44 @@ public class ApplySymbols extends HeadlessScript {
 		// catch block only the EH tables point to; analysis never reached
 		// it, but the delinker needs its instructions for relocations.
 		// (Not every undefined byte: jump tables are undefined too.)
+		//
+		// Collect the eligible starts in one pass, then disassemble each at
+		// most once. Rescanning the whole function after every disassemble
+		// (and letting each disassemble follow flow through the rest of it)
+		// is quadratic and never finishes on the full image. Code added by a
+		// disassemble can expose more catch blocks, so rescan only the bytes
+		// that disassemble just created.
 		Listing listing = currentProgram.getListing();
-		boolean more = true;
-		while (more) {
-			more = false;
-			for (Instruction ins : listing.getInstructions(new AddressSet(addr, end), true)) {
-				Address next = ins.getMaxAddress().add(1);
-				if (!ins.getFlowType().isCall() || next.compareTo(end) > 0 ||
-					listing.getInstructionContaining(next) != null ||
-					listing.getDefinedDataContaining(next) != null ||
-					(currentProgram.getMemory().getByte(next) & 0xff) == 0xcc) {
-					continue;
-				}
-				disassemble(next);
-				more = true;
-				break;
+		List<Address> pending = new ArrayList<>();
+		collectCatchStarts(listing, new AddressSet(addr, end), end, pending);
+		Set<Address> tried = new HashSet<>();
+		for (int i = 0; i < pending.size(); i++) {
+			Address next = pending.get(i);
+			if (next.compareTo(end) > 0 || !tried.add(next) ||
+				listing.getInstructionContaining(next) != null ||
+				listing.getDefinedDataContaining(next) != null ||
+				(currentProgram.getMemory().getByte(next) & 0xff) == 0xcc) {
+				continue;
+			}
+			DisassembleCommand cmd = new DisassembleCommand(next, null, true);
+			cmd.applyTo(currentProgram, monitor);
+			AddressSet added = cmd.getDisassembledAddressSet();
+			if (added != null && !added.isEmpty()) {
+				collectCatchStarts(listing, added, end, pending);
 			}
 		}
 		return f;
+	}
+
+	// Queue the fall-through of every call in range that ends at or before
+	// end: a call that never returns leaves its successor undisassembled.
+	private void collectCatchStarts(Listing listing, AddressSetView range, Address end,
+			List<Address> out) {
+		for (Instruction ins : listing.getInstructions(range, true)) {
+			Address next = ins.getMaxAddress().add(1);
+			if (ins.getFlowType().isCall() && next.compareTo(end) <= 0) {
+				out.add(next);
+			}
+		}
 	}
 }

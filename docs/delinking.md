@@ -6,26 +6,42 @@ objdiff compares **object files**, but the original game exists only as a linked
 
 ## Setup
 
-1. Install [Ghidra 12.1.4](https://github.com/NationalSecurityAgency/ghidra/releases) and JDK 21. Set `GHIDRA_INSTALL_DIR` to the install folder.
-2. Download the [ghidra-delinker-extension 0.9.2 release](https://github.com/boricj/ghidra-delinker-extension/releases/tag/v0.9.2) built for Ghidra 12.1.4 (`ghidra_12.1.4_PUBLIC_20260926_ghidra-delinker-extension.zip`) and unzip it into Ghidra's own `Extensions` folder:
+1. Install [Ghidra 12.2](https://github.com/NationalSecurityAgency/ghidra/releases) and JDK 21+ (tested with Temurin 25). Set `GHIDRA_INSTALL_DIR` to the install folder.
+2. Download the [ghidra-delinker-extension 0.9.3 release](https://github.com/boricj/ghidra-delinker-extension/releases/tag/v0.9.3) built for Ghidra 12.2 (`ghidra_12.2_PUBLIC_20261030_ghidra-delinker-extension.zip`) and unzip it into Ghidra's own `Extensions` folder:
    ```sh
-   unzip ghidra_12.1.4_PUBLIC_20260926_ghidra-delinker-extension.zip -d "$GHIDRA_INSTALL_DIR/Ghidra/Extensions"
+   unzip ghidra_12.2_PUBLIC_20261030_ghidra-delinker-extension.zip -d "$GHIDRA_INSTALL_DIR/Ghidra/Extensions"
    ```
-   (Unzipping it into your user folder, `~/.config/ghidra/ghidra_12.1.4_PUBLIC/Extensions` or `~/Library/ghidra/ghidra_12.1.4_PUBLIC/Extensions` on macOS, works too, as does building it from source with Gradle.)
+   On Windows, `Expand-Archive .\ghidra_12.2_PUBLIC_20261030_ghidra-delinker-extension.zip -DestinationPath "$env:GHIDRA_INSTALL_DIR\Ghidra\Extensions"`. (Unzipping it into your user folder, `~/.config/ghidra/ghidra_12.2_PUBLIC/Extensions` or `~/Library/ghidra/ghidra_12.2_PUBLIC/Extensions` on macOS, works too, as does building it from source with Gradle.)
 
 ## Steps
 
-```sh
-python3 tools/analyze.py      # creates build/ghidra and runs auto-analysis (~3 min)
-python3 tools/delink.py       # exports every unit with "ranges" to build/target/
-python3 configure.py
+Commands are for Windows; on Linux and macOS use `python3` with `/` paths (`--wine` defaults to `wine` there).
+
+```bat
+rem creates build\ghidra and runs auto-analysis (~3 min)
+py tools\analyze.py
+rem exports every unit with "ranges" to build\target\
+py tools\delink.py
+py configure.py --msvc tools\vc71
 ```
 
-`analyze.py` only needs to run again after `config/symbols.txt` changes a lot. `delink.py` applies `config/symbols.txt` first, so target objects use our names, e.g. `_adler32` instead of `FUN_0047e661`. It runs the delinker's relocation synthesizer on each unit's ranges (`tools/ghidra/DelinkUnit.java`) and writes a COFF object to the unit's `target` path. Pass unit names to delink only those units. A log is written to `build/delink.log`.
+`analyze.py` only needs to run again after `config/symbols.txt` changes a lot. `delink.py` applies `config/symbols.txt` first, so target objects use our names, e.g. `_adler32` instead of `FUN_0047e661`. It runs the delinker's relocation synthesizer on each unit's ranges (`tools/ghidra/DelinkUnit.java`) and writes a COFF object to the unit's `target` path. Pass unit names to delink only those units. A log is written to `build/delink.log`. On Windows it splits large selections into several headless runs automatically to stay under the cmd.exe command-line limit, so there is no manual batching.
 
 The game was compiled with `/Gy`, so the compiler put every function and every string literal in its own section, and the linker padded functions to 16 bytes with `int3`. `delink.py` therefore post-processes each target with `tools/split_functions.py`, which gives each function and each data symbol its own section, drops the `int3` padding, and resolves PC-relative relocations inside a function. Without this, objdiff counts the padding as mismatched code and calls between functions of the same unit as mismatched arguments.
 
 For C++ code it also does what the exe can't show: it adds the `__except_list` relocation to every `fs:[0]` access (the exe holds a plain 0), keeps catch blocks inside their function, and renames Ghidra's labels there (`Catch@...`, `DAT_...`) to the compiler's `$L...` names taken from our object, so objdiff sees the same functions on both sides. Where a function's size is known (from `config/symbols.txt`, or from our object), the size decides where padding starts, so the `int3` the compiler leaves after a call that never returns (`_CxxThrowException`) is kept. A size taken from our object is wrong while our function doesn't match yet; when ours is shorter, the target's function gets cut and objdiff can crash on it, so such functions get their size in `symbols.txt`.
+
+## Reading pseudocode
+
+`tools/decompile.py` prints the decompiler's C for a unit's ranges from the same Ghidra project, without touching the delinked objects. Ranges come from `config/units.json`, and every function that intersects them gets a `// ==== name @ address ====` header.
+
+```bat
+py tools\decompile.py Tongas2/LOG
+```
+
+It writes `build\decompile\<unit>.c` by default; pass `--out <file>` for somewhere else, `--project <dir>` for a different Ghidra project, and `--ghidra <dir>` (or `GHIDRA_INSTALL_DIR`) for a different install. The helper runs `tools\ghidra\DumpDecomp.java` on the project read-only and applies `config/symbols.txt` first, so names match what `delink.py` exports. On Linux and macOS use `python3 tools/decompile.py`.
+
+Decompiler output is a starting point: rename and retype it before committing (see [CONTRIBUTING.md](../CONTRIBUTING.md)). For an agent-driven workflow that also answers caller/callee, string and type questions, see [rea.md](rea.md).
 
 ## Naming symbols
 
@@ -41,15 +57,20 @@ Target objects are derived from the game, so they stay in `build/` and are never
 
 For code built from upstream source (zlib, libpng...), compile the source first, then let the tools find it and copy names over:
 
-```sh
+On Windows (PowerShell expands the wildcard; cmd passes it literally):
+
+```powershell
 ninja
-python3 tools/find_objects.py --functions build/src/lib/zlib/*.obj     # where each function sits
-python3 tools/find_objects.py --functions --layout 0x582971-0x586fc2 build/src/lib/zlib/*.obj  # suggest unit ranges
-python3 tools/find_objects.py --functions --write build/src/lib/zlib/*.obj  # name them in symbols.txt
-python3 tools/delink.py
-python3 tools/sync_symbols.py lib/zlib/inflate lib/zlib/trees          # name referenced data
-python3 tools/delink.py
+$zlib = (Get-ChildItem build\src\lib\zlib\*.obj).FullName
+py tools\find_objects.py --functions $zlib     # where each function sits
+py tools\find_objects.py --functions --layout '0x582971-0x586fc2' $zlib  # suggest unit ranges
+py tools\find_objects.py --functions --write $zlib  # name them in symbols.txt
+py tools\delink.py
+py tools\sync_symbols.py lib/zlib/inflate lib/zlib/trees          # name referenced data
+py tools\delink.py
 ```
+
+On Linux and macOS, `build/src/lib/zlib/*.obj` can be passed directly with `python3`.
 
 `find_objects.py` searches the exe for each function's bytes with relocated bytes wildcarded; `--write` names functions found exactly once inside their unit's range. `sync_symbols.py` pairs relocations in a matching unit and gives the target's auto-named data (`DAT_…`, `s_…`) the names our compiler used, so objdiff can pair them. Functions the linker dropped (`/OPT:REF`) simply aren't found; identical functions the linker folded (`/OPT:ICF`, e.g. zlib's `zcfree`) are found at several addresses. A folded function carries one name in the target; when it sits in another unit, map it with `"symbol_mappings": {"_zcfree": "_jpeg_free_small"}` on that unit in `config/units.json`.
 

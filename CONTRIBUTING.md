@@ -24,9 +24,9 @@ Open an issue (or comment on one) saying which unit or class you're taking, so t
 ## Match a unit
 
 1. Add the unit to `config/units.json`: its address `ranges`, `target` (`build/target/...obj`), `source` (mirror the original path where strings reveal it, e.g. `src/Tongas2/Renderer.cpp`), `category` (`game`, `engine`, `lib`, `sdk` or `crt`) and `cflags` if it isn't built with the defaults.
-2. Write the source, and put shared declarations in `include/`.
+2. Write the source, and put shared declarations in `include/`. `py tools\decompile.py <unit>` writes the unit's decompiled C to `build/decompile/` (see [docs/delinking.md](docs/delinking.md#reading-pseudocode)).
 3. Add every symbol the unit defines or references to `config/symbols.txt` with its MSVC decorated name; compiling first and reading names from your object is the easy way (`objdump -t build/src/...obj`).
-4. `python3 tools/delink.py <unit>`, then `ninja`, then check the unit in objdiff. Iterate.
+4. `py tools\delink.py <unit>` (`python3 tools/delink.py` on Linux/macOS), then `ninja`, then check the unit in objdiff. Iterate.
 5. When every function and data item matches, set `"complete": true`.
 
 Partial units are welcome too: leave `complete` off and say in the pull request which functions match.

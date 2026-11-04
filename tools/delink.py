@@ -10,6 +10,7 @@ import json
 import os
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 import fix_data_symbols
@@ -27,7 +28,40 @@ def base_function_sizes(path: Path) -> dict:
     return sizes
 
 ROOT = Path(__file__).resolve().parent.parent
-DEFAULT_PROJECT = ROOT / "build" / "ghidra"
+
+
+def _dot_prefixed(path: Path) -> bool:
+    """True if any element of an absolute path starts with '.'.
+
+    Ghidra refuses to create a project below such a path
+    ("Path element starting with '.' is not permitted"), which bites when the
+    checkout lives under a hidden folder such as ~/.local or an agent
+    worktree's .ao directory.
+    """
+    return any(
+        part not in (path.anchor, os.sep) and part.startswith(".")
+        for part in path.parts
+    )
+
+
+def default_project() -> Path:
+    """Project folder inside the checkout, or a dot-free fallback."""
+    project = ROOT / "build" / "ghidra"
+    if not _dot_prefixed(project):
+        return project
+    candidates = []
+    local = os.environ.get("LOCALAPPDATA")
+    if local:
+        candidates.append(Path(local) / "tornado-jockey" / "ghidra")
+    candidates.append(Path(tempfile.gettempdir()) / "tornado-jockey-ghidra")
+    for candidate in candidates:
+        if not _dot_prefixed(candidate):
+            return candidate
+    return candidates[-1]
+
+
+DEFAULT_PROJECT = default_project()
+PROJECT_FALLBACK = DEFAULT_PROJECT != ROOT / "build" / "ghidra"
 
 
 def analyze_headless(ghidra: Path) -> Path:
@@ -35,6 +69,44 @@ def analyze_headless(ghidra: Path) -> Path:
     if not script.is_file():
         sys.exit(f"error: {script} not found; pass --ghidra or set GHIDRA_INSTALL_DIR")
     return script
+
+
+# cmd.exe refuses an input line longer than 8191 characters. The arguments
+# here are not the whole line: analyzeHeadless.bat -> launch.bat re-emits them
+# on a java command line that also carries ~800 characters of VM arguments,
+# -cp, and class names, so keep our own arguments well under the limit.
+# Every unit adds a target path and its ranges to that invocation, so large
+# selections are delinked in several headless runs that each fit.
+WINDOWS_COMMAND_LIMIT = 7000
+POSIX_COMMAND_LIMIT = 100_000  # ARG_MAX is much larger, but stay well clear
+
+
+def command_size(args: list[str]) -> int:
+    """Rough rendered length of an argument list (quoting and separators)."""
+    return sum(len(arg) + 3 for arg in args)
+
+
+def unit_args(unit: dict) -> list[str]:
+    target = ROOT / unit["target"]
+    return [str(target), *unit["ranges"], "--"]
+
+
+def batches(units: list[dict], base: list[str], limit: int) -> list[list[list[str]]]:
+    """Split units into headless runs whose command lines fit limit."""
+    result = []
+    batch: list[list[str]] = []
+    size = command_size(base)
+    for unit in units:
+        args = unit_args(unit)
+        args_size = command_size(args)
+        if batch and size + args_size > limit:
+            result.append(batch)
+            batch, size = [], command_size(base)
+        batch.append(args)
+        size += args_size
+    if batch:
+        result.append(batch)
+    return result
 
 
 def main() -> int:
@@ -46,6 +118,9 @@ def main() -> int:
     args = parser.parse_args()
     if args.ghidra is None:
         sys.exit("error: pass --ghidra or set GHIDRA_INSTALL_DIR")
+    if PROJECT_FALLBACK and args.project == DEFAULT_PROJECT:
+        print(f"note: {ROOT} is under a dot-prefixed folder, which Ghidra rejects; "
+              f"using {args.project}", file=sys.stderr)
 
     units = json.loads((ROOT / "config" / "units.json").read_text())["units"]
     selected = [u for u in units if u.get("ranges") and (not args.units or u["name"] in args.units)]
@@ -53,13 +128,11 @@ def main() -> int:
         print("No units to delink.")
         return 0
 
-    script_args = []
     for unit in selected:
         target = ROOT / unit["target"]
         target.parent.mkdir(parents=True, exist_ok=True)
         if target.exists():
             target.unlink()
-        script_args += [str(target), *unit["ranges"], "--"]
 
     # The COFF exporter refuses an object with two symbols of the same name.
     names = {}
@@ -83,40 +156,52 @@ def main() -> int:
             if len(inside) > 1:
                 print(f"warning: {name} is named {len(inside)} times inside {unit['name']}", file=sys.stderr)
 
-    cmd = [
+    base = [
         str(analyze_headless(args.ghidra)), str(args.project), "TornadoJockey",
         "-process", "Tornado.exe", "-noanalysis", "-readOnly",
         "-scriptPath", str(ROOT / "tools" / "ghidra"),
         "-preScript", "ApplySymbols.java", str(ROOT / "config" / "symbols.txt"),
         "-preScript", "FixReferences.java", str(ROOT / "config" / "norefs.txt"),
         "-preScript", "FixJumpTables.java",
-        "-postScript", "DelinkUnit.java", *script_args,
+        "-postScript", "DelinkUnit.java",
     ]
-    result = subprocess.run(cmd, capture_output=True, text=True)
+    limit = WINDOWS_COMMAND_LIMIT if os.name == "nt" else POSIX_COMMAND_LIMIT
+    runs = batches(selected, base, limit)
+    output = []
+    returncode = 0
+    for index, run in enumerate(runs, 1):
+        if len(runs) > 1:
+            print(f"delink: headless run {index}/{len(runs)}, {len(run)} unit(s)",
+                  file=sys.stderr)
+        cmd = base + [arg for args in run for arg in args]
+        result = subprocess.run(cmd, capture_output=True, text=True)
+        returncode = returncode or result.returncode
+        output.append(result.stdout + result.stderr)
+    log_text = "\n".join(output)
     log = ROOT / "build" / "delink.log"
-    log.write_text(result.stdout + result.stderr)
+    log.write_text(log_text)
     missing = [u["name"] for u in selected if not (ROOT / u["target"]).is_file()]
-    for line in (result.stdout + result.stderr).splitlines():
+    for line in log_text.splitlines():
         if "DELINK FAILED" in line:
             print(line[line.index("DELINK FAILED"):].replace(" (GhidraScript)", "").strip(), file=sys.stderr)
-    if result.returncode != 0 or missing or "SCRIPT ERROR" in result.stdout + result.stderr:
+    if returncode != 0 or missing or "SCRIPT ERROR" in log_text:
         print(f"error: delinking failed ({', '.join(missing) or 'see log'}); log in {log.relative_to(ROOT)}",
               file=sys.stderr)
     for unit in selected:
         if unit["name"] in missing:
             continue
-        base = int(unit["ranges"][0].split("-")[0], 16) if len(unit["ranges"]) == 1 else None
+        base_addr = int(unit["ranges"][0].split("-")[0], 16) if len(unit["ranges"]) == 1 else None
         ours = ROOT / "build" / Path(unit["source"]).with_suffix(".obj") if "source" in unit else None
         spans = [tuple(int(x, 16) for x in r.split("-")) for r in unit["ranges"]]
         # Sizes from our object where symbols.txt has none: a function ending
         # in a call that never returns keeps the int3 the compiler put after it.
         unit_sizes = base_function_sizes(ours) if ours is not None and ours.is_file() else {}
         unit_sizes.update({n: sz for n, a, sz in sizes if any(lo <= a <= hi for lo, hi in spans)})
-        split.main_path(ROOT / unit["target"], base=base, ours=ours, sizes=unit_sizes)
+        split.main_path(ROOT / unit["target"], base=base_addr, ours=ours, sizes=unit_sizes)
         fix_data_symbols.main_path(ROOT / unit["target"],
                                    {n: a for n, a in variables if any(lo <= a <= hi for lo, hi in spans)},
                                    [v for v in sized if not any(lo <= v[1] <= hi for lo, hi in spans)])
-    if result.returncode != 0 or missing or "SCRIPT ERROR" in result.stdout + result.stderr:
+    if returncode != 0 or missing or "SCRIPT ERROR" in log_text:
         return 1
     print(f"Delinked {len(selected)} unit(s)")
     return 0

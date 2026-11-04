@@ -4,7 +4,7 @@
 
 ## Setup
 
-Requirements: Node.js 22.19+ (or 24.11+), a JDK and Ghidra. On Linux, rea also needs a procps-compatible `ps`.
+Requirements: Node.js 22.19+ (or 24.11+), a JDK 21+ and Ghidra 12.2 (the same install the rest of the pipeline uses; set `GHIDRA_INSTALL_DIR` if rea doesn't find it). On Linux, rea also needs a procps-compatible `ps`.
 
 ```sh
 npx rea-agents setup          # registers the MCP server with your agent
@@ -21,3 +21,5 @@ rea inspect "$PWD/orig/Tornado.exe" --provider ghidra --json
 4. Iterate until objdiff reports 100%. When names or struct layouts are learned, add them to `config/symbols.txt` and `include/`.
 
 rea's `compare_functions` tool compares pseudocode, assembly and control flow between two analyses. It is handy for spotting behavioural differences, but objdiff's byte-level match is the standard for this project.
+
+If rea isn't set up, `py tools\decompile.py <unit>` prints the same Ghidra decompiler's C for a unit's ranges directly from the project `delink.py` uses; see [delinking.md](delinking.md#reading-pseudocode).

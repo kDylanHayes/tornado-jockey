@@ -1,6 +1,6 @@
 # Code regions in Tornado.exe
 
-Ghidra 12.1.4 auto-analysis finds **13,087 functions** in `.text` (0x401000–0x655424), including compiler-generated catch/unwind funclets and thunks.
+Ghidra 12.2 auto-analysis finds about 13,100 functions in `.text` (0x401000–0x655424), including compiler-generated catch/unwind funclets and thunks.
 
 ## How the map was made
 
@@ -18,7 +18,7 @@ Two independent signals line up:
 | 0x482cd0–0x559dff | ~3,150 | aligned | Game and Tongas2 engine code (renderer, resources, GUI, input, ACTOR/SCENE). FMOD import thunks at 0x559cc6 |
 | 0x559e00–0x56717b | ~220 | aligned | FreeImage 3.7.0's C++ code, all matched: FreeImage.cpp and Plugin.cpp (trimmed to PNG and JPEG), then bitmap access, conversions, the PNG and JPEG plugins, metadata and quantizers, built with `/O2 /GX` |
 | 0x56717c–0x586df5 | ~460 | unaligned | FreeImage 3.6.1/3.7.0's bundled libraries, all matched: libpng 1.2.8 (0x56717c–0x574aa4), libjpeg 6b (0x574aa5–0x582970), zlib 1.2.2 (0x582971–0x586fc2; `adler32` is shared with block 1 at 0x47e661). FreeImage's own code is elsewhere |
-| 0x586fd0–0x5bda8f | ~530 | aligned | ODE 0.5 (single precision, trimesh collision through OPCODE), built from `C:\Wanako\Tongas2\SDKs\ode`; all matched (49 units, `/O2 /GX`). Objects sit in the order the linker pulled them from the ODE library, not source order |
+| 0x586fd0–0x5bda8f | ~530 | aligned | ODE 0.5 (single precision, trimesh collision through OPCODE), built from `C:\Wanako\Tongas2\SDKs\ode`; all matched (49 units, `/O2 /GX`). Objects sit in the order the linker pulled them from the ODE library, not source order. The ISO-extracted target differs from the old retail image in 18 bytes at 0x59188f, inside this block (`lib/ode/joint` matches 99.73%) |
 | 0x5bda90–0x5bf241 | ~25 | aligned | Game code: online leaderboard requests ("Secret Key or Leaderboard Key given was invalid."), the DX8 and `.wkz` file loaders, and a zlib wrapper for `.wkz` archives |
 | 0x5bf242–0x5e5f66 | ~715 | unaligned | Static MSVC 7.1 runtime: libcmt (CRT), libcpmt (Dinkumware STL), ATL, EH support |
 | 0x5e5fa0–0x655400 | ~160 | aligned | Mostly large functions referencing D3DX: the prebuilt D3DX8 static library (the VC6-era objects in the Rich header) |
