@@ -42,3 +42,15 @@ Both start on a 16-byte boundary and read as `e2 a8 e7 d2 ...`/`f1 b8 51 c4
 ...` in the raw file, so the affected functions, and with them those two
 units, stay partial. `?SetWaitOnFirst` is otherwise a 12-byte body that does
 match; only its trailing `ret` immediate is overwritten.
+
+The `.data` command/property tables of `Tongas2/PATH` and `Tongas2/EMITTER`
+are hit as well, which is what keeps their data percentage below 100:
+
+| range | unit | symbol |
+|---|---|---|
+| `0x6bc290-0x6bc29f` | `Tongas2/PATH` | `?s_properties@PATHMASTER@@2PAUPROPENTRY@@A` (+`0xd8`) |
+| `0x6bd290-0x6bd29f` | `Tongas2/EMITTER` | `?s_properties@EMITTERMASTER@@2PAUPROPENTRY@@A` (+`0xa78`) |
+
+In both the target table holds sixteen random bytes where our source has a
+zeroed entry, and the surrounding entries match, so nothing legitimate can
+close that gap.

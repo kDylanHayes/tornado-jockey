@@ -40,6 +40,8 @@
 # of the run at 0x4b5590 and displaces the end of SetWaitOnFirst):
 0x4b558d-0x4b559f   Tongas2/SPAWNER             ?SetWaitOnFirst@SPAWNER@@UAEXAB_N@Z (also SetUseSpawnerAngleScale)  code  observed
 0x4cdd00-0x4cdd0f   Tongas2/VALUEMANAGER        ?Delete@VALUEMANAGER@@UAE?AVSRESULT@@PAUCMDCALL@@@Z     code  observed
+0x6bc290-0x6bc29f   Tongas2/PATH                ?s_properties@PATHMASTER@@2PAUPROPENTRY@@A              data  observed
+0x6bd290-0x6bd29f   Tongas2/EMITTER             ?s_properties@EMITTERMASTER@@2PAUPROPENTRY@@A           data  observed
 #
 # Lengths observed so far are 7-19 bytes (16 typical). No fixed address
 # stride or modulus was found: starts include 0x4846ab, 0x486dd0, 0x48e349,
