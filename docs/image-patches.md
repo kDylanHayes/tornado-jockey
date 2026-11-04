@@ -1,9 +1,10 @@
 # Image-integrity patches
 
 The committed target image (`orig/Tornado.exe`, SHA-1 `20bf7200...`) contains a
-few 15-19 byte blocks that overwrite otherwise readable `.rdata` strings,
-`_s_TypeNames` copies and one `.text` function. They exist in the exe itself,
-not in the delinked target objects: the bytes are opaque in the file.
+few 15-24 byte blocks that overwrite otherwise readable `.rdata` strings,
+`_s_TypeNames` copies and code in several `.text` functions. They exist in the
+exe itself, not in the delinked target objects: the bytes are opaque in the
+file.
 
 They are treated as image-integrity exceptions, not decompilation targets.
 `config/image_patches.txt` lists every known block with its address range,
