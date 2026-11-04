@@ -1152,7 +1152,8 @@
     {
       "name": "lib/ode/collision_trimesh_ray",
       "ranges": [
-        "0x005a0e40-0x005a114f"
+        "0x005a0e40-0x005a114f",
+        "0x00a0fa18-0x00a0fe97"
       ],
       "target": "build/target/lib/ode/collision_trimesh_ray.obj",
       "source": "src/lib/ode/ode/src/collision_trimesh_ray.cpp",
@@ -1174,7 +1175,8 @@
     {
       "name": "lib/ode/collision_trimesh_sphere",
       "ranges": [
-        "0x005a3b80-0x005a47df"
+        "0x005a3b80-0x005a47df",
+        "0x00a0fa18-0x00a0fe97"
       ],
       "target": "build/target/lib/ode/collision_trimesh_sphere.obj",
       "source": "src/lib/ode/ode/src/collision_trimesh_sphere.cpp",
