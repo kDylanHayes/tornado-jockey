@@ -50,10 +50,11 @@
 0x4a6aaf-0x4a6abf   Tongas2/RESOURCES           ?Insert@?$SAFEINDEX@VRESOURCE@@$0IAAA@$0CDJ@$02@@QAE?AURESHANDLE@@PAPAVRESOURCE@@H@Z  code  observed
 0x4894f3-0x489507   Tongas2/CMDMGR              ?RegisterEngineClasses@@YAXXZ                           code  scan
 #
+# Found by the commands pass (byte-checked):
+0x4894e9-0x4894f6   Tongas2/CMDMGR              ?RegisterEngineClasses@@YAXXZ                            code  observed
 # Lengths observed so far are 7-19 bytes (16 typical). No fixed address
 # stride or modulus was found: starts include 0x4846ab, 0x486dd0, 0x4894f3,
 # 0x48e349, 0x490a62, 0x49f542, 0x4a1c65, 0x4a438a, 0x4a6aaf, 0x4a91d3,
 # 0x4b558d, 0x4b5592, 0x4b7cb2, 0x4c1942, 0x4c4071, 0x4c8eb5, 0x4cdd00, 0x4d2b49,
 # 0x4d526d, 0x4da0b8, 0x4dc7dd, 0x667150, 0x66c0d8, 0x671062, 0x673827,
 # 0x6bc290 and 0x6bd290.
-0x4894e9-0x4894f6   Tongas2/CMDMGR              ?RegisterEngineClasses@@YAXXZ                            code  observed
