@@ -36,6 +36,16 @@ Data is patched too, in the GUI tables the initializers fill:
 | `0x00667150`, `0x0066c0d8` | `Tongas2/CMDMGR`, `Tongas2/RESOURCE` | `.rdata` string/table bytes | reported by those units' workers |
 | `0x00673827` | `Tongas2/BEHAVIORFADERESLOOP` | 16 bytes inside its `_s_TypeNames` copy | reported by the behavior worker |
 
+More code watermarks found by comparing the exact-match residuals:
+
+| VA | Unit | Symbol / item | Patched bytes |
+|---|---|---|---|
+| `0x004ba3d8` | `Tongas2/GUIVISUAL` | `??0GUIVISUALMASTER@@QAE@PAVRESOURCEMANAGER@@PBD@Z` (+0x328) | 15 bytes mid-function; the analysis also loses the relocations of the real code that follows |
+| `0x004bcafb` | `Tongas2/FX` | `??0FXMASTER@@QAE@PAVRESOURCEMANAGER@@PBD@Z` (+0x33b) | 17 bytes mid-function; three later operands (an empty-string address, a `_free` call and two `g_i` stores) lose their relocations as a result |
+| `0x0048bc18` | `Tongas2/APP` | `??1APP@@UAE@XZ` (+0xc8) | 16 bytes mid-function; code resumes at +0x118 |
+| `0x004b2e68` | `Tongas2/SOUND` | `?EnableSounds@SOUNDMANAGER@@QAEX_N@Z` (+0x18) | 16 bytes (the whole loop body); code resumes at +0x28 |
+| `0x00613337` | `Tongas2/GUITEXT` | `_$E3` (+0x7d7), the property-table initializer | 21 bytes mid-function; the following stores lose their `s_properties` relocations |
+
 `SetValueAt`, `SetVisualOpacity`, `SetOpacity`, `GUITEXT::Execute`, `GUI::~GUI`,
 `ACCELERATION::Update`, `GUIGROUP::MouseOverCommand`, `GUICONTROL::MoveRel`,
 `GUIGENERICCONTROL`'s `_$E3` and the two GUI tables above therefore never
@@ -43,3 +53,7 @@ reach 100%, and the units that own them (`GUISLIDERCONTROL`,
 `GUIVISUALCONTROL`, `GUITEXTCONTROL`, `GUI`, `GUIBEHAVIORS`,
 `GUIGROUPCONTROL`, `GUICONTROL`, `GUIGENERICCONTROL`) stay partial.
 Everything else in those units can still match.
+
+The second table's owners (`GUIVISUAL`, `FX`, `APP`, `SOUND`, `GUITEXT`) stay
+partial on those initializers/destructors for the same reason; their remaining
+functions and data still match.
