@@ -61,6 +61,25 @@ public class FixReferences extends HeadlessScript {
 		return ended && b[0] != 0;
 	}
 
+	// Four bytes of printable text ending in NUL, whether or not analysis
+	// typed them as a pointer ("set\0" is the address 0x00746573).
+	private boolean bytesLookLikeString(Address a) throws Exception {
+		byte[] b = new byte[4];
+		if (currentProgram.getMemory().getBytes(a, b) != 4) {
+			return false;
+		}
+		boolean ended = false;
+		for (byte x : b) {
+			if (x == 0) {
+				ended = true;
+			}
+			else if (ended || x < 0x20 || x > 0x7e) {
+				return false;
+			}
+		}
+		return ended && b[0] != 0;
+	}
+
 	// A pointer to a string, or to a short string typed as a pointer: a
 	// command table whose first name pointer reads as text ("xff").
 	private boolean pointsAtString(Address a) throws Exception {
@@ -207,6 +226,17 @@ public class FixReferences extends HeadlessScript {
 				for (Reference ref : refs.getReferencesFrom(loc)) {
 					refs.delete(ref);
 					removed++;
+				}
+				// A short string whose bytes read as an address ("set" is
+				// 0x00746573): leave it typed as a string so the relocation
+				// synthesizer does not put a relocation on its bytes.
+				if (bytesLookLikeString(loc)) {
+					try {
+						createAsciiString(loc, 4);
+					}
+					catch (Exception e) {
+						// Something else is defined in the word.
+					}
 				}
 				continue;
 			}
