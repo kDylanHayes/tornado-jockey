@@ -48,7 +48,7 @@ def fix(coff: split.Coff, variables: dict, externals=()) -> int:
     for i, rec, _ in coff.symbols:
         name = coff.name(rec)
         secno = struct.unpack_from("<h", rec, 12)[0]
-        if secno > 0 and name.startswith("DAT_") and not coff.sections[secno - 1]["chars"] & split.IMAGE_SCN_CNT_CODE:
+        if secno > 0 and name.startswith(("DAT_", "PTR_")) and not coff.sections[secno - 1]["chars"] & split.IMAGE_SCN_CNT_CODE:
             value = struct.unpack_from("<I", rec, 8)[0]
             owner = max((s for s in starts.get(secno, []) if s[0] <= value), default=None)
             if owner is not None:
