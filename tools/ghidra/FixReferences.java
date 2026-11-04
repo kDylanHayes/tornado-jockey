@@ -61,6 +61,25 @@ public class FixReferences extends HeadlessScript {
 		return ended && b[0] != 0;
 	}
 
+	// Four bytes of printable text ending in NUL, whether or not analysis
+	// typed them as a pointer ("set\0" is the address 0x00746573).
+	private boolean bytesLookLikeString(Address a) throws Exception {
+		byte[] b = new byte[4];
+		if (currentProgram.getMemory().getBytes(a, b) != 4) {
+			return false;
+		}
+		boolean ended = false;
+		for (byte x : b) {
+			if (x == 0) {
+				ended = true;
+			}
+			else if (ended || x < 0x20 || x > 0x7e) {
+				return false;
+			}
+		}
+		return ended && b[0] != 0;
+	}
+
 	// A pointer to a string, or to a short string typed as a pointer: a
 	// command table whose first name pointer reads as text ("xff").
 	private boolean pointsAtString(Address a) throws Exception {
@@ -132,16 +151,18 @@ public class FixReferences extends HeadlessScript {
 					continue;
 				}
 				if (refs.getReferencesFrom(ins.getAddress(), op).length == 0) {
-					// A store through a table (`mov [eax*4 + table], ecx`):
-					// analysis gives no reference, so the delinker would emit
-					// no relocation for it.
+					// An indexed read or write of a data address
+					// ([eax*4 + g_classParents]) that analysis left as a
+					// plain scalar: add the reference so the delinker
+					// relocates it.
 					MemoryBlock block = currentProgram.getMemory().getBlock(disp);
-					if (block != null && block.isInitialized() && !block.isExecute()) {
+					Function owner = getFunctionContaining(ins.getAddress());
+					boolean sameFunction = owner != null && owner.getBody().contains(disp);
+					if (block != null && block.isInitialized() && (!block.isExecute() || sameFunction)) {
 						refs.addMemoryReference(ins.getAddress(), disp, RefType.DATA,
 							SourceType.USER_DEFINED, op);
 						added++;
 					}
-					continue;
 				}
 				for (Reference ref : refs.getReferencesFrom(ins.getAddress(), op)) {
 					if (!ref.isMemoryReference() || ref.getReferenceType().isFlow() ||
@@ -219,6 +240,17 @@ public class FixReferences extends HeadlessScript {
 				for (Reference ref : refs.getReferencesFrom(loc)) {
 					refs.delete(ref);
 					removed++;
+				}
+				// A short string whose bytes read as an address ("set" is
+				// 0x00746573): leave it typed as a string so the relocation
+				// synthesizer does not put a relocation on its bytes.
+				if (bytesLookLikeString(loc)) {
+					try {
+						createAsciiString(loc, 4);
+					}
+					catch (Exception e) {
+						// Something else is defined in the word.
+					}
 				}
 				continue;
 			}
