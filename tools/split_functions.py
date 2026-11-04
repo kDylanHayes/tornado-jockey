@@ -444,9 +444,43 @@ def data_extents(coff: Coff) -> dict:
     return out
 
 
+def data_last(coff: Coff) -> set:
+    """Names of the last symbol in each base data section.
+
+    A data symbol that is followed by another symbol in its base section can
+    have interior padding after it that the base object keeps (GUIVISUAL's
+    150-byte array is followed by two pad bytes before the next array). Trimming
+    that as if it were trailing alignment padding would cut bytes the base still
+    has, so the delinker's trailing-zero trim only applies to a symbol that ends
+    its base section; there the padding sits past the base data and is the
+    linker's, not the section's.
+    """
+    out = set()
+    for secno, sec in enumerate(coff.sections, 1):
+        if sec["chars"] & IMAGE_SCN_CNT_CODE:
+            continue
+        if not sec["chars"] & IMAGE_SCN_CNT_INITIALIZED_DATA:
+            continue
+        by_off = {}
+        for _, rec, _ in coff.symbols:
+            if struct.unpack_from("<h", rec, 12)[0] != secno:
+                continue
+            off = struct.unpack_from("<I", rec, 8)[0]
+            name = coff.name(rec)
+            if name.startswith("."):
+                continue  # section symbol
+            # Prefer a named symbol over the section symbol at the same offset.
+            if off not in by_off or by_off[off].startswith("."):
+                by_off[off] = name
+        if by_off:
+            out.add(by_off[max(by_off)])
+    return out
+
+
 def split(coff: Coff, base: int | None = None, sizes: dict | None = None,
           follows: set | None = None, data_sizes: dict | None = None,
-          base_data_sizes: dict | None = None) -> int:
+          base_data_sizes: dict | None = None,
+          base_last: set | None = None) -> int:
     """sizes: known function sizes by name; they decide where padding starts.
     follows: data symbols our compiler put after another one in the same
     section (statics outside COMDATs); they don't start a section.
@@ -512,7 +546,12 @@ def split(coff: Coff, base: int | None = None, sizes: dict | None = None,
                 last_size = data_sizes.get(names.get(max(inside), "")) if inside else None
                 if last_size is not None:
                     last = max(inside) + last_size
-                    if last < end and end - last < 4 and not any(data[last:end]):
+                    # Only a symbol that ends its base section has trailing
+                    # padding; one followed by another base symbol has interior
+                    # padding there, which the base section still contains.
+                    if (last < end and end - last < 4 and not any(data[last:end])
+                            and (base_last is None
+                                 or names.get(max(inside)) in base_last)):
                         end = last
             body_end = end
             known = sizes.get(names.get(start, "")) if sizes else None
@@ -604,7 +643,8 @@ def main_path(src, dst=None, base=None, ours=None, sizes=None, data_sizes=None) 
         with open(ours, "rb") as f:
             base_coff = Coff(f.read())
     n = split(coff, base, sizes, data_followers(base_coff) if base_coff else None, data_sizes,
-              data_extents(base_coff) if base_coff is not None else None)
+              data_extents(base_coff) if base_coff is not None else None,
+              data_last(base_coff) if base_coff is not None else None)
     add_except_list(coff)
     if base_coff is not None:
         name_local_labels(coff, base_coff)
