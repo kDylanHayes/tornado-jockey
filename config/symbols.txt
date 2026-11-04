@@ -5079,9 +5079,15 @@
 0x00667d2c ??_C@_07CCJCOENN@testCmd?$AA@ data
 0x00667d38 _s_TypeNames data 0xb4
 0x00667df0 _s_pvsTypes data 0x78
+0x00667e68 ??_C@_0BE@NGPNEKCG@already?5initted?$CB?$CB?$CB?$CB?$AA@ data 0x14
+0x00667e7c ??_C@_0CI@JHJCIHPH@SCENE?3?3PVSAddMember?5?9?5PVS?5not?5su@ data 0x28
+0x00667ea4 ??_C@_0CD@DLLLBKPD@SCENE?3?3PVSDump?5?9?5PVS?5not?5support@ data 0x23
 0x00667ec8 __real@c3340000 data
 0x00667ecc __real@c3b40000 data
 0x00667ed8 ??_C@_0CM@OCPNAOAO@SAFEINDEX?3FreePos?$DO?5Invalid?5delet@ data 0x2c
+0x00667f54 ??_C@_07DKACKEOF@OneNode?$AA@ data 0x8
+0x00667ff4 ??_C@_05ELCCFCFH@scene?$AA@ data 0x6
+0x00668110 ??_C@_0DH@FGFBGCPK@SCENE?3?3CreateActor?5?9?5Could?5creat@ data 0x37
 0x00667f04 ??_C@_0CP@MNDOJFFL@SAFEINDEX?3?3FreePos?$DO?5Error?5?9?5posi@ data 0x2f
 0x00667f34 ??_C@_0BP@MIFJHLDG@LIFO?3?3Push?$DO?5Error?5?9?5Table?5full?$AA@ data 0x1f
 0x00667f60 ??_C@_0FC@BEJMAJLI@SAFEINDEX?3?3?5ALERT?$CB?$CB?$CB?$CB?5?9?5MAX?5WHIL@ data 0x52

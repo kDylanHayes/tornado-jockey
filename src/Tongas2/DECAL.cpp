@@ -84,14 +84,14 @@ RESHANDLE DECAL::GetShaderHandle()
 
 void DECAL::SetUV(float u0, float v0, float u1, float v1)
 {
-    m_uv[0].v = v0;
     m_uv[0].u = u0;
+    m_uv[0].v = v0;
     m_uv[1].u = u1;
     m_uv[1].v = v1;
     m_vertices[0].u = u0;
     m_vertices[0].v = v0;
-    m_vertices[1].v = v1;
     m_vertices[1].u = u0;
+    m_vertices[1].v = v1;
     m_vertices[2].u = u1;
     m_vertices[2].v = v0;
     m_vertices[3].u = u1;
