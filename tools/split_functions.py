@@ -426,8 +426,27 @@ def base_by_index(base: Coff, index: int):
     raise KeyError(index)
 
 
+def data_extents(coff: Coff) -> dict:
+    """Size of every data symbol as our object lays it out (to the next one)."""
+    out = {}
+    for secno, sec in enumerate(coff.sections, 1):
+        if sec["chars"] & IMAGE_SCN_CNT_CODE:
+            continue
+        syms = sorted(
+            (struct.unpack_from("<I", rec, 8)[0], coff.name(rec))
+            for _, rec, _ in coff.symbols
+            if struct.unpack_from("<h", rec, 12)[0] == secno
+            and struct.unpack_from("<H", rec, 14)[0] == 0
+            and rec[16] in (IMAGE_SYM_CLASS_EXTERNAL, IMAGE_SYM_CLASS_STATIC))
+        for n, (value, name) in enumerate(syms):
+            end = syms[n + 1][0] if n + 1 < len(syms) else len(sec["data"])
+            out.setdefault(name, end - value)
+    return out
+
+
 def split(coff: Coff, base: int | None = None, sizes: dict | None = None,
-          follows: set | None = None, data_sizes: dict | None = None) -> int:
+          follows: set | None = None, data_sizes: dict | None = None,
+          base_data_sizes: dict | None = None) -> int:
     """sizes: known function sizes by name; they decide where padding starts.
     follows: data symbols our compiler put after another one in the same
     section (statics outside COMDATs); they don't start a section.
@@ -453,9 +472,19 @@ def split(coff: Coff, base: int | None = None, sizes: dict | None = None,
             # A follower at offset 0 still starts the section: the ranges put
             # it first even though our compiler laid it out after another.
             starts = {struct.unpack_from("<I", rec, 8)[0] for _, rec in syms
-                      if rec[16] == IMAGE_SYM_CLASS_EXTERNAL
-                      and (coff.name(rec) not in (follows or ())
-                           or struct.unpack_from("<I", rec, 8)[0] == 0)}
+                      if (rec[16] == IMAGE_SYM_CLASS_EXTERNAL
+                          and (coff.name(rec) not in (follows or ())
+                               or struct.unpack_from("<I", rec, 8)[0] == 0))
+                      # A static item whose size symbols.txt pins and our own
+                      # object lays out exactly that size: otherwise the target
+                      # extent runs on to the next symbol and keeps the linker's
+                      # alignment padding (GUICONTROL's _s_timeSpaces is a
+                      # 90-byte 3x30 table followed by two pad bytes). The size
+                      # has to agree with our object, or trimming would cut
+                      # bytes our object still has.
+                      or (data_sizes and coff.name(rec) in data_sizes
+                          and base_data_sizes is not None
+                          and base_data_sizes.get(coff.name(rec)) == data_sizes[coff.name(rec)])}
         starts = sorted(starts)
         if not starts:
             continue
@@ -479,6 +508,8 @@ def split(coff: Coff, base: int | None = None, sizes: dict | None = None,
             if is_code and known is not None and start + known <= end:
                 body_end = start + known
             elif not is_code and data_sizes and names.get(start, "") in data_sizes \
+                    and (base_data_sizes is None
+                         or base_data_sizes.get(names[start]) == data_sizes[names[start]]) \
                     and start + data_sizes[names[start]] <= end \
                     and not any(start + data_sizes[names[start]] <= v < end for v in later):
                 body_end = start + data_sizes[names[start]]
@@ -561,7 +592,8 @@ def main_path(src, dst=None, base=None, ours=None, sizes=None, data_sizes=None) 
     if ours is not None and ours.is_file():
         with open(ours, "rb") as f:
             base_coff = Coff(f.read())
-    n = split(coff, base, sizes, data_followers(base_coff) if base_coff else None, data_sizes)
+    n = split(coff, base, sizes, data_followers(base_coff) if base_coff else None, data_sizes,
+              data_extents(base_coff) if base_coff is not None else None)
     add_except_list(coff)
     if base_coff is not None:
         name_local_labels(coff, base_coff)
