@@ -1,3 +1,7 @@
+// The original's PATHMASTER::Execute tracks the return value in its EH table
+// and runs FreeValue with a state change, so this file saw it as throwing.
+#define SRESULT_FREEVALUE_MAY_THROW
+
 #include <math.h>
 
 #include "Tongas2/PATH.h"
