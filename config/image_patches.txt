@@ -9,12 +9,29 @@
 0x4d2b49-0x4d2b58   Tongas2/OCTREE              ??0OCTREE@@QAE@UV3@@0H@Z                                code  observed
 0x4d526e-0x4d527f   Tongas2/MESH                ?AcquireShader@MESHMASTER@@QAEXXZ                       code  observed
 0x4dc7dd-0x4dc7f4   Tongas2/RENDERER            ?SetFogColor@RENDERER@@QAEXPBUV3I@@@Z                   code  observed
-0x671062-0x671071   Tongas2/SHADER              ??_C@_0O@EOICMLBP@AllowCompress?$AA@ /                  data  observed
-                                                ??_C@_0M@MOHFMCHH@AllowResize?$AA@
+0x4da0b8-0x4da0c7   Tongas2/GEOMETRY            ?IntersectFace@OOBOX3@@QAE_NHABUV3@@0PAU2@@Z            code  observed
+0x490a62-0x490a71   Tongas2/SCENE               ?New@?$SAFEINDEX@VACTOR@@$0BDII@$0PL@$00@@QAE_NPAPAVACTOR@@HPAHPAURESHANDLE@@@Z  code  observed
+0x4a1c65-0x4a1c74   Tongas2/CAMERA              ?Reset@CAMERA@@UAEXXZ                                   code  observed
+0x4b7cb2-0x4b7cc1   Tongas2/LIGHT               ?Init@LIGHTMANAGER@@UAEXXZ                              code  observed
+0x671062-0x671071   Tongas2/SHADER              ??_C@_0O@EOICMLBP@AllowCompress?$AA@ (also           data  observed
+                                                ??_C@_0M@MOHFMCHH@AllowResize?$AA@)
+#
+# Reported by the orchestrator / worker 8 (bytes not independently compared here):
 0x667150-0x66715f   Tongas2/CMDMGR              ??_C@_0CF@MLNDBCPD@scripting?5object?5without?5base?5@  data  reported
 0x66c0d8-0x66c0e7   Tongas2/RESOURCE            ??_C@_0M@OHKMKKDH@Description?$AA@                       data  reported
 0x673827-0x673836   Tongas2/BEHAVIORFADERESLOOP _s_TypeNames                                            data  reported
 #
-# Lengths observed so far are 13-19 bytes (16 typical). No fixed address
-# stride or modulus was found: the starts are 0x4a91d4, 0x4c1943, 0x4d2b49,
-# 0x4d526e, 0x4dc7dd, 0x667150, 0x66c0d8, 0x671062 and 0x673827.
+# Found by the suspicious-disassembly scan (opaque bytes checked in the exe;
+# ranges may include the adjacent code the watermark displaced):
+0x4b5592-0x4b559c   Tongas2/SPAWNER             ?SetUseSpawnerAngleScale@SPAWNER@@UAEXAB_N@Z            code  scan
+0x4c4071-0x4c407c   Tongas2/TEXT                ?Update@TEXT@@UAEXXZ                                    code  scan
+0x4846ab-0x4846b7   Tongas2/CMDBASE             ?GetShortStringAttribute@CMDBASE@@UAEXAAV?$FIXEDSTRING@$0CAA@@@PBDH@Z  code  scan
+0x486dd0-0x486de1   Tongas2/CMDBASE             ?SetAttribute@CMDBASE@@UAE?AVSRESULT@@PAUCMDCALL@@@Z     code  scan
+0x48e349-0x48e35b   Tongas2/GUI                 ??1GUI@@UAE@XZ                                          code  scan
+0x49f542-0x49f551   Tongas2/GUIGROUPCONTROL     ?MouseOverCommand@GUIGROUP@@UAE?AVSRESULT@@PAUCMDCALL@@@Z  code  scan
+#
+# Lengths observed so far are 7-19 bytes (16 typical). No fixed address
+# stride or modulus was found: starts include 0x4846ab, 0x486dd0, 0x48e349,
+# 0x490a62, 0x49f542, 0x4a1c65, 0x4a91d4, 0x4b5592, 0x4b7cb2, 0x4c1943,
+# 0x4c4071, 0x4d2b49, 0x4d526e, 0x4da0b8, 0x4dc7dd, 0x667150, 0x66c0d8,
+# 0x671062 and 0x673827.

@@ -14,8 +14,10 @@ partial.
 `../config/image_patches.txt` records every known range with its unit, symbol
 and kind. The starts are irregular — no fixed address stride or modulus was
 found — so new ones have to be identified from a target/base diff. Ranges
-marked `observed` came from byte-level target/base comparisons; `reported`
-ones came from other workers and are listed at their reported start address.
+marked `observed` came from byte-level target/base comparisons; `scan` ones
+came from a suspicious-disassembly sweep over all units (their exact end can
+include the code the watermark displaced); `reported` ones came from other
+workers and are listed at their reported start address.
 
 A separate, fixable issue is the delinker putting relocations on short strings
 whose bytes read as an address (`"set"` is `0x00746573`). That is handled in
