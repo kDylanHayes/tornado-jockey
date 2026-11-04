@@ -4803,6 +4803,11 @@
 0x0065f224 ??_C@_07GKACAEDJ@Texture?$AA@ data 0x8
 0x0065f888 ??_7CMDBASE@@6B@ data 0x4c
 0x0065f900 ??_7RESOURCE@@6B@ data
+0x00667ed0 ??_7?$LIFO@URESHANDLE@@$0BDII@@@6B@ data 0x4
+0x00667ed4 ??_7?$LIFO@PAVACTOR@@$0BDII@@@6B@ data 0x4
+0x00667f5c ??_7?$SAFEINDEX@VACTOR@@$0BDII@$0PL@$00@@6B@ data 0x4
+0x0066c270 ??_7SOUND@@6B@ data
+0x0066c390 ??_7SOUNDMASTER@@6B@ data
 0x0065fae0 __real@3b808081 data 0x4
 0x0065fc58 ??_C@_0BB@NJBJIAGB@BarGrowDirection?$AA@ data 0x11
 0x0065fc6c ??_C@_0N@IGCJLPCK@BarEndOffset?$AA@ data 0xd
