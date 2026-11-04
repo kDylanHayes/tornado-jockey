@@ -68,6 +68,21 @@ Confirmed so far:
 
 FreeImage's own project files build its libraries with `/O2 /Ob2 /Oi /Ot /G7`, but the copies in `Tornado.exe` match `/O1`: Wanako rebuilt FreeImage with their own settings.
 
+The engine units were swept against alternatives, and the defaults are the ones that match:
+
+| Unit | Tried | Result |
+|---|---|---|
+| `Tongas2/CAMERA` | `/G7` (Pentium 4 scheduling) | 98.57% -> 95.47% |
+| `Tongas2/CAMERA` | `/Oa` (assume no aliasing) | 98.57% -> 92.73% (`MATRIX::View` 92% -> 48%) |
+| `Tongas2/CAMERA` | `/Ob1` | 98.57% -> 94.25% |
+| `Tongas2/SCENE` | `/Ob1` | 97.63% -> 96.60% |
+| `Tongas2/DECAL` | `/Ob1` | 97.45% -> 96.51% |
+| `Tongas2/CPRIMITIVE3` | `/Ob1` | 98.74% -> 98.14% |
+| `Tongas2/HEIGHTMAPDX8` | `/Ob1` | 97.55% -> 96.19% (`UpdateVertices` 86% -> 79%) |
+| `Tongas2/GEOMETRY` | `/Ob2` (the default) | 95.07% -> 94.21%, so `GEOMETRY` keeps its `/Ob1` (`CollideBoxSegment` 72% -> 67%) |
+
+The scheduling differences left in the terrain, geometry and camera functions are therefore not a flag choice: they come from the source the original was written in (see the register notes below).
+
 ## Matching notes
 
 Things learned while matching engine code with `/O2`:
@@ -123,3 +138,7 @@ Things learned while matching engine code with `/O2`:
 - **Switch lowering can differ for the same source.** `PATHMASTER::GetSegmentLength` switches on `m_curvature`; the exe has a four-entry jump table (0,1,2 call `MeasureCurve`, 3 skips it) while VC7.1 emits a range check for the natural three-case source, and splitting the three labels into separate identical case bodies only turns that into a compare chain. A jump table needs four *distinct* bodies at the point the compiler lowers the switch, which this source cannot express without changing what the case does. The function stays partial unless someone finds a construction that forces the table.
 - **Tail duplication at a loop entry.** In `CONSOLE::Update` the target's first loop exits to the second loop's shared condition header (`cmp line, CONSOLE_LINES`), but VC7.1 tail-duplicates our source's zero-iteration path straight to the body, so the `je` lands 5 bytes later (`0xe5` instead of `0xe0`). The instruction addresses are otherwise identical and the raw exe has the same bytes, so this is not delinker padding. `#pragma optimize("t", off)` wrecks the function and `("s", off)` does not change it; making the bound `volatile` restores the header but adds loads (95.1% instead of 99.98%). Left as the last 0.02% of the unit.
 - **A call's result compared to zero.** `if (!strstr(text, "GVIS:dplogo"))` compares the call result directly and compiles to `test eax, eax`, but the exe has `cmp eax, esi` against the function's zero register (`RESOURCEMANAGER::IsListLoaded`). Naming the result first (`char *found = strstr(...); if (!found ...)`) makes the comparison a variable test and gives the `cmp`.
+- **A constant in a callee-saved register, or an immediate.** The exe often keeps `0` or `-1` in a callee-saved register for a whole function (`SCENE::Update` starts `xor ebp, ebp` and later does `cmp ecx, ebp` and `mov [ebx+0xec8c], ebp`), where our build rematerialises the immediate (`test ecx, ecx`, `mov dword ptr [...], 0`). The two forms differ in one instruction, so objdiff then sees every branch displacement in the function move. It is a register-pressure outcome: the exe recomputes a member's address with a scratch register (`lea ecx, [ebx+0xec90]`) where our object keeps it in a callee-saved one, leaving that register free for the constant. Changing the loop shape (`for` to `while`), naming the address or hoisting locals did not move it in `SCENE::MessageSpawned` (0%), `SCENE::Update` (92%) or `GUIGROUP::Update`; treat it as a watermark unless the original statement order can be recovered.
+- **`-1` shared by a temporary and a loop test.** `SCENE::MessageSpawned` keeps the `-1` of `RESHANDLE()` and of `i != -1` in one register (`or edi, 0xffffffff`) where our object stores and compares the immediate. Every block after the constructors then differs, so the function scores 0% even though the code does the same thing.
+- **vtable stores with a `__real@...` addend.** Template ctors and dtors that store their vtable show the target as `mov [esi], __real@c3b40000+4` against our `mov [esi], ??_7<vtable>`. The delinker names the address by the nearest symbol it has; adding the vtable itself to `symbols.txt` at its address is what would let the two agree, and `symbol_mappings` cannot (the addends differ).
+- **EH unwind-state stores.** `HEIGHTMAPDX8::ParseTilesInfo` is ten instructions off: three `local_4 = 5/6/7` stores before the three `TOKENS` destructors are missing from our build, plus four addressing forms written `[edx+eax+0x2]` where the exe has `[eax+edx+0x2]` (same registers, the other SIB base/index choice). Making `~TOKENS` out of line removes the inlining and drops the function to 92.78%.
