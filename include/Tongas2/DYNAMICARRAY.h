@@ -144,9 +144,9 @@ void DYNAMICARRAY<T>::Resize(const int &size)
         delete[] m_used;
         m_used = 0;
     }
-    m_used = used;
     m_free = free;
     m_data = data;
+    m_used = used;
     m_capacity = size;
 }
 
