@@ -185,8 +185,8 @@ void CONSOLE::Update()
         }
         line++;
     }
-    for (; line < CONSOLE_LINES; line++) {
-        RESOURCE *text = g_pResources->GetResource(m_lines[line]);
+    for (int j = line; j < CONSOLE_LINES; j++) {
+        RESOURCE *text = g_pResources->GetResource(m_lines[j]);
         if (text && text->m_active) {
             text->Stop();
             text->m_active = false;

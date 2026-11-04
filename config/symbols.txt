@@ -295,7 +295,7 @@
 0x00483790 ?ToEncoded@CWSTRING@@QBEXAAVSTRING@@@Z function 0x30
 0x004837c0 ?RegisterCommands@CMDBASE@@SAXXZ function
 0x00483800 ?FindProperty@CMDBASE@@UAEPAUPROPENTRY@@PBDH@Z function
-0x004838c0 ?FindEnum@@YAHPAY0BO@$$CBDPBD@Z function
+0x004838c0 ?FindEnum@@YAHPBDPAY0BO@$$CBD@Z function
 0x00483910 ?HashProperties@@YAXPAUPROPENTRY@@@Z function
 0x00483940 ?GetObject@@YAPAVCMDBASE@@URESHANDLE@@@Z function
 0x004839e0 ??_9@$BDM@AE function
