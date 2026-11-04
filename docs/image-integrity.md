@@ -17,6 +17,8 @@ what our compiled object produces for the same symbol.
 |---|---|---|---|
 | `0x004c6790` | `Tongas2/GUISLIDERCONTROL` | `?SetValueAt@GUISLIDER@@QAEXMM@Z` | 16 bytes at the function's prologue; code resumes at +16 |
 | `0x004c8ec0` | `Tongas2/GUIVISUALCONTROL` | `?SetVisualOpacity@GUIVISUAL@@UAEXABHABM@Z` | 6 bytes at the function's prologue; code resumes at +6 |
+| `0x004cb5da` | `Tongas2/GUITEXTCONTROL` | `?Execute@GUITEXT@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z` (+74) | 16 bytes mid-function; code resumes at +90 |
+| `0x0048e33d` | `Tongas2/GUI` | `??1GUI@@UAE@XZ` (+77) | 16 bytes mid-function; code resumes at +93 |
 | `0x004d2b48` | `Tongas2/OCTREE` | 16 bytes inside a function | reported by the octree worker |
 | `0x00671060`, `0x00671070` | `Tongas2/SHADER` | string prefixes in `.rdata` | reported by the shader worker |
 | `0x00667150`, `0x0066c0d8` | `Tongas2/CMDMGR`, `Tongas2/RESOURCE` | `.rdata` string/table bytes | reported by those units' workers |
