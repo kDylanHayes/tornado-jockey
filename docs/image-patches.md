@@ -56,3 +56,16 @@ are hit as well, which is what keeps their data percentage below 100:
 In both the target table holds sixteen random bytes where our source has a
 zeroed entry, and the surrounding entries match, so nothing legitimate can
 close that gap.
+
+## Found while matching code bytes
+
+`PATHMASTER::GetCatmullRom` also overlaps a code run. Our object has the
+expected Hermite/tangent arithmetic at the corresponding offset, while the
+image has `e7 59 35 ff 88 b3 8d c1 50 25 86 f1` after the `fcomp`/`pop`
+opcodes:
+
+| range | unit | symbol |
+|---|---|---|
+| `0x4ab8fa-0x4ab908` | `Tongas2/PATH` | `?GetCatmullRom@PATHMASTER@@QAE_NMPAUV3@@00PAM1@Z` |
+
+The run is 15 bytes, so the function and `Tongas2/PATH`'s code stay partial.
