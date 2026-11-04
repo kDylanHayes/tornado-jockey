@@ -257,11 +257,22 @@ def sync_undefined_refs(coff: Coff, base: Coff) -> int:
     is an exception handler, the reference takes our name, so objdiff pairs
     the call with the function in our object."""
     by_index = {i: rec for i, rec, _ in coff.symbols}
+
+    def sec_size(sec):
+        return len(sec["data"]) if sec["data"] else sec["bss"]
+
     base_sections = {}
     for i, rec, _ in base.symbols:
         secno = struct.unpack_from("<h", rec, 12)[0]
         if secno > 0:
-            base_sections.setdefault(base.name(rec), secno)
+            # The size rides along: a relocation at offset N only matches
+            # when both objects lay the section out the same way. In a
+            # function ours does not reproduce yet the offsets differ, and
+            # copying the base's name for offset N would name the wrong
+            # reference (SCREENSHOT's push of a string sat where ours calls
+            # LOG::Error).
+            base_sections.setdefault(base.name(rec),
+                                     (secno, sec_size(base.sections[secno - 1])))
 
     def base_name(base_secno, offset):
         for r in base.sections[base_secno - 1]["relocs"]:
@@ -274,8 +285,11 @@ def sync_undefined_refs(coff: Coff, base: Coff) -> int:
     for secno, sec in enumerate(coff.sections, 1):
         if not sec["relocs"]:
             continue
-        base_secno = base_sections.get(primary_name(coff, secno))
-        if base_secno is None:
+        entry = base_sections.get(primary_name(coff, secno))
+        if entry is None:
+            continue
+        base_secno, base_size = entry
+        if base_size != sec_size(sec):
             continue
         for vaddr, symidx, _rtype in sec["relocs"]:
             rec = by_index.get(symidx)
@@ -308,8 +322,11 @@ def sync_undefined_refs(coff: Coff, base: Coff) -> int:
                     and all(n.startswith("??_E") for n in names))):
             continue
         for secno, sec in enumerate(coff.sections, 1):
-            base_secno = base_sections.get(primary_name(coff, secno))
-            if base_secno is None:
+            entry = base_sections.get(primary_name(coff, secno))
+            if entry is None:
+                continue
+            base_secno, base_size = entry
+            if base_size != sec_size(sec):
                 continue
             for reloc in sec["relocs"]:
                 if reloc[1] != symidx:
@@ -326,8 +343,11 @@ def sync_undefined_refs(coff: Coff, base: Coff) -> int:
     for secno, sec in enumerate(coff.sections, 1):
         if not sec["chars"] & IMAGE_SCN_CNT_CODE or not sec["relocs"]:
             continue
-        base_secno = base_sections.get(primary_name(coff, secno))
-        if base_secno is None:
+        entry = base_sections.get(primary_name(coff, secno))
+        if entry is None:
+            continue
+        base_secno, base_size = entry
+        if base_size != sec_size(sec):
             continue
         for reloc in sec["relocs"]:
             rec = by_index.get(reloc[1])

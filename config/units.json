@@ -2246,7 +2246,7 @@
         "0x00654400-0x0065445f",
         "0x00667d2c-0x00668167",
         "0x006b9e88-0x006b9faf",
-        "0x006d09dc-0x006d26ff"
+        "0x006d09e0-0x006d26ff"
       ],
       "target": "build/target/Tongas2/SCENE.obj",
       "source": "src/Tongas2/SCENE.cpp",

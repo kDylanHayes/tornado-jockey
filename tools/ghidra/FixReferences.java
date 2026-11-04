@@ -108,6 +108,7 @@ public class FixReferences extends HeadlessScript {
 		int fixed = 0;
 		int added = 0;
 		int cleared = 0;
+		int retyped = 0;
 		for (Instruction ins : currentProgram.getListing().getInstructions(true)) {
 			for (int op = 0; op < ins.getNumOperands(); op++) {
 				Address disp = null;
@@ -126,6 +127,28 @@ public class FixReferences extends HeadlessScript {
 				if (!indexed && disp != null && looksLikeString(disp) && !pointsAtString(disp)) {
 					clearListing(disp, disp.add(3));
 					cleared++;
+				}
+				if (!indexed && disp != null && getDataAt(disp) == null) {
+					// Analysis can type a string one byte early, over the tail
+					// of the preceding item: RENDERER::Render's "Don't render"
+					// message began at 0x673d77, inside __real@44160000, so the
+					// named symbol at 0x673d78 fell inside a data item and the
+					// delinker emitted no relocation for `push 0x673d78`.
+					// Re-type the string at the symbol's own address.
+					Data containing = getDataContaining(disp);
+					ghidra.program.model.symbol.Symbol sym = getSymbolAt(disp);
+					if (containing != null && containing.hasStringValue()
+							&& containing.getAddress().compareTo(disp) < 0
+							&& sym != null && sym.getSource() == SourceType.USER_DEFINED) {
+						clearListing(containing.getAddress(), containing.getMaxAddress());
+						try {
+							createAsciiString(disp);
+							retyped++;
+						}
+						catch (Exception e) {
+							// Something else stays defined in the word.
+						}
+					}
 				}
 				if (!indexed && disp != null && !ins.getFlowType().isFlow()) {
 					// The EH analysis can leave a flow reference on the
@@ -180,6 +203,7 @@ public class FixReferences extends HeadlessScript {
 		println("Re-pointed " + fixed + " indexed operand references");
 		println("Added " + added + " references from immediates into data");
 		println("Cleared " + cleared + " short strings typed as pointers");
+		println("Re-typed " + retyped + " strings analysis started before their symbol");
 
 		int strings = 0;
 		int pointers = 0;
