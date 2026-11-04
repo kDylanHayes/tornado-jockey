@@ -2166,7 +2166,11 @@
       "source": "src/Tongas2/GUI.cpp",
       "category": "engine",
       "symbol_mappings": {
-        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z"
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z",
+        "_$E1": "_$E1",
+        "_$E2": "_$E2",
+        "_$E3": "_$E3",
+        "_$E4": "_$E4"
       }
     },
     {
@@ -2505,7 +2509,13 @@
       ],
       "target": "build/target/Tongas2/GUIGENERICCONTROL.obj",
       "source": "src/Tongas2/GUIGENERICCONTROL.cpp",
-      "category": "engine"
+      "category": "engine",
+      "symbol_mappings": {
+        "_$E1": "_$E1",
+        "_$E2": "_$E2",
+        "_$E3": "_$E3",
+        "_$E4": "_$E4"
+      }
     },
     {
       "name": "Tongas2/GUIVISUALCONTROL",
@@ -2517,7 +2527,13 @@
       ],
       "target": "build/target/Tongas2/GUIVISUALCONTROL.obj",
       "source": "src/Tongas2/GUIVISUALCONTROL.cpp",
-      "category": "engine"
+      "category": "engine",
+      "symbol_mappings": {
+        "_$E1": "_$E1",
+        "_$E2": "_$E2",
+        "_$E3": "_$E3",
+        "_$E4": "_$E4"
+      }
     },
     {
       "name": "Tongas2/GUITEXTEDITCONTROL",
@@ -2529,7 +2545,13 @@
       ],
       "target": "build/target/Tongas2/GUITEXTEDITCONTROL.obj",
       "source": "src/Tongas2/GUITEXTEDITCONTROL.cpp",
-      "category": "engine"
+      "category": "engine",
+      "symbol_mappings": {
+        "_$E1": "_$E1",
+        "_$E2": "_$E2",
+        "_$E3": "_$E3",
+        "_$E4": "_$E4"
+      }
     },
     {
       "name": "Tongas2/GUITEXTCONTROL",
@@ -2541,7 +2563,13 @@
       ],
       "target": "build/target/Tongas2/GUITEXTCONTROL.obj",
       "source": "src/Tongas2/GUITEXTCONTROL.cpp",
-      "category": "engine"
+      "category": "engine",
+      "symbol_mappings": {
+        "_$E1": "_$E1",
+        "_$E2": "_$E2",
+        "_$E3": "_$E3",
+        "_$E4": "_$E4"
+      }
     },
     {
       "name": "Tongas2/GUICHECKBOXCONTROL",
