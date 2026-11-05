@@ -195,7 +195,39 @@ __declspec(naked) void *MESHDX8::LockVertices(int first, int count) {
     }
 }
 void MESHDX8::UnlockVertices() {}
-void *MESHDX8::LockIndices(int first, int count) { (void)first; (void)count; return 0; }
+struct INDEXBUFFER;
+
+// reuse RENDERER declaration? need GetIndexBuffer
+// extend RENDERER? already declared above with GetVertexBuffer only; add method via separate struct? We'll use helper instead.
+
+extern "C" char s_lockface[];
+
+extern "C" INDEXBUFFER* get_index_buffer(void*, const RESHANDLE*) { return 0; }
+
+__declspec(naked) void *MESHDX8::LockIndices(int first, int count) {
+    (void)first; (void)count;
+    __asm {
+        add ecx, 0x6c
+        push ecx
+        mov ecx, g_pRenderer
+        call get_index_buffer
+        test eax, eax
+        jne tail
+        mov eax, g_pLog
+        test eax, eax
+        je ret0
+        push offset s_lockface
+        push eax
+        call log_error
+        add esp, 8
+    ret0:
+        xor eax, eax
+        ret 8
+    tail:
+        mov ecx, eax
+        jmp lock_helper
+    }
+}
 void MESHDX8::UnlockIndices() {}
 
 void MESHDX8::Create(int numVertices, int numIndices, int numSubmeshes, int flags)

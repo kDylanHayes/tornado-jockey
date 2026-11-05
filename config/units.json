@@ -2781,6 +2781,8 @@
         "?GetVertexBuffer@RENDERER@@QAEPAVVERTEXBUFFER@@ABURESHANDLE@@@Z": "_get_vertex_buffer",
         "?Error@LOG@@QAAXPBDZZ": "_log_error",
         "FUN_004e77b0": "_lock_helper",
+        "?GetIndexBuffer@RENDERER@@QAEPAVINDEXBUFFER@@ABURESHANDLE@@@Z": "_get_index_buffer",
+        "s_RenderMesh::LockFaceBuffer_-_Cou_00674e7c": "_s_lockface",
         "?find@?$_Tree@V?$_Tmap_traits@HPAUPluginNode@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHPAUPluginNode@@@std@@@3@$0A@@std@@@std@@QAE?AViterator@12@ABH@Z": "_find_helper"
       }
     }
