@@ -226,35 +226,5 @@ extern "C" __declspec(naked) void reset_rendershadermaster() {
         pop edi
         pop esi
         ret
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0x8b
-        __emit 0x81
-        __emit 0xa4
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x7e
-        __emit 0x13
-        __emit 0x8a
-        __emit 0x91
-        __emit 0xd8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x84
-        __emit 0xd2
-        __emit 0x75
     }
 }
