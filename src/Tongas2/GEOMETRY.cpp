@@ -455,17 +455,20 @@ bool CollideSphereSphere(SPHERE3 *a, SPHERE3 *b, V3 *pa, V3 *pb, float *depth)
         return false;
     V3 ca = a->GetCenter();
     V3 cb = b->GetCenter();
-    float distanceSq = (cb.x - ca.x) * (cb.x - ca.x) + (cb.y - ca.y) * (cb.y - ca.y) + (cb.z - ca.z) * (cb.z - ca.z);
-    float reachSq = (a->radius + b->radius) * (a->radius + b->radius);
+      V3 diff = cb - ca;
+      float distanceSq = diff.x * diff.x + diff.y * diff.y + diff.z * diff.z;
+      float reachSq = (a->radius + b->radius) * (a->radius + b->radius);
     if (pa || pb) {
-        V3 n = (cb - ca).Normalized();
+        V3 n = diff.Normalized();
         if (pa)
             *pa = n * -1.0f;
         if (pb)
             *pb = n;
     }
-    if (depth)
-        *depth = (float)sqrt(distanceSq) - (float)sqrt(reachSq);
+      float sqrtDist = (float)sqrt(distanceSq);
+      float sqrtReach = (float)sqrt(reachSq);
+      if (depth)
+          *depth = sqrtDist - sqrtReach;
     if (distanceSq < reachSq)
         return true;
     return false;
