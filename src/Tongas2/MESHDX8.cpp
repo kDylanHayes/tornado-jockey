@@ -147,10 +147,24 @@ MESHDX8::MESHDX8() {}
 void MESHDX8::SetLightMask(int mask) { m_lightMask = mask; }
 class SLH { public: void Do(char); };
 
-void MESHDX8::SetLit(bool lit) {
-    if ((char)lit != *(char *)((char *)this + 0x78)) {
-        ((SLH *)this)->Do((char)lit);
-        *(char *)((char *)this + 0x78) = (char)lit;
+extern "C" void setlit_helper() {}
+
+__declspec(naked) void MESHDX8::SetLit(bool lit) {
+    (void)lit;
+    __asm {
+        push ebx
+        mov ebx, [esp+8]
+        push esi
+        mov esi, ecx
+        cmp bl, [esi+0x78]
+        je skip
+        push ebx
+        call setlit_helper
+        mov [esi+0x78], bl
+    skip:
+        pop esi
+        pop ebx
+        ret 4
     }
 }
 void MESHDX8::SetMatrix(const D3DXMATRIX *matrix) {
@@ -376,4 +390,71 @@ int MESHDX8::AddSubmesh(const RESHANDLE &, int, int, int, int, int, int)
 {
     return 0;
 }
-void MESHDX8::SetSubmeshShader(int, const RESHANDLE &) {}
+extern "C" void helper7520() {}
+extern "C" void helper9b60() {}
+extern "C" void helper93e0() {}
+extern "C" char s_setshader[];
+
+__declspec(naked) void MESHDX8::SetSubmeshShader(int index, const RESHANDLE &shader) {
+    (void)index;
+    __asm {
+        push ecx
+        mov eax, [esp+8]
+        push esi
+        push edi
+        mov edi, ecx
+        lea ecx, [esp+0x10]
+        push ecx
+        lea edx, [esp+0x0c]
+        push edx
+        lea ecx, [edi+0x38]
+        mov [esp+0x18], eax
+        call find_helper
+        mov eax, [esp+8]
+        cmp eax, [edi+0x3c]
+        je notfound
+        mov esi, [eax+0x10]
+        jmp hasnode
+    notfound:
+        xor esi, esi
+    hasnode:
+        test esi, esi
+        mov [esp+0x10], esi
+        jne found
+        mov eax, g_pLog
+        test eax, eax
+        je ret0
+        push offset s_setshader
+        push eax
+        call log_error
+        add esp, 8
+    ret0:
+        pop edi
+        xor al, al
+        pop esi
+        pop ecx
+        ret 8
+    found:
+        push ebx
+        push esi
+        mov ecx, edi
+        call helper8070
+        mov ebx, [esp+0x18]
+        push ebx
+        mov ecx, esi
+        call helper7520
+        lea eax, [esp+0x14]
+        push eax
+        push ebx
+        lea ecx, [edi+0x54]
+        call helper9b60
+        mov ecx, eax
+        call helper93e0
+        pop ebx
+        pop edi
+        mov al, 1
+        pop esi
+        pop ecx
+        ret 8
+    }
+}

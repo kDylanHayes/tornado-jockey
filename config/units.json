@@ -2787,7 +2787,12 @@
         "s_RenderMesh::UnLockVertexBuffer_-_00674e3c": "_s_unlockmsg",
         "s_RenderMesh::UnLockFaceBuffer_-_C_00674eb4": "_s_unlockface",
         "FUN_004e8070": "_helper8070",
-        "FUN_004e8350": "_helper8350"
+        "FUN_004e8350": "_helper8350",
+        "FUN_004eb960": "_setlit_helper",
+        "FUN_004e7520": "_helper7520",
+        "FUN_004e9b60": "_helper9b60",
+        "FUN_004e93e0": "_helper93e0",
+        "s_RenderMesh::SetShader_-_SubMesh_n_00675088": "_s_setshader"
       }
     }
   ]
