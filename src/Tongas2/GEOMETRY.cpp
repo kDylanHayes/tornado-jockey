@@ -639,7 +639,9 @@ bool CollideBoxBox(OOBOX3 *a, OOBOX3 *b, V3 *pa, V3 *pb, float *depth)
     akB[2] = b->angles.GetDirection();
     V3 ea = a->GetSize() * 0.5f;
     V3 eb = b->GetSize() * 0.5f;
-    BOXES_TOUCH(a->GetCenter(), akA, ea, b->GetCenter(), akB, eb)
+    V3 ca = a->GetCenter();
+    V3 cb = b->GetCenter();
+    BOXES_TOUCH(ca, akA, ea, cb, akB, eb)
 }
 
 // Whether a sphere radius r away along d touches a box with the axes and
