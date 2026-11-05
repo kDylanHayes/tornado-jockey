@@ -371,3 +371,48 @@ extern "C" __declspec(naked) void helper_004eb940() {
     }
 }
 extern "C" unsigned char is_compressed() { return 0; }
+
+struct RENDERER;
+extern "C" RENDERER* g_pRenderer;
+extern "C" void insert_renderer() {}
+extern "C" void remove_renderer() {}
+
+extern "C" __declspec(naked) void helper_004eb960() {
+    __asm {
+        push ebx
+        mov bl, [esp+8]
+        push esi
+        mov esi, ecx
+        cmp bl, [esi+0x0c]
+        je commonret
+        test bl, bl
+        je removepath
+        push edi
+        mov edi, [esi]
+        call dword ptr [edi+0x0c]
+        mov ecx, g_pRenderer
+        push eax
+        push esi
+        call insert_renderer
+        push eax
+        mov ecx, esi
+        call dword ptr [edi+0x08]
+        pop edi
+        mov [esi+0x0c], bl
+        pop esi
+        pop ebx
+        ret 4
+    removepath:
+        mov eax, [esi]
+        call dword ptr [eax+0x0c]
+        mov ecx, g_pRenderer
+        push eax
+        push esi
+        call remove_renderer
+        mov [esi+0x0c], bl
+    commonret:
+        pop esi
+        pop ebx
+        ret 4
+    }
+}

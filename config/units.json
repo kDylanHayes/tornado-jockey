@@ -2814,7 +2814,8 @@
         "0x004eb6c0-0x004eb72f",
         "0x004eb6c0-0x004eb72f",
         "0x004eb940-0x004eb94f",
-        "0x004eb950-0x004eb952"
+        "0x004eb950-0x004eb952",
+        "0x004eb960-0x004eb9af"
       ],
       "target": "build/target/Tongas2/RENDERSHADER.obj",
       "source": "src/Tongas2/RENDERSHADER.cpp",
@@ -2845,7 +2846,11 @@
         "FUN_004eae60": "_helper_004eae60",
         "FUN_004eb940": "_helper_004eb940",
         "PTR_LAB_006758cc": "_ptr_lab_6758cc",
-        "?IsCompressed@FILELOADER@@UAE_NXZ": "_is_compressed"
+        "?IsCompressed@FILELOADER@@UAE_NXZ": "_is_compressed",
+        "FUN_004eb960": "_helper_004eb960",
+        "?Insert@RENDERER@@QAEHPAVRENDERABLE@@H@Z": "_insert_renderer",
+        "?Remove@RENDERER@@QAEXPAVRENDERABLE@@H@Z": "_remove_renderer",
+        "?g_pRenderer@@3PAVRENDERER@@A": "_g_pRenderer"
       }
     }
   ]
