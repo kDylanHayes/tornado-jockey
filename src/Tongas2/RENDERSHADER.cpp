@@ -370,3 +370,4 @@ extern "C" __declspec(naked) void helper_004eb940() {
         ret
     }
 }
+extern "C" unsigned char is_compressed() { return 0; }
