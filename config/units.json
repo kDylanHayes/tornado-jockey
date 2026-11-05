@@ -2815,7 +2815,8 @@
         "0x004eb6c0-0x004eb72f",
         "0x004eb940-0x004eb94f",
         "0x004eb950-0x004eb952",
-        "0x004eb960-0x004eb9af"
+        "0x004eb960-0x004eb9af",
+        "0x004ebb00-0x004ebba5"
       ],
       "target": "build/target/Tongas2/RENDERSHADER.obj",
       "source": "src/Tongas2/RENDERSHADER.cpp",
@@ -2850,7 +2851,8 @@
         "FUN_004eb960": "_helper_004eb960",
         "?Insert@RENDERER@@QAEHPAVRENDERABLE@@H@Z": "_insert_renderer",
         "?Remove@RENDERER@@QAEXPAVRENDERABLE@@H@Z": "_remove_renderer",
-        "?g_pRenderer@@3PAVRENDERER@@A": "_g_pRenderer"
+        "?g_pRenderer@@3PAVRENDERER@@A": "_g_pRenderer",
+        "??0HEIGHTMAPTEMP@@QAE@XZ": "_heightmaptemp_ctor"
       }
     }
   ]

@@ -1,6 +1,10 @@
 // Tongas2/RENDERSHADER -- DX8 renderer plugin shaders.
 
 #include "Tongas2/RENDERSHADER.h"
+#include "Tongas2/MATHS.h"
+#include "d3dx8.h"
+
+extern V3 g_up;
 
 struct RESOURCES;
 extern "C" RESOURCES* g_pResources;
@@ -414,5 +418,61 @@ extern "C" __declspec(naked) void helper_004eb960() {
         pop esi
         pop ebx
         ret 4
+    }
+}
+extern "C" __declspec(naked) void heightmaptemp_ctor() {
+    __asm {
+        sub esp, 0x24
+        push ebx
+        xor ebx, ebx
+        push esi
+        mov esi, ecx
+        mov [esi+4], ebx
+        mov [esi+8], ebx
+        mov eax, 1
+        mov [esi+0x10], eax
+        mov byte ptr [esi+0x14], al
+        mov dword ptr [esi], offset ptr_lab_6758cc
+        mov byte ptr [esi+0x0C], bl
+        mov eax, ebx
+        mov [esp+0x14], eax
+        mov eax, dword ptr g_up
+        mov ecx, ebx
+        mov [esp+0x18], ecx
+        mov ecx, dword ptr g_up+4
+        mov edx, ebx
+        mov [esp+0x1C], edx
+        mov edx, dword ptr g_up+8
+        mov [esp+8], ebx
+        mov [esp+8], eax
+        mov eax, ebx
+        mov [esp+0x0C], ebx
+        mov [esp+0x0C], ecx
+        mov [esp+0x20], eax
+        mov eax, [esp+8]
+        mov ecx, ebx
+        mov [esp+0x10], ebx
+        mov [esp+0x10], edx
+        mov [esp+0x24], ecx
+        mov ecx, [esp+0x0C]
+        mov edx, ebx
+        mov [esp+0x28], edx
+        mov edx, [esp+0x10]
+        mov [esp+0x14], eax
+        lea eax, [esp+0x14]
+        mov [esp+0x18], ecx
+        push eax
+        lea ecx, [esp+0x24]
+        mov [esp+0x20], edx
+        push ecx
+        lea edx, [esi+0x18]
+        push edx
+        call D3DXPlaneFromPointNormal
+        mov [esi+0x28], ebx
+        mov eax, esi
+        pop esi
+        pop ebx
+        add esp, 0x24
+        ret
     }
 }
