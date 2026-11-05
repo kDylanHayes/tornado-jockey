@@ -265,3 +265,41 @@ extern "C" void FUN_004ea450();
 extern "C" __declspec(naked) void thunk_004eb570() {
     __asm { jmp FUN_004ea450 }
 }
+extern "C" __declspec(naked) int helper_004eb5d0(int a, int b, int c) {
+    (void)a; (void)b; (void)c;
+    __asm {
+        mov ecx, [esp+4]
+        mov edx, [esp+8]
+        push esi
+        sub esp, 0x0c
+        mov eax, esp
+        mov [eax], ecx
+        mov ecx, [esp+0x1c]
+        mov [eax+4], edx
+        mov [eax+8], ecx
+        mov ecx, g_pResources
+        call get_master_resources
+        mov esi, eax
+        test esi, esi
+        je notfound
+        mov ecx, [esi+0xa4]
+        inc ecx
+        mov eax, ecx
+        test eax, eax
+        mov [esi+0xa4], ecx
+        jle skipreset
+        mov al, [esi+0xd8]
+        test al, al
+        jne skipreset
+        mov ecx, esi
+        call reset_rendershadermaster
+    skipreset:
+        mov eax, esi
+        pop esi
+        ret 0x0c
+    notfound:
+        xor eax, eax
+        pop esi
+        ret 0x0c
+    }
+}
