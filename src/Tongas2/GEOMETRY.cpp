@@ -696,7 +696,8 @@ bool CollideSphereQuad(SPHERE3 *a, QUAD3 *b, V3 *pa, V3 *pb, float *depth)
 {
     if (!a || !b)
         return false;
-    V3 d = a->GetCenter() - b->GetCenter();
+    V3 d = a->GetCenter();
+    d -= b->GetCenter();
     PRIMV3 axes[3];
     axes[0] = b->GetRight();
     axes[1] = b->GetUp();
