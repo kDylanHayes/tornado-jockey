@@ -476,3 +476,22 @@ extern "C" __declspec(naked) void heightmaptemp_ctor() {
         ret
     }
 }
+
+// Scalar deleting destructor at 0x004EBBB0. The destructor body is only the
+// vtable store, so it is inlined ahead of the optional operator delete.
+extern "C" __declspec(naked) void helper_004ebbb0() {
+    __asm {
+        test byte ptr [esp+4], 1
+        push esi
+        mov esi, ecx
+        mov dword ptr [esi], offset ptr_lab_6758cc
+        je skip
+        push esi
+        call operator_delete
+        add esp, 4
+    skip:
+        mov eax, esi
+        pop esi
+        ret 4
+    }
+}
