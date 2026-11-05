@@ -2804,7 +2804,8 @@
     {
       "name": "Tongas2/RENDERSHADER",
       "ranges": [
-        "0x004ea100-0x004ea35f"
+        "0x004ea100-0x004ea35f",
+        "0x004ea360-0x004ea44f"
       ],
       "target": "build/target/Tongas2/RENDERSHADER.obj",
       "source": "src/Tongas2/RENDERSHADER.cpp",
@@ -2812,7 +2813,17 @@
       "symbol_mappings": {
         "?g_pResources@@3PAVRESOURCES@@A": "_g_pResources",
         "?GetMaster@RESOURCES@@QAEPAVRESOURCEMASTER@@URESHANDLE@@@Z": "_get_master_resources",
-        "FUN_004e9e70": "_helper9e70"
+        "FUN_004e9e70": "_helper9e70",
+        "?CreateRENDERSHADERMANAGER@@YAPAVRENDERSHADERMANAGER@@XZ": "_create_rendershadermanager",
+        "?Reset@RENDERSHADERMASTER@@QAEXXZ": "_reset_rendershadermaster",
+        "FUN_004e9ed0": "_helper9ed0",
+        "FUN_004ede90": "_helperde90",
+        "DAT_009fef3c": "_dat_9fef3c",
+        "??2@YAPAXI@Z": "_rendershader_new",
+        "??0RESOURCEMANAGER@@QAE@XZ": "_resourcemanager_ctor",
+        "s_RENDERSHADER.txt_006754f8": "_s_rendershader_txt",
+        "PTR_FUN_006754d8": "_ptr_fun_6754d8",
+        "?SafeSprintf@@YAHPADPBDZZ": "_safe_sprintf"
       }
     }
   ]
