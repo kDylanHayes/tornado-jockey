@@ -1,5 +1,26 @@
 #include <string.h>
 
+extern "C" __declspec(naked) void *meshdx8_min(void *param) {
+    __asm {
+        mov eax, [esp+4]
+        mov ecx, [eax]
+        mov dl, [ecx+0x15]
+        test dl, dl
+        jne done
+        __emit 0x8d
+        __emit 0x49
+        __emit 0x00
+    loop1:
+        mov eax, ecx
+        mov ecx, [eax]
+        mov dl, [ecx+0x15]
+        test dl, dl
+        je loop1
+    done:
+        ret
+    }
+}
+
 // Tongas2/MESHDX8 -- DX8 renderer plugin: vertex/index buffers, DX8 camera and
 // the MESHDX8 mesh implementation.
 //
@@ -94,7 +115,14 @@ const _D3DMATRIX *DX8CAMERA::GetProjection() {
 
 MESHDX8::MESHDX8() {}
 void MESHDX8::SetLightMask(int mask) { m_lightMask = mask; }
-void MESHDX8::SetLit(bool lit) { (void)lit; }
+class SLH { public: void Do(char); };
+
+void MESHDX8::SetLit(bool lit) {
+    if ((char)lit != *(char *)((char *)this + 0x78)) {
+        ((SLH *)this)->Do((char)lit);
+        *(char *)((char *)this + 0x78) = (char)lit;
+    }
+}
 void MESHDX8::SetMatrix(const D3DXMATRIX *matrix) {
     memcpy((char *)this + 0x80, matrix, 64);
 }
