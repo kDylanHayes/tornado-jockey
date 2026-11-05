@@ -303,3 +303,22 @@ extern "C" __declspec(naked) int helper_004eb5d0(int a, int b, int c) {
         ret 0x0c
     }
 }
+extern "C" void FUN_004eb4b0();
+extern "C" void helper_004eb4b0() {}
+extern "C" void operator_delete(void*) {}
+
+extern "C" __declspec(naked) void helper_004eb730() {
+    __asm {
+        push esi
+        mov esi, ecx
+        call helper_004eb4b0
+        test byte ptr [esp+8], 1
+        je skip
+        push esi
+        call operator_delete
+        add esp, 4
+    skip:
+        mov eax, esi
+        pop esi
+    }
+}
