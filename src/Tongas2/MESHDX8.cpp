@@ -165,6 +165,16 @@ __declspec(naked) void MESHDX8::SetLit(bool lit) {
         pop esi
         pop ebx
         ret 4
+        __emit 0xcc
+        __emit 0xcc
+        __emit 0xcc
+        __emit 0xcc
+        __emit 0xcc
+        __emit 0xe9
+        __emit 0x5b
+        __emit 0x42
+        __emit 0x00
+        __emit 0x00
     }
 }
 void MESHDX8::SetMatrix(const D3DXMATRIX *matrix) {
