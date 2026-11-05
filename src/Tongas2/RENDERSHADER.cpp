@@ -261,3 +261,7 @@ __declspec(naked) RESOURCE *RENDERSHADERMANAGER::Find(const char *name) {
         ret 4
     }
 }
+extern "C" void FUN_004ea450();
+extern "C" __declspec(naked) void thunk_004eb570() {
+    __asm { jmp FUN_004ea450 }
+}
