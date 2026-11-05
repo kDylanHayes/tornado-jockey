@@ -37,6 +37,11 @@ public:
 
 class MESHDX8
 {
+    // Stand-in layout: enough padding to put the fields the code touches at
+    // their original offsets. Filled in as each function is matched.
+    char m_pad[0xC4];
+    int m_lightMask;
+
 public:
     MESHDX8();
 
@@ -65,7 +70,7 @@ void VERTEXBUFFER::Validate() {}
 const _D3DMATRIX *DX8CAMERA::GetProjection() { return 0; }
 
 MESHDX8::MESHDX8() {}
-void MESHDX8::SetLightMask(int mask) { (void)mask; }
+void MESHDX8::SetLightMask(int mask) { m_lightMask = mask; }
 void MESHDX8::SetLit(bool lit) { (void)lit; }
 void MESHDX8::SetMatrix(const D3DXMATRIX *matrix) { (void)matrix; }
 
