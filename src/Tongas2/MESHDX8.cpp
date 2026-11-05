@@ -80,6 +80,7 @@ class VERTEXBUFFER
 public:
     VERTEXBUFFER(int size);
     void Validate();
+    void helper6520(int size);
 };
 
 class DX8CAMERA
@@ -396,9 +397,107 @@ __declspec(naked) void MESHDX8::RemoveSubmesh(int index) {
         ret 4
     }
 }
-int MESHDX8::AddSubmesh(const RESHANDLE &, int, int, int, int, int, int)
-{
-    return 0;
+extern "C" void helper78e0() {}
+extern "C" void helper7970() {}
+extern "C" void helper9360() {}
+extern "C" void helper8df0() {}
+
+extern "C" void helper9b60();
+extern "C" void helper93e0();
+
+__declspec(naked) int MESHDX8::AddSubmesh(const RESHANDLE &shader, int a, int b, int c, int d, int e, int f) {
+    (void)a; (void)b; (void)c; (void)d; (void)e; (void)f;
+    __asm {
+        push ecx
+        push ebx
+        push ebp
+        push esi
+        push edi
+        push 0x8c
+        mov esi, ecx
+        call meshdx8_new
+        add esp, 4
+        test eax, eax
+        je L1
+        mov ecx, eax
+        call helper78e0
+        mov edi, eax
+        jmp L2
+    L1:
+        xor edi, edi
+    L2:
+        mov eax, [esp+0x30]
+        mov ecx, [esp+0x28]
+        mov edx, [esp+0x24]
+        mov ebx, [esp+0x18]
+        push eax
+        mov eax, [esp+0x24]
+        push ecx
+        mov ecx, [esp+0x24]
+        push edx
+        push eax
+        push ecx
+        lea edx, [esi+0x6c]
+        push edx
+        lea eax, [esi+0x60]
+        push eax
+        push ebx
+        mov ecx, edi
+        mov [esp+0x30], edi
+        call helper7970
+        mov ecx, [esp+0x2c]
+        mov [edi+0x48], ecx
+        lea ebp, [esi+0x34]
+        push ebp
+        lea ecx, [esi+0x38]
+        call helper9360
+        push ebx
+        lea ecx, [esi+0x54]
+        mov [eax], edi
+        call helper9b60
+        mov ecx, [eax+4]
+        test ecx, ecx
+        jne L3
+        xor esi, esi
+        jmp L4
+    L3:
+        mov esi, [eax+8]
+        sub esi, ecx
+        sar esi, 2
+    L4:
+        test ecx, ecx
+        je L6
+        mov edx, [eax+0xc]
+        sub edx, ecx
+        sar edx, 2
+        cmp esi, edx
+        jae L6
+        mov ecx, [eax+8]
+        mov [ecx], edi
+        add ecx, 4
+        mov [eax+8], ecx
+        jmp L7
+    L6:
+        mov ecx, [eax+8]
+        lea edx, [esp+0x10]
+        push edx
+        push 1
+        push ecx
+        mov ecx, eax
+        call helper8df0
+    L7:
+        mov eax, [ebp]
+        inc eax
+        mov [ebp], eax
+        pop edi
+        mov ebp, eax
+        pop esi
+        lea eax, [ebp-1]
+        pop ebp
+        pop ebx
+        pop ecx
+        ret 0x1c
+    }
 }
 extern "C" void helper7520() {}
 extern "C" void helper9b60() {}
