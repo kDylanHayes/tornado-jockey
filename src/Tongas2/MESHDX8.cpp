@@ -166,7 +166,35 @@ void MESHDX8::Create(int numVertices, int numIndices, int numSubmeshes, int flag
 {
     (void)numVertices; (void)numIndices; (void)numSubmeshes; (void)flags;
 }
-void MESHDX8::ShowSubmesh(int index, bool show) { (void)index; (void)show; }
+extern "C" void find_helper() {}
+
+__declspec(naked) void MESHDX8::ShowSubmesh(int index, bool show) {
+    (void)index; (void)show;
+    __asm {
+        push ecx
+        push esi
+        mov esi, ecx
+        lea eax, [esp+0xc]
+        push eax
+        lea ecx, [esp+0x8]
+        push ecx
+        lea ecx, [esi+0x38]
+        call find_helper
+        mov ecx, [esi+0x3c]
+        mov eax, [esp+4]
+        cmp eax, ecx
+        pop esi
+        je skip
+        mov eax, [eax+0x10]
+        test eax, eax
+        je skip
+        mov dl, [esp+0xc]
+        mov [eax+0x44], dl
+    skip:
+        pop ecx
+        ret 8
+    }
+}
 void MESHDX8::RemoveSubmesh(int index) { (void)index; }
 int MESHDX8::AddSubmesh(const RESHANDLE &, int, int, int, int, int, int)
 {
