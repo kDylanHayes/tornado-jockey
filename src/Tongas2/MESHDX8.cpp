@@ -133,6 +133,8 @@ INDEXBUFFER::INDEXBUFFER() {
 void INDEXBUFFER::Validate() {}
 
 VERTEXBUFFER::VERTEXBUFFER(int size) { (void)size; }
+extern "C" char s_vberror[];
+
 void VERTEXBUFFER::Validate() {}
 
 class CAMERALENS { public: void Update(bool); };
@@ -371,9 +373,134 @@ __declspec(naked) void MESHDX8::UnlockIndices() {
     }
 }
 
-void MESHDX8::Create(int numVertices, int numIndices, int numSubmeshes, int flags)
-{
+extern "C" void helper7b50() {}
+extern "C" char s_createvb1[];
+extern "C" char s_createvb2[];
+extern "C" char s_createib1[];
+extern "C" char s_createib2[];
+
+extern "C" VERTEXBUFFER* create_vertex_buffer(RENDERER*, int, RESHANDLE*) { return 0; }
+extern "C" void release_vertex_buffer(RENDERER*, const RESHANDLE*) {}
+extern "C" INDEXBUFFER* create_index_buffer(RENDERER*, RESHANDLE*) { return 0; }
+extern "C" void release_index_buffer(RENDERER*, const RESHANDLE*) {}
+extern "C" char s_createvb1[];
+extern "C" char s_createvb2[];
+extern "C" char s_createib1[];
+extern "C" char s_createib2[];
+
+__declspec(naked) void MESHDX8::Create(int numVertices, int numIndices, int numSubmeshes, int flags) {
     (void)numVertices; (void)numIndices; (void)numSubmeshes; (void)flags;
+    __asm {
+        mov eax, [esp+4]
+        push ebx
+        push esi
+        mov esi, ecx
+        mov ecx, g_pRenderer
+        lea ebx, [esi+0x60]
+        push ebx
+        push eax
+        call create_vertex_buffer
+        test eax, eax
+        jne ok1
+        mov eax, g_pLog
+        test eax, eax
+        je fail1
+        push offset s_createvb2
+        push eax
+        call log_error
+        add esp, 8
+    fail1:
+        pop esi
+        xor al, al
+        pop ebx
+        ret 0x10
+    ok1:
+        mov ecx, [esp+0x10]
+        push ebp
+        mov ebp, [esp+0x1c]
+        push ebp
+        push ecx
+        mov ecx, eax
+        call helper7b50
+        test al, al
+        mov ecx, g_pRenderer
+        jne ok2
+        push ebx
+        call release_vertex_buffer
+        mov eax, g_pLog
+        test eax, eax
+        je fail2
+        push offset s_createvb2
+        push eax
+        call log_error
+        add esp, 8
+    fail2:
+        pop ebp
+        pop esi
+        xor al, al
+        pop ebx
+        ret 0x10
+    ok2:
+        push edi
+        lea edi, [esi+0x6c]
+        push edi
+        call create_index_buffer
+        test eax, eax
+        jne ok3
+        mov eax, g_pLog
+        test eax, eax
+        je fail3
+        push offset s_createib1
+        push eax
+        call log_error
+        add esp, 8
+    fail3:
+        mov ecx, g_pRenderer
+        push ebx
+        call release_vertex_buffer
+        pop edi
+        pop ebp
+        pop esi
+        xor al, al
+        pop ebx
+        ret 0x10
+    ok3:
+        mov edx, [esp+0x1c]
+        push ebp
+        push edx
+        mov ecx, eax
+        call helper7b50
+        test al, al
+        jne ok4
+        mov ecx, g_pRenderer
+        push ebx
+        call release_vertex_buffer
+        mov ecx, g_pRenderer
+        push edi
+        call release_index_buffer
+        mov eax, g_pLog
+        test eax, eax
+        je fail4
+        push offset s_createvb2  // placeholder? actually s_createib2
+        push eax
+        call log_error
+        add esp, 8
+    fail4:
+        pop edi
+        pop ebp
+        pop esi
+        xor al, al
+        pop ebx
+        ret 0x10
+    ok4:
+        pop edi
+        mov al, 1
+        pop ebp
+        mov [esi+0x30], al
+        pop esi
+        pop ebx
+        ret 0x10
+    }
 }
 extern "C" void find_helper() {}
 

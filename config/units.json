@@ -2797,7 +2797,8 @@
         "FUN_004e78e0": "_helper78e0",
         "FUN_004e7970": "_helper7970",
         "FUN_004e9360": "_helper9360",
-        "FUN_004e8df0": "_helper8df0"
+        "FUN_004e8df0": "_helper8df0",
+        "s_Error_-_could_not_lock_vertex_bu_00674b98": "_s_vberror"
       }
     }
   ]
