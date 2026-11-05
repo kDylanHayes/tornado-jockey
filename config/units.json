@@ -2810,7 +2810,9 @@
         "0x004eb570-0x004eb57f",
         "0x004eb5d0-0x004eb62f",
         "0x004eb730-0x004eb74a",
-        "0x004eb730-0x004eb74a"
+        "0x004eb730-0x004eb74a",
+        "0x004eb6c0-0x004eb72f",
+        "0x004eb6c0-0x004eb72f"
       ],
       "target": "build/target/Tongas2/RENDERSHADER.obj",
       "source": "src/Tongas2/RENDERSHADER.cpp",
@@ -2835,7 +2837,10 @@
         "FUN_004eb5d0": "_helper_004eb5d0",
         "FUN_004eb730": "_helper_004eb730",
         "FUN_004eb4b0": "_helper_004eb4b0",
-        "??3@YAXPAX@Z": "_operator_delete"
+        "??3@YAXPAX@Z": "_operator_delete",
+        "FUN_004eb6c0": "_helper_004eb6c0",
+        "LAB_005eca0b": "_lab_5eca0b",
+        "FUN_004eae60": "_helper_004eae60"
       }
     }
   ]

@@ -322,3 +322,44 @@ extern "C" __declspec(naked) void helper_004eb730() {
         pop esi
     }
 }
+extern "C" void lab_5eca0b();
+extern "C" int _except_list;
+extern "C" void *rendershader_new(unsigned int);
+extern "C" void helper_004eae60();
+
+extern "C" __declspec(naked) void helper_004eb6c0() {
+    __asm {
+        push -1
+        push offset lab_5eca0b
+        mov eax, fs:[_except_list]
+        push eax
+        mov fs:[_except_list], esp
+        push ecx
+        push esi
+        push 0x1208
+        mov esi, ecx
+        call rendershader_new
+        add esp, 4
+        mov [esp+4], eax
+        test eax, eax
+        mov dword ptr [esp+0x10], 0
+        je skip
+        mov ecx, [esp+0x18]
+        push ecx
+        push esi
+        mov ecx, eax
+        call helper_004eae60
+        pop esi
+        mov ecx, [esp+4]
+        mov fs:[_except_list], ecx
+        add esp, 0x10
+        ret 4
+    skip:
+        mov ecx, [esp+8]
+        xor eax, eax
+        pop esi
+        mov fs:[_except_list], ecx
+        add esp, 0x10
+        ret 4
+    }
+}
