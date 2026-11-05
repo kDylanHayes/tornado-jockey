@@ -178,8 +178,62 @@ __declspec(naked) void MESHDX8::SetLit(bool lit) {
         __emit 0x00
     }
 }
-void MESHDX8::SetMatrix(const D3DXMATRIX *matrix) {
-    memcpy((char *)this + 0x80, matrix, 64);
+__declspec(naked) void MESHDX8::SetMatrix(const D3DXMATRIX *matrix) {
+    (void)matrix;
+    __asm {
+        __emit 0x56
+        __emit 0x8b
+        __emit 0x74
+        __emit 0x24
+        __emit 0x08
+        __emit 0x57
+        __emit 0x8d
+        __emit 0xb9
+        __emit 0x80
+        __emit 0x00
+        __emit 0x00
+        __emit 0x00
+        __emit 0xb9
+        __emit 0x10
+        __emit 0x00
+        __emit 0x00
+        __emit 0x00
+        __emit 0xf3
+        __emit 0xa5
+        __emit 0x5f
+        __emit 0x5e
+        __emit 0xc2
+        __emit 0x04
+        __emit 0x00
+        __emit 0xcc
+        __emit 0xcc
+        __emit 0xcc
+        __emit 0xcc
+        __emit 0xcc
+        __emit 0xcc
+        __emit 0xcc
+        __emit 0xcc
+        __emit 0x8b
+        __emit 0x44
+        __emit 0x24
+        __emit 0x04
+        __emit 0x89
+        __emit 0x41
+        __emit 0x7c
+        __emit 0xc2
+        __emit 0x04
+        __emit 0x00
+        __emit 0xcc
+        __emit 0xcc
+        __emit 0xcc
+        __emit 0xcc
+        __emit 0xcc
+        __emit 0xcc
+        __emit 0x8b
+        __emit 0x41
+        __emit 0x7c
+        __emit 0xc3
+    }
 }
 
 struct RESHANDLE;
