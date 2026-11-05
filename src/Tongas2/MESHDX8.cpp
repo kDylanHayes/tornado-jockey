@@ -1,5 +1,35 @@
 #include <string.h>
 
+extern "C" void *meshdx8_new(unsigned int size) {
+    return operator new(size);
+}
+
+extern "C" __declspec(naked) void *meshdx8_buynode(int a, int b, int c, int *d, char e) {
+    __asm {
+        push 0x18
+        call meshdx8_new
+        add esp, 4
+        test eax, eax
+        je skip
+        mov ecx, [esp+4]
+        mov edx, [esp+8]
+        mov [eax], ecx
+        mov ecx, [esp+0xc]
+        mov [eax+8], ecx
+        mov ecx, [esp+0x10]
+        mov [eax+4], edx
+        mov edx, [ecx]
+        mov [eax+0xc], edx
+        mov ecx, [ecx+4]
+        mov dl, [esp+0x14]
+        mov [eax+0x10], ecx
+        mov [eax+0x14], dl
+        mov byte ptr [eax+0x15], 0
+    skip:
+        ret 0x14
+    }
+}
+
 extern "C" __declspec(naked) void *meshdx8_min(void *param) {
     __asm {
         mov eax, [esp+4]
