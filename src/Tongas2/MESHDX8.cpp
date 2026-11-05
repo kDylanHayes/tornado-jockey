@@ -1,3 +1,5 @@
+#include <string.h>
+
 // Tongas2/MESHDX8 -- DX8 renderer plugin: vertex/index buffers, DX8 camera and
 // the MESHDX8 mesh implementation.
 //
@@ -61,18 +63,39 @@ public:
     void SetSubmeshShader(int index, const RESHANDLE &shader);
 };
 
-INDEXBUFFER::INDEXBUFFER() {}
+INDEXBUFFER::INDEXBUFFER() {
+    int *p = (int *)this;
+    p[1] = 0;
+    *(char *)(p + 2) = 0;
+    p[3] = 0;
+    p[4] = 0;
+    p[5] = 0;
+    p[6] = 0;
+    *(char *)((char *)p + 0x1d) = 0;
+    p[0] = 0x00674c14;
+    p[8] = 0;
+    p[9] = 0;
+}
 void INDEXBUFFER::Validate() {}
 
 VERTEXBUFFER::VERTEXBUFFER(int size) { (void)size; }
 void VERTEXBUFFER::Validate() {}
 
-const _D3DMATRIX *DX8CAMERA::GetProjection() { return 0; }
+class CAMERALENS { public: void Update(bool); };
+
+const _D3DMATRIX *DX8CAMERA::GetProjection() {
+    if (*(unsigned char *)((char *)this + 0x90)) {
+        ((CAMERALENS *)this)->Update(false);
+    }
+    return (const _D3DMATRIX *)((char *)this + 0x26c);
+}
 
 MESHDX8::MESHDX8() {}
 void MESHDX8::SetLightMask(int mask) { m_lightMask = mask; }
 void MESHDX8::SetLit(bool lit) { (void)lit; }
-void MESHDX8::SetMatrix(const D3DXMATRIX *matrix) { (void)matrix; }
+void MESHDX8::SetMatrix(const D3DXMATRIX *matrix) {
+    memcpy((char *)this + 0x80, matrix, 64);
+}
 
 void *MESHDX8::LockVertices(int first, int count) { (void)first; (void)count; return 0; }
 void MESHDX8::UnlockVertices() {}
