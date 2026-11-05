@@ -2769,7 +2769,10 @@
       ],
       "target": "build/target/Tongas2/MESHDX8.obj",
       "source": "src/Tongas2/MESHDX8.cpp",
-      "category": "engine"
+      "category": "engine",
+      "symbol_mappings": {
+        "PTR_?Virtual19@GUICHECKGROUP@@UAEHXZ_00674c14": "_idx_vtable"
+      }
     }
   ]
 }

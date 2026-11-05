@@ -63,6 +63,8 @@ public:
     void SetSubmeshShader(int index, const RESHANDLE &shader);
 };
 
+extern "C" int idx_vtable;
+
 INDEXBUFFER::INDEXBUFFER() {
     int *p = (int *)this;
     p[1] = 0;
@@ -72,7 +74,7 @@ INDEXBUFFER::INDEXBUFFER() {
     p[5] = 0;
     p[6] = 0;
     *(char *)((char *)p + 0x1d) = 0;
-    p[0] = 0x00674c14;
+    p[0] = (int)&idx_vtable;
     p[8] = 0;
     p[9] = 0;
 }
