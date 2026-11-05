@@ -259,7 +259,38 @@ __declspec(naked) void *MESHDX8::LockIndices(int first, int count) {
         jmp lock_helper
     }
 }
-void MESHDX8::UnlockIndices() {}
+extern "C" char s_unlockface[];
+
+__declspec(naked) void MESHDX8::UnlockIndices() {
+    __asm {
+        add ecx, 0x6c
+        push esi
+        push ecx
+        mov ecx, g_pRenderer
+        call get_index_buffer
+        mov esi, eax
+        test esi, esi
+        jne check
+        mov eax, g_pLog
+        test eax, eax
+        je check
+        push offset s_unlockface
+        push eax
+        call log_error
+        add esp, 8
+    check:
+        mov al, [esi+0x1d]
+        test al, al
+        je done
+        mov eax, [esi]
+        mov ecx, esi
+        pop esi
+        jmp dword ptr [eax+0xc]
+    done:
+        pop esi
+        ret
+    }
+}
 
 void MESHDX8::Create(int numVertices, int numIndices, int numSubmeshes, int flags)
 {
