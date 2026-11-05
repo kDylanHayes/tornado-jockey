@@ -675,7 +675,8 @@ bool CollideSphereBox(SPHERE3 *a, OOBOX3 *b, V3 *pa, V3 *pb, float *depth)
     if (!a || !b)
         return false;
     b->GetPlanes();
-    V3 d = a->GetCenter() - b->GetCenter();
+    V3 d = a->GetCenter();
+    d -= b->GetCenter();
     if (pa || pb)
         MATRIX m = b->GetMatrix();
     PRIMV3 axes[3];
