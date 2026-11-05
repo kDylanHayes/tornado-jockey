@@ -363,3 +363,10 @@ extern "C" __declspec(naked) void helper_004eb6c0() {
         ret 4
     }
 }
+extern "C" int ptr_lab_6758cc;
+extern "C" __declspec(naked) void helper_004eb940() {
+    __asm {
+        mov dword ptr [ecx], offset ptr_lab_6758cc
+        ret
+    }
+}
