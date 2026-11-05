@@ -405,14 +405,15 @@ bool CollideQuadSegment(QUAD3 *a, SEGMENT3 *b, V3 *pa, V3 *pb, float *depth, V3 
 
 bool CollideSphereSegment(SPHERE3 *a, SEGMENT3 *b, V3 *pa, V3 *pb, float *depth, V3 *normal)
 {
+    V3 center = a->GetCenter();
     float t;
-    float distance = b->DistanceSq(a->GetCenter(), &t);
+    float distance = b->DistanceSq(center, &t);
     if (normal)
         *normal = b->PointAt(t);
     if (depth)
         *depth = distance;
     if (pa)
-        *pa = b->PointAt(t) - a->center;
+        *pa = b->PointAt(t) - center;
     return distance <= a->GetRadiusSq();
 }
 
