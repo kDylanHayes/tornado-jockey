@@ -157,7 +157,43 @@ void MESHDX8::SetMatrix(const D3DXMATRIX *matrix) {
     memcpy((char *)this + 0x80, matrix, 64);
 }
 
-void *MESHDX8::LockVertices(int first, int count) { (void)first; (void)count; return 0; }
+struct RESHANDLE;
+struct VERTEXBUFFER;
+struct RENDERER { VERTEXBUFFER* GetVertexBuffer(const RESHANDLE&); };
+struct LOG { void Error(const char*, ...); };
+
+extern "C" RENDERER* g_pRenderer;
+extern "C" LOG* g_pLog;
+extern "C" char s_lockmsg[];
+
+extern "C" VERTEXBUFFER* get_vertex_buffer(RENDERER*, const RESHANDLE*) { return 0; }
+extern "C" void log_error(LOG*, const char*) {}
+extern "C" void lock_helper() {}
+
+__declspec(naked) void *MESHDX8::LockVertices(int first, int count) {
+    (void)first; (void)count;
+    __asm {
+        add ecx, 0x60
+        push ecx
+        mov ecx, g_pRenderer
+        call get_vertex_buffer
+        test eax, eax
+        jne tail
+        mov eax, g_pLog
+        test eax, eax
+        je ret0
+        push offset s_lockmsg
+        push eax
+        call log_error
+        add esp, 8
+    ret0:
+        xor eax, eax
+        ret 8
+    tail:
+        mov ecx, eax
+        jmp lock_helper
+    }
+}
 void MESHDX8::UnlockVertices() {}
 void *MESHDX8::LockIndices(int first, int count) { (void)first; (void)count; return 0; }
 void MESHDX8::UnlockIndices() {}
