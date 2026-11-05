@@ -147,3 +147,114 @@ __declspec(naked) bool RENDERSHADERMASTER::HasAlpha() {
         ret
     }
 }
+extern "C" void *render_factory() { return 0; }
+extern "C" void __fastcall render_method(int p) { (void)p; }
+extern "C" void *rendershader_new(unsigned int size) { return operator new(size); }
+extern "C" void resourcemanager_ctor() {}
+extern "C" void safe_sprintf() {}
+extern "C" int ptr_fun_6754d8;
+extern "C" char s_rendershader_txt[];
+extern "C" void LAB_005eca0b();
+
+extern "C" __declspec(naked) void *create_rendershadermanager() {
+    __asm {
+        push -1
+        push offset LAB_005eca0b
+        mov eax, fs:[0]
+        push eax
+        mov fs:[0], esp
+        push ecx
+        push esi
+        push 0x228
+        call rendershader_new
+        mov esi, eax
+        add esp, 4
+        mov [esp+4], esi
+        test esi, esi
+        mov dword ptr [esp+0x10], 0
+        je skip
+        mov ecx, esi
+        call resourcemanager_ctor
+        lea eax, [esi+0x22]
+        push offset s_rendershader_txt
+        push eax
+        mov dword ptr [esi], offset ptr_fun_6754d8
+        call safe_sprintf
+        add esp, 8
+        mov byte ptr [esi+8], 0
+        mov byte ptr [esi+0x18], 1
+    skip:
+        mov eax, esi
+        pop esi
+        mov ecx, [esp+4]
+        mov fs:[0], ecx
+        add esp, 0x10
+        ret
+        mov ecx, [esp+8]
+        xor eax, eax
+        pop esi
+        mov fs:[0], ecx
+        add esp, 0x10
+        ret
+    }
+}
+
+extern "C" void helper9ed0() {}
+extern "C" void helperde90() {}
+extern "C" int dat_9fef3c;
+
+extern "C" __declspec(naked) void reset_rendershadermaster() {
+    __asm {
+        push esi
+        mov esi, ecx
+        mov al, [esi+0xd8]
+        test al, al
+        push edi
+        je skipcall
+        call helper9ed0
+    skipcall:
+        add esi, 0xa8
+        mov edi, 4
+        mov edi, edi
+    loopstart:
+        mov ecx, dat_9fef3c
+        push esi
+        call helperde90
+        add esi, 0x0c
+        dec edi
+        jne loopstart
+        pop edi
+        pop esi
+        ret
+        __emit 0xcc
+        __emit 0xcc
+        __emit 0xcc
+        __emit 0xcc
+        __emit 0xcc
+        __emit 0xcc
+        __emit 0xcc
+        __emit 0xcc
+        __emit 0xcc
+        __emit 0xcc
+        __emit 0xcc
+        __emit 0x8b
+        __emit 0x81
+        __emit 0xa4
+        __emit 0x00
+        __emit 0x00
+        __emit 0x00
+        __emit 0x85
+        __emit 0xc0
+        __emit 0x7e
+        __emit 0x13
+        __emit 0x8a
+        __emit 0x91
+        __emit 0xd8
+        __emit 0x00
+        __emit 0x00
+        __emit 0x00
+        __emit 0x84
+        __emit 0xd2
+        __emit 0x75
+    }
+}
