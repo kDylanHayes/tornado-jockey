@@ -194,7 +194,38 @@ __declspec(naked) void *MESHDX8::LockVertices(int first, int count) {
         jmp lock_helper
     }
 }
-void MESHDX8::UnlockVertices() {}
+extern "C" char s_unlockmsg[];
+
+__declspec(naked) void MESHDX8::UnlockVertices() {
+    __asm {
+        add ecx, 0x60
+        push esi
+        push ecx
+        mov ecx, g_pRenderer
+        call get_vertex_buffer
+        mov esi, eax
+        test esi, esi
+        jne check
+        mov eax, g_pLog
+        test eax, eax
+        je check
+        push offset s_unlockmsg
+        push eax
+        call log_error
+        add esp, 8
+    check:
+        mov al, [esi+0x1d]
+        test al, al
+        je done
+        mov eax, [esi]
+        mov ecx, esi
+        pop esi
+        jmp dword ptr [eax+0xc]
+    done:
+        pop esi
+        ret
+    }
+}
 struct INDEXBUFFER;
 
 // reuse RENDERER declaration? need GetIndexBuffer
