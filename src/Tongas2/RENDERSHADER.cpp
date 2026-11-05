@@ -228,3 +228,36 @@ extern "C" __declspec(naked) void reset_rendershadermaster() {
         ret
     }
 }
+extern "C" void *get_master_resourcemanager(void *, const char *) { return 0; }
+
+__declspec(naked) RESOURCE *RENDERSHADERMANAGER::Find(const char *name) {
+    (void)name;
+    __asm {
+        mov eax, [esp+4]
+        push esi
+        push eax
+        call get_master_resourcemanager
+        mov esi, eax
+        test esi, esi
+        je notfound
+        mov ecx, [esi+0xa4]
+        inc ecx
+        mov eax, ecx
+        test eax, eax
+        mov [esi+0xa4], ecx
+        jle skipreset
+        mov al, [esi+0xd8]
+        test al, al
+        jne skipreset
+        mov ecx, esi
+        call reset_rendershadermaster
+    skipreset:
+        mov eax, esi
+        pop esi
+        ret 4
+    notfound:
+        xor eax, eax
+        pop esi
+        ret 4
+    }
+}
