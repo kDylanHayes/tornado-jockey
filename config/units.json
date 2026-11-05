@@ -2785,7 +2785,9 @@
         "s_RenderMesh::LockFaceBuffer_-_Cou_00674e7c": "_s_lockface",
         "?find@?$_Tree@V?$_Tmap_traits@HPAUPluginNode@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHPAUPluginNode@@@std@@@3@$0A@@std@@@std@@QAE?AViterator@12@ABH@Z": "_find_helper",
         "s_RenderMesh::UnLockVertexBuffer_-_00674e3c": "_s_unlockmsg",
-        "s_RenderMesh::UnLockFaceBuffer_-_C_00674eb4": "_s_unlockface"
+        "s_RenderMesh::UnLockFaceBuffer_-_C_00674eb4": "_s_unlockface",
+        "FUN_004e8070": "_helper8070",
+        "FUN_004e8350": "_helper8350"
       }
     }
   ]

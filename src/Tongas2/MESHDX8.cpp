@@ -325,7 +325,53 @@ __declspec(naked) void MESHDX8::ShowSubmesh(int index, bool show) {
         ret 8
     }
 }
-void MESHDX8::RemoveSubmesh(int index) { (void)index; }
+extern "C" void helper8070() {}
+extern "C" void helper8350() {}
+
+__declspec(naked) void MESHDX8::RemoveSubmesh(int index) {
+    (void)index;
+    __asm {
+        push ecx
+        push ebx
+        push ebp
+        push edi
+        mov edi, ecx
+        lea eax, [esp+0x14]
+        push eax
+        lea ecx, [esp+0x10]
+        lea ebp, [edi+0x38]
+        push ecx
+        mov ecx, ebp
+        call find_helper
+        mov ebx, [esp+0xc]
+        cmp ebx, [edi+0x3c]
+        je skip
+        push esi
+        mov esi, [ebx+0x10]
+        push esi
+        mov ecx, edi
+        call helper8070
+        push ebx
+        lea edx, [esp+0x1c]
+        push edx
+        mov ecx, ebp
+        call helper8350
+        test esi, esi
+        je skip2
+        mov eax, [esi]
+        push 1
+        mov ecx, esi
+        call dword ptr [eax+0x10]
+    skip2:
+        pop esi
+    skip:
+        pop edi
+        pop ebp
+        pop ebx
+        pop ecx
+        ret 4
+    }
+}
 int MESHDX8::AddSubmesh(const RESHANDLE &, int, int, int, int, int, int)
 {
     return 0;
