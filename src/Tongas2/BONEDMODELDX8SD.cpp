@@ -8,6 +8,7 @@
 #include <d3dx8.h>
 #include <stdio.h>
 #include <string.h>
+#include <algorithm>
 
 
 // The display's renderer-side context.

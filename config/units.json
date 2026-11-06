@@ -3252,7 +3252,11 @@
                 "?GetMaterialNamePtr@BONEDMODELDX8MODEL@@QAEPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z": "?GetMaterialNamePtr@BONEDMODELDX8MODEL@@QAEPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z",
                 "?RemoveAnimations@SKINNEDMESH@@QAEHPBD@Z": "?DeleteAnimation@BONEDMODELDX8MODEL@@QAEXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z",
                 "?PlayAnimation@SKINNEDMESH@@QAEHH@Z": "?FUN_00513330@@YGXPAXHH@Z",
-                "_m_70": "?CreateModel@BONEDMODELDX8DISPLAYCTX@@QAEPAXPAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@11@Z"
+                "_m_70": "?CreateModel@BONEDMODELDX8DISPLAYCTX@@QAEPAXPAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@11@Z",
+                "FUN_00449440": "?find_last_of@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBEIPBDII@Z",
+                "FUN_004497c0": "?substr@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBE?AV12@II@Z",
+                "FUN_0044a2a0": "?push_back@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QAEXABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@@Z",
+                "s_BONEDMODELDX8SDRESOURCE::LoadExt_006775d0": "??_C@_0DP@LNHKHOFA@BONEDMODELDX8SDRESOURCE?3?3LoadExt@"
             },
             "target": "build/target/Tongas2/BONEDMODELDX8SD.obj",
             "source": "src/Tongas2/BONEDMODELDX8SD.cpp",
