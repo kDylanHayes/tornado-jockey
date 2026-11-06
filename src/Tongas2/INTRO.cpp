@@ -54,24 +54,14 @@ extern int HardwareC();
 void SETTINGSTABLE::SetQuality()
 {
     switch (GetDetailLevel()) {
-    case 0:
-    case 1:
-        SetInt(0, 0x280);
-        SetInt(1, 0x1e0);
-        SetInt(9, 0);
-        SetInt(0x15, 1);
-        SetInt(0x13, 0);
-        SetInt(0x19, 0);
-        SetInt(10, 0);
-        break;
-    case 2:
-        SetInt(0, 0x320);
-        SetInt(1, 0x258);
-        SetInt(9, 0);
+    case 4:
+        SetInt(0, 0x400);
+        SetInt(1, 0x300);
+        SetInt(9, 1);
         SetInt(0x15, 1);
         SetInt(0x13, 1);
-        SetInt(0x19, 0);
-        SetInt(10, 0);
+        SetInt(0x19, 1);
+        SetInt(10, 1);
         break;
     case 3:
         SetInt(0, 0x400);
@@ -82,14 +72,32 @@ void SETTINGSTABLE::SetQuality()
         SetInt(0x19, 1);
         SetInt(10, 1);
         break;
-    case 4:
-        SetInt(0, 0x400);
-        SetInt(1, 0x300);
-        SetInt(9, 1);
+    case 2:
+        SetInt(0, 0x320);
+        SetInt(1, 0x258);
+        SetInt(9, 0);
         SetInt(0x15, 1);
         SetInt(0x13, 1);
-        SetInt(0x19, 1);
-        SetInt(10, 1);
+        SetInt(0x19, 0);
+        SetInt(10, 0);
+        break;
+    case 0:
+        SetInt(0, 0x280);
+        SetInt(1, 0x1e0);
+        SetInt(9, 0);
+        SetInt(0x15, 1);
+        SetInt(0x13, 0);
+        SetInt(0x19, 0);
+        SetInt(10, 0);
+        break;
+    case 1:
+        SetInt(0, 0x280);
+        SetInt(1, 0x1e0);
+        SetInt(9, 0);
+        SetInt(0x15, 1);
+        SetInt(0x13, 0);
+        SetInt(0x19, 0);
+        SetInt(10, 0);
         break;
     }
     GetDetailLevel();
