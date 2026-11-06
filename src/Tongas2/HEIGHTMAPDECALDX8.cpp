@@ -182,8 +182,8 @@ void HEIGHTMAPDECALDX8MASTER::Prepare()
 
 void HEIGHTMAPDECALDX8MASTER::UpdateCopies()
 {
-    bool hardware = (!m_userFolder && g_pResources->IsHighDetail() && !m_correctSizeInWidescreen) ? false : true;
-    if (hardware != m_60) {
+    int hardware = (!m_userFolder && g_pResources->IsHighDetail() && !m_correctSizeInWidescreen) ? 0 : 1;
+    if ((unsigned char)hardware != (unsigned char)m_60) {
         HEIGHTMAPDECALDX8MASTER::Prepare();
         FreeCopiesMeshes();
     }
