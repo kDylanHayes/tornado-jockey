@@ -35,12 +35,13 @@ object name. The sky and glow cases ask `FUN_00527550` whether the combined
 name exists and then load it through the manager at `0x04`
 (`FUN_004ff8c0`) into `0x18`/`0x1c`.
 
-`Update` runs the 1-second intro timer, creates the `"SUN"` particle
-descriptor (material 2, layer 0, position/color `V3(0,0,-15)`, direction
-`V3(30,30,30)`) and gives it to the second camera holder, advances the
-shared time `0x230` at 0.4/sec up to 2, follows the camera path at `0x240`
-into the camera's `0x1a8`/`0x1b4`, and builds the wing path's inverse view
-matrix at `0x244`.
+`Update` runs the 1-second intro timer, clears the camera holder's target
+list (`0x517aa0`, a thunk to the holder's list-release routine), creates the
+`"SUN"` particle descriptor (material 2, layer 0, position `V3(0,0,-15)`,
+direction the camera's `0x188` position, color `V3(30,30,30)`) and gives it
+to the second camera holder, advances the shared time `0x230` at 0.4/sec up
+to 2, follows the camera path at `0x240` into the camera's
+`0x1a8`/`0x1b4`, and builds the wing path's inverse view matrix at `0x244`.
 
 The `substr` instantiation the parser inlines is named at `0x004497c0` in
 `config/symbols.txt`; `UpperString` and `FindMapResource` are paired with
@@ -48,14 +49,21 @@ their target `FUN_` symbols through `config/units.json`.
 
 ## Progress
 
-- `Update`: **82.08%** fuzzy (908 bytes). Remaining gap is codegen only:
-  block ordering in the intro timer, the target's bool test for `m_10`,
-  the dummy `V3` slot read into `m_1b4`, and the sun/path stack slots.
-- `LoadMap`: **67.44%** fuzzy (2864 bytes). All three list walks and the
-  six name cases are translated; the remaining gap is `std::string`
-  temporary stack offsets and loop register allocation.
+- `Update`: **90.66%** fuzzy (908 bytes; base 849). The camera-holder call
+  turned out to be a target-list release, not a position setter, and the
+  sun descriptor's direction is the camera position with a `(30,30,30)`
+  color. What remains is codegen only: the `V3` temporary/`point` stack
+  slots are swapped (target puts `point` at the lowest slot), plus the
+  target's SEH prologue instruction scheduling.
+- `LoadMap`: **67.44%** fuzzy (2864 bytes; base 2587). All three list walks
+  and the six name cases are translated. The remaining base is smaller
+  because the target's `MAPMANAGER::Load` call takes a by-value
+  `std::string` resource path in addition to the map name; adding it
+  reproduces the target's code but makes objdiff lose the alignment for
+  this function, so the simpler call is kept for now. The rest of the gap
+  is `std::string` temporary stack offsets and loop register allocation.
 - `VectorTooLong`: 100%.
 
-Unit: 2.73% exact, 71.76% fuzzy, 106/3878 bytes, 1/3 functions.
+Unit: 2.73% exact, 73.77% fuzzy, 106/3878 bytes, 1/3 functions.
 
 No image watermark affects the unit. It is left without `"complete": true`.
