@@ -45,6 +45,7 @@ private:
 class PARTICLEB
 {
 public:
+    PARTICLEB(const std::string &name);
     void DestroyMembers();
 
 private:
@@ -138,6 +139,10 @@ void PARTICLEB::DestroyMembers()
     m_094.~vector();
     m_078.~basic_string();
     m_05c.~basic_string();
+}
+
+PARTICLEB::PARTICLEB(const std::string &name) : m_05c(name)
+{
 }
 
 VI *CopyForward(VI *first, VI *last, VI *dest)
