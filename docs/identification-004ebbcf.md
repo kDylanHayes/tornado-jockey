@@ -103,3 +103,24 @@ scaffold percentages (0.37%-1.53% fuzzy), and all five are recorded without
 
 Verified with the original `Tornado.exe` (SHA-1 `20bf7200...06bc`) and a
 private Ghidra project copy at `%LOCALAPPDATA%\tornado-jockey\ghidra-carve-engine`.
+
+## LIGHTDX8: the light side matched, the mesh tail is another object
+
+The light half of `Tongas2/LIGHTDX8` (`0x004eff70-0x004f138f`) has been
+written from the decompilation. The unit as configured still includes
+`0x004f1390-0x004f241f`, but those addresses are not lights: they
+construct a `MESHMASTER`-derived master with `HEIGHTMAPTEMP`, a `MESH`
+resource and a `MESH`-type manager (`GetTypeCode` returns `"MESH"` at
+`0x004f1390`), and draw indexed triangles. That tail belongs to a separate,
+still unidentified renderer object; the next unit should be re-carved at
+`0x004f1390` once that class is named.
+
+The lights are currently 24 exact functions out of the 29 target symbols in
+their half; `0x004f10b0` (`Start`) and `0x004f12f0` (`SetType`) were folded
+into one Ghidra function, so their sizes were corrected to `0x23a` and
+`0x9c`. The remaining light functions are fuzzy rather than exact:
+`Update` (87.25%), `UnpackColor` (91.67%), `_Xlen` (95.65%, one byte of
+trailing padding), `Virtual09` (98.87%, only ESI/EDI swapped for the device
+and light index) and `LightVertex` (99.35%, only the x87 load order of the
+dot-product's x term). `0x004f00c0` in the base `LIGHTMANAGER` vtable has
+seventeen bytes of non-code filler in the executable and is left unnamed.

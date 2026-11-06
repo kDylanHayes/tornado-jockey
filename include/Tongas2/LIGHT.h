@@ -12,9 +12,9 @@
 // A color that starts black.
 struct LIGHTCOLOR
 {
-    LIGHTCOLOR() { r = g = b = 0.0f; }
+    LIGHTCOLOR() { r = g = b = 0; }
 
-    float r, g, b;
+    int r, g, b;
 };
 
 // Integer color components, as the renderer adds them up.
@@ -26,14 +26,22 @@ struct LIGHTRGB
 class LIGHTMANAGER : public RESOURCEMANAGER
 {
 public:
+    LIGHTMANAGER()
+    {
+        SafeSprintf(m_fileName, "LIGHT.txt");
+        m_8 = false;
+        m_18 = true;
+    }
+
     virtual void Init();
     virtual void Update();
     // Defined by the renderer plugin: a vertex's color lit by the lights in
     // mask, from its own color and its normal, ambient the most each
     // component may reach.
     virtual void LightVertex(const LIGHTRGB &ambient, const V3I &color, const V3 &normal, int mask, LIGHTRGB &out) = 0;
-    virtual void Virtual09() = 0;
+    virtual void Virtual09(int mask) = 0;
     virtual void UpdateLights() = 0;
+    virtual void Invalidate(int mask) = 0;
 
     // The sum of two colors, each component at most 255.
     void AddColors(const LIGHTRGB &a, const LIGHTRGB &b, int unused1, int unused2, LIGHTRGB &out);
@@ -50,6 +58,7 @@ class LIGHTMASTER : public RESOURCEMASTER
 {
 public:
     LIGHTMASTER(RESOURCEMANAGER *manager, const char *name);
+    virtual ~LIGHTMASTER() {}
 
     static void RegisterCommands();
 
@@ -88,9 +97,10 @@ class LIGHT : public OBJECT
 {
 public:
     LIGHT(LIGHTMASTER *master, const RESHANDLE &handle);
+    virtual ~LIGHT() {}
 
     virtual void Init();
-    virtual void Start() { AddCounts(); }
+    virtual void Start();
     virtual void Stop() { AddCounts(); }
     virtual bool IsLoaded() { return false; }
     virtual V3 GetScaleFactor() { return V3(0.0f, 0.0f, 0.0f); }
