@@ -356,9 +356,9 @@ void BONEDMODELDX8SDRESOURCE::Virtual89()
 {
     if (m_model && !m_648) {
         ((BONEDMODELDX8MODEL *)m_model)->SetTime(*(float *)((char *)this + 0x408) * g_pTimer->m_dt);
-        std::vector<std::string> *events = (std::vector<std::string> *)((char *)m_model + 0x38);
-        for (unsigned int i = 0; i < events->size(); i++)
-            RunCommand((*events)[i].c_str());
+        for (unsigned int i = 0;
+             i < ((std::vector<std::string> *)((char *)m_model + 0x38))->size(); i++)
+            RunCommand((*(std::vector<std::string> *)((char *)m_model + 0x38))[i].c_str());
     }
 }
 
