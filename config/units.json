@@ -1967,7 +1967,7 @@
       "target": "build/target/Tongas2/SHELL.obj",
       "source": "src/Tongas2/SHELL.cpp",
       "category": "engine",
-      "complete": false
+      "complete": true
     },
     {
       "name": "Tongas2/UNICODESTRING",
