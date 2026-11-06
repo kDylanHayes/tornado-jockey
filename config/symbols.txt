@@ -2630,6 +2630,9 @@
 0x004e5740 ?Load@HEIGHTMAPDX8@@QAEXXZ function 0x3e3
 0x004e5b30 ?Start@HEIGHTMAPDX8@@UAEXXZ function 0x44
 0x004e5b80 ?Update@HEIGHTMAPDX8@@UAEXXZ function 0x1cb
+# Tongas2/MESHDX8: dynamic initializer at the start of the unit, only reached
+# through a .CRT$XCU pointer, so auto-analysis never made it a function.
+0x004e5d50 code_004e5d50 function 0x2b0
 0x004e68e0 ?Validate@INDEXBUFFER@@QAEXXZ function
 0x004e6a60 ?Validate@VERTEXBUFFER@@QAEXXZ function
 0x004e6c40 ??0VERTEXBUFFER@@QAE@H@Z function
