@@ -122,10 +122,8 @@ void BONEDMODELDX8SDMASTER::RegisterCommands()
 }
 
 BONEDMODELDX8SDRESOURCE::BONEDMODELDX8SDRESOURCE(BONEDMODELMASTER *master, const RESHANDLE &handle)
-    : BONEDMODELRESOURCE(master, handle)
+    : BONEDMODELRESOURCE(master, handle), m_448(false), m_647(false)
 {
-    m_448 = false;
-    m_647 = false;
     {
         BONEDMODELDX8ANIMBASE guard;
     }
