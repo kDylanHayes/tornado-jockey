@@ -42,8 +42,9 @@ bool B2FOLLOWMAXPATH::Init(const char *params)
 
 bool B2FOLLOWMAXPATH::Update(float dt)
 {
-    dt = m_time - dt;
-    m_time = dt;
+    float time = m_time - dt;
+    m_time = time;
+    dt = time;
     if (dt < 0.0f) {
         m_index++;
         int count = m_numPoints;
