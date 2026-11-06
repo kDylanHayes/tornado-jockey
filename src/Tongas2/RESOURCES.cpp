@@ -23,6 +23,9 @@ PROPENTRY RESOURCES::s_properties[] = {
 
 CMDBASE *(*RESOURCES::s_pfnCreate)() = RESOURCES::Create;
 
+// Allows the globals whose extent the image gives explicitly to sit in .bss.
+#pragma section(".bss", read, write)
+
 // Each manager type's create function, and the global its manager is kept in.
 #define RESOURCE_TYPE(TYPE) \
     extern CREATEMANAGER g_pfnCreate##TYPE; \
@@ -52,8 +55,10 @@ RESOURCE_TYPE(GUITEXTEDIT)
 RESOURCE_TYPE(GUIVISUAL)
 RESOURCE_TYPE(GUICHECKBOX)
 RESOURCE_TYPE(GUICHECKGROUP)
-RESOURCE_TYPE(GUISLIDER)
-RESOURCE_TYPE(GUIGROUP)
+extern CREATEMANAGER g_pfnCreateGUIGROUP;
+extern CREATEMANAGER g_pfnCreateGUISLIDER;
+__declspec(allocate(".bss")) RESOURCEMANAGER *g_pGUIGROUP;
+__declspec(allocate(".bss")) RESOURCEMANAGER *g_pGUISLIDER;
 
 char RESOURCES::s_managerNames[RESOURCES_MAX_MANAGERS][30];
 RESOURCEMANAGER **RESOURCES::s_managerSlots[RESOURCES_MAX_MANAGERS];
