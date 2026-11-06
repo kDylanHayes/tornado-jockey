@@ -69,3 +69,28 @@ opaque helper objects whose methods and types live in uncarved units. The
 and the matrix helpers are still guesses, and `LoadMap` is a 2,864-byte
 `std::string`-heavy parser that needs the same class layout before it can be
 written exactly.
+
+## INTRO matching
+
+`Tongas2/INTRO` turned out to contain a second, self-contained settings
+object at `0x004f97d0`-`0x004fa4af`: four 0xff-entry tables at `0x000`,
+`0x3fc`, `0x7f8` and `0xbf4`, the int/float settings pointers at `0x1030` and
+`0x1034`, and the changed flag at `0xff4`. Twelve of its functions are exact:
+
+- `GetInt`, `SetInt`, `GetFloat`, `SetFloat`, `Changed`
+- `Clear`, `Reset`, `RemovePair`, `AddPair`, `ReplacePair`
+- `ClearAll`, `ResetKeys`
+
+`Init` (`0x004f97d0`) is 99.23%: only its two initial `xor` instructions are
+in the other order. The three tiny accessors at `0x004f9830` etc. are already
+matched.
+
+The unit is 15.30% exact, 20.79% fuzzy, 12/19 functions (`function_status.py`
+counts 12/15 paired functions). Still open: `INTRO::Load` (the 989-byte intro
+screen), the `SETTINGS` constructor at `0x004f9660`, the 0x708-byte quality
+update at `0x004f9c40`, `SetQuality` at `0x004fa360` (written but not yet
+paired; its jump table extends past Ghidra's 0x130-byte extent), and the
+destructor at `0x004fa4b0`. The remaining blockers are the incomplete object layout
+around `0x1018`-`0x1038` (two `std::string`s overlapping the settings
+pointers), the unknown quality/hardware helpers, and the intro screen's own
+resource construction.
