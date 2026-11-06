@@ -2392,7 +2392,8 @@
       ],
       "target": "build/target/Tongas2/GUIBEHAVIOR.obj",
       "source": "src/Tongas2/GUIBEHAVIOR.cpp",
-      "category": "engine"
+      "category": "engine",
+      "complete": true
     },
     {
       "name": "Tongas2/GUISIZE",
