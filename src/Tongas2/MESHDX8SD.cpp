@@ -1,5 +1,6 @@
 #include "Tongas2/MESHDX8SD.h"
 #include "Tongas2/RENDERER.h"
+#include "Tongas2/TIMER.h"
 
 struct MESHUNKNOWN
 {
@@ -282,6 +283,52 @@ const char *MESHDX8SDMANAGER::GetTypeCode()
     return "MESH";
 }
 
+void MESHDX8SDMANAGER::Update()
+{
+    if (g_pRenderer->IsDeviceLost())
+        return;
+
+    RESOURCEMANAGER::Update();
+
+    float dt = g_pTimer->m_soundDt;
+    MESHDX8SDMASTER *master = (MESHDX8SDMASTER *)m_first;
+    if (master) {
+        do {
+            MESHDX8SDMASTER *next = (MESHDX8SDMASTER *)master->m_next;
+            if (master->m_numUsed == 0) {
+                master->m_c8 += dt;
+                if (master->m_c8 > 3.0f)
+                    RemoveMaster(master->m_handle);
+            }
+            master = next;
+        } while (master);
+    }
+}
+
+void MESHDX8SDMANAGER::ReleaseAllBuffers()
+{
+    MESHDX8SDMASTER *master = (MESHDX8SDMASTER *)m_first;
+    if (master) {
+        do {
+            MESHDX8SDMASTER *next = (MESHDX8SDMASTER *)master->m_next;
+            master->ReleaseVertexBuffer();
+            master = next;
+        } while (master);
+    }
+}
+
+void MESHDX8SDMANAGER::LockAllBuffers()
+{
+    MESHDX8SDMASTER *master = (MESHDX8SDMASTER *)m_first;
+    if (master) {
+        do {
+            MESHDX8SDMASTER *next = (MESHDX8SDMASTER *)master->m_next;
+            master->LockVertexBuffer();
+            master = next;
+        } while (master);
+    }
+}
+
 void MESHDX8SDRESOURCE::Start()
 {
     MESHDX8SDMASTER *m = (MESHDX8SDMASTER *)m_master;
@@ -406,4 +453,26 @@ void MESHDX8SDSETTER::Disable()
 {
     Empty();
     m_temp.SetEnabled(false);
+}
+
+void HEIGHTMAPTEMP::SetValue(int value)
+{
+    *(int *)((char *)this + 0x54) = value;
+}
+
+int HEIGHTMAPTEMP::GetValue()
+{
+    return *(int *)((char *)this + 0x54);
+}
+
+extern V3 g_one;
+
+V3 *HEIGHTMAPTEMP::GetOne()
+{
+    return &g_one;
+}
+
+void MESHDX8SDMASTER::ForwardTemp()
+{
+    ((HEIGHTMAPTEMP *)((char *)this + 0x70))->Touch();
 }

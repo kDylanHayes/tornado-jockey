@@ -47,6 +47,7 @@ public:
 
     void Update(bool force);
     void Stop();
+    void ForwardTemp();
 
     MESHDX8SDRESOURCE *m_first;
     MESHDX8SDRESOURCE *m_last;
@@ -61,7 +62,7 @@ public:
     void *m_bc;
     void *m_c0;
     void *m_c4;
-    void *m_c8;
+    float m_c8;
 };
 
 class MESHDX8SDRESOURCE : public MESH
@@ -116,6 +117,8 @@ public:
     virtual RESOURCEMASTER *CreateMaster(const char *name);
     virtual const char *GetTypeCode();
     virtual void Update();
+    virtual void ReleaseAllBuffers();
+    virtual void LockAllBuffers();
 };
 
 RESOURCEMANAGER *CreateMESHDX8SD();
