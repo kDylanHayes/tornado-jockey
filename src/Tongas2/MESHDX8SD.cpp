@@ -8,6 +8,14 @@ struct MESHUNKNOWN
     virtual void __stdcall Release();
 };
 
+class CAMERAMATRIX
+{
+public:
+    void *GetMatrix();
+};
+
+extern int g_numTriangles;
+
 RESOURCEMANAGER *CreateMESHDX8SD()
 {
     return new MESHDX8SDMANAGER;
@@ -73,6 +81,147 @@ void MESHDX8SDMASTER::UpdateCopies()
         return;
     }
     Update(false);
+}
+
+void MESHDX8SDMASTER::Render()
+{
+    if (!m_bc || !m_c0 || !m_b9 || m_a4 < 1 || m_a8 < 1)
+        return;
+
+    g_pRenderer->SetTongaShader(m_shader);
+
+    int matrix[16];
+    int *source = (int *)((CAMERAMATRIX *)*(void **)((char *)g_pCamera + 0xda4))->GetMatrix();
+    memcpy(matrix, source, sizeof(matrix));
+    g_pRenderer->GetDevice()->SetTransform(D3DTS_VIEW, (const D3DMATRIX *)matrix);
+
+    RESOURCE *resource = g_pResources->GetResource(m_shader);
+    bool fog = false;
+    if (*(char *)((char *)g_pRenderer + 0x303e) && resource && resource->m_master) {
+        int shaderType = *(int *)((char *)resource->m_master + 0x70);
+        if (shaderType == 2) {
+            V3I color(0xff, 0xff, 0xff);
+            g_pRenderer->SetFogColor(&color);
+            fog = true;
+        } else if (shaderType == 3 || shaderType == 4) {
+            V3I color(0, 0, 0);
+            g_pRenderer->SetFogColor(&color);
+            fog = true;
+        }
+    }
+
+    IDirect3DDevice8 *device = g_pRenderer->GetDevice();
+    device->SetVertexShader(0x142);
+    device = g_pRenderer->GetDevice();
+    device->SetStreamSource(0, (IDirect3DVertexBuffer8 *)m_c0, 0x18);
+    device = g_pRenderer->GetDevice();
+    device->SetIndices((IDirect3DIndexBuffer8 *)m_bc, 0);
+    device = g_pRenderer->GetDevice();
+    device->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, m_a4, 0, m_a8);
+    g_numTriangles += m_a8;
+
+    if (resource && resource->m_master && *(char *)((char *)resource->m_master + 0x79)) {
+        if (!*(char *)((char *)g_pRenderer + 0x3016)) {
+            device = g_pRenderer->GetDevice();
+            device->SetRenderState(D3DRS_FILLMODE, 2);
+        }
+        device = g_pRenderer->GetDevice();
+        device->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, m_a4, 0, m_a8);
+        if (!*(char *)((char *)g_pRenderer + 0x3016)) {
+            device = g_pRenderer->GetDevice();
+            device->SetRenderState(D3DRS_FILLMODE, 3);
+        }
+        g_numTriangles += m_a8;
+    }
+
+    if (fog)
+        g_pRenderer->SetFogColor(0);
+}
+
+void MESHDX8SDMASTER::Update(bool force)
+{
+    if (!m_c0)
+        return;
+
+    if (m_b9)
+        force = true;
+
+    MESHDX8SDRESOURCE *copy = m_first;
+    int *data = 0;
+    m_b9 = 1;
+    while (copy) {
+        if (copy->m_a4 < 0)
+            break;
+        int flags = copy->m_flags;
+        if (force || flags) {
+            if (!data && ((IDirect3DVertexBuffer8 *)m_c0)->Lock(0, 0, (BYTE **)&data, 0) != 0) {
+                if (g_pLog)
+                    g_pLog->Error("Error - could not lock vertex buffer");
+                return;
+            }
+
+            if (force || (flags & 2)) {
+                if (!copy->m_a0) {
+                    for (int i = 0; i < m_ac; i++)
+                        *(int *)((char *)data + (copy->m_a4 + i) * 0x18 + 0x0c) = 0;
+                } else if (!copy->m_a8) {
+                    for (int i = 0; i < m_ac; i++)
+                        *(int *)((char *)data + (copy->m_a4 + i) * 0x18 + 0x0c) =
+                            *(int *)((char *)copy->m_a0 + i * 0x18 + 0x0c);
+                } else {
+                    unsigned int color =
+                        ((copy->m_ac & 0xff | copy->m_4c << 8) << 8 | copy->m_b0 & 0xff) << 8 |
+                        copy->m_b4 & 0xff;
+                    for (int i = 0; i < m_ac; i++)
+                        *(unsigned int *)((char *)data + (copy->m_a4 + i) * 0x18 + 0x0c) = color;
+                }
+            }
+
+            if (force || (flags & 1)) {
+                if (!copy->m_a0) {
+                    for (int i = 0; i < m_ac; i++) {
+                        float *dest = (float *)((char *)data + (copy->m_a4 + i) * 0x18);
+                        dest[0] = -10000.0f;
+                        dest[1] = -10000.0f;
+                        dest[2] = -10000.0f;
+                    }
+                } else {
+                    for (int i = 0; i < m_ac; i++) {
+                        float *source = (float *)((char *)copy->m_a0 + i * 0x18);
+                        V3 point(source[0] * copy->m_40.x, source[1] * copy->m_40.y,
+                                 source[2] * copy->m_40.z);
+                        V3 transformed = copy->m_angles.Transform(point);
+                        float *dest = (float *)((char *)data + (copy->m_a4 + i) * 0x18);
+                        dest[0] = transformed.x + copy->m_34.x;
+                        dest[1] = transformed.y + copy->m_34.y;
+                        dest[2] = transformed.z + copy->m_34.z;
+                    }
+                }
+            }
+
+            if (force || (flags & 4)) {
+                if (!copy->m_a0) {
+                    for (int i = 0; i < m_ac; i++) {
+                        *(int *)((char *)data + (copy->m_a4 + i) * 0x18 + 0x10) = 0;
+                        *(int *)((char *)data + (copy->m_a4 + i) * 0x18 + 0x14) = 0;
+                    }
+                } else {
+                    for (int i = 0; i < m_ac; i++) {
+                        *(int *)((char *)data + (copy->m_a4 + i) * 0x18 + 0x10) =
+                            *(int *)((char *)copy->m_a0 + i * 0x18 + 0x10);
+                        *(int *)((char *)data + (copy->m_a4 + i) * 0x18 + 0x14) =
+                            *(int *)((char *)copy->m_a0 + i * 0x18 + 0x14);
+                    }
+                }
+            }
+
+            copy->m_flags = 0;
+        }
+        copy = copy->m_next;
+    }
+
+    if (data)
+        ((IDirect3DVertexBuffer8 *)m_c0)->Unlock();
 }
 
 void MESHDX8SDMASTER::Stop()
@@ -142,10 +291,10 @@ void MESHDX8SDRESOURCE::Reset()
     m_40.x = 0.0f;
     m_40.y = 0.0f;
     m_40.z = 0.0f;
-    m_50.x = 0.0f;
-    m_50.y = 0.0f;
-    m_50.z = 0.0f;
-    m_9c = true;
+    m_angles.euler.x = 0.0f;
+    m_angles.euler.y = 0.0f;
+    m_angles.euler.z = 0.0f;
+    m_angles.flags = 1;
     m_a0 = 0;
     m_a8 = false;
     m_4c = -1;
@@ -157,8 +306,8 @@ MESHDX8SDRESOURCE::MESHDX8SDRESOURCE(MESHMASTER *master, const RESHANDLE &handle
 {
     m_34.x = m_34.y = m_34.z = 0.0f;
     m_40.x = m_40.y = m_40.z = 0.0f;
-    m_50.x = m_50.y = m_50.z = 0.0f;
-    m_9c = true;
+    m_angles.euler.x = m_angles.euler.y = m_angles.euler.z = 0.0f;
+    m_angles.flags = 1;
     m_ac = 0;
     m_b0 = 0;
     m_b4 = 0;
@@ -193,4 +342,16 @@ MESHDX8SDRESOURCE::~MESHDX8SDRESOURCE()
     m->m_b8 = 1;
     m_a0 = 0;
     m_a4 = -1;
+}
+
+void MESHDX8SDSETTER::Enable()
+{
+    Empty();
+    m_temp.SetEnabled(true);
+}
+
+void MESHDX8SDSETTER::Disable()
+{
+    Empty();
+    m_temp.SetEnabled(false);
 }

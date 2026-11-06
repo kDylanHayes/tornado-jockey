@@ -1,3 +1,9 @@
+#include "Tongas2/MESHDX8SD.h"
+
+__declspec(noinline) void MESHDX8SDSETTER::Empty()
+{
+}
+
 #include "Tongas2/LIGHTDX8.h"
 #include "Tongas2/LOG.h"
 #include "Tongas2/RENDERER.h"

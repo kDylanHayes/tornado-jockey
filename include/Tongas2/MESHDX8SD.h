@@ -43,6 +43,7 @@ public:
     virtual void UpdateCopies();
     virtual void ReleaseVertexBuffer();
     virtual void LockVertexBuffer();
+    virtual void Render();
 
     void Update(bool force);
     void Stop();
@@ -79,9 +80,7 @@ public:
     V3 m_34;
     V3 m_40;
     int m_4c;
-    V3 m_50;
-    char m_5c[0x40];
-    bool m_9c;
+    ANG m_angles;
     void *m_a0;
     int m_a4;
     bool m_a8;
@@ -116,5 +115,19 @@ public:
 };
 
 RESOURCEMANAGER *CreateMESHDX8SD();
+
+// The two start/stop hooks of the screen-decal resource that follows the
+// mesh master in the address space. They only toggle the embedded
+// HEIGHTMAPTEMP subobject.
+class MESHDX8SDSETTER
+{
+public:
+    __declspec(noinline) void Empty();
+    void Enable();
+    void Disable();
+
+    char m_pad[0x418];
+    HEIGHTMAPTEMP m_temp;
+};
 
 #endif
