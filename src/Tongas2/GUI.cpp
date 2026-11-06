@@ -24,6 +24,9 @@
 #define VK_RIGHT 0x27
 #define VK_DOWN 0x28
 
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
+
 #define CMD_FUNC(CLASS, method) (CMDFUNC)(SRESULT (CLASS::*)(TOKENS **))(SRESULT (CLASS::*)(CMDCALL *))&CLASS::method
 
 // Defined elsewhere.
@@ -504,6 +507,9 @@ void GUI::SetScreen(const FIXEDSTRING<0x200> &name)
             black->SetSize(V2(2.0f, 1.0f));
             black->m_screenPosition.x = 0.5f;
             black->m_screenPosition.y = 0.5f;
+            // Otherwise VC7.1 loads the vtable for SetAlpha before the two
+            // stores; the original has the stores first.
+            _ReadWriteBarrier();
             black->m_screenSpace = true;
             black->SetAlpha(0.0f);
             black->SetActive(true);
