@@ -237,11 +237,11 @@ bool TEXTUREDX8SDMASTER::BuildDiffuseColorTexture()
     m_60 = new TEXTUREDX8SDTEXTURE(true);
     m_60->m_38 = *(bool *)((char *)this + 0x488);
 
-    int format = *(int *)((char *)this + 0x484);
-    int height = *(int *)((char *)this + 0x70);
-    int width = *(int *)((char *)this + 0x6c);
     void *renderTexture =
-        ((RENDERERCREATETEXTURE *)g_pRenderer)->CreateTexture(width, height, format);
+        ((RENDERERCREATETEXTURE *)g_pRenderer)->CreateTexture(
+            *(int *)((char *)this + 0x6c),
+            *(int *)((char *)this + 0x70),
+            *(int *)((char *)this + 0x484));
 
     if (!m_60->Create(renderTexture)) {
         float color[4];
