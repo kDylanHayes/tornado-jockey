@@ -4,9 +4,13 @@
 // the texture builders and the copy class are still scaffolds.
 #include <windows.h>
 
+#include "Tongas2/STRING.h"
+#include "Tongas2/TOKENS.h"
 #include "Tongas2/TEXTUREDX8SD.h"
 
 extern RESOURCES *g_pResources;
+extern char g_basePath[];
+extern const char g_rgbPrefix[];
 
 int TEXTUREDX8SDMASTER::Build()
 {
@@ -128,6 +132,59 @@ __declspec(naked) unsigned int GetPhysicalMemoryMB()
 TEXTUREDX8SDMASTER::TEXTUREDX8SDMASTER(RESOURCEMANAGER *manager, const char *name)
     : RESOURCEMASTER(manager, name)
 {
+    unsigned char *base = (unsigned char *)this;
+    char *fileBuffer = (char *)base + 0x280;
+    char *pathBuffer = (char *)base + 0x48a;
+
+    *(int *)(base + 0x7c) = 0;
+    *(int *)(base + 0x78) = 0;
+    *(int *)(base + 0x74) = 0;
+    *(char *)(base + 0x80) = 0;
+    *(char *)(base + 0x27f) = 0;
+    fileBuffer[0] = 0;
+    fileBuffer[0x1ff] = 0;
+    pathBuffer[0] = 0;
+    *(bool *)(base + 0x689) = false;
+    *(void **)(base + 0x60) = 0;
+    *(bool *)(base + 0x480) = false;
+    *(int *)(base + 0x64) = 0;
+
+    if (*name == ';') {
+        TOKENS tokens;
+        STRING text(name);
+        tokens.Split(text, ";");
+
+        name = tokens.GetToken(0);
+        *(bool *)(base + 0x480) = true;
+
+        const char *source = tokens.GetToken(1);
+        if (source) {
+            strncpy(fileBuffer, source, 0x1ff);
+            fileBuffer[0x1ff] = 0;
+        } else {
+            fileBuffer[0] = 0;
+        }
+    }
+
+    if (*(const unsigned int *)g_rgbPrefix == *(const unsigned int *)name) {
+        sscanf(name + 4, "%d %d %d %d %d",
+               base + 0x6c, base + 0x70, base + 0x74, base + 0x78, base + 0x7c);
+        *(bool *)(base + 0x68) = true;
+    } else {
+        SafeSprintf(pathBuffer, "%s%s%s", g_basePath, "data/art/", name);
+        *(bool *)(base + 0x68) = false;
+        if (name) {
+            char *nameBuffer = (char *)base + 0x80;
+            strncpy(nameBuffer, name, 0x1ff);
+            nameBuffer[0x1ff] = 0;
+        } else {
+            *(char *)(base + 0x80) = 0;
+        }
+    }
+
+    *(int *)(base + 0x484) = 4;
+    *(bool *)(base + 0x488) = true;
+    *(bool *)(base + 0x489) = true;
 }
 
 TEXTUREDX8SDMASTER::~TEXTUREDX8SDMASTER()
