@@ -6156,7 +6156,7 @@ extern "C" unsigned int FUN_004f3aa0(unsigned int format)
 
 extern "C" bool FUN_004f3af0(unsigned int format)
 {
-    unsigned int flags;
+    unsigned short flags;
     switch (format) {
     case 1: flags = 0x142; break;
     case 2: flags = 0x112; break;
@@ -6165,12 +6165,12 @@ extern "C" bool FUN_004f3af0(unsigned int format)
     case 5: flags = 0x242; break;
     default: flags = 0; break;
     }
-    return (flags >> 2) & 1;
+    return (flags >> 2) & 1 ? true : false;
 }
 
 extern "C" bool FUN_004f3b60(unsigned int format)
 {
-    unsigned int flags;
+    unsigned short flags;
     switch (format) {
     case 1: flags = 0x142; break;
     case 2: flags = 0x112; break;
@@ -6179,12 +6179,12 @@ extern "C" bool FUN_004f3b60(unsigned int format)
     case 5: flags = 0x242; break;
     default: flags = 0; break;
     }
-    return (flags >> 6) & 1;
+    return (flags >> 6) & 1 ? true : false;
 }
 
 extern "C" bool FUN_004f3bd0(unsigned int format)
 {
-    unsigned int flags;
+    unsigned short flags;
     switch (format) {
     case 1: flags = 0x142; break;
     case 2: flags = 0x112; break;
@@ -6193,12 +6193,12 @@ extern "C" bool FUN_004f3bd0(unsigned int format)
     case 5: flags = 0x242; break;
     default: flags = 0; break;
     }
-    return flags >> 7;
+    return (unsigned char)flags >> 7;
 }
 
 extern "C" bool FUN_004f3c30(unsigned int format)
 {
-    unsigned int flags;
+    unsigned short flags;
     switch (format) {
     case 1: flags = 0x142; break;
     case 2: flags = 0x112; break;
@@ -6207,7 +6207,7 @@ extern "C" bool FUN_004f3c30(unsigned int format)
     case 5: flags = 0x242; break;
     default: flags = 0; break;
     }
-    return (flags >> 4) & 1;
+    return (flags >> 4) & 1 ? true : false;
 }
 
 extern "C" unsigned int FUN_004f3ca0(unsigned int format)

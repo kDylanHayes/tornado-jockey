@@ -51,8 +51,9 @@ report and both units' objdiff targets build without truncation panics.
 
 `src/Tongas2/SCREENDECALDX8.cpp` now carries byte-transcribed asm for the
 functions whose C++ shape is unknown, plus C++ for the vertex-format flag
-helpers (`FUN_004f3aa0` and `FUN_004f3ca0` match exactly; the four bit-extract
-helpers are close but the compiler emits 32-bit shifts where the target uses
-`al`, so they remain partial). The 2020-byte switch-default body matches every
+helpers (`FUN_004f3aa0` and `FUN_004f3ca0` match exactly. The four bit-extract helpers
+now match too: keeping the switch flags in an `unsigned short` makes VC7.1 use
+the target's byte operations (`shr al, N`), and `FUN_004f3bd0` returns
+`(unsigned char)flags >> 7`. The 2020-byte switch-default body matches every
 non-table byte; its five jump-table entries still need relocations that inline
 asm cannot emit. Unit remains incomplete.
