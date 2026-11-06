@@ -57,3 +57,12 @@ the target's byte operations (`shr al, N`), and `FUN_004f3bd0` returns
 `(unsigned char)flags >> 7`. The 2020-byte switch-default body matches every
 non-table byte; its five jump-table entries still need relocations that inline
 asm cannot emit. Unit remains incomplete.
+
+The owning function starts at `0x004f2d70`, not at the Ghidra label at
+`0x004f2cc0`: `0x004f2d70` is a 2652-byte member function with a `0x1d8`-byte
+stack frame, five switch cases and a 2000-byte common tail of floating-point
+and renderer calls. Forcing Ghidra to make it one function (with
+`FixJumpTables` before `DumpDecomp`) gives 460 lines of pseudocode whose
+variadic/stack expressions are corrupted, so a C++ reconstruction that is
+byte-exact has to be written from the `0x4f2d70` disassembly. The switch table
+itself sits at `0x004f37b8` and is the last 20 bytes of that function.
