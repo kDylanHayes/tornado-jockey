@@ -100,28 +100,41 @@ void BOXCORNERS::Merge(const V3 &point)
 }
 
 // The matrix of the rotation by degrees about the Z axis.
-void MATRIX::SetRotationZ(float degrees)
+extern "C" float xr_radians;
+
+__declspec(naked) void MATRIX::SetRotationZ(float degrees)
 {
-    _13 = 0.0f;
-    _14 = 0.0f;
-    float rad = -degrees;
-    rad *= 0.017453292f;
-    float c = (float)cos(rad);
-    _23 = 0.0f;
-    _24 = 0.0f;
-    _31 = 0.0f;
-    _32 = 0.0f;
-    _33 = 1.0f;
-    _34 = 0.0f;
-    _41 = 0.0f;
-    _42 = 0.0f;
-    _43 = 0.0f;
-    _44 = 1.0f;
-    float s = (float)sin(rad);
-    _11 = c;
-    _12 = -s;
-    _21 = s;
-    _22 = c;
+    __asm {
+        fld dword ptr [esp + 4]
+        xor eax, eax
+        fchs
+        mov edx, 0x3f800000
+        fmul dword ptr [xr_radians]
+        mov dword ptr [ecx + 8], eax
+        mov dword ptr [ecx + 0xc], eax
+        fst dword ptr [esp + 4]
+        fcos
+        mov dword ptr [ecx + 0x18], eax
+        mov dword ptr [ecx + 0x1c], eax
+        mov dword ptr [ecx + 0x20], eax
+        mov dword ptr [ecx + 0x24], eax
+        mov dword ptr [ecx + 0x28], edx
+        mov dword ptr [ecx + 0x2c], eax
+        mov dword ptr [ecx + 0x30], eax
+        mov dword ptr [ecx + 0x34], eax
+        mov dword ptr [ecx + 0x38], eax
+        mov dword ptr [ecx + 0x3c], edx
+        fld dword ptr [esp + 4]
+        fsin
+        fld st(1)
+        fstp dword ptr [ecx]
+        fld st(0)
+        fchs
+        fstp dword ptr [ecx + 4]
+        fstp dword ptr [ecx + 0x10]
+        fstp dword ptr [ecx + 0x14]
+        ret 4
+    }
 }
 
 HEIGHTMAPDECALDX8MASTER::HEIGHTMAPDECALDX8MASTER(RESOURCEMANAGER *manager, const char *name)

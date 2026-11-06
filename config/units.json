@@ -2976,7 +2976,8 @@
       "source": "src/Tongas2/HEIGHTMAPDECALDX8.cpp",
       "category": "engine",
       "symbol_mappings": {
-        "FUN_004eb940": "??1HEIGHTMAPTEMP@@UAE@XZ"
+        "FUN_004eb940": "??1HEIGHTMAPTEMP@@UAE@XZ",
+        "__real@3c8efa35": "_xr_radians"
       }
     },
     {
