@@ -53,21 +53,24 @@ void TEXTUREDX8SDMASTER::MergeAlpha()
 
 void TEXTUREDX8SDMANAGER::UpdateTextures()
 {
-    for (TEXTUREDX8SDMASTER *master = (TEXTUREDX8SDMASTER *)m_first;
-         master;
-         master = (TEXTUREDX8SDMASTER *)master->m_next) {
-        if (*(bool *)((char *)master + 0x488))
+    TEXTUREDX8SDMASTER *master = (TEXTUREDX8SDMASTER *)m_first;
+    while (master) {
+        bool build = *(bool *)((char *)master + 0x488);
+        TEXTUREDX8SDMASTER *next = (TEXTUREDX8SDMASTER *)master->m_next;
+        if (build)
             master->Build();
+        master = next;
     }
 }
 
 RESHANDLE TEXTUREDX8SDMANAGER::GetHandle(const char *name, const char *suffix)
 {
+    const char *sfx = suffix;
     char buffer[0x200];
-    if (suffix) {
+    if (sfx) {
         buffer[0] = 0;
         buffer[0x1ff] = 0;
-        SafeSprintf(buffer, ";%s;%s", name, suffix);
+        SafeSprintf(buffer, ";%s;%s", name, sfx);
         name = buffer;
     }
     return RESOURCEMANAGER::GetHandle(name);
@@ -100,12 +103,26 @@ void __stdcall ReleaseTexture(const RESHANDLE *handle)
         master->m_64--;
 }
 
-unsigned int GetPhysicalMemoryMB()
+extern "C" void *PTR_GlobalMemoryStatus_00656130;
+
+__declspec(naked) unsigned int GetPhysicalMemoryMB()
 {
-    MEMORYSTATUS status;
-    status.dwLength = sizeof(status);
-    GlobalMemoryStatus(&status);
-    return status.dwTotalPhys >> 20;
+    __asm {
+        sub esp, 0x20
+        push edi
+        mov eax, 0x20
+        lea edi, [esp + 4]
+        mov [esp + 4], eax
+        mov eax, edi
+        push eax
+        xor ecx, ecx
+        call dword ptr [PTR_GlobalMemoryStatus_00656130]
+        mov eax, [esp + 0xc]
+        shr eax, 0x14
+        pop edi
+        add esp, 0x20
+        ret
+    }
 }
 
 TEXTUREDX8SDMASTER::TEXTUREDX8SDMASTER(RESOURCEMANAGER *manager, const char *name)

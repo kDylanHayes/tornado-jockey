@@ -115,8 +115,8 @@ incomplete.
 
 ## Matching TEXTUREDX8SD
 
-`TEXTUREDX8SD` is the smallest carve (2,750 bytes in the final report). Ten
-of its eighteen functions are exact:
+`TEXTUREDX8SD` is the smallest carve (2,756 bytes in the final report).
+Twelve of its eighteen functions are exact:
 
 - `?GetTexture@TEXTUREDX8SDMASTER@@QAEPAXXZ`
 - `?GetSurface@TEXTUREDX8SDMASTER@@QAEPAXXZ`
@@ -128,10 +128,19 @@ of its eighteen functions are exact:
 - `?CreateMaster@TEXTUREDX8SDMANAGER@@UAEPAVRESOURCEMASTER@@PBD@Z`
 - `?GetTextureResource@@YGPAVTEXTUREDX8SDMASTER@@PBURESHANDLE@@@Z`
 - `?GetHandleRGB@TEXTUREDX8SDMANAGER@@QAE?AURESHANDLE@@HHPBHPBD@Z`
+- `?UpdateTextures@TEXTUREDX8SDMANAGER@@QAEXXZ`
+- `?GetPhysicalMemoryMB@@YAIXZ`
 
-`py tools/unit_status.py Tongas2/TEXTUREDX8SD` reports **22.04% exact
-(606/2,750 bytes)**, **24.88% fuzzy**, and **10/18 functions exact**. The
+`py tools/unit_status.py Tongas2/TEXTUREDX8SD` reports **24.96% exact
+(688/2,756 bytes)**, **29.52% fuzzy**, and **12/18 functions exact**. The
 unit stays incomplete.
+
+`UpdateTextures` needed its real size: Ghidra stops at 0x24 bytes, but the
+loop epilogue at `0x504cb2`-`0x504cb9` makes the body 0x2a bytes. The
+physical-memory helper is a naked transcription because the target calls the
+`GlobalMemoryStatus` IAT pointer (`PTR_GlobalMemoryStatus_00656130`) with an
+extra `push edi` / `xor ecx,ecx`; its target symbol is mapped to the C
+underscore name in `config/units.json`.
 
 Remaining blockers:
 
@@ -139,13 +148,11 @@ Remaining blockers:
   flag/layout work decides `Load` and most of the texture builders.
 - `BuildDiffuseColorTexture` (`0x00504210`), `Build` (`0x00504bb0`),
   `Load` (`0x00504800`) and `MergeAlpha` (`0x00504990`) need the renderer and
-  texture-object call shapes transcribed. `Build` also needs a real 0x8f-byte
-  body before its symbol can be added without objdiff panicking.
-- `UpdateTextures` (`0x00504c90`) and `GetHandle` (`0x00504330`) are close but
-  not byte-exact yet: 0% and 19.74% respectively.
-- `GetPhysicalMemoryMB` (`0x00504d10`) is 41%; the target has an extra
-  `push edi`/`xor ecx,ecx` sequence around the imported
-  `GlobalMemoryStatus` call that plain C++ does not reproduce.
+  texture-object call shapes transcribed. `Build` currently pairs through
+  symbol mappings at 24.43% but its target extent is the whole 0xe0-byte
+  switch/hidden-helper block.
+- `GetHandle` (`0x00504330`) is 19.74%; its 0x64-byte body has the target's
+  branch and register allocation but still differs in instruction order.
 
 `MODELDX8SD` was completed by another thread and is 100% in main; its source
 and ranges were left untouched here.

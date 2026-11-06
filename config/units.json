@@ -3297,7 +3297,13 @@
       ],
       "target": "build/target/Tongas2/TEXTUREDX8SD.obj",
       "source": "src/Tongas2/TEXTUREDX8SD.cpp",
-      "category": "engine"
+      "category": "engine",
+      "symbol_mappings": {
+        "FUN_00504bb0": "?Build@TEXTUREDX8SDMASTER@@QAEHXZ",
+        "FUN_00504800": "?Load@TEXTUREDX8SDMASTER@@QAE_N_N@Z",
+        "FUN_00504990": "?MergeAlpha@TEXTUREDX8SDMASTER@@QAEXXZ",
+        "PTR_GlobalMemoryStatus_00656130": "_PTR_GlobalMemoryStatus_00656130"
+      }
     }
   ]
 }
