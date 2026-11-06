@@ -33,8 +33,9 @@ public:
 
 class MESHDX8SDRESOURCE;
 
-class MESHDX8SDMASTER : public MESHMASTER
-{public:
+class MESHDX8SDMASTER : public MESHMASTER, public HEIGHTMAPTEMP
+{
+public:
     MESHDX8SDMASTER(RESOURCEMANAGER *manager, const char *name);
     virtual ~MESHDX8SDMASTER();
 
@@ -46,7 +47,6 @@ class MESHDX8SDMASTER : public MESHMASTER
     void Update(bool force);
     void Stop();
 
-    char m_70[0x2c];
     MESHDX8SDRESOURCE *m_first;
     MESHDX8SDRESOURCE *m_last;
     int m_a4;
@@ -92,16 +92,22 @@ public:
     MESHDX8SDRESOURCE *m_prev;
 };
 
-class MESHDX8SDMANAGER : public MESHMANAGER
+class MESHDX8SDMANAGERBASE : public MESHMANAGER
 {
 public:
-    MESHDX8SDMANAGER()
+    MESHDX8SDMANAGERBASE()
     {
         m_loaded = true;
         m_initialized = true;
         m_8 = false;
         m_18 = false;
     }
+};
+
+class MESHDX8SDMANAGER : public MESHDX8SDMANAGERBASE
+{
+public:
+    MESHDX8SDMANAGER() {}
     virtual ~MESHDX8SDMANAGER();
 
     virtual RESOURCEMASTER *CreateMaster(const char *name);

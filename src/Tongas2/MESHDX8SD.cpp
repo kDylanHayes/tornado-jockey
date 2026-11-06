@@ -25,15 +25,22 @@ RESOURCE *MESHDX8SDMASTER::CreateCopy(const RESHANDLE &handle)
 
 MESHDX8SDMASTER::MESHDX8SDMASTER(RESOURCEMANAGER *manager, const char *name) : MESHMASTER(manager, name)
 {
+    {
+        HEIGHTMAPTEMP temp;
+    }
+    m_b9 = 0;
+    m_c0 = 0;
+    m_bc = 0;
+    m_c4 = 0;
+    m_c8 = 0;
     m_first = 0;
     m_last = 0;
-    m_a4 = 0;
-    m_a8 = 0;
+    m_b4 = 0;
     m_ac = 0;
     m_b0 = 0;
-    m_b4 = 0;
-    m_b8 = 0;
-    m_b9 = 0;
+    m_a4 = 0;
+    m_a8 = 0;
+    m_b8 = 1;
 }
 
 void MESHDX8SDMASTER::ReleaseVertexBuffer()
@@ -70,6 +77,15 @@ void MESHDX8SDMASTER::UpdateCopies()
 
 MESHDX8SDMASTER::~MESHDX8SDMASTER()
 {
+    HEIGHTMAPTEMP::SetEnabled(false);
+    if (m_bc) {
+        ((MESHUNKNOWN *)m_bc)->Release();
+        m_bc = 0;
+    }
+    if (m_c0) {
+        ((MESHUNKNOWN *)m_c0)->Release();
+        m_c0 = 0;
+    }
 }
 
 const char *MESHDX8SDMANAGER::GetTypeCode()
