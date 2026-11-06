@@ -53,6 +53,21 @@ void MESHDX8SDMASTER::LockVertexBuffer()
     }
 }
 
+void MESHDX8SDMASTER::UpdateCopies()
+{
+    RESOURCEMASTER::UpdateCopies();
+    int count = m_numCopies / 10;
+    if (count < 100)
+        count = 100;
+    if (m_numCopies - m_numUsed > count)
+        TrimCopies();
+    if (m_b8) {
+        Stop();
+        return;
+    }
+    Update(false);
+}
+
 MESHDX8SDMASTER::~MESHDX8SDMASTER()
 {
 }

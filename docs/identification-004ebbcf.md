@@ -126,7 +126,13 @@ dot-product's x term). `0x004f00c0` in the base `LIGHTMANAGER` vtable has
 seventeen bytes of non-code filler in the executable and is left unnamed;
 `0x004f0940` is a 42-byte STL copy helper that did not get its own symbol.
 
-MESHDX8SD is only scaffolded so far. The manager constructor at
-`0x004f13a0` is the first target: it sets the manager's loaded/initialized
-flags, with the master (`0x004f1650`), copy (`0x004f1ba0`), manager factory
-(`0x004f1b30`) and copy factory (`0x004f1d80`) next.
+MESHDX8SD is now at 9 exact functions out of the 14 it has named so far
+(`GetTypeCode`, `CreateMaster`, `CreateCopy`, the resource and master
+deleting destructors, the resource destructor, the vertex-buffer lock and
+release, and `UpdateCopies`). The manager factory is 96.54% (only the
+vtable-store order differs), the resource constructor 85.86%, `Reset`
+66.96%, and the master constructor/destructor 39.80%/3.14% because the
+original master also inherits a `HEIGHTMAPTEMP` subobject at offset `0x70`
+(size `0x5c`). The remaining unnamed functions are the large renderer at
+`0x4f1730`, the master's `Update`/`Stop` at `0x4f1e10`/`0x4f21c0`, and the
+tiny `HEIGHTMAPTEMP` setters at `0x4f23a0`/`0x4f23c0`.

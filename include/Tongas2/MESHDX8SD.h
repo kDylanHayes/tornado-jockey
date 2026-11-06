@@ -43,6 +43,9 @@ class MESHDX8SDMASTER : public MESHMASTER
     virtual void ReleaseVertexBuffer();
     virtual void LockVertexBuffer();
 
+    void Update(bool force);
+    void Stop();
+
     char m_70[0x2c];
     MESHDX8SDRESOURCE *m_first;
     MESHDX8SDRESOURCE *m_last;
