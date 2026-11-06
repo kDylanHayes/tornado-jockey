@@ -71,7 +71,7 @@ void ONENODE::Clear()
     m_members = 0;
 }
 
-PVSNODE::~PVSNODE()
+__declspec(noinline) PVSNODE::~PVSNODE()
 {
     if (m_members)
         Unlink(m_members);
