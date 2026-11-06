@@ -658,11 +658,10 @@ void BONEDMODELDX8PARTICLE::Virtual11(MATRIX *matrix, BONEDMODELDX8RENDERERAPI *
 
 void BONEDMODELDX8SDRESOURCE::Virtual21()
 {
-    std::string empty1;
-    std::string empty2;
-    std::string name(((BONEDMODELMASTER *)m_master)->m_artPath.c_str());
     void *device = ((BONEDMODELDX8RENDERERDEVICE *)g_pRenderer)->GetDevice();
-    m_model = g_pDisplay->m_2bc->CreateModel(device, empty1, empty2, name);
+    m_model = g_pDisplay->m_2bc->CreateModel(
+        device, std::string(""), std::string(""),
+        std::string(((BONEDMODELMASTER *)m_master)->m_artPath.c_str()));
     if (m_model) {
         void *object = operator new(0x90);
         if (object) {
@@ -863,6 +862,8 @@ lab_7a50:
 }
 
 
+const float kNegativeOne = -1.0f;
+
 class BONEDMODELDX8MATH
 {
 public:
@@ -872,7 +873,7 @@ public:
 void BONEDMODELDX8MATH::Basis(const V3 *a, const V3 *b)
 {
     MATRIX *out = (MATRIX *)this;
-    V3 n(-b->x, -b->y, -b->z);
+    V3 n = *b * kNegativeOne;
     n.Normalize();
     V3 u;
     u.x = n.y * a->z - n.z * a->y;
