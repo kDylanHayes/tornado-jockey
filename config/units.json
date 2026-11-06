@@ -2189,7 +2189,8 @@
       ],
       "target": "build/target/Tongas2/TIMER.obj",
       "source": "src/Tongas2/TIMER.cpp",
-      "category": "engine"
+      "category": "engine",
+      "complete": true
     },
     {
       "name": "Tongas2/GAME",

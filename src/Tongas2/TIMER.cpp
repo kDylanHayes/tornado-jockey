@@ -140,9 +140,10 @@ void TIMER::Start()
     g_pGuiBehaviors = new GUIBEHAVIORS;
     g_pCamera = (WTACTOR *)g_pfnCreateCamera();
     g_pCamera->Virtual146();
+    RESOURCES *resources;
     g_pResources = (RESOURCES *)RESOURCES::s_pfnCreate();
-    RESOURCES *resources = g_pResources;
-    resources->InitManagers();
+    resources = g_pResources;
+    g_pResources->InitManagers();
     resources->ResetGroups();
     g_pInput = g_pfnCreateInput();
     g_pInput->Init();
