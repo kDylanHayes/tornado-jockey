@@ -400,6 +400,7 @@ RESOURCEMASTER *CPRIMITIVE3MANAGER::CreateMaster(const char *name)
 
 void PRIMITIVE3::Update(const V3 &position, const ANG &angles, const V3 &scale)
 {
+    float capsuleRadius;
     switch (m_type) {
     case PRIMITIVE3_OOBOX:
         ((OOBOX3 *)m_data)->SetCenter(position);
@@ -425,8 +426,8 @@ void PRIMITIVE3::Update(const V3 &position, const ANG &angles, const V3 &scale)
         ((QUAD3 *)m_data)->SetAngles(angles);
         break;
     case PRIMITIVE3_CAPSULE: {
-        float radius = scale.x * 0.5f;
-        ((CAPSULE3 *)m_data)->Set(position, radius, scale.y, angles);
+        capsuleRadius = scale.x * 0.5f;
+        ((CAPSULE3 *)m_data)->Set(position, capsuleRadius, scale.y, angles);
         break;
     }
     }
