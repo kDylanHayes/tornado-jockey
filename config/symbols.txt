@@ -2633,9 +2633,9 @@
 # Tongas2/MESHDX8: dynamic initializer at the start of the unit, only reached
 # through a .CRT$XCU pointer, so auto-analysis never made it a function.
 0x004e5d50 code_004e5d50 function 0x2b0
-0x004e68e0 ?Validate@INDEXBUFFER@@QAEXXZ function
-0x004e6a60 ?Validate@VERTEXBUFFER@@QAEXXZ function
-0x004e6c40 ??0VERTEXBUFFER@@QAE@H@Z function
+0x004e68e0 ?Validate@INDEXBUFFER@@QAEXXZ function 0xcc
+0x004e6a60 ?Validate@VERTEXBUFFER@@QAEXXZ function 0xc9
+0x004e6c40 ??0VERTEXBUFFER@@QAE@H@Z function 0x6a
 0x004e6d20 ??0INDEXBUFFER@@QAE@XZ function
 0x004e7140 ?GetProjection@DX8CAMERA@@QAEPBU_D3DMATRIX@@XZ function
 0x004e7720 ?SetLightMask@MESHDX8@@QAEXH@Z function
@@ -2650,7 +2650,7 @@
 0x004e7ed0 ?_Buynode@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@PAU342@00ABU?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@2@D@Z function
 0x004e80f0 ?ShowSubmesh@MESHDX8@@QAEXH_N@Z function
 0x004e8bd0 ?RemoveSubmesh@MESHDX8@@QAEXH@Z function
-0x004e98b0 ??0MESHDX8@@QAE@XZ function
+0x004e98b0 ??0MESHDX8@@QAE@XZ function 0x112
 0x004e9c30 ?AddSubmesh@MESHDX8@@QAEHABURESHANDLE@@HHHHHH@Z function
 0x004e9d00 ?SetSubmeshShader@MESHDX8@@QAEXHABURESHANDLE@@@Z function
 0x004ea100 ?Get@RENDERSHADERMANAGER@@QAEPAVRENDERSHADER@@URESHANDLE@@@Z function
