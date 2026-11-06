@@ -79,9 +79,39 @@ private Ghidra project copy at
 `%LOCALAPPDATA%\tornado-jockey\ghidra-carve-tail`. The report and all four
 objdiff targets build without truncation panics.
 
-## Matching started on TEXTUREDX8SD
+## Matching TEXTUREDX8SD
 
-`TEXTUREDX8SD` is the smallest carve (2,773 bytes). `py
-tools/function_status.py Tongas2/TEXTUREDX8SD` and `unit_status.py` are the
-starting point; none of its functions are exact yet. The unit stays
-incomplete, as do `SETTINGS`, `MODEL` and `MODELDX8SD`.
+`TEXTUREDX8SD` is the smallest carve (2,750 bytes in the final report). Ten
+of its eighteen functions are exact:
+
+- `?GetTexture@TEXTUREDX8SDMASTER@@QAEPAXXZ`
+- `?GetSurface@TEXTUREDX8SDMASTER@@QAEPAXXZ`
+- `?ReleaseTexture@@YGXPBURESHANDLE@@@Z`
+- `??1TEXTUREDX8SDMANAGER@@UAE@XZ`
+- `??_GTEXTUREDX8SDMANAGER@@UAEPAXI@Z`
+- `??1TEXTUREDX8SDMASTER@@UAE@XZ`
+- `??_GTEXTUREDX8SDMASTER@@UAEPAXI@Z`
+- `?CreateMaster@TEXTUREDX8SDMANAGER@@UAEPAVRESOURCEMASTER@@PBD@Z`
+- `?GetTextureResource@@YGPAVTEXTUREDX8SDMASTER@@PBURESHANDLE@@@Z`
+- `?GetHandleRGB@TEXTUREDX8SDMANAGER@@QAE?AURESHANDLE@@HHPBHPBD@Z`
+
+`py tools/unit_status.py Tongas2/TEXTUREDX8SD` reports **22.04% exact
+(606/2,750 bytes)**, **24.88% fuzzy**, and **10/18 functions exact**. The
+unit stays incomplete.
+
+Remaining blockers:
+
+- The master constructor (`0x00504570`, 0x21f bytes) still has a stub body; its
+  flag/layout work decides `Load` and most of the texture builders.
+- `BuildDiffuseColorTexture` (`0x00504210`), `Build` (`0x00504bb0`),
+  `Load` (`0x00504800`) and `MergeAlpha` (`0x00504990`) need the renderer and
+  texture-object call shapes transcribed. `Build` also needs a real 0x8f-byte
+  body before its symbol can be added without objdiff panicking.
+- `UpdateTextures` (`0x00504c90`) and `GetHandle` (`0x00504330`) are close but
+  not byte-exact yet: 0% and 19.74% respectively.
+- `GetPhysicalMemoryMB` (`0x00504d10`) is 41%; the target has an extra
+  `push edi`/`xor ecx,ecx` sequence around the imported
+  `GlobalMemoryStatus` call that plain C++ does not reproduce.
+
+`MODELDX8SD` was completed by another thread and is 100% in main; its source
+and ranges were left untouched here.
