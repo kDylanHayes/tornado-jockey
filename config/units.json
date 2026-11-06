@@ -3261,9 +3261,9 @@
       "source": "src/Tongas2/INTRO.cpp",
       "category": "engine",
       "symbol_mappings": {
-        "FUN_00504d70": "?HardwareA@@YAHXZ",
-        "FUN_00504d10": "?HardwareB@@YAHXZ",
-        "FUN_00504d40": "?HardwareC@@YAHXZ",
+        "FUN_00504d70": "?HardwareA@HARDWARE@@QAEHXZ",
+        "FUN_00504d40": "?HardwareC@HARDWARE@@QAEHXZ",
+        "?GetPhysicalMemoryMB@@YAIXZ": "?GetPhysicalMemoryMB@HARDWARE@@QAEIXZ",
         "FUN_004f9c40": "?UpdateQuality@SETTINGSTABLE@@QAEXXZ"
       }
     },
