@@ -937,15 +937,16 @@ V3 HEIGHTMAPDX8::GetNormal(const V3 &point)
     HEIGHTMAPDX8MASTER *master = Master();
     int x, y;
     PointToPixel(point, &x, &y);
-    V3 normal;
     PLANE plane;
     if (x >= 0 && y >= 0 && x < master->m_imageWidth && y < master->m_imageHeight)
         plane = GetFlatPlane(x, y);
     else
         plane = GetDefaultPlane();
-    normal = *(V3 *)&plane;
-    normal.Normalize();
-    return normal;
+    {
+        V3 normal = *(V3 *)&plane;
+        normal.Normalize();
+        return normal;
+    }
 }
 
 void HEIGHTMAPDX8MASTER::Prepare()
