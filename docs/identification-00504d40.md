@@ -89,8 +89,23 @@ private Ghidra project copy at
 `%LOCALAPPDATA%\tornado-jockey\ghidra-carve-504d40`. The full report and all
 four units' objdiff targets build without truncation panics.
 
-## Matching not started
+## Matching started on HARDWARE
 
-None of the four units is matched yet. `Tongas2/HARDWARE` is the smallest
-(5,029 bytes, 7 functions) and is the first candidate. All four are recorded
-without `"complete": true`.
+`Tongas2/HARDWARE` is the smallest carve (5,029 bytes, 7 functions) and is the
+first one worked on. Two of its five scaffolded functions are exact:
+
+- `?HardwareA@@YAHXZ` at `0x00504d70` (the `~MHz` registry read).
+- `?HardwareC@@YAHXZ` at `0x00504d40` (the `"VRAM requested..."` /
+  `"DETECTION ERROR"` box and the two field reads). It is a naked function
+  because the target takes its object pointer in `ecx`; the two strings are
+  `extern "C"` arrays so their relocations carry the same names, and the
+  target symbols `0x006780e8`/`0x00678114` are named `_s_vram_error`/
+  `_s_detection_error` in `config/symbols.txt`. The `HardwareA` strings at
+  `0x00678124`/`0x0067812c` got their compiler names the same way.
+
+`py tools/unit_status.py Tongas2/HARDWARE --functions` reports 2.37% exact
+(119/5029 bytes), 2.57% fuzzy, 2/7 functions. Still open: `?HardwareD`
+(the `GetVersionExA` switch), the `HARDWARE` constructor, and the 4,495-byte
+`Detect`. With the two matches the full report's `matched_code` rises from
+645389 to 645508 and `matched_functions` from 3738 to 3740; `total_code` and
+the function total are unchanged. All four units stay incomplete.

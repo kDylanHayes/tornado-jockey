@@ -7385,6 +7385,10 @@
 0x00504dd0 ?HardwareD@@YAHXZ function 0xd8
 0x00504f90 ??0HARDWARE@@QAE@XZ function 0x5b
 0x00504ff0 ?Detect@HARDWARE@@QAEXXZ function 0x118f
+0x006780e8 _s_vram_error data 0x2a
+0x00678114 _s_detection_error data 0x10
+0x00678124 ??_C@_04LNBIJLKI@?$HOMHz?$AA@ data 0x5
+0x0067812c ??_C@_0CP@CCOAHBOL@Hardware?2Description?2System?2Cent@ data 0x2f
 
 # Tongas2/D3DAPP (0x00506190-0x00508a6f)
 0x00506ba0 ?Cleanup3DEnvironment@D3DAPP@@QAEXXZ function 0x7c
