@@ -121,6 +121,7 @@ struct HEIGHTMAPTEMP
     void SetEnabled(bool enabled);
     void SetValue(int value);
     int GetValue();
+    V3 *GetOne();
 
     char *m_04;
     char *m_08;

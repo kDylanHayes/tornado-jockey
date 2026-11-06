@@ -61,7 +61,7 @@ public:
     void *m_bc;
     void *m_c0;
     void *m_c4;
-    void *m_c8;
+    float m_c8;
 };
 
 class MESHDX8SDRESOURCE : public MESH

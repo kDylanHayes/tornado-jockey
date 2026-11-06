@@ -126,16 +126,17 @@ dot-product's x term). `0x004f00c0` in the base `LIGHTMANAGER` vtable has
 seventeen bytes of non-code filler in the executable and is left unnamed;
 `0x004f0940` is a 42-byte STL copy helper that did not get its own symbol.
 
-MESHDX8SD now names 30 functions and has 25 exact. `GetTypeCode`,
-`CreateMaster`, `CreateCopy`, the manager factory, the master ctor/dtor, the
-resource constructor's `Start`/`Stop` pair, the resource dtor, all deleting
-destructors, the vertex-buffer lock/release, `UpdateCopies`, the
-screen-decal enable hooks, the 624-byte master renderer (`0x4f1730`), the
-resource `SetPosition`/`SetScale`/`SetLayer` setters, the
-`HEIGHTMAPTEMP::SetValue`/`GetValue` pair at `0x4f1a20`/`0x4f1a30`, the
-secondary-base adjustor thunk at `0x4f1b10` and the manager's
-`ReleaseAllBuffers`/`LockAllBuffers` pair at `0x4f1a40`/`0x4f1a70` are
-exact. The remaining fuzzy functions are `Update` (56.33%), `Reset`
-(66.96%), `SetColor` (75.48%), `Stop` (83.49%) and the resource constructor
-(85.75%). `SetColor` differs only in using ESI for the comparison
-temporaries; `Stop` and the constructor differ in register allocation.
+MESHDX8SD now names 32 functions and has 27 exact. `GetTypeCode`,
+`CreateMaster`, `CreateCopy`, the manager factory and `Update`, the master
+ctor/dtor, the resource constructor's `Start`/`Stop` pair, the resource
+dtor, all deleting destructors, the vertex-buffer lock/release,
+`UpdateCopies`, the screen-decal enable hooks, the 624-byte master renderer
+(`0x4f1730`), the resource `SetPosition`/`SetScale`/`SetLayer` setters, the
+`HEIGHTMAPTEMP::SetValue`/`GetValue` pair and `GetOne` at
+`0x4f1a20`/`0x4f1a30`/`0x4f1720`, the secondary-base adjustor thunk at
+`0x4f1b10` and the manager's `ReleaseAllBuffers`/`LockAllBuffers` pair at
+`0x4f1a40`/`0x4f1a70` are exact. The remaining fuzzy functions are
+`Update` (56.33%), `Reset` (66.96%), `SetColor` (75.48%), `Stop` (83.49%)
+and the resource constructor (85.75%). `SetColor` differs only in using ESI
+for the comparison temporaries; `Stop` and the constructor differ in
+register allocation.
