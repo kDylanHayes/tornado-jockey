@@ -6,6 +6,15 @@
 // config/symbols.txt so a later delink cannot cut the target short.
 #include "Tongas2/MAPLOADER.h"
 
+#include <stdexcept>
+
+// The out-of-line std::vector length check the map list's vector instantiation
+// leaves in this object.
+void VectorTooLong()
+{
+    throw std::length_error("vector<T> too long");
+}
+
 void MAPLOADER::LoadMap(const char *name)
 {
     (void)name;
