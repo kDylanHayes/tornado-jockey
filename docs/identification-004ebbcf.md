@@ -117,7 +117,7 @@ still unidentified renderer object; the next unit should be re-carved at
 
 The lights are currently 24 exact functions out of the 29 target symbols in
 their half; `0x004f10b0` (`Start`) and `0x004f12f0` (`SetType`) were folded
-into one Ghidra function, so their sizes were corrected to `0x240` and
+into one Ghidra function, so their sizes were corrected to `0x23a` and
 `0x9c`. The remaining light functions are fuzzy rather than exact:
 `Update` (87.25%), `UnpackColor` (91.67%), `_Xlen` (95.65%, one byte of
 trailing padding), `Virtual09` (98.87%, only ESI/EDI swapped for the device
