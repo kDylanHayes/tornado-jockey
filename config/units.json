@@ -3407,7 +3407,13 @@
       ],
       "target": "build/target/Tongas2/TEXTFILE.obj",
       "source": "src/Tongas2/TEXTFILE.cpp",
-      "category": "engine"
+      "category": "engine",
+      "symbol_mappings": {
+        "FUN_00543cc0": "?ReleaseA@REFOBJ@@QAEXXZ",
+        "FUN_00543cd0": "?ReleaseB@REFOBJ@@QAEXXZ",
+        "FUN_005105d0": "??$copy@PAHPAH@std@@YAPAHPAH00@Z",
+        "FUN_00517d30": "??$_Ucopy@PAH@?$vector@HV?$allocator@H@std@@@std@@IAEPAHPAH00@Z"
+      }
     },
     {
       "name": "Tongas2/ANIMATEDGEOMETRY",

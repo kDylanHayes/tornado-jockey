@@ -7614,6 +7614,17 @@
 0x00528610 ?Load@TEXTFILE@@QAEHPBD@Z function 0x158
 0x00528aa0 ?GetToken@TEXTFILE@@QAEHXZ function 0x5d
 0x00528b00 ?GetLine@TEXTFILE@@QAEHXZ function 0x74
+0x0052a120 ?ReleaseA@PARTICLE@@QAEXXZ function 0x8
+0x0052a130 ?ReleaseB@PARTICLE@@QAEXXZ function 0x8
+0x0052aa20 ?FindKey@PARTICLE@@QAEHH@Z function 0x39
+0x0052ade0 ?DestroyIntVector@@YGXPAV?$vector@HV?$allocator@H@std@@@std@@@Z function 0x2e
+0x0052ae10 ?DestroyMembers@PARTICLEB@@QAEXXZ function 0x9a
+0x0052aeb0 ?_Buy@?$vector@HV?$allocator@H@std@@@std@@IAE_NI@Z function 0x4d
+0x0052b0e0 ??4?$vector@HV?$allocator@H@std@@@std@@QAEAAV01@ABV01@@Z function 0x146
+0x0052b230 ?CopyForward@@YAPAV?$vector@HV?$allocator@H@std@@@std@@PAV12@00@Z function 0x32
+0x0052b270 ?CopyBackward@@YAPAV?$vector@HV?$allocator@H@std@@@std@@PAV12@00@Z function 0x32
+0x0052b370 ?FillVectors@@YAXPAV?$vector@HV?$allocator@H@std@@@std@@0ABV12@@Z function 0x26
+0x0052cc70 ?PushBack@VECINT@@QAEXABH@Z function 0x4d
 
 # Tongas2/ANIMATEDGEOMETRY (0x0052d400-0x00530d0f)
 0x0052d400 ?Load@ANIMATEDGEOMETRY@@QAEHPAXH0@Z function 0x24b2
