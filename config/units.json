@@ -3420,6 +3420,42 @@
       "target": "build/target/Tongas2/ANIMATEDGEOMETRY.obj",
       "source": "src/Tongas2/ANIMATEDGEOMETRY.cpp",
       "category": "engine"
+    },
+    {
+      "name": "Tongas2/CANIMATEDMESH",
+      "ranges": [
+        "0x00530d10-0x00532baf"
+      ],
+      "target": "build/target/Tongas2/CANIMATEDMESH.obj",
+      "source": "src/Tongas2/CANIMATEDMESH.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/SKINNEDANIMATION",
+      "ranges": [
+        "0x00532bb0-0x0053464f"
+      ],
+      "target": "build/target/Tongas2/SKINNEDANIMATION.obj",
+      "source": "src/Tongas2/SKINNEDANIMATION.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/TEXTURE",
+      "ranges": [
+        "0x00534650-0x005358ef"
+      ],
+      "target": "build/target/Tongas2/TEXTURE.obj",
+      "source": "src/Tongas2/TEXTURE.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/TEXTURERESIZER",
+      "ranges": [
+        "0x005358f0-0x00535fcf"
+      ],
+      "target": "build/target/Tongas2/TEXTURERESIZER.obj",
+      "source": "src/Tongas2/TEXTURERESIZER.cpp",
+      "category": "engine"
     }
   ]
 }
