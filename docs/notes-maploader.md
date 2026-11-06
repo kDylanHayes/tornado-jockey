@@ -31,13 +31,13 @@ the manager at `0x04` (`FUN_004ff8c0`) into `0x18`/`0x1c`.
 
 ## Progress
 
-- `Update`: **61.92%** fuzzy. The timer, sun resource creation (the target
+- `Update`: **64.34%** fuzzy. The timer, sun resource creation (the target
   builds `V3(0,0,-15)`, `V3(30,30,30)`, `V3(0,0,-15)` and `"SUN"`), camera
   path following and the inverse view matrix are in place. The remaining
   gap is stack layout/register allocation: the target reuses one `MATRIX`
-  in place and stores the branch's `V3`s through slots our build lays out
-  differently.
-- `LoadMap`: **63.65%** fuzzy. All three list walks and the six name cases
+  in place, reads the first camera target from an uninitialized `V3` slot
+  at `[esp+0xc]`, and lays the sun's `V3` arguments out differently.
+- `LoadMap`: **63.69%** fuzzy. All three list walks and the six name cases
   are translated. The remaining differences are the `std::string`
   temporaries: the target expands `substr`/`operator+`/`UpperString` into
   a slightly different sequence of local strings and calls, and the

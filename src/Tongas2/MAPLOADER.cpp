@@ -165,6 +165,7 @@ void MAPLOADER::LoadMap(const char *name)
 void MAPLOADER::Update(float dt)
 {
     int zero = 0;
+    V3 target;
     if (m_20 == (void *)zero)
         return;
 
@@ -176,8 +177,10 @@ void MAPLOADER::Update(float dt)
             m_24c = true;
 
             CAMERAOBJ *camera = (CAMERAOBJ *)m_24;
-            camera->m_1a8 = V3(0.0f, 0.0f, -15.0f);
-            camera->m_1b4 = m_234;
+            camera->m_1a8.x = 0.0f;
+            camera->m_1a8.y = 0.0f;
+            camera->m_1a8.z = -15.0f;
+            camera->m_1b4 = target;
 
             V3 position = camera->m_188;
             CAMERAOBJ *holder = (CAMERAOBJ *)m_38;
