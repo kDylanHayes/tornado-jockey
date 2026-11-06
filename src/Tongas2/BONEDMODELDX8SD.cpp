@@ -140,7 +140,7 @@ BONEDMODELDX8SDRESOURCE::~BONEDMODELDX8SDRESOURCE()
 {
     if (m_model) {
         DestroyAnimations();
-        FUN_004fdf80(m_model);
+        g_pDisplay->m_2bc->ReleaseModel(m_model);
         m_model = 0;
     }
     if (m_loader) {
@@ -361,7 +361,7 @@ void BONEDMODELDX8SDRESOURCE::Virtual71()
         void *material = ((BONEDMODELDX8MODEL *)m_model)->m_materials->Get(i);
         if (material && material != ((void **)m_materials)[i]) {
             ((BONEDMODELDX8MODEL *)m_model)->m_materials->Set(i, ((void **)m_materials)[i]);
-            FUN_004fde40(material);
+            g_pDisplay->m_2bc->DeleteMaterial(material);
         }
     }
 }
