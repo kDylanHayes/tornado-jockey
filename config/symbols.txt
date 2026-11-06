@@ -7617,7 +7617,7 @@
 0x00515290 ?LoadExtraAnimations@SKINNEDMESH@@QAEHPBD@Z function 0x64c
 
 # Tongas2/TEXTFILE (0x00528610-0x0052d3ff)
-0x00528610 ?Load@TEXTFILE@@QAEHPBD@Z function 0x158
+0x00528610 ?Load@TEXTREADER@@QAEHABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z function 0x158
 0x00528770 ?ReadString@TEXTREADER@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ function 0xaa
 0x00528aa0 ?GetToken@TEXTFILE@@QAEXPAXH@Z function 0x5d
 0x00528b00 ??0TEXTFILE@@QAE@XZ function 0x74

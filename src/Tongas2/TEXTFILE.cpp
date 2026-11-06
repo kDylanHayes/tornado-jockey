@@ -4,13 +4,18 @@
 // function has its exact target size in config/symbols.txt so a later delink
 // cannot cut the target short.
 #include "Tongas2/TEXTFILE.h"
+#include "Tongas2/LOG.h"
 
 #include <stdlib.h>
+#include <string.h>
 #include <string>
 #include <vector>
 
 typedef std::vector<int> VI;
 typedef std::vector<VI> VV;
+
+extern "C" char s_TEXTFILE_file[] = "TEXTFILE - file does not exist: %s";
+bool FileExists(std::string *path, char *flag);
 
 class REFOBJ
 {
@@ -114,9 +119,9 @@ class STREAM
 {
 public:
     virtual void v00();
-    virtual void v04();
+    virtual void Open(const char *name);
     virtual void v08();
-    virtual void v0c();
+    virtual int IsOpen();
     virtual void v10();
     virtual void v14();
     virtual void v18();
@@ -127,6 +132,7 @@ public:
 class TEXTREADER
 {
 public:
+    int Load(const std::string &name);
     std::string ReadString();
 
 private:
@@ -135,6 +141,32 @@ private:
 
 TOK::TOK() : m_000(0), m_004(0), m_008(0)
 {
+}
+
+int TEXTREADER::Load(const std::string &name)
+{
+    char buffer[0x200];
+    const char *text = name.c_str();
+    if (text)
+        strncpy(buffer, text, 0x1ff);
+    else
+        buffer[0] = 0;
+    buffer[0x1ff] = 0;
+    m_stream->Open(buffer);
+    if (m_stream->IsOpen())
+        return 1;
+    bool found;
+    {
+        std::string local;
+        local = buffer;
+        char flag = 0;
+        found = FileExists(&local, &flag) != 0;
+    }
+    if (found) {
+        if (g_pLog)
+            g_pLog->ContentError(s_TEXTFILE_file, buffer);
+    }
+    return 0;
 }
 
 std::string TEXTREADER::ReadString()
@@ -150,12 +182,6 @@ std::string TEXTREADER::ReadString()
 
 TEXTFILE::TEXTFILE() : m_030(0), m_034(0), m_080(0)
 {
-}
-
-int TEXTFILE::Load(const char *name)
-{
-    (void)name;
-    return 0;
 }
 
 void TEXTFILE::GetToken(void *buf, int size)
