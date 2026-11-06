@@ -437,6 +437,9 @@ void BONEDMODELDX8SDRESOURCE::LoadTags()
     fclose(handle);
 }
 
+
+void FUN_0046365f(MATRIX *out, float width, float height, float zNear, float zFar);
+
 std::string BONEDMODELDX8MODEL::GetMaterialName(int index)
 {
     return m_materials->GetName(index);
@@ -468,8 +471,16 @@ public:
 class BONEDMODELDX8RENDERERAPI
 {
 public:
-    char m_00[0xc8];
+    char m_00[0x94];
+    void (__stdcall *m_94)(BONEDMODELDX8RENDERERAPI *self, int a, void *value);
+    char m_98[0xc8 - 0x98];
     void (__stdcall *m_c8)(BONEDMODELDX8RENDERERAPI *self, int a, int b);
+};
+
+class BONEDMODELDX8RENDERHELPER
+{
+public:
+    void FUN_00516380(BONEDMODELDX8RENDERERAPI *device);
 };
 
 class BONEDMODELDX8PARTICLESYSTEM
@@ -491,6 +502,7 @@ public:
     void Virtual9(int unused);
     void Virtual10(int unused);
     void Virtual11(MATRIX *matrix, BONEDMODELDX8RENDERERAPI *renderer);
+    void Virtual12(BONEDMODELDX8RENDERERAPI *device);
     void Render(int arg);
 
     BONEDMODELDX8STAGE *m_0;
@@ -499,6 +511,8 @@ public:
     char m_1c[4];
     BONEDMODELDX8EFFECT *m_20;
     int m_24;
+    char m_28[0x228];
+    BONEDMODELDX8RENDERHELPER *m_250;
 };
 
 void BONEDMODELDX8PARTICLE::Virtual9(int unused)
@@ -525,6 +539,19 @@ void BONEDMODELDX8PARTICLE::Virtual11(MATRIX *matrix, BONEDMODELDX8RENDERERAPI *
         renderer->m_c8(renderer, 0xe, 0);
         m_18->Emit(renderer, &m, &zero, 1.0f);
         renderer->m_c8(renderer, 0xe, 1);
+    }
+}
+
+void BONEDMODELDX8PARTICLE::Virtual12(BONEDMODELDX8RENDERERAPI *device)
+{
+    if (m_20) {
+        device->m_c8(device, 0x89, 0);
+        MATRIX matrix;
+        FUN_0046365f(&matrix, 640.0f, 480.0f, 1.0f, 10.0f);
+        device->m_94(device, 3, &matrix);
+        device->m_94(device, 0x100, &matrix);
+        device->m_94(device, 2, &matrix);
+        m_250->FUN_00516380(device);
     }
 }
 
