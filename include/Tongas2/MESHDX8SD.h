@@ -31,14 +31,33 @@ public:
     RESHANDLE m_shader;
 };
 
+class MESHDX8SDRESOURCE;
+
 class MESHDX8SDMASTER : public MESHMASTER
-{
-public:
+{public:
     MESHDX8SDMASTER(RESOURCEMANAGER *manager, const char *name);
     virtual ~MESHDX8SDMASTER();
 
     virtual RESOURCE *CreateCopy(const RESHANDLE &handle);
     virtual void UpdateCopies();
+    virtual void ReleaseVertexBuffer();
+    virtual void LockVertexBuffer();
+
+    char m_70[0x2c];
+    MESHDX8SDRESOURCE *m_first;
+    MESHDX8SDRESOURCE *m_last;
+    int m_a4;
+    int m_a8;
+    int m_ac;
+    int m_b0;
+    int m_b4;
+    unsigned char m_b8;
+    unsigned char m_b9;
+    char m_ba[2];
+    void *m_bc;
+    void *m_c0;
+    void *m_c4;
+    void *m_c8;
 };
 
 class MESHDX8SDRESOURCE : public MESH
@@ -47,9 +66,27 @@ public:
     MESHDX8SDRESOURCE(MESHMASTER *master, const RESHANDLE &handle);
     virtual ~MESHDX8SDRESOURCE();
 
+    // Clears the mesh's build state.
+    __declspec(noinline) void Reset();
+
     virtual void Start();
     virtual void Stop();
     virtual void Update();
+
+    V3 m_34;
+    V3 m_40;
+    int m_4c;
+    V3 m_50;
+    char m_5c[0x40];
+    bool m_9c;
+    void *m_a0;
+    int m_a4;
+    bool m_a8;
+    int m_ac;
+    int m_b0;
+    int m_b4;
+    MESHDX8SDRESOURCE *m_next;
+    MESHDX8SDRESOURCE *m_prev;
 };
 
 class MESHDX8SDMANAGER : public MESHMANAGER

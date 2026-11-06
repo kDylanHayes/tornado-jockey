@@ -248,7 +248,8 @@ struct IDirect3DDevice8
     virtual HRESULT __stdcall CreateTexture() = 0;
     virtual HRESULT __stdcall CreateVolumeTexture() = 0;
     virtual HRESULT __stdcall CreateCubeTexture() = 0;
-    virtual HRESULT __stdcall CreateVertexBuffer() = 0;
+    virtual HRESULT __stdcall CreateVertexBuffer(UINT Length, DWORD Usage, DWORD FVF, int Pool,
+                                                 IDirect3DVertexBuffer8 **ppVertexBuffer) = 0;
     virtual HRESULT __stdcall CreateIndexBuffer() = 0;
     virtual HRESULT __stdcall CreateRenderTarget() = 0;
     virtual HRESULT __stdcall CreateDepthStencilSurface() = 0;

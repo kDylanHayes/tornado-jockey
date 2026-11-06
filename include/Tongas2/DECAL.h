@@ -41,7 +41,7 @@ public:
 #ifdef MESH_DEFINITIONS
     // MESH.cpp alone was built seeing this.
     MESH(class MESHMASTER *master, const RESHANDLE &handle);
-    virtual ~MESH() {}
+    virtual ~MESH();
     virtual bool IsLoaded() { return true; }
 #endif
     virtual void SetColor(const V3 &color);
