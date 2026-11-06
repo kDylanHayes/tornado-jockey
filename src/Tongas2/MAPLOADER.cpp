@@ -64,17 +64,19 @@ struct MAPOBJECT
     std::string m_20c;
 };
 
-// The manager that loads a map resource by name.
+// The manager that loads a map resource by name. The target calls it with the
+// map name, a resource path, a second (empty) path and three flags.
 struct MAPMANAGER
 {
-    void *Load(const char *name);
+    void *Load(const char *name, std::string path, std::string suffix,
+               int a, int b, int c);
 };
 
 // A 0x60-byte map decoration (the wing and logo objects).
 struct MAPDECOR
 {
-    MAPDECOR(const char *text, int length);
-    void SetName(const char *name);
+    MAPDECOR(void *manager, int type);
+    void SetName(const char *name, std::string path, std::string ext, int flags);
 
     char m_000[0x60];
 };
@@ -111,9 +113,8 @@ void MAPLOADER::LoadMap(const char *name)
     m_240 = 0;
     m_244 = 0;
 
-    MAPDATA *map = (MAPDATA *)m_20;
-    for (int i = 0; map->m_pathsBegin != 0 && i < map->m_pathsEnd - map->m_pathsBegin; i++) {
-        PATHOBJ *path = (PATHOBJ *)map->GetPath(i);
+    for (int i = 0; ((MAPDATA *)m_20)->m_pathsBegin != 0 && i < ((MAPDATA *)m_20)->m_pathsEnd - ((MAPDATA *)m_20)->m_pathsBegin; i++) {
+        PATHOBJ *path = (PATHOBJ *)((MAPDATA *)m_20)->GetPath(i);
         std::string pathName = UpperString(path->m_name);
         if (pathName.length() >= 10 && pathName.substr(0, 10) == "CAMERAPATH")
             m_240 = path;
@@ -121,31 +122,32 @@ void MAPLOADER::LoadMap(const char *name)
             m_244 = path;
     }
 
-    for (int i = 0; map->m_modelsBegin != 0 && i < map->m_modelsEnd - map->m_modelsBegin; i++) {
-        void *model = map->GetModel(i);
+    for (int i = 0; ((MAPDATA *)m_20)->m_modelsBegin != 0 && i < ((MAPDATA *)m_20)->m_modelsEnd - ((MAPDATA *)m_20)->m_modelsBegin; i++) {
+        void *model = ((MAPDATA *)m_20)->GetModel(i);
         BONEDMODELDX8PARTICLEDESC *resource =
             new BONEDMODELDX8PARTICLEDESC(*(BONEDMODELDX8PARTICLEDESC *)model);
         ((CAMERAOBJ *)m_38)->SetTarget(resource);
     }
 
-    for (int i = 0; map->m_objectsBegin != 0 && i < map->m_objectsEnd - map->m_objectsBegin; i++) {
-        MAPOBJECT *object = (MAPOBJECT *)map->GetObject(i);
+    void **objBegin = ((MAPDATA *)m_20)->m_objectsBegin;
+    for (int i = 0; objBegin != 0 && i < ((MAPDATA *)m_20)->m_objectsEnd - objBegin; i++) {
+        MAPOBJECT *object = (MAPOBJECT *)((MAPDATA *)m_20)->GetObject(i);
         std::string objectType = UpperString(object->m_type);
         std::string objectName = UpperString(object->m_name);
 
         if (objectType.length() >= 4 && objectType.substr(0, 4) == "WING") {
             if (objectName.length() > 0) {
                 std::string full = m_20c + objectName;
-                MAPDECOR *wing = new MAPDECOR(objectName.c_str(), objectName.length());
+                MAPDECOR *wing = new MAPDECOR(m_04, m_00);
                 m_204 = wing;
-                wing->SetName(full.c_str());
+                wing->SetName(name, full, std::string(""), 1);
             }
         } else if (objectType.length() >= 4 && objectType.substr(0, 4) == "LOGO") {
             if (objectName.length() > 0) {
                 std::string full = m_20c + objectName;
-                MAPDECOR *logo = new MAPDECOR(objectName.c_str(), objectName.length());
+                MAPDECOR *logo = new MAPDECOR(m_04, m_00);
                 m_208 = logo;
-                logo->SetName(full.c_str());
+                logo->SetName(name, full, std::string(""), 1);
                 *(V3 *)((char *)logo + 0x50) = *(V3 *)((char *)object + 0x38);
             }
         } else if (objectType == "CAMERA") {
@@ -155,16 +157,16 @@ void MAPLOADER::LoadMap(const char *name)
             ((CAMERAOBJ *)m_24)->m_1b4 = *(V3 *)((char *)object + 0x38);
         } else if (objectType == "SKYBOX") {
             std::string full = m_20c + objectName;
-            char suffix[12];
+            char suffix[28];
             suffix[0] = 0;
             if (FindMapResource(&full, suffix))
-                m_18 = ((MAPMANAGER *)m_04)->Load(name);
+                m_18 = ((MAPMANAGER *)m_04)->Load(name, full, std::string(""), 1, 1, 0);
         } else if (objectType == "GLOWSKYBOX") {
             std::string full = m_20c + objectName;
-            char suffix[12];
+            char suffix[28];
             suffix[0] = 0;
             if (FindMapResource(&full, suffix))
-                m_1c = ((MAPMANAGER *)m_04)->Load(name);
+                m_1c = ((MAPMANAGER *)m_04)->Load(name, full, std::string(""), 1, 1, 0);
         }
     }
 }
@@ -184,7 +186,8 @@ void MAPLOADER::Update(float dt)
             m_24c = true;
 
             CAMERAOBJ *camera = (CAMERAOBJ *)m_24;
-            camera->m_1a8 = V3((float)zero, (float)zero, -15.0f);
+            V3 start((float)zero, (float)zero, -15.0f);
+            camera->m_1a8 = start;
             camera->m_1b4 = point;
 
             V3 direction = camera->m_188;

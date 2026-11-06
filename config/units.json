@@ -3277,9 +3277,9 @@
         "FUN_00517e10": "?GetModel@MAPDATA@@QAEPAXH@Z",
         "?FUN_004f82a0@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@Z": "_UpperString",
         "FUN_00527550": "_FindMapResource",
-        "FUN_005174a0": "??0MAPDECOR@@QAE@PBDH@Z",
-        "FUN_00517550": "?SetName@MAPDECOR@@QAEXPBD@Z",
-        "_m_62": "?Load@MAPMANAGER@@QAEPAXPBD@Z"
+        "FUN_005174a0": "??0MAPDECOR@@QAE@PAXH@Z",
+        "FUN_00517550": "?SetName@MAPDECOR@@QAEXPBDV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@1H@Z",
+        "_m_62": "?Load@MAPMANAGER@@QAEPAXPBDV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@1HHH@Z"
       }
     },
     {
