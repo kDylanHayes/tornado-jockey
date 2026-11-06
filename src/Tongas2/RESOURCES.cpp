@@ -23,6 +23,10 @@ PROPENTRY RESOURCES::s_properties[] = {
 
 CMDBASE *(*RESOURCES::s_pfnCreate)() = RESOURCES::Create;
 
+// Shared axes used by the actors and the primitive renderer.
+V3 g_up(0.0f, 1.0f, 0.0f);
+V3 g_zero;
+
 // Allows the globals whose extent the image gives explicitly to sit in .bss.
 #pragma section(".bss", read, write)
 
@@ -47,7 +51,6 @@ RESOURCE_TYPE(LIGHT)
 RESOURCE_TYPE(FX)
 RESOURCE_TYPE(GLOBALDEFS)
 RESOURCE_TYPE(PATH)
-RESOURCE_TYPE(PATHREPOSITORY)
 RESOURCE_TYPE(ACTORRESOURCES)
 RESOURCE_TYPE(GUIGENERIC)
 RESOURCE_TYPE(GUITEXT)
@@ -57,8 +60,10 @@ RESOURCE_TYPE(GUICHECKBOX)
 RESOURCE_TYPE(GUICHECKGROUP)
 extern CREATEMANAGER g_pfnCreateGUIGROUP;
 extern CREATEMANAGER g_pfnCreateGUISLIDER;
+extern CREATEMANAGER g_pfnCreatePATHREPOSITORY;
 __declspec(allocate(".bss")) RESOURCEMANAGER *g_pGUIGROUP;
 __declspec(allocate(".bss")) RESOURCEMANAGER *g_pGUISLIDER;
+__declspec(allocate(".bss")) RESOURCEMANAGER *g_pPATHREPOSITORY;
 
 char RESOURCES::s_managerNames[RESOURCES_MAX_MANAGERS][30];
 RESOURCEMANAGER **RESOURCES::s_managerSlots[RESOURCES_MAX_MANAGERS];
