@@ -63,12 +63,17 @@ void LIGHT::Init()
     m_baseSpecular = m_specular;
 }
 
+void LIGHT::Start()
+{
+    AddCounts();
+}
+
 LIGHTMASTER::LIGHTMASTER(RESOURCEMANAGER *manager, const char *name)
     : RESOURCEMASTER(manager, name)
 {
-    m_ambient.r = m_specular.r = m_color.r = 0.0f;
-    m_ambient.g = m_specular.g = m_color.g = 0.0f;
-    m_ambient.b = m_specular.b = m_color.b = 0.0f;
+    m_ambient.r = m_specular.r = m_color.r = 0;
+    m_ambient.g = m_specular.g = m_color.g = 0;
+    m_ambient.b = m_specular.b = m_color.b = 0;
     m_type = 0;
     m_attenuation0 = 0.0f;
     m_attenuation1 = 0.0f;

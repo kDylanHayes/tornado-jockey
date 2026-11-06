@@ -47,6 +47,22 @@ typedef struct _D3DMATERIAL8 {
     float Power;
 } D3DMATERIAL8;
 
+typedef struct _D3DLIGHT8 {
+    int Type;
+    D3DCOLORVALUE Diffuse;
+    D3DCOLORVALUE Specular;
+    D3DCOLORVALUE Ambient;
+    D3DVECTOR Position;
+    D3DVECTOR Direction;
+    float Range;
+    float Falloff;
+    float Attenuation0;
+    float Attenuation1;
+    float Attenuation2;
+    float Theta;
+    float Phi;
+} D3DLIGHT8;
+
 typedef struct _D3DRECT {
     LONG x1;
     LONG y1;
@@ -149,7 +165,9 @@ typedef enum _D3DRENDERSTATETYPE {
     D3DRS_FOGSTART = 36,
     D3DRS_FOGEND = 37,
     D3DRS_STENCILENABLE = 52,
+    D3DRS_TEXTUREFACTOR = 60,
     D3DRS_LIGHTING = 137,
+    D3DRS_AMBIENT = 139,
     D3DRS_FOGVERTEXMODE = 140,
     D3DRS_NORMALIZENORMALS = 143,
     D3DRS_FORCE_DWORD = 0x7fffffff
@@ -251,9 +269,9 @@ struct IDirect3DDevice8
     virtual HRESULT __stdcall GetViewport() = 0;
     virtual HRESULT __stdcall SetMaterial(const D3DMATERIAL8 *pMaterial) = 0;
     virtual HRESULT __stdcall GetMaterial() = 0;
-    virtual HRESULT __stdcall SetLight() = 0;
+    virtual HRESULT __stdcall SetLight(DWORD Index, const D3DLIGHT8 *pLight) = 0;
     virtual HRESULT __stdcall GetLight() = 0;
-    virtual HRESULT __stdcall LightEnable() = 0;
+    virtual HRESULT __stdcall LightEnable(DWORD Index, BOOL Enable) = 0;
     virtual HRESULT __stdcall GetLightEnable() = 0;
     virtual HRESULT __stdcall SetClipPlane() = 0;
     virtual HRESULT __stdcall GetClipPlane() = 0;
