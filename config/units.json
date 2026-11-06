@@ -2878,7 +2878,10 @@
       ],
       "target": "build/target/Tongas2/RENDERTEXTURE.obj",
       "source": "src/Tongas2/RENDERTEXTURE.cpp",
-      "category": "engine"
+      "category": "engine",
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z"
+      }
     },
     {
       "name": "Tongas2/DXINPUT",

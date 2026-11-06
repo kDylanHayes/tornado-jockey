@@ -7,19 +7,41 @@
 // short.
 #include "Tongas2/RENDERTEXTURE.h"
 
+class RENDERTEXTUREMANAGER : public RESOURCEMANAGER
+{
+public:
+    RENDERTEXTUREMANAGER()
+    {
+        SafeSprintf(m_fileName, "RENDERTEXTURE.txt");
+        m_8 = false;
+        m_18 = true;
+    }
+
+    virtual RESOURCEMASTER *CreateMaster(const char *name) { return new RENDERTEXTUREMASTER(this, name); }
+};
+
+int RENDERTEXTUREMASTER::s_classId = -1;
+
+CMDENTRY RENDERTEXTUREMASTER::s_commands[] = {
+    { 0, 0, 0, 0, 0 },
+};
+
 void RENDERTEXTUREMASTER::RegisterCommands()
 {
+    g_classParents[s_classId] = RESOURCEMASTER::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "RENDERTEXTUREMASTER", "RESOURCEMASTER");
 }
 
 RESOURCEMANAGER *CreateRENDERTEXTURE()
 {
-    return 0;
+    return new RENDERTEXTUREMANAGER;
 }
 
 RENDERTEXTUREMASTER::RENDERTEXTUREMASTER(RESOURCEMANAGER *manager, const char *name)
+    : RESOURCEMASTER(manager, name)
 {
-    (void)manager;
-    (void)name;
 }
 
 RENDERTEXTUREMASTER::~RENDERTEXTUREMASTER()
@@ -30,10 +52,4 @@ RENDERTEXTURE::RENDERTEXTURE(RENDERTEXTUREMASTER *master, const RESHANDLE &handl
 {
     (void)master;
     (void)handle;
-}
-
-RESOURCEMASTER *RENDERTEXTUREMANAGER::CreateMaster(const char *name)
-{
-    (void)name;
-    return 0;
 }

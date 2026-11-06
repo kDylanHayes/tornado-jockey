@@ -70,9 +70,36 @@ remaining 816-byte difference in global `total_code` is the trailing `int3`
 padding that `tools/split_functions.py` removes from each delinked unit, the
 same effect earlier carves show.
 
-None of the five units is complete; their exact match is 0.00% and their
-fuzzy percentages are 0.37%-1.53% while the bodies are still stubs. They are
-recorded without `"complete": true`.
+## Matching started on RENDERTEXTURE
+
+`RENDERTEXTURE` is the smallest carve and is the first one worked on. Four of
+its seventeen functions are exact so far:
+
+- `?RegisterCommands@RENDERTEXTUREMASTER@@SAXXZ` at `0x004ed980`
+- `?CreateRENDERTEXTURE@@YAPAVRESOURCEMANAGER@@XZ` at `0x004edcf0`
+- `?CreateMaster@RENDERTEXTUREMANAGER@@UAEPAVRESOURCEMASTER@@PBD@Z` at `0x004edf50`
+- `??1RENDERTEXTUREMASTER@@UAE@XZ` at `0x004ede50`
+
+`py tools/unit_status.py Tongas2/RENDERTEXTURE --functions` reports 20.70%
+exact (359/1734 bytes), 23.08% fuzzy, 4/17 functions. The unit stays
+incomplete. The remaining functions are the constructor
+`??0RENDERTEXTUREMASTER` (its two `CSTRING` members and twelve scalar fields
+are in place; the constructor's inlined empty-string handling is not written
+yet), `??0RENDERTEXTURE`, the render-target state machine at `0x004ed9c0`,
+`0x004eda30`, `0x004edb10`, `0x004edb80` and `0x004edbc0`, and the
+`RENDERTEXTUREMANAGER` reference-count helpers at `0x004ede90`, `0x004edef0`
+and `0x004edf20`.
+
+The four matches needed one source-shape hint: the exe calls the large
+`RENDERTEXTUREMASTER` constructor out of line from `CreateMaster`, while our
+five-byte scaffold constructor was inlined and used different registers.
+`__declspec(noinline)` on the scaffold constructor restores the call and
+`CreateMaster` matches 100%; it can come off once the constructor itself is
+written.
+
+None of the five units is complete. The other four are still at their
+scaffold percentages (0.37%-1.53% fuzzy), and all five are recorded without
+`"complete": true`.
 
 Verified with the original `Tornado.exe` (SHA-1 `20bf7200...06bc`) and a
 private Ghidra project copy at `%LOCALAPPDATA%\tornado-jockey\ghidra-carve-engine`.
