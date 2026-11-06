@@ -102,9 +102,16 @@ the empty scaffold; it is the 0xc25-byte config.dat/JOYAXISMAP/JOYBUTTONMAP
 parser.
 
 The remaining blockers are the exact constructor argument order/register
-allocation and the parser's `std::string` token loop, whose helper names and
-globals (`FUN_005285c0`, `FUN_00528610`, `FUN_00528820`, ...) are still
-unrecovered. The unit stays incomplete.
+allocation and the parser's `std::string` token loop. The parser's helper
+cluster is still in the uncovered tail: `0x005285c0`-`0x00528770` is a
+`TEXTFILE` object (the only string there is `"TEXTFILE - file does not
+exist: %s"`), with `0x00528610` the open/check, `0x005285c0` the constructor,
+`0x005285d0`/`0x005285e0` the line and EOF checks, and `0x00528820` the
+tokenizer. It needs its own class/unit before the config.dat parser can be
+written exactly. The constructor is otherwise byte-for-byte except for the
+eight-byte `new std::string[2]` null-check shape (`m_1038` is stored through
+`eax` in our object and through `edi` in the target). The unit stays
+incomplete.
 
 ## Matching TEXTUREDX8SD
 
