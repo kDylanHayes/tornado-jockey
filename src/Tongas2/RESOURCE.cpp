@@ -5,9 +5,12 @@
 #include "Tongas2/LOG.h"
 #include "Tongas2/RESOURCES.h"
 
+// The image keeps this all-zero command table in .data, not .bss.
+#pragma data_seg(".data")
 CMDENTRY RESOURCEMASTER::s_commands[] = {
     { 0, 0, 0, 0, 0 },
 };
+#pragma data_seg()
 
 PROPENTRY RESOURCEMASTER::s_properties[] = {
     { "GroupMask", 0, 0, 0, PROP_FIELD(RESOURCEMASTER, m_groupMask), false, 1, PROP_SETTER(RESOURCEMASTER, SetGroupMask) },
