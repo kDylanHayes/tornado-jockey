@@ -358,7 +358,9 @@ __declspec(noinline) void HEIGHTMAPDECALDX8RESOURCE::CreateMesh()
     m_40c = m_404 * m_408;
     m_410 = (m_408 * 2 - 2) * (m_404 - 1);
     m_mesh = new MESHDX8;
-    if (!master->m_userFolder && g_pResources->IsHighDetail() && !master->m_correctSizeInWidescreen)
+    bool hardware = !master->m_userFolder && g_pResources->IsHighDetail() &&
+                    !master->m_correctSizeInWidescreen;
+    if (hardware)
         m_mesh->Create(3, m_40c, m_410, 1);
     else
         m_mesh->Create(1, m_40c, m_410, 1);
@@ -392,7 +394,7 @@ __declspec(noinline) void HEIGHTMAPDECALDX8RESOURCE::CreateMesh()
             base++;
         }
         m_mesh->UnlockIndices();
-        if (!master->m_userFolder && g_pResources->IsHighDetail() && !master->m_correctSizeInWidescreen) {
+        if (hardware) {
             char *vertices = (char *)m_mesh->LockVertices(0, m_40c);
             if (!vertices) {
                 if (g_pLog)
@@ -443,10 +445,9 @@ __declspec(noinline) void HEIGHTMAPDECALDX8RESOURCE::UpdateVertices()
 
     V3 origin = heightmap->WorldToLocal(GetPosition());
     origin.z = 0.0f;
-    V3 scale = GetScale();
+    float stepX = GetScale().x / (float)master->m_tilesX;
     float aspect = master->m_aspect * master->m_aspectRatioModifier;
-    float stepX = scale.x / (float)master->m_tilesX;
-    float stepY = scale.y * (float)master->m_tilesX / (float)master->m_tilesY;
+    float stepY = GetScale().y * (float)master->m_tilesX / (float)master->m_tilesY;
 
     MATRIX rotation;
     rotation.SetRotationZ(GetAngles().GetEuler().x);
@@ -487,10 +488,10 @@ __declspec(noinline) void HEIGHTMAPDECALDX8RESOURCE::Render()
 {
     if (m_4e0)
         return;
-    HEIGHTMAPDECALDX8MASTER *master = (HEIGHTMAPDECALDX8MASTER *)m_master;
     HEIGHTMAPDX8 *heightmap = FindHeightmap();
     if (!heightmap)
         return;
+    HEIGHTMAPDECALDX8MASTER *master = (HEIGHTMAPDECALDX8MASTER *)m_master;
     D3DXMATRIX matrix = m_matrix;
     m_mesh->SetMatrix(&matrix);
     MATRIX heightmapMatrix = heightmap->GetAngles().GetMatrix();
@@ -505,7 +506,7 @@ __declspec(noinline) void HEIGHTMAPDECALDX8RESOURCE::Render()
             for (int x = 0; x < m_404; x++) {
                 int index = m_404 * y + x;
                 V3 &position = m_vertices[index];
-                V3 &normal = m_normals[index];
+                V3 normal = m_normals[index];
                 if (!master->m_userFolder && g_pResources->IsHighDetail() &&
                     !master->m_correctSizeInWidescreen) {
                     *(unsigned int *)(out + 0x18) =
