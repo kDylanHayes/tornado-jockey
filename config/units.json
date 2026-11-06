@@ -3541,6 +3541,42 @@
       "target": "build/target/Tongas2/DXVERSION.obj",
       "source": "src/Tongas2/DXVERSION.cpp",
       "category": "engine"
+    },
+    {
+      "name": "Tongas2/RENDERTEXTUREDX8SD",
+      "ranges": [
+        "0x005398d0-0x0053a97f"
+      ],
+      "target": "build/target/Tongas2/RENDERTEXTUREDX8SD.obj",
+      "source": "src/Tongas2/RENDERTEXTUREDX8SD.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/SHADERDX8SD",
+      "ranges": [
+        "0x0053a980-0x0053dfdf"
+      ],
+      "target": "build/target/Tongas2/SHADERDX8SD.obj",
+      "source": "src/Tongas2/SHADERDX8SD.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/TEXTUREDX8CORE",
+      "ranges": [
+        "0x0053dfe0-0x005478df"
+      ],
+      "target": "build/target/Tongas2/TEXTUREDX8CORE.obj",
+      "source": "src/Tongas2/TEXTUREDX8CORE.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/SOUNDFMOD",
+      "ranges": [
+        "0x005478e0-0x0054841f"
+      ],
+      "target": "build/target/Tongas2/SOUNDFMOD.obj",
+      "source": "src/Tongas2/SOUNDFMOD.cpp",
+      "category": "engine"
     }
   ]
 }
