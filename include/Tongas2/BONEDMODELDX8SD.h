@@ -100,6 +100,8 @@ public:
     virtual const char *GetClassName();
     virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
 
+    virtual void Virtual21();
+
     virtual void Virtual1();
     virtual void Virtual2();
     virtual void Virtual3();
@@ -117,6 +119,7 @@ public:
 
     void RunCommand(const char *command);
     void DestroyAnimations();
+    void LoadTags();
     void SetBone(int index, const V3 &position, void *placement);
     int FindMaterial(const char *name);
 
