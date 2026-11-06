@@ -40,38 +40,32 @@ private:
     int m_3fc[0xff];
     int m_7f8[0xff];
     int m_bf4[0xff];
-    void *m_ff0;
+    void *volatile m_ff0;
     bool m_ff4;
     char m_ff5[0x1030 - 0xff5];
     int *m_1030;
     float *m_1034;
 };
 
-extern int HardwareA();
-extern int HardwareB();
-extern int HardwareC();
+class HARDWARE
+{
+public:
+    int HardwareA();
+    unsigned int GetPhysicalMemoryMB();
+    int HardwareC();
+};
 
 void SETTINGSTABLE::SetQuality()
 {
     switch (GetDetailLevel()) {
-    case 0:
-    case 1:
-        SetInt(0, 0x280);
-        SetInt(1, 0x1e0);
-        SetInt(9, 0);
-        SetInt(0x15, 1);
-        SetInt(0x13, 0);
-        SetInt(0x19, 0);
-        SetInt(10, 0);
-        break;
-    case 2:
-        SetInt(0, 0x320);
-        SetInt(1, 0x258);
-        SetInt(9, 0);
+    case 4:
+        SetInt(0, 0x400);
+        SetInt(1, 0x300);
+        SetInt(9, 1);
         SetInt(0x15, 1);
         SetInt(0x13, 1);
-        SetInt(0x19, 0);
-        SetInt(10, 0);
+        SetInt(0x19, 1);
+        SetInt(10, 1);
         break;
     case 3:
         SetInt(0, 0x400);
@@ -82,14 +76,32 @@ void SETTINGSTABLE::SetQuality()
         SetInt(0x19, 1);
         SetInt(10, 1);
         break;
-    case 4:
-        SetInt(0, 0x400);
-        SetInt(1, 0x300);
-        SetInt(9, 1);
+    case 2:
+        SetInt(0, 0x320);
+        SetInt(1, 0x258);
+        SetInt(9, 0);
         SetInt(0x15, 1);
         SetInt(0x13, 1);
-        SetInt(0x19, 1);
-        SetInt(10, 1);
+        SetInt(0x19, 0);
+        SetInt(10, 0);
+        break;
+    case 0:
+        SetInt(0, 0x280);
+        SetInt(1, 0x1e0);
+        SetInt(9, 0);
+        SetInt(0x15, 1);
+        SetInt(0x13, 0);
+        SetInt(0x19, 0);
+        SetInt(10, 0);
+        break;
+    case 1:
+        SetInt(0, 0x280);
+        SetInt(1, 0x1e0);
+        SetInt(9, 0);
+        SetInt(0x15, 1);
+        SetInt(0x13, 0);
+        SetInt(0x19, 0);
+        SetInt(10, 0);
         break;
     }
     GetDetailLevel();
@@ -244,11 +256,11 @@ void SETTINGSTABLE::ResetKeys()
 
 int SETTINGSTABLE::GetDetailLevel()
 {
-    char flag = *(char *)((char *)m_ff0 + 0x51);
     int level = 4;
-    int a = HardwareA();
-    int b = HardwareB();
-    int c = HardwareC();
+    char flag = *(char *)((char *)m_ff0 + 0x51);
+    int a = ((HARDWARE *)m_ff0)->HardwareA();
+    int b = ((HARDWARE *)m_ff0)->GetPhysicalMemoryMB();
+    int c = ((HARDWARE *)m_ff0)->HardwareC();
     if (c < 1)
         c = 0x20;
     if (a < 0x12d)

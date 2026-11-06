@@ -85,14 +85,22 @@ object at `0x004f97d0`-`0x004fa4af`: four 0xff-entry tables at `0x000`,
 in the other order. The three tiny accessors at `0x004f9830` etc. are already
 matched.
 
-The unit is 15.41% exact, 24.22% fuzzy, 12/19 functions (`function_status.py`
-counts 12/16 paired functions). Still open: `INTRO::Load` (the 989-byte intro
-screen), the `SETTINGS` constructor at `0x004f9660`, the 0x708-byte quality
-update at `0x004f9c40`, `SetQuality` at `0x004fa360` (written but not yet
-paired; its jump table extends past Ghidra's 0x130-byte extent), and the
-destructor at `0x004fa4b0` (now written but only 74.50%: the target drops the
-last string's field resets after freeing its heap buffer, while our
-compiler-generated destructor keeps them).
+The unit is 22.22% exact, 31.53% fuzzy, 13/19 functions
+(`function_status.py` counts 13/17 paired functions). `SetQuality` at
+`0x004fa360` is now exact: the target lays the switch bodies out as case 4,
+3, 2, 0/1 and keeps separate identical case 0 and case 1 bodies, so writing
+them in that order reproduces its jump table; the symbol size is `0x144`
+because the table sits inside the function extent.
+
+Still open: `INTRO::Load` (the 989-byte intro screen), the `SETTINGS`
+constructor at `0x004f9660`, the 0x708-byte quality update at `0x004f9c40`,
+and the destructor at `0x004fa4b0` (written but only 74.50%: the target drops
+the last string's field resets after freeing its heap buffer, while our
+compiler-generated destructor keeps them). `GetDetailLevel` is now 82.25%:
+the three hardware helpers are member functions of the object at `m_ff0`
+(the target reloads `[this+0xff0]` before each call), and
+`0x00504d10` is `GetPhysicalMemoryMB`; the remaining difference is the
+prologue's stack-slot and `edi` push ordering.
 
 The remaining blockers are the incomplete object layout around
 `0x1018`-`0x1038` (two `std::string`s overlapping the settings pointers), the
