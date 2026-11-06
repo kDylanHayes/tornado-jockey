@@ -41,8 +41,7 @@ STRINGMANAGER::STRINGMANAGER()
 
 void STRINGMANAGER::Defrag()
 {
-    int free = -1;
-    for (int i = 0; i < NUMPAGES; i++) {
+    for (int i = 0, free = -1; i < NUMPAGES; i++) {
         if (m_used[i]) {
             if (free >= 0)
             while (m_used[i] && i < NUMPAGES) {
@@ -55,8 +54,8 @@ void STRINGMANAGER::Defrag()
                     owner->m_block = free;
                 }
                 m_used[i] = false;
-                i++;
                 m_used[free] = true;
+                i++;
                 free++;
             }
         } else if (free == -1)
