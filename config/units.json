@@ -2909,6 +2909,24 @@
       "target": "build/target/Tongas2/LIGHTDX8.obj",
       "source": "src/Tongas2/LIGHTDX8.cpp",
       "category": "engine"
+    },
+    {
+      "name": "Tongas2/SCREENDECALDX8",
+      "ranges": [
+        "0x004f2420-0x004f412f"
+      ],
+      "target": "build/target/Tongas2/SCREENDECALDX8.obj",
+      "source": "src/Tongas2/SCREENDECALDX8.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/BONEDMODELDX8SD",
+      "ranges": [
+        "0x004f4130-0x004f834f"
+      ],
+      "target": "build/target/Tongas2/BONEDMODELDX8SD.obj",
+      "source": "src/Tongas2/BONEDMODELDX8SD.cpp",
+      "category": "engine"
     }
   ]
 }
