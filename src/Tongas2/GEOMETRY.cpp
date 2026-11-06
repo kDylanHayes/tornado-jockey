@@ -405,14 +405,15 @@ bool CollideQuadSegment(QUAD3 *a, SEGMENT3 *b, V3 *pa, V3 *pb, float *depth, V3 
 
 bool CollideSphereSegment(SPHERE3 *a, SEGMENT3 *b, V3 *pa, V3 *pb, float *depth, V3 *normal)
 {
+    V3 center = a->GetCenter();
     float t;
-    float distance = b->DistanceSq(a->GetCenter(), &t);
+    float distance = b->DistanceSq(center, &t);
     if (normal)
         *normal = b->PointAt(t);
     if (depth)
         *depth = distance;
     if (pa)
-        *pa = b->PointAt(t) - a->center;
+        *pa = b->PointAt(t) - center;
     return distance <= a->GetRadiusSq();
 }
 
@@ -454,17 +455,20 @@ bool CollideSphereSphere(SPHERE3 *a, SPHERE3 *b, V3 *pa, V3 *pb, float *depth)
         return false;
     V3 ca = a->GetCenter();
     V3 cb = b->GetCenter();
-    float distanceSq = (cb.x - ca.x) * (cb.x - ca.x) + (cb.y - ca.y) * (cb.y - ca.y) + (cb.z - ca.z) * (cb.z - ca.z);
-    float reachSq = (a->radius + b->radius) * (a->radius + b->radius);
+      V3 diff = cb - ca;
+      float distanceSq = diff.x * diff.x + diff.y * diff.y + diff.z * diff.z;
+      float reachSq = (a->radius + b->radius) * (a->radius + b->radius);
     if (pa || pb) {
-        V3 n = (cb - ca).Normalized();
+        V3 n = diff.Normalized();
         if (pa)
             *pa = n * -1.0f;
         if (pb)
             *pb = n;
     }
-    if (depth)
-        *depth = (float)sqrt(distanceSq) - (float)sqrt(reachSq);
+      float sqrtDist = (float)sqrt(distanceSq);
+      float sqrtReach = (float)sqrt(reachSq);
+      if (depth)
+          *depth = sqrtDist - sqrtReach;
     if (distanceSq < reachSq)
         return true;
     return false;
@@ -639,7 +643,9 @@ bool CollideBoxBox(OOBOX3 *a, OOBOX3 *b, V3 *pa, V3 *pb, float *depth)
     akB[2] = b->angles.GetDirection();
     V3 ea = a->GetSize() * 0.5f;
     V3 eb = b->GetSize() * 0.5f;
-    BOXES_TOUCH(a->GetCenter(), akA, ea, b->GetCenter(), akB, eb)
+    V3 ca = a->GetCenter();
+    V3 cb = b->GetCenter();
+    BOXES_TOUCH(ca, akA, ea, cb, akB, eb)
 }
 
 // Whether a sphere radius r away along d touches a box with the axes and
@@ -675,7 +681,8 @@ bool CollideSphereBox(SPHERE3 *a, OOBOX3 *b, V3 *pa, V3 *pb, float *depth)
     if (!a || !b)
         return false;
     b->GetPlanes();
-    V3 d = a->GetCenter() - b->GetCenter();
+    V3 d = a->GetCenter();
+    d -= b->GetCenter();
     if (pa || pb)
         MATRIX m = b->GetMatrix();
     PRIMV3 axes[3];
@@ -693,7 +700,8 @@ bool CollideSphereQuad(SPHERE3 *a, QUAD3 *b, V3 *pa, V3 *pb, float *depth)
 {
     if (!a || !b)
         return false;
-    V3 d = a->GetCenter() - b->GetCenter();
+    V3 d = a->GetCenter();
+    d -= b->GetCenter();
     PRIMV3 axes[3];
     axes[0] = b->GetRight();
     axes[1] = b->GetUp();

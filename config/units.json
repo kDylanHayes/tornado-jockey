@@ -2669,7 +2669,14 @@
       "target": "build/target/Tongas2/GEOMETRY.obj",
       "source": "src/Tongas2/GEOMETRY.cpp",
       "category": "engine",
-      "cflags": "/nologo /c /O2 /Ob1 /MT /GX /W3"
+      "cflags": "/nologo /c /O2 /Ob1 /MT /GX /W3",
+      "symbol_mappings": {
+        "DAT_00666a9c": "??_C@_01LFCBOECM@?4?$AA@",
+        "FUN_004497c0": "?substr@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBE?AV12@II@Z",
+        "FUN_005e6aaf": "__mkdir",
+        "PTR_GetFileAttributesA_0065612c": "__imp__GetFileAttributesA@4",
+        "LAB_004020a0": "??0PRIMV3@@QAE@XZ"
+      }
     },
     {
       "name": "Tongas2/BEHAVIORGROW",
