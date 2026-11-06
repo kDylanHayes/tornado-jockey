@@ -4251,6 +4251,7 @@
 0x005c00c6 __abnormal_termination function 0x23
 0x005c00e9 __NLG_Notify1 function 0x9
 0x005c0110 _floor function
+0x005c0efa __CIfmod function 0xa
 0x005c0231 _wcsncpy function 0x3d
 0x005c02dd _free function 0x38
 0x005c0315 __vsnprintf function 0x56

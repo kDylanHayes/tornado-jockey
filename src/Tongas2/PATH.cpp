@@ -132,13 +132,16 @@ int PATHMASTER::NextIndex(int i)
 
 void PATHMASTER::FindSegment(float t, float *distance, int *segment)
 {
-    if (!m_isClosed) {
-        t = (float)fmod((double)t, 1.0);
-    } else if (t > 1.0f) {
-        float start = m_distance[m_closeToPoint] / m_totalLength;
-        t = fmod(t - start, 1.0f - start) + start;
+    float tt = t;
+    if (m_isClosed) {
+        if (t > 1.0f) {
+            float start = m_distance[m_closeToPoint] / m_totalLength;
+            tt = fmod(t - start, 1.0f - start) + start;
+        }
+    } else {
+        tt = (float)fmod((double)t, 1.0);
     }
-    float d = t * m_totalLength;
+    float d = tt * m_totalLength;
     *distance = d;
     *segment = 0;
     int lo = 0;
@@ -160,14 +163,8 @@ bool PATHMASTER::GetLinear(float t, V3 *position, V3 *direction, V3 *up, float *
 {
     int segment;
     FindSegment(t, &t, &segment);
-    int next = segment + 1;
+    int next = NextIndex(segment);
     float f = (t - m_distance[segment]) / m_length[segment];
-    if (next >= m_numPoints) {
-        if (m_isClosed)
-            next += m_closeToPoint - m_numPoints;
-        else
-            next = m_numPoints - 1;
-    }
     float g = 1.0f - f;
     *position = m_pos[segment] * g + m_pos[next] * f;
     *direction = m_pos[next] - m_pos[segment];
@@ -398,13 +395,7 @@ bool PATHMASTER::GetHermite(float t, V3 *position, V3 *direction, V3 *up, float 
 {
     int segment;
     FindSegment(t, &t, &segment);
-    int next = segment + 1;
-    if (next >= m_numPoints) {
-        if (m_isClosed)
-            next += m_closeToPoint - m_numPoints;
-        else
-            next = m_numPoints - 1;
-    }
+    int next = NextIndex(segment);
     float length;
     if (!m_isParamLength)
         length = m_distance[next] - m_distance[segment];
