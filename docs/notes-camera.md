@@ -43,3 +43,30 @@ source-shape problem, not a flag problem.
   argument and the late `m_rotateTarget.flags` store; inlining the three `Stop*`
   bodies by hand or moving the flag assignment out of `StopRotate` does not
   change the schedule.
+
+## Sweeps that did not close the gap
+
+- `MATRIX::View`: splitting the three translation terms into named `float`
+  locals raises the byte match from 409 to 415 of 474, but no ordering of those
+  locals (all six) is exact. Permuting the two multiplicands of each term in the
+  inline `Cross` (64 forms, compiled in one mock TU) leaves the code at 415 too:
+  the compiler canonicalises the commutative pairs. The residual is the
+  interleaving of the cross-product loads with stores, not the expressions.
+- `CAMERA::Update`: the whole difference is 21 bytes at `0xa0`-`0xb4`. Source
+  forms tried: both operand orders of the sum, component-wise `V3`,
+  component-wise `Set`, `+=`, named `V3`, `const V3 &` binding, and all six
+  orders of the three `m_jitter` assignments. The best remains the current
+  `m_jitter + m_position` at 419 of 439; the target stores `m_jitter.y` before
+  loading the vtable and then adds position-first only for `x`.
+- `CAMERALENS::UpdateView`: more than twenty shapes were compiled (named
+  eye/at, one reused local, arrays, copy-init, `Set`, direct expressions). The
+  target allocates the eye temporary at `[esp]` and the at temporary at
+  `[esp+0xc]`; VC7.1 gives the first call argument the higher slot in every
+  shape, so the same 8 displacement bytes stay swapped. Function length and
+  every instruction are otherwise identical.
+- `MATRIX::Determinant`: the 91-byte target keeps `_11`-`_14` on the x87 stack
+  and interoperates them with `faddp st(4)`/`fxch st(4)`, which is atypical for
+  this compiler (it looks hand-written). A naked `__asm` copy compiles to the
+  exact bytes except the `call`: MSVC's inline assembler cannot spell the
+  decorated `?Adjoint@MATRIX@@QAE?AU1@XZ` symbol, so the call cannot carry the
+  target's relocation without a build-system change. Left as source.
