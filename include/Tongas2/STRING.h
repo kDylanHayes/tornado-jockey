@@ -180,7 +180,8 @@ public:
         m_buf = 0;
         m_length = 0;
         m_lengthValid = true;
-        Reserve((wcslen(text) + 1) * 2);
+        int size = wcslen(text) + 1;
+        Reserve(size * 2);
         *this = text;
     }
     // Seen as not throwing: the units that destroy one keep no unwind

@@ -18,6 +18,50 @@
 #include <stdlib.h>
 #include <windows.h>
 
+// Inline here, so the compiler can expand it where it destroys a result.
+inline void SRESULT::FreeValue() throw()
+{
+    switch (m_type) {
+    case SRT_STRING:
+    case SRT_UNICODESTRING:
+        if (m_value.str) {
+            free(m_value.str);
+            m_value.str = 0;
+        }
+        break;
+    case SRT_V3:
+        if (m_value.v3) {
+            delete m_value.v3;
+            m_value.v3 = 0;
+        }
+        break;
+    case SRT_V2:
+        if (m_value.v2) {
+            delete m_value.v2;
+            m_value.v2 = 0;
+        }
+        break;
+    case SRT_ANG:
+        if (m_value.ang) {
+            delete m_value.ang;
+            m_value.ang = 0;
+        }
+        break;
+    case SRT_RGB:
+        if (m_value.rgb) {
+            delete m_value.rgb;
+            m_value.rgb = 0;
+        }
+        break;
+    case SRT_TEXTURE:
+        if (m_value.tex) {
+            delete m_value.tex;
+            m_value.tex = 0;
+        }
+        break;
+    }
+}
+
 #define CMD_FUNC(CLASS, method) (CMDFUNC)(SRESULT (CLASS::*)(TOKENS **))(SRESULT (CLASS::*)(CMDCALL *))&CLASS::method
 
 static CMDBASE *CreateKernelCommands();
@@ -72,8 +116,8 @@ PROPENTRY KERNELCOMMANDS::s_properties[] = {
 // Whether two vectors are the same.
 bool operator==(const V2 &a, const V2 &b)
 {
-    bool same = a.x == b.x && a.y == b.y;
-    return same;
+    bool equal = a.x == b.x && a.y == b.y;
+    return equal;
 }
 
 // Defined in other units.
@@ -81,7 +125,7 @@ bool operator==(const V3 &a, const V3 &b);
 bool operator==(const RGB &a, const RGB &b);
 
 // Whether a's value is above b's; only characters, integers, strings and
-// floats compare.
+// floats compare. The comparisons read b first, as the exe does.
 bool operator>(const SRESULT &a, const SRESULT &b)
 {
     switch (a.GetType()) {
@@ -117,7 +161,8 @@ bool operator>(const SRESULT &a, const SRESULT &b)
     return false;
 }
 
-// Whether a's value is below b's.
+// Whether a's value is below b's. The comparisons read b first, as the exe
+// does.
 bool operator<(const SRESULT &a, const SRESULT &b)
 {
     switch (a.GetType()) {
@@ -190,17 +235,17 @@ const char *KERNELCOMMANDS::Virtual58()
 // Whether the euler angles are the same.
 bool operator==(const ANG &a, const ANG &b)
 {
-    ANG x = a;
-    const V3 &ex = x.GetEuler();
     ANG y = b;
     const V3 &ey = y.GetEuler();
-    return ey.x == ex.x && ey.y == ex.y && ey.z == ex.z;
+    ANG x = a;
+    const V3 &ex = x.GetEuler();
+    return ex.x == ey.x && ex.y == ey.y && ex.z == ey.z;
 }
 
 bool SRTEXTURE::operator==(const SRTEXTURE &other) const
 {
-    bool same = !strcmp(name.m_buf, other.name.m_buf) && index == other.index;
-    return same;
+    bool equal = !strcmp(name.m_buf, other.name.m_buf) && index == other.index;
+    return equal;
 }
 
 // Whether the values are the same; values of different types are the same
@@ -214,62 +259,62 @@ bool operator==(const SRESULT &a, const SRESULT &b)
             return true;
         break;
     case SRT_INT:
-        if (b.GetType() == SRT_CHAR && a.GetInt(0) == b.GetChar(0))
+        if (b.GetType() == SRT_CHAR && b.GetChar(0) == a.GetInt(0))
             return true;
-        if (b.GetType() == SRT_INT && a.GetInt(0) == b.GetInt(0))
+        if (b.GetType() == SRT_INT && b.GetInt(0) == a.GetInt(0))
             return true;
-        if (b.GetType() == SRT_FLOAT && a.GetInt(0) == (int)b.GetFloat(0))
+        if (b.GetType() == SRT_FLOAT && (int)b.GetFloat(0) == a.GetInt(0))
             return true;
         return false;
     case SRT_STRING:
-        if (b.GetType() == SRT_STRING && !_stricmp(a.GetString(""), b.GetString("")))
+        if (b.GetType() == SRT_STRING && !_stricmp(b.GetString(""), a.GetString("")))
             return true;
         break;
     case SRT_UNICODESTRING:
-        if (b.GetType() == SRT_UNICODESTRING && !_wcsicmp(a.GetUnicodeString(L""), b.GetUnicodeString(L"")))
+        if (b.GetType() == SRT_UNICODESTRING && !_wcsicmp(b.GetUnicodeString(L""), a.GetUnicodeString(L"")))
             return true;
         break;
     case SRT_FLOAT:
-        if (b.GetType() == SRT_CHAR && a.GetFloat(0) == (float)b.GetChar(0))
+        if (b.GetType() == SRT_CHAR && (float)b.GetChar(0) == a.GetFloat(0))
             return true;
-        if (b.GetType() == SRT_INT && a.GetFloat(0) == (float)b.GetInt(0))
+        if (b.GetType() == SRT_INT && (float)b.GetInt(0) == a.GetFloat(0))
             return true;
-        if (b.GetType() == SRT_FLOAT && a.GetFloat(0) == b.GetFloat(0))
+        if (b.GetType() == SRT_FLOAT && b.GetFloat(0) == a.GetFloat(0))
             return true;
         break;
     case SRT_BOOL:
-        if (b.GetType() == SRT_BOOL && a.GetBool(false) == b.GetBool(false))
+        if (b.GetType() == SRT_BOOL && b.GetBool(false) == a.GetBool(false))
             return true;
         if (b.GetType() == SRT_CHAR) {
             char c = b.GetChar(0);
-            if (a.GetBool(false) == ToBool(c))
+            if (ToBool(c) == a.GetBool(false))
                 return true;
         }
         if (b.GetType() == SRT_INT) {
             int i = b.GetInt(0);
-            if (a.GetBool(false) == ToBool(i))
+            if (ToBool(i) == a.GetBool(false))
                 return true;
         }
         if (b.GetType() == SRT_FLOAT) {
             float f = b.GetFloat(0);
-            if (a.GetBool(false) == ToBool(f))
+            if (ToBool(f) == a.GetBool(false))
                 return true;
         }
         break;
     case SRT_V3:
-        if (b.GetType() == SRT_V3 && a.GetV3(V3(0.0f, 0.0f, 0.0f)) == b.GetV3(V3(0.0f, 0.0f, 0.0f)))
+        if (b.GetType() == SRT_V3 && b.GetV3(V3(0.0f, 0.0f, 0.0f)) == a.GetV3(V3(0.0f, 0.0f, 0.0f)))
             return true;
         break;
     case SRT_V2:
-        if (b.GetType() == SRT_V2 && a.GetV2(V2(0.0f, 0.0f)) == b.GetV2(V2(0.0f, 0.0f)))
+        if (b.GetType() == SRT_V2 && b.GetV2(V2(0.0f, 0.0f)) == a.GetV2(V2(0.0f, 0.0f)))
             return true;
         break;
     case SRT_ANG:
-        if (b.GetType() == SRT_ANG && a.GetANG(ANG(0.0f, 0.0f, 0.0f)) == b.GetANG(ANG(0.0f, 0.0f, 0.0f)))
+        if (b.GetType() == SRT_ANG && b.GetANG(ANG(0.0f, 0.0f, 0.0f)) == a.GetANG(ANG(0.0f, 0.0f, 0.0f)))
             return true;
         break;
     case SRT_RGB:
-        if (b.GetType() == SRT_RGB && a.GetRGB(RGB()) == b.GetRGB(RGB()))
+        if (b.GetType() == SRT_RGB && b.GetRGB(RGB()) == a.GetRGB(RGB()))
             return true;
         break;
     case SRT_TEXTURE:
@@ -307,7 +352,7 @@ SRESULT KERNELCOMMANDS::DumpLayer(CMDCALL *call)
 {
     int layer;
     if (call->tokens->m_count == 2)
-        layer = atol(call->tokens->GetToken(1));
+        layer = atoi(call->tokens->GetToken(1));
     else
         layer = -1;
     g_pScene->DumpActors(layer);
