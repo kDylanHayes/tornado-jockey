@@ -22,6 +22,7 @@ class REFOBJ
 public:
     void ReleaseA();
     void ReleaseB();
+    void Destroy();
 };
 
 class TRACK
@@ -45,6 +46,7 @@ public:
     int FindKey(int value);
     int *CopyTrack(int *dest, int index, int flags);
     int GetTrackOffset(int index);
+    void Destroy();
 
 private:
     char m_000;
@@ -235,6 +237,32 @@ int PARTICLE::GetTrackOffset(int index)
 {
     TRACK **slot = &m_048[index];
     return (int)*slot + 0x5c;
+}
+
+void PARTICLE::Destroy()
+{
+    std::vector<int> dummy;
+    dummy.clear();
+    m_044->ReleaseA();
+    if (m_044) {
+        m_044->Destroy();
+        operator delete(m_044);
+        m_044 = 0;
+    }
+    for (unsigned i = 0; i < m_048.size(); i++) {
+        PARTICLEB *p = (PARTICLEB *)m_048[i];
+        if (p) {
+            p->DestroyMembers();
+            operator delete(p);
+            m_048[i] = 0;
+        }
+    }
+    m_048.clear();
+    m_074.clear();
+    m_058.clear();
+    m_048.clear();
+    m_034.clear();
+    m_01c.clear();
 }
 
 void ANIMTRACK::GetPoint(V3 *out, unsigned i1, unsigned i2, float t)

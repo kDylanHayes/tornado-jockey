@@ -7636,6 +7636,7 @@
 0x0052b370 ?FillVectors@@YAXPAV?$vector@HV?$allocator@H@std@@@std@@0ABV12@@Z function 0x26
 0x0052b3a0 ??0PARTICLEB@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z function 0x85
 0x0052ce60 ??0PARTICLE@@QAE@HH@Z function 0x8a
+0x0052cef0 ?Destroy@PARTICLE@@QAEXXZ function 0x189
 0x0052ccc0 ??$_Uninit_copy@PAV?$vector@HV?$allocator@H@std@@@std@@PAV12@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@std@@YAPAV?$vector@HV?$allocator@H@std@@@0@PAV10@00AAV?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@0@U_Nonscalar_ptr_iterator_tag@0@@Z function 0x8e
 0x0052cdd0 ??$_Uninit_fill_n@PAV?$vector@HV?$allocator@H@std@@@std@@IV12@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@std@@YAXPAV?$vector@HV?$allocator@H@std@@@0@IABV10@AAV?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@0@U_Nonscalar_ptr_iterator_tag@0@@Z function 0x8c
 0x0052d0b0 ?_Insert_n@?$vector@V?$vector@HV?$allocator@H@std@@@std@@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@std@@IAEXViterator@12@IABV?$vector@HV?$allocator@H@std@@@2@@Z function 0x298

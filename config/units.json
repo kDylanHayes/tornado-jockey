@@ -3448,6 +3448,8 @@
         "FUN_00518c50": "?Read@READER@@QAEXPAXHH0@Z",
         "LAB_005f4168": "__ehhandler$?ReadString@TEXTREADER@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ",
         "LAB_005f414b": "__ehhandler$?Load@TEXTREADER@@QAEHABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z",
+        "LAB_005f4837": "__ehhandler$?Destroy@PARTICLE@@QAEXXZ",
+        "FUN_005445c0": "?Destroy@REFOBJ@@QAEXXZ",
         "FUN_00527550": "?FileExists@@YA_NPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAD@Z",
         "s_TEXTFILE_-_file_does_not_exist:_%_006793a4": "_s_TEXTFILE_file"
       }
