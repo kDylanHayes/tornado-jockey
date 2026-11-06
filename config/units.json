@@ -3134,7 +3134,9 @@
                 "FUN_0051a700": "?Release@BONEDMODELDX8EFFECT@@QAEXH@Z",
                 "FUN_00517d90": "?IsActive@BONEDMODELDX8EFFECT@@QAE_NXZ",
                 "FUN_00522e80": "?Emit@BONEDMODELDX8PARTICLESYSTEM@@QAEXPAXPAUMATRIX@@PAUV3@@M@Z",
-                "FUN_005129f0": "?DeleteAnimation@BONEDMODELDX8MODEL@@QAEXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z"
+                "FUN_005129f0": "?DeleteAnimation@BONEDMODELDX8MODEL@@QAEXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z",
+                "FUN_004f7920": "?Init@BONEDMODELDX8PARTICLEDESC@@QAEXXZ",
+                "FUN_00461e54": "?FUN_00461e54@@YAXPAUV3@@@Z"
             }
         },
         {

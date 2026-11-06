@@ -476,6 +476,120 @@ void BONEDMODELDX8PARTICLE::Virtual11(MATRIX *matrix, BONEDMODELDX8RENDERERAPI *
     }
 }
 
+
+class BONEDMODELDX8PARTICLEDESC
+{
+public:
+    BONEDMODELDX8PARTICLEDESC(const BONEDMODELDX8PARTICLEDESC &other);
+    BONEDMODELDX8PARTICLEDESC(std::string name, int material, int layer,
+                              const V3 *position, const V3 *direction, const V3 *color);
+    void Init();
+
+    std::string m_00;
+    char m_1c[0x68];
+    int m_84;
+    std::string m_88;
+    V3 m_a4;
+    V3 m_b0;
+    V3 m_bc;
+    int m_c8;
+    int m_cc;
+};
+
+BONEDMODELDX8PARTICLEDESC::BONEDMODELDX8PARTICLEDESC(std::string name, int material, int layer,
+                                                     const V3 *position, const V3 *direction,
+                                                     const V3 *color)
+    : m_84(material)
+{
+    m_88 = name;
+    m_a4 = *position;
+    m_b0 = *direction;
+    m_bc = *color;
+    m_cc = 1;
+    Init();
+}
+
+BONEDMODELDX8PARTICLEDESC::BONEDMODELDX8PARTICLEDESC(const BONEDMODELDX8PARTICLEDESC &other)
+{
+    m_00 = other.m_00;
+    m_84 = other.m_84;
+    m_88 = other.m_88;
+    m_a4 = other.m_a4;
+    m_b0 = other.m_b0;
+    m_bc = other.m_bc;
+    m_c8 = *(int *)((char *)&other + 0x68);
+    m_cc = other.m_cc;
+    Init();
+}
+
+
+void FUN_00461e54(V3 *value);
+
+void BONEDMODELDX8PARTICLEDESC::Init()
+{
+    int *p = (int *)((char *)this + 0x1c);
+    for (int i = 0; i < 0x1a; i++)
+        p[i] = 0;
+    int *first = p;
+    switch (m_84) {
+    case 1:
+        first[0] = 2;
+        *(int *)((char *)this + 0x68) = *(int *)((char *)this + 0xc8);
+        *(int *)((char *)this + 0x50) = *(int *)((char *)this + 0xa4);
+        *(int *)((char *)this + 0x54) = *(int *)((char *)this + 0xa8);
+        *(int *)((char *)this + 0x58) = *(int *)((char *)this + 0xac);
+        FUN_00461e54(&m_b0);
+        *(int *)((char *)this + 0x5c) = *(int *)((char *)this + 0xb0);
+        *(int *)((char *)this + 0x60) = *(int *)((char *)this + 0xb4);
+        *(int *)((char *)this + 0x64) = *(int *)((char *)this + 0xb8);
+        break;
+    case 2:
+    case 4:
+        m_84 = 2;
+        first[0] = 3;
+        FUN_00461e54(&m_b0);
+        *(int *)((char *)this + 0x5c) = *(int *)((char *)this + 0xb0);
+        *(int *)((char *)this + 0x60) = *(int *)((char *)this + 0xb4);
+        *(int *)((char *)this + 0x64) = *(int *)((char *)this + 0xb8);
+        goto lab_7a50;
+    case 3:
+        first[0] = 2;
+        *(int *)((char *)this + 0x68) = *(int *)((char *)this + 0xc8);
+        *(int *)((char *)this + 0x50) = *(int *)((char *)this + 0xa4);
+        *(int *)((char *)this + 0x54) = *(int *)((char *)this + 0xa8);
+        *(int *)((char *)this + 0x58) = *(int *)((char *)this + 0xac);
+        FUN_00461e54(&m_b0);
+        *(int *)((char *)this + 0x5c) = *(int *)((char *)this + 0xb0);
+        *(int *)((char *)this + 0x60) = *(int *)((char *)this + 0xb4);
+        *(int *)((char *)this + 0x64) = *(int *)((char *)this + 0xb8);
+        *(int *)((char *)this + 0x7c) = 0x3f000000;
+        *(int *)((char *)this + 0x80) = 0x3f800000;
+        *(int *)((char *)this + 0x6c) = 0x3f800000;
+lab_7a4d:
+        *(int *)((char *)this + 0x70) = 0x3f800000;
+lab_7a50:
+        *(int *)((char *)this + 0x6c) = 0x3f800000;
+        *(int *)((char *)this + 0x20) = *(int *)((char *)this + 0xbc);
+        *(int *)((char *)this + 0x24) = *(int *)((char *)this + 0xc0);
+        *(int *)((char *)this + 0x28) = *(int *)((char *)this + 0xc4);
+        *(int *)((char *)this + 0x30) = *(int *)((char *)this + 0xbc);
+        *(int *)((char *)this + 0x34) = *(int *)((char *)this + 0xc0);
+        *(int *)((char *)this + 0x38) = *(int *)((char *)this + 0xc4);
+        return;
+    default:
+        first[0] = 1;
+        *(int *)((char *)this + 0x68) = *(int *)((char *)this + 0xc8);
+        *(int *)((char *)this + 0x50) = *(int *)((char *)this + 0xa4);
+        *(int *)((char *)this + 0x54) = *(int *)((char *)this + 0xa8);
+        *(int *)((char *)this + 0x58) = *(int *)((char *)this + 0xac);
+        goto lab_7a4d;
+    }
+    *(int *)((char *)this + 0x7c) = 0x3f000000;
+    *(int *)((char *)this + 0x80) = 0x3f800000;
+    *(int *)((char *)this + 0x6c) = 0x3f800000;
+    goto lab_7a4d;
+}
+
 std::string FUN_004f82a0(std::string text)
 {
     for (unsigned int i = 0; i < text.size(); i++)
