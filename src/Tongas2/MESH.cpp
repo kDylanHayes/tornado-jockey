@@ -78,6 +78,10 @@ MESH::MESH(MESHMASTER *master, const RESHANDLE &handle)
     m_flags = 0;
 }
 
+MESH::~MESH()
+{
+}
+
 void MESH::SetVertices(DECALVERTEX *vertices, int numVertices, const short *indices, int numTriangles)
 {
 }

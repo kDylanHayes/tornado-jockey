@@ -3093,10 +3093,19 @@
     {
       "name": "Tongas2/LIGHTDX8",
       "ranges": [
-        "0x004eff70-0x004f241f"
+        "0x004eff70-0x004f138f"
       ],
       "target": "build/target/Tongas2/LIGHTDX8.obj",
       "source": "src/Tongas2/LIGHTDX8.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/MESHDX8SD",
+      "ranges": [
+        "0x004f1390-0x004f241f"
+      ],
+      "target": "build/target/Tongas2/MESHDX8SD.obj",
+      "source": "src/Tongas2/MESHDX8SD.cpp",
       "category": "engine"
     },
     {
