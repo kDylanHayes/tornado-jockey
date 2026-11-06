@@ -84,18 +84,23 @@ RESHANDLE DECAL::GetShaderHandle()
 
 void DECAL::SetUV(float u0, float v0, float u1, float v1)
 {
-    m_uv[0].u = u0;
-    m_uv[0].v = v0;
-    m_uv[1].u = u1;
-    m_uv[1].v = v1;
-    m_vertices[0].u = u0;
-    m_vertices[0].v = v0;
-    m_vertices[1].u = u0;
-    m_vertices[1].v = v1;
-    m_vertices[2].u = u1;
-    m_vertices[2].v = v0;
-    m_vertices[3].u = u1;
-    m_vertices[3].v = v1;
+    float *uv = &m_uv[0].u;
+    uv[0] = u0;
+    uv[1] = v0;
+    uv[2] = u1;
+    uv[3] = v1;
+    float *p0 = &m_vertices[0].u;
+    p0[0] = u0;
+    p0[1] = v0;
+    float *p1 = &m_vertices[1].u;
+    p1[0] = u0;
+    p1[1] = v1;
+    float *p2 = &m_vertices[2].u;
+    p2[0] = u1;
+    p2[1] = v0;
+    float *p3 = &m_vertices[3].u;
+    p3[0] = u1;
+    p3[1] = v1;
     MESH *mesh = (MESH *)g_pResources->GetResource(m_meshCopy);
     if (mesh)
         mesh->m_flags |= 4;
