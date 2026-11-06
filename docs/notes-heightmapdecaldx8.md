@@ -54,4 +54,31 @@ constant store after the cosine. The transcription also names the
 - The resource constructor is 99.0% (the two initializations of the color
   member store their three dwords in the opposite order).
 
+## Exact-match attempts
+
+The remaining four functions were tried against the compiler again:
+
+- The unit-wide `/Ow` switch takes `UpdateVertices` from 52.4% to 55.7%,
+  but it changes three other functions enough to lose their exact status,
+  so the default flags stay. `#pragma optimize("w", on)` is ignored by
+  VC7.1 for this option.
+- `UpdateVertices`: the vector form, the scalar
+  `axis * index / (count - 1)` form, the reciprocal form, separate
+  `origin - xAxis*0.5 - yAxis*0.5`, and the three addition orders were all
+  compiled. The vector form with the row fraction inside the x loop is the
+  closest (52.4%); the exe's scalar stack layout was not reproduced.
+- The resource constructor: `V3I`, a local three-int colour type with a
+  reverse-order constructor, and interleaved `serial`/`index`/`kind`
+  assignments were tried. VC7.1 still groups the three stores (forward for
+  the member init, contiguous for the body) or, with a POD colour type,
+  loses `Virtual30`'s `lea edi,[ecx+0x474]` three-store shape. Reversing
+  the `RESHANDLE` constructor's member-init order also has no effect.
+- A naked-asm transcription of `CreateMesh` was prepared. It is blocked by
+  the empty `CSTRING` literal `??_C@_00CNPNBAHC@?$AA@`: that symbol is
+  also used by the already-exact master destructor, `Prepare` and
+  `SetHmapFromActor`, so mapping it would rename their definitions.
+  `Render`/`UpdateVertices` additionally call local functions
+  (`FindHeightmap`, `SetRotationZ`, `BOXCORNERS::Merge`) whose definitions
+  would be renamed by the same mappings.
+
 No image watermark affects the unit. It is left without `"complete": true`.
