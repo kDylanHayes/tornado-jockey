@@ -100,6 +100,8 @@ public:
     virtual const char *GetClassName();
     virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
 
+    virtual void Virtual21();
+
     virtual void Virtual1();
     virtual void Virtual2();
     virtual void Virtual3();

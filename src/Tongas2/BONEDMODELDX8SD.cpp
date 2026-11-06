@@ -11,11 +11,18 @@
 
 
 // The display's renderer-side context.
+class BONEDMODELDX8ANIMOBJ
+{
+public:
+    void *Init(void *arg);
+};
+
 class BONEDMODELDX8DISPLAYCTX
 {
 public:
     void ReleaseModel(void *model);
     void DeleteMaterial(void *material);
+    void *CreateModel(void *device, std::string a, std::string b, std::string name);
 };
 
 void FUN_004fde40(void *value);
@@ -283,10 +290,25 @@ public:
     void SetAnimationFrame(void *animation, float frame);
     void UpdateBones();
     void Render(void *material);
+    void *CreateAnimator();
+    void *CreateAnimatorFrom(void *arg);
     void DeleteAnimation(std::string name);
 
     char m_00[0xc];
     BONEDMODELDX8MATERIALS *m_materials;
+};
+
+class BONEDMODELDX8RENDERERDEVICE
+{
+public:
+    virtual void D0();
+    virtual void D1();
+    virtual void D2();
+    virtual void D3();
+    virtual void D4();
+    virtual void D5();
+    virtual void D6();
+    virtual void *GetDevice();
 };
 
 class BONEDMODELDX8RENDERER7
@@ -540,6 +562,31 @@ void BONEDMODELDX8PARTICLE::Virtual11(MATRIX *matrix, BONEDMODELDX8RENDERERAPI *
         m_18->Emit(renderer, &m, &zero, 1.0f);
         renderer->m_c8(renderer, 0xe, 1);
     }
+}
+
+
+void BONEDMODELDX8SDRESOURCE::Virtual21()
+{
+    std::string empty1;
+    std::string empty2;
+    std::string name(((BONEDMODELMASTER *)m_master)->m_artPath.c_str());
+    void *device = ((BONEDMODELDX8RENDERERDEVICE *)g_pRenderer)->GetDevice();
+    m_model = g_pDisplay->m_2bc->CreateModel(device, empty1, empty2, name);
+    if (m_model) {
+        void *object = operator new(0x90);
+        if (object) {
+            void *a = ((BONEDMODELDX8MODEL *)m_model)->CreateAnimator();
+            void *b = ((BONEDMODELDX8MODEL *)m_model)->CreateAnimatorFrom(a);
+            m_loader = ((BONEDMODELDX8ANIMOBJ *)object)->Init(b);
+        }
+    }
+    int count = ((BONEDMODELDX8MODEL *)m_model)->m_materials->m_names.size();
+    m_materials = operator new[](count * 4);
+    for (int i = 0; i < count; i++) {
+        std::string material = ((BONEDMODELDX8MODEL *)m_model)->GetMaterialName(i);
+        ((void **)m_materials)[i] = ((BONEDMODELDX8MODEL *)m_model)->m_materials->Get(i);
+    }
+    LoadTags();
 }
 
 void BONEDMODELDX8PARTICLE::Virtual12(BONEDMODELDX8RENDERERAPI *device)

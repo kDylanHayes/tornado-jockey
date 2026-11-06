@@ -3176,7 +3176,11 @@
                 "FUN_00510550": "?GetMaterialCount@BONEDMODELDX8MODEL@@QAEIXZ",
                 "FUN_00511510": "?GetMaterialNamePtr@BONEDMODELDX8MODEL@@QAEPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z",
                 "FUN_0046365f": "?FUN_0046365f@@YAXPAUMATRIX@@MMMM@Z",
-                "FUN_00516380": "?FUN_00516380@BONEDMODELDX8RENDERHELPER@@QAEXPAVBONEDMODELDX8RENDERERAPI@@@Z"
+                "FUN_00516380": "?FUN_00516380@BONEDMODELDX8RENDERHELPER@@QAEXPAVBONEDMODELDX8RENDERERAPI@@@Z",
+                "FUN_00500de0": "?CreateModel@BONEDMODELDX8DISPLAYCTX@@QAEPAXPAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@11@Z",
+                "FUN_00510420": "?CreateAnimator@BONEDMODELDX8MODEL@@QAEPAXXZ",
+                "FUN_00510410": "?CreateAnimatorFrom@BONEDMODELDX8MODEL@@QAEPAXPAX@Z",
+                "FUN_004f3e80": "?Init@BONEDMODELDX8ANIMOBJ@@QAEPAXPAX@Z"
             },
             "target": "build/target/Tongas2/BONEDMODELDX8SD.obj",
             "source": "src/Tongas2/BONEDMODELDX8SD.cpp",
