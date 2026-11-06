@@ -2890,7 +2890,23 @@
 0x004f8e80 ?Update@MAPLOADER@@QAEXM@Z function 0x38c
 0x004f9210 ?VectorTooLong@@YAXXZ function 0x6a
 0x004f9280 ?Load@INTRO@@QAEXPBD0@Z function 0x3dd
-0x004fbbb0 ??1?$vector@UPATHREPOPOINT@@V?$allocator@UPATHREPOPOINT@@@std@@@std@@QAE@XZ function
+0x004fa5b0 ??0SETTINGS@@QAE@XZ function 0x16a
+0x004fa720 ?PopFront@SETTINGS@@QAEXXZ function 0x55
+0x004fa780 ?ClearAll@SETTINGS@@QAEXXZ function 0x93
+0x004fa820 ?Destroy@SETTINGS@@QAEXXZ function 0x5
+0x004fa830 ?Load@SETTINGS@@QAEXPBD@Z function 0xc25
+0x004fb4a0 ??0MODEL@@QAE@XZ function 0x73
+0x004fbbb0 ??1?$vector@UPATHREPOPOINT@@V?$allocator@UPATHREPOPOINT@@@std@@@std@@QAE@XZ function 0x2a
+0x004fbc80 ?Find@MODEL@@QAEPAXPBD@Z function 0x2d6
+0x004fcbe0 ??1MODEL@@QAE@XZ function 0x93f
+0x004fe350 ?Load@MODEL@@QAEPAXPBD@Z function 0x8c0
+0x004fec10 ?Create@MODEL@@QAEPAXPBD@Z function 0x3e3
+0x00502e30 ?RegisterCommands@MODELDX8SDMASTER@@SAXXZ function 0x3f
+0x00502e70 ?GetTypeCode@MODELDX8SDMANAGER@@SAPBDXZ function 0x6
+0x00502e80 ?CreateMODELDX8SD@@YAPAVRESOURCEMANAGER@@XZ function 0x80
+0x00504210 ?BuildDiffuseColorTexture@TEXTUREDX8SDMASTER@@QAEXXZ function 0x113
+0x00504360 ??1TEXTUREDX8SDMANAGER@@QAE@XZ function 0xb
+0x005043c0 ??1TEXTUREDX8SDMASTER@@QAE@XZ function 0x6a
 0x00537270 ?SetFileName@SCREENDECALMASTER@@UAEXABVCSTRING@@@Z function 0x34
 0x0053dad0 ?size@?$vector@UPATHREPOPOINT@@V?$allocator@UPATHREPOPOINT@@@std@@@std@@QBEIXZ function 0x1f
 0x0053db30 ??$fill@PAUPATHREPOPOINT@@U1@@std@@YAXPAUPATHREPOPOINT@@0ABU1@@Z function

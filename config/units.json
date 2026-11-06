@@ -3142,6 +3142,42 @@
       "target": "build/target/Tongas2/INTRO.obj",
       "source": "src/Tongas2/INTRO.cpp",
       "category": "engine"
+    },
+    {
+      "name": "Tongas2/SETTINGS",
+      "ranges": [
+        "0x004fa5b0-0x004fb45f"
+      ],
+      "target": "build/target/Tongas2/SETTINGS.obj",
+      "source": "src/Tongas2/SETTINGS.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/MODEL",
+      "ranges": [
+        "0x004fb460-0x00502e2f"
+      ],
+      "target": "build/target/Tongas2/MODEL.obj",
+      "source": "src/Tongas2/MODEL.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/MODELDX8SD",
+      "ranges": [
+        "0x00502e30-0x0050420f"
+      ],
+      "target": "build/target/Tongas2/MODELDX8SD.obj",
+      "source": "src/Tongas2/MODELDX8SD.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/TEXTUREDX8SD",
+      "ranges": [
+        "0x00504210-0x00504d3f"
+      ],
+      "target": "build/target/Tongas2/TEXTUREDX8SD.obj",
+      "source": "src/Tongas2/TEXTUREDX8SD.cpp",
+      "category": "engine"
     }
   ]
 }
