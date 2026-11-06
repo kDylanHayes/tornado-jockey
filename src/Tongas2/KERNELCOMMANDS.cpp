@@ -334,16 +334,16 @@ static CMDBASE *CreateKernelCommands()
 
 SRESULT KERNELCOMMANDS::SpawnPos(CMDCALL *call)
 {
-    if (call->caller.kind == 1 && call->caller.IsValid()) {
-        ACTOR *target = (ACTOR *)g_pScene->FindActor(call->tokens->GetToken(1));
-        ACTOR *caller;
-        if (target && (caller = (ACTOR *)g_pScene->GetActor(call->caller)) != 0) {
-            ACTOR *copy = target->Clone(0);
-            copy->SetPosition(caller->GetPosition());
-            copy->Place();
-            copy->m_placed = true;
-            return SRESULT(true);
-        }
+    if (call->caller.kind != 1 || !call->caller.IsValid())
+        return SRESULT(false);
+    ACTOR *target = (ACTOR *)g_pScene->FindActor(call->tokens->GetToken(1));
+    ACTOR *caller;
+    if (target && (caller = (ACTOR *)g_pScene->GetActor(call->caller)) != 0) {
+        ACTOR *copy = target->Clone(0);
+        copy->SetPosition(caller->GetPosition());
+        copy->Place();
+        copy->m_placed = true;
+        return SRESULT(true);
     }
     return SRESULT(false);
 }
@@ -478,36 +478,36 @@ SRESULT KERNELCOMMANDS::Create(CMDCALL *call)
 
 SRESULT KERNELCOMMANDS::CreateAttached(CMDCALL *call)
 {
-    if (call->caller.kind == 1 && call->caller.IsValid()) {
-        ACTOR *actor = g_pScene->CreateActor(call->tokens->GetToken(1));
-        if (actor) {
-            actor->Run(STRING(call->tokens->GetToken(2)));
-            actor->Place();
-            actor->m_placed = true;
-            actor->AttachTo(call->caller);
-            return SRESULT(true);
-        }
-    }
-    return SRESULT(false);
+    if (call->caller.kind != 1 || !call->caller.IsValid())
+        return SRESULT(false);
+    ACTOR *actor = g_pScene->CreateActor(call->tokens->GetToken(1));
+    if (!actor)
+        return SRESULT(false);
+    actor->Run(STRING(call->tokens->GetToken(2)));
+    actor->Place();
+    actor->m_placed = true;
+    actor->AttachTo(call->caller);
+    return SRESULT(true);
 }
 
 SRESULT KERNELCOMMANDS::DelayFrames(CMDCALL *call)
 {
     TOKENS *tokens = new TOKENS;
-    int frames = atol(call->tokens->GetToken(1));
+    int frames = atoi(call->tokens->GetToken(1));
     tokens->Parse(STRING(call->tokens->GetToken(2)), 0);
-    if (tokens->m_count <= 0)
-        return SRESULT(false);
-    if (frames <= 0) {
-        CMDCONTEXT context(tokens, call->caller);
-        context.Run(this);
-        delete tokens;
-    } else {
-        CMDCONTEXT *context = new CMDCONTEXT(tokens, call->caller);
-        context->m_frames = frames;
-        g_pCmdMgr->Queue(context);
+    if (tokens->m_count > 0) {
+        if (frames <= 0) {
+            CMDCONTEXT context(tokens, call->caller);
+            context.Run(this);
+            delete tokens;
+        } else {
+            CMDCONTEXT *context = new CMDCONTEXT(tokens, call->caller);
+            context->m_frames = frames;
+            g_pCmdMgr->Queue(context);
+        }
+        return SRESULT(true);
     }
-    return SRESULT(true);
+    return SRESULT(false);
 }
 
 SRESULT KERNELCOMMANDS::RandomDelay(CMDCALL *call)
@@ -515,7 +515,7 @@ SRESULT KERNELCOMMANDS::RandomDelay(CMDCALL *call)
     TOKENS *tokens = new TOKENS;
     float time = (float)atof(call->tokens->GetToken(1));
     float most = (float)atof(call->tokens->GetToken(2));
-    if (time < most)
+    if (most > time)
         time += (most - time) * (float)rand() * (1.0f / RAND_MAX);
     tokens->Parse(STRING(call->tokens->GetToken(3)), 0);
     if (tokens->m_count <= 0)

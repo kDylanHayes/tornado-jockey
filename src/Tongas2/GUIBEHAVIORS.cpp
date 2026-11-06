@@ -210,11 +210,12 @@ void ORBITBEHAVIOR::Place()
     ACTOR *actor = GetActor();
     if (!actor)
         return;
-    float angle = (m_start - m_time) / m_period * 360.0f * 0.017453292f;
+    float angle = (m_start - m_time) / m_period * 360.0f;
+    angle *= 0.017453292f;
     float s = (float)sin(angle);
     float c = (float)cos(angle);
     actor->SetPosition((m_u * c + m_v * s) * m_radius + m_center);
-    actor->m_angles.PointAt(m_lookAt + m_center - actor->GetPosition());
+    actor->m_angles.PointAt(m_center + m_lookAt - actor->GetPosition());
 }
 
 INTERPOLATEDGROWBEHAVIOR::INTERPOLATEDGROWBEHAVIOR(const RESHANDLE &owner, CMDCALL *call) : TIMEDBEHAVIOR(owner, call)
@@ -549,7 +550,7 @@ void CHANGETEXTUREBEHAVIOR::Update()
             m_up = false;
     } else {
         m_phase -= g_pTimer->GetDt();
-        if (m_phase <= 0.0f)
+        if (m_phase < 0.0f)
             m_up = true;
     }
 }
@@ -580,7 +581,8 @@ void TRAVELWANIMBEHAVIOR::Start()
         actor->SetAngVel(V3(0.0f, 0.0f, 0.0f));
         m_state = TURNING;
         m_done = false;
-        Turn(m_target - actor->GetPosition());
+        V3 toTarget = m_target - actor->GetPosition();
+        Turn(toTarget);
     } else {
         m_done = true;
     }

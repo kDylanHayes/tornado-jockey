@@ -26,6 +26,7 @@
 0x00402650 ??_9@$BNI@AE function
 0x00402660 ??_9@$BLI@AE function
 0x00402670 ??_9@$BJI@AE function
+0x00402690 ?GetToken@TOKENS@@QAEPBDH@Z function 0x26
 0x004026c0 ?FreeValue@SRESULT@@QAEXXZ function 0x47
 0x00402730 ??1SRESULT@@UAE@XZ function 0xb
 0x00402740 ??_GSRESULT@@UAEPAXI@Z function 0x24
@@ -40,6 +41,7 @@
 0x004037d0 ?LookAt@MATRIX@@QAEXABUV3@@0@Z function
 0x00403ae0 ?SetName@CMDBASE@@UAEXABVCSTRING@@@Z function
 0x00403af0 ??4CSTRING@@QAEAAV0@ABV0@@Z function
+0x00403a50 ??4?$FIXEDWSTRING@$0CAA@@@QAEAAV0@PBD@Z function 0x56
 0x00403bb0 ??4?$FIXEDSTRING@$0CAA@@@QAEAAV0@PBD@Z function
 0x00403be0 ??1STRING@@UAE@XZ function
 0x00403c30 ?Reserve@STRING@@QAEXABH@Z function
@@ -2721,7 +2723,10 @@
 0x004e6390 FUN_004e6390 function 0x10a
 0x004e649a code_004e649a function 0x86
 0x004e6520 FUN_004e6520 function 0x9e
-0x004e65c0 code_004e65c0 function 0x320
+0x004e65c0 ?CreateBuffers@VERTEXBUFFER@@QAE_NPAPAXH_N@Z function 0x1b8
+0x004e6780 code_004e6780 function 0x89
+0x004e6810 code_004e6810 function 0xb4
+0x004e68d0 code_004e68d0 function 0xa
 0x004e68e0 ?Validate@INDEXBUFFER@@QAEXXZ function 0xcc
 0x004e69ac code_004e69ac function 0xb4
 0x004e6a60 ?Validate@VERTEXBUFFER@@QAEXXZ function 0xc9
@@ -2870,6 +2875,11 @@
 0x004f10b0 ?Start@LIGHTDX8RESOURCE@@QAEXXZ function 0x2e6
 0x004f1e10 ?Update@LIGHTDX8RESOURCE@@QAEX_N@Z function 0x3a8
 0x004f21c0 ?Stop@LIGHTDX8RESOURCE@@QAEXXZ function 0x15c
+0x004f2420 ?RegisterCommands@SCREENDECALDX8MASTER@@SAXXZ function 0x3f
+0x004f2a80 ?CreateSCREENDECALDX8@@YAPAVRESOURCEMANAGER@@XZ function 0x86
+0x004f4130 ?RegisterCommands@BONEDMODELDX8SDMASTER@@SAXXZ function 0x3f
+0x004f4170 ?RegisterCommands@BONEDMODELDX8SDRESOURCE@@SAXXZ function 0x3f
+0x004f4ca0 ?CreateBONEDMODELDX8SD@@YAPAVRESOURCEMANAGER@@XZ function 0x86
 0x004fbbb0 ??1?$vector@UPATHREPOPOINT@@V?$allocator@UPATHREPOPOINT@@@std@@@std@@QAE@XZ function
 0x00537270 ?SetFileName@SCREENDECALMASTER@@UAEXABVCSTRING@@@Z function 0x34
 0x0053dad0 ?size@?$vector@UPATHREPOPOINT@@V?$allocator@UPATHREPOPOINT@@@std@@@std@@QBEIXZ function 0x1f
@@ -4251,6 +4261,7 @@
 0x005c00c6 __abnormal_termination function 0x23
 0x005c00e9 __NLG_Notify1 function 0x9
 0x005c0110 _floor function
+0x005c0efa __CIfmod function 0xa
 0x005c0231 _wcsncpy function 0x3d
 0x005c02dd _free function 0x38
 0x005c0315 __vsnprintf function 0x56
@@ -5322,9 +5333,12 @@
 0x00668000 ??_7SCENE@@6B@ data 0x70
 0x00668070 ??_C@_0CP@PMFMMKEI@SAFEINDEX?3?3New?$DO?5ERROR?5Ivalid?5dis@ data 0x2f
 0x006680a0 ??_C@_04HGGBINEM@?$CFs?$CFd?$AA@ data 0x5
+0x006680a8 ??_C@_0M@PLMLCMLH@msg?5?$CFs?5?$CI?$CFs?$CJ?$AA@ data 0xc
 0x006680b4 ??_C@_0CK@FBJPJPNG@SAFEINDEX?3?3Insert?$DO?5ERROR?$CB?$CB?$CB?5Tabl@ data 0x2a
 0x006680e0 ??_C@_0DA@JIDJBGHL@SAFEINDEX?3?3New?$DO?5ERROR?5Invalid?5di@ data 0x30
 0x00668110 ??_C@_0DH@FGFBGCPK@SCENE?3?3CreateActor?5?9?5Could?5creat@ data 0x37
+0x00668148 ??_C@_07PGEILMHB@DumpPVS?$AA@ data 0x8
+0x00668150 ??_C@_09PBKMMNCK@CreatePVS?$AA@ data 0xa
 0x0066815c ??_C@_04MBNFPKFL@cols?$AA@ data 0x5
 0x00668168 _s_TypeNames data 0xb4
 0x0066821c ??_7INPUT@@6B@ data 0x10

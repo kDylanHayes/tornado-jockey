@@ -111,6 +111,14 @@ def apply_symbol_mappings(path: Path, mappings: dict) -> int:
             if rec is None:
                 continue
             name = coff.name(rec)
+            # Mapping a label that is defined inside this object would make
+            # objdiff treat it as a function start and cut the enclosing
+            # function. Defined function symbols still take the mapping (the
+            # folded-thunk case), but static labels keep their names; objdiff
+            # applies the mapping to code operands itself.
+            secno, typ = struct.unpack_from("<hH", rec, 12)
+            if secno > 0 and typ != 0x20:
+                continue
             if name in mappings and mappings[name] not in taken:
                 coff.set_name(rec, mappings[name])
                 taken.add(mappings[name])
@@ -241,7 +249,8 @@ def main() -> int:
                         data_sizes=data_sizes)
         fix_data_symbols.main_path(ROOT / unit["target"],
                                    {n: a for n, a in variables if any(lo <= a <= hi for lo, hi in spans)},
-                                   [v for v in sized if not any(lo <= v[1] <= hi for lo, hi in spans)])
+                                   [v for v in sized if not any(lo <= v[1] <= hi for lo, hi in spans)],
+                                   data_sizes)
         apply_symbol_mappings(ROOT / unit["target"], unit.get("symbol_mappings", {}))
         if ours is not None and ours.is_file():
             fix_data_icf.main_path(ROOT / unit["target"], ours)

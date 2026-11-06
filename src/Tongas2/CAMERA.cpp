@@ -381,7 +381,7 @@ void CAMERA::Update()
         m_jitter.x = 0.0f;
         m_jitter.z = 0.0f;
         m_jitter.y = r - m_jitterAmount;
-        SetPosition(m_position + m_jitter);
+        SetPosition(m_jitter + m_position);
         m_jitterTime -= g_pTimer->m_dt;
     }
     if (g_pGui)
@@ -413,7 +413,7 @@ SRESULT CAMERA::PanTo(CMDCALL *call)
 
 SRESULT CAMERA::RotateTo(CMDCALL *call)
 {
-    float x, y, z = 0.0f;
+    float x, y, z;
     sscanf(call->tokens->GetToken(1), "%f %f %f", &x, &y, &z);
     m_rotateTime = (float)atof(call->tokens->GetToken(2));
     m_rotateTarget = ANG(x, y, z);

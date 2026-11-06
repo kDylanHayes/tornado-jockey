@@ -77,6 +77,8 @@
 0x4bcafb-0x4bcb0b   Tongas2/FX                  ??0FXMASTER@@QAE@PAVRESOURCEMANAGER@@PBD@Z            code  observed
 0x48bc18-0x48bc27   Tongas2/APP                 ??1APP@@UAE@XZ                                        code  observed
 0x4b2e68-0x4b2e77   Tongas2/SOUND               ?EnableSounds@SOUNDMANAGER@@QAEX_N@Z                  code  observed
+0x4958aa-0x4958be   Tongas2/KERNELCOMMANDS       ?RandomDelay@KERNELCOMMANDS@@UAE?AVSRESULT@@PAUCMDCALL@@@Z     code  scan
+0x497fd0-0x497fe9   Tongas2/KERNELCOMMANDS       ?Delay@KERNELCOMMANDS@@UAE?AVSRESULT@@PAUCMDCALL@@@Z           code  scan
 0x613337-0x61334b   Tongas2/GUITEXT             _$E3                                                  code  observed
 #
 # Lengths observed so far are 7-19 bytes (16 typical). No fixed address

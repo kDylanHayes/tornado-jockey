@@ -65,7 +65,11 @@ static RENDERER *CreateRENDERER()
 
 RENDERER *(*g_pfnCreateRENDERER)() = CreateRENDERER;
 
+// The image lays this zero-initialized pointer out in a section of its own.
+#pragma bss_seg(".bss")
 RENDERER *g_pRenderer;
+#pragma bss_seg()
+
 D3DXMATRIX *g_pIdentityMatrix;
 
 bool RENDERER::Init()

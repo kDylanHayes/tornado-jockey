@@ -138,7 +138,7 @@ void GUITEXTEDIT::SetText(const int &i, const FIXEDWSTRING<0x200> &text)
     FIXEDWSTRING<0x200> shown;
     int k;
     for (k = 0; k < maskLength && j < length; k++) {
-        wchar_t c = m_editMaster->m_separators[i].c_str()[k];
+        int c = m_editMaster->m_separators[i].c_str()[k];
         if (c == '%')
             c = text.m_buf[j++];
         shown.m_buf[k] = c;

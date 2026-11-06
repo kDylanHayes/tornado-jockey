@@ -49,12 +49,20 @@ PROPENTRY SCENE::s_properties[] = {
     { 0, 0, 15, 0, 0, false },
 };
 
-static const char s_pvsTypes[][30] = {
+// The image has this table in a .rdata section of its own: an external array
+// with selectany gives VC7.1 that shape, so objdiff compares the whole table.
+extern "C" __declspec(selectany) const char s_pvsTypes[][30] = {
     "None",
     "Octree",
     "OneNode",
     "",
 };
+
+// The image keeps MATHS' -180 and -360 float constants just before SCENE's
+// vtables. Nothing in this file uses them, but they fall inside the unit's
+// data range; SCENE's symbol_mappings pair them with these definitions.
+extern "C" const float g_neg180 = -180.0f;
+extern "C" const float g_neg360 = -360.0f;
 
 #define ACTOR_CREATOR(CLASS) \
     ACTOR *Create##CLASS() \

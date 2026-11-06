@@ -145,7 +145,8 @@ void GUIGENERIC::UpdateAngles()
 SRESULT GUIGENERIC::ActorShowPart(CMDCALL *call)
 {
     bool show = atoi(call->tokens->GetToken(3)) != 0;
-    BONEDMODELRESOURCE *copy = (BONEDMODELRESOURCE *)g_pResources->GetResource(m_handles[atoi(call->tokens->GetToken(1))]);
+    int index = atoi(call->tokens->GetToken(1));
+    BONEDMODELRESOURCE *copy = (BONEDMODELRESOURCE *)g_pResources->GetResource(m_handles[index]);
     if (copy) {
         int id = g_pBONEDMODEL->m_id;
         if (copy->GetManagerId() != id) {
