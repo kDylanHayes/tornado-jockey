@@ -117,4 +117,18 @@ public:
 
 RESOURCEMANAGER *CreateMESHDX8SD();
 
+// The two start/stop hooks of the screen-decal resource that follows the
+// mesh master in the address space. They only toggle the embedded
+// HEIGHTMAPTEMP subobject.
+class MESHDX8SDSETTER
+{
+public:
+    __declspec(noinline) void Empty();
+    void Enable();
+    void Disable();
+
+    char m_pad[0x418];
+    HEIGHTMAPTEMP m_temp;
+};
+
 #endif

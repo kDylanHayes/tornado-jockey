@@ -3107,7 +3107,10 @@
       ],
       "target": "build/target/Tongas2/MESHDX8SD.obj",
       "source": "src/Tongas2/MESHDX8SD.cpp",
-      "category": "engine"
+      "category": "engine",
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?Empty@MESHDX8SDSETTER@@QAEXXZ"
+      }
     },
     {
       "name": "Tongas2/SCREENDECALDX8",

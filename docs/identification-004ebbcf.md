@@ -136,5 +136,7 @@ exact. The master ctor/dtor became exact once the class inherited the real
 resource constructor (85.86%, store scheduling) and `Reset` (66.96%, store
 scheduling). The master's `Stop` is written and at 83.53% (index-buffer
 rebuild and vertex-buffer relock); its `Update` at `0x4f1e10` and the large
-renderer at `0x4f1730` are still unimplemented. The tiny
-`HEIGHTMAPTEMP` setters at `0x4f23a0`/`0x4f23c0` also remain unnamed.
+renderer at `0x4f1730` are still unimplemented. The two small hooks at
+`0x4f23a0`/`0x4f23c0` are matched as the screen-decal resource's
+enable/disable pair by mapping their folded empty base call to a local
+helper; they belong to the class whose vtable starts at `0x676ee8`.

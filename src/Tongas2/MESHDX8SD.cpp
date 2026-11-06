@@ -194,3 +194,15 @@ MESHDX8SDRESOURCE::~MESHDX8SDRESOURCE()
     m_a0 = 0;
     m_a4 = -1;
 }
+
+void MESHDX8SDSETTER::Enable()
+{
+    Empty();
+    m_temp.SetEnabled(true);
+}
+
+void MESHDX8SDSETTER::Disable()
+{
+    Empty();
+    m_temp.SetEnabled(false);
+}
