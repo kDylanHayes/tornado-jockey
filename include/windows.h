@@ -31,6 +31,18 @@ typedef unsigned long DWORD;
 typedef long LONG;
 typedef unsigned long ULONG;
 typedef unsigned int UINT;
+typedef struct _MEMORYSTATUS
+{
+    DWORD dwLength;
+    DWORD dwMemoryLoad;
+    DWORD dwTotalPhys;
+    DWORD dwAvailPhys;
+    DWORD dwTotalPageFile;
+    DWORD dwAvailPageFile;
+    DWORD dwTotalVirtual;
+    DWORD dwAvailVirtual;
+} MEMORYSTATUS, *LPMEMORYSTATUS;
+WINBASEAPI void WINAPI GlobalMemoryStatus(LPMEMORYSTATUS);
 typedef void *PVOID;
 typedef void *LPVOID;
 typedef void *HANDLE;
