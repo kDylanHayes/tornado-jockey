@@ -134,6 +134,7 @@ exact. The master ctor/dtor became exact once the class inherited the real
 `HEIGHTMAPTEMP` subobject at offset `0x70` (size `0x5c`) and its
 `SetEnabled`/destructor were named. The remaining named functions are the
 resource constructor (85.86%, store scheduling) and `Reset` (66.96%, store
-scheduling). Still unnamed are the large renderer at `0x4f1730`, the
-master's `Update`/`Stop` at `0x4f1e10`/`0x4f21c0`, and the tiny
-`HEIGHTMAPTEMP` setters at `0x4f23a0`/`0x4f23c0`.
+scheduling). The master's `Stop` is written and at 83.53% (index-buffer
+rebuild and vertex-buffer relock); its `Update` at `0x4f1e10` and the large
+renderer at `0x4f1730` are still unimplemented. The tiny
+`HEIGHTMAPTEMP` setters at `0x4f23a0`/`0x4f23c0` also remain unnamed.

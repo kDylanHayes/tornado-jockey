@@ -75,6 +75,46 @@ void MESHDX8SDMASTER::UpdateCopies()
     Update(false);
 }
 
+void MESHDX8SDMASTER::Stop()
+{
+    m_b8 = 0;
+    if (m_bc) {
+        ((IDirect3DIndexBuffer8 *)m_bc)->Release();
+        m_bc = 0;
+    }
+    ReleaseVertexBuffer();
+    HEIGHTMAPTEMP::SetEnabled(true);
+
+    int indices = m_b0 * m_numCopies;
+    int vertices = m_ac * m_numCopies;
+    m_a8 = indices;
+    m_a4 = vertices;
+    if (indices > 0) {
+        IDirect3DDevice8 *device = g_pRenderer->GetDevice();
+        device->CreateIndexBuffer(indices * 6, 8, 0x65, 1, (IDirect3DIndexBuffer8 **)&m_bc);
+        unsigned short *data = 0;
+        if (((IDirect3DIndexBuffer8 *)m_bc)->Lock(0, 0, (BYTE **)&data, 0) != 0) {
+            if (g_pLog)
+                g_pLog->Error("Error - could not lock index buffer");
+            return;
+        }
+        int base = 0;
+        int out = 0;
+        for (MESHDX8SDRESOURCE *copy = m_first; copy; copy = copy->m_next) {
+            copy->m_a4 = base;
+            int count = m_b0 * 3;
+            for (int i = 0; i < count; i++) {
+                data[out] = ((unsigned short *)m_b4)[i] + (unsigned short)base;
+                out++;
+            }
+            base += m_ac;
+        }
+        ((IDirect3DIndexBuffer8 *)m_bc)->Unlock();
+        LockVertexBuffer();
+        Update(true);
+    }
+}
+
 MESHDX8SDMASTER::~MESHDX8SDMASTER()
 {
     HEIGHTMAPTEMP::SetEnabled(false);
