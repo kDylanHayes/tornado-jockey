@@ -13,6 +13,12 @@
 
 #include "Tongas2/CPRIMITIVE3.h"
 
+// std::operator==(const std::string &, const char *) is instantiated here,
+// as the original object has a copy of it.
+template bool std::operator==<char, std::char_traits<char>, std::allocator<char> >(
+    const std::basic_string<char, std::char_traits<char>, std::allocator<char> > &,
+    const char *);
+
 // The shapes' headers bring in FreeImage's stand-ins for the Windows types,
 // so the two calls are declared here rather than through windows.h.
 #define MAX_PATH 260
@@ -48,7 +54,7 @@ std::string GetExeFolder()
 }
 
 // The path with forward slashes, and no two together.
-static std::string FixSlashes(const std::string &path)
+std::string FixSlashes(const std::string &path)
 {
     std::string fixed = path;
     while (fixed.find("\\") != std::string::npos)
@@ -66,10 +72,12 @@ void CreateFolder(const std::string &folder)
     if (path.find(".") != std::string::npos)
         path = path.substr(0, path.find_last_of("/"));
     unsigned long attributes = GetFileAttributesA(path.c_str());
-    if (attributes != FILE_ATTRIBUTE_DIRECTORY && attributes != 0) {
+    if ((attributes | FILE_ATTRIBUTE_DIRECTORY) != FILE_ATTRIBUTE_DIRECTORY) {
         for (unsigned int i = 1; i < path.size(); i++) {
-            if (path[i] == '/')
-                _mkdir(path.substr(0, i).c_str());
+            if (path[i] == '/') {
+                std::string parent = path.substr(0, i);
+                _mkdir(parent.c_str());
+            }
         }
         _mkdir(path.c_str());
     }
@@ -455,9 +463,10 @@ bool CollideSphereSphere(SPHERE3 *a, SPHERE3 *b, V3 *pa, V3 *pb, float *depth)
         return false;
     V3 ca = a->GetCenter();
     V3 cb = b->GetCenter();
-      V3 diff = cb - ca;
-      float distanceSq = diff.x * diff.x + diff.y * diff.y + diff.z * diff.z;
-      float reachSq = (a->radius + b->radius) * (a->radius + b->radius);
+    V3 diff = cb - ca;
+    float reach = a->radius + b->radius;
+    float distanceSq = diff.x * diff.x + diff.y * diff.y + diff.z * diff.z;
+    float reachSq = reach * reach;
     if (pa || pb) {
         V3 n = diff.Normalized();
         if (pa)
@@ -465,10 +474,10 @@ bool CollideSphereSphere(SPHERE3 *a, SPHERE3 *b, V3 *pa, V3 *pb, float *depth)
         if (pb)
             *pb = n;
     }
-      float sqrtDist = (float)sqrt(distanceSq);
-      float sqrtReach = (float)sqrt(reachSq);
-      if (depth)
-          *depth = sqrtDist - sqrtReach;
+    float sqrtDist = (float)sqrt(distanceSq);
+    float sqrtReach = (float)sqrt(reachSq);
+    if (depth)
+        *depth = sqrtDist - sqrtReach;
     if (distanceSq < reachSq)
         return true;
     return false;
