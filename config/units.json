@@ -55,7 +55,7 @@
       "source": "src/lib/zlib/inflate.c",
       "category": "lib",
       "cflags": "/nologo /c /O1 /MT /W3",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/zlib/deflate",
@@ -88,7 +88,7 @@
       "source": "src/lib/zlib/inffast.c",
       "category": "lib",
       "cflags": "/nologo /c /O1 /MT /W3",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/zlib/inftrees",
@@ -132,7 +132,7 @@
       "source": "src/lib/libpng/pngset.c",
       "category": "lib",
       "cflags": "/nologo /c /O1 /MT /W3 /Isrc/lib/zlib /DPNG_iTXt_SUPPORTED",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/libpng/pngmem",
@@ -198,7 +198,7 @@
       "source": "src/lib/libpng/pngread.c",
       "category": "lib",
       "cflags": "/nologo /c /O1 /MT /W3 /Isrc/lib/zlib /DPNG_iTXt_SUPPORTED",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/libpng/pngrtran",
@@ -209,7 +209,7 @@
       "source": "src/lib/libpng/pngrtran.c",
       "category": "lib",
       "cflags": "/nologo /c /O1 /MT /W3 /Isrc/lib/zlib /DPNG_iTXt_SUPPORTED",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/libpng/pngrio",
@@ -242,7 +242,7 @@
       "source": "src/lib/libpng/pngwutil.c",
       "category": "lib",
       "cflags": "/nologo /c /O1 /MT /W3 /Isrc/lib/zlib /DPNG_iTXt_SUPPORTED",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/libpng/pngwtran",
@@ -253,7 +253,7 @@
       "source": "src/lib/libpng/pngwtran.c",
       "category": "lib",
       "cflags": "/nologo /c /O1 /MT /W3 /Isrc/lib/zlib /DPNG_iTXt_SUPPORTED",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/libpng/pngrutil",
@@ -264,7 +264,7 @@
       "source": "src/lib/libpng/pngrutil.c",
       "category": "lib",
       "cflags": "/nologo /c /O1 /MT /W3 /Isrc/lib/zlib /DPNG_iTXt_SUPPORTED",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/libjpeg/jcomapi",
@@ -308,7 +308,7 @@
       "source": "src/lib/libjpeg/jdapimin.c",
       "category": "lib",
       "cflags": "/nologo /c /O1 /MT /W3",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/libjpeg/jdapistd",
@@ -443,7 +443,7 @@
       "source": "src/lib/libjpeg/jdmainct.c",
       "category": "lib",
       "cflags": "/nologo /c /O1 /MT /W3",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/libjpeg/jdcoefct",
@@ -487,7 +487,7 @@
       "source": "src/lib/libjpeg/jddctmgr.c",
       "category": "lib",
       "cflags": "/nologo /c /O1 /MT /W3",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/libjpeg/jdpostct",
@@ -564,7 +564,7 @@
       "source": "src/lib/libjpeg/jchuff.c",
       "category": "lib",
       "cflags": "/nologo /c /O1 /MT /W3",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/libjpeg/jcphuff",
@@ -630,7 +630,7 @@
       "source": "src/lib/libjpeg/jcmaster.c",
       "category": "lib",
       "cflags": "/nologo /c /O1 /MT /W3",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/libjpeg/jidctint",
@@ -718,7 +718,7 @@
       "source": "src/lib/freeimage/FreeImage/BitmapAccess.cpp",
       "category": "lib",
       "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/freeimage/Conversion24",
@@ -762,7 +762,7 @@
       "source": "src/lib/freeimage/FreeImageToolkit/Rescale.cpp",
       "category": "lib",
       "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/freeimage/Conversion32",
@@ -817,7 +817,7 @@
       "source": "src/lib/freeimage/FreeImage/PluginJPEG.cpp",
       "category": "lib",
       "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/freeimage/FreeImageTag",
@@ -883,7 +883,7 @@
       "source": "src/lib/freeimage/Metadata/Exif.cpp",
       "category": "lib",
       "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/freeimage/WuQuantizer",
@@ -905,7 +905,7 @@
       "source": "src/lib/freeimage/FreeImage/NNQuantizer.cpp",
       "category": "lib",
       "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DFREEIMAGE_LIB /Isrc/lib/freeimage",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/freeimage/TagLib",
@@ -927,7 +927,7 @@
       "source": "src/lib/ode/ode/src/ode.cpp",
       "category": "lib",
       "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/ode/collision_space",
@@ -960,7 +960,7 @@
       "source": "src/lib/ode/ode/src/collision_trimesh.cpp",
       "category": "lib",
       "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/ode/collision_transform",
@@ -982,7 +982,7 @@
       "source": "src/lib/ode/ode/src/collision_std.cpp",
       "category": "lib",
       "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/ode/mass",
@@ -1026,7 +1026,7 @@
       "source": "src/lib/ode/ode/src/joint.cpp",
       "category": "lib",
       "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/ode/rotation",
@@ -1059,7 +1059,7 @@
       "source": "src/lib/ode/ode/src/matrix.cpp",
       "category": "lib",
       "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/ode/memory",
@@ -1081,7 +1081,7 @@
       "source": "src/lib/ode/ode/src/obstack.cpp",
       "category": "lib",
       "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/ode/util",
@@ -1114,7 +1114,7 @@
       "source": "src/lib/ode/ode/src/quickstep.cpp",
       "category": "lib",
       "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/ode/misc",
@@ -1136,7 +1136,7 @@
       "source": "src/lib/ode/ode/src/collision_trimesh_ccylinder.cpp",
       "category": "lib",
       "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/ode/collision_trimesh_trimesh",
@@ -1147,7 +1147,7 @@
       "source": "src/lib/ode/ode/src/collision_trimesh_trimesh.cpp",
       "category": "lib",
       "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/ode/collision_trimesh_ray",
@@ -1169,7 +1169,7 @@
       "source": "src/lib/ode/ode/src/collision_trimesh_box.cpp",
       "category": "lib",
       "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/ode/collision_trimesh_sphere",
@@ -1246,7 +1246,7 @@
       "source": "src/lib/ode/OPCODE/OPC_TreeCollider.cpp",
       "category": "lib",
       "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/ode/OPC_PlanesCollider",
@@ -1279,7 +1279,7 @@
       "source": "src/lib/ode/OPCODE/OPC_OBBCollider.cpp",
       "category": "lib",
       "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/ode/OPC_RayCollider",
@@ -1290,7 +1290,7 @@
       "source": "src/lib/ode/OPCODE/OPC_RayCollider.cpp",
       "category": "lib",
       "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/ode/OPC_LSSCollider",
@@ -1356,7 +1356,7 @@
       "source": "src/lib/ode/ode/src/lcp.cpp",
       "category": "lib",
       "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/ode/IceMatrix4x4",
@@ -1400,7 +1400,7 @@
       "source": "src/lib/ode/OPCODE/OPC_OptimizedTree.cpp",
       "category": "lib",
       "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
-      "complete": true
+      "complete": false
     },
     {
       "name": "lib/ode/OPC_Collider",
@@ -1455,7 +1455,7 @@
       "source": "src/lib/ode/ode/src/fastldlt.c",
       "category": "lib",
       "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
-      "complete": true
+      "complete": false
     },
     {
       "name": "Tongas2/CAMERA",
@@ -1735,7 +1735,7 @@
       "target": "build/target/Tongas2/GUIVISUAL.obj",
       "source": "src/Tongas2/GUIVISUAL.cpp",
       "category": "engine",
-      "complete": true,
+      "complete": false,
       "symbol_mappings": {
         "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z"
       }
@@ -1752,7 +1752,7 @@
       "target": "build/target/Tongas2/GUITEXTEDIT.obj",
       "source": "src/Tongas2/GUITEXTEDIT.cpp",
       "category": "engine",
-      "complete": true,
+      "complete": false,
       "symbol_mappings": {
         "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z",
         "??0CSTRING@@QAE@XZ": "??0CWSTRING@@QAE@XZ",
@@ -1773,7 +1773,7 @@
       "target": "build/target/Tongas2/GUITEXT.obj",
       "source": "src/Tongas2/GUITEXT.cpp",
       "category": "engine",
-      "complete": true,
+      "complete": false,
       "symbol_mappings": {
         "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z",
         "??0CSTRING@@QAE@XZ": "??0CWSTRING@@QAE@XZ",
@@ -1792,7 +1792,7 @@
       "target": "build/target/Tongas2/SCREENDECAL.obj",
       "source": "src/Tongas2/SCREENDECAL.cpp",
       "category": "engine",
-      "complete": true,
+      "complete": false,
       "symbol_mappings": {
         "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z",
         "?SetDescription@RESOURCEMASTER@@UAEXABH@Z": "?SetLayer@SCREENDECAL@@UAEXH@Z",
@@ -1832,7 +1832,7 @@
       "target": "build/target/Tongas2/FX.obj",
       "source": "src/Tongas2/FX.cpp",
       "category": "engine",
-      "complete": true,
+      "complete": false,
       "symbol_mappings": {
         "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z",
         "?IsLoaded@SCREENDECAL@@UAE_NXZ": "?IsLoaded@FX@@UAE_NXZ",
@@ -1967,7 +1967,7 @@
       "target": "build/target/Tongas2/SHELL.obj",
       "source": "src/Tongas2/SHELL.cpp",
       "category": "engine",
-      "complete": true
+      "complete": false
     },
     {
       "name": "Tongas2/UNICODESTRING",
@@ -1996,7 +1996,7 @@
       "target": "build/target/Tongas2/SOUND.obj",
       "source": "src/Tongas2/SOUND.cpp",
       "category": "engine",
-      "complete": true,
+      "complete": false,
       "symbol_mappings": {
         "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z"
       }
@@ -2144,7 +2144,7 @@
       "target": "build/target/Tongas2/APP.obj",
       "source": "src/Tongas2/APP.cpp",
       "category": "engine",
-      "complete": true
+      "complete": false
     },
     {
       "name": "Tongas2/APPWINDOW",
@@ -2725,7 +2725,8 @@
       ],
       "target": "build/target/Tongas2/BEHAVIORFADERESLOOP.obj",
       "source": "src/Tongas2/BEHAVIORFADERESLOOP.cpp",
-      "category": "engine"
+      "category": "engine",
+      "complete": true
     },
     {
       "name": "Tongas2/B2PATH",

@@ -1,12 +1,12 @@
 # Progress
 
-**28.74%** of `Tornado.exe`'s code matches byte for byte: 671.2 KB of 2.28 MB, 3,959 of 14,186 functions, 176 units complete.
+**28.84%** of `Tornado.exe`'s code matches byte for byte: 673.7 KB of 2.28 MB, 3,980 of 14,186 functions, 176 units complete.
 
 | | | Matched | Code | Functions |
 |---|---|---:|---:|---:|
-| All code | `██████░░░░░░░░░░░░░░` | 28.74% | 671.2 KB / 2.28 MB | 3,959 / 14,186 |
-| Game and engine | `█████░░░░░░░░░░░░░░░` | 27.06% | 326.0 KB / 1.18 MB | 2,710 / 5,577 |
-| Libraries | `█████████████████░░░` | 86.90% | 341.9 KB / 393.5 KB | 1,237 / 1,281 |
+| All code | `██████░░░░░░░░░░░░░░` | 28.84% | 673.7 KB / 2.28 MB | 3,980 / 14,186 |
+| Game and engine | `█████░░░░░░░░░░░░░░░` | 27.27% | 328.5 KB / 1.18 MB | 2,732 / 5,577 |
+| Libraries | `█████████████████░░░` | 86.88% | 341.9 KB / 393.5 KB | 1,236 / 1,281 |
 | C/C++ runtime | `░░░░░░░░░░░░░░░░░░░░` | 0.00% | 0.0 KB / 155.3 KB | 0 / 717 |
 | SDK libraries | `░░░░░░░░░░░░░░░░░░░░` | 0.57% | 3.3 KB / 582.5 KB | 12 / 6,611 |
 
@@ -22,7 +22,7 @@
 |---|---:|---:|---|
 | `Tongas2/ACTOR` | 23.0 KB | 53.32% |  |
 | `Tongas2/ACTORLINK` | 2.1 KB | 100.00% | yes |
-| `Tongas2/ACTORRESOURCES` | 2.5 KB | 97.54% | yes |
+| `Tongas2/ACTORRESOURCES` | 2.5 KB | 100.00% | yes |
 | `Tongas2/ANIMATEDGEOMETRY` | 14.0 KB | 0.00% |  |
 | `Tongas2/APP` | 1.4 KB | 81.97% | yes |
 | `Tongas2/APPOPTIONS` | 1.2 KB | 100.00% | yes |
@@ -32,51 +32,51 @@
 | `Tongas2/BEHAVIORGROW` | 0.2 KB | 100.00% | yes |
 | `Tongas2/BEHAVIORGROWLOOP` | 0.1 KB | 100.00% | yes |
 | `Tongas2/BEHAVIORGROWRESLOOP` | 0.2 KB | 100.00% | yes |
-| `Tongas2/BONEDMODEL` | 2.2 KB | 97.26% | yes |
+| `Tongas2/BONEDMODEL` | 2.2 KB | 100.00% | yes |
 | `Tongas2/BONEDMODELDX8SD` | 11.1 KB | 18.96% |  |
 | `Tongas2/CAMERA` | 6.2 KB | 56.12% |  |
 | `Tongas2/CANIMATEDMESH` | 7.5 KB | 0.00% |  |
 | `Tongas2/CMDBASE` | 20.6 KB | 29.15% |  |
 | `Tongas2/CMDMGR` | 7.9 KB | 54.85% |  |
-| `Tongas2/CONSOLE` | 3.1 KB | 68.01% |  |
+| `Tongas2/CONSOLE` | 3.1 KB | 79.77% |  |
 | `Tongas2/CPRIMITIVE3` | 10.7 KB | 50.63% |  |
 | `Tongas2/CURVE` | 4.0 KB | 61.83% |  |
 | `Tongas2/D3DAPP` | 10.1 KB | 0.00% |  |
 | `Tongas2/DECAL` | 7.2 KB | 56.40% |  |
 | `Tongas2/DISTSEGBOX` | 4.2 KB | 30.23% |  |
-| `Tongas2/DRM` | 0.5 KB | 86.42% | yes |
+| `Tongas2/DRM` | 0.5 KB | 100.00% | yes |
 | `Tongas2/DX8APP` | 9.9 KB | 0.00% |  |
 | `Tongas2/DXINPUT` | 3.8 KB | 100.00% | yes |
 | `Tongas2/EMITTER` | 23.3 KB | 17.00% |  |
 | `Tongas2/FILELOADER` | 0.6 KB | 100.00% | yes |
 | `Tongas2/FILELOADERWKZ` | 0.9 KB | 100.00% | yes |
-| `Tongas2/FX` | 9.3 KB | 66.62% | yes |
-| `Tongas2/GAME` | 0.8 KB | 92.65% | yes |
+| `Tongas2/FX` | 9.3 KB | 67.29% | yes |
+| `Tongas2/GAME` | 0.8 KB | 100.00% | yes |
 | `Tongas2/GEOMETRY` | 20.2 KB | 30.99% |  |
-| `Tongas2/GLOBALDEFS` | 0.8 KB | 92.48% | yes |
+| `Tongas2/GLOBALDEFS` | 0.8 KB | 100.00% | yes |
 | `Tongas2/GUI` | 8.4 KB | 95.02% |  |
 | `Tongas2/GUIBEHAVIOR` | 0.7 KB | 100.00% | yes |
 | `Tongas2/GUIBEHAVIORS` | 13.2 KB | 83.11% |  |
 | `Tongas2/GUIBLINK` | 0.7 KB | 85.59% |  |
-| `Tongas2/GUICHECKBOX` | 1.0 KB | 93.85% | yes |
-| `Tongas2/GUICHECKBOXCONTROL` | 0.8 KB | 91.96% | yes |
-| `Tongas2/GUICHECKGROUP` | 0.8 KB | 92.46% | yes |
-| `Tongas2/GUICHECKGROUPCONTROL` | 0.8 KB | 91.94% | yes |
+| `Tongas2/GUICHECKBOX` | 1.0 KB | 100.00% | yes |
+| `Tongas2/GUICHECKBOXCONTROL` | 0.8 KB | 100.00% | yes |
+| `Tongas2/GUICHECKGROUP` | 0.8 KB | 100.00% | yes |
+| `Tongas2/GUICHECKGROUPCONTROL` | 0.8 KB | 100.00% | yes |
 | `Tongas2/GUICONTROL` | 3.2 KB | 84.12% |  |
 | `Tongas2/GUIFADE` | 0.4 KB | 77.11% |  |
-| `Tongas2/GUIGENERIC` | 2.8 KB | 97.80% | yes |
+| `Tongas2/GUIGENERIC` | 2.8 KB | 100.00% | yes |
 | `Tongas2/GUIGENERICCONTROL` | 6.6 KB | 46.77% |  |
-| `Tongas2/GUIGROUP` | 4.9 KB | 98.75% | yes |
+| `Tongas2/GUIGROUP` | 4.9 KB | 100.00% | yes |
 | `Tongas2/GUIGROUPCONTROL` | 10.4 KB | 74.55% |  |
 | `Tongas2/GUIJITTER` | 0.9 KB | 84.23% |  |
 | `Tongas2/GUISIZE` | 0.7 KB | 11.32% |  |
-| `Tongas2/GUISLIDER` | 2.0 KB | 96.90% | yes |
+| `Tongas2/GUISLIDER` | 2.0 KB | 100.00% | yes |
 | `Tongas2/GUISLIDERCONTROL` | 1.7 KB | 61.17% |  |
-| `Tongas2/GUITEXT` | 4.0 KB | 48.15% | yes |
+| `Tongas2/GUITEXT` | 4.0 KB | 49.67% | yes |
 | `Tongas2/GUITEXTCONTROL` | 6.8 KB | 42.14% |  |
-| `Tongas2/GUITEXTEDIT` | 2.6 KB | 97.61% | yes |
+| `Tongas2/GUITEXTEDIT` | 2.6 KB | 100.00% | yes |
 | `Tongas2/GUITEXTEDITCONTROL` | 2.9 KB | 84.35% |  |
-| `Tongas2/GUIVISUAL` | 3.9 KB | 72.49% | yes |
+| `Tongas2/GUIVISUAL` | 3.9 KB | 74.05% | yes |
 | `Tongas2/GUIVISUALCONTROL` | 6.6 KB | 44.75% |  |
 | `Tongas2/HARDWARE` | 4.9 KB | 0.70% |  |
 | `Tongas2/HEIGHTMAPDECALDX8` | 7.2 KB | 44.99% |  |
@@ -84,7 +84,7 @@
 | `Tongas2/INPUT` | 4.3 KB | 100.00% | yes |
 | `Tongas2/INTRO` | 4.6 KB | 22.22% |  |
 | `Tongas2/KERNELCOMMANDS` | 18.5 KB | 44.21% |  |
-| `Tongas2/LIGHT` | 2.2 KB | 44.25% |  |
+| `Tongas2/LIGHT` | 2.2 KB | 47.09% |  |
 | `Tongas2/LIGHTDX8` | 4.8 KB | 57.81% |  |
 | `Tongas2/LOG` | 2.4 KB | 100.00% | yes |
 | `Tongas2/MAPLOADER` | 3.8 KB | 2.73% |  |
@@ -106,19 +106,19 @@
 | `Tongas2/RESOURCEMANAGER` | 2.4 KB | 65.12% |  |
 | `Tongas2/RESOURCES` | 14.0 KB | 95.67% |  |
 | `Tongas2/SCENE` | 9.1 KB | 77.24% |  |
-| `Tongas2/SCREENDECAL` | 1.9 KB | 90.31% | yes |
+| `Tongas2/SCREENDECAL` | 1.9 KB | 93.56% | yes |
 | `Tongas2/SCREENDECALDX8` | 7.1 KB | 61.04% |  |
 | `Tongas2/SCREENSHOT` | 1.2 KB | 43.22% |  |
 | `Tongas2/SCROOT` | 9.2 KB | 0.00% |  |
 | `Tongas2/SETTINGS` | 3.6 KB | 6.39% |  |
 | `Tongas2/SHADER` | 5.7 KB | 100.00% |  |
-| `Tongas2/SHELL` | 0.7 KB | 100.00% | yes |
+| `Tongas2/SHELL` | 0.7 KB | 79.88% | yes |
 | `Tongas2/SIMPLEMODEL` | 2.9 KB | 59.22% |  |
 | `Tongas2/SIMPLEMODELDX8` | 3.6 KB | 46.46% |  |
 | `Tongas2/SKINNEDANIMATION` | 6.6 KB | 0.00% |  |
 | `Tongas2/SKINNEDGEOMETRY` | 11.2 KB | 0.30% |  |
 | `Tongas2/SKINNEDMESH` | 94.1 KB | 0.00% |  |
-| `Tongas2/SOUND` | 3.4 KB | 96.02% | yes |
+| `Tongas2/SOUND` | 3.4 KB | 97.85% | yes |
 | `Tongas2/SPAWNER` | 4.2 KB | 59.00% |  |
 | `Tongas2/SRESULT` | 1.6 KB | 100.00% | yes |
 | `Tongas2/STRINGMANAGER` | 0.6 KB | 30.67% |  |
@@ -131,10 +131,10 @@
 | `Tongas2/TEXTURERESIZER` | 1.7 KB | 0.00% |  |
 | `Tongas2/TIMER` | 1.6 KB | 100.00% | yes |
 | `Tongas2/TOKENS` | 1.7 KB | 100.00% | yes |
-| `Tongas2/TRIGGER` | 2.6 KB | 97.62% | yes |
+| `Tongas2/TRIGGER` | 2.6 KB | 100.00% | yes |
 | `Tongas2/UNICODESTRING` | 1.5 KB | 63.01% |  |
 | `Tongas2/VALUEMANAGER` | 6.6 KB | 84.09% |  |
-| `Tongas2/WKZ` | 1.6 KB | 33.77% | yes |
+| `Tongas2/WKZ` | 1.6 KB | 100.00% | yes |
 | `lib/freeimage/BitmapAccess` | 8.8 KB | 92.31% | yes |
 | `lib/freeimage/Conversion` | 0.3 KB | 100.00% | yes |
 | `lib/freeimage/Conversion24` | 1.4 KB | 100.00% | yes |
@@ -154,7 +154,7 @@
 | `lib/freeimage/PluginPNG` | 3.8 KB | 100.00% | yes |
 | `lib/freeimage/Rescale` | 1.4 KB | 57.97% | yes |
 | `lib/freeimage/Resize` | 3.3 KB | 100.00% | yes |
-| `lib/freeimage/TagLib` | 4.3 KB | 96.67% | yes |
+| `lib/freeimage/TagLib` | 4.3 KB | 100.00% | yes |
 | `lib/freeimage/WuQuantizer` | 6.0 KB | 100.00% | yes |
 | `lib/libjpeg/jcapimin` | 0.6 KB | 100.00% | yes |
 | `lib/libjpeg/jcapistd` | 0.3 KB | 100.00% | yes |
@@ -249,7 +249,7 @@
 | `lib/ode/matrix` | 5.3 KB | 81.13% | yes |
 | `lib/ode/memory` | 0.1 KB | 100.00% | yes |
 | `lib/ode/misc` | 0.1 KB | 100.00% | yes |
-| `lib/ode/obstack` | 0.4 KB | 100.00% | yes |
+| `lib/ode/obstack` | 0.4 KB | 41.60% | yes |
 | `lib/ode/ode` | 5.2 KB | 97.16% | yes |
 | `lib/ode/odemath` | 0.9 KB | 100.00% | yes |
 | `lib/ode/quickstep` | 6.2 KB | 96.48% | yes |
@@ -270,4 +270,4 @@
 
 </details>
 
-Measured 2026-11-06 17:53 UTC at commit 057f1e4 with `tools/report.py`; see [docs/maintainers.md](../docs/maintainers.md). Generated by `tools/progress.py`; don't edit by hand.
+Measured 2026-11-06 18:14 UTC at commit 35126aa with `tools/report.py`; see [docs/maintainers.md](../docs/maintainers.md). Generated by `tools/progress.py`; don't edit by hand.
