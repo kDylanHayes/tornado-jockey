@@ -632,9 +632,8 @@ BONEDMODELDX8PARTICLEDESC::BONEDMODELDX8PARTICLEDESC(std::string name, int mater
 }
 
 BONEDMODELDX8PARTICLEDESC::BONEDMODELDX8PARTICLEDESC(const BONEDMODELDX8PARTICLEDESC &other)
+    : m_84(other.m_84)
 {
-    m_00 = other.m_00;
-    m_84 = other.m_84;
     m_88 = other.m_88;
     m_a4 = other.m_a4;
     m_b0 = other.m_b0;
