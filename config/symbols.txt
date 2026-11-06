@@ -7535,3 +7535,34 @@
 0x00a12444 _MMXAvailable data
 0x004ea360 ?CreateRENDERSHADERMANAGER@@YAPAVRENDERSHADERMANAGER@@XZ function 0x80
 0x004ea3e0 ?Reset@RENDERSHADERMASTER@@QAEXXZ function 0x35
+
+# Tongas2/HARDWARE (0x00504d40-0x0050618f)
+0x00504d40 ?HardwareC@@YAHXZ function 0x23
+0x00504d70 ?HardwareA@@YAHXZ function 0x54
+0x00504dd0 ?HardwareD@@YAHXZ function 0xd8
+0x00504f90 ??0HARDWARE@@QAE@XZ function 0x5b
+0x00504ff0 ?Detect@HARDWARE@@QAEXXZ function 0x118f
+0x006780e8 _s_vram_error data 0x2a
+0x00678114 _s_detection_error data 0x10
+0x00678124 ??_C@_04LNBIJLKI@?$HOMHz?$AA@ data 0x5
+0x0067812c ??_C@_0CP@CCOAHBOL@Hardware?2Description?2System?2Cent@ data 0x2f
+
+# Tongas2/D3DAPP (0x00506190-0x00508a6f)
+0x00506ba0 ?Cleanup3DEnvironment@D3DAPP@@QAEXXZ function 0x7c
+0x00506c20 ?Initialize3DEnvironment@D3DAPP@@QAEHXZ function 0x3ac
+0x00508040 ?Run@D3DAPP@@QAEHXZ function 0x158
+0x005081a0 ??0D3DAPP@@QAE@XZ function 0x107
+0x005082b0 ?Create@D3DAPP@@QAEHPAUHINSTANCE__@@@Z function 0x74d
+
+# Tongas2/DX8APP (0x00508a70-0x0050b3df)
+0x00508a70 ??0DX8APP@@QAE@XZ function 0x80
+0x005098a0 ?CreateDX8APP@@YAPAVDX8APP@@XZ function 0x59
+0x00509900 ??1DX8APP@@UAE@XZ function 0xc9
+0x005099f0 ?Init@DX8APP@@QAEXXZ function 0x224
+0x00509d30 ?RegisterDX8Plugin@@YAXXZ function 0x127
+
+# Tongas2/SCROOT (0x0050b3e0-0x0050d90f)
+0x0050b3e0 ??0SCROOT@@QAE@HPBX@Z function 0x9d
+0x0050b480 ?CreateSCROOT@@YAPAVSCROOT@@XZ function 0x126
+0x0050b5b0 ?Init@SCROOT@@QAEXXZ function 0x4d
+0x0050b600 ?Load@SCROOT@@QAEXPAXHHH@Z function 0x17b4

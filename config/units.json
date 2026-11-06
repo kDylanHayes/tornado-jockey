@@ -3315,6 +3315,42 @@
         "FUN_00504990": "?MergeAlpha@TEXTUREDX8SDMASTER@@QAEXXZ",
         "PTR_GlobalMemoryStatus_00656130": "_PTR_GlobalMemoryStatus_00656130"
       }
+    },
+    {
+      "name": "Tongas2/HARDWARE",
+      "ranges": [
+        "0x00504d40-0x0050618f"
+      ],
+      "target": "build/target/Tongas2/HARDWARE.obj",
+      "source": "src/Tongas2/HARDWARE.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/D3DAPP",
+      "ranges": [
+        "0x00506190-0x00508a6f"
+      ],
+      "target": "build/target/Tongas2/D3DAPP.obj",
+      "source": "src/Tongas2/D3DAPP.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/DX8APP",
+      "ranges": [
+        "0x00508a70-0x0050b3df"
+      ],
+      "target": "build/target/Tongas2/DX8APP.obj",
+      "source": "src/Tongas2/DX8APP.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/SCROOT",
+      "ranges": [
+        "0x0050b3e0-0x0050d90f"
+      ],
+      "target": "build/target/Tongas2/SCROOT.obj",
+      "source": "src/Tongas2/SCROOT.cpp",
+      "category": "engine"
     }
   ]
 }
