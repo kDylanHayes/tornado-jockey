@@ -43,8 +43,10 @@ V3 MATRIX::Project(const V3 &v) const
 {
     V3 r = v.Transform(*this);
     float inv = 1.0f / (v.x * _14 + v.y * _24 + v.z * _34 + _44);
-    V3 out = inv * r;
-    return out;
+    r.x = inv * r.x;
+    r.y = inv * r.y;
+    r.z = inv * r.z;
+    return r;
 }
 
 void BOXCORNERS::Transform(const MATRIX &m)
