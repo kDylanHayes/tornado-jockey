@@ -3417,7 +3417,9 @@
         "FUN_00537630": "??$fill@PAHH@std@@YAXPAH0ABH@Z",
         "FUN_00537680": "??$_Uninit_fill_n@PAV?$vector@HV?$allocator@H@std@@@std@@IV12@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@std@@YAXPAV?$vector@HV?$allocator@H@std@@@0@IABV10@AAV?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@0@U_Nonscalar_ptr_iterator_tag@0@@Z",
         "FUN_00511c30": "?_Insert_n@?$vector@V?$vector@HV?$allocator@H@std@@@std@@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@std@@IAEXViterator@12@IABV?$vector@HV?$allocator@H@std@@@2@@Z",
-        "FUN_0052faa0": "??$copy_backward@PAHPAH@std@@YAPAHPAH00@Z"
+        "FUN_0052faa0": "??$copy_backward@PAHPAH@std@@YAPAHPAH00@Z",
+        "FUN_0050b010": "??$_Destroy_range@V?$vector@HV?$allocator@H@std@@@std@@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@std@@YAXPAV?$vector@HV?$allocator@H@std@@@0@0AAV?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@0@U_Nonscalar_ptr_iterator_tag@0@@Z",
+        "FUN_0050cf00": "?_Destroy@?$vector@V?$vector@HV?$allocator@H@std@@@std@@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@std@@IAEXPAV?$vector@HV?$allocator@H@std@@@2@0@Z"
       }
     },
     {
