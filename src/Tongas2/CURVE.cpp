@@ -117,9 +117,8 @@ CURVE::~CURVE()
 void CURVE::CreateMesh()
 {
     FIXEDSTRING<0x200> name;
-    CURVEMASTER *master = Master();
     SafeSprintf(name, "__c%d", m_numPoints);
-    RESHANDLE shader = master->m_shaderHandle;
+    RESHANDLE shader = ((CURVEMASTER *)m_master)->m_shaderHandle;
     m_mesh = ((MESHMANAGER *)g_pMESH)->CreateMesh(shader, GetLayer(), name);
 }
 
