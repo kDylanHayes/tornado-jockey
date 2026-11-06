@@ -80,9 +80,7 @@ public:
     V3 m_34;
     V3 m_40;
     int m_4c;
-    V3 m_50;
-    char m_5c[0x40];
-    bool m_9c;
+    ANG m_angles;
     void *m_a0;
     int m_a4;
     bool m_a8;

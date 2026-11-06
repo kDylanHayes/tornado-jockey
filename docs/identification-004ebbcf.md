@@ -126,12 +126,12 @@ dot-product's x term). `0x004f00c0` in the base `LIGHTMANAGER` vtable has
 seventeen bytes of non-code filler in the executable and is left unnamed;
 `0x004f0940` is a 42-byte STL copy helper that did not get its own symbol.
 
-MESHDX8SD is now at 15 exact functions out of the 18 it has named so far.
-`GetTypeCode`, `CreateMaster`, `CreateCopy`, the manager factory, the
-master ctor/dtor, the resource dtor, both deleting destructors, the
-vertex-buffer lock/release, `UpdateCopies`, the screen-decal enable hooks
-and the 624-byte master renderer (`0x4f1730`) are exact. The remaining named
-functions are the resource constructor (85.86%, store scheduling), `Stop`
-(83.53%, index-buffer rebuild and register allocation) and `Reset` (66.96%,
-store scheduling). The master's `Update` at `0x4f1e10` is still
-unimplemented.
+MESHDX8SD is now at 15 exact functions out of the 19 it names. `GetTypeCode`,
+`CreateMaster`, `CreateCopy`, the manager factory, the master ctor/dtor, the
+resource dtor, both deleting destructors, the vertex-buffer lock/release,
+`UpdateCopies`, the screen-decal enable hooks and the 624-byte master
+renderer (`0x4f1730`) are exact. The master `Update` (`0x4f1e10`) is written
+and at 56.35%; it rebuilds the locked vertex buffer's positions, colors and
+UVs from the source copies. The remaining named functions are the resource
+constructor (85.86%, store scheduling), `Stop` (83.53%, index-buffer rebuild
+and register allocation) and `Reset` (66.96%, store scheduling).

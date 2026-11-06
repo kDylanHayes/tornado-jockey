@@ -138,6 +138,92 @@ void MESHDX8SDMASTER::Render()
         g_pRenderer->SetFogColor(0);
 }
 
+void MESHDX8SDMASTER::Update(bool force)
+{
+    if (!m_c0)
+        return;
+
+    if (m_b9)
+        force = true;
+
+    MESHDX8SDRESOURCE *copy = m_first;
+    int *data = 0;
+    m_b9 = 1;
+    while (copy) {
+        if (copy->m_a4 < 0)
+            break;
+        int flags = copy->m_flags;
+        if (force || flags) {
+            if (!data && ((IDirect3DVertexBuffer8 *)m_c0)->Lock(0, 0, (BYTE **)&data, 0) != 0) {
+                if (g_pLog)
+                    g_pLog->Error("Error - could not lock vertex buffer");
+                return;
+            }
+
+            if (force || (flags & 2)) {
+                if (!copy->m_a0) {
+                    for (int i = 0; i < m_ac; i++)
+                        *(int *)((char *)data + (copy->m_a4 + i) * 0x18 + 0x0c) = 0;
+                } else if (!copy->m_a8) {
+                    for (int i = 0; i < m_ac; i++)
+                        *(int *)((char *)data + (copy->m_a4 + i) * 0x18 + 0x0c) =
+                            *(int *)((char *)copy->m_a0 + i * 0x18 + 0x0c);
+                } else {
+                    unsigned int color =
+                        ((copy->m_ac & 0xff | copy->m_4c << 8) << 8 | copy->m_b0 & 0xff) << 8 |
+                        copy->m_b4 & 0xff;
+                    for (int i = 0; i < m_ac; i++)
+                        *(unsigned int *)((char *)data + (copy->m_a4 + i) * 0x18 + 0x0c) = color;
+                }
+            }
+
+            if (force || (flags & 1)) {
+                if (!copy->m_a0) {
+                    for (int i = 0; i < m_ac; i++) {
+                        float *dest = (float *)((char *)data + (copy->m_a4 + i) * 0x18);
+                        dest[0] = -10000.0f;
+                        dest[1] = -10000.0f;
+                        dest[2] = -10000.0f;
+                    }
+                } else {
+                    for (int i = 0; i < m_ac; i++) {
+                        float *source = (float *)((char *)copy->m_a0 + i * 0x18);
+                        V3 point(source[0] * copy->m_40.x, source[1] * copy->m_40.y,
+                                 source[2] * copy->m_40.z);
+                        V3 transformed = copy->m_angles.Transform(point);
+                        float *dest = (float *)((char *)data + (copy->m_a4 + i) * 0x18);
+                        dest[0] = transformed.x + copy->m_34.x;
+                        dest[1] = transformed.y + copy->m_34.y;
+                        dest[2] = transformed.z + copy->m_34.z;
+                    }
+                }
+            }
+
+            if (force || (flags & 4)) {
+                if (!copy->m_a0) {
+                    for (int i = 0; i < m_ac; i++) {
+                        *(int *)((char *)data + (copy->m_a4 + i) * 0x18 + 0x10) = 0;
+                        *(int *)((char *)data + (copy->m_a4 + i) * 0x18 + 0x14) = 0;
+                    }
+                } else {
+                    for (int i = 0; i < m_ac; i++) {
+                        *(int *)((char *)data + (copy->m_a4 + i) * 0x18 + 0x10) =
+                            *(int *)((char *)copy->m_a0 + i * 0x18 + 0x10);
+                        *(int *)((char *)data + (copy->m_a4 + i) * 0x18 + 0x14) =
+                            *(int *)((char *)copy->m_a0 + i * 0x18 + 0x14);
+                    }
+                }
+            }
+
+            copy->m_flags = 0;
+        }
+        copy = copy->m_next;
+    }
+
+    if (data)
+        ((IDirect3DVertexBuffer8 *)m_c0)->Unlock();
+}
+
 void MESHDX8SDMASTER::Stop()
 {
     m_b8 = 0;
@@ -205,10 +291,10 @@ void MESHDX8SDRESOURCE::Reset()
     m_40.x = 0.0f;
     m_40.y = 0.0f;
     m_40.z = 0.0f;
-    m_50.x = 0.0f;
-    m_50.y = 0.0f;
-    m_50.z = 0.0f;
-    m_9c = true;
+    m_angles.euler.x = 0.0f;
+    m_angles.euler.y = 0.0f;
+    m_angles.euler.z = 0.0f;
+    m_angles.flags = 1;
     m_a0 = 0;
     m_a8 = false;
     m_4c = -1;
@@ -220,8 +306,8 @@ MESHDX8SDRESOURCE::MESHDX8SDRESOURCE(MESHMASTER *master, const RESHANDLE &handle
 {
     m_34.x = m_34.y = m_34.z = 0.0f;
     m_40.x = m_40.y = m_40.z = 0.0f;
-    m_50.x = m_50.y = m_50.z = 0.0f;
-    m_9c = true;
+    m_angles.euler.x = m_angles.euler.y = m_angles.euler.z = 0.0f;
+    m_angles.flags = 1;
     m_ac = 0;
     m_b0 = 0;
     m_b4 = 0;
