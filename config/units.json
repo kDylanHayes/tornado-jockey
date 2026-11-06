@@ -3003,7 +3003,6 @@
         "?s_classId@RENDERTEXTUREMASTER@@2HA": "_xr_7",
         "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z",
         "FUN_004ed9c0": "_f_0",
-        "FUN_004eda30": "_f_1",
         "FUN_004edb10": "_f_2",
         "FUN_004edb80": "_f_3",
         "FUN_004edbc0": "_f_4",
@@ -3014,7 +3013,8 @@
         "FUN_004edfe0": "_f_11",
         "LAB_switchD_004eda59::switchdataD_004edaf8": "_xr_1",
         "PTR_?DumpProps@CMDBASE@@UAE?AVSRESULT@@PAUCMDCALL@@@Z_00675da0": "_xr_5"
-      }
+      },
+      "complete": true
     },
     {
       "name": "Tongas2/DXINPUT",
@@ -3202,7 +3202,9 @@
       ],
       "target": "build/target/Tongas2/MODELDX8SD.obj",
       "source": "src/Tongas2/MODELDX8SD.cpp",
-      "category": "engine"
+      "category": "engine",
+      "symbol_mappings": {},
+      "complete": true
     },
     {
       "name": "Tongas2/TEXTUREDX8SD",
