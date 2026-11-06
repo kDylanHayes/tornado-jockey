@@ -118,10 +118,10 @@ void GUIVISUAL::Virtual34(V2 point, GUICONTROL **hit, int *zsort)
         if (layer >= *zsort) {
             width *= 0.5f;
             height *= 0.5f;
-            if (x - width <= point.x && x + width >= point.x && y - height <= point.y && y + height >= point.y) {
-                *zsort = layer;
-                *hit = this;
-            }
+            if (x - width > point.x || point.x > x + width || y - height > point.y || point.y > y + height)
+                continue;
+            *zsort = layer;
+            *hit = this;
         }
     }
 }
