@@ -4,7 +4,10 @@
 #include "Tongas2/TIMER.h"
 #include "Tongas2/CMDMGR.h"
 #include "Tongas2/RENDERER.h"
+#include "Tongas2/APP.h"
 #include <d3dx8.h>
+#include <stdio.h>
+#include <string.h>
 
 
 // The display's renderer-side context.
@@ -272,6 +275,8 @@ class BONEDMODELDX8MODEL
 {
 public:
     std::string GetMaterialName(int index);
+    unsigned GetMaterialCount();
+    std::string *GetMaterialNamePtr(int index);
     int GetFrameCount(void *animation);
     float GetFrameRate(void *animation);
     void SetTime(float time);
@@ -387,6 +392,49 @@ void BONEDMODELDX8SDRESOURCE::DestroyAnimations()
         ((BONEDMODELDX8MODEL *)m_model)->DeleteAnimation(m_strings.front());
         m_strings.erase(m_strings.begin());
     }
+}
+
+void BONEDMODELDX8SDRESOURCE::LoadTags()
+{
+    std::string path(((BONEDMODELMASTER *)m_master)->m_artPath.c_str());
+    size_t dot = path.rfind('.');
+    std::string file = std::string(g_basePath) + path.substr(0, dot + 1) + "tag";
+    FILE *handle = fopen(file.c_str(), "rt");
+    if (!handle)
+        return;
+    int count = 0;
+    fscanf(handle, "TotalTags:%d\n", &count);
+    m_tagCount = count;
+    m_tags = new BONEDMODELTAG[count];
+    for (int i = 0; i < count; i++) {
+        char name[128];
+        char materialName[128];
+        V3 a, b, c;
+        fscanf(handle, "%s %s (%f,%f,%f) (%f,%f,%f) (%f,%f,%f)", name, materialName,
+               &a.x, &a.y, &a.z, &b.x, &b.y, &b.z, &c.x, &c.y, &c.z);
+        a.SwapYZ();
+        b.SwapYZ();
+        c.SwapYZ();
+        int material = 0;
+        unsigned materials = ((BONEDMODELDX8MODEL *)m_model)->GetMaterialCount();
+        for (unsigned j = 0; j < materials; j++) {
+            std::string *known = ((BONEDMODELDX8MODEL *)m_model)->GetMaterialNamePtr(j);
+            if (stricmp(known->c_str(), materialName) == 0) {
+                material = j;
+                break;
+            }
+        }
+        BONEDMODELTAG *tag = &m_tags[i];
+        tag->m_matrix.LookAt(a, b);
+        tag->m_inverse = tag->m_matrix;
+        tag->m_inverse.Invert();
+        tag->m_material = material;
+        tag->m_position = c;
+        size_t length = strlen(name) + 1;
+        tag->m_name = new char[length];
+        strcpy(tag->m_name, name);
+    }
+    fclose(handle);
 }
 
 std::string BONEDMODELDX8MODEL::GetMaterialName(int index)

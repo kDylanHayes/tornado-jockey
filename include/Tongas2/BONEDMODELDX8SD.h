@@ -117,6 +117,7 @@ public:
 
     void RunCommand(const char *command);
     void DestroyAnimations();
+    void LoadTags();
     void SetBone(int index, const V3 &position, void *placement);
     int FindMaterial(const char *name);
 
