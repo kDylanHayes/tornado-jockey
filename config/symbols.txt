@@ -2640,26 +2640,118 @@
 # Tongas2/MESHDX8: dynamic initializer at the start of the unit, only reached
 # through a .CRT$XCU pointer, so auto-analysis never made it a function.
 0x004e5d50 code_004e5d50 function 0x2b0
+0x004e6000 FUN_004e6000 function 0xa2
+0x004e60a2 code_004e60a2 function 0xee
+0x004e6190 FUN_004e6190 function 0xdb
+0x004e626b code_004e626b function 0x15
+0x004e6280 FUN_004e6280 function 0x3f
+0x004e62bf code_004e62bf function 0x11
+0x004e62d0 FUN_004e62d0 function 0x9a
+0x004e6370 FUN_004e6370 function 0x1e
+0x004e6390 FUN_004e6390 function 0x10a
+0x004e649a code_004e649a function 0x86
+0x004e6520 FUN_004e6520 function 0x9e
+0x004e65c0 code_004e65c0 function 0x320
 0x004e68e0 ?Validate@INDEXBUFFER@@QAEXXZ function 0xcc
+0x004e69ac code_004e69ac function 0xb4
 0x004e6a60 ?Validate@VERTEXBUFFER@@QAEXXZ function 0xc9
+0x004e6b30 FUN_004e6b30 function 0x55
+0x004e6b90 FUN_004e6b90 function 0x55
+0x004e6bf0 FUN_004e6bf0 function 0x1e
+0x004e6c10 FUN_004e6c10 function 0x1e
+0x004e6c2e code_004e6c2e function 0x12
 0x004e6c40 ??0VERTEXBUFFER@@QAE@H@Z function 0x6a
-0x004e6d20 ??0INDEXBUFFER@@QAE@XZ function
-0x004e7140 ?GetProjection@DX8CAMERA@@QAEPBU_D3DMATRIX@@XZ function
-0x004e7720 ?SetLightMask@MESHDX8@@QAEXH@Z function
-0x004e7730 ?SetLit@MESHDX8@@QAEX_N@Z function
-0x004e7760 ?SetMatrix@MESHDX8@@QAEXPBUD3DXMATRIX@@@Z function
-0x004e7820 ?_Min@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@KAPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@PAU342@@Z function
-0x004e7a50 ?LockVertices@MESHDX8@@QAEPAXHH@Z function
-0x004e7a90 ?UnlockVertices@MESHDX8@@QAEXXZ function
-0x004e7ad0 ?LockIndices@MESHDX8@@QAEPAXHH@Z function
-0x004e7b10 ?UnlockIndices@MESHDX8@@QAEXXZ function
-0x004e7d80 ?Create@MESHDX8@@QAEXHHHH@Z function
-0x004e7ed0 ?_Buynode@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@PAU342@00ABU?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@2@D@Z function
-0x004e80f0 ?ShowSubmesh@MESHDX8@@QAEXH_N@Z function
-0x004e8bd0 ?RemoveSubmesh@MESHDX8@@QAEXH@Z function
+0x004e6cb0 FUN_004e6cb0 function 0x65
+0x004e6d20 ??0INDEXBUFFER@@QAE@XZ function 0x26
+0x004e6d50 FUN_004e6d50 function 0x65
+0x004e6dc0 FUN_004e6dc0 function 0x1e
+0x004e6de0 FUN_004e6de0 function 0x1e
+0x004e6e00 FUN_004e6e00 function 0x7
+0x004e6e10 FUN_004e6e10 function 0x129
+0x004e6f40 FUN_004e6f40 function 0x59
+0x004e6fa0 FUN_004e6fa0 function 0x43
+0x004e6ff0 FUN_004e6ff0 function 0xaa
+0x004e70a0 FUN_004e70a0 function 0x75
+0x004e7120 FUN_004e7120 function 0x19
+0x004e7140 ?GetProjection@DX8CAMERA@@QAEPBU_D3DMATRIX@@XZ function 0x1c
+0x004e7160 FUN_004e7160 function 0x59
+0x004e71c0 FUN_004e71c0 function 0x1e
+0x004e71de code_004e71de function 0x252
+0x004e7430 FUN_004e7430 function 0xef
+0x004e7520 FUN_004e7520 function 0x62
+0x004e7590 FUN_004e7590 function 0x65
+0x004e75f5 code_004e75f5 function 0x2b
+0x004e7620 FUN_004e7620 function 0xbd
+0x004e76dd code_004e76dd function 0x43
+0x004e7720 ?SetLightMask@MESHDX8@@QAEXH@Z function 0xd
+0x004e7730 ?SetLit@MESHDX8@@QAEX_N@Z function 0x1b
+0x004e774b code_004e774b function 0x15
+0x004e7760 ?SetMatrix@MESHDX8@@QAEXPBUD3DXMATRIX@@@Z function 0x18
+0x004e7778 code_004e7778 function 0x28
+0x004e77a0 FUN_004e77a0 function 0x3
+0x004e77b0 FUN_004e77b0 function 0x61
+0x004e7820 ?_Min@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@KAPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@PAU342@@Z function 0x1c
+0x004e7840 FUN_004e7840 function 0x1d
+0x004e7860 FUN_004e7860 function 0x1c
+0x004e7880 FUN_004e7880 function 0x5d
+0x004e78e0 FUN_004e78e0 function 0x81
+0x004e7970 FUN_004e7970 function 0xdc
+0x004e7a50 ?LockVertices@MESHDX8@@QAEPAXHH@Z function 0x36
+0x004e7a90 ?UnlockVertices@MESHDX8@@QAEXXZ function 0x3e
+0x004e7ad0 ?LockIndices@MESHDX8@@QAEPAXHH@Z function 0x36
+0x004e7b10 ?UnlockIndices@MESHDX8@@QAEXXZ function 0x3e
+0x004e7b50 FUN_004e7b50 function 0xd6
+0x004e7c30 FUN_004e7c30 function 0x55
+0x004e7c90 FUN_004e7c90 function 0x59
+0x004e7cf0 FUN_004e7cf0 function 0x57
+0x004e7d50 FUN_004e7d50 function 0x24
+0x004e7d80 ?Create@MESHDX8@@QAEXHHHH@Z function 0x10a
+0x004e7e90 FUN_004e7e90 function 0x37
+0x004e7ed0 ?_Buynode@?$_Tree@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@std@@@2@$0A@@std@@@2@PAU342@00ABU?$pair@$$CBHPAV?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUFITAG@@@std@@@2@@std@@@2@D@Z function 0x3f
+0x004e7f10 FUN_004e7f10 function 0x37
+0x004e7f50 FUN_004e7f50 function 0x44
+0x004e7fa0 FUN_004e7fa0 function 0x6a
+0x004e8010 FUN_004e8010 function 0x2a
+0x004e8040 FUN_004e8040 function 0x2a
+0x004e8070 FUN_004e8070 function 0x77
+0x004e80f0 ?ShowSubmesh@MESHDX8@@QAEXH_N@Z function 0x34
+0x004e8130 FUN_004e8130 function 0x5f
+0x004e818f code_004e818f function 0x1c1
+0x004e8350 FUN_004e8350 function 0x2b8
+0x004e8610 FUN_004e8610 function 0xb7
+0x004e86d0 FUN_004e86d0 function 0x1ad
+0x004e8880 FUN_004e8880 function 0x69
+0x004e88f0 FUN_004e88f0 function 0x2d7
+0x004e8bd0 ?RemoveSubmesh@MESHDX8@@QAEXH@Z function 0x51
+0x004e8c30 FUN_004e8c30 function 0x3e
+0x004e8c70 FUN_004e8c70 function 0xb9
+0x004e8d30 code_004e8d30 function 0xb7
+0x004e8df0 FUN_004e8df0 function 0x1e0
+0x004e8fd0 FUN_004e8fd0 function 0x169
+0x004e9140 FUN_004e9140 function 0xb7
+0x004e9200 FUN_004e9200 function 0x53
+0x004e9260 FUN_004e9260 function 0x2e
+0x004e9290 FUN_004e9290 function 0xc2
+0x004e9360 FUN_004e9360 function 0x79
+0x004e93e0 FUN_004e93e0 function 0x4d
+0x004e9430 code_004e9430 function 0x7b
+0x004e94c0 FUN_004e94c0 function 0x1ad
+0x004e9670 FUN_004e9670 function 0x2e
+0x004e96a0 FUN_004e96a0 function 0x108
+0x004e97a8 code_004e97a8 function 0x48
+0x004e97f0 FUN_004e97f0 function 0xb9
 0x004e98b0 ??0MESHDX8@@QAE@XZ function 0x112
-0x004e9c30 ?AddSubmesh@MESHDX8@@QAEHABURESHANDLE@@HHHHHH@Z function
-0x004e9d00 ?SetSubmeshShader@MESHDX8@@QAEXHABURESHANDLE@@@Z function
+0x004e99d0 FUN_004e99d0 function 0x1e
+0x004e99f0 FUN_004e99f0 function 0x16c
+0x004e9b60 FUN_004e9b60 function 0xc8
+0x004e9c30 ?AddSubmesh@MESHDX8@@QAEHABURESHANDLE@@HHHHHH@Z function 0xca
+0x004e9d00 ?SetSubmeshShader@MESHDX8@@QAEXHABURESHANDLE@@@Z function 0x89
+0x004e9d90 FUN_004e9d90 function 0x91
+0x004e9e30 FUN_004e9e30 function 0x3f
+0x004e9e70 FUN_004e9e70 function 0x5a
+0x004e9ed0 FUN_004e9ed0 function 0x35
+0x004e9f10 FUN_004e9f10 function 0xe9
+0x004ea000 FUN_004ea000 function 0xf8
 0x004ea100 ?Get@RENDERSHADERMANAGER@@QAEPAVRENDERSHADER@@URESHANDLE@@@Z function
 0x004ea140 ?GetWidth@RENDERSHADER@@QAEIXZ function
 0x004ea180 ?GetHeight@RENDERSHADER@@QAEIXZ function

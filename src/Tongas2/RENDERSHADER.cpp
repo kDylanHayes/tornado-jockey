@@ -158,15 +158,16 @@ extern "C" void resourcemanager_ctor() {}
 extern "C" void safe_sprintf() {}
 extern "C" int ptr_fun_6754d8;
 extern "C" char s_rendershader_txt[];
-extern "C" void LAB_005eca0b();
+extern "C" void lab_5eca0b();
+extern "C" int _except_list;
 
 extern "C" __declspec(naked) void *create_rendershadermanager() {
     __asm {
         push -1
-        push offset LAB_005eca0b
-        mov eax, fs:[0]
+        push offset lab_5eca0b
+        mov eax, fs:[_except_list]
         push eax
-        mov fs:[0], esp
+        mov fs:[_except_list], esp
         push ecx
         push esi
         push 0x228
@@ -176,7 +177,7 @@ extern "C" __declspec(naked) void *create_rendershadermanager() {
         mov [esp+4], esi
         test esi, esi
         mov dword ptr [esp+0x10], 0
-        je skip
+        je fail
         mov ecx, esi
         call resourcemanager_ctor
         lea eax, [esi+0x22]
@@ -187,17 +188,17 @@ extern "C" __declspec(naked) void *create_rendershadermanager() {
         add esp, 8
         mov byte ptr [esi+8], 0
         mov byte ptr [esi+0x18], 1
-    skip:
         mov eax, esi
         pop esi
         mov ecx, [esp+4]
-        mov fs:[0], ecx
+        mov fs:[_except_list], ecx
         add esp, 0x10
         ret
+    fail:
         mov ecx, [esp+8]
         xor eax, eax
         pop esi
-        mov fs:[0], ecx
+        mov fs:[_except_list], ecx
         add esp, 0x10
         ret
     }
