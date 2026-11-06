@@ -76,8 +76,21 @@ private Ghidra project copy at
 `%LOCALAPPDATA%\tornado-jockey\ghidra-carve-50d910`. The full report and all
 four units' objdiff targets build without truncation panics.
 
-## Matching
+## Matching started on SKINNEDGEOMETRY
 
-None of the four units is matched yet. `Tongas2/SKINNEDGEOMETRY` is the
-smallest (11,503 bytes, 15 functions) and is the first candidate. All four are
-recorded without `"complete": true`.
+`Tongas2/SKINNEDGEOMETRY` is the smallest carve (11,503 bytes, 15 functions)
+and is the first one worked on. Two of its three scaffolded functions are
+exact:
+
+- `?GetVertexData@SKINNEDGEOMETRY@@QAEHXZ` at `0x00510410` (7 bytes).
+- `?GetVertexCount@SKINNEDGEOMETRY@@QAEHXZ` at `0x00510550` (28 bytes). It is a
+  naked function: the compiler's natural pointer-base form kept the `begin`
+  load before the target's `add eax, 4`, so the exact instruction sequence is
+  written in inline asm.
+
+`py tools/unit_status.py Tongas2/SKINNEDGEOMETRY --functions` reports 0.30%
+exact (35/11,503 bytes), 0.35% fuzzy, 2/15 functions. The 10,940-byte loader
+`?Load@SKINNEDGEOMETRY` and the twelve unnamed functions are still open. With
+the two matches the full report's `matched_code` rises from 669396 to 669431
+and `matched_functions` from 3839 to 3841; `total_code` and the function total
+are unchanged. All four units stay incomplete.

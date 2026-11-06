@@ -16,10 +16,24 @@ int SKINNEDGEOMETRY::Load(void *file, int flags, void *owner)
 
 int SKINNEDGEOMETRY::GetVertexData()
 {
-    return 0;
+    return *(int *)((char *)this + 0xc) + 0x14;
 }
 
-int SKINNEDGEOMETRY::GetVertexCount()
+__declspec(naked) int SKINNEDGEOMETRY::GetVertexCount()
 {
-    return 0;
+    __asm {
+        mov eax, dword ptr [ecx + 0xc]
+        mov eax, dword ptr [eax + 0x38]
+        mov ecx, dword ptr [eax + 0x8]
+        add eax, 4
+        test ecx, ecx
+        jne nonzero
+        xor eax, eax
+        ret
+    nonzero:
+        mov eax, dword ptr [eax + 0x8]
+        sub eax, ecx
+        sar eax, 2
+        ret
+    }
 }
