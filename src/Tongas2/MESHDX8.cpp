@@ -1,4 +1,5 @@
 // Generated from the delinked target for Tongas2/MESHDX8.
+extern "C" void *memcpy(void *, const void *, unsigned int);
 extern "C" int xr_10;
 extern "C" int xr_12;
 extern "C" int xr_38;
@@ -228,7 +229,6 @@ extern "C" void f_004e6c10();
 extern "C" void f_004e6c2e();
 extern "C" void f_004e6c40();
 extern "C" void f_004e6cb0();
-extern "C" void f_004e6d20();
 extern "C" void f_004e6d50();
 extern "C" void f_004e6dc0();
 extern "C" void f_004e6de0();
@@ -239,7 +239,6 @@ extern "C" void f_004e6fa0();
 extern "C" void f_004e6ff0();
 extern "C" void f_004e70a0();
 extern "C" void f_004e7120();
-extern "C" void f_004e7140();
 extern "C" void f_004e7160();
 extern "C" void f_004e71c0();
 extern "C" void f_004e71de();
@@ -249,10 +248,7 @@ extern "C" void f_004e7590();
 extern "C" void f_004e75f5();
 extern "C" void f_004e7620();
 extern "C" void f_004e76dd();
-extern "C" void f_004e7720();
-extern "C" void f_004e7730();
 extern "C" void f_004e774b();
-extern "C" void f_004e7760();
 extern "C" void f_004e7778();
 extern "C" void f_004e77a0();
 extern "C" void f_004e77b0();
@@ -2905,43 +2901,6 @@ extern "C" __declspec(naked) void f_004e6cb0() {
         __emit 0xc3
     }
 }
-extern "C" __declspec(naked) void f_004e6d20() {
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0x33
-        __emit 0xc9
-        __emit 0x89
-        __emit 0x48
-        __emit 0x04
-        __emit 0x88
-        __emit 0x48
-        __emit 0x08
-        __emit 0x89
-        __emit 0x48
-        __emit 0x0c
-        __emit 0x89
-        __emit 0x48
-        __emit 0x10
-        __emit 0x89
-        __emit 0x48
-        __emit 0x14
-        __emit 0x89
-        __emit 0x48
-        __emit 0x18
-        __emit 0x88
-        __emit 0x48
-        __emit 0x1d
-        mov dword ptr [eax], offset xr_45
-        __emit 0x89
-        __emit 0x48
-        __emit 0x20
-        __emit 0x89
-        __emit 0x48
-        __emit 0x24
-        __emit 0xc3
-    }
-}
 extern "C" __declspec(naked) void f_004e6d50() {
     __asm {
         __emit 0x6a
@@ -3761,34 +3720,6 @@ extern "C" __declspec(naked) void f_004e7120() {
         __emit 0x8d
         __emit 0x86
         __emit 0x2c
-        __emit 0x02
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0xc3
-    }
-}
-extern "C" __declspec(naked) void f_004e7140() {
-    __asm {
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x8a
-        __emit 0x86
-        __emit 0x90
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x07
-        __emit 0x6a
-        __emit 0x00
-        call xr_48
-        __emit 0x8d
-        __emit 0x86
-        __emit 0x6c
         __emit 0x02
         __emit 0x00
         __emit 0x00
@@ -5067,50 +4998,6 @@ extern "C" __declspec(naked) void f_004e76dd() {
         __emit 0xcc
     }
 }
-extern "C" __declspec(naked) void f_004e7720() {
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x89
-        __emit 0x81
-        __emit 0xc4
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-extern "C" __declspec(naked) void f_004e7730() {
-    __asm {
-        __emit 0x53
-        __emit 0x8b
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x3a
-        __emit 0x5e
-        __emit 0x78
-        __emit 0x74
-        __emit 0x09
-        __emit 0x53
-        call FUN_004eb960
-        __emit 0x88
-        __emit 0x5e
-        __emit 0x78
-        __emit 0x5e
-        __emit 0x5b
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
 extern "C" __declspec(naked) void f_004e774b() {
     __asm {
         __emit 0xcc
@@ -5130,34 +5017,6 @@ extern "C" __declspec(naked) void f_004e774b() {
         __emit 0xcc
         __emit 0xcc
         __emit 0xcc
-    }
-}
-extern "C" __declspec(naked) void f_004e7760() {
-    __asm {
-        __emit 0x56
-        __emit 0x8b
-        __emit 0x74
-        __emit 0x24
-        __emit 0x08
-        __emit 0x57
-        __emit 0x8d
-        __emit 0xb9
-        __emit 0x80
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xb9
-        __emit 0x10
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xf3
-        __emit 0xa5
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
     }
 }
 extern "C" __declspec(naked) void f_004e7778() {
@@ -14174,4 +14033,89 @@ bool VERTEXBUFFER::CreateBuffers(void **out, int count, bool flag)
     }
     m_valid = 1;
     return true;
+}
+
+struct _D3DMATRIX;
+struct D3DXMATRIX;
+
+class INDEXBUFFER
+{
+public:
+    INDEXBUFFER();
+};
+
+extern "C" int idx_vtable;
+
+INDEXBUFFER::INDEXBUFFER()
+{
+    int *p = (int *)this;
+    p[1] = 0;
+    *(char *)(p + 2) = 0;
+    p[3] = 0;
+    p[4] = 0;
+    p[5] = 0;
+    p[6] = 0;
+    *(char *)((char *)p + 0x1d) = 0;
+    p[0] = (int)&idx_vtable;
+    p[8] = 0;
+    p[9] = 0;
+}
+
+class CAMERALENS
+{
+public:
+    void Update(bool);
+};
+
+class DX8CAMERA
+{
+public:
+    const _D3DMATRIX *GetProjection();
+};
+
+const _D3DMATRIX *DX8CAMERA::GetProjection()
+{
+    if (*(unsigned char *)((char *)this + 0x90)) {
+        ((CAMERALENS *)this)->Update(false);
+    }
+    return (const _D3DMATRIX *)((char *)this + 0x26c);
+}
+
+class SLH
+{
+public:
+    void Do(char);
+};
+
+class MESHDX8
+{
+public:
+    char pad0[0x78];
+    char m_lit;
+    char pad1[0x7];
+    char m_matrix[0x40];
+    char pad2[0x4];
+    int m_lightMask;
+
+    void SetLightMask(int mask);
+    void SetLit(bool lit);
+    void SetMatrix(const D3DXMATRIX *matrix);
+};
+
+void MESHDX8::SetLightMask(int mask)
+{
+    m_lightMask = mask;
+}
+
+void MESHDX8::SetLit(bool lit)
+{
+    if ((char)lit != *(char *)((char *)this + 0x78)) {
+        ((SLH *)this)->Do((char)lit);
+        *(char *)((char *)this + 0x78) = (char)lit;
+    }
+}
+
+void MESHDX8::SetMatrix(const D3DXMATRIX *matrix)
+{
+    memcpy((char *)this + 0x80, matrix, 64);
 }
