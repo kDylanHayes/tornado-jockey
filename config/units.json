@@ -3351,6 +3351,42 @@
       "target": "build/target/Tongas2/SCROOT.obj",
       "source": "src/Tongas2/SCROOT.cpp",
       "category": "engine"
+    },
+    {
+      "name": "Tongas2/SKINNEDGEOMETRY",
+      "ranges": [
+        "0x0050d910-0x0051065f"
+      ],
+      "target": "build/target/Tongas2/SKINNEDGEOMETRY.obj",
+      "source": "src/Tongas2/SKINNEDGEOMETRY.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/SKINNEDMESH",
+      "ranges": [
+        "0x00510660-0x0052860f"
+      ],
+      "target": "build/target/Tongas2/SKINNEDMESH.obj",
+      "source": "src/Tongas2/SKINNEDMESH.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/TEXTFILE",
+      "ranges": [
+        "0x00528610-0x0052d3ff"
+      ],
+      "target": "build/target/Tongas2/TEXTFILE.obj",
+      "source": "src/Tongas2/TEXTFILE.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/ANIMATEDGEOMETRY",
+      "ranges": [
+        "0x0052d400-0x00530d0f"
+      ],
+      "target": "build/target/Tongas2/ANIMATEDGEOMETRY.obj",
+      "source": "src/Tongas2/ANIMATEDGEOMETRY.cpp",
+      "category": "engine"
     }
   ]
 }
