@@ -498,7 +498,8 @@ HEIGHTMAPDX8 *HEIGHTMAPDECALDX8RESOURCE::FindHeightmap()
                 if (g_pLog)
                     g_pLog->Error("resource idx of actor specified for decal has no active heightmap!");
             } else {
-                RESOURCE *copy = actor->FindResourceCopy(g_pHEIGHTMAPDX8->m_id);
+                int managerId = g_pHEIGHTMAPDX8->m_id;
+                RESOURCE *copy = actor->FindResourceCopy(managerId);
                 if (copy)
                     return (HEIGHTMAPDX8 *)copy;
                 if (g_pLog)
