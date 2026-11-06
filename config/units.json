@@ -3445,7 +3445,8 @@
         "FUN_0050cf00": "?_Destroy@?$vector@V?$vector@HV?$allocator@H@std@@@std@@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@std@@IAEXPAV?$vector@HV?$allocator@H@std@@@2@0@Z",
         "FUN_0050b230": "?Init@TOK@@QAEXHH@Z",
         "FUN_00518b10": "?Read@READER@@QAEXPAXHH0@Z",
-        "FUN_00518c50": "?Read@READER@@QAEXPAXHH0@Z"
+        "FUN_00518c50": "?Read@READER@@QAEXPAXHH0@Z",
+        "LAB_005f4168": "__ehhandler$?ReadString@TEXTREADER@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ"
       }
     },
     {

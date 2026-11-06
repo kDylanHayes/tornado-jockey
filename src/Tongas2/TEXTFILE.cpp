@@ -5,6 +5,7 @@
 // cannot cut the target short.
 #include "Tongas2/TEXTFILE.h"
 
+#include <stdlib.h>
 #include <string>
 #include <vector>
 
@@ -97,8 +98,42 @@ public:
     READER *m_1c;
 };
 
+class STREAM
+{
+public:
+    virtual void v00();
+    virtual void v04();
+    virtual void v08();
+    virtual void v0c();
+    virtual void v10();
+    virtual void v14();
+    virtual void v18();
+    virtual void v1c();
+    virtual char *GetString();
+};
+
+class TEXTREADER
+{
+public:
+    std::string ReadString();
+
+private:
+    STREAM *m_stream;
+};
+
 TOK::TOK() : m_000(0), m_004(0), m_008(0)
 {
+}
+
+std::string TEXTREADER::ReadString()
+{
+    char *mem = m_stream->GetString();
+    std::string tmp;
+    if (mem) {
+        tmp = mem;
+        free(mem);
+    }
+    return tmp;
 }
 
 TEXTFILE::TEXTFILE() : m_030(0), m_034(0), m_080(0)
