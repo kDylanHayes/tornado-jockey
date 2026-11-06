@@ -79,7 +79,7 @@ void DECAL::SetColor(const V3 &color)
 
 RESHANDLE DECAL::GetShaderHandle()
 {
-    return Master()->m_shaderHandle;
+    return ((DECALMASTER *)m_master)->m_shaderHandle;
 }
 
 void DECAL::SetUV(float u0, float v0, float u1, float v1)
@@ -177,12 +177,8 @@ void DECAL::CreateMeshCopy()
             mesh->SetColor(m_color);
         mesh->SetActive(true);
         m_lastLayer = -1;
-        m_lastPosition.x = -1.0f;
-        m_lastPosition.y = -1.0f;
-        m_lastPosition.z = -1.0f;
-        m_lastScale.x = -1.0f;
-        m_lastScale.y = -1.0f;
-        m_lastScale.z = -1.0f;
+        m_lastPosition.Set(-1.0f, -1.0f, -1.0f);
+        m_lastScale.Set(-1.0f, -1.0f, -1.0f);
         m_134 = ANG(-1.0f, -1.0f, -1.0f);
         m_meshCopy = mesh->m_handle;
     } else if (g_pLog)
