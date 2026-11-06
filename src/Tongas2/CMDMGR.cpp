@@ -367,15 +367,46 @@ void CMDMGR::LoadMap(const char *name)
 
 void STRING::Append(const char *text)
 {
-    int length = strlen(text);
-    Reserve(Length() + length + 1);
+    Reserve(Length() + strlen(text) + 1);
     strcpy(m_buf + Length(), text);
     m_lengthValid = false;
 }
 
+// The original Run inlined the final TOKENS destructor but called the
+// out-of-line one for the inner tokens. This local shape gives the same code
+// without making the whole file see TOKENS' destructor inline.
+struct RUNLINES
+{
+    STRING m_string;
+    int m_count;
+    int m_offsets[TOKENS_MAX];
+    bool m_parsed;
+
+    RUNLINES()
+    {
+        m_count = 0;
+        m_parsed = false;
+    }
+    ~RUNLINES() { m_string.Free(); }
+    bool Split(const STRING &text, const char *delimiters)
+    {
+        return ((TOKENS *)this)->Split(text, delimiters);
+    }
+    bool Merge(int first, int last, char sep)
+    {
+        return ((TOKENS *)this)->Merge(first, last, sep);
+    }
+    const char *GetToken(int i)
+    {
+        if (i < 0 || i >= m_count)
+            return "";
+        return m_string.c_str() + m_offsets[i];
+    }
+};
+
 bool CMDMGR::Run(const STRING &command, const RESHANDLE &caller)
 {
-    TOKENS lines;
+    RUNLINES lines;
     lines.Split(command, ";");
     bool ok = true;
     for (int i = 0; i < lines.m_count; i++) {
@@ -393,7 +424,10 @@ bool CMDMGR::Run(const STRING &command, const RESHANDLE &caller)
             bool failed;
             {
                 STRING line(lines.GetToken(i));
-                failed = !Evaluate(line, caller).IsSet();
+                // Keeping the IsSet result in a bool first leaves the two
+                // conversions the original object has (setne/test/sete).
+                bool set;
+                failed = !(set = Evaluate(line, caller).IsSet());
             }
             if (failed) {
                 if (g_pLog)
