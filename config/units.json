@@ -3023,7 +3023,9 @@
       ],
       "target": "build/target/Tongas2/DXINPUT.obj",
       "source": "src/Tongas2/DXINPUT.cpp",
-      "category": "engine"
+      "category": "engine",
+      "symbol_mappings": {},
+      "complete": true
     },
     {
       "name": "Tongas2/SIMPLEMODELDX8",
