@@ -129,7 +129,7 @@ void OCTREENODE::AddMember(ACTOR *actor)
     ZEROV3 boxMin;
     actor->GetBoxTop(&boxMin, &boxMax);
     V3 half = (m_max - m_min) * 0.5f;
-    if (!m_split && m_depth > 0 && BoxInside(m_min, m_max, boxMin, boxMax)) {
+    if (!IsSplit() && m_depth > 0 && BoxInside(m_min, m_max, boxMin, boxMax)) {
         m_split = true;
         m_children[0] = new OCTREENODE(V3(m_min.x, m_min.y + half.y, m_min.z + half.z), V3(m_min.x + half.x, m_max.y, m_max.z), m_depth - 1);
         m_children[1] = new OCTREENODE(V3(m_min.x + half.x, m_min.y + half.y, m_min.z + half.z), V3(m_max.x, m_max.y, m_max.z), m_depth - 1);
@@ -140,7 +140,7 @@ void OCTREENODE::AddMember(ACTOR *actor)
         m_children[6] = new OCTREENODE(V3(m_min.x, m_min.y, m_min.z), V3(m_min.x + half.x, m_min.y + half.y, m_min.z + half.z), m_depth - 1);
         m_children[7] = new OCTREENODE(V3(m_min.x + half.x, m_min.y, m_min.z), V3(m_max.x, m_min.y + half.y, m_min.z + half.z), m_depth - 1);
     }
-    if (m_split) {
+    if (IsSplit()) {
         for (unsigned int i = 0; i < 8; i++) {
             if (BoxInside(m_children[i]->m_min, m_children[i]->m_max, boxMin, boxMax)) {
                 m_children[i]->AddMember(actor);
