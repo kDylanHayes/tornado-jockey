@@ -1,129 +1,14 @@
-// Tongas2/MESHDX8 -- DX8 renderer plugin: vertex/index buffers, DX8 camera and
-// the MESHDX8 mesh implementation.
-//
-// The bodies below were transcribed from the delinked target so the unit can
-// be matched byte for byte; the original scaffold only named a handful of the
-// 113 functions the unit contains. All but code_004e65c0 match exactly. That
-// function contains a compiler switch table in the middle of its body; Ghidra
-// exports the table as .dword relocations but leaves the code after it
-// undisassembled as .byte rows, so an asm transcription cannot pair the tail.
-// The exact decorated names and target sizes are recorded in
-// config/symbols.txt; the per-function names here (f_<address>) are paired
-// with the target through the unit's symbol_mappings.
-extern "C" int xr_1;
-extern "C" int xr_2;
-extern "C" int xr_3;
-extern "C" int xr_4;
-extern "C" int xr_5;
-extern "C" int xr_6;
-extern "C" int xr_7;
-extern "C" int xr_8;
-extern "C" int xr_9;
-extern "C" int xr_11;
-extern "C" int xr_13;
-extern "C" void xr_14();
-extern "C" void xr_15();
-extern "C" int xr_16;
-extern "C" int xr_17;
-extern "C" int xr_18;
-extern "C" void xr_19();
-extern "C" int xr_20;
-extern "C" void xr_21();
-extern "C" int xr_22;
-extern "C" int xr_23;
-extern "C" void xr_24();
-extern "C" void xr_25();
-extern "C" void xr_26();
-extern "C" int xr_27;
-extern "C" void xr_28();
-extern "C" int xr_29;
-extern "C" int xr_30;
-extern "C" int xr_31;
-extern "C" int xr_32;
-extern "C" int xr_33;
-extern "C" int xr_34;
-extern "C" int xr_35;
-extern "C" int xr_36;
-extern "C" int xr_37;
-extern "C" int LAB_xr_1;
-extern "C" int xr_41;
-extern "C" int xr_42;
-extern "C" void xr_43();
-extern "C" int xr_44;
-extern "C" int xr_45;
-extern "C" int xr_46;
-extern "C" void xr_47();
-extern "C" void xr_48();
-extern "C" int xr_49;
-extern "C" void xr_50();
-extern "C" void xr_51();
-extern "C" void xr_52();
-extern "C" void xr_53();
-extern "C" void xr_54();
-extern "C" void xr_55();
-extern "C" int xr_56;
-extern "C" void xr_57();
-extern "C" void xr_58();
-extern "C" void xr_59();
-extern "C" void xr_60();
-extern "C" void xr_61();
-extern "C" void xr_62();
-extern "C" void xr_63();
-extern "C" void xr_64();
-extern "C" void xr_65();
-extern "C" void xr_66();
-extern "C" void xr_67();
-extern "C" int xr_68;
-extern "C" int xr_69;
-extern "C" void xr_70();
-extern "C" int xr_71;
-extern "C" int xr_72;
-extern "C" int xr_73;
-extern "C" int xr_74;
-extern "C" void xr_75();
-extern "C" int xr_76;
-extern "C" int xr_77;
-extern "C" void xr_78();
-extern "C" int xr_79;
-extern "C" int xr_80;
-extern "C" void xr_81();
-extern "C" int xr_82;
-extern "C" void xr_83();
-extern "C" int xr_84;
-extern "C" int xr_85;
-extern "C" void xr_86();
-extern "C" int xr_87;
-extern "C" void xr_88();
-extern "C" void xr_89();
-extern "C" int xr_90;
-extern "C" int xr_91;
-extern "C" void xr_92();
-extern "C" void xr_93();
-extern "C" void xr_94();
-extern "C" void xr_95();
-extern "C" void xr_96();
-extern "C" int xr_97;
-extern "C" int xr_98;
-extern "C" int xr_99;
-extern "C" int xr_100;
-extern "C" void xr_101();
-extern "C" void xr_102();
-extern "C" void xr_103();
-extern "C" void xr_104();
-extern "C" int xr_105;
-extern "C" int xr_106;
-extern "C" int xr_107;
-extern "C" int xr_108;
-extern "C" int xr_109;
-extern "C" int xr_110;
-extern "C" void xr_111();
-extern "C" int xr_112;
-extern "C" void xr_113();
-extern "C" void xr_114();
-extern "C" int xr_115;
-extern "C" void xr_116();
-extern "C" int xr_117;
-extern "C" int xr_118;
+// Generated from the delinked target for Tongas2/MESHDX8.
+extern "C" void *memcpy(void *, const void *, unsigned int);
+extern "C" int xr_10;
+extern "C" int xr_12;
+extern "C" int xr_38;
+extern "C" void xr_39();
+extern "C" void xr_40();
+extern "C" void xr_119();
+extern "C" void xr_120();
+extern "C" int xr_121;
+extern "C" int xr_122;
 extern "C" int DAT_006595b0;
 extern "C" int DAT_00674780;
 extern "C" int DAT_00674c00;
@@ -144,7 +29,6 @@ extern "C" void FUN_004eb5d0();
 extern "C" void FUN_004eb960();
 extern "C" void FUN_004eb9b0();
 extern "C" void FUN_004edb80();
-extern "C" void FUN_004ee070();
 extern "C" void FUN_004ee600();
 extern "C" void FUN_004f3aa0();
 extern "C" void FUN_004f3b60();
@@ -165,10 +49,12 @@ extern "C" int LAB_004e6480;
 extern "C" int LAB_004e64a0;
 extern "C" int LAB_004e64c0;
 extern "C" int LAB_004e64f0;
+extern "C" int LAB_004e6510;
 extern "C" int LAB_004eb750;
 extern "C" int LAB_005ec813;
 extern "C" int LAB_005ec828;
 extern "C" int LAB_005ec86c;
+extern "C" int LAB_005ec88b;
 extern "C" int LAB_005ec8a8;
 extern "C" int LAB_005ec8c8;
 extern "C" int LAB_005ec8e8;
@@ -179,12 +65,11 @@ extern "C" int LAB_005ec958;
 extern "C" int LAB_005ec999;
 extern "C" int LAB_005ec9ce;
 extern "C" int LAB_005ec9f0;
+extern "C" int LAB_xr_1;
 extern "C" int PTR_ClientToScreen_006562dc;
 extern "C" int PTR_FUN_00674850;
 extern "C" int PTR_FUN_00674ce0;
 extern "C" int PTR_FUN_00675064;
-extern "C" int PTR_FUN_006c2370;
-extern "C" int PTR_FUN_006c2540;
 extern "C" int PTR_GetDesktopWindow_0065638c;
 extern "C" int PTR_GetWindowRect_006562e4;
 extern "C" int PTR_LAB_00674dec;
@@ -206,11 +91,119 @@ extern "C" int s_RENDERSHADER_00674760;
 extern "C" int s_RENDERTEXTURE_00674770;
 extern "C" int s_Reflection_00674788;
 extern "C" void strncpy();
-extern "C" int xr_10;
-extern "C" void xr_12();
-extern "C" void xr_38();
-extern "C" void xr_39();
-extern "C" int xr_40;
+extern "C" int xr_1;
+extern "C" int xr_100;
+extern "C" void xr_101();
+extern "C" void xr_102();
+extern "C" void xr_103();
+extern "C" void xr_104();
+extern "C" int xr_105;
+extern "C" int xr_106;
+extern "C" int xr_107;
+extern "C" int xr_108;
+extern "C" int xr_109;
+extern "C" int xr_11;
+extern "C" int xr_110;
+extern "C" void xr_111();
+extern "C" int xr_112;
+extern "C" void xr_113();
+extern "C" void xr_114();
+extern "C" int xr_115;
+extern "C" void xr_116();
+extern "C" int xr_117;
+extern "C" int xr_118;
+extern "C" int xr_13;
+extern "C" void xr_14();
+extern "C" void xr_15();
+extern "C" int xr_16;
+extern "C" int xr_17;
+extern "C" int xr_18;
+extern "C" void xr_19();
+extern "C" int xr_2;
+extern "C" int xr_20;
+extern "C" void xr_21();
+extern "C" int xr_22;
+extern "C" int xr_23;
+extern "C" void xr_24();
+extern "C" void xr_25();
+extern "C" void xr_26();
+extern "C" int xr_27;
+extern "C" void xr_28();
+extern "C" int xr_29;
+extern "C" int xr_3;
+extern "C" int xr_30;
+extern "C" int xr_31;
+extern "C" int xr_32;
+extern "C" int xr_33;
+extern "C" int xr_34;
+extern "C" int xr_35;
+extern "C" int xr_36;
+extern "C" int xr_37;
+extern "C" int xr_4;
+extern "C" int xr_41;
+extern "C" int xr_42;
+extern "C" void xr_43();
+extern "C" int xr_44;
+extern "C" int xr_45;
+extern "C" int xr_46;
+extern "C" void xr_47();
+extern "C" void xr_48();
+extern "C" int xr_49;
+extern "C" int xr_5;
+extern "C" void xr_50();
+extern "C" void xr_51();
+extern "C" void xr_52();
+extern "C" void xr_53();
+extern "C" void xr_54();
+extern "C" void xr_55();
+extern "C" int xr_56;
+extern "C" void xr_57();
+extern "C" void xr_58();
+extern "C" void xr_59();
+extern "C" int xr_6;
+extern "C" void xr_60();
+extern "C" void xr_61();
+extern "C" void xr_62();
+extern "C" void xr_63();
+extern "C" void xr_64();
+extern "C" void xr_65();
+extern "C" void xr_66();
+extern "C" void xr_67();
+extern "C" int xr_68;
+extern "C" int xr_69;
+extern "C" int xr_7;
+extern "C" void xr_70();
+extern "C" int xr_71;
+extern "C" int xr_72;
+extern "C" int xr_73;
+extern "C" int xr_74;
+extern "C" void xr_75();
+extern "C" int xr_76;
+extern "C" int xr_77;
+extern "C" void xr_78();
+extern "C" int xr_79;
+extern "C" int xr_8;
+extern "C" int xr_80;
+extern "C" void xr_81();
+extern "C" int xr_82;
+extern "C" void xr_83();
+extern "C" int xr_84;
+extern "C" int xr_85;
+extern "C" void xr_86();
+extern "C" int xr_87;
+extern "C" void xr_88();
+extern "C" void xr_89();
+extern "C" int xr_9;
+extern "C" int xr_90;
+extern "C" int xr_91;
+extern "C" void xr_92();
+extern "C" void xr_93();
+extern "C" void xr_94();
+extern "C" void xr_95();
+extern "C" void xr_96();
+extern "C" int xr_97;
+extern "C" int xr_98;
+extern "C" int xr_99;
 extern "C" void f_004e5d50();
 extern "C" void f_004e6000();
 extern "C" void f_004e60a2();
@@ -223,7 +216,9 @@ extern "C" void f_004e6370();
 extern "C" void f_004e6390();
 extern "C" void f_004e649a();
 extern "C" void f_004e6520();
-extern "C" void f_004e65c0();
+extern "C" void f_004e6780();
+extern "C" void f_004e6810();
+extern "C" void f_004e68d0();
 extern "C" void f_004e68e0();
 extern "C" void f_004e69ac();
 extern "C" void f_004e6a60();
@@ -234,7 +229,6 @@ extern "C" void f_004e6c10();
 extern "C" void f_004e6c2e();
 extern "C" void f_004e6c40();
 extern "C" void f_004e6cb0();
-extern "C" void f_004e6d20();
 extern "C" void f_004e6d50();
 extern "C" void f_004e6dc0();
 extern "C" void f_004e6de0();
@@ -245,7 +239,6 @@ extern "C" void f_004e6fa0();
 extern "C" void f_004e6ff0();
 extern "C" void f_004e70a0();
 extern "C" void f_004e7120();
-extern "C" void f_004e7140();
 extern "C" void f_004e7160();
 extern "C" void f_004e71c0();
 extern "C" void f_004e71de();
@@ -255,10 +248,7 @@ extern "C" void f_004e7590();
 extern "C" void f_004e75f5();
 extern "C" void f_004e7620();
 extern "C" void f_004e76dd();
-extern "C" void f_004e7720();
-extern "C" void f_004e7730();
 extern "C" void f_004e774b();
-extern "C" void f_004e7760();
 extern "C" void f_004e7778();
 extern "C" void f_004e77a0();
 extern "C" void f_004e77b0();
@@ -327,7 +317,7 @@ extern "C" void f_004ea000();
 
 extern "C" __declspec(naked) void f_004e5d50() {
     __asm {
-        call dword ptr [PTR_FUN_006c2540]
+        call dword ptr [xr_10]
         mov ecx, [xr_1]
         mov [ecx*0x4+xr_2], eax
         mov dword ptr [ecx*0x4+xr_3], 0x0
@@ -415,7 +405,7 @@ extern "C" __declspec(naked) void f_004e5d50() {
         __emit 0x89
         __emit 0x4a
         __emit 0x04
-        call dword ptr [PTR_FUN_006c2370]
+        call dword ptr [xr_12]
         mov ecx, [xr_1]
         mov [ecx*0x4+xr_2], eax
         mov dword ptr [ecx*0x4+xr_3], 0x0
@@ -506,14 +496,14 @@ extern "C" __declspec(naked) void f_004e5d50() {
         cmp dword ptr [xr_1], 0x80
         __emit 0x7c
         __emit 0x17
-        mov eax, [xr_10]
+        mov eax, [xr_38]
         __emit 0x85
         __emit 0xc0
         __emit 0x74
         __emit 0x0e
         push offset xr_11
         __emit 0x50
-        call xr_12
+        call xr_39
         __emit 0x83
         __emit 0xc4
         __emit 0x08
@@ -716,7 +706,7 @@ extern "C" __declspec(naked) void f_004e6000() {
         __emit 0x09
         __emit 0x8b
         __emit 0xc8
-        call FUN_004ee070
+        call xr_40
         __emit 0xeb
         __emit 0x02
         __emit 0x33
@@ -1609,7 +1599,7 @@ extern "C" __declspec(naked) void f_004e6520() {
         __emit 0xc0
         __emit 0x74
         __emit 0x1f
-        mov eax, [xr_10]
+        mov eax, [xr_38]
         __emit 0x85
         __emit 0xc0
         __emit 0x0f
@@ -1620,7 +1610,7 @@ extern "C" __declspec(naked) void f_004e6520() {
         __emit 0x00
         push offset xr_37
         __emit 0x50
-        call xr_12
+        call xr_39
         __emit 0x83
         __emit 0xc4
         __emit 0x08
@@ -1711,12 +1701,12 @@ extern "C" __declspec(naked) void f_004e6520() {
         __emit 0x00
     }
 }
-extern "C" __declspec(naked) void f_004e65c0() {
+extern "C" __declspec(naked) void f_004e6780() {
     __asm {
         mov eax, fs:[_except_list]
         __emit 0x6a
         __emit 0xff
-        push offset LAB_005ec86c
+        push offset LAB_005ec88b
         __emit 0x50
         __emit 0x8a
         __emit 0x44
@@ -1725,376 +1715,6 @@ extern "C" __declspec(naked) void f_004e65c0() {
         __emit 0x84
         __emit 0xc0
         mov fs:[_except_list], esp
-        __emit 0x55
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xe9
-        __emit 0x57
-        __emit 0x88
-        __emit 0x45
-        __emit 0x1d
-        __emit 0x0f
-        __emit 0x85
-        __emit 0x59
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x45
-        __emit 0x2c
-        __emit 0x48
-        __emit 0x83
-        __emit 0xf8
-        __emit 0x04
-        __emit 0x0f
-        __emit 0x87
-        __emit 0x1f
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        jmp dword ptr [eax*0x4+LAB_xr_1]
-        __emit 0x8b
-        __emit 0x7c
-        __emit 0x24
-        __emit 0x20
-        __emit 0x8d
-        __emit 0x04
-        __emit 0x7f
-        __emit 0xc1
-        __emit 0xe0
-        __emit 0x03
-        __emit 0x50
-        call xr_38
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x24
-        __emit 0x85
-        __emit 0xf6
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x74
-        __emit 0x19
-        push offset LAB_004e6480
-        __emit 0x57
-        __emit 0x6a
-        __emit 0x18
-        __emit 0x56
-        call xr_39
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x89
-        __emit 0x31
-        __emit 0xe9
-        __emit 0x0e
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x33
-        __emit 0xf6
-        __emit 0x89
-        __emit 0x31
-        __emit 0xe9
-        __emit 0x01
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x7c
-        __emit 0x24
-        __emit 0x20
-        __emit 0x8b
-        __emit 0xd7
-        __emit 0xc1
-        __emit 0xe2
-        __emit 0x05
-        __emit 0x52
-        call xr_38
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x24
-        __emit 0x85
-        __emit 0xf6
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x74
-        __emit 0x19
-        push offset LAB_004e64a0
-        __emit 0x57
-        __emit 0x6a
-        __emit 0x20
-        __emit 0x56
-        call xr_39
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x89
-        __emit 0x30
-        __emit 0xe9
-        __emit 0xc4
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x33
-        __emit 0xf6
-        __emit 0x89
-        __emit 0x30
-        __emit 0xe9
-        __emit 0xb7
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x7c
-        __emit 0x24
-        __emit 0x20
-        __emit 0x8d
-        __emit 0x0c
-        __emit 0xff
-        __emit 0xc1
-        __emit 0xe1
-        __emit 0x02
-        __emit 0x51
-        call xr_38
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x24
-        __emit 0x85
-        __emit 0xf6
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x02
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x74
-        __emit 0x16
-        push offset LAB_004e64c0
-        __emit 0x57
-        __emit 0x6a
-        __emit 0x24
-        __emit 0x56
-        call xr_39
-        __emit 0x8b
-        __emit 0x54
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x89
-        __emit 0x32
-        __emit 0xeb
-        __emit 0x7c
-        __emit 0x8b
-        __emit 0x54
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x33
-        __emit 0xf6
-        __emit 0x89
-        __emit 0x32
-        __emit 0xeb
-        __emit 0x72
-        __emit 0x8b
-        __emit 0x7c
-        __emit 0x24
-        __emit 0x20
-        __emit 0x8b
-        __emit 0xc7
-        __emit 0xc1
-        __emit 0xe0
-        __emit 0x05
-        __emit 0x50
-        call xr_38
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x24
-        __emit 0x85
-        __emit 0xf6
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x03
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x0f
-        __emit 0x84
-        __emit 0x3c
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        push offset LAB_004e64f0
-        __emit 0x57
-        __emit 0x6a
-        __emit 0x20
-        __emit 0x56
-        call xr_39
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x89
-        __emit 0x31
-        __emit 0xeb
-        __emit 0x34
-        mov eax, [xr_10]
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x0e
-        push offset xr_40
-        __emit 0x50
-        call xr_12
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x08
-        __emit 0x32
-        __emit 0xc0
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        mov fs:[_except_list], ecx
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x5d
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0xc2
-        __emit 0x0c
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x54
-        __emit 0x24
-        __emit 0x20
-        __emit 0x89
-        __emit 0x55
-        __emit 0x14
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x5f
-        __emit 0xc6
-        __emit 0x45
-        __emit 0x1c
-        __emit 0x01
-        __emit 0x5e
-        __emit 0xb0
-        __emit 0x01
-        mov fs:[_except_list], ecx
-        __emit 0x5d
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0xc2
-        __emit 0x0c
-        __emit 0x00
-        __emit 0x90
-        __emit 0xfd
-        __emit 0x65
-        __emit 0x4e
-        __emit 0x00
-        __emit 0x48
-        __emit 0x66
-        __emit 0x4e
-        __emit 0x00
-        __emit 0x92
-        __emit 0x66
-        __emit 0x4e
-        __emit 0x00
-        __emit 0x15
-        __emit 0x67
-        __emit 0x4e
-        __emit 0x00
-        __emit 0xd7
-        __emit 0x66
-        __emit 0x4e
-        __emit 0x00
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0x5e
-        __emit 0x00
-        __emit 0x50
-        __emit 0x8a
-        __emit 0x44
-        __emit 0x24
-        __emit 0x18
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
         __emit 0x53
         __emit 0x56
         __emit 0x8b
@@ -2115,11 +1735,7 @@ extern "C" __declspec(naked) void f_004e65c0() {
         __emit 0xd1
         __emit 0xe0
         __emit 0x50
-        __emit 0xe8
-        __emit 0x5b
-        __emit 0xdd
-        __emit 0xf6
-        __emit 0xff
+        call xr_119
         __emit 0x8b
         __emit 0xf0
         __emit 0x83
@@ -2141,20 +1757,12 @@ extern "C" __declspec(naked) void f_004e65c0() {
         __emit 0x00
         __emit 0x74
         __emit 0x16
-        __emit 0x68
-        __emit 0x10
-        __emit 0x65
-        __emit 0x4e
-        __emit 0x00
+        push offset LAB_004e6510
         __emit 0x57
         __emit 0x6a
         __emit 0x06
         __emit 0x56
-        __emit 0xe8
-        __emit 0x59
-        __emit 0xb7
-        __emit 0xf1
-        __emit 0xff
+        call xr_120
         __emit 0x8b
         __emit 0x4c
         __emit 0x24
@@ -2191,13 +1799,7 @@ extern "C" __declspec(naked) void f_004e65c0() {
         __emit 0x43
         __emit 0x1c
         __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
+        mov fs:[_except_list], ecx
         __emit 0x5b
         __emit 0x83
         __emit 0xc4
@@ -2205,13 +1807,10 @@ extern "C" __declspec(naked) void f_004e65c0() {
         __emit 0xc2
         __emit 0x0c
         __emit 0x00
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
+    }
+}
+extern "C" __declspec(naked) void f_004e6810() {
+    __asm {
         __emit 0x51
         __emit 0x55
         __emit 0x56
@@ -2263,12 +1862,7 @@ extern "C" __declspec(naked) void f_004e65c0() {
         __emit 0x20
         __emit 0x75
         __emit 0x27
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x08
-        __emit 0xee
-        __emit 0x9f
-        __emit 0x00
+        mov ecx, [xr_17]
         __emit 0x8b
         __emit 0x11
         __emit 0xff
@@ -2356,26 +1950,14 @@ extern "C" __declspec(naked) void f_004e65c0() {
         __emit 0x5d
         __emit 0x74
         __emit 0x1d
-        __emit 0xa1
-        __emit 0x80
-        __emit 0xbc
-        __emit 0x6c
-        __emit 0x00
+        mov eax, [xr_38]
         __emit 0x85
         __emit 0xc0
         __emit 0x74
         __emit 0x0e
-        __emit 0x68
-        __emit 0x08
-        __emit 0x4b
-        __emit 0x67
-        __emit 0x00
+        push offset xr_122
         __emit 0x50
-        __emit 0xe8
-        __emit 0x3c
-        __emit 0xc4
-        __emit 0xf9
-        __emit 0xff
+        call xr_39
         __emit 0x83
         __emit 0xc4
         __emit 0x08
@@ -2392,18 +1974,10 @@ extern "C" __declspec(naked) void f_004e65c0() {
         __emit 0xc2
         __emit 0x08
         __emit 0x00
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
+    }
+}
+extern "C" __declspec(naked) void f_004e68d0() {
+    __asm {
         __emit 0x8b
         __emit 0x41
         __emit 0x20
@@ -2414,12 +1988,6 @@ extern "C" __declspec(naked) void f_004e65c0() {
         __emit 0x51
         __emit 0x30
         __emit 0xc3
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
-        __emit 0xcc
     }
 }
 extern "C" __declspec(naked) void f_004e68e0() {
@@ -2547,14 +2115,14 @@ extern "C" __declspec(naked) void f_004e68e0() {
         __emit 0xc0
         __emit 0x74
         __emit 0x1c
-        mov eax, [xr_10]
+        mov eax, [xr_38]
         __emit 0x3b
         __emit 0xc6
         __emit 0x74
         __emit 0x3e
         push offset xr_41
         __emit 0x50
-        call xr_12
+        call xr_39
         __emit 0x83
         __emit 0xc4
         __emit 0x08
@@ -2751,14 +2319,14 @@ extern "C" __declspec(naked) void f_004e69ac() {
         __emit 0x5d
         __emit 0x74
         __emit 0x1d
-        mov eax, [xr_10]
+        mov eax, [xr_38]
         __emit 0x85
         __emit 0xc0
         __emit 0x74
         __emit 0x0e
         push offset xr_42
         __emit 0x50
-        call xr_12
+        call xr_39
         __emit 0x83
         __emit 0xc4
         __emit 0x08
@@ -2903,14 +2471,14 @@ extern "C" __declspec(naked) void f_004e6a60() {
         __emit 0xc0
         __emit 0x74
         __emit 0x1c
-        mov eax, [xr_10]
+        mov eax, [xr_38]
         __emit 0x85
         __emit 0xc0
         __emit 0x74
         __emit 0x3d
         push offset xr_42
         __emit 0x50
-        call xr_12
+        call xr_39
         __emit 0x83
         __emit 0xc4
         __emit 0x08
@@ -3022,14 +2590,14 @@ extern "C" __declspec(naked) void f_004e6b30() {
         __emit 0x5e
         __emit 0x7e
         __emit 0x17
-        mov eax, [xr_10]
+        mov eax, [xr_38]
         __emit 0x85
         __emit 0xc0
         __emit 0x74
         __emit 0x0e
         push offset xr_44
         __emit 0x50
-        call xr_12
+        call xr_39
         __emit 0x83
         __emit 0xc4
         __emit 0x08
@@ -3090,14 +2658,14 @@ extern "C" __declspec(naked) void f_004e6b90() {
         __emit 0x5e
         __emit 0x7e
         __emit 0x17
-        mov eax, [xr_10]
+        mov eax, [xr_38]
         __emit 0x85
         __emit 0xc0
         __emit 0x74
         __emit 0x0e
         push offset xr_44
         __emit 0x50
-        call xr_12
+        call xr_39
         __emit 0x83
         __emit 0xc4
         __emit 0x08
@@ -3330,43 +2898,6 @@ extern "C" __declspec(naked) void f_004e6cb0() {
         __emit 0x83
         __emit 0xc4
         __emit 0x10
-        __emit 0xc3
-    }
-}
-extern "C" __declspec(naked) void f_004e6d20() {
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0x33
-        __emit 0xc9
-        __emit 0x89
-        __emit 0x48
-        __emit 0x04
-        __emit 0x88
-        __emit 0x48
-        __emit 0x08
-        __emit 0x89
-        __emit 0x48
-        __emit 0x0c
-        __emit 0x89
-        __emit 0x48
-        __emit 0x10
-        __emit 0x89
-        __emit 0x48
-        __emit 0x14
-        __emit 0x89
-        __emit 0x48
-        __emit 0x18
-        __emit 0x88
-        __emit 0x48
-        __emit 0x1d
-        mov dword ptr [eax], offset xr_45
-        __emit 0x89
-        __emit 0x48
-        __emit 0x20
-        __emit 0x89
-        __emit 0x48
-        __emit 0x24
         __emit 0xc3
     }
 }
@@ -4189,34 +3720,6 @@ extern "C" __declspec(naked) void f_004e7120() {
         __emit 0x8d
         __emit 0x86
         __emit 0x2c
-        __emit 0x02
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0xc3
-    }
-}
-extern "C" __declspec(naked) void f_004e7140() {
-    __asm {
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x8a
-        __emit 0x86
-        __emit 0x90
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x07
-        __emit 0x6a
-        __emit 0x00
-        call xr_48
-        __emit 0x8d
-        __emit 0x86
-        __emit 0x6c
         __emit 0x02
         __emit 0x00
         __emit 0x00
@@ -5495,50 +4998,6 @@ extern "C" __declspec(naked) void f_004e76dd() {
         __emit 0xcc
     }
 }
-extern "C" __declspec(naked) void f_004e7720() {
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x89
-        __emit 0x81
-        __emit 0xc4
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-extern "C" __declspec(naked) void f_004e7730() {
-    __asm {
-        __emit 0x53
-        __emit 0x8b
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x3a
-        __emit 0x5e
-        __emit 0x78
-        __emit 0x74
-        __emit 0x09
-        __emit 0x53
-        call FUN_004eb960
-        __emit 0x88
-        __emit 0x5e
-        __emit 0x78
-        __emit 0x5e
-        __emit 0x5b
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
 extern "C" __declspec(naked) void f_004e774b() {
     __asm {
         __emit 0xcc
@@ -5558,34 +5017,6 @@ extern "C" __declspec(naked) void f_004e774b() {
         __emit 0xcc
         __emit 0xcc
         __emit 0xcc
-    }
-}
-extern "C" __declspec(naked) void f_004e7760() {
-    __asm {
-        __emit 0x56
-        __emit 0x8b
-        __emit 0x74
-        __emit 0x24
-        __emit 0x08
-        __emit 0x57
-        __emit 0x8d
-        __emit 0xb9
-        __emit 0x80
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xb9
-        __emit 0x10
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xf3
-        __emit 0xa5
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
     }
 }
 extern "C" __declspec(naked) void f_004e7778() {
@@ -6267,14 +5698,14 @@ extern "C" __declspec(naked) void f_004e7a50() {
         __emit 0xc0
         __emit 0x75
         __emit 0x1c
-        mov eax, [xr_10]
+        mov eax, [xr_38]
         __emit 0x85
         __emit 0xc0
         __emit 0x74
         __emit 0x0e
         push offset xr_68
         __emit 0x50
-        call xr_12
+        call xr_39
         __emit 0x83
         __emit 0xc4
         __emit 0x08
@@ -6303,14 +5734,14 @@ extern "C" __declspec(naked) void f_004e7a90() {
         __emit 0xf6
         __emit 0x75
         __emit 0x17
-        mov eax, [xr_10]
+        mov eax, [xr_38]
         __emit 0x85
         __emit 0xc0
         __emit 0x74
         __emit 0x0e
         push offset xr_69
         __emit 0x50
-        call xr_12
+        call xr_39
         __emit 0x83
         __emit 0xc4
         __emit 0x08
@@ -6345,14 +5776,14 @@ extern "C" __declspec(naked) void f_004e7ad0() {
         __emit 0xc0
         __emit 0x75
         __emit 0x1c
-        mov eax, [xr_10]
+        mov eax, [xr_38]
         __emit 0x85
         __emit 0xc0
         __emit 0x74
         __emit 0x0e
         push offset xr_71
         __emit 0x50
-        call xr_12
+        call xr_39
         __emit 0x83
         __emit 0xc4
         __emit 0x08
@@ -6381,14 +5812,14 @@ extern "C" __declspec(naked) void f_004e7b10() {
         __emit 0xf6
         __emit 0x75
         __emit 0x17
-        mov eax, [xr_10]
+        mov eax, [xr_38]
         __emit 0x85
         __emit 0xc0
         __emit 0x74
         __emit 0x0e
         push offset xr_72
         __emit 0x50
-        call xr_12
+        call xr_39
         __emit 0x83
         __emit 0xc4
         __emit 0x08
@@ -6429,14 +5860,14 @@ extern "C" __declspec(naked) void f_004e7b50() {
         __emit 0xf0
         __emit 0x73
         __emit 0x1f
-        mov eax, [xr_10]
+        mov eax, [xr_38]
         __emit 0x85
         __emit 0xc0
         __emit 0x74
         __emit 0x4c
         push offset xr_73
         __emit 0x50
-        call xr_12
+        call xr_39
         __emit 0x83
         __emit 0xc4
         __emit 0x08
@@ -6479,14 +5910,14 @@ extern "C" __declspec(naked) void f_004e7b50() {
         __emit 0xc0
         __emit 0x75
         __emit 0x1f
-        mov eax, [xr_10]
+        mov eax, [xr_38]
         __emit 0x85
         __emit 0xc0
         __emit 0x74
         __emit 0x0e
         push offset xr_74
         __emit 0x50
-        call xr_12
+        call xr_39
         __emit 0x83
         __emit 0xc4
         __emit 0x08
@@ -6922,14 +6353,14 @@ extern "C" __declspec(naked) void f_004e7d80() {
         __emit 0xc0
         __emit 0x75
         __emit 0x1e
-        mov eax, [xr_10]
+        mov eax, [xr_38]
         __emit 0x85
         __emit 0xc0
         __emit 0x74
         __emit 0x0e
         push offset xr_76
         __emit 0x50
-        call xr_12
+        call xr_39
         __emit 0x83
         __emit 0xc4
         __emit 0x08
@@ -6961,14 +6392,14 @@ extern "C" __declspec(naked) void f_004e7d80() {
         __emit 0x25
         __emit 0x53
         call xr_60
-        mov eax, [xr_10]
+        mov eax, [xr_38]
         __emit 0x85
         __emit 0xc0
         __emit 0x74
         __emit 0x0e
         push offset xr_77
         __emit 0x50
-        call xr_12
+        call xr_39
         __emit 0x83
         __emit 0xc4
         __emit 0x08
@@ -6990,14 +6421,14 @@ extern "C" __declspec(naked) void f_004e7d80() {
         __emit 0xc0
         __emit 0x75
         __emit 0x2c
-        mov eax, [xr_10]
+        mov eax, [xr_38]
         __emit 0x85
         __emit 0xc0
         __emit 0x74
         __emit 0x0e
         push offset xr_79
         __emit 0x50
-        call xr_12
+        call xr_39
         __emit 0x83
         __emit 0xc4
         __emit 0x08
@@ -7032,14 +6463,14 @@ extern "C" __declspec(naked) void f_004e7d80() {
         mov ecx, [xr_17]
         __emit 0x57
         call xr_59
-        mov eax, [xr_10]
+        mov eax, [xr_38]
         __emit 0x85
         __emit 0xc0
         __emit 0x74
         __emit 0x0e
         push offset xr_80
         __emit 0x50
-        call xr_12
+        call xr_39
         __emit 0x83
         __emit 0xc4
         __emit 0x08
@@ -13857,14 +13288,14 @@ extern "C" __declspec(naked) void f_004e9d00() {
         __emit 0x10
         __emit 0x75
         __emit 0x1f
-        mov eax, [xr_10]
+        mov eax, [xr_38]
         __emit 0x85
         __emit 0xc0
         __emit 0x74
         __emit 0x0e
         push offset xr_105
         __emit 0x50
-        call xr_12
+        call xr_39
         __emit 0x83
         __emit 0xc4
         __emit 0x08
@@ -14251,7 +13682,7 @@ extern "C" __declspec(naked) void f_004e9f10() {
         __emit 0x08
         __emit 0xeb
         __emit 0x3c
-        mov ecx, [xr_10]
+        mov ecx, [xr_38]
         __emit 0x85
         __emit 0xc9
         __emit 0x74
@@ -14266,7 +13697,7 @@ extern "C" __declspec(naked) void f_004e9f10() {
         __emit 0x50
         push offset xr_117
         __emit 0x51
-        call xr_12
+        call xr_39
         __emit 0x83
         __emit 0xc4
         __emit 0x0c
@@ -14546,4 +13977,145 @@ extern "C" __declspec(naked) void f_004ea000() {
         __emit 0x00
         __emit 0xc3
     }
+}
+
+// VERTEXBUFFER::CreateBuffers. The target holds a switch table in the middle
+// of this function; the C++ source lets the compiler emit the same table and
+// the exception-handling tail. The element constructors live in the packed
+// render-vertex helper before this function.
+struct LOG { void Error(const char *, ...); };
+extern "C" LOG *g_pLog;
+extern "C" char s_error[];
+
+struct VERTEX1 { int m[6]; VERTEX1(); };
+struct VERTEX2 { int m[8]; VERTEX2(); };
+struct VERTEX3 { int m[9]; VERTEX3(); };
+struct VERTEX5 { int m[8]; VERTEX5(); };
+
+struct VERTEXBUFFER
+{
+    char pad0[0x14];
+    int m_count;
+    char pad1[0x4];
+    unsigned char m_valid;
+    unsigned char m_locked;
+    char pad2[0xe];
+    int m_format;
+
+    bool CreateBuffers(void **out, int count, bool flag);
+};
+
+bool VERTEXBUFFER::CreateBuffers(void **out, int count, bool flag)
+{
+    m_locked = flag;
+    if (!flag) {
+        switch (m_format) {
+        case 1:
+            *out = new VERTEX1[count];
+            break;
+        case 2:
+            *out = new VERTEX2[count];
+            break;
+        case 3:
+            *out = new VERTEX3[count];
+            break;
+        case 5:
+            *out = new VERTEX5[count];
+            break;
+        default:
+            if (g_pLog != 0) {
+                g_pLog->Error(s_error);
+            }
+            return false;
+        }
+    } else {
+        m_count = count;
+    }
+    m_valid = 1;
+    return true;
+}
+
+struct _D3DMATRIX;
+struct D3DXMATRIX;
+
+class INDEXBUFFER
+{
+public:
+    INDEXBUFFER();
+};
+
+extern "C" int idx_vtable;
+
+INDEXBUFFER::INDEXBUFFER()
+{
+    int *p = (int *)this;
+    p[1] = 0;
+    *(char *)(p + 2) = 0;
+    p[3] = 0;
+    p[4] = 0;
+    p[5] = 0;
+    p[6] = 0;
+    *(char *)((char *)p + 0x1d) = 0;
+    p[0] = (int)&idx_vtable;
+    p[8] = 0;
+    p[9] = 0;
+}
+
+class CAMERALENS
+{
+public:
+    void Update(bool);
+};
+
+class DX8CAMERA
+{
+public:
+    const _D3DMATRIX *GetProjection();
+};
+
+const _D3DMATRIX *DX8CAMERA::GetProjection()
+{
+    if (*(unsigned char *)((char *)this + 0x90)) {
+        ((CAMERALENS *)this)->Update(false);
+    }
+    return (const _D3DMATRIX *)((char *)this + 0x26c);
+}
+
+class SLH
+{
+public:
+    void Do(char);
+};
+
+class MESHDX8
+{
+public:
+    char pad0[0x78];
+    char m_lit;
+    char pad1[0x7];
+    char m_matrix[0x40];
+    char pad2[0x4];
+    int m_lightMask;
+
+    void SetLightMask(int mask);
+    void SetLit(bool lit);
+    void SetMatrix(const D3DXMATRIX *matrix);
+};
+
+void MESHDX8::SetLightMask(int mask)
+{
+    m_lightMask = mask;
+}
+
+void MESHDX8::SetLit(bool lit)
+{
+    if ((char)lit != *(char *)((char *)this + 0x78)) {
+        ((SLH *)this)->Do((char)lit);
+        *(char *)((char *)this + 0x78) = (char)lit;
+    }
+}
+
+void MESHDX8::SetMatrix(const D3DXMATRIX *matrix)
+{
+    memcpy((char *)this + 0x80, matrix, 64);
 }
