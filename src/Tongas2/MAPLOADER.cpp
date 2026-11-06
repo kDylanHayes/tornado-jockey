@@ -18,7 +18,7 @@ struct CAMERAOBJ
     V3 m_1a8;
     V3 m_1b4;
 
-    void SetPosition(V3 position);
+    void ClearTargets();
     void SetTarget(void *target);
     void SetAngles(float x, float y, float z);
     void Update();
@@ -171,8 +171,8 @@ void MAPLOADER::LoadMap(const char *name)
 
 void MAPLOADER::Update(float dt)
 {
-    V3 point;
     int zero = 0;
+    V3 point;
     if (m_20 == (void *)zero)
         return;
 
@@ -184,19 +184,17 @@ void MAPLOADER::Update(float dt)
             m_24c = true;
 
             CAMERAOBJ *camera = (CAMERAOBJ *)m_24;
+            camera->m_1a8 = V3((float)zero, (float)zero, -15.0f);
             camera->m_1b4 = point;
-            camera->m_1a8.x = 0.0f;
-            camera->m_1a8.y = 0.0f;
-            camera->m_1a8.z = -15.0f;
 
-            V3 position = camera->m_188;
-            ((CAMERAOBJ *)m_38)->SetPosition(position);
+            V3 direction = camera->m_188;
+            ((CAMERAOBJ *)m_38)->ClearTargets();
 
             BONEDMODELDX8PARTICLEDESC *resource =
                 new BONEDMODELDX8PARTICLEDESC(std::string("SUN"), 2, 0,
                     &V3((float)zero, (float)zero, -15.0f),
-                    &V3(30.0f, 30.0f, 30.0f),
-                    &V3((float)zero, (float)zero, -15.0f));
+                    &direction,
+                    &V3(30.0f, 30.0f, 30.0f));
             ((CAMERAOBJ *)m_38)->SetTarget(resource);
             ((CAMERAOBJ *)m_38)->SetAngles((float)zero, (float)zero, (float)zero);
             m_258 = true;

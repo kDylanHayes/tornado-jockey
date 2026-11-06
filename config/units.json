@@ -3232,7 +3232,7 @@
       "source": "src/Tongas2/MAPLOADER.cpp",
       "category": "engine",
       "symbol_mappings": {
-        "FUN_00517aa0": "?SetPosition@CAMERAOBJ@@QAEXUV3@@@Z",
+        "FUN_00517aa0": "?ClearTargets@CAMERAOBJ@@QAEXXZ",
         "FUN_00517a80": "?SetTarget@CAMERAOBJ@@QAEXPAX@Z",
         "FUN_005178a0": "?SetAngles@CAMERAOBJ@@QAEXMMM@Z",
         "FUN_00527ec0": "?GetPoint@PATHOBJ@@QAEPAUV3@@PAU2@M@Z",
