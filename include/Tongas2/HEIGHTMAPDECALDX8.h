@@ -6,6 +6,7 @@
 
 #include <d3dx8.h>
 
+#include "Tongas2/CPRIMITIVE3.h"
 #include "Tongas2/HEIGHTMAPDX8.h"
 #include "Tongas2/RESOURCE.h"
 #include "Tongas2/RESOURCES.h"
@@ -96,8 +97,8 @@ public:
     MESHDX8 *m_mesh;
     int m_488;
     bool m_48c;
-    V3 *m_vertices;
-    V3 *m_normals;
+    PRIMV3 *m_vertices;
+    PRIMV3 *m_normals;
     int m_498;
     bool m_49c;
     D3DXMATRIX m_matrix;

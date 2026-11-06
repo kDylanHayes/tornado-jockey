@@ -6276,6 +6276,9 @@
 0x006759e8 ??_C@_0ED@CBMKIMME@resource?5idx?5of?5actor?5specified?5@ data 0x43
 0x00675a2c ??_7HEIGHTMAPDECALDX8MANAGER@@6B@ data 0x20
 0x00675a70 ??_7HEIGHTMAPDECALDX8RESOURCE@@6B@ data 0x178
+0x00675b8c ??_C@_0CB@KHBNOFGO@could?5not?5lock?5vertex?5buffer?@ data 0x21
+0x00675bb0 ??_C@_0BP@BGJDHKKM@Could?5not?5lock?5face?5buffer?5?@ data 0x1f
+0x00675bd0 ??_C@_0BC@KIAMFJFB@Shader?5not?5found?@ data 0x12
 0x00675be8 ??_7HEIGHTMAPDECALDX8MASTER@@6B@ data 0x9c
 0x00675d64 ??_7RENDERTEXTUREMANAGER@@6B@ data 0x8
 0x00675d84 ??_C@_0BC@CCFKEEJH@RENDERTEXTURE?4txt?$AA@ data

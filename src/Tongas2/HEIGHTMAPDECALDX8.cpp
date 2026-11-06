@@ -1,3 +1,5 @@
+#include "lib/freeimage/FreeImage.h"
+
 #define HEIGHTMAP_BOXES
 #define FRUSTUM_MATHS
 #include "Tongas2/HEIGHTMAPDECALDX8.h"
@@ -338,16 +340,104 @@ void HEIGHTMAPDECALDX8RESOURCE::Update()
     Render();
 }
 
-void HEIGHTMAPDECALDX8RESOURCE::CreateMesh()
+__declspec(noinline) void HEIGHTMAPDECALDX8RESOURCE::CreateMesh()
 {
+    if (m_480)
+        return;
+    HEIGHTMAPDECALDX8MASTER *master = (HEIGHTMAPDECALDX8MASTER *)m_master;
+    int count = m_400;
+    if (count != 0) {
+        m_404 = count;
+    } else {
+        m_404 = (int)master->m_size.x;
+        count = (int)master->m_size.y;
+    }
+    m_408 = count;
+    m_vertices = new PRIMV3[m_404 * count];
+    m_normals = new PRIMV3[m_404 * m_408];
+    m_40c = m_404 * m_408;
+    m_410 = (m_408 * 2 - 2) * (m_404 - 1);
+    m_mesh = new MESHDX8;
+    if (!master->m_userFolder && g_pResources->IsHighDetail() && !master->m_correctSizeInWidescreen)
+        m_mesh->Create(3, m_40c, m_410, 1);
+    else
+        m_mesh->Create(1, m_40c, m_410, 1);
+    m_mesh->SetVisibility(m_19c);
+    m_mesh->m_passes = master->m_70;
+    m_mesh->SetLightMask(m_1ac);
+    RESOURCE *shader = g_pRENDERSHADER->Find(master->m_shader.c_str());
+    if (shader) {
+        m_mesh->AddSubmesh(shader->m_handle, 0, m_40c, 0, m_410, 0, 0);
+        g_pRENDERSHADER->Get(shader->m_handle);
+    } else {
+        if (g_pLog)
+            g_pLog->Error("Shader not found!");
+    }
+    short *indices = (short *)m_mesh->LockIndices(0, m_410);
+    if (!indices) {
+        if (g_pLog)
+            g_pLog->Error("Could not lock face buffer %s!", master->m_name.c_str());
+    } else {
+        short base = 0;
+        for (int y = 0; y < m_408 - 1; y++) {
+            for (int x = 0; x < m_404 - 1; x++) {
+                *indices++ = base;
+                *indices++ = base + 1;
+                *indices++ = (short)m_408 + base;
+                *indices++ = base + 1;
+                *indices++ = (short)m_408 + base + 1;
+                *indices++ = (short)m_408 + base;
+                base++;
+            }
+            base++;
+        }
+        m_mesh->UnlockIndices();
+        if (!master->m_userFolder && g_pResources->IsHighDetail() && !master->m_correctSizeInWidescreen) {
+            char *vertices = (char *)m_mesh->LockVertices(0, m_40c);
+            if (!vertices) {
+                if (g_pLog)
+                    g_pLog->Error("could not lock vertex buffer! %s", master->m_name.c_str());
+                return;
+            }
+            for (int y = 0; y < m_408; y++) {
+                for (int x = 0; x < m_404; x++) {
+                    *(int *)(vertices + 0x18) = -1;
+                    *(float *)(vertices + 0x1c) = (float)x / (float)(m_404 - 1);
+                    *(float *)(vertices + 0x20) = (float)y / (float)(m_408 - 1);
+                    vertices += 0x24;
+                }
+            }
+        } else {
+            char *vertices = (char *)m_mesh->LockVertices(0, m_40c);
+            if (!vertices) {
+                if (g_pLog)
+                    g_pLog->Error("could not lock vertex buffer! %s", master->m_name.c_str());
+                return;
+            }
+            for (int y = 0; y < m_408; y++) {
+                for (int x = 0; x < m_404; x++) {
+                    *(int *)(vertices + 0xc) = -1;
+                    *(float *)(vertices + 0x10) = (float)x / (float)(m_404 - 1);
+                    *(float *)(vertices + 0x14) = (float)y / (float)(m_408 - 1);
+                    vertices += 0x18;
+                }
+            }
+        }
+        m_mesh->UnlockVertices();
+        m_48c = false;
+        m_mesh->SetLit(true);
+        m_480 = true;
+    }
 }
 
-void HEIGHTMAPDECALDX8RESOURCE::UpdateVertices()
+__declspec(noinline) void HEIGHTMAPDECALDX8RESOURCE::UpdateVertices()
 {
+    __asm { nop }
 }
 
-void HEIGHTMAPDECALDX8RESOURCE::Render()
+__declspec(noinline) void HEIGHTMAPDECALDX8RESOURCE::Render()
 {
+    __asm { nop }
 }
 
 void HEIGHTMAPDECALDX8RESOURCE::SetLayer(int layer)
@@ -394,25 +484,28 @@ HEIGHTMAPDX8 *HEIGHTMAPDECALDX8RESOURCE::FindHeightmap()
     m_hmap.Invalidate();
     m_48c = false;
     m_49c = false;
-    if (m_actor.serial >= 0 && m_actor.index >= 0) {
-        ACTOR *actor = (ACTOR *)g_pScene->GetActor(m_actor);
-        if (!actor) {
-            m_actor.Invalidate();
-        } else if (m_500 >= 0) {
-            RESOURCE *copy = g_pResources->GetResource(actor->m_copies[m_500]);
-            if (copy) {
-                int managerId = g_pHEIGHTMAPDX8->m_id;
-                if (copy->GetManagerId() == managerId)
+    RESHANDLE &actorHandle = m_actor;
+    if (actorHandle.serial >= 0 && actorHandle.index >= 0) {
+        ACTOR *actor = (ACTOR *)g_pScene->GetActor(actorHandle);
+        if (actor) {
+            if (m_500 >= 0) {
+                RESOURCE *copy = g_pResources->GetResource(actor->m_copies[m_500]);
+                if (copy) {
+                    int managerId = g_pHEIGHTMAPDX8->m_id;
+                    if (copy->GetManagerId() == managerId)
+                        return (HEIGHTMAPDX8 *)copy;
+                }
+                if (g_pLog)
+                    g_pLog->Error("resource idx of actor specified for decal has no active heightmap!");
+            } else {
+                RESOURCE *copy = actor->FindResourceCopy(g_pHEIGHTMAPDX8->m_id);
+                if (copy)
                     return (HEIGHTMAPDX8 *)copy;
+                if (g_pLog)
+                    g_pLog->Error("actor specified for decal has no active heightmap!");
             }
-            if (g_pLog)
-                g_pLog->Error("resource idx of actor specified for decal has no active heightmap!");
         } else {
-            RESOURCE *copy = actor->FindResourceCopy(g_pHEIGHTMAPDX8->m_id);
-            if (copy)
-                return (HEIGHTMAPDX8 *)copy;
-            if (g_pLog)
-                g_pLog->Error("actor specified for decal has no active heightmap!");
+            m_actor.Invalidate();
         }
     }
 
