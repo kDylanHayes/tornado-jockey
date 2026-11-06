@@ -282,6 +282,30 @@ const char *MESHDX8SDMANAGER::GetTypeCode()
     return "MESH";
 }
 
+void MESHDX8SDMANAGER::ReleaseAllBuffers()
+{
+    MESHDX8SDMASTER *master = (MESHDX8SDMASTER *)m_first;
+    if (master) {
+        do {
+            MESHDX8SDMASTER *next = (MESHDX8SDMASTER *)master->m_next;
+            master->ReleaseVertexBuffer();
+            master = next;
+        } while (master);
+    }
+}
+
+void MESHDX8SDMANAGER::LockAllBuffers()
+{
+    MESHDX8SDMASTER *master = (MESHDX8SDMASTER *)m_first;
+    if (master) {
+        do {
+            MESHDX8SDMASTER *next = (MESHDX8SDMASTER *)master->m_next;
+            master->LockVertexBuffer();
+            master = next;
+        } while (master);
+    }
+}
+
 void MESHDX8SDRESOURCE::Start()
 {
     MESHDX8SDMASTER *m = (MESHDX8SDMASTER *)m_master;

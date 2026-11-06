@@ -116,6 +116,8 @@ public:
     virtual RESOURCEMASTER *CreateMaster(const char *name);
     virtual const char *GetTypeCode();
     virtual void Update();
+    virtual void ReleaseAllBuffers();
+    virtual void LockAllBuffers();
 };
 
 RESOURCEMANAGER *CreateMESHDX8SD();
