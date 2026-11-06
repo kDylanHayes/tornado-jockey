@@ -46,3 +46,13 @@ is trailing `int3` padding removed by `tools/split_functions.py`.
 
 Verified with the original `Tornado.exe` (SHA-1 `20bf7200...06bc`); the
 report and both units' objdiff targets build without truncation panics.
+
+## SCREENDECALDX8 progress
+
+`src/Tongas2/SCREENDECALDX8.cpp` now carries byte-transcribed asm for the
+functions whose C++ shape is unknown, plus C++ for the vertex-format flag
+helpers (`FUN_004f3aa0` and `FUN_004f3ca0` match exactly; the four bit-extract
+helpers are close but the compiler emits 32-bit shifts where the target uses
+`al`, so they remain partial). The 2020-byte switch-default body matches every
+non-table byte; its five jump-table entries still need relocations that inline
+asm cannot emit. Unit remains incomplete.
