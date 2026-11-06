@@ -29,11 +29,14 @@ model is a `BONEDMODELDX8PARTICLEDESC` (`0xd0` bytes, real constructor and
 copy constructor at `0x4f7f40`/`0x4f8030` in `BONEDMODELDX8SD`): the map
 copies each model through its copy constructor. It then walks the object
 list and handles `WING`, `LOGO`, `CAMERA`, `TARGET`, `SKYBOX` and
-`GLOWSKYBOX`. The wing and logo cases build a 0x60-byte decoration from
-the object's name and set its name to the loader's `0x20c` string plus the
-object name. The sky and glow cases ask `FUN_00527550` whether the combined
-name exists and then load it through the manager at `0x04`
-(`FUN_004ff8c0`) into `0x18`/`0x1c`.
+`GLOWSKYBOX`. The wing and logo cases build a 0x60-byte decoration from the
+loader's manager and type (`m_04`, `m_00`); `MAPDECOR::SetName` is the
+by-value method at `0x517550` (`0x40` bytes of arguments: map name, the
+`0x20c` string plus the object name, an empty string, and `1`). The sky and
+glow cases ask `FUN_00527550` whether the combined name exists and then load
+it through the manager at `0x04`. `MAPMANAGER::Load` (`0x4ff8c0`, `_m_62`)
+takes `0x48` bytes of arguments: the map name, the combined name, an empty
+string, and the flags `1, 1, 0`.
 
 `Update` runs the 1-second intro timer, clears the camera holder's target
 list (`0x517aa0`, a thunk to the holder's list-release routine), creates the
@@ -49,21 +52,23 @@ their target `FUN_` symbols through `config/units.json`.
 
 ## Progress
 
-- `Update`: **90.66%** fuzzy (908 bytes; base 849). The camera-holder call
+- `Update`: **90.77%** fuzzy (908 bytes; base 849). The camera-holder call
   turned out to be a target-list release, not a position setter, and the
   sun descriptor's direction is the camera position with a `(30,30,30)`
   color. What remains is codegen only: the `V3` temporary/`point` stack
   slots are swapped (target puts `point` at the lowest slot), plus the
   target's SEH prologue instruction scheduling.
-- `LoadMap`: **67.44%** fuzzy (2864 bytes; base 2587). All three list walks
-  and the six name cases are translated. The remaining base is smaller
-  because the target's `MAPMANAGER::Load` call takes a by-value
-  `std::string` resource path in addition to the map name; adding it
-  reproduces the target's code but makes objdiff lose the alignment for
-  this function, so the simpler call is kept for now. The rest of the gap
-  is `std::string` temporary stack offsets and loop register allocation.
+- `LoadMap`: **93.71%** fuzzy (2864 bytes; base 2901). The by-value
+  `MAPMANAGER::Load` and `MAPDECOR::SetName` argument shapes are recovered
+  (`0x48` and `0x40` bytes), as is the `(manager, type)` decoration
+  constructor. The object loop caches `m_objectsBegin` so the compiler
+  keeps its `!= 0` test at the top and emits the function epilogue at the
+  end, matching the target's block order; the map pointer is read from
+  `m_20` directly. Remaining differences are the frame size (`0x118` vs
+  `0x10c`) and a handful of `ARG`/`REPLACE` rows from register/stack
+  allocation.
 - `VectorTooLong`: 100%.
 
-Unit: 2.73% exact, 73.77% fuzzy, 106/3878 bytes, 1/3 functions.
+Unit: 2.73% exact, 93.19% fuzzy, 106/3878 bytes, 1/3 functions.
 
 No image watermark affects the unit. It is left without `"complete": true`.

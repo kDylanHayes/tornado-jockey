@@ -18,7 +18,7 @@ public:
 
 private:
     // Offsets recovered from the two functions' decompiler output.
-    char m_00[4];
+    int m_00;
     void *m_04;
     char m_08[4];
     float m_0c;
