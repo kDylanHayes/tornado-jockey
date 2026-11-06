@@ -151,8 +151,10 @@ TEXTUREDX8SDMASTER::TEXTUREDX8SDMASTER(RESOURCEMANAGER *manager, const char *nam
 
     if (*name == ';') {
         TOKENS tokens;
-        STRING text(name);
-        tokens.Split(text, ";");
+        {
+            STRING text(name);
+            tokens.Split(text, ";");
+        }
 
         name = tokens.GetToken(0);
         *(bool *)(base + 0x480) = true;
@@ -166,7 +168,8 @@ TEXTUREDX8SDMASTER::TEXTUREDX8SDMASTER(RESOURCEMANAGER *manager, const char *nam
         }
     }
 
-    if (*(const unsigned int *)g_rgbPrefix == *(const unsigned int *)name) {
+    const unsigned int *rgbPrefix = (const unsigned int *)g_rgbPrefix;
+    if (*(const unsigned int *)name == *rgbPrefix) {
         sscanf(name + 4, "%d %d %d %d %d",
                base + 0x6c, base + 0x70, base + 0x74, base + 0x78, base + 0x7c);
         *(bool *)(base + 0x68) = true;

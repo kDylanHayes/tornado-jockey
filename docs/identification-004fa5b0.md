@@ -132,7 +132,7 @@ Twelve of its eighteen functions are exact:
 - `?GetPhysicalMemoryMB@@YAIXZ`
 
 `py tools/unit_status.py Tongas2/TEXTUREDX8SD` reports **24.96% exact
-(688/2,756 bytes)**, **45.55% fuzzy**, and **12/18 functions exact**. The
+(688/2,756 bytes)**, **46.18% fuzzy**, and **12/18 functions exact**. The
 unit stays incomplete.
 
 `UpdateTextures` needed its real size: Ghidra stops at 0x24 bytes, but the
@@ -145,10 +145,11 @@ underscore name in `config/units.json`.
 Remaining blockers:
 
 - The master constructor (`0x00504570`, 0x21f bytes) is reconstructed from the
-  target but is 87.81% fuzzy: it has the layout (0x60 texture, 0x64 refcount,
+  target and is 90.97% fuzzy: it has the layout (0x60 texture, 0x64 refcount,
   0x68 RGB flag, 0x6c-0x7c RGBA ints, two 0x200 name buffers, 0x480/0x484/
   0x488/0x489 flags and the 0x48a path) and the `;`/`RGB:` parsing, but the
-  generated code is 0x20e bytes against the target's 0x21f.
+  generated code is 0x20f bytes against the target's 0x21f and still differs
+  in the token null check and a few register assignments.
 - `BuildDiffuseColorTexture` (`0x00504210`), `Build` (`0x00504bb0`),
   `Load` (`0x00504800`) and `MergeAlpha` (`0x00504990`) need the renderer and
   texture-object call shapes transcribed. `Build` currently pairs through
