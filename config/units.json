@@ -3354,7 +3354,13 @@
         "FUN_00504bb0": "?Build@TEXTUREDX8SDMASTER@@QAEHXZ",
         "FUN_00504800": "?Load@TEXTUREDX8SDMASTER@@QAE_N_N@Z",
         "FUN_00504990": "?MergeAlpha@TEXTUREDX8SDMASTER@@QAEXXZ",
-        "PTR_GlobalMemoryStatus_00656130": "_PTR_GlobalMemoryStatus_00656130"
+        "PTR_GlobalMemoryStatus_00656130": "_PTR_GlobalMemoryStatus_00656130",
+        "FUN_00534d70": "??0TEXTUREDX8SDTEXTURE@@QAE@_N@Z",
+        "FUN_00534900": "?Create@TEXTUREDX8SDTEXTURE@@QAEHPAX@Z",
+        "FUN_00455832": "?FillTexture@@YAHPAX00@Z",
+        "LAB_005041f0": "?FillColorCallback@@YAXPAX000@Z",
+        "s_TEXTUREDX8SDMASTER::BuildDiffuse_00677e60": "??_C@_0FA@CODABLOK@TEXTUREDX8SDMASTER?3?3BuildDiffuse@",
+        "s_TEXTUREDX8SDMASTER::BuildDiffuse_00677eb0": "??_C@_0FB@OEKHKDBH@TEXTUREDX8SDMASTER?3?3BuildDiffuse@"
       }
     },
     {
