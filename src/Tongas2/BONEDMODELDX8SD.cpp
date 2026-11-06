@@ -8,6 +8,9 @@
 #include <d3dx8.h>
 #include <stdio.h>
 #include <string.h>
+
+const float kNegativeOne = -1.0f;
+const double kDegToRad = 0.01745329252;
 #include <algorithm>
 
 
@@ -194,7 +197,8 @@ BONEDMODELDX8SDRESOURCE::~BONEDMODELDX8SDRESOURCE()
 {
     if (m_model) {
         DestroyAnimations();
-        g_pDisplay->m_2bc->ReleaseModel(m_model);
+        BONEDMODELDX8DISPLAY *display = g_pDisplay;
+        display->m_2bc->ReleaseModel(m_model);
         m_model = 0;
     }
     if (m_loader) {
@@ -495,8 +499,8 @@ bool BONEDMODELDX8SDRESOURCE::FUN_004f7040(const char *name)
 void BONEDMODELDX8SDRESOURCE::LoadTags()
 {
     std::string path(((BONEDMODELMASTER *)m_master)->m_artPath.c_str());
-    size_t dot = path.rfind('.');
-    std::string file = std::string(g_basePath) + path.substr(0, dot + 1) + "tag";
+    size_t dot = path.find_last_of(".");
+    std::string file = g_basePath + path.substr(0, dot + 1) + "tag";
     FILE *handle = fopen(file.c_str(), "rt");
     if (!handle)
         return;
@@ -564,12 +568,35 @@ public:
     void *Get(int what);
 };
 
+class BONEDMODELDX8RENDERERAPI;
+
+class BONEDMODELDX8SETTINGS
+{
+public:
+    int GetInt(int index);
+    float GetFloat(int index);
+};
+
+class BONEDMODELDX8SYSTEM
+{
+public:
+    int GetCount();
+    void *GetItem(int index);
+    void Prepare(void *item);
+    void Finish(void *item);
+    void Draw(void *box);
+    void Render(BONEDMODELDX8RENDERERAPI *device, void *box, int mode);
+};
+
 class BONEDMODELDX8RENDERERAPI
 {
 public:
-    char m_00[0x94];
+    char m_00[0x90];
+    void (__stdcall *m_90)(BONEDMODELDX8RENDERERAPI *self, int a, int b, int c);
     void (__stdcall *m_94)(BONEDMODELDX8RENDERERAPI *self, int a, void *value);
-    char m_98[0xc8 - 0x98];
+    char m_98[0xc0 - 0x98];
+    void (__stdcall *m_c0)(BONEDMODELDX8RENDERERAPI *self, int a, void *value);
+    char m_c4[4];
     void (__stdcall *m_c8)(BONEDMODELDX8RENDERERAPI *self, int a, int b);
 };
 
@@ -599,7 +626,7 @@ public:
     void Virtual10(int unused);
     void Virtual11(MATRIX *matrix, BONEDMODELDX8RENDERERAPI *renderer);
     void Virtual12(BONEDMODELDX8RENDERERAPI *device);
-    void Render(int arg);
+    void Virtual13(BONEDMODELDX8RENDERERAPI *device);
     void Destroy();
 
     BONEDMODELDX8STAGE *m_0;
@@ -639,7 +666,7 @@ void BONEDMODELDX8PARTICLE::Virtual10(int unused)
         m_20->Release((int)m_24);
         if (m_0->Get(0xf)) {
             if (m_20->IsActive())
-                Render(unused);
+                Virtual13((BONEDMODELDX8RENDERERAPI *)unused);
         }
     }
 }
@@ -862,8 +889,6 @@ lab_7a50:
 }
 
 
-const float kNegativeOne = -1.0f;
-
 class BONEDMODELDX8MATH
 {
 public:
@@ -873,7 +898,8 @@ public:
 void BONEDMODELDX8MATH::Basis(const V3 *a, const V3 *b)
 {
     MATRIX *out = (MATRIX *)this;
-    V3 n = *b * kNegativeOne;
+    V3 n;
+    n = *b * kNegativeOne;
     n.Normalize();
     V3 u;
     u.x = n.y * a->z - n.z * a->y;
@@ -1022,6 +1048,54 @@ void FUN_004f75f0(BONEDMODELDX8BOX *box, const MATRIX *a, const MATRIX *b)
     FUN_004641c8(&box->m_planes[4], &box->m_corners[2], &box->m_corners[3], &box->m_corners[6]);
     FUN_004641c8(&box->m_planes[5], &box->m_corners[1], &box->m_corners[0], &box->m_corners[4]);
 }
+
+void FUN_004635cb(MATRIX *out, float fov, float aspect, float zNear, float zFar);
+void FUN_0046378f(MATRIX *out, const void *source);
+
+void BONEDMODELDX8PARTICLE::Virtual13(BONEDMODELDX8RENDERERAPI *device)
+{
+    BONEDMODELDX8SYSTEM *system = (BONEDMODELDX8SYSTEM *)m_20;
+    BONEDMODELDX8SETTINGS *settings = (BONEDMODELDX8SETTINGS *)m_0;
+    int count = system->GetCount();
+    float aspect = (float)settings->GetInt(0) / (float)settings->GetInt(1);
+    float fov = settings->GetFloat(2) * kDegToRad;
+    MATRIX projection;
+    FUN_004635cb(&projection, fov, aspect, 10.0f, 1500.0f);
+    device->m_94(device, 3, &projection);
+    device->m_c8(device, 0x16, 2);
+    for (int i = 0; i < count; i++) {
+        void *item = system->GetItem(i);
+        system->Prepare(item);
+        item = system->GetItem(i);
+        V3 position = *(V3 *)((char *)item + 0x1c4);
+        MATRIX world, combined, copy;
+        FUN_0046378f(&world, item);
+        FUN_004626de(&combined, &world, (MATRIX *)((char *)m_24 + 0xe8));
+        copy = combined;
+        FUN_004f75f0((BONEDMODELDX8BOX *)((char *)this + 0x120), &copy, &copy);
+        position.x *= -1.0f;
+        position.y *= -1.0f;
+        position.z *= -1.0f;
+        position.z -= 1.0f;
+        device->m_c8(device, 0x98, 1);
+        device->m_c0(device, 0, &position);
+        Virtual11(&copy, device);
+        if (m_20) {
+            system->Draw((char *)this + 0x120);
+            system->Render(device, (char *)this + 0x120, 0);
+        }
+        device->m_c8(device, 0x89, 1);
+        device->m_c8(device, 0x89, 0);
+        device->m_c8(device, 0x16, 3);
+        device->m_c8(device, 0x16, 2);
+        device->m_c8(device, 0x89, 0);
+        device->m_c8(device, 0x98, 0);
+        item = system->GetItem(i);
+        system->Finish(item);
+    }
+    device->m_c8(device, 0x16, 3);
+}
+
 
 std::string FUN_004f82a0(std::string text)
 {
