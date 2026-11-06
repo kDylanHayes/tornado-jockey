@@ -241,7 +241,8 @@ def main() -> int:
                         data_sizes=data_sizes)
         fix_data_symbols.main_path(ROOT / unit["target"],
                                    {n: a for n, a in variables if any(lo <= a <= hi for lo, hi in spans)},
-                                   [v for v in sized if not any(lo <= v[1] <= hi for lo, hi in spans)])
+                                   [v for v in sized if not any(lo <= v[1] <= hi for lo, hi in spans)],
+                                   data_sizes)
         apply_symbol_mappings(ROOT / unit["target"], unit.get("symbol_mappings", {}))
         if ours is not None and ours.is_file():
             fix_data_icf.main_path(ROOT / unit["target"], ours)
