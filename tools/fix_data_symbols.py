@@ -28,9 +28,10 @@ IMAGE_SCN_CNT_UNINITIALIZED_DATA = 0x80
 IMAGE_SYM_CLASS_EXTERNAL = 2
 
 
-def fix(coff: split.Coff, variables: dict, externals=()) -> int:
+def fix(coff: split.Coff, variables: dict, externals=(), sizes=None) -> int:
     """variables: name -> exe address of the unit's data symbols.
-    externals: (name, address, size) of other units' sized data symbols."""
+    externals: (name, address, size) of other units' sized data symbols.
+    sizes: name -> size of the unit's sized data symbols."""
     by_index = {i: rec for i, rec, _ in coff.symbols}
     defined = {}
     for i, rec, _ in coff.symbols:
@@ -54,8 +55,17 @@ def fix(coff: split.Coff, variables: dict, externals=()) -> int:
             # Labels analysis/delinking left inside a named variable extend it
             # or cut it at the label. The delinker names an interior reference
             # "<owner>+<offset>"; hiding it keeps the variable's own extent.
-            interior = (owner is not None and value > owner[0]
-                        and name.startswith(coff.name(by_index[owner[1]]) + "+"))
+            # The same goes for an auto-named string label inside a variable
+            # whose size symbols.txt gives (a table of strings, say): objdiff
+            # would otherwise stop the variable at that label.
+            interior = False
+            if owner is not None and value > owner[0]:
+                owner_name = coff.name(by_index[owner[1]])
+                if name.startswith(owner_name + "+"):
+                    interior = True
+                elif sizes:
+                    owner_size = sizes.get(owner_name)
+                    interior = owner_size is not None and value < owner[0] + owner_size
             if name.startswith(("DAT_", "PTR_")) or interior:
                 if owner is not None:
                     inside[i] = (owner[1], value - owner[0])
@@ -118,10 +128,10 @@ def fix(coff: split.Coff, variables: dict, externals=()) -> int:
     return changed
 
 
-def main_path(path, variables: dict, externals=()) -> int:
+def main_path(path, variables: dict, externals=(), sizes=None) -> int:
     with open(path, "rb") as f:
         coff = split.Coff(f.read())
-    n = fix(coff, variables, externals)
+    n = fix(coff, variables, externals, sizes)
     if n:
         with open(path, "wb") as f:
             f.write(coff.write())
