@@ -532,18 +532,18 @@ void CMDMGR::Update()
     while (m_timed && m_timed->m_time <= g_pTimer->m_time) {
         m_timed->Run(g_pScriptRoot);
         CMDCONTEXT *context = m_timed;
-        if (context) {
-            m_timed = context->m_next;
-            DeleteContext(context);
-        }
+        if (!context)
+            break;
+        m_timed = context->m_next;
+        DeleteContext(context);
     }
     while (m_framed && --m_framed->m_frames < 0) {
         m_framed->Run(g_pScriptRoot);
         CMDCONTEXT *context = m_framed;
-        if (context) {
-            m_framed = context->m_next;
-            DeleteContext(context);
-        }
+        if (!context)
+            break;
+        m_framed = context->m_next;
+        DeleteContext(context);
     }
 }
 
