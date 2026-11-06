@@ -172,3 +172,5 @@ byte. None of this moved the report (objdiff already counted argument
 mismatches as matched); it makes those functions 100% in `objdiff diff`.
 
 
+
+`TEXT::Update` also holds a scan run at `0x4c4071-0x4c407c`; together with its stack layout it stays about 87% fuzzy and keeps `Tongas2/TEXT` partial.
