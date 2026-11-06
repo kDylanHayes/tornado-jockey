@@ -24,9 +24,16 @@ public:
     void Copy(int *dest, int flags);
 };
 
+struct V3
+{
+    float x, y, z;
+    V3() : x(0), y(0), z(0) {}
+};
+
 class PARTICLE
 {
 public:
+    PARTICLE(int a, int b);
     void ReleaseA();
     void ReleaseB();
     int FindKey(int value);
@@ -34,11 +41,20 @@ public:
     int GetTrackOffset(int index);
 
 private:
-    char m_000[0x44];
+    char m_000;
+    char pad0[3];
+    V3 m_004;
+    V3 m_010;
+    std::vector<int> m_01c;
+    int m_02c;
+    int m_030;
+    std::vector<std::string> m_034;
     REFOBJ *m_044;
-    int m_048;
-    TRACK **m_04c;
-    char m_050[0x24];
+    std::vector<TRACK *> m_048;
+    std::vector<VI> m_058;
+    float m_068;
+    int m_06c;
+    int m_070;
     std::vector<int> m_074;
 };
 
@@ -68,6 +84,23 @@ public:
     void PushBack(const VI &value);
 };
 
+class READER
+{
+public:
+    void Read(void *buf, int size, int flag, void *tok);
+};
+
+class STREAMOBJ
+{
+public:
+    char pad[0x1c];
+    READER *m_1c;
+};
+
+TOK::TOK() : m_000(0), m_004(0), m_008(0)
+{
+}
+
 TEXTFILE::TEXTFILE() : m_030(0), m_034(0), m_080(0)
 {
 }
@@ -78,9 +111,23 @@ int TEXTFILE::Load(const char *name)
     return 0;
 }
 
-int TEXTFILE::GetToken()
+void TEXTFILE::GetToken(void *buf, int size)
 {
-    return 0;
+    m_084.Init(0, 0);
+    if (m_030) {
+        if (m_030->m_1c)
+            m_030->m_1c->Read(buf, size, 1, &m_084);
+    }
+    else {
+        STREAMOBJ *p = m_034;
+        if (p->m_1c)
+            p->m_1c->Read(buf, size, 1, &m_084);
+    }
+}
+
+PARTICLE::PARTICLE(int a, int b)
+    : m_000(0), m_02c(a), m_030(b), m_068(1.0f), m_06c(0), m_070(0)
+{
 }
 
 void PARTICLE::ReleaseA()
@@ -105,7 +152,7 @@ int PARTICLE::FindKey(int value)
 
 int *PARTICLE::CopyTrack(int *dest, int index, int flags)
 {
-    TRACK **slot = &m_04c[index];
+    TRACK **slot = &m_048[index];
     TRACK *track = *slot;
     track->Copy(dest, flags);
     return dest;
@@ -113,7 +160,7 @@ int *PARTICLE::CopyTrack(int *dest, int index, int flags)
 
 int PARTICLE::GetTrackOffset(int index)
 {
-    TRACK **slot = &m_04c[index];
+    TRACK **slot = &m_048[index];
     return (int)*slot + 0x5c;
 }
 

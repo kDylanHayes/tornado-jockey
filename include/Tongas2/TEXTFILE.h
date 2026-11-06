@@ -11,25 +11,40 @@
 #include <string>
 #include <vector>
 
+class STREAMOBJ;
+
+class TOK
+{
+public:
+    TOK();
+    void Init(int a, int b);
+
+private:
+    int m_pad;
+    int m_000;
+    int m_004;
+    int m_008;
+};
+
 class TEXTFILE
 {
 public:
     TEXTFILE();
     int Load(const char *name);
-    int GetToken();
+    void GetToken(void *buf, int size);
 
 private:
     std::vector<int> m_000;
     std::vector<int> m_010;
     std::vector<int> m_020;
-    void *m_030;
-    void *m_034;
+    STREAMOBJ *m_030;
+    STREAMOBJ *m_034;
     char m_038[0x14];
     std::vector<int> m_04c;
     char m_05c[0x14];
     std::vector<std::string> m_070;
     void *m_080;
-    std::vector<int> m_084;
+    TOK m_084;
 };
 
 #endif
