@@ -87,8 +87,15 @@ with the next `free`/member cleanup sequence:
 | range | unit | symbol |
 |---|---|---|
 | `0x49ce1b-0x49ce2b` | `Tongas2/ACTOR` | `??1ACTOR@@UAE@XZ` |
+| `0x49a6f6-0x49a705` | `Tongas2/ACTOR` | `?SetAnimationFrame@ACTOR@@UAE?AVSRESULT@@PAUCMDCALL@@@Z` |
+| `0x669913-0x669922` | `Tongas2/ACTOR` | `??_C@_0P@JAHACPPH@TestOnActivate?$AA@` (data) |
+| `0x6bb290-0x6bb29f` | `Tongas2/ACTOR` | `?s_properties@ACTOR@@2PAUPROPENTRY@@A` (data; +0x790) |
 
-The destructor and `Tongas2/ACTOR`'s code therefore stay partial.
+The destructor, `SetAnimationFrame` and those two data items therefore stay
+partial. `SetAnimationFrame`'s run replaces the second `TOKENS::GetToken`
+sequence at `0x49a6f6`; the property-table run is the same 16-byte opaque
+pattern as the `PATH` and `EMITTER` tables at `0x6bc290`/`0x6bd290`, and the
+`TestOnActivate` string is cut after `TestOnActiv` at `0x669913`.
 
 ## CMDMGR
 

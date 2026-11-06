@@ -1,5 +1,6 @@
 #define LOG_VALUE
 #define ANG_INLINE_AXES
+#define TOKENS_INLINE_DTOR
 #include "Tongas2/ACTOR.h"
 #include "Tongas2/ACTORRESOURCES.h"
 #include "Tongas2/BONEDMODEL.h"
@@ -472,7 +473,8 @@ bool ACTOR::UpdateAttachTag()
         if (parent) {
             WTACTOR *copy = (WTACTOR *)g_pResources->GetResource(parent->m_copies[m_attachBoneResId]);
             if (copy) {
-                if (copy->GetManagerId() == g_pBONEDMODEL->m_id) {
+                int managerId = g_pBONEDMODEL->m_id;
+                if (copy->GetManagerId() == managerId) {
                     if (m_attachTag) {
                         delete m_attachTag;
                         m_attachTag = 0;
@@ -1284,9 +1286,11 @@ SRESULT ACTOR::SetLight(CMDCALL *call)
     TOKENS tokens;
     tokens.Split(STRING(call->tokens->GetToken(1)), "+");
     for (int i = 0; i < tokens.m_count; i++) {
+        int bit = 1;
         for (int j = 0; j < RESOURCES_MAX_GROUPS; j++) {
             if (!_strnicmp(g_pResources->m_groups[j].c_str(), tokens.GetToken(i), 0x200))
-                mask += 1 << j;
+                mask += bit;
+            bit <<= 1;
         }
     }
     SetLightMask(mask);
