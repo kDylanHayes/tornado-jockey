@@ -4,6 +4,7 @@
 #include "Tongas2/GUI.h"
 #include "Tongas2/CMDMGR.h"
 #include "Tongas2/CWSTRING.h"
+#include "Tongas2/CPRIMITIVE3.h"
 #include "Tongas2/KERNELCOMMANDS.h"
 #include "Tongas2/LOG.h"
 #include "Tongas2/RESOURCE.h"
@@ -169,6 +170,16 @@ void CMDBASE::GetShortStringAttribute(FIXEDSTRING<0x200> &out, const char *name,
     case PROP_FLOAT:
         SafeSprintf(out, "%f", PROP_VALUE(float, this, p, index));
         return;
+    case PROP_V2: {
+        V2 &v = PROP_VALUE(V2, this, p, index);
+        SafeSprintf(out, "(%.4f %.4f)", v.x, v.y);
+        return;
+    }
+    case PROP_V3: {
+        V3 &v = PROP_VALUE(V3, this, p, index);
+        SafeSprintf(out, "(%.4f %.4f %.4f)", v.x, v.y, v.z);
+        return;
+    }
     case PROP_CWSTRING:
         out = PROP_VALUE(CWSTRING, this, p, index).ToAnsi();
         return;
@@ -187,16 +198,6 @@ void CMDBASE::GetShortStringAttribute(FIXEDSTRING<0x200> &out, const char *name,
     case PROP_CHARS:
         out = PROP_VALUE(FIXEDSTRING<0x200>, this, p, index).m_buf;
         return;
-    case PROP_V2: {
-        V2 &v = PROP_VALUE(V2, this, p, index);
-        SafeSprintf(out, "(%.4f %.4f)", v.x, v.y);
-        return;
-    }
-    case PROP_V3: {
-        V3 &v = PROP_VALUE(V3, this, p, index);
-        SafeSprintf(out, "(%.4f %.4f %.4f)", v.x, v.y, v.z);
-        return;
-    }
     case PROP_ANG: {
         ANG &a = PROP_VALUE(ANG, this, p, index);
         SafeSprintf(out, "(%.4f %.4f %.4f)", a.GetEulerX(), a.GetEulerY(), a.GetEulerZ());
@@ -472,6 +473,12 @@ void CMDBASE::ResizeArrays()
             case PROP_FLOAT:
                 RESIZE_PROP(float);
                 break;
+            case PROP_V2:
+                RESIZE_PROP(PRIMV2);
+                break;
+            case PROP_V3:
+                RESIZE_PROP(PRIMV3);
+                break;
             case PROP_CWSTRING:
                 RESIZE_PROP(CWSTRING);
                 break;
@@ -489,12 +496,6 @@ void CMDBASE::ResizeArrays()
                 break;
             case PROP_CHARS:
                 RESIZE_PROP(FIXEDSTRING<0x200>);
-                break;
-            case PROP_V2:
-                RESIZE_PROP(V2);
-                break;
-            case PROP_V3:
-                RESIZE_PROP(V3);
                 break;
             case PROP_ANG:
                 RESIZE_PROP(ANG);
@@ -637,19 +638,6 @@ SRESULT CMDBASE::SetAttribute(CMDCALL *call)
             } else
                 PROP_VALUE(FIXEDSTRING<0x200>, this, p, index) = token;
             break;
-        case PROP_V2:
-            if (p->setter) {
-                V2 v(0.0f, 0.0f);
-                sscanf(token, "%f %f", &v.x, &v.y);
-                if ((unsigned)p->count > 1)
-                    (this->*PROP_SET_AT(V2, p))((int)index, v);
-                else
-                    (this->*PROP_SET(V2, p))(v);
-            } else {
-                V2 &v = PROP_VALUE(V2, this, p, index);
-                sscanf(token, "%f %f", &v.x, &v.y);
-            }
-            break;
         case PROP_V3:
             if (p->setter) {
                 V3 v(0.0f, 0.0f, 0.0f);
@@ -661,6 +649,19 @@ SRESULT CMDBASE::SetAttribute(CMDCALL *call)
             } else {
                 V3 &v = PROP_VALUE(V3, this, p, index);
                 sscanf(token, "%f %f %f", &v.x, &v.y, &v.z);
+            }
+            break;
+        case PROP_V2:
+            if (p->setter) {
+                V2 v(0.0f, 0.0f);
+                sscanf(token, "%f %f", &v.x, &v.y);
+                if ((unsigned)p->count > 1)
+                    (this->*PROP_SET_AT(V2, p))((int)index, v);
+                else
+                    (this->*PROP_SET(V2, p))(v);
+            } else {
+                V2 &v = PROP_VALUE(V2, this, p, index);
+                sscanf(token, "%f %f", &v.x, &v.y);
             }
             break;
         case PROP_ANG: {
