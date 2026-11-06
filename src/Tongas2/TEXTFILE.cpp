@@ -67,6 +67,10 @@ public:
     void PushBack(const VI &value);
 };
 
+TEXTFILE::TEXTFILE() : m_030(0), m_034(0), m_080(0)
+{
+}
+
 int TEXTFILE::Load(const char *name)
 {
     (void)name;
@@ -74,11 +78,6 @@ int TEXTFILE::Load(const char *name)
 }
 
 int TEXTFILE::GetToken()
-{
-    return 0;
-}
-
-int TEXTFILE::GetLine()
 {
     return 0;
 }
