@@ -121,6 +121,20 @@ BONEDMODELEVENT::BONEDMODELEVENT(BONEDMODELDX8SDRESOURCE *resource, int tag)
     m_10 = -1;
 }
 
+
+void __fastcall BONEDMODELDX8_MASTERDESTROY(BONEDMODELMASTER *self)
+{
+    if (self->m_artPath.m_str) {
+        free(self->m_artPath.m_str);
+        self->m_artPath.m_str = 0;
+    }
+    if (self->m_file.m_str) {
+        free(self->m_file.m_str);
+        self->m_file.m_str = 0;
+    }
+    self->RESOURCEMASTER::~RESOURCEMASTER();
+}
+
 BONEDMODELDX8SDMASTER::BONEDMODELDX8SDMASTER(RESOURCEMANAGER *manager, const char *name)
     : BONEDMODELMASTER(manager, name)
 {
