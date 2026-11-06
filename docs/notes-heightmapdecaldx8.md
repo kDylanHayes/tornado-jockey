@@ -9,13 +9,13 @@ classes' vtables are at `0x675be8` and `0x675a70`; its manager's is
 
 ## What matches
 
-36 of the 41 delinked functions are exact. The registration, class id,
+37 of the 41 delinked functions are exact. The registration, class id,
 command, factory and setter functions, both deleting destructors, the
 resource destructor, `Start`/`Stop`, `SetLayer`, `SetFrame`, `Virtual30`,
-`FindHeightmap`, the master's `Prepare` and `UpdateCopies`, the manager's
-`GetTypeCode`, `CreateMaster`, `CreateCopy` and `CreateHEIGHTMAPDECALDX8`,
-`BOXCORNERS::Merge(const V3 &)`, `MATRIX::SetRotationZ`, `SetHmapFromActor`
-and `Update` are matched.
+`FindHeightmap`, the master's `Prepare`, the manager's `GetTypeCode`,
+`CreateMaster`, `CreateCopy` and `CreateHEIGHTMAPDECALDX8`,
+`BOXCORNERS::Merge(const V3 &)`, `MATRIX::SetRotationZ`, `SetHmapFromActor`,
+`Update` and `UpdateCopies` are matched.
 
 `HEIGHTMAPTEMP` needed its real fields and a virtual destructor for the
 resource constructor's stack frame to line up. The unit's
@@ -32,7 +32,7 @@ constant store after the cosine. The transcription also names the
 ## What does not match
 
 - `HEIGHTMAPDECALDX8RESOURCE::UpdateVertices` (`0x4ec8c0`, 1431 bytes) is
-  52.1%. It now does the real work: it puts the copy's world position into
+  52.4%. It now does the real work: it puts the copy's world position into
   the heightmap's space, builds the rotated grid axes from the object's
   euler X angle (`SetRotationZ`), samples `GetGroundPoint`/`GetNormal` for
   every grid point, writes the vertex and normal arrays, and rebuilds the
@@ -52,8 +52,6 @@ constant store after the cosine. The transcription also names the
   index-fill loop still uses a different pointer/offset shape from the
   exe, and the vertex lock branches differ.
 - The resource constructor is 99.0% (the two initializations of the color
-  member store their three dwords in the opposite order), and
-  `HEIGHTMAPDECALDX8MASTER::UpdateCopies` is 99.4% (`xor eax,eax` /
-  `mov eax,1` versus the byte forms).
+  member store their three dwords in the opposite order).
 
 No image watermark affects the unit. It is left without `"complete": true`.
