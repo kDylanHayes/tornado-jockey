@@ -2861,6 +2861,54 @@
         "??0HEIGHTMAPTEMP@@QAE@XZ": "_heightmaptemp_ctor",
         "??_GHEIGHTMAPTEMP@@UAEPAXI@Z": "_helper_004ebbb0"
       }
+    },
+    {
+      "name": "Tongas2/HEIGHTMAPDECALDX8",
+      "ranges": [
+        "0x004ebbd0-0x004ed97f"
+      ],
+      "target": "build/target/Tongas2/HEIGHTMAPDECALDX8.obj",
+      "source": "src/Tongas2/HEIGHTMAPDECALDX8.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/RENDERTEXTURE",
+      "ranges": [
+        "0x004ed980-0x004ee0af"
+      ],
+      "target": "build/target/Tongas2/RENDERTEXTURE.obj",
+      "source": "src/Tongas2/RENDERTEXTURE.cpp",
+      "category": "engine",
+      "symbol_mappings": {
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z"
+      }
+    },
+    {
+      "name": "Tongas2/DXINPUT",
+      "ranges": [
+        "0x004ee0b0-0x004ef08f"
+      ],
+      "target": "build/target/Tongas2/DXINPUT.obj",
+      "source": "src/Tongas2/DXINPUT.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/SIMPLEMODELDX8",
+      "ranges": [
+        "0x004ef090-0x004eff6f"
+      ],
+      "target": "build/target/Tongas2/SIMPLEMODELDX8.obj",
+      "source": "src/Tongas2/SIMPLEMODELDX8.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/LIGHTDX8",
+      "ranges": [
+        "0x004eff70-0x004f241f"
+      ],
+      "target": "build/target/Tongas2/LIGHTDX8.obj",
+      "source": "src/Tongas2/LIGHTDX8.cpp",
+      "category": "engine"
     }
   ]
 }
