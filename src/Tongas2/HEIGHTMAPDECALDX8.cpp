@@ -432,12 +432,119 @@ __declspec(noinline) void HEIGHTMAPDECALDX8RESOURCE::CreateMesh()
 
 __declspec(noinline) void HEIGHTMAPDECALDX8RESOURCE::UpdateVertices()
 {
-    __asm { nop }
+    if (m_48c)
+        return;
+    m_4e0 = false;
+    m_4e1 = false;
+    HEIGHTMAPDX8 *heightmap = FindHeightmap();
+    if (!heightmap)
+        return;
+    HEIGHTMAPDX8MASTER *master = heightmap->Master();
+
+    V3 origin = heightmap->WorldToLocal(GetPosition());
+    origin.z = 0.0f;
+    V3 scale = GetScale();
+    float aspect = master->m_aspect * master->m_aspectRatioModifier;
+    float stepX = scale.x / (float)master->m_tilesX;
+    float stepY = scale.y * (float)master->m_tilesX / (float)master->m_tilesY;
+
+    MATRIX rotation;
+    rotation.SetRotationZ(GetAngles().GetEuler().x);
+    V3 xAxis = V3(stepX, 0.0f, 0.0f) * rotation;
+    V3 yAxis = V3(0.0f, stepY * aspect, 0.0f) * rotation;
+    V3 base = origin - (xAxis + yAxis) * 0.5f;
+    float zRange = master->m_maxHeight * 100.0f;
+    float minZ = -zRange;
+    float maxZ = zRange;
+
+    for (int y = 0; y < m_408; y++) {
+        float v = (m_408 > 1) ? (float)y / (float)(m_408 - 1) : 0.0f;
+        for (int x = 0; x < m_404; x++) {
+            float u = (m_404 > 1) ? (float)x / (float)(m_404 - 1) : 0.0f;
+            V3 point = base + xAxis * u + yAxis * v;
+            point.z += zRange;
+            point = heightmap->GetGroundPoint(point);
+            V3 normal = heightmap->GetNormal(point);
+            int index = m_404 * y + x;
+            m_vertices[index] = point;
+            m_normals[index] = normal;
+            if (point.z < minZ)
+                minZ = point.z;
+            if (point.z > maxZ)
+                maxZ = point.z;
+        }
+    }
+    m_box.Set(m_vertices[0], m_vertices[0]);
+    m_box.Merge(m_vertices[m_404 - 1]);
+    m_box.Merge(m_vertices[(m_408 - 1) * m_404]);
+    m_box.Merge(m_vertices[m_404 * m_408 - 1]);
+    m_box.ExtendHeight(minZ);
+    m_box.ExtendHeight(maxZ);
+    m_48c = true;
 }
 
 __declspec(noinline) void HEIGHTMAPDECALDX8RESOURCE::Render()
 {
-    __asm { nop }
+    if (m_4e0)
+        return;
+    HEIGHTMAPDECALDX8MASTER *master = (HEIGHTMAPDECALDX8MASTER *)m_master;
+    HEIGHTMAPDX8 *heightmap = FindHeightmap();
+    if (!heightmap)
+        return;
+    D3DXMATRIX matrix = m_matrix;
+    m_mesh->SetMatrix(&matrix);
+    MATRIX heightmapMatrix = heightmap->GetAngles().GetMatrix();
+    if (!m_4e1) {
+        char *out = (char *)m_mesh->LockVertices(0, m_40c);
+        if (!out) {
+            if (g_pLog)
+                g_pLog->Error("could not lock vertex buffer! %s", master->m_name.c_str());
+            return;
+        }
+        for (int y = 0; y < m_408; y++) {
+            for (int x = 0; x < m_404; x++) {
+                int index = m_404 * y + x;
+                V3 &position = m_vertices[index];
+                V3 &normal = m_normals[index];
+                if (!master->m_userFolder && g_pResources->IsHighDetail() &&
+                    !master->m_correctSizeInWidescreen) {
+                    *(unsigned int *)(out + 0x18) =
+                        (((*(int *)&m_heightmap & 0xff) | m_layer << 8) << 8 |
+                         (*(int *)((char *)&m_heightmap + 4) & 0xff)) << 8 |
+                        (*(int *)((char *)&m_heightmap + 8) & 0xff);
+                    *(V3 *)(out + 0xc) =
+                        V3(normal.x * m_scale.x, normal.y * m_scale.y, normal.z * m_scale.z);
+                    *(V3 *)out = position;
+                    out += 0x24;
+                } else {
+                    V3 lightNormal(heightmapMatrix._11 * normal.x + heightmapMatrix._21 * normal.y +
+                                       heightmapMatrix._31 * normal.z + heightmapMatrix._41,
+                                   heightmapMatrix._12 * normal.x + heightmapMatrix._22 * normal.y +
+                                       heightmapMatrix._32 * normal.z + heightmapMatrix._42,
+                                   heightmapMatrix._13 * normal.x + heightmapMatrix._23 * normal.y +
+                                       heightmapMatrix._33 * normal.z + heightmapMatrix._43);
+                    LIGHTRGB lit;
+                    if (!master->m_correctSizeInWidescreen) {
+                        LIGHTRGB ambient = { 0xff, 0xff, 0xff };
+                        ((LIGHTMANAGER *)g_pLIGHT)
+                            ->LightVertex(ambient, *(V3I *)&m_heightmap, lightNormal, m_1ac, lit);
+                    } else {
+                        lit.r = 0xff;
+                        lit.g = 0xff;
+                        lit.b = 0xff;
+                    }
+                    *(unsigned int *)(out + 0xc) =
+                        (((lit.r & 0xff) | m_layer << 8) << 8 | (lit.g & 0xff)) << 8 |
+                        (lit.b & 0xff);
+                    *(V3 *)out = position;
+                    out += 0x18;
+                }
+            }
+        }
+        m_mesh->UnlockVertices();
+    }
+    m_4e1 = true;
+    m_4e0 = true;
 }
 
 void HEIGHTMAPDECALDX8RESOURCE::SetLayer(int layer)
