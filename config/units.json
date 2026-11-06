@@ -3453,6 +3453,42 @@
       "target": "build/target/Tongas2/TEXTURERESIZER.obj",
       "source": "src/Tongas2/TEXTURERESIZER.cpp",
       "category": "engine"
+    },
+    {
+      "name": "Tongas2/VERTEXMODELDX8SD",
+      "ranges": [
+        "0x00535fd0-0x005366bf"
+      ],
+      "target": "build/target/Tongas2/VERTEXMODELDX8SD.obj",
+      "source": "src/Tongas2/VERTEXMODELDX8SD.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/COLLISIONSCENEDX8SD",
+      "ranges": [
+        "0x005366c0-0x00536cbf"
+      ],
+      "target": "build/target/Tongas2/COLLISIONSCENEDX8SD.obj",
+      "source": "src/Tongas2/COLLISIONSCENEDX8SD.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/SCENEMODELDX8SD",
+      "ranges": [
+        "0x00536cc0-0x00538cef"
+      ],
+      "target": "build/target/Tongas2/SCENEMODELDX8SD.obj",
+      "source": "src/Tongas2/SCENEMODELDX8SD.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/DXVERSION",
+      "ranges": [
+        "0x00538cf0-0x0053974f"
+      ],
+      "target": "build/target/Tongas2/DXVERSION.obj",
+      "source": "src/Tongas2/DXVERSION.cpp",
+      "category": "engine"
     }
   ]
 }
