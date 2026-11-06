@@ -3030,6 +3030,24 @@
       "target": "build/target/Tongas2/BONEDMODELDX8SD.obj",
       "source": "src/Tongas2/BONEDMODELDX8SD.cpp",
       "category": "engine"
+    },
+    {
+      "name": "Tongas2/MAPLOADER",
+      "ranges": [
+        "0x004f8350-0x004f927f"
+      ],
+      "target": "build/target/Tongas2/MAPLOADER.obj",
+      "source": "src/Tongas2/MAPLOADER.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/INTRO",
+      "ranges": [
+        "0x004f9280-0x004fa5af"
+      ],
+      "target": "build/target/Tongas2/INTRO.obj",
+      "source": "src/Tongas2/INTRO.cpp",
+      "category": "engine"
     }
   ]
 }
