@@ -471,3 +471,8 @@ V3 *HEIGHTMAPTEMP::GetOne()
 {
     return &g_one;
 }
+
+void MESHDX8SDMASTER::ForwardTemp()
+{
+    ((HEIGHTMAPTEMP *)((char *)this + 0x70))->Touch();
+}

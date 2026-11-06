@@ -47,6 +47,7 @@ public:
 
     void Update(bool force);
     void Stop();
+    void ForwardTemp();
 
     MESHDX8SDRESOURCE *m_first;
     MESHDX8SDRESOURCE *m_last;

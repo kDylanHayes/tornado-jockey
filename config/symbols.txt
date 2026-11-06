@@ -7716,3 +7716,4 @@
 0x004f1aa0 ?Update@MESHDX8SDMANAGER@@UAEXXZ function 0x6c
 0x004f1720 ?GetOne@HEIGHTMAPTEMP@@QAEPAUV3@@XZ function 0x6
 0x006bbe4c ?g_one@@3UV3@@A data 0xc
+0x004f1a10 ?ForwardTemp@MESHDX8SDMASTER@@QAEXXZ function 0x8

@@ -3111,7 +3111,8 @@
       "category": "engine",
       "symbol_mappings": {
         "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?Empty@MESHDX8SDSETTER@@QAEXXZ",
-        "FUN_004e7120": "?GetMatrix@CAMERAMATRIX@@QAEPAXXZ"
+        "FUN_004e7120": "?GetMatrix@CAMERAMATRIX@@QAEPAXXZ",
+        "FUN_004eb9b0": "?Touch@HEIGHTMAPTEMP@@QAEXXZ"
       }
     },
     {
