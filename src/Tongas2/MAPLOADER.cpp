@@ -130,7 +130,8 @@ void MAPLOADER::LoadMap(const char *name)
     }
 
     void **objBegin = ((MAPDATA *)m_20)->m_objectsBegin;
-    for (int i = 0; objBegin != 0 && i < ((MAPDATA *)m_20)->m_objectsEnd - objBegin; i++) {
+    void **objEnd = ((MAPDATA *)m_20)->m_objectsEnd;
+    for (int i = 0; objBegin != 0 && i < objEnd - objBegin; i++) {
         MAPOBJECT *object = (MAPOBJECT *)((MAPDATA *)m_20)->GetObject(i);
         std::string objectType = UpperString(object->m_type);
         std::string objectName = UpperString(object->m_name);
@@ -157,15 +158,13 @@ void MAPLOADER::LoadMap(const char *name)
             ((CAMERAOBJ *)m_24)->m_1b4 = *(V3 *)((char *)object + 0x38);
         } else if (objectType == "SKYBOX") {
             std::string full = m_20c + objectName;
-            char suffix[12];
-            suffix[0] = 0;
-            if (FindMapResource(&full, suffix))
+            char suffix = 0;
+            if (FindMapResource(&full, &suffix))
                 m_18 = ((MAPMANAGER *)m_04)->Load(name, full, std::string(""), 1, 1, 0);
         } else if (objectType == "GLOWSKYBOX") {
             std::string full = m_20c + objectName;
-            char suffix[12];
-            suffix[0] = 0;
-            if (FindMapResource(&full, suffix))
+            char suffix = 0;
+            if (FindMapResource(&full, &suffix))
                 m_1c = ((MAPMANAGER *)m_04)->Load(name, full, std::string(""), 1, 1, 0);
         }
     }

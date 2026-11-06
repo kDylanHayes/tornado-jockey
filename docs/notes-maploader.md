@@ -59,20 +59,22 @@ their target `FUN_` symbols through `config/units.json`.
   accounts for the six missing stores, but the remaining difference is the
   V3 stack-slot assignment: the target puts the uninitialized `point` at
   the lowest slot (`-144`) and the `m_1a8`/color temporary at `-132`,
-  while this compiler does the reverse. The target's SEH prologue also
-  schedules `mov eax, fs:[0]` before `push -1`; both look like a compiler
-  build/scheduling difference rather than source.
-- `LoadMap`: **93.71%** fuzzy (2864 bytes; base 2901). The by-value
+  while this compiler does the reverse. Initializing `point` (e.g.
+  `V3 point(0,0,0)`) reproduces the target slot order but adds three stores
+  and drops the score, so the uninitialized read is kept. The target's SEH
+  prologue also schedules `mov eax, fs:[0]` before `push -1`; both look
+  like compiler build/scheduling differences rather than source.
+- `LoadMap`: **93.67%** fuzzy (2864 bytes; base 2892). The by-value
   `MAPMANAGER::Load` and `MAPDECOR::SetName` argument shapes are recovered
   (`0x48` and `0x40` bytes), as is the `(manager, type)` decoration
-  constructor. The object loop caches `m_objectsBegin` so the compiler
-  keeps its `!= 0` test at the top and emits the function epilogue at the
-  end, matching the target's block order; the map pointer is read from
-  `m_20` directly. Frame is `0x118` vs the target's `0x10c`; using a scalar
-  suffix drops it to `0x110` but loses fuzzy alignment, so the 12-byte
-  suffix buffers are kept. The rest is register/stack allocation.
+  constructor. The object loop caches `m_objectsBegin`/`m_objectsEnd` so
+  the compiler keeps the `!= 0` test at the top and emits the function
+  epilogue at the end, matching the target's block order; the map pointer
+  is read from `m_20` directly. Using scalar suffix bytes brings the frame
+  from `0x118` down to `0x110` vs the target's `0x10c`; the last 4 bytes
+  come from the compiler's EH/temporary slot allocation.
 - `VectorTooLong`: 100%.
 
-Unit: 2.73% exact, 93.49% fuzzy, 106/3878 bytes, 1/3 functions.
+Unit: 2.73% exact, 93.47% fuzzy, 106/3878 bytes, 1/3 functions.
 
 No image watermark affects the unit. It is left without `"complete": true`.
