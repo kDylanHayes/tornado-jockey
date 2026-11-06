@@ -43,7 +43,9 @@ Two more byte-checked runs came out of the actors/gameplay pass
 Both start on a 16-byte boundary and read as `e2 a8 e7 d2 ...`/`f1 b8 51 c4
 ...` in the raw file, so the affected functions, and with them those two
 units, stay partial. `?SetWaitOnFirst` is otherwise a 12-byte body that does
-match; only its trailing `ret` immediate is overwritten.
+match; only its trailing `ret` immediate is overwritten. The same run covers
+all of `?SetUseSpawnerAngleScale`, whose image bytes decode as junk, so no
+source can match that setter either.
 
 The `.data` command/property tables of `Tongas2/PATH` and `Tongas2/EMITTER`
 are hit as well, which is what keeps their data percentage below 100:
