@@ -161,9 +161,14 @@ void SHADERMASTER::SetEmissiveColor(const V3I &color)
 
 void SHADERMASTER::SetSpecularPowerValue(const float &power)
 {
-    if (m_users > 0 && m_specularPower != power)
-        m_dirty |= SHADER_DIRTY_MATERIAL;
-    m_specularPower = power;
+    if (m_users > 0) {
+        if (m_specularPower != power) {
+            m_dirty |= SHADER_DIRTY_MATERIAL;
+            m_specularPower = power;
+        } else
+            m_specularPower = power;
+    } else
+        m_specularPower = power;
 }
 
 void SHADERMASTER::SetAllowResize(const bool &allow)
