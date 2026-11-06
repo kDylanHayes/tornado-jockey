@@ -263,6 +263,10 @@ bool CONSOLE::OnKeyDown(unsigned int vkey)
         break;
     case VK_LEFT:
     case VK_RIGHT:
+        // Keep this empty body apart from the default one: VC7.1 then builds
+        // the exe's six-entry jump table instead of sharing the default body.
+        do {
+        } while (0);
         break;
     case VK_UP:
         if (m_browse == -1) {
@@ -280,7 +284,7 @@ bool CONSOLE::OnKeyDown(unsigned int vkey)
             m_input[strlen(m_input) - 1] = 0;
         break;
     default:
-        return true;
+        break;
     }
     return true;
 }
