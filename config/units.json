@@ -3430,7 +3430,23 @@
       ],
       "target": "build/target/Tongas2/TEXTFILE.obj",
       "source": "src/Tongas2/TEXTFILE.cpp",
-      "category": "engine"
+      "category": "engine",
+      "symbol_mappings": {
+        "FUN_00543cc0": "?ReleaseA@REFOBJ@@QAEXXZ",
+        "FUN_00543cd0": "?ReleaseB@REFOBJ@@QAEXXZ",
+        "FUN_005105d0": "??$copy@PAHPAH@std@@YAPAHPAH00@Z",
+        "FUN_00517d30": "??$_Ucopy@PAH@?$vector@HV?$allocator@H@std@@@std@@IAEPAHPAH00@Z",
+        "FUN_00517d60": "?_Ufill@?$vector@HV?$allocator@H@std@@@std@@IAEPAHPAHIABH@Z",
+        "FUN_00537630": "??$fill@PAHH@std@@YAXPAH0ABH@Z",
+        "FUN_00537680": "??$_Uninit_fill_n@PAV?$vector@HV?$allocator@H@std@@@std@@IV12@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@std@@YAXPAV?$vector@HV?$allocator@H@std@@@0@IABV10@AAV?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@0@U_Nonscalar_ptr_iterator_tag@0@@Z",
+        "FUN_00511c30": "?_Insert_n@?$vector@V?$vector@HV?$allocator@H@std@@@std@@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@std@@IAEXViterator@12@IABV?$vector@HV?$allocator@H@std@@@2@@Z",
+        "FUN_0052faa0": "??$copy_backward@PAHPAH@std@@YAPAHPAH00@Z",
+        "FUN_0050b010": "??$_Destroy_range@V?$vector@HV?$allocator@H@std@@@std@@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@std@@YAXPAV?$vector@HV?$allocator@H@std@@@0@0AAV?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@0@U_Nonscalar_ptr_iterator_tag@0@@Z",
+        "FUN_0050cf00": "?_Destroy@?$vector@V?$vector@HV?$allocator@H@std@@@std@@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@std@@IAEXPAV?$vector@HV?$allocator@H@std@@@2@0@Z",
+        "FUN_0050b230": "?Init@TOK@@QAEXHH@Z",
+        "FUN_00518b10": "?Read@READER@@QAEXPAXHH0@Z",
+        "FUN_00518c50": "?Read@READER@@QAEXPAXHH0@Z"
+      }
     },
     {
       "name": "Tongas2/ANIMATEDGEOMETRY",
