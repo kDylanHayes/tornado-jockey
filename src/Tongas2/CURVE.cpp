@@ -85,10 +85,10 @@ void CURVEMASTER::SetShaderHandle(const RESHANDLE &handle)
         bool loaded = false;
         if (m_shaderLoaded)
             loaded = true;
-        if (current.IsValid())
+        if (m_shaderHandle.IsValid())
             ReleaseShader();
         current = handle;
-        if (loaded && current.IsValid())
+        if (loaded && m_shaderHandle.IsValid())
             LoadShader();
     }
 }
