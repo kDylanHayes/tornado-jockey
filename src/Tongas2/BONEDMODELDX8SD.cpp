@@ -500,7 +500,7 @@ void BONEDMODELDX8SDRESOURCE::LoadTags()
 {
     std::string path(((BONEDMODELMASTER *)m_master)->m_artPath.c_str());
     size_t dot = path.find_last_of(".");
-    std::string file = std::string(g_basePath) + path.substr(0, dot + 1) + "tag";
+    std::string file = g_basePath + path.substr(0, dot + 1) + "tag";
     FILE *handle = fopen(file.c_str(), "rt");
     if (!handle)
         return;
@@ -898,7 +898,8 @@ public:
 void BONEDMODELDX8MATH::Basis(const V3 *a, const V3 *b)
 {
     MATRIX *out = (MATRIX *)this;
-    V3 n = *b * kNegativeOne;
+    V3 n;
+    n = *b * kNegativeOne;
     n.Normalize();
     V3 u;
     u.x = n.y * a->z - n.z * a->y;
