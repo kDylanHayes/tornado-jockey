@@ -73,6 +73,18 @@ private:
     std::vector<int> m_0a4;
 };
 
+class ANIMTRACK
+{
+public:
+    void GetPoint(V3 *out, unsigned i1, unsigned i2, float t);
+
+private:
+    char m_000[0x10];
+    V3 m_010;
+    char m_01c[0x88];
+    std::vector<V3> m_0a4;
+};
+
 class VECINT : public std::vector<int>
 {
 public:
@@ -197,6 +209,22 @@ int PARTICLE::GetTrackOffset(int index)
 {
     TRACK **slot = &m_048[index];
     return (int)*slot + 0x5c;
+}
+
+void ANIMTRACK::GetPoint(V3 *out, unsigned i1, unsigned i2, float t)
+{
+    if (m_0a4.size() == 0) {
+        *out = m_010;
+        return;
+    }
+    if (i1 >= m_0a4.size())
+        i1 = m_0a4.size() - 1;
+    if (i2 >= m_0a4.size())
+        i2 = m_0a4.size() - 1;
+    m_010.x = (m_0a4[i2].x - m_0a4[i1].x) * t + m_0a4[i1].x;
+    m_010.y = (m_0a4[i2].y - m_0a4[i1].y) * t + m_0a4[i1].y;
+    m_010.z = (m_0a4[i2].z - m_0a4[i1].z) * t + m_0a4[i1].z;
+    *out = m_010;
 }
 
 void __stdcall DestroyIntVector(VI *v)

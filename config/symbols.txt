@@ -7623,6 +7623,7 @@
 0x00528b00 ??0TEXTFILE@@QAE@XZ function 0x74
 0x0052a120 ?ReleaseA@PARTICLE@@QAEXXZ function 0x8
 0x0052a130 ?ReleaseB@PARTICLE@@QAEXXZ function 0x8
+0x0052a8d0 ?GetPoint@ANIMTRACK@@QAEXPAUV3@@IIM@Z function 0x144
 0x0052aa20 ?FindKey@PARTICLE@@QAEHH@Z function 0x39
 0x0052ade0 ?DestroyIntVector@@YGXPAV?$vector@HV?$allocator@H@std@@@std@@@Z function 0x2e
 0x0052ae10 ?DestroyMembers@PARTICLEB@@QAEXXZ function 0x9a
