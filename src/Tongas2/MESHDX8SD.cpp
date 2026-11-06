@@ -8,6 +8,14 @@ struct MESHUNKNOWN
     virtual void __stdcall Release();
 };
 
+class CAMERAMATRIX
+{
+public:
+    void *GetMatrix();
+};
+
+extern int g_numTriangles;
+
 RESOURCEMANAGER *CreateMESHDX8SD()
 {
     return new MESHDX8SDMANAGER;
@@ -73,6 +81,61 @@ void MESHDX8SDMASTER::UpdateCopies()
         return;
     }
     Update(false);
+}
+
+void MESHDX8SDMASTER::Render()
+{
+    if (!m_bc || !m_c0 || !m_b9 || m_a4 < 1 || m_a8 < 1)
+        return;
+
+    g_pRenderer->SetTongaShader(m_shader);
+
+    int matrix[16];
+    int *source = (int *)((CAMERAMATRIX *)*(void **)((char *)g_pCamera + 0xda4))->GetMatrix();
+    memcpy(matrix, source, sizeof(matrix));
+    g_pRenderer->GetDevice()->SetTransform(D3DTS_VIEW, (const D3DMATRIX *)matrix);
+
+    RESOURCE *resource = g_pResources->GetResource(m_shader);
+    bool fog = false;
+    if (*(char *)((char *)g_pRenderer + 0x303e) && resource && resource->m_master) {
+        int shaderType = *(int *)((char *)resource->m_master + 0x70);
+        if (shaderType == 2) {
+            V3I color(0xff, 0xff, 0xff);
+            g_pRenderer->SetFogColor(&color);
+            fog = true;
+        } else if (shaderType == 3 || shaderType == 4) {
+            V3I color(0, 0, 0);
+            g_pRenderer->SetFogColor(&color);
+            fog = true;
+        }
+    }
+
+    IDirect3DDevice8 *device = g_pRenderer->GetDevice();
+    device->SetVertexShader(0x142);
+    device = g_pRenderer->GetDevice();
+    device->SetStreamSource(0, (IDirect3DVertexBuffer8 *)m_c0, 0x18);
+    device = g_pRenderer->GetDevice();
+    device->SetIndices((IDirect3DIndexBuffer8 *)m_bc, 0);
+    device = g_pRenderer->GetDevice();
+    device->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, m_a4, 0, m_a8);
+    g_numTriangles += m_a8;
+
+    if (resource && resource->m_master && *(char *)((char *)resource->m_master + 0x79)) {
+        if (!*(char *)((char *)g_pRenderer + 0x3016)) {
+            device = g_pRenderer->GetDevice();
+            device->SetRenderState(D3DRS_FILLMODE, 2);
+        }
+        device = g_pRenderer->GetDevice();
+        device->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, m_a4, 0, m_a8);
+        if (!*(char *)((char *)g_pRenderer + 0x3016)) {
+            device = g_pRenderer->GetDevice();
+            device->SetRenderState(D3DRS_FILLMODE, 3);
+        }
+        g_numTriangles += m_a8;
+    }
+
+    if (fog)
+        g_pRenderer->SetFogColor(0);
 }
 
 void MESHDX8SDMASTER::Stop()

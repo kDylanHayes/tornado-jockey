@@ -3109,7 +3109,8 @@
       "source": "src/Tongas2/MESHDX8SD.cpp",
       "category": "engine",
       "symbol_mappings": {
-        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?Empty@MESHDX8SDSETTER@@QAEXXZ"
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?Empty@MESHDX8SDSETTER@@QAEXXZ",
+        "FUN_004e7120": "?GetMatrix@CAMERAMATRIX@@QAEPAXXZ"
       }
     },
     {

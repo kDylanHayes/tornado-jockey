@@ -43,6 +43,7 @@ public:
     virtual void UpdateCopies();
     virtual void ReleaseVertexBuffer();
     virtual void LockVertexBuffer();
+    virtual void Render();
 
     void Update(bool force);
     void Stop();

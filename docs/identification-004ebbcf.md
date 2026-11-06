@@ -126,17 +126,12 @@ dot-product's x term). `0x004f00c0` in the base `LIGHTMANAGER` vtable has
 seventeen bytes of non-code filler in the executable and is left unnamed;
 `0x004f0940` is a 42-byte STL copy helper that did not get its own symbol.
 
-MESHDX8SD is now at 12 exact functions out of the 14 it has named so far.
+MESHDX8SD is now at 15 exact functions out of the 18 it has named so far.
 `GetTypeCode`, `CreateMaster`, `CreateCopy`, the manager factory, the
-resource and master destructors, the resource and master deleting
-destructors, the vertex-buffer lock and release, and `UpdateCopies` are
-exact. The master ctor/dtor became exact once the class inherited the real
-`HEIGHTMAPTEMP` subobject at offset `0x70` (size `0x5c`) and its
-`SetEnabled`/destructor were named. The remaining named functions are the
-resource constructor (85.86%, store scheduling) and `Reset` (66.96%, store
-scheduling). The master's `Stop` is written and at 83.53% (index-buffer
-rebuild and vertex-buffer relock); its `Update` at `0x4f1e10` and the large
-renderer at `0x4f1730` are still unimplemented. The two small hooks at
-`0x4f23a0`/`0x4f23c0` are matched as the screen-decal resource's
-enable/disable pair by mapping their folded empty base call to a local
-helper; they belong to the class whose vtable starts at `0x676ee8`.
+master ctor/dtor, the resource dtor, both deleting destructors, the
+vertex-buffer lock/release, `UpdateCopies`, the screen-decal enable hooks
+and the 624-byte master renderer (`0x4f1730`) are exact. The remaining named
+functions are the resource constructor (85.86%, store scheduling), `Stop`
+(83.53%, index-buffer rebuild and register allocation) and `Reset` (66.96%,
+store scheduling). The master's `Update` at `0x4f1e10` is still
+unimplemented.
