@@ -100,28 +100,41 @@ void BOXCORNERS::Merge(const V3 &point)
 }
 
 // The matrix of the rotation by degrees about the Z axis.
-void MATRIX::SetRotationZ(float degrees)
+extern "C" float xr_radians;
+
+__declspec(naked) void MATRIX::SetRotationZ(float degrees)
 {
-    _13 = 0.0f;
-    _14 = 0.0f;
-    float rad = -degrees;
-    rad *= 0.017453292f;
-    float c = (float)cos(rad);
-    _23 = 0.0f;
-    _24 = 0.0f;
-    _31 = 0.0f;
-    _32 = 0.0f;
-    _33 = 1.0f;
-    _34 = 0.0f;
-    _41 = 0.0f;
-    _42 = 0.0f;
-    _43 = 0.0f;
-    _44 = 1.0f;
-    float s = (float)sin(rad);
-    _11 = c;
-    _12 = -s;
-    _21 = s;
-    _22 = c;
+    __asm {
+        fld dword ptr [esp + 4]
+        xor eax, eax
+        fchs
+        mov edx, 0x3f800000
+        fmul dword ptr [xr_radians]
+        mov dword ptr [ecx + 8], eax
+        mov dword ptr [ecx + 0xc], eax
+        fst dword ptr [esp + 4]
+        fcos
+        mov dword ptr [ecx + 0x18], eax
+        mov dword ptr [ecx + 0x1c], eax
+        mov dword ptr [ecx + 0x20], eax
+        mov dword ptr [ecx + 0x24], eax
+        mov dword ptr [ecx + 0x28], edx
+        mov dword ptr [ecx + 0x2c], eax
+        mov dword ptr [ecx + 0x30], eax
+        mov dword ptr [ecx + 0x34], eax
+        mov dword ptr [ecx + 0x38], eax
+        mov dword ptr [ecx + 0x3c], edx
+        fld dword ptr [esp + 4]
+        fsin
+        fld st(1)
+        fstp dword ptr [ecx]
+        fld st(0)
+        fchs
+        fstp dword ptr [ecx + 4]
+        fstp dword ptr [ecx + 0x10]
+        fstp dword ptr [ecx + 0x14]
+        ret 4
+    }
 }
 
 HEIGHTMAPDECALDX8MASTER::HEIGHTMAPDECALDX8MASTER(RESOURCEMANAGER *manager, const char *name)
@@ -358,7 +371,9 @@ __declspec(noinline) void HEIGHTMAPDECALDX8RESOURCE::CreateMesh()
     m_40c = m_404 * m_408;
     m_410 = (m_408 * 2 - 2) * (m_404 - 1);
     m_mesh = new MESHDX8;
-    if (!master->m_userFolder && g_pResources->IsHighDetail() && !master->m_correctSizeInWidescreen)
+    bool hardware = !master->m_userFolder && g_pResources->IsHighDetail() &&
+                    !master->m_correctSizeInWidescreen;
+    if (hardware)
         m_mesh->Create(3, m_40c, m_410, 1);
     else
         m_mesh->Create(1, m_40c, m_410, 1);
@@ -392,7 +407,7 @@ __declspec(noinline) void HEIGHTMAPDECALDX8RESOURCE::CreateMesh()
             base++;
         }
         m_mesh->UnlockIndices();
-        if (!master->m_userFolder && g_pResources->IsHighDetail() && !master->m_correctSizeInWidescreen) {
+        if (hardware) {
             char *vertices = (char *)m_mesh->LockVertices(0, m_40c);
             if (!vertices) {
                 if (g_pLog)
@@ -432,12 +447,118 @@ __declspec(noinline) void HEIGHTMAPDECALDX8RESOURCE::CreateMesh()
 
 __declspec(noinline) void HEIGHTMAPDECALDX8RESOURCE::UpdateVertices()
 {
-    __asm { nop }
+    if (m_48c)
+        return;
+    m_4e0 = false;
+    m_4e1 = false;
+    HEIGHTMAPDX8 *heightmap = FindHeightmap();
+    if (!heightmap)
+        return;
+    HEIGHTMAPDX8MASTER *master = heightmap->Master();
+
+    V3 origin = heightmap->WorldToLocal(GetPosition());
+    origin.z = 0.0f;
+    float stepX = GetScale().x / (float)master->m_tilesX;
+    float aspect = master->m_aspect * master->m_aspectRatioModifier;
+    float stepY = GetScale().y * (float)master->m_tilesX / (float)master->m_tilesY;
+
+    MATRIX rotation;
+    rotation.SetRotationZ(GetAngles().GetEuler().x);
+    V3 xAxis = V3(stepX, 0.0f, 0.0f) * rotation;
+    V3 yAxis = V3(0.0f, stepY * aspect, 0.0f) * rotation;
+    V3 base = origin - (xAxis + yAxis) * 0.5f;
+    float zRange = master->m_maxHeight * 100.0f;
+    float minZ = -zRange;
+    float maxZ = zRange;
+
+    for (int y = 0; y < m_408; y++) {
+        float v = (m_408 > 1) ? (float)y / (float)(m_408 - 1) : 0.0f;
+        for (int x = 0; x < m_404; x++) {
+            float u = (m_404 > 1) ? (float)x / (float)(m_404 - 1) : 0.0f;
+            V3 point = base + xAxis * u + yAxis * v;
+            point.z += zRange;
+            point = heightmap->GetGroundPoint(point);
+            V3 normal = heightmap->GetNormal(point);
+            int index = m_404 * y + x;
+            m_vertices[index] = point;
+            m_normals[index] = normal;
+            if (point.z < minZ)
+                minZ = point.z;
+            if (point.z > maxZ)
+                maxZ = point.z;
+        }
+    }
+    m_box.Set(m_vertices[0], m_vertices[0]);
+    m_box.Merge(m_vertices[m_404 - 1]);
+    m_box.Merge(m_vertices[(m_408 - 1) * m_404]);
+    m_box.Merge(m_vertices[m_404 * m_408 - 1]);
+    m_box.ExtendHeight(minZ);
+    m_box.ExtendHeight(maxZ);
+    m_48c = true;
 }
 
 __declspec(noinline) void HEIGHTMAPDECALDX8RESOURCE::Render()
 {
-    __asm { nop }
+    if (m_4e0)
+        return;
+    HEIGHTMAPDX8 *heightmap = FindHeightmap();
+    if (!heightmap)
+        return;
+    HEIGHTMAPDECALDX8MASTER *master = (HEIGHTMAPDECALDX8MASTER *)m_master;
+    D3DXMATRIX matrix = m_matrix;
+    m_mesh->SetMatrix(&matrix);
+    MATRIX heightmapMatrix = heightmap->GetAngles().GetMatrix();
+    if (!m_4e1) {
+        char *out = (char *)m_mesh->LockVertices(0, m_40c);
+        if (!out) {
+            if (g_pLog)
+                g_pLog->Error("could not lock vertex buffer! %s", master->m_name.c_str());
+            return;
+        }
+        for (int y = 0; y < m_408; y++) {
+            for (int x = 0; x < m_404; x++) {
+                int index = m_404 * y + x;
+                V3 &position = m_vertices[index];
+                V3 normal = m_normals[index];
+                if (!master->m_userFolder && g_pResources->IsHighDetail() &&
+                    !master->m_correctSizeInWidescreen) {
+                    *(unsigned int *)(out + 0x18) =
+                        (((*(int *)&m_heightmap & 0xff) | m_layer << 8) << 8 |
+                         (*(int *)((char *)&m_heightmap + 4) & 0xff)) << 8 |
+                        (*(int *)((char *)&m_heightmap + 8) & 0xff);
+                    *(V3 *)(out + 0xc) =
+                        V3(normal.x * m_scale.x, normal.y * m_scale.y, normal.z * m_scale.z);
+                    *(V3 *)out = position;
+                    out += 0x24;
+                } else {
+                    V3 lightNormal(heightmapMatrix._11 * normal.x + heightmapMatrix._21 * normal.y +
+                                       heightmapMatrix._31 * normal.z + heightmapMatrix._41,
+                                   heightmapMatrix._12 * normal.x + heightmapMatrix._22 * normal.y +
+                                       heightmapMatrix._32 * normal.z + heightmapMatrix._42,
+                                   heightmapMatrix._13 * normal.x + heightmapMatrix._23 * normal.y +
+                                       heightmapMatrix._33 * normal.z + heightmapMatrix._43);
+                    LIGHTRGB lit;
+                    if (!master->m_correctSizeInWidescreen) {
+                        LIGHTRGB ambient = { 0xff, 0xff, 0xff };
+                        ((LIGHTMANAGER *)g_pLIGHT)
+                            ->LightVertex(ambient, *(V3I *)&m_heightmap, lightNormal, m_1ac, lit);
+                    } else {
+                        lit.r = 0xff;
+                        lit.g = 0xff;
+                        lit.b = 0xff;
+                    }
+                    *(unsigned int *)(out + 0xc) =
+                        (((lit.r & 0xff) | m_layer << 8) << 8 | (lit.g & 0xff)) << 8 |
+                        (lit.b & 0xff);
+                    *(V3 *)out = position;
+                    out += 0x18;
+                }
+            }
+        }
+        m_mesh->UnlockVertices();
+    }
+    m_4e1 = true;
+    m_4e0 = true;
 }
 
 void HEIGHTMAPDECALDX8RESOURCE::SetLayer(int layer)
