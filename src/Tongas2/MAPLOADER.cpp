@@ -157,13 +157,13 @@ void MAPLOADER::LoadMap(const char *name)
             ((CAMERAOBJ *)m_24)->m_1b4 = *(V3 *)((char *)object + 0x38);
         } else if (objectType == "SKYBOX") {
             std::string full = m_20c + objectName;
-            char suffix[28];
+            char suffix[12];
             suffix[0] = 0;
             if (FindMapResource(&full, suffix))
                 m_18 = ((MAPMANAGER *)m_04)->Load(name, full, std::string(""), 1, 1, 0);
         } else if (objectType == "GLOWSKYBOX") {
             std::string full = m_20c + objectName;
-            char suffix[28];
+            char suffix[12];
             suffix[0] = 0;
             if (FindMapResource(&full, suffix))
                 m_1c = ((MAPMANAGER *)m_04)->Load(name, full, std::string(""), 1, 1, 0);
