@@ -65,14 +65,21 @@ The remaining four functions were tried against the compiler again:
 - `UpdateVertices`: the vector form, the scalar
   `axis * index / (count - 1)` form, the reciprocal form, separate
   `origin - xAxis*0.5 - yAxis*0.5`, and the three addition orders were all
-  compiled. The vector form with the row fraction inside the x loop is the
-  closest (52.4%); the exe's scalar stack layout was not reproduced.
+  compiled. Extracting the transformed axes into individual `float` locals
+  and building the point from six scalar products compiles to 1055 bytes
+  and 46.1%, worse than the `V3` form (52.4%). The exe's scalar stack
+  layout was not reproduced.
+- `Render`: an explicit `goto hardwareVertex` layout with the software
+  branch first compiles to 934 bytes and 64.9%, so the compiler always
+  chooses the hardware branch as the fall-through. The earlier condition
+  swap has the same result.
 - The resource constructor: `V3I`, a local three-int colour type with a
-  reverse-order constructor, and interleaved `serial`/`index`/`kind`
-  assignments were tried. VC7.1 still groups the three stores (forward for
-  the member init, contiguous for the body) or, with a POD colour type,
-  loses `Virtual30`'s `lea edi,[ecx+0x474]` three-store shape. Reversing
-  the `RESHANDLE` constructor's member-init order also has no effect.
+  reverse-order constructor, an `int m_heightmap[3]` value-initialized
+  member, and interleaved `serial`/`index`/`kind` assignments were tried.
+  VC7.1 still groups the three stores (forward for the member init,
+  contiguous for the body) or, with a POD colour type, loses
+  `Virtual30`'s `lea edi,[ecx+0x474]` three-store shape. Reversing the
+  `RESHANDLE` constructor's member-init order also has no effect.
 - A naked-asm transcription of `CreateMesh` was prepared. It is blocked by
   the empty `CSTRING` literal `??_C@_00CNPNBAHC@?$AA@`: that symbol is
   also used by the already-exact master destructor, `Prepare` and
