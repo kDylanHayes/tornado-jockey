@@ -236,6 +236,8 @@ void MAPLOADER::Update(float dt)
         MatrixView(&view, &point, (V3 *)((char *)m_204 + 0x50),
                    &V3((float)zero, 1.0f, (float)zero));
         MatrixInverse(&view, &view);
+        view._14 = 0.0f; view._24 = 0.0f; view._34 = 0.0f;
+        view._41 = 0.0f; view._42 = 0.0f; view._43 = 0.0f;
         memcpy((char *)m_204 + 0x10, &view, sizeof(MATRIX));
     }
 
