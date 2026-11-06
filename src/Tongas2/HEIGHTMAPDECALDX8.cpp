@@ -472,8 +472,8 @@ __declspec(noinline) void HEIGHTMAPDECALDX8RESOURCE::UpdateVertices()
     float maxZ = zRange;
 
     for (int y = 0; y < m_408; y++) {
-        float v = (m_408 > 1) ? (float)y / (float)(m_408 - 1) : 0.0f;
         for (int x = 0; x < m_404; x++) {
+            float v = (m_408 > 1) ? (float)y / (float)(m_408 - 1) : 0.0f;
             float u = (m_404 > 1) ? (float)x / (float)(m_404 - 1) : 0.0f;
             V3 point = base + xAxis * u + yAxis * v;
             point.z += zRange;
