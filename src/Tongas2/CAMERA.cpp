@@ -431,12 +431,8 @@ SRESULT CAMERA::Jitter(CMDCALL *call)
 CAMERALENS::CAMERALENS() throw() : m_position(0.0f, 0.0f, 0.0f), m_direction(0.0f, 0.0f, 0.0f), m_up(0.0f, 0.0f, 0.0f)
 {
     m_position.x = m_position.y = m_position.z = 0.0f;
-    m_direction.x = 0.0f;
-    m_direction.y = 0.0f;
-    m_direction.z = 1.0f;
-    m_up.x = 0.0f;
-    m_up.y = 1.0f;
-    m_up.z = 0.0f;
+    m_direction.Set(0.0f, 0.0f, 1.0f);
+    m_up.Set(0.0f, 1.0f, 0.0f);
     m_orthoWidth = 1.0f;
     m_viewDirty = true;
     m_billboardDirty = true;
