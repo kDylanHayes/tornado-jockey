@@ -94,10 +94,10 @@ SUBMESHINDEX::~SUBMESHINDEX()
 
 void SUBMESHINDEX::Shrink()
 {
+    unsigned short numFaces = m_numFaces;
     unsigned short numVertices = m_numVertices;
     unsigned short *vertices = m_vertices;
     unsigned short *faces = m_faces;
-    unsigned short numFaces = m_numFaces;
     m_vertices = new unsigned short[numVertices];
     m_faces = new unsigned short[numFaces * 3];
     m_maxVertices = numVertices;
@@ -117,10 +117,12 @@ void SUBMESHINDEX::CopyFaces(unsigned short *out, unsigned short base)
 {
     unsigned short *in = m_faces;
     for (unsigned short i = 0; i < m_numFaces; i++) {
-        out[0] = in[0] + base;
-        out[1] = in[1] + base;
-        out[2] = in[2] + base;
-        in += 3;
+        out[0] = *in + base;
+        in++;
+        out[1] = *in + base;
+        in++;
+        out[2] = *in + base;
+        in++;
         out += 3;
     }
 }
@@ -935,8 +937,13 @@ V3 HEIGHTMAPDX8::GetNormal(const V3 &point)
     HEIGHTMAPDX8MASTER *master = Master();
     int x, y;
     PointToPixel(point, &x, &y);
-    PLANE plane = (x >= 0 && y >= 0 && x < master->m_imageWidth && y < master->m_imageHeight) ? GetFlatPlane(x, y) : GetDefaultPlane();
-    V3 normal = *(V3 *)&plane;
+    V3 normal;
+    PLANE plane;
+    if (x >= 0 && y >= 0 && x < master->m_imageWidth && y < master->m_imageHeight)
+        plane = GetFlatPlane(x, y);
+    else
+        plane = GetDefaultPlane();
+    normal = *(V3 *)&plane;
     normal.Normalize();
     return normal;
 }

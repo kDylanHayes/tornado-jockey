@@ -142,3 +142,9 @@
 #   0x4e3d4e  5c 69 68 4e 39 f8 8e d8 fa 43 86 a8 e9 8e ff ff
 0x4bf221-0x4bf232   Tongas2/CPRIMITIVE3         ?ShowHelper@CPRIMITIVE3RESOURCE@@QAEXAB_NH@Z           code  observed
 0x4e3d4e-0x4e3d5d   Tongas2/HEIGHTMAPDX8        ?LoadImages@HEIGHTMAPDX8MASTER@@QAEXXZ                 code  observed
+# Found by the HEIGHTMAPDX8 exact-match pass (byte-checked against
+# orig/Tornado.exe): UpdateIndices' LockIndices call and UpdateBoxes' affine
+# copy loop are overwritten with opaque bytes, so both functions and the unit
+# stay partial. The displaced code resumes at 0x4def12 and 0x4e163b.
+0x4def00-0x4def11   Tongas2/HEIGHTMAPDX8        ?UpdateIndices@HEIGHTMAPDX8@@QAEXXZ                    code  observed
+0x4e1625-0x4e163a   Tongas2/HEIGHTMAPDX8        ?UpdateBoxes@HEIGHTMAPDX8@@QAEXXZ                      code  observed

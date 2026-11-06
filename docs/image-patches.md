@@ -99,6 +99,21 @@ resumes at `0x4894f7`. The same pattern later in the function is intact
 (`mov dword [ecx*4 + 0x6cbc90], 0x6be8d0`), so this is a patched span, not a
 delinker or FixReferences defect. The unit stays partial.
 
+## HEIGHTMAPDX8
+
+The terrain unit has three opaque runs. `HEIGHTMAPDX8MASTER::LoadImages` was
+already listed at `0x4e3d4e`. The exact-match pass found two more, both in
+16-to-22-byte runs that displace real code and keep its relocations:
+
+| range | symbol |
+|---|---|
+| `0x4def00-0x4def11` | `?UpdateIndices@HEIGHTMAPDX8@@QAEXXZ` (the `LockIndices` call) |
+| `0x4e1625-0x4e163a` | `?UpdateBoxes@HEIGHTMAPDX8@@QAEXXZ` (the affine copy loop) |
+
+Valid code resumes at `0x4def12` (`mov [esp+ebx*4+0x10], eax`) and
+`0x4e163b` (`mov ecx, [ebx+0x77c]`). These three functions, and therefore
+`Tongas2/HEIGHTMAPDX8`, stay partial.
+
 ## Libraries
 
 The third-party libraries carry the same runs. Comparing every library unit
