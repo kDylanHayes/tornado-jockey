@@ -41,7 +41,7 @@ void PVSNODE::RemoveMember(ACTOR *actor)
 }
 
 // Takes actor and the actors after it out of their node.
-static void __stdcall Unlink(ACTOR *actor)
+void __stdcall Unlink(ACTOR *actor)
 {
     if (actor->m_next)
         Unlink(actor->m_next);
@@ -71,7 +71,7 @@ void ONENODE::Clear()
     m_members = 0;
 }
 
-__declspec(noinline) PVSNODE::~PVSNODE()
+PVSNODE::~PVSNODE()
 {
     if (m_members)
         Unlink(m_members);

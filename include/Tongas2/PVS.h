@@ -39,6 +39,8 @@ public:
     void Update(FRUSTUM *frustum, bool test);
     // Counts the actors in view, the actors tested and the nodes.
     void Dump(FRUSTUM *frustum, bool test, int *unused, int *visible, int *tested, int *nodes);
+    // Whether the node has split into its eight children.
+    bool IsSplit() const { return m_split; }
 
     BOXCORNERS m_box;
     V3 m_max;
