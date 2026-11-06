@@ -3010,6 +3010,7 @@
 0x004f8e80 ?Update@MAPLOADER@@QAEXM@Z function 0x38c
 0x004f9210 ?VectorTooLong@@YAXXZ function 0x6a
 0x004f9280 ?Load@INTRO@@QAEXPBD0@Z function 0x3dd
+0x004fa4b0 ??1SETTINGS@@QAE@XZ function 0xd2
 0x004fa5b0 ??0SETTINGS@@QAE@PAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@1@Z function 0x16a
 0x004fa720 ?PopFront@SETTINGS@@QAEXXZ function 0x55
 0x004fa780 ?ClearAll@SETTINGS@@QAEXXZ function 0x93

@@ -14,6 +14,7 @@ class SETTINGS
 {
 public:
     SETTINGS(void *owner, std::string file, std::string defaultFile);
+    ~SETTINGS();
     void PopFront();
     void ClearAll();
     void Destroy();

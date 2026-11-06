@@ -4,6 +4,7 @@
 // 0x004f97d0-0x004f9c20 are the SETTINGSTABLE table the intro object also owns;
 // they are written here first because their layout is fully recovered.
 #include "Tongas2/INTRO.h"
+#include "Tongas2/SETTINGS.h"
 
 #include <string.h>
 
@@ -277,6 +278,19 @@ int SETTINGSTABLE::GetDetailLevel()
     if ((level != 4 && level != 3) || flag == 0)
         return level;
     return 2;
+}
+
+SETTINGS::~SETTINGS()
+{
+    if (m_1030)
+        delete[] m_1030;
+    m_1030 = 0;
+    if (m_1034)
+        delete[] m_1034;
+    m_1034 = 0;
+    if (m_1038)
+        delete[] m_1038;
+    m_1038 = 0;
 }
 
 void INTRO::Load(const char *name, const char *path)
