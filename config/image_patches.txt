@@ -31,6 +31,7 @@
 0x4c4071-0x4c407c   Tongas2/TEXT                ?Update@TEXT@@UAEXXZ                                    code  scan
 0x4846ab-0x4846b7   Tongas2/CMDBASE             ?GetShortStringAttribute@CMDBASE@@UAEXAAV?$FIXEDSTRING@$0CAA@@@PBDH@Z  code  scan
 0x486dd0-0x486de1   Tongas2/CMDBASE             ?SetAttribute@CMDBASE@@UAE?AVSRESULT@@PAUCMDCALL@@@Z     code  scan
+0x6b92a8-0x6b92b7   Tongas2/CMDBASE             ?s_properties@CMDBASE@@2PAUPROPENTRY@@A (+0x30)        data  observed
 0x48e349-0x48e35b   Tongas2/GUI                 ??1GUI@@UAE@XZ                                          code  scan
 0x49f542-0x49f551   Tongas2/GUIGROUPCONTROL     ?MouseOverCommand@GUIGROUP@@UAE?AVSRESULT@@PAUCMDCALL@@@Z  code  scan
 0x4c8eb5-0x4c8ec5   Tongas2/GUIVISUALCONTROL    ?SetOpacity@GUIVISUAL@@UAEXABM@Z (also SetVisualOpacity)  code  observed
