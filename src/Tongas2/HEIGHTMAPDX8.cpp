@@ -1312,8 +1312,8 @@ HEIGHTMAPDX8::HEIGHTMAPDX8(RESOURCEMASTER *master, const RESHANDLE &handle)
     m_maxTileVertices = 0;
     m_maxTileFaces = 0;
     m_submeshes = 0;
+    m_quadtree = 0;
     m_tileNodes = 0;
-    m_indices = 0;
     m_tileBoxes = 0;
     m_tilesX = -1;
     m_tilesY = -1;
@@ -1328,9 +1328,9 @@ HEIGHTMAPDX8::HEIGHTMAPDX8(RESOURCEMASTER *master, const RESHANDLE &handle)
     m_matrixDone = false;
     m_verticesDone = false;
     m_indicesDone = false;
-    m_colorsDone = false;
+    m_boxesDone = false;
     m_lightCount = -1;
-    m_quadtree = 0;
+    m_indices = 0;
     m_710 = 0;
     m_matrixSerial = 0;
     m_7a4 = false;

@@ -116,6 +116,8 @@ struct QUADNODE
 struct HEIGHTMAPTEMP
 {
     HEIGHTMAPTEMP();
+    virtual ~HEIGHTMAPTEMP();
+    unsigned char m_data[0x28];
 };
 
 class HEIGHTMAPDX8MASTER : public RESOURCEMASTER
