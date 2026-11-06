@@ -45,3 +45,20 @@ Their `.data` sections include the property tables already recorded in
 `config/image_patches.txt` (`0x6bc290` and `0x6bd290`); those 16-byte
 watermarks make the containing data symbols, and so the section, permanently
 partial.
+
+### EMITTER
+
+The report combines every data section with the same base name, so the whole
+`.data`, `.rdata` and `.bss` groups are scored as one section each:
+
+- `.rdata` combines to 2480 bytes and pairs at 100%, and the 32-byte `.bss`
+  (`s_commands`) pairs too.
+- `.data` combines to 3216 bytes and contains the 16 watermarked bytes in
+  `?s_properties@EMITTERMASTER` (`0x6bd290-0x6bd29f`), so it can never reach
+  100%. That caps `matched_data` at 2512/5728 (43.85%).
+
+Code is capped by the `_$E3` code watermark at `0x60e4ed-0x60e4fc`: the
+function is 5506 bytes, so at most 18329/23835 (76.87%) of the unit's code can
+be exact. The remaining non-watermark gaps are `EMITTER::Update`,
+`PARTICLE::Update`, both constructors and `LoadPicture`; see the matching note
+in [toolchain.md](toolchain.md#matching-notes).
