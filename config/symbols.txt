@@ -7620,11 +7620,14 @@
 0x0052ade0 ?DestroyIntVector@@YGXPAV?$vector@HV?$allocator@H@std@@@std@@@Z function 0x2e
 0x0052ae10 ?DestroyMembers@PARTICLEB@@QAEXXZ function 0x9a
 0x0052aeb0 ?_Buy@?$vector@HV?$allocator@H@std@@@std@@IAE_NI@Z function 0x4d
+0x0052af00 ?_Insert_n@?$vector@HV?$allocator@H@std@@@std@@IAEXViterator@12@IABH@Z function 0x1e0
 0x0052b0e0 ??4?$vector@HV?$allocator@H@std@@@std@@QAEAAV01@ABV01@@Z function 0x146
 0x0052b230 ?CopyForward@@YAPAV?$vector@HV?$allocator@H@std@@@std@@PAV12@00@Z function 0x32
 0x0052b270 ?CopyBackward@@YAPAV?$vector@HV?$allocator@H@std@@@std@@PAV12@00@Z function 0x32
 0x0052b370 ?FillVectors@@YAXPAV?$vector@HV?$allocator@H@std@@@std@@0ABV12@@Z function 0x26
+0x0052cc00 ?push_back@?$vector@V?$vector@HV?$allocator@H@std@@@std@@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@std@@QAEXABV?$vector@HV?$allocator@H@std@@@2@@Z function 0x61
 0x0052cc70 ?PushBack@VECINT@@QAEXABH@Z function 0x4d
+0x0052d080 ?_Ufill@?$vector@V?$vector@HV?$allocator@H@std@@@std@@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@std@@IAEPAV?$vector@HV?$allocator@H@std@@@2@PAV32@IABV32@@Z function 0x2b
 
 # Tongas2/ANIMATEDGEOMETRY (0x0052d400-0x00530d0f)
 0x0052d400 ?Load@ANIMATEDGEOMETRY@@QAEHPAXH0@Z function 0x24b2

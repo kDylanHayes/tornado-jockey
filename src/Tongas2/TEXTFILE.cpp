@@ -9,6 +9,7 @@
 #include <vector>
 
 typedef std::vector<int> VI;
+typedef std::vector<VI> VV;
 
 class REFOBJ
 {
@@ -58,6 +59,12 @@ class VECINT : public std::vector<int>
 {
 public:
     void PushBack(const int &value);
+};
+
+class VECVEC : public std::vector<VI>
+{
+public:
+    void PushBack(const VI &value);
 };
 
 int TEXTFILE::Load(const char *name)
@@ -158,6 +165,11 @@ void FillVectors(VI *first, VI *last, const VI &value)
 }
 
 void VECINT::PushBack(const int &value)
+{
+    push_back(value);
+}
+
+void VECVEC::PushBack(const VI &value)
 {
     push_back(value);
 }
