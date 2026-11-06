@@ -1,20 +1,20 @@
 // Tongas2/INTRO -- the intro screen object at 0x004f9280.
 //
 // Discovery scaffold: Load is still a stub. The small functions at
-// 0x004f97d0-0x004f9c20 are the settings table the intro object also owns;
+// 0x004f97d0-0x004f9c20 are the SETTINGSTABLE table the intro object also owns;
 // they are written here first because their layout is fully recovered.
 #include "Tongas2/INTRO.h"
 
 #include <string.h>
 
 // The packed setting table: 47 records of 0x24 bytes whose first word is the
-// value, and three float settings after it.
+// value, and three float SETTINGSTABLE after it.
 extern "C" char g_settingRecords[];
 extern "C" float g_settingFloat0;
 extern "C" float g_settingFloat1;
 extern "C" float g_settingFloat2;
 
-class SETTINGS
+class SETTINGSTABLE
 {
 public:
     void Init();
@@ -50,7 +50,7 @@ extern int HardwareA();
 extern int HardwareB();
 extern int HardwareC();
 
-void SETTINGS::SetQuality()
+void SETTINGSTABLE::SetQuality()
 {
     switch (GetDetailLevel()) {
     case 0:
@@ -96,7 +96,7 @@ void SETTINGS::SetQuality()
     Clear();
 }
 
-void SETTINGS::Init()
+void SETTINGSTABLE::Init()
 {
     int i;
     unsigned int offset;
@@ -108,12 +108,12 @@ void SETTINGS::Init()
     m_1034[2] = g_settingFloat2;
 }
 
-int SETTINGS::GetInt(int index)
+int SETTINGSTABLE::GetInt(int index)
 {
     return m_1030[index];
 }
 
-void SETTINGS::SetInt(int index, int value)
+void SETTINGSTABLE::SetInt(int index, int value)
 {
     int first = m_1030[0];
     int second = m_1030[1];
@@ -122,17 +122,17 @@ void SETTINGS::SetInt(int index, int value)
         m_ff4 = true;
 }
 
-float SETTINGS::GetFloat(int index)
+float SETTINGSTABLE::GetFloat(int index)
 {
     return m_1034[index];
 }
 
-void SETTINGS::SetFloat(int index, float value)
+void SETTINGSTABLE::SetFloat(int index, float value)
 {
     m_1034[index] = value;
 }
 
-bool SETTINGS::Changed()
+bool SETTINGSTABLE::Changed()
 {
     if (m_ff4) {
         m_ff4 = false;
@@ -141,7 +141,7 @@ bool SETTINGS::Changed()
     return false;
 }
 
-void SETTINGS::Clear()
+void SETTINGSTABLE::Clear()
 {
     if (m_1030[0x21] == 0 && m_1030[0x23] > 0) {
         int first = m_1030[0];
@@ -158,7 +158,7 @@ void SETTINGS::Clear()
         m_ff4 = true;
 }
 
-void SETTINGS::Reset()
+void SETTINGSTABLE::Reset()
 {
     for (int i = 0; i < 0xff; i++) {
         m_3fc[i] = -1;
@@ -179,7 +179,7 @@ void SETTINGS::Reset()
     m_3fc[10] = 6;
 }
 
-void SETTINGS::RemovePair(int first, int second)
+void SETTINGSTABLE::RemovePair(int first, int second)
 {
     for (int i = 0; i < 0xff; i++) {
         if (m_7f8[i] == first && m_bf4[i] == second) {
@@ -189,7 +189,7 @@ void SETTINGS::RemovePair(int first, int second)
     }
 }
 
-void SETTINGS::AddPair(unsigned int index, int value)
+void SETTINGSTABLE::AddPair(unsigned int index, int value)
 {
     for (int i = 0; i < 0xff; i++) {
         if (m_3fc[i] == value)
@@ -202,7 +202,7 @@ void SETTINGS::AddPair(unsigned int index, int value)
     }
 }
 
-void SETTINGS::ReplacePair(unsigned int index, int first, int second)
+void SETTINGSTABLE::ReplacePair(unsigned int index, int first, int second)
 {
     RemovePair(first, second);
     if (index < 0xff) {
@@ -212,7 +212,7 @@ void SETTINGS::ReplacePair(unsigned int index, int first, int second)
     }
 }
 
-void SETTINGS::ClearAll()
+void SETTINGSTABLE::ClearAll()
 {
     for (int i = 0; i < 0xff; i++) {
         m_000[i] = -1;
@@ -222,7 +222,7 @@ void SETTINGS::ClearAll()
     }
 }
 
-void SETTINGS::ResetKeys()
+void SETTINGSTABLE::ResetKeys()
 {
     for (int i = 0; i < 0xff; i++)
         m_000[i] = -1;
@@ -241,7 +241,7 @@ void SETTINGS::ResetKeys()
     m_000[0x0c] = 0x48;
 }
 
-int SETTINGS::GetDetailLevel()
+int SETTINGSTABLE::GetDetailLevel()
 {
     char flag = *(char *)((char *)m_ff0 + 0x51);
     int level = 4;

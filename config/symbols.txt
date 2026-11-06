@@ -248,6 +248,7 @@
 0x00444300 ?SetStartFrame@DECALMASTER@@UAEXABH@Z function
 0x004451b0 ?Free@UNICODESTRING@@QAEXXZ function
 0x00445600 ??1UNICODESTRING@@UAE@XZ function 0x4d
+0x004484a0 ??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@XZ function
 0x00448570 ?Virtual09@RESOURCE@@UAEPAXPBD@Z function
 0x004487b0 ?GetDPCodeName@WTINFO@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ function
 0x00448840 ?GetProductCodeName@WTINFO@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ function
@@ -2996,7 +2997,7 @@
 0x004f8e80 ?Update@MAPLOADER@@QAEXM@Z function 0x38c
 0x004f9210 ?VectorTooLong@@YAXXZ function 0x6a
 0x004f9280 ?Load@INTRO@@QAEXPBD0@Z function 0x3dd
-0x004fa5b0 ??0SETTINGS@@QAE@XZ function 0x16a
+0x004fa5b0 ??0SETTINGS@@QAE@PAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@1@Z function 0x16a
 0x004fa720 ?PopFront@SETTINGS@@QAEXXZ function 0x55
 0x004fa780 ?ClearAll@SETTINGS@@QAEXXZ function 0x93
 0x004fa820 ?Destroy@SETTINGS@@QAEXXZ function 0x5
@@ -3028,20 +3029,20 @@
 0x00504210 ?BuildDiffuseColorTexture@TEXTUREDX8SDMASTER@@QAEXXZ function 0x113
 0x00504360 ??1TEXTUREDX8SDMANAGER@@QAE@XZ function 0xb
 0x005043c0 ??1TEXTUREDX8SDMASTER@@QAE@XZ function 0x6a
-0x004f97d0 ?Init@SETTINGS@@QAEXXZ function 0x5b
-0x004f9830 ?GetInt@SETTINGS@@QAEHH@Z function 0x10
-0x004f9840 ?SetInt@SETTINGS@@QAEXHH@Z function 0x35
-0x004f9880 ?GetFloat@SETTINGS@@QAEMH@Z function 0x10
-0x004f9890 ?SetFloat@SETTINGS@@QAEXHM@Z function 0x14
-0x004f98b0 ?Clear@SETTINGS@@QAEXXZ function 0x64
-0x004f9920 ?GetDetailLevel@SETTINGS@@QAEHXZ function 0xea
-0x004f9a10 ?ClearAll@SETTINGS@@QAEXXZ function 0x2f
-0x004f9a40 ?ResetKeys@SETTINGS@@QAEXXZ function 0x6b
-0x004f9ab0 ?Reset@SETTINGS@@QAEXXZ function 0x9b
-0x004f9b50 ?RemovePair@SETTINGS@@QAEXHH@Z function 0x3a
-0x004f9b90 ?AddPair@SETTINGS@@QAEXIH@Z function 0x4c
-0x004f9be0 ?ReplacePair@SETTINGS@@QAEXIHH@Z function 0x3e
-0x004f9c20 ?Changed@SETTINGS@@QAE_NXZ function 0x17
+0x004f97d0 ?Init@SETTINGSTABLE@@QAEXXZ function 0x5b
+0x004f9830 ?GetInt@SETTINGSTABLE@@QAEHH@Z function 0x10
+0x004f9840 ?SetInt@SETTINGSTABLE@@QAEXHH@Z function 0x35
+0x004f9880 ?GetFloat@SETTINGSTABLE@@QAEMH@Z function 0x10
+0x004f9890 ?SetFloat@SETTINGSTABLE@@QAEXHM@Z function 0x14
+0x004f98b0 ?Clear@SETTINGSTABLE@@QAEXXZ function 0x64
+0x004f9920 ?GetDetailLevel@SETTINGSTABLE@@QAEHXZ function 0xea
+0x004f9a10 ?ClearAll@SETTINGSTABLE@@QAEXXZ function 0x2f
+0x004f9a40 ?ResetKeys@SETTINGSTABLE@@QAEXXZ function 0x6b
+0x004f9ab0 ?Reset@SETTINGSTABLE@@QAEXXZ function 0x9b
+0x004f9b50 ?RemovePair@SETTINGSTABLE@@QAEXHH@Z function 0x3a
+0x004f9b90 ?AddPair@SETTINGSTABLE@@QAEXIH@Z function 0x4c
+0x004f9be0 ?ReplacePair@SETTINGSTABLE@@QAEXIHH@Z function 0x3e
+0x004f9c20 ?Changed@SETTINGSTABLE@@QAE_NXZ function 0x17
 0x00537270 ?SetFileName@SCREENDECALMASTER@@UAEXABVCSTRING@@@Z function 0x34
 0x0053dad0 ?size@?$vector@UPATHREPOPOINT@@V?$allocator@UPATHREPOPOINT@@@std@@@std@@QBEIXZ function 0x1f
 0x0053db30 ??$fill@PAUPATHREPOPOINT@@U1@@std@@YAXPAUPATHREPOPOINT@@0ABU1@@Z function
@@ -6404,6 +6405,8 @@
 0x00675be8 ??_7HEIGHTMAPDECALDX8MASTER@@6B@ data 0x9c
 0x00675d64 ??_7RENDERTEXTUREMANAGER@@6B@ data 0x8
 0x00675d84 ??_C@_0BC@CCFKEEJH@RENDERTEXTURE?4txt?$AA@ data
+0x006776bc ??_C@_0CG@CBLLNBHP@Settings?5enumeration?5is?5out?5of?5o@ data
+0x006776e4 ??_C@_0M@PFHINJOG@SETUP?5ERROR?$AA@ data
 0x00679658 __real@3f50624dd2f1a9fc data
 0x00679660 __real@bff0000000000000 data
 0x00679b3c ??_C@_03NAIKFGEJ@PNG?$AA@ data
@@ -7291,6 +7294,7 @@
 0x009fef40 ?g_numTriangles@@3HA data 0x4
 0x009fef44 ?g_9fef44@@3HA data 0x4
 0x009fef88 ?s_commands@RENDERTEXTUREMASTER@@2PAUCMDENTRY@@A data 0x20
+0x009fff90 _g_settingsEnum data
 0x009fffb0 _g_settingRecords data
 0x00a00650 _g_settingFloat0 data
 0x00a00674 _g_settingFloat1 data
