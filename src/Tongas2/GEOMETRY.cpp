@@ -714,8 +714,9 @@ bool CollideSphereQuad(SPHERE3 *a, QUAD3 *b, V3 *pa, V3 *pb, float *depth)
 
 bool CollideBoxSegment(OOBOX3 *a, SEGMENT3 *b, V3 *pa, V3 *pb, float *depth, V3 *normal)
 {
-    V3 start = b->start - a->center;
-    V3 end = b->end - a->center;
+    V3 center = a->GetCenter();
+    V3 start = b->GetStart() - center;
+    V3 end = b->GetEnd() - center;
     MATRIX m = a->angles.GetMatrix();
     m.Invert();
     MATRIX inverse = m;
