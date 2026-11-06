@@ -469,11 +469,9 @@ std::string BONEDMODELDX8MODEL::GetMaterialName(int index)
 
 int BONEDMODELDX8SDRESOURCE::FindMaterial(const char *name)
 {
-    BONEDMODELDX8MODEL *model = (BONEDMODELDX8MODEL *)m_model;
-    BONEDMODELDX8MATERIALS *materials = *(BONEDMODELDX8MATERIALS **)((char *)model + 0xc);
-    int count = materials->m_names.size();
+    int count = ((BONEDMODELDX8MODEL *)m_model)->m_materials->m_names.size();
     for (int i = 0; i < count; i++) {
-        std::string material = model->GetMaterialName(i);
+        std::string material = ((BONEDMODELDX8MODEL *)m_model)->GetMaterialName(i);
         if (stricmp(material.c_str(), name) == 0)
             return i;
     }
