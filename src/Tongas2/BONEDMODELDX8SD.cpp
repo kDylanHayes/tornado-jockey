@@ -626,7 +626,6 @@ public:
     void Virtual11(MATRIX *matrix, BONEDMODELDX8RENDERERAPI *renderer);
     void Virtual12(BONEDMODELDX8RENDERERAPI *device);
     void Virtual13(BONEDMODELDX8RENDERERAPI *device);
-    void Render(int arg);
     void Destroy();
 
     BONEDMODELDX8STAGE *m_0;
@@ -666,7 +665,7 @@ void BONEDMODELDX8PARTICLE::Virtual10(int unused)
         m_20->Release((int)m_24);
         if (m_0->Get(0xf)) {
             if (m_20->IsActive())
-                Render(unused);
+                Virtual13((BONEDMODELDX8RENDERERAPI *)unused);
         }
     }
 }
