@@ -1497,8 +1497,8 @@
         "0x0060c9a0-0x0060cb9c",
         "0x00654470-0x006544f4",
         "0x0066a450-0x0066a83a",
-        "0x006bbcb8-0x006bbe28",
-        "0x007df740-0x007e0cd0"
+        "0x006bbcb8-0x006bbe33",
+        "0x007df740-0x007e0cdb"
       ],
       "target": "build/target/Tongas2/RESOURCES.obj",
       "source": "src/Tongas2/RESOURCES.cpp",
