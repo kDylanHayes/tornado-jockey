@@ -17,11 +17,50 @@ public:
     void *Init(void *arg);
 };
 
+class BONEDMODELDX8T1
+{
+public:
+    void Destroy();
+};
+
+class BONEDMODELDX8T2
+{
+public:
+    void Destroy();
+};
+
+class BONEDMODELDX8T3
+{
+public:
+    void Destroy();
+};
+
+class BONEDMODELDX8T4
+{
+public:
+    void Destroy();
+};
+
+class BONEDMODELDX8T5
+{
+public:
+    void Destroy();
+};
+
+class BONEDMODELDX8T6
+{
+public:
+    void Destroy();
+};
+
 class BONEDMODELDX8DISPLAYCTX
 {
 public:
     void ReleaseModel(void *model);
     void DeleteMaterial(void *material);
+    void Release(void *value);
+    void Release2(void *value);
+    void Release3(void *value);
     void *CreateModel(void *device, std::string a, std::string b, std::string name);
 };
 
@@ -522,15 +561,32 @@ public:
     void Virtual11(MATRIX *matrix, BONEDMODELDX8RENDERERAPI *renderer);
     void Virtual12(BONEDMODELDX8RENDERERAPI *device);
     void Render(int arg);
+    void Destroy();
 
     BONEDMODELDX8STAGE *m_0;
-    char m_04[0x14];
+    BONEDMODELDX8DISPLAYCTX *m_4;
+    void *m_8;
+    char m_0c[8];
+    void *m_14;
     BONEDMODELDX8PARTICLESYSTEM *m_18;
-    char m_1c[4];
+    void *m_1c;
     BONEDMODELDX8EFFECT *m_20;
-    int m_24;
-    char m_28[0x228];
+    void *m_24;
+    void *m_28;
+    void *m_2c;
+    void *m_30;
+    void *m_34;
+    void *m_38;
+    char m_3c[0x1c8];
+    void *m_204;
+    void *m_208;
+    char m_20c[4];
+    char m_210[0x10];
+    int m_220;
+    int m_224;
+    char m_228[0x28];
     BONEDMODELDX8RENDERHELPER *m_250;
+    int m_254;
 };
 
 void BONEDMODELDX8PARTICLE::Virtual9(int unused)
@@ -541,7 +597,7 @@ void BONEDMODELDX8PARTICLE::Virtual9(int unused)
 void BONEDMODELDX8PARTICLE::Virtual10(int unused)
 {
     if (m_20) {
-        m_20->Release(m_24);
+        m_20->Release((int)m_24);
         if (m_0->Get(0xf)) {
             if (m_20->IsActive())
                 Render(unused);
@@ -583,6 +639,62 @@ void BONEDMODELDX8SDRESOURCE::Virtual21()
         ((void **)m_materials)[i] = ((BONEDMODELDX8MODEL *)m_model)->m_materials->Get(i);
     }
     LoadTags();
+}
+
+
+void BONEDMODELDX8PARTICLE::Destroy()
+{
+    if (m_250) {
+        ((BONEDMODELDX8T1 *)m_250)->Destroy();
+        operator delete(m_250);
+        m_250 = 0;
+    }
+    m_4->Release((void *)m_254);
+    if (m_8) {
+        ((BONEDMODELDX8T2 *)m_8)->Destroy();
+        operator delete(m_8);
+        m_8 = 0;
+    }
+    if (m_14) {
+        ((BONEDMODELDX8T3 *)m_14)->Destroy();
+        operator delete(m_14);
+        m_14 = 0;
+    }
+    if (m_208) {
+        ((BONEDMODELDX8T4 *)m_208)->Destroy();
+        operator delete(m_208);
+        m_208 = 0;
+    }
+    if (m_204) {
+        ((BONEDMODELDX8T4 *)m_204)->Destroy();
+        operator delete(m_204);
+        m_204 = 0;
+    }
+    m_4->Release2(m_20);
+    m_4->Release3(m_18);
+    m_4->Release3(m_1c);
+    if (m_24) {
+        ((BONEDMODELDX8T5 *)m_24)->Destroy();
+        operator delete(m_24);
+        m_24 = 0;
+    }
+    if (m_38) {
+        ((BONEDMODELDX8T6 *)m_38)->Destroy();
+        operator delete(m_38);
+        m_38 = 0;
+    }
+    if (m_224 >= 0x10)
+        operator delete(m_210);
+    m_224 = 0xf;
+    m_220 = 0;
+    m_210[0] = 0;
+    if (m_2c) {
+        operator delete(m_2c);
+    } else {
+        m_2c = 0;
+        m_30 = 0;
+        m_34 = 0;
+    }
 }
 
 void BONEDMODELDX8PARTICLE::Virtual12(BONEDMODELDX8RENDERERAPI *device)
