@@ -88,7 +88,7 @@ def command_size(args: list[str]) -> int:
     return sum(len(arg) + 3 for arg in args)
 
 
-def apply_symbol_mappings(path: Path, mappings: dict) -> int:
+def apply_symbol_mappings(path: Path, mappings: dict, ours: Path | None = None) -> int:
     """Give referenced, undefined symbols the names our object uses.
 
     objdiff pairs code relocations through the unit's symbol_mappings, but it
@@ -98,12 +98,24 @@ def apply_symbol_mappings(path: Path, mappings: dict) -> int:
     undefined symbol (the fold target lives outside this unit, so it has no
     body here) makes both sides agree. Defined symbols are left alone: objdiff
     already pairs those.
+
+    A folded reference's target symbol can be typed as data in the exported
+    object even when our object calls it as a function (0x547f50 is the usual
+    example: term_source there is also RegisterClassName). Copy the type from
+    the base symbol of the mapped name so objdiff pairs the call.
     """
     if not mappings:
         return 0
     coff = split.Coff(path.read_bytes())
     by_index = {i: rec for i, rec, _ in coff.symbols}
     taken = {coff.name(rec) for _, rec, _ in coff.symbols}
+    base_types = {}
+    if ours is not None and ours.is_file():
+        base = split.Coff(ours.read_bytes())
+        for _, rec, _ in base.symbols:
+            _secno, typ = struct.unpack_from("<hH", rec, 12)
+            if typ == 0x20:
+                base_types[base.name(rec)] = 0x20
     renamed = 0
     for sec in coff.sections:
         for rel in sec["relocs"]:
@@ -120,8 +132,11 @@ def apply_symbol_mappings(path: Path, mappings: dict) -> int:
             if secno > 0 and typ != 0x20:
                 continue
             if name in mappings and mappings[name] not in taken:
-                coff.set_name(rec, mappings[name])
-                taken.add(mappings[name])
+                mapped = mappings[name]
+                coff.set_name(rec, mapped)
+                if secno == 0 and mapped in base_types:
+                    struct.pack_into("<H", rec, 14, base_types[mapped])
+                taken.add(mapped)
                 renamed += 1
     if renamed:
         path.write_bytes(coff.write())
@@ -251,7 +266,7 @@ def main() -> int:
                                    {n: a for n, a in variables if any(lo <= a <= hi for lo, hi in spans)},
                                    [v for v in sized if not any(lo <= v[1] <= hi for lo, hi in spans)],
                                    data_sizes)
-        apply_symbol_mappings(ROOT / unit["target"], unit.get("symbol_mappings", {}))
+        apply_symbol_mappings(ROOT / unit["target"], unit.get("symbol_mappings", {}), ours)
         if ours is not None and ours.is_file():
             fix_data_icf.main_path(ROOT / unit["target"], ours)
     if returncode != 0 or missing or "SCRIPT ERROR" in log_text:

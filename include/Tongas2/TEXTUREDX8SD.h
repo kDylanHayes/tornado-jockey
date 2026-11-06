@@ -14,11 +14,16 @@
 class TEXTUREDX8SDTEXTURE
 {
 public:
+    TEXTUREDX8SDTEXTURE(bool scratch);
     ~TEXTUREDX8SDTEXTURE();
 
+    int Create(void *texture);
     void *GetSurface();
 
     void *m_texture;
+    char m_04[0x34];
+    bool m_38;
+    char m_39[0x54 - 0x39];
 };
 
 class TEXTUREDX8SDMASTER : public RESOURCEMASTER

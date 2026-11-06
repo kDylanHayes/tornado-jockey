@@ -118,6 +118,8 @@ struct HEIGHTMAPTEMP
     HEIGHTMAPTEMP();
     virtual ~HEIGHTMAPTEMP();
 
+    void SetEnabled(bool enabled);
+
     char *m_04;
     char *m_08;
     int m_0c;

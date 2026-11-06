@@ -250,7 +250,8 @@ struct IDirect3DDevice8
     virtual HRESULT __stdcall CreateCubeTexture() = 0;
     virtual HRESULT __stdcall CreateVertexBuffer(UINT Length, DWORD Usage, DWORD FVF, int Pool,
                                                  IDirect3DVertexBuffer8 **ppVertexBuffer) = 0;
-    virtual HRESULT __stdcall CreateIndexBuffer() = 0;
+    virtual HRESULT __stdcall CreateIndexBuffer(UINT Length, DWORD Usage, int Format, int Pool,
+                                                IDirect3DIndexBuffer8 **ppIndexBuffer) = 0;
     virtual HRESULT __stdcall CreateRenderTarget() = 0;
     virtual HRESULT __stdcall CreateDepthStencilSurface() = 0;
     virtual HRESULT __stdcall CreateImageSurface() = 0;
@@ -323,6 +324,42 @@ struct IDirect3DDevice8
     virtual HRESULT __stdcall DrawRectPatch() = 0;
     virtual HRESULT __stdcall DrawTriPatch() = 0;
     virtual HRESULT __stdcall DeletePatch() = 0;
+};
+
+// The vertex and index buffer methods in the SDK's order. Only Lock/Unlock
+// and Release are called directly by the engine.
+struct IDirect3DVertexBuffer8
+{
+    virtual HRESULT __stdcall QueryInterface(REFIID riid, void **ppvObj) = 0;
+    virtual ULONG __stdcall AddRef() = 0;
+    virtual ULONG __stdcall Release() = 0;
+    virtual HRESULT __stdcall GetDevice(void **ppDevice) = 0;
+    virtual HRESULT __stdcall SetPrivateData() = 0;
+    virtual HRESULT __stdcall GetPrivateData() = 0;
+    virtual HRESULT __stdcall FreePrivateData() = 0;
+    virtual DWORD __stdcall SetPriority(DWORD priority) = 0;
+    virtual DWORD __stdcall GetPriority() = 0;
+    virtual void __stdcall PreLoad() = 0;
+    virtual DWORD __stdcall GetType() = 0;
+    virtual HRESULT __stdcall Lock(UINT OffsetToLock, UINT SizeToLock, BYTE **ppbData, DWORD Flags) = 0;
+    virtual HRESULT __stdcall Unlock() = 0;
+};
+
+struct IDirect3DIndexBuffer8
+{
+    virtual HRESULT __stdcall QueryInterface(REFIID riid, void **ppvObj) = 0;
+    virtual ULONG __stdcall AddRef() = 0;
+    virtual ULONG __stdcall Release() = 0;
+    virtual HRESULT __stdcall GetDevice(void **ppDevice) = 0;
+    virtual HRESULT __stdcall SetPrivateData() = 0;
+    virtual HRESULT __stdcall GetPrivateData() = 0;
+    virtual HRESULT __stdcall FreePrivateData() = 0;
+    virtual DWORD __stdcall SetPriority(DWORD priority) = 0;
+    virtual DWORD __stdcall GetPriority() = 0;
+    virtual void __stdcall PreLoad() = 0;
+    virtual DWORD __stdcall GetType() = 0;
+    virtual HRESULT __stdcall Lock(UINT OffsetToLock, UINT SizeToLock, BYTE **ppbData, DWORD Flags) = 0;
+    virtual HRESULT __stdcall Unlock() = 0;
 };
 
 #endif

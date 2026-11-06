@@ -8,6 +8,7 @@
 #include <d3dx8.h>
 #include <stdio.h>
 #include <string.h>
+#include <algorithm>
 
 
 // The display's renderer-side context.
@@ -119,6 +120,20 @@ BONEDMODELEVENT::BONEDMODELEVENT(BONEDMODELDX8SDRESOURCE *resource, int tag)
     m_tag = tag;
     m_10 = 0;
     m_10 = -1;
+}
+
+
+void __fastcall BONEDMODELDX8_MASTERDESTROY(BONEDMODELMASTER *self)
+{
+    if (self->m_artPath.m_str) {
+        free(self->m_artPath.m_str);
+        self->m_artPath.m_str = 0;
+    }
+    if (self->m_file.m_str) {
+        free(self->m_file.m_str);
+        self->m_file.m_str = 0;
+    }
+    self->RESOURCEMASTER::~RESOURCEMASTER();
 }
 
 BONEDMODELDX8SDMASTER::BONEDMODELDX8SDMASTER(RESOURCEMANAGER *manager, const char *name)
@@ -330,6 +345,7 @@ public:
     void *CreateAnimator();
     void *CreateAnimatorFrom(void *arg);
     void DeleteAnimation(std::string name);
+    int LoadExtraAnimations(std::string name);
 
     char m_00[0xc];
     BONEDMODELDX8MATERIALS *m_materials;
@@ -451,6 +467,29 @@ void BONEDMODELDX8SDRESOURCE::DestroyAnimations()
         ((BONEDMODELDX8MODEL *)m_model)->DeleteAnimation(m_strings.front());
         m_strings.erase(m_strings.begin());
     }
+}
+
+
+bool BONEDMODELDX8SDRESOURCE::FUN_004f7040(const char *name)
+{
+    if (!m_model) {
+        if (g_pLog)
+            g_pLog->Error("BONEDMODELDX8SDRESOURCE::LoadExtraAnimation - model not loaded");
+        return false;
+    }
+    std::string model(((BONEDMODELMASTER *)m_master)->m_artPath.c_str());
+    int forwards = model.find_last_of("/");
+    int backwards = model.find_last_of("\\");
+    int cut = (forwards > backwards ? forwards : backwards) + 1;
+    std::string path = model.substr(0, cut) + name;
+    for (unsigned int i = 0; i < m_strings.size(); i++) {
+        if (m_strings[i].compare(path) == 0)
+            return true;
+    }
+    int loaded = ((BONEDMODELDX8MODEL *)m_model)->LoadExtraAnimations(path);
+    if (loaded)
+        m_strings.push_back(path);
+    return loaded != 0;
 }
 
 void BONEDMODELDX8SDRESOURCE::LoadTags()
@@ -910,6 +949,48 @@ void FUN_004f72c0(BONEDMODELDX8BOX *box, const MATRIX *a, const MATRIX *b)
     FUN_004641c8(&box->m_planes[5], &box->m_corners[1], &box->m_corners[0], &box->m_corners[4]);
 }
 
+
+
+struct BONEDMODELDX8CORNERBOX
+{
+    V3 m_a;
+    V3 m_b;
+    V3 m_min;
+    V3 m_max;
+    D3DXPLANE m_planes[6];
+
+    void Transform(const MATRIX *matrix);
+    void BuildPlanes();
+};
+
+void BONEDMODELDX8CORNERBOX::Transform(const MATRIX *matrix)
+{
+    V3 corner;
+    FUN_004620d9(&corner, &m_a, matrix);
+    m_min = corner;
+    m_max = corner;
+    FUN_004620d9(&corner, &m_b, matrix);
+    FUN_00515db0(&m_min, &m_max, corner);
+    corner = V3(m_a.x, m_a.y, m_b.z);
+    FUN_004620d9(&corner, &corner, matrix);
+    FUN_00515db0(&m_min, &m_max, corner);
+    corner = V3(m_a.x, m_b.y, m_b.z);
+    FUN_004620d9(&corner, &corner, matrix);
+    FUN_00515db0(&m_min, &m_max, corner);
+    corner = V3(m_a.x, m_b.y, m_a.z);
+    FUN_004620d9(&corner, &corner, matrix);
+    FUN_00515db0(&m_min, &m_max, corner);
+    corner = V3(m_b.x, m_b.y, m_a.z);
+    FUN_004620d9(&corner, &corner, matrix);
+    FUN_00515db0(&m_min, &m_max, corner);
+    corner = V3(m_b.x, m_a.y, m_a.z);
+    FUN_004620d9(&corner, &corner, matrix);
+    FUN_00515db0(&m_min, &m_max, corner);
+    corner = V3(m_b.x, m_a.y, m_b.z);
+    FUN_004620d9(&corner, &corner, matrix);
+    FUN_00515db0(&m_min, &m_max, corner);
+    BuildPlanes();
+}
 
 void FUN_004f75f0(BONEDMODELDX8BOX *box, const MATRIX *a, const MATRIX *b)
 {
