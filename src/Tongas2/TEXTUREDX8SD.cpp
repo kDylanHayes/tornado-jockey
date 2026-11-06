@@ -4,6 +4,8 @@
 // the texture builders and the copy class are still scaffolds.
 #include <windows.h>
 
+#include "Tongas2/LOG.h"
+#include "Tongas2/RENDERER.h"
 #include "Tongas2/STRING.h"
 #include "Tongas2/TOKENS.h"
 #include "Tongas2/TEXTUREDX8SD.h"
@@ -11,6 +13,23 @@
 extern RESOURCES *g_pResources;
 extern char g_basePath[];
 extern const char g_rgbPrefix[];
+
+void FillColorCallback(void *out, void *a, void *b, void *color);
+int FillTexture(void *surface, void *callback, void *color);
+
+// The renderer's texture creation entry is virtual slot 7.
+class RENDERERCREATETEXTURE
+{
+public:
+    virtual void Virtual00();
+    virtual void Virtual01();
+    virtual void Virtual02();
+    virtual void Virtual03();
+    virtual void Virtual04();
+    virtual void Virtual05();
+    virtual void Virtual06();
+    virtual void *CreateTexture(int width, int height, int format);
+};
 
 int TEXTUREDX8SDMASTER::Build()
 {
@@ -215,6 +234,31 @@ void *TEXTUREDX8SDMASTER::GetSurface()
 
 bool TEXTUREDX8SDMASTER::BuildDiffuseColorTexture()
 {
+    m_60 = new TEXTUREDX8SDTEXTURE(true);
+    m_60->m_38 = *(bool *)((char *)this + 0x488);
+
+    int format = *(int *)((char *)this + 0x484);
+    int height = *(int *)((char *)this + 0x70);
+    int width = *(int *)((char *)this + 0x6c);
+    void *renderTexture =
+        ((RENDERERCREATETEXTURE *)g_pRenderer)->CreateTexture(width, height, format);
+
+    if (!m_60->Create(renderTexture)) {
+        float color[4];
+        color[0] = *(int *)((char *)this + 0x74) * (1.0f / 255.0f);
+        color[1] = *(int *)((char *)this + 0x78) * (1.0f / 255.0f);
+        color[2] = *(int *)((char *)this + 0x7c) * (1.0f / 255.0f);
+        color[3] = 1.0f;
+        if (FillTexture(m_60->GetSurface(), (void *)FillColorCallback, color) != 0) {
+            if (g_pLog)
+                g_pLog->Error("TEXTUREDX8SDMASTER::BuildDiffuseColorTexture - trying to fill texture with color");
+            return false;
+        }
+        return true;
+    }
+
+    if (g_pLog)
+        g_pLog->Error("TEXTUREDX8SDMASTER::BuildDiffuseColorTexture - creation of blank texture failed");
     return false;
 }
 
