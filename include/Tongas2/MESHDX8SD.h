@@ -76,6 +76,10 @@ public:
     virtual void Start();
     virtual void Stop();
     virtual void Update();
+    virtual void SetPosition(const V3 &position);
+    virtual void SetScale(const V3 &scale);
+    virtual void SetColor(const V3 &color);
+    virtual void SetLayer(int layer);
 
     V3 m_34;
     V3 m_40;

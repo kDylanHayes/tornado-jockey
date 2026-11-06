@@ -282,6 +282,58 @@ const char *MESHDX8SDMANAGER::GetTypeCode()
     return "MESH";
 }
 
+void MESHDX8SDRESOURCE::Start()
+{
+    MESHDX8SDMASTER *m = (MESHDX8SDMASTER *)m_master;
+    if (m)
+        m->m_c8 = 0;
+    m_flags = 0xffff;
+}
+
+void MESHDX8SDRESOURCE::Stop()
+{
+    Reset();
+}
+
+void MESHDX8SDRESOURCE::SetPosition(const V3 &position)
+{
+    if (position.x != m_34.x || position.y != m_34.y || position.z != m_34.z) {
+        m_34 = position;
+        m_flags |= 1;
+    }
+}
+
+void MESHDX8SDRESOURCE::SetScale(const V3 &scale)
+{
+    if (scale.x != m_40.x || scale.y != m_40.y || scale.z != m_40.z) {
+        m_40 = scale;
+        m_flags |= 1;
+    }
+}
+
+void MESHDX8SDRESOURCE::SetColor(const V3 &color)
+{
+    const int *components = (const int *)&color;
+    if (components[0] != m_ac || components[1] != m_b0 || components[2] != m_b4) {
+        m_ac = components[0];
+        m_b0 = components[1];
+        m_b4 = components[2];
+        int flags = m_flags | 2;
+        m_a8 = true;
+        m_flags = flags;
+    }
+}
+
+void MESHDX8SDRESOURCE::SetLayer(int layer)
+{
+    if (layer != m_4c) {
+        m_4c = layer;
+        int flags = m_flags | 2;
+        m_a8 = true;
+        m_flags = flags;
+    }
+}
+
 void MESHDX8SDRESOURCE::Reset()
 {
     m_flags = 0xffff;
