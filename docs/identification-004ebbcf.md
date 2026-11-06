@@ -3,7 +3,7 @@
 Follow-up to [identification-004e5d50.md](identification-004e5d50.md). The
 placeholder left after `Tongas2/RENDERSHADER` is not one unit: the first
 26,704 bytes are four more DX8 renderer-plugin objects plus the plugin's
-DirectInput layer. Five contiguous units were carved out of it; the rest of
+DirectInput layer. Six contiguous units were carved out of it; the rest of
 the tail (`0x004f2420`-`0x00559dff`) stays unassigned.
 
 ## What was carved
@@ -14,7 +14,8 @@ the tail (`0x004f2420`-`0x00559dff`) stays unassigned.
 | `Tongas2/RENDERTEXTURE` | `0x004ed980-0x004ee0af` | 1734 | 17 | `RENDERTEXTUREMASTER` registration at `0x004ed980`; `"RENDERTEXTURE.txt"` manager factory at `0x004edcf0`; render-target state machine from `0x004ed9c0` to `0x004eebc0`. |
 | `Tongas2/DXINPUT` | `0x004ee0b0-0x004ef08f` | 3905 | 24 | `INPUTDEVICE::Init` / `CreateKeyboard` / `CreateGamepad` / `CreateMouse` and `DXINPUT::StepMouse` log strings from `0x004ee0b0` to `0x004ee780`; ends where `SIMPLEMODELDX8` begins. |
 | `Tongas2/SIMPLEMODELDX8` | `0x004ef090-0x004eff6f` | 3705 | 14 | `"SIMPLEMODELDX8RESOURCE::AddMeshPart> null master"` at `0x004ef720`; the object builds a `SIMPLEMODEL` and the master constructor at `0x004efe40` calls `SIMPLEMODELMASTER`; ends where the light helpers begin. |
-| `Tongas2/LIGHTDX8` | `0x004eff70-0x004f241f` | 9107 | 47 | `PackColor`/`UnpackColor` at `0x004eff70`/`0x004effd0`; `LIGHTMASTER` constructor call at `0x004f0140`; `"LIGHT.txt"` manager at `0x004f0f40`; `"LIGHTDX8RESOURCE::OnActivate - Light type not supported"` at `0x004f10b0`; ends before the next `RegisterClassName` at `0x004f2420`. |
+| `Tongas2/LIGHTDX8` | `0x004eff70-0x004f138f` | 4961 | 31 | `PackColor`/`UnpackColor` at `0x004eff70`/`0x004effd0`; `LIGHTMASTER` constructor call at `0x004f0140`; `"LIGHT.txt"` manager at `0x004f0f40`; `"LIGHTDX8RESOURCE::OnActivate - Light type not supported"` at `0x004f10b0`; ends after the light master's `SetType` at `0x004f12f0`. |
+| `Tongas2/MESHDX8SD` | `0x004f1390-0x004f241f` | 4110 | 19 | Manager `GetTypeCode` returns the four-character type code `"MESH"` at `0x004f1390`; the master constructor at `0x004f1650` calls `MESHMASTER` and `HEIGHTMAPTEMP`; the copy constructor at `0x004f1ba0` calls `MESH`; ends before the next `RegisterClassName` at `0x004f2420`. |
 
 `docs/identification-004e5d50.md` guessed that `SCREENDECALMASTER`,
 `BONEDMODELRESOURCE` and `CPRIMITIVE3RESOURCE` named further units. In this
@@ -25,7 +26,8 @@ and `?Virtual81@BONEDMODELRESOURCE` at `0x004ede40` is a three-byte folded
 function inside the `RENDERTEXTURE` cluster. `CPRIMITIVE3RESOURCE`'s folded
 `GetScaleFactor` is much later, at `0x00548d70`, still in the remaining
 placeholder. The real derived classes here are `HEIGHTMAPDECALDX8`,
-`RENDERTEXTURE`, `INPUTDEVICE`/`DXINPUT`, `SIMPLEMODELDX8` and `LIGHTDX8`.
+`RENDERTEXTURE`, `INPUTDEVICE`/`DXINPUT`, `SIMPLEMODELDX8`, `LIGHTDX8` and
+`MESHDX8SD`.
 
 ## Scaffolds
 
@@ -97,30 +99,34 @@ five-byte scaffold constructor was inlined and used different registers.
 `CreateMaster` matches 100%; it can come off once the constructor itself is
 written.
 
-None of the five units is complete. The other four are still at their
+None of these units is complete. The other four are still at their
 scaffold percentages (0.37%-1.53% fuzzy), and all five are recorded without
 `"complete": true`.
 
 Verified with the original `Tornado.exe` (SHA-1 `20bf7200...06bc`) and a
 private Ghidra project copy at `%LOCALAPPDATA%\tornado-jockey\ghidra-carve-engine`.
 
-## LIGHTDX8: the light side matched, the mesh tail is another object
+## LIGHTDX8 split from MESHDX8SD
 
-The light half of `Tongas2/LIGHTDX8` (`0x004eff70-0x004f138f`) has been
-written from the decompilation. The unit as configured still includes
-`0x004f1390-0x004f241f`, but those addresses are not lights: they
-construct a `MESHMASTER`-derived master with `HEIGHTMAPTEMP`, a `MESH`
-resource and a `MESH`-type manager (`GetTypeCode` returns `"MESH"` at
-`0x004f1390`), and draw indexed triangles. That tail belongs to a separate,
-still unidentified renderer object; the next unit should be re-carved at
-`0x004f1390` once that class is named.
+The light half of the old `Tongas2/LIGHTDX8` carve is
+`0x004eff70-0x004f138f`. The old tail was not light code: it constructs a
+`MESHMASTER`-derived master with `HEIGHTMAPTEMP`, a `MESH` resource and a
+manager whose `GetTypeCode` returns `"MESH"` at `0x004f1390`, then draws
+indexed triangles. It is now its own unit, `Tongas2/MESHDX8SD`
+(`0x004f1390-0x004f241f`). The new unit has a scaffold in
+`include/Tongas2/MESHDX8SD.h` and `src/Tongas2/MESHDX8SD.cpp`; its plain
+`GetTypeCode` is already exact.
 
 The lights are currently 24 exact functions out of the 29 target symbols in
-their half; `0x004f10b0` (`Start`) and `0x004f12f0` (`SetType`) were folded
-into one Ghidra function, so their sizes were corrected to `0x23a` and
-`0x9c`. The remaining light functions are fuzzy rather than exact:
+their half. The remaining light functions are fuzzy rather than exact:
 `Update` (87.25%), `UnpackColor` (91.67%), `_Xlen` (95.65%, one byte of
 trailing padding), `Virtual09` (98.87%, only ESI/EDI swapped for the device
 and light index) and `LightVertex` (99.35%, only the x87 load order of the
 dot-product's x term). `0x004f00c0` in the base `LIGHTMANAGER` vtable has
-seventeen bytes of non-code filler in the executable and is left unnamed.
+seventeen bytes of non-code filler in the executable and is left unnamed;
+`0x004f0940` is a 42-byte STL copy helper that did not get its own symbol.
+
+MESHDX8SD is only scaffolded so far. The manager constructor at
+`0x004f13a0` is the first target: it sets the manager's loaded/initialized
+flags, with the master (`0x004f1650`), copy (`0x004f1ba0`), manager factory
+(`0x004f1b30`) and copy factory (`0x004f1d80`) next.
