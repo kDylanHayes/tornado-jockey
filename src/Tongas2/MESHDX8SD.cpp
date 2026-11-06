@@ -407,3 +407,13 @@ void MESHDX8SDSETTER::Disable()
     Empty();
     m_temp.SetEnabled(false);
 }
+
+void HEIGHTMAPTEMP::SetValue(int value)
+{
+    *(int *)((char *)this + 0x54) = value;
+}
+
+int HEIGHTMAPTEMP::GetValue()
+{
+    return *(int *)((char *)this + 0x54);
+}
