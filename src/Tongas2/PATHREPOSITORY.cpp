@@ -1,5 +1,7 @@
 // This file was built seeing SRESULT::FreeValue as one that can throw.
 #define SRESULT_FREEVALUE_MAY_THROW
+// And STRINGMANAGER::Free as one that cannot.
+#define STRINGMANAGER_FREE_NOTHROW
 
 #include <stdio.h>
 
@@ -130,7 +132,7 @@ void PATHREPOSITORYMASTER::SetFileName(const CSTRING &name)
         count = 0;
         fscanf(file, "%d\n", &count);
         m_paths[i].resize(count);
-        m_names[i].assign(pathName, strlen(pathName));
+        m_names[i].assign(pathName);
         master->m_numPoints = count;
         for (j = 0; j < count; j++) {
             // The file's y and z are the other way round.
