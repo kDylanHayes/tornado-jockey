@@ -11,7 +11,8 @@ holder at `0x38`, and the map's loaded sky/glow resources at `0x18`/`0x1c`.
 Its own `std::string` is at `0x20c`; the timer is `0x0c`, the start flag
 `0x10`, the path times `0x228`/`0x22c`, the shared time `0x230`, the target
 point `0x234`, the two paths `0x240`/`0x244`, the elapsed time `0x248` and
-the flags at `0x24c`/`0x258`.
+the flags at `0x24c`/`0x258`. The target's `Update` frame is `0x84`,
+`LoadMap`'s is `0x10c`.
 
 The map object behind `0x20` keeps three pointer vectors at `+4` (objects),
 `+0x14` (paths) and `+0x24` (models), each with its end pointer at `+8`.
@@ -20,28 +21,41 @@ They are read through the target's own accessors
 `config/units.json`. A map object entry has its name at `+0`, its type at
 `+0x1c`, its point at `+0x38` and another string at `+0x20c`.
 
+## Functions
+
 `LoadMap` uppercases the path names and matches `CAMERAPATH` / `WINGPATH`;
-it creates one `MAPRESOURCE` (`0xd0` bytes) for each model and gives it to
-the camera holder; then it walks the object list and handles `WING`, `LOGO`,
-`CAMERA`, `TARGET`, `SKYBOX` and `GLOWSKYBOX`. The wing and logo cases build
-a 0x60-byte decoration from the object's name and set its name to the
-loader's `0x20c` string plus the object name. The sky and glow cases ask
-`FUN_00527550` whether the combined name exists and then load it through
-the manager at `0x04` (`FUN_004ff8c0`) into `0x18`/`0x1c`.
+it walks the model list and gives each model to the camera holder. The
+model is a `BONEDMODELDX8PARTICLEDESC` (`0xd0` bytes, real constructor and
+copy constructor at `0x4f7f40`/`0x4f8030` in `BONEDMODELDX8SD`): the map
+copies each model through its copy constructor. It then walks the object
+list and handles `WING`, `LOGO`, `CAMERA`, `TARGET`, `SKYBOX` and
+`GLOWSKYBOX`. The wing and logo cases build a 0x60-byte decoration from
+the object's name and set its name to the loader's `0x20c` string plus the
+object name. The sky and glow cases ask `FUN_00527550` whether the combined
+name exists and then load it through the manager at `0x04`
+(`FUN_004ff8c0`) into `0x18`/`0x1c`.
+
+`Update` runs the 1-second intro timer, creates the `"SUN"` particle
+descriptor (material 2, layer 0, position/color `V3(0,0,-15)`, direction
+`V3(30,30,30)`) and gives it to the second camera holder, advances the
+shared time `0x230` at 0.4/sec up to 2, follows the camera path at `0x240`
+into the camera's `0x1a8`/`0x1b4`, and builds the wing path's inverse view
+matrix at `0x244`.
+
+The `substr` instantiation the parser inlines is named at `0x004497c0` in
+`config/symbols.txt`; `UpperString` and `FindMapResource` are paired with
+their target `FUN_` symbols through `config/units.json`.
 
 ## Progress
 
-- `Update`: **64.34%** fuzzy. The timer, sun resource creation (the target
-  builds `V3(0,0,-15)`, `V3(30,30,30)`, `V3(0,0,-15)` and `"SUN"`), camera
-  path following and the inverse view matrix are in place. The remaining
-  gap is stack layout/register allocation: the target reuses one `MATRIX`
-  in place, reads the first camera target from an uninitialized `V3` slot
-  at `[esp+0xc]`, and lays the sun's `V3` arguments out differently.
-- `LoadMap`: **63.69%** fuzzy. All three list walks and the six name cases
-  are translated. The remaining differences are the `std::string`
-  temporaries: the target expands `substr`/`operator+`/`UpperString` into
-  a slightly different sequence of local strings and calls, and the
-  generated register allocation shifts the surrounding blocks.
+- `Update`: **82.08%** fuzzy (908 bytes). Remaining gap is codegen only:
+  block ordering in the intro timer, the target's bool test for `m_10`,
+  the dummy `V3` slot read into `m_1b4`, and the sun/path stack slots.
+- `LoadMap`: **67.44%** fuzzy (2864 bytes). All three list walks and the
+  six name cases are translated; the remaining gap is `std::string`
+  temporary stack offsets and loop register allocation.
 - `VectorTooLong`: 100%.
+
+Unit: 2.73% exact, 71.76% fuzzy, 106/3878 bytes, 1/3 functions.
 
 No image watermark affects the unit. It is left without `"complete": true`.

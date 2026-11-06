@@ -79,11 +79,15 @@ struct MAPDECOR
     char m_000[0x60];
 };
 
-// The 0xd0-byte model resource the map creates.
-struct MAPRESOURCE
+// The 0xd0-byte particle descriptor the map attaches to the camera. Its
+// constructor and copy constructor live in BONEDMODELDX8SD.
+class BONEDMODELDX8PARTICLEDESC
 {
-    MAPRESOURCE(int type, int flags, V3 *a, V3 *b, V3 *c, std::string name);
-    MAPRESOURCE(void *model);
+public:
+    BONEDMODELDX8PARTICLEDESC(const BONEDMODELDX8PARTICLEDESC &other);
+    BONEDMODELDX8PARTICLEDESC(std::string name, int material, int layer,
+                              const V3 *position, const V3 *direction, const V3 *color);
+
     char m_000[0xd0];
 };
 
@@ -111,15 +115,16 @@ void MAPLOADER::LoadMap(const char *name)
     for (int i = 0; map->m_pathsBegin != 0 && i < map->m_pathsEnd - map->m_pathsBegin; i++) {
         PATHOBJ *path = (PATHOBJ *)map->GetPath(i);
         std::string pathName = UpperString(path->m_name);
-        if (pathName.length() >= 10 && std::string(pathName, 0, 10) == "CAMERAPATH")
+        if (pathName.length() >= 10 && pathName.substr(0, 10) == "CAMERAPATH")
             m_240 = path;
-        else if (pathName.length() >= 8 && std::string(pathName, 0, 8) == "WINGPATH")
+        else if (pathName.length() >= 8 && pathName.substr(0, 8) == "WINGPATH")
             m_244 = path;
     }
 
     for (int i = 0; map->m_modelsBegin != 0 && i < map->m_modelsEnd - map->m_modelsBegin; i++) {
         void *model = map->GetModel(i);
-        MAPRESOURCE *resource = new MAPRESOURCE(model);
+        BONEDMODELDX8PARTICLEDESC *resource =
+            new BONEDMODELDX8PARTICLEDESC(*(BONEDMODELDX8PARTICLEDESC *)model);
         ((CAMERAOBJ *)m_38)->SetTarget(resource);
     }
 
@@ -128,14 +133,14 @@ void MAPLOADER::LoadMap(const char *name)
         std::string objectType = UpperString(object->m_type);
         std::string objectName = UpperString(object->m_name);
 
-        if (objectType.length() >= 4 && std::string(objectType, 0, 4) == "WING") {
+        if (objectType.length() >= 4 && objectType.substr(0, 4) == "WING") {
             if (objectName.length() > 0) {
                 std::string full = m_20c + objectName;
                 MAPDECOR *wing = new MAPDECOR(objectName.c_str(), objectName.length());
                 m_204 = wing;
                 wing->SetName(full.c_str());
             }
-        } else if (objectType.length() >= 4 && std::string(objectType, 0, 4) == "LOGO") {
+        } else if (objectType.length() >= 4 && objectType.substr(0, 4) == "LOGO") {
             if (objectName.length() > 0) {
                 std::string full = m_20c + objectName;
                 MAPDECOR *logo = new MAPDECOR(objectName.c_str(), objectName.length());
@@ -150,13 +155,15 @@ void MAPLOADER::LoadMap(const char *name)
             ((CAMERAOBJ *)m_24)->m_1b4 = *(V3 *)((char *)object + 0x38);
         } else if (objectType == "SKYBOX") {
             std::string full = m_20c + objectName;
-            char suffix = 0;
-            if (FindMapResource(&full, &suffix))
+            char suffix[12];
+            suffix[0] = 0;
+            if (FindMapResource(&full, suffix))
                 m_18 = ((MAPMANAGER *)m_04)->Load(name);
         } else if (objectType == "GLOWSKYBOX") {
             std::string full = m_20c + objectName;
-            char suffix = 0;
-            if (FindMapResource(&full, &suffix))
+            char suffix[12];
+            suffix[0] = 0;
+            if (FindMapResource(&full, suffix))
                 m_1c = ((MAPMANAGER *)m_04)->Load(name);
         }
     }
@@ -164,8 +171,8 @@ void MAPLOADER::LoadMap(const char *name)
 
 void MAPLOADER::Update(float dt)
 {
+    V3 point;
     int zero = 0;
-    V3 target;
     if (m_20 == (void *)zero)
         return;
 
@@ -177,21 +184,21 @@ void MAPLOADER::Update(float dt)
             m_24c = true;
 
             CAMERAOBJ *camera = (CAMERAOBJ *)m_24;
+            camera->m_1b4 = point;
             camera->m_1a8.x = 0.0f;
             camera->m_1a8.y = 0.0f;
             camera->m_1a8.z = -15.0f;
-            camera->m_1b4 = target;
 
             V3 position = camera->m_188;
-            CAMERAOBJ *holder = (CAMERAOBJ *)m_38;
-            holder->SetPosition(position);
+            ((CAMERAOBJ *)m_38)->SetPosition(position);
 
-            V3 a((float)zero, (float)zero, -15.0f);
-            V3 b(30.0f, 30.0f, 30.0f);
-            V3 c((float)zero, (float)zero, -15.0f);
-            MAPRESOURCE *resource = new MAPRESOURCE(2, 0, &a, &b, &c, std::string("SUN"));
-            holder->SetTarget(resource);
-            holder->SetAngles((float)zero, (float)zero, (float)zero);
+            BONEDMODELDX8PARTICLEDESC *resource =
+                new BONEDMODELDX8PARTICLEDESC(std::string("SUN"), 2, 0,
+                    &V3((float)zero, (float)zero, -15.0f),
+                    &V3(30.0f, 30.0f, 30.0f),
+                    &V3((float)zero, (float)zero, -15.0f));
+            ((CAMERAOBJ *)m_38)->SetTarget(resource);
+            ((CAMERAOBJ *)m_38)->SetAngles((float)zero, (float)zero, (float)zero);
             m_258 = true;
         }
     }
@@ -211,31 +218,22 @@ void MAPLOADER::Update(float dt)
         if (path->m_1c < m_228)
             m_228 = path->m_1c;
 
-        V3 point;
-        path->GetPoint(&point, m_228);
-
-        CAMERAOBJ *camera = (CAMERAOBJ *)m_24;
-        camera->m_1a8 = point;
-        camera->m_1b4 = m_234;
+        ((CAMERAOBJ *)m_24)->m_1a8 = *path->GetPoint(&point, m_228);
+        ((CAMERAOBJ *)m_24)->m_1b4 = m_234;
     }
 
     if (m_244 != 0 && m_204 != 0) {
-        PATHOBJ *path = (PATHOBJ *)m_244;
-        m_22c = m_230 * path->m_1c;
-        if (path->m_1c - 2.0f < m_22c)
-            m_22c = path->m_1c - 2.0f;
+        m_22c = m_230 * ((PATHOBJ *)m_244)->m_1c;
+        if (m_22c > ((PATHOBJ *)m_244)->m_1c - 2.0f)
+            m_22c = ((PATHOBJ *)m_244)->m_1c - 2.0f;
 
-        V3 point;
-        path->GetPoint(&point, m_22c);
-        V3 *target = (V3 *)((char *)m_204 + 0x50);
-        *target = point;
-
-        V3 eye;
-        path->GetPoint(&eye, m_22c + 2.0f);
-        V3 up((float)zero, 1.0f, (float)zero);
+        ((PATHOBJ *)m_244)->GetPoint(&point, m_22c);
+        *(V3 *)((char *)m_204 + 0x50) = *((PATHOBJ *)m_244)->GetPoint(&point, m_22c);
+        ((PATHOBJ *)m_244)->GetPoint(&point, m_22c + 2.0f);
 
         MATRIX view;
-        MatrixView(&view, &eye, target, &up);
+        MatrixView(&view, &point, (V3 *)((char *)m_204 + 0x50),
+                   &V3((float)zero, 1.0f, (float)zero));
         MatrixInverse(&view, &view);
         memcpy((char *)m_204 + 0x10, &view, sizeof(MATRIX));
     }
