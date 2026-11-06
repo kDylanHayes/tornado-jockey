@@ -21,7 +21,7 @@ public:
     ~TOKENS() { m_string.Free(); }
 #elif defined(TOKENS_INLINE_DTOR_CLEAR)
     // And the GUI behaviors saw it clearing the string.
-    ~TOKENS() throw() { m_string = (const char *)0; }
+    __forceinline ~TOKENS() { m_string = (const char *)0; }
 #else
     // Defined elsewhere.
     ~TOKENS();
