@@ -85,12 +85,18 @@ object at `0x004f97d0`-`0x004fa4af`: four 0xff-entry tables at `0x000`,
 in the other order. The three tiny accessors at `0x004f9830` etc. are already
 matched.
 
-The unit is 15.30% exact, 20.79% fuzzy, 12/19 functions (`function_status.py`
-counts 12/15 paired functions). Still open: `INTRO::Load` (the 989-byte intro
+The unit is 15.41% exact, 24.22% fuzzy, 12/19 functions (`function_status.py`
+counts 12/16 paired functions). Still open: `INTRO::Load` (the 989-byte intro
 screen), the `SETTINGS` constructor at `0x004f9660`, the 0x708-byte quality
 update at `0x004f9c40`, `SetQuality` at `0x004fa360` (written but not yet
 paired; its jump table extends past Ghidra's 0x130-byte extent), and the
-destructor at `0x004fa4b0`. The remaining blockers are the incomplete object layout
-around `0x1018`-`0x1038` (two `std::string`s overlapping the settings
-pointers), the unknown quality/hardware helpers, and the intro screen's own
-resource construction.
+destructor at `0x004fa4b0` (now written but only 74.50%: the target drops the
+last string's field resets after freeing its heap buffer, while our
+compiler-generated destructor keeps them).
+
+The remaining blockers are the incomplete object layout around
+`0x1018`-`0x1038` (two `std::string`s overlapping the settings pointers), the
+unknown quality/hardware helpers, and the intro screen's own resource
+construction. The constructor needs the `??_L`/`std::string[2]` allocation
+shape that keeps the pointer in `edi`; our compiler stores it through `eax`
+and is eight bytes longer.
