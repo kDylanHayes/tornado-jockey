@@ -116,6 +116,15 @@ struct QUADNODE
 struct HEIGHTMAPTEMP
 {
     HEIGHTMAPTEMP();
+    virtual ~HEIGHTMAPTEMP();
+
+    char *m_04;
+    char *m_08;
+    int m_0c;
+    int m_10;
+    bool m_14;
+    D3DXPLANE m_plane;
+    int m_28;
 };
 
 class HEIGHTMAPDX8MASTER : public RESOURCEMASTER

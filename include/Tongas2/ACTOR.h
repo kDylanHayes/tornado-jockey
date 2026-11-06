@@ -72,6 +72,8 @@ struct BOXCORNERS
     void ExtendHeight(float height);
     // The box around this one and other.
     void Merge(const BOXCORNERS &other);
+    // Grows the box to hold a point.
+    void Merge(const V3 &point);
 #endif
 
     ZEROV3 corners[8];

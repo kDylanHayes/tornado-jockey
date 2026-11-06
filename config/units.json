@@ -2974,7 +2974,10 @@
       ],
       "target": "build/target/Tongas2/HEIGHTMAPDECALDX8.obj",
       "source": "src/Tongas2/HEIGHTMAPDECALDX8.cpp",
-      "category": "engine"
+      "category": "engine",
+      "symbol_mappings": {
+        "FUN_004eb940": "??1HEIGHTMAPTEMP@@UAE@XZ"
+      }
     },
     {
       "name": "Tongas2/RENDERTEXTURE",
