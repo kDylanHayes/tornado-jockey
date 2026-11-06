@@ -45,6 +45,9 @@ direction the camera's `0x188` position, color `V3(30,30,30)`) and gives it
 to the second camera holder, advances the shared time `0x230` at 0.4/sec up
 to 2, follows the camera path at `0x240` into the camera's
 `0x1a8`/`0x1b4`, and builds the wing path's inverse view matrix at `0x244`.
+The target explicitly zeroes the six matrix elements that `MatrixView` does
+not write (`_14`, `_24`, `_34`, `_41`, `_42`, `_43`) just before copying the
+inverse into the decoration.
 
 The `substr` instantiation the parser inlines is named at `0x004497c0` in
 `config/symbols.txt`; `UpperString` and `FindMapResource` are paired with
@@ -52,23 +55,24 @@ their target `FUN_` symbols through `config/units.json`.
 
 ## Progress
 
-- `Update`: **90.77%** fuzzy (908 bytes; base 849). The camera-holder call
-  turned out to be a target-list release, not a position setter, and the
-  sun descriptor's direction is the camera position with a `(30,30,30)`
-  color. What remains is codegen only: the `V3` temporary/`point` stack
-  slots are swapped (target puts `point` at the lowest slot), plus the
-  target's SEH prologue instruction scheduling.
+- `Update`: **92.06%** fuzzy (908 bytes; base 906). The matrix zero-fill
+  accounts for the six missing stores, but the remaining difference is the
+  V3 stack-slot assignment: the target puts the uninitialized `point` at
+  the lowest slot (`-144`) and the `m_1a8`/color temporary at `-132`,
+  while this compiler does the reverse. The target's SEH prologue also
+  schedules `mov eax, fs:[0]` before `push -1`; both look like a compiler
+  build/scheduling difference rather than source.
 - `LoadMap`: **93.71%** fuzzy (2864 bytes; base 2901). The by-value
   `MAPMANAGER::Load` and `MAPDECOR::SetName` argument shapes are recovered
   (`0x48` and `0x40` bytes), as is the `(manager, type)` decoration
   constructor. The object loop caches `m_objectsBegin` so the compiler
   keeps its `!= 0` test at the top and emits the function epilogue at the
   end, matching the target's block order; the map pointer is read from
-  `m_20` directly. Remaining differences are the frame size (`0x118` vs
-  `0x10c`) and a handful of `ARG`/`REPLACE` rows from register/stack
-  allocation.
+  `m_20` directly. Frame is `0x118` vs the target's `0x10c`; using a scalar
+  suffix drops it to `0x110` but loses fuzzy alignment, so the 12-byte
+  suffix buffers are kept. The rest is register/stack allocation.
 - `VectorTooLong`: 100%.
 
-Unit: 2.73% exact, 93.19% fuzzy, 106/3878 bytes, 1/3 functions.
+Unit: 2.73% exact, 93.49% fuzzy, 106/3878 bytes, 1/3 functions.
 
 No image watermark affects the unit. It is left without `"complete": true`.
