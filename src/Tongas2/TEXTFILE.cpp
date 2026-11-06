@@ -4,18 +4,25 @@
 // function has its exact target size in config/symbols.txt so a later delink
 // cannot cut the target short.
 #include "Tongas2/TEXTFILE.h"
+#include "Tongas2/LOG.h"
 
+#include <stdlib.h>
+#include <string.h>
 #include <string>
 #include <vector>
 
 typedef std::vector<int> VI;
 typedef std::vector<VI> VV;
 
+extern "C" char s_TEXTFILE_file[] = "TEXTFILE - file does not exist: %s";
+bool FileExists(std::string *path, char *flag);
+
 class REFOBJ
 {
 public:
     void ReleaseA();
     void ReleaseB();
+    void Destroy();
 };
 
 class TRACK
@@ -39,6 +46,7 @@ public:
     int FindKey(int value);
     int *CopyTrack(int *dest, int index, int flags);
     int GetTrackOffset(int index);
+    void Destroy();
 
 private:
     char m_000;
@@ -72,6 +80,18 @@ private:
     std::vector<int> m_0a4;
 };
 
+class ANIMTRACK
+{
+public:
+    void GetPoint(V3 *out, unsigned i1, unsigned i2, float t);
+
+private:
+    char m_000[0x10];
+    V3 m_010;
+    char m_01c[0x88];
+    std::vector<V3> m_0a4;
+};
+
 class VECINT : public std::vector<int>
 {
 public:
@@ -97,18 +117,73 @@ public:
     READER *m_1c;
 };
 
+class STREAM
+{
+public:
+    virtual void v00();
+    virtual void Open(const char *name);
+    virtual void v08();
+    virtual int IsOpen();
+    virtual void v10();
+    virtual void v14();
+    virtual void v18();
+    virtual void v1c();
+    virtual char *GetString();
+};
+
+class TEXTREADER
+{
+public:
+    int Load(const std::string &name);
+    std::string ReadString();
+
+private:
+    STREAM *m_stream;
+};
+
 TOK::TOK() : m_000(0), m_004(0), m_008(0)
 {
 }
 
-TEXTFILE::TEXTFILE() : m_030(0), m_034(0), m_080(0)
+int TEXTREADER::Load(const std::string &name)
 {
+    char buffer[0x200];
+    const char *text = name.c_str();
+    if (text)
+        strncpy(buffer, text, 0x1ff);
+    else
+        buffer[0] = 0;
+    buffer[0x1ff] = 0;
+    m_stream->Open(buffer);
+    if (m_stream->IsOpen())
+        return 1;
+    bool found;
+    {
+        std::string local;
+        local = buffer;
+        char flag = 0;
+        found = FileExists(&local, &flag) != 0;
+    }
+    if (found) {
+        if (g_pLog)
+            g_pLog->ContentError(s_TEXTFILE_file, buffer);
+    }
+    return 0;
 }
 
-int TEXTFILE::Load(const char *name)
+std::string TEXTREADER::ReadString()
 {
-    (void)name;
-    return 0;
+    char *mem = m_stream->GetString();
+    std::string tmp;
+    if (mem) {
+        tmp = mem;
+        free(mem);
+    }
+    return tmp;
+}
+
+TEXTFILE::TEXTFILE() : m_030(0), m_034(0), m_080(0)
+{
 }
 
 void TEXTFILE::GetToken(void *buf, int size)
@@ -162,6 +237,48 @@ int PARTICLE::GetTrackOffset(int index)
 {
     TRACK **slot = &m_048[index];
     return (int)*slot + 0x5c;
+}
+
+void PARTICLE::Destroy()
+{
+    std::vector<int> dummy;
+    dummy.clear();
+    m_044->ReleaseA();
+    if (m_044) {
+        m_044->Destroy();
+        operator delete(m_044);
+        m_044 = 0;
+    }
+    for (unsigned i = 0; i < m_048.size(); i++) {
+        PARTICLEB *p = (PARTICLEB *)m_048[i];
+        if (p) {
+            p->DestroyMembers();
+            operator delete(p);
+            m_048[i] = 0;
+        }
+    }
+    m_048.clear();
+    m_074.clear();
+    m_058.clear();
+    m_048.clear();
+    m_034.clear();
+    m_01c.clear();
+}
+
+void ANIMTRACK::GetPoint(V3 *out, unsigned i1, unsigned i2, float t)
+{
+    if (m_0a4.size() == 0) {
+        *out = m_010;
+        return;
+    }
+    if (i1 >= m_0a4.size())
+        i1 = m_0a4.size() - 1;
+    if (i2 >= m_0a4.size())
+        i2 = m_0a4.size() - 1;
+    m_010.x = (m_0a4[i2].x - m_0a4[i1].x) * t + m_0a4[i1].x;
+    m_010.y = (m_0a4[i2].y - m_0a4[i1].y) * t + m_0a4[i1].y;
+    m_010.z = (m_0a4[i2].z - m_0a4[i1].z) * t + m_0a4[i1].z;
+    *out = m_010;
 }
 
 void __stdcall DestroyIntVector(VI *v)

@@ -30,7 +30,6 @@ class TEXTFILE
 {
 public:
     TEXTFILE();
-    int Load(const char *name);
     void GetToken(void *buf, int size);
 
 private:
