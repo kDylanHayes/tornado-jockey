@@ -3577,6 +3577,42 @@
       "target": "build/target/Tongas2/SOUNDFMOD.obj",
       "source": "src/Tongas2/SOUNDFMOD.cpp",
       "category": "engine"
+    },
+    {
+      "name": "Tongas2/ODEWORLD",
+      "ranges": [
+        "0x00548420-0x00548e3f"
+      ],
+      "target": "build/target/Tongas2/ODEWORLD.obj",
+      "source": "src/Tongas2/ODEWORLD.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/ODEGEOM",
+      "ranges": [
+        "0x00548e40-0x0054ab8f"
+      ],
+      "target": "build/target/Tongas2/ODEGEOM.obj",
+      "source": "src/Tongas2/ODEGEOM.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/ODEACTOR",
+      "ranges": [
+        "0x0054ab90-0x0054d34f"
+      ],
+      "target": "build/target/Tongas2/ODEACTOR.obj",
+      "source": "src/Tongas2/ODEACTOR.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/ODERAGDOLL",
+      "ranges": [
+        "0x0054d350-0x0054eebf"
+      ],
+      "target": "build/target/Tongas2/ODERAGDOLL.obj",
+      "source": "src/Tongas2/ODERAGDOLL.cpp",
+      "category": "engine"
     }
   ]
 }
