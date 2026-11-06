@@ -152,7 +152,11 @@ void CURVE::UpdateMesh()
     for (i = 0; i < m_numPoints; i++) {
         V3 side;
         if (master->m_lookCamera) {
-            V3 prev = i == 0 ? m_points[0] : m_points[i - 1];
+            V3 prev;
+            if (i == 0)
+                prev = m_points[0];
+            else
+                prev = m_points[i - 1];
             V3 next;
             if (i == m_numPoints - 1)
                 next = m_points[i];
@@ -163,24 +167,23 @@ void CURVE::UpdateMesh()
             side = CurveRightPoint(m_angles);
         }
         float length = side.Length();
-        float sx, sy, sz;
         if (length != 0.0f) {
             float inv = 1.0f / length;
-            sx = side.x * inv;
-            sy = side.y * inv;
-            sz = side.z * inv;
+            side.x *= inv;
+            side.y *= inv;
+            side.z *= inv;
         } else {
-            sx = sy = sz = 0.0f;
+            side.x = side.y = side.z = 0.0f;
         }
-        sx *= halfWidth;
-        sy *= halfWidth;
-        sz *= halfWidth;
-        m_vertices[i * 2].position.x = m_points[i].x - sx;
-        m_vertices[i * 2].position.y = m_points[i].y - sy;
-        m_vertices[i * 2].position.z = m_points[i].z - sz;
-        m_vertices[i * 2 + 1].position.x = sx + m_points[i].x;
-        m_vertices[i * 2 + 1].position.y = sy + m_points[i].y;
-        m_vertices[i * 2 + 1].position.z = sz + m_points[i].z;
+        side.x *= halfWidth;
+        side.y *= halfWidth;
+        side.z *= halfWidth;
+        m_vertices[i * 2].position.x = m_points[i].x - side.x;
+        m_vertices[i * 2].position.y = m_points[i].y - side.y;
+        m_vertices[i * 2].position.z = m_points[i].z - side.z;
+        m_vertices[i * 2 + 1].position.x = side.x + m_points[i].x;
+        m_vertices[i * 2 + 1].position.y = side.y + m_points[i].y;
+        m_vertices[i * 2 + 1].position.z = side.z + m_points[i].z;
     }
     float range = m_uv.right - m_uv.left - 0.05f;
     for (i = 0; i < m_numPoints; i++) {
