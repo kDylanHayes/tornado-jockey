@@ -3005,6 +3005,7 @@
       "target": "build/target/Tongas2/SIMPLEMODELDX8.obj",
       "source": "src/Tongas2/SIMPLEMODELDX8.cpp",
       "category": "engine",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /Op",
       "symbol_mappings": {
         "?Update@BONEDMODELRESOURCE@@UAEXXZ": "?Update@OBJECT@@UAEXXZ",
         "PTR_?DumpProps@CMDBASE@@UAE?AVSRESULT@@PAUCMDCALL@@@Z_00676530": "??_7SIMPLEMODELDX8MASTER@@6B@",

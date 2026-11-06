@@ -173,22 +173,32 @@ bool SIMPLEMODELDX8RESOURCE::SetCustomData(V3 *vertices, int numVertices, int nu
     m_numVertices = numVertices;
     m_customIndices = new char[numFaces * 6];
     m_customVertices = new DECALVERTEX[numVertices];
-    V3 *src = vertices;
+    float *src = (float *)vertices;
     int i = 0;
-    if (numVertices > 3) {
-        for (; i < numVertices - 3; i += 4) {
-            m_customVertices[i].position = *src++;
+    if (numVertices >= 4) {
+        for (; i <= numVertices - 4; i += 4) {
+            m_customVertices[i].position.x = *src++;
+            m_customVertices[i].position.y = *src++;
+            m_customVertices[i].position.z = *src++;
             m_customVertices[i].color = -1;
-            m_customVertices[i + 1].position = *src++;
+            m_customVertices[i + 1].position.x = *src++;
+            m_customVertices[i + 1].position.y = *src++;
+            m_customVertices[i + 1].position.z = *src++;
             m_customVertices[i + 1].color = -1;
-            m_customVertices[i + 2].position = *src++;
+            m_customVertices[i + 2].position.x = *src++;
+            m_customVertices[i + 2].position.y = *src++;
+            m_customVertices[i + 2].position.z = *src++;
             m_customVertices[i + 2].color = -1;
-            m_customVertices[i + 3].position = *src++;
+            m_customVertices[i + 3].position.x = *src++;
+            m_customVertices[i + 3].position.y = *src++;
+            m_customVertices[i + 3].position.z = *src++;
             m_customVertices[i + 3].color = -1;
         }
     }
     for (; i < numVertices; i++) {
-        m_customVertices[i].position = *src++;
+        m_customVertices[i].position.x = *src++;
+        m_customVertices[i].position.y = *src++;
+        m_customVertices[i].position.z = *src++;
         m_customVertices[i].color = -1;
     }
     return true;
@@ -262,8 +272,12 @@ void SIMPLEMODELDX8RESOURCE::AddMeshPart()
     }
     SetActive(true);
     m_lastLayer = -1;
-    m_lastPosition = V3(-1.0f, -1.0f, -1.0f);
-    m_lastScale = V3(-1.0f, -1.0f, -1.0f);
+    m_lastPosition.x = -1.0f;
+    m_lastPosition.y = -1.0f;
+    m_lastPosition.z = -1.0f;
+    m_lastScale.x = -1.0f;
+    m_lastScale.y = -1.0f;
+    m_lastScale.z = -1.0f;
     m_134 = ANG(-1.0f, -1.0f, -1.0f);
     m_mesh = mesh->m_handle;
     return;
