@@ -197,7 +197,8 @@ BONEDMODELDX8SDRESOURCE::~BONEDMODELDX8SDRESOURCE()
 {
     if (m_model) {
         DestroyAnimations();
-        g_pDisplay->m_2bc->ReleaseModel(m_model);
+        BONEDMODELDX8DISPLAY *display = g_pDisplay;
+        display->m_2bc->ReleaseModel(m_model);
         m_model = 0;
     }
     if (m_loader) {

@@ -71,7 +71,7 @@ class BONEDMODELRESOURCE : public OBJECT
 {
 public:
     BONEDMODELRESOURCE(BONEDMODELMASTER *master, const RESHANDLE &handle);
-    virtual ~BONEDMODELRESOURCE() {}
+    virtual ~BONEDMODELRESOURCE();
 
     // Resets the speed, then lets the model go.
     virtual void Virtual20()

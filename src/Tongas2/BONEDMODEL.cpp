@@ -152,6 +152,10 @@ void BONEDMODELMASTER::SetNormalizeNormals(const bool &normalize)
     m_normalizeNormals = normalize;
 }
 
+BONEDMODELRESOURCE::~BONEDMODELRESOURCE()
+{
+}
+
 BONEDMODELRESOURCE::BONEDMODELRESOURCE(BONEDMODELMASTER *master, const RESHANDLE &handle)
     : OBJECT(master, handle)
 {

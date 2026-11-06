@@ -3278,7 +3278,9 @@
                 "FUN_0051c130": "?Render@BONEDMODELDX8SYSTEM@@QAEXPAVBONEDMODELDX8RENDERERAPI@@PAXH@Z",
                 "FUN_004635cb": "?FUN_004635cb@@YAXPAUMATRIX@@MMMM@Z",
                 "FUN_0046378f": "?FUN_0046378f@@YAXPAUMATRIX@@PBX@Z",
-                "DAT_00677630": "_kDegToRad"
+                "DAT_00677630": "_kDegToRad",
+                "_m_50": "?ReleaseModel@BONEDMODELDX8DISPLAYCTX@@QAEXPAX@Z",
+                "?g_pDisplay@@3PAVAPPWINDOW@@A": "?g_pDisplay@@3PAVBONEDMODELDX8DISPLAY@@A"
             },
             "target": "build/target/Tongas2/BONEDMODELDX8SD.obj",
             "source": "src/Tongas2/BONEDMODELDX8SD.cpp",
