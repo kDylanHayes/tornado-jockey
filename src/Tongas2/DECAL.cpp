@@ -286,9 +286,10 @@ DECAL::DECAL(DECALMASTER *master, RESHANDLE handle)
     m_vertices[2].position.x = s_corners[2][0];
     m_vertices[2].position.y = s_corners[2][1];
     m_vertices[2].position.z = s_corners[2][2];
-    m_vertices[3].position.x = s_corners[3][0];
-    m_vertices[3].position.y = s_corners[3][1];
-    m_vertices[3].position.z = s_corners[3][2];
+    float *p3 = &m_vertices[3].position.x;
+    p3[0] = s_corners[3][0];
+    p3[1] = s_corners[3][1];
+    p3[2] = s_corners[3][2];
     m_hasColor = false;
 }
 
