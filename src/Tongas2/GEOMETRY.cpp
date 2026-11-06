@@ -413,15 +413,14 @@ bool CollideQuadSegment(QUAD3 *a, SEGMENT3 *b, V3 *pa, V3 *pb, float *depth, V3 
 
 bool CollideSphereSegment(SPHERE3 *a, SEGMENT3 *b, V3 *pa, V3 *pb, float *depth, V3 *normal)
 {
-    V3 center = a->GetCenter();
     float t;
-    float distance = b->DistanceSq(center, &t);
+    float distance = b->DistanceSq(a->GetCenter(), &t);
     if (normal)
         *normal = b->PointAt(t);
     if (depth)
         *depth = distance;
     if (pa)
-        *pa = b->PointAt(t) - center;
+        *pa = b->PointAt(t) - a->GetCenter();
     return distance <= a->GetRadiusSq();
 }
 
@@ -814,8 +813,8 @@ void CAPSULE3::Set(const V3 &center, const float &radius_, const float &height, 
     float bottom = height * -0.5f;
     V3 up;
     V3 down;
-    up = ((ANG &)angles).Transform(V3(0.0f, top, 0.0f));
     down = ((ANG &)angles).Transform(V3(0.0f, bottom, 0.0f));
+    up = ((ANG &)angles).Transform(V3(0.0f, top, 0.0f));
     GetSegmentRef().Set(up + center, down + center);
 }
 
@@ -855,10 +854,10 @@ void QUAD3::UpdateCorners()
     corners[1].Set(hx, 0.0f, -hz);
     corners[2].Set(-hx, 0.0f, hz);
     corners[3].Set(hx, 0.0f, hz);
-    corners[0] = center + angles.Transform(corners[0]);
-    corners[1] = center + angles.Transform(corners[1]);
-    corners[2] = center + angles.Transform(corners[2]);
-    corners[3] = center + angles.Transform(corners[3]);
+    corners[0] = angles.Transform(corners[0]) + center;
+    corners[1] = angles.Transform(corners[1]) + center;
+    corners[2] = angles.Transform(corners[2]) + center;
+    corners[3] = angles.Transform(corners[3]) + center;
     planeDirty = true;
     cornersDirty = false;
 }
@@ -923,9 +922,10 @@ void OOBOX3::SetAngles(const ANG &angles_)
 
 void OOBOX3::UpdateCorners()
 {
-    float hx = size.x * 0.5f;
-    float hy = size.y * 0.5f;
-    float hz = size.z * 0.5f;
+    V3 half = size;
+    float hx = half.x * 0.5f;
+    float hy = half.y * 0.5f;
+    float hz = half.z * 0.5f;
     corners[0].Set(-hx, -hy, -hz);
     corners[1].Set(hx, -hy, -hz);
     corners[2].Set(-hx, -hy, hz);
