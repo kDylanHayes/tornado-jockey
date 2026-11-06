@@ -79,6 +79,33 @@ private Ghidra project copy at
 `%LOCALAPPDATA%\tornado-jockey\ghidra-carve-tail`. The report and all four
 objdiff targets build without truncation panics.
 
+## SETTINGS matching
+
+The settings object shares its class name with the table object inside
+`INTRO`; both defined `SETTINGS::ClearAll`, so the delinker rejected the
+target with a duplicate-symbol error. The table object in `INTRO` was renamed
+`SETTINGSTABLE` (its methods and the `UpdateQuality` mapping moved with it);
+`SETTINGS` is now the queue/config object at `0x004fa5b0`.
+
+Three of the five functions are exact:
+
+- `?PopFront@SETTINGS@@QAEXXZ` (`0x004fa720`, 100%)
+- `?ClearAll@SETTINGS@@QAEXXZ` (`0x004fa780`, 100%)
+- `?Destroy@SETTINGS@@QAEXXZ` (`0x004fa820`, 100%, the `jmp ClearAll`)
+
+`??0SETTINGS` is 96.44% fuzzy: its length already matches the target's
+`0x16a` bytes, and the two `std::string` arguments, arrays and
+`SETTINGSTABLE` calls are in place; the remaining difference is the
+compiler's register allocation around `new std::string[2]` and the string
+assignments. `?Load@SETTINGS@@QAEXPBD@Z` is still
+the empty scaffold; it is the 0xc25-byte config.dat/JOYAXISMAP/JOYBUTTONMAP
+parser.
+
+The remaining blockers are the exact constructor argument order/register
+allocation and the parser's `std::string` token loop, whose helper names and
+globals (`FUN_005285c0`, `FUN_00528610`, `FUN_00528820`, ...) are still
+unrecovered. The unit stays incomplete.
+
 ## Matching started on TEXTUREDX8SD
 
 `TEXTUREDX8SD` is the smallest carve (2,773 bytes). `py
