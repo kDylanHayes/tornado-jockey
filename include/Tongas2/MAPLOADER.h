@@ -6,6 +6,8 @@
 #ifndef TONGAS2_MAPLOADER_H
 #define TONGAS2_MAPLOADER_H
 
+#include <string>
+
 #include "Tongas2/MATHS.h"
 
 class MAPLOADER
@@ -16,10 +18,14 @@ public:
 
 private:
     // Offsets recovered from the two functions' decompiler output.
-    char m_00[0xc];
+    char m_00[4];
+    void *m_04;
+    char m_08[4];
     float m_0c;
     bool m_10;
-    char m_11[0xf];
+    char m_11[7];
+    void *m_18;
+    void *m_1c;
     void *m_20;
     void *m_24;
     char m_28[0x10];
@@ -27,7 +33,7 @@ private:
     char m_3c[0x1c8];
     void *m_204;
     void *m_208;
-    char m_20c[0x1c];
+    std::string m_20c;
     float m_228;
     float m_22c;
     float m_230;

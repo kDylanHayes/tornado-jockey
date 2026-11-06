@@ -3239,7 +3239,17 @@
         "FUN_005177a0": "?Update@CAMERAOBJ@@QAEXXZ",
         "FUN_004f7f40": "??0MAPRESOURCE@@QAE@HHPAUV3@@00V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z",
         "FUN_00464edb": "?MatrixView@@YAXPAUMATRIX@@PBUV3@@11@Z",
-        "FUN_00462927": "?MatrixInverse@@YAXPAUMATRIX@@PBU1@@Z"
+        "FUN_00462927": "?MatrixInverse@@YAXPAUMATRIX@@PBU1@@Z",
+        "FUN_00517df0": "?GetPath@MAPDATA@@QAEPAXH@Z",
+        "FUN_00517e00": "?GetObject@MAPDATA@@QAEPAXH@Z",
+        "FUN_00517e10": "?GetModel@MAPDATA@@QAEPAXH@Z",
+        "FUN_004f82a0": "_UpperString",
+        "FUN_00527550": "_FindMapResource",
+        "FUN_004f8030": "??0MAPRESOURCE@@QAE@PAX@Z",
+        "FUN_005174a0": "??0MAPDECOR@@QAE@PBDH@Z",
+        "FUN_00517550": "?SetName@MAPDECOR@@QAEXPBD@Z",
+        "FUN_004ff8c0": "?Load@MAPMANAGER@@QAEPAXPBD@Z",
+        "FUN_004497c0": "?assign@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@ABV12@II@Z"
       }
     },
     {
