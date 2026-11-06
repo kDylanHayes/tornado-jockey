@@ -159,28 +159,29 @@ void CURVE::UpdateMesh()
                 next = m_points[i];
             else
                 next = m_points[i + 1];
-            V3 toCamera = m_points[i] - WorldToLocal(g_pCamera->GetWorldPosition());
-            side = CurveCross(next - prev, toCamera);
+            side = CurveCross(next - prev, m_points[i] - WorldToLocal(g_pCamera->GetWorldPosition()));
         } else {
             side = CurveRightPoint(m_angles);
         }
         float length = side.Length();
+        float sx, sy, sz;
         if (length != 0.0f) {
             float inv = 1.0f / length;
-            side.x = side.x * inv;
-            side.y = side.y * inv;
-            side.z = side.z * inv;
+            sx = side.x * inv;
+            sy = side.y * inv;
+            sz = side.z * inv;
         } else {
-            side.x = 0.0f;
-            side.y = 0.0f;
-            side.z = 0.0f;
+            sx = sy = sz = 0.0f;
         }
-        m_vertices[i * 2].position.x = m_points[i].x - side.x * halfWidth;
-        m_vertices[i * 2].position.y = m_points[i].y - side.y * halfWidth;
-        m_vertices[i * 2].position.z = m_points[i].z - side.z * halfWidth;
-        m_vertices[i * 2 + 1].position.x = side.x * halfWidth + m_points[i].x;
-        m_vertices[i * 2 + 1].position.y = side.y * halfWidth + m_points[i].y;
-        m_vertices[i * 2 + 1].position.z = side.z * halfWidth + m_points[i].z;
+        sx *= halfWidth;
+        sy *= halfWidth;
+        sz *= halfWidth;
+        m_vertices[i * 2].position.x = m_points[i].x - sx;
+        m_vertices[i * 2].position.y = m_points[i].y - sy;
+        m_vertices[i * 2].position.z = m_points[i].z - sz;
+        m_vertices[i * 2 + 1].position.x = sx + m_points[i].x;
+        m_vertices[i * 2 + 1].position.y = sy + m_points[i].y;
+        m_vertices[i * 2 + 1].position.z = sz + m_points[i].z;
     }
     float range = m_uv.right - m_uv.left - 0.05f;
     for (i = 0; i < m_numPoints; i++) {

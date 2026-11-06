@@ -62,9 +62,9 @@ void TESLA::Strike()
             m_points[m].x = (m_points[b].x + m_points[a].x) * 0.5f + x;
             m_points[m].y = (m_points[b].y + m_points[a].y) * 0.5f + y;
             m_points[m].z = (m_points[b].z + m_points[a].z) * 0.5f + z * scale;
+            m += half * 2;
             a += span;
             b += span;
-            m += half * 2;
         }
         scale *= 0.5f;
         half /= 2;
