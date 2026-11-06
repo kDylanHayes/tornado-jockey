@@ -2772,7 +2772,8 @@
       "category": "engine",
       "symbol_mappings": {
         "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z",
-        "?IsLoaded@SCREENDECAL@@UAE_NXZ": "?IsLoaded@HEIGHTMAPDX8@@UAE_NXZ"
+        "?IsLoaded@SCREENDECAL@@UAE_NXZ": "?IsLoaded@HEIGHTMAPDX8@@UAE_NXZ",
+        "FUN_004eb940": "??1HEIGHTMAPTEMP@@UAE@XZ"
       }
     },
     {
