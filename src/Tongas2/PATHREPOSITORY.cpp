@@ -99,23 +99,27 @@ void PATHREPOSITORYMASTER::SetFileName(const CSTRING &name)
     if (m_file.Length() <= 0)
         return;
 
+    char pathName[0x200];
+    FILE *file;
     STRING path;
     path.Format("%s%s%s", g_basePath, "data/art/", m_file.c_str());
-    FILE *file = fopen(path.c_str(), "rt");
+    file = fopen(path.c_str(), "rt");
     if (!file) {
         if (g_pLog)
             g_pLog->Error("PATHREPOSITYMASTER::SetFileName - file %s not found", path.c_str());
         return;
     }
 
-    char pathName[0x200];
     pathName[0] = 0;
     pathName[0x1ff] = 0;
     int total = 0;
     fscanf(file, "Total:%d\n", &total);
     m_paths.SetSize(total);
     m_names.resize(total);
-    for (int i = 0; i < total; i++) {
+    float x1, y1, z1, x2, y2, z2;
+    int count;
+    int i, j;
+    for (i = 0; i < total; i++) {
         fscanf(file, "%s[^\n]\n", pathName);
         PATHMASTER *master = (PATHMASTER *)g_pPATH->GetMaster(pathName);
         if (!master) {
@@ -123,14 +127,13 @@ void PATHREPOSITORYMASTER::SetFileName(const CSTRING &name)
             master->SetName(CSTRING(pathName));
             master->m_48 = false;
         }
-        int count = 0;
+        count = 0;
         fscanf(file, "%d\n", &count);
         m_paths[i].resize(count);
         m_names[i].assign(pathName, strlen(pathName));
         master->m_numPoints = count;
-        for (int j = 0; j < count; j++) {
+        for (j = 0; j < count; j++) {
             // The file's y and z are the other way round.
-            float x1, y1, z1, x2, y2, z2;
             int unused;
             fscanf(file, "[%f,%f,%f] [%f,%f,%f] %d\n", &x1, &y1, &z1, &x2, &y2, &z2, &unused);
             master->m_direction[j] = V3(x2, z2, y2) - V3(x1, z1, y1);
