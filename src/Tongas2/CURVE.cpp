@@ -165,9 +165,22 @@ void CURVE::UpdateMesh()
             side = CurveRightPoint(m_angles);
         }
         float length = side.Length();
-        V3 offset = (length != 0.0f ? side * (1.0f / length) : V3(0.0f, 0.0f, 0.0f)) * halfWidth;
-        m_vertices[i * 2].position = m_points[i] - offset;
-        m_vertices[i * 2 + 1].position = offset + m_points[i];
+        if (length != 0.0f) {
+            float inv = 1.0f / length;
+            side.x = side.x * inv;
+            side.y = side.y * inv;
+            side.z = side.z * inv;
+        } else {
+            side.x = 0.0f;
+            side.y = 0.0f;
+            side.z = 0.0f;
+        }
+        m_vertices[i * 2].position.x = m_points[i].x - side.x * halfWidth;
+        m_vertices[i * 2].position.y = m_points[i].y - side.y * halfWidth;
+        m_vertices[i * 2].position.z = m_points[i].z - side.z * halfWidth;
+        m_vertices[i * 2 + 1].position.x = side.x * halfWidth + m_points[i].x;
+        m_vertices[i * 2 + 1].position.y = side.y * halfWidth + m_points[i].y;
+        m_vertices[i * 2 + 1].position.z = side.z * halfWidth + m_points[i].z;
     }
     float range = m_uv.right - m_uv.left - 0.05f;
     for (i = 0; i < m_numPoints; i++) {

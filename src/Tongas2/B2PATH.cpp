@@ -42,8 +42,9 @@ bool B2FOLLOWMAXPATH::Init(const char *params)
 
 bool B2FOLLOWMAXPATH::Update(float dt)
 {
-    dt = m_time - dt;
-    m_time = dt;
+    float time = m_time - dt;
+    m_time = time;
+    dt = time;
     if (dt < 0.0f) {
         m_index++;
         int count = m_numPoints;
@@ -94,7 +95,8 @@ bool B2LOOKATPATH::Update(float dt)
     PATHV3 up;
     m_owner->Link07(&up, 0);
     up = V3(0.0f, 1.0f, 0.0f);
-    V3 dir = Normal(target - m_owner->Link05());
+    V3 from = target - m_owner->Link05();
+    V3 dir = Normal(from);
     Orthonormalize(up, dir);
     m_owner->Link08(up, dir);
     return true;
