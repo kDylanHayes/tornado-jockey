@@ -58,8 +58,7 @@ public:
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
-    virtual void Virtual30();
-    virtual void Start();
+    virtual void Virtual30();    virtual void Start();
     virtual void Stop();
     virtual void Update();
     virtual bool IsLoaded() { return true; }
@@ -67,8 +66,17 @@ public:
     virtual void SetLayer(int layer);
     virtual void SetFrame(int frame);
 
+    // Sets the actor the decal is attached to, and which of its resources.
+    SRESULT SetHmapFromActor(TOKENS **args);
+
     // Deletes the mesh and the vertex and normal arrays.
     void FreeMeshes();
+    // Makes the mesh and its buffers the first time it is drawn.
+    void CreateMesh();
+    // Works out the grid's vertices and normals from the heightmap.
+    void UpdateVertices();
+    // Draws the mesh.
+    void Render();
     // The heightmap the decal is drawn from, or 0.
     HEIGHTMAPDX8 *FindHeightmap();
     // Keeps the mesh lit only while the box is in the camera's frustum.
@@ -94,6 +102,7 @@ public:
     bool m_49c;
     D3DXMATRIX m_matrix;
     bool m_4e0;
+    bool m_4e1;
     int m_4e4;
     RESHANDLE m_hmap;
     RESHANDLE m_actor;

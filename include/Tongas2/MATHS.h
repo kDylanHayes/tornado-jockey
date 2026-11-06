@@ -65,6 +65,8 @@ struct MATRIX
     void RotateAxis(float angle, V3 axis);
     // The rotation by degrees about the Y axis.
     void RotateY(float degrees);
+    // The matrix of the rotation by degrees about the Z axis.
+    void SetRotationZ(float degrees);
     // The rotation that looks along direction from position.
     void LookAt(const V3 &position, const V3 &direction);
     // Defined in another unit: the matrix of cofactors.

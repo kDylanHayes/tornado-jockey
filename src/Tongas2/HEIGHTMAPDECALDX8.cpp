@@ -5,7 +5,9 @@
 #include <stdlib.h>
 
 #include "Tongas2/CAMERA.h"
+#include "Tongas2/LIGHT.h"
 #include "Tongas2/LOG.h"
+#include "Tongas2/SCENE.h"
 #include "Tongas2/RENDERSHADER.h"
 
 int HEIGHTMAPDECALDX8MASTER::s_classId;
@@ -21,6 +23,7 @@ PROPENTRY HEIGHTMAPDECALDX8MASTER::s_properties[] = {
 int HEIGHTMAPDECALDX8RESOURCE::s_classId;
 
 CMDENTRY HEIGHTMAPDECALDX8RESOURCE::s_commands[] = {
+    { "SetHmapFromActor", 0, 2, 3, (CMDFUNC)&HEIGHTMAPDECALDX8RESOURCE::SetHmapFromActor },
     { 0, 0, 0, 0, 0 },
 };
 
@@ -38,6 +41,85 @@ void HEIGHTMAPDECALDX8RESOURCE::RegisterCommands()
     g_classCommands[s_classId] = s_commands;
     HashCommands(s_commands);
     RegisterClassName(s_commands, "HEIGHTMAPDECALDX8RESOURCE", "RESOURCE");
+}
+
+
+// Grows the box so that it holds point, one axis at a time.
+void BOXCORNERS::Merge(const V3 &point)
+{
+    if (corners[0].x > point.x)
+        corners[0].x = point.x;
+    if (corners[0].y > point.y)
+        corners[0].y = point.y;
+    if (corners[0].z < point.z)
+        corners[0].z = point.z;
+    if (corners[1].x < point.x)
+        corners[1].x = point.x;
+    if (corners[1].y > point.y)
+        corners[1].y = point.y;
+    if (corners[1].z < point.z)
+        corners[1].z = point.z;
+    if (corners[2].x > point.x)
+        corners[2].x = point.x;
+    if (corners[2].y > point.y)
+        corners[2].y = point.y;
+    if (corners[2].z > point.z)
+        corners[2].z = point.z;
+    if (corners[3].x < point.x)
+        corners[3].x = point.x;
+    if (corners[3].y > point.y)
+        corners[3].y = point.y;
+    if (corners[3].z > point.z)
+        corners[3].z = point.z;
+    if (corners[4].x > point.x)
+        corners[4].x = point.x;
+    if (corners[4].y < point.y)
+        corners[4].y = point.y;
+    if (corners[4].z < point.z)
+        corners[4].z = point.z;
+    if (corners[5].x < point.x)
+        corners[5].x = point.x;
+    if (corners[5].y < point.y)
+        corners[5].y = point.y;
+    if (corners[5].z < point.z)
+        corners[5].z = point.z;
+    if (corners[6].x > point.x)
+        corners[6].x = point.x;
+    if (corners[6].y < point.y)
+        corners[6].y = point.y;
+    if (corners[6].z > point.z)
+        corners[6].z = point.z;
+    if (corners[7].x < point.x)
+        corners[7].x = point.x;
+    if (corners[7].y < point.y)
+        corners[7].y = point.y;
+    if (corners[7].z > point.z)
+        corners[7].z = point.z;
+}
+
+// The matrix of the rotation by degrees about the Z axis.
+void MATRIX::SetRotationZ(float degrees)
+{
+    _13 = 0.0f;
+    _14 = 0.0f;
+    float rad = -degrees;
+    rad *= 0.017453292f;
+    float c = (float)cos(rad);
+    _23 = 0.0f;
+    _24 = 0.0f;
+    _31 = 0.0f;
+    _32 = 0.0f;
+    _33 = 1.0f;
+    _34 = 0.0f;
+    _41 = 0.0f;
+    _42 = 0.0f;
+    _43 = 0.0f;
+    _44 = 1.0f;
+    float s = (float)sin(rad);
+    _11 = c;
+    _12 = -s;
+    _21 = s;
+    _22 = c;
 }
 
 HEIGHTMAPDECALDX8MASTER::HEIGHTMAPDECALDX8MASTER(RESOURCEMANAGER *manager, const char *name)
@@ -203,6 +285,69 @@ void HEIGHTMAPDECALDX8RESOURCE::Stop()
 
 void HEIGHTMAPDECALDX8RESOURCE::Update()
 {
+    OBJECT::Update();
+    if (!m_active)
+        return;
+    CreateMesh();
+    HEIGHTMAPDX8 *heightmap = FindHeightmap();
+    if (heightmap) {
+        if (m_488 != heightmap->m_710) {
+            m_488 = heightmap->m_710;
+            m_48c = false;
+        }
+        if (m_498 != heightmap->m_matrixSerial) {
+            m_498 = heightmap->m_matrixSerial;
+            m_49c = false;
+        }
+    }
+    if (m_scale.x != m_d8.x || m_scale.y != m_d8.y || m_scale.z != m_d8.z) {
+        m_d8 = m_scale;
+        m_48c = false;
+    }
+    if (m_angles != m_134) {
+        m_134 = m_angles;
+        m_48c = false;
+    }
+    if (m_position.x != m_c0.x || m_position.y != m_c0.y || m_position.z != m_c0.z) {
+        m_c0 = m_position;
+        m_48c = false;
+    }
+    if (m_layer != m_lastLayer) {
+        m_lastLayer = m_layer;
+        m_4e1 = false;
+        m_4e0 = false;
+    }
+    if (((HEIGHTMAPDECALDX8MASTER *)m_master)->m_userFolder) {
+        int count = ((LIGHTMANAGER *)g_pLIGHT)->GetMaxCount(m_1ac);
+        if (m_4e4 != count) {
+            m_4e4 = count;
+            m_4e1 = false;
+            m_4e0 = false;
+        }
+    }
+    UpdateVertices();
+    if (!m_49c) {
+        heightmap = FindHeightmap();
+        if (heightmap) {
+            m_matrix = heightmap->m_matrix;
+            m_4e0 = false;
+            m_49c = true;
+        }
+    }
+    UpdateVisibility();
+    Render();
+}
+
+void HEIGHTMAPDECALDX8RESOURCE::CreateMesh()
+{
+}
+
+void HEIGHTMAPDECALDX8RESOURCE::UpdateVertices()
+{
+}
+
+void HEIGHTMAPDECALDX8RESOURCE::Render()
+{
 }
 
 void HEIGHTMAPDECALDX8RESOURCE::SetLayer(int layer)
@@ -227,8 +372,55 @@ void HEIGHTMAPDECALDX8RESOURCE::Virtual30()
     OBJECT::Init();
 }
 
+SRESULT HEIGHTMAPDECALDX8RESOURCE::SetHmapFromActor(TOKENS **args)
+{
+    const char *name = args[0]->GetToken(1);
+    const char *index = args[0]->GetToken(2);
+    int resource = atoi(index);
+    ACTOR *actor = (ACTOR *)g_pScene->FindActor(name);
+    if (actor) {
+        m_actor = actor->m_handle;
+        m_500 = resource;
+    }
+    return SRESULT(true);
+}
+
 HEIGHTMAPDX8 *HEIGHTMAPDECALDX8RESOURCE::FindHeightmap()
 {
+    RESOURCE *resource = g_pResources->GetResource(m_hmap);
+    if (resource)
+        return (HEIGHTMAPDX8 *)resource;
+
+    m_hmap.Invalidate();
+    m_48c = false;
+    m_49c = false;
+    if (m_actor.serial >= 0 && m_actor.index >= 0) {
+        ACTOR *actor = (ACTOR *)g_pScene->GetActor(m_actor);
+        if (!actor) {
+            m_actor.Invalidate();
+        } else if (m_500 >= 0) {
+            RESOURCE *copy = g_pResources->GetResource(actor->m_copies[m_500]);
+            if (copy) {
+                int managerId = g_pHEIGHTMAPDX8->m_id;
+                if (copy->GetManagerId() == managerId)
+                    return (HEIGHTMAPDX8 *)copy;
+            }
+            if (g_pLog)
+                g_pLog->Error("resource idx of actor specified for decal has no active heightmap!");
+        } else {
+            RESOURCE *copy = actor->FindResourceCopy(g_pHEIGHTMAPDX8->m_id);
+            if (copy)
+                return (HEIGHTMAPDX8 *)copy;
+            if (g_pLog)
+                g_pLog->Error("actor specified for decal has no active heightmap!");
+        }
+    }
+
+    RESOURCE *editing = g_pResources->GetResource(((HEIGHTMAPDX8MANAGER *)g_pHEIGHTMAPDX8)->m_editing);
+    if (editing) {
+        m_hmap = editing->m_handle;
+        return (HEIGHTMAPDX8 *)editing;
+    }
     return 0;
 }
 
