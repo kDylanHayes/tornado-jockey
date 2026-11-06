@@ -3038,7 +3038,17 @@
       ],
       "target": "build/target/Tongas2/MAPLOADER.obj",
       "source": "src/Tongas2/MAPLOADER.cpp",
-      "category": "engine"
+      "category": "engine",
+      "symbol_mappings": {
+        "FUN_00517aa0": "?SetPosition@CAMERAOBJ@@QAEXUV3@@@Z",
+        "FUN_00517a80": "?SetTarget@CAMERAOBJ@@QAEXPAX@Z",
+        "FUN_005178a0": "?SetAngles@CAMERAOBJ@@QAEXMMM@Z",
+        "FUN_00527ec0": "?GetPoint@PATHOBJ@@QAEPAUV3@@PAU2@M@Z",
+        "FUN_005177a0": "?Update@CAMERAOBJ@@QAEXXZ",
+        "FUN_004f7f40": "??0MAPRESOURCE@@QAE@HHPAUV3@@00V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z",
+        "FUN_00464edb": "?MatrixView@@YAXPAUMATRIX@@PBUV3@@11@Z",
+        "FUN_00462927": "?MatrixInverse@@YAXPAUMATRIX@@PBU1@@Z"
+      }
     },
     {
       "name": "Tongas2/INTRO",

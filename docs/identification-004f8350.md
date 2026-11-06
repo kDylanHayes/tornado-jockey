@@ -44,3 +44,28 @@ is trailing `int3` padding removed by `tools/split_functions.py`.
 
 Verified with the original `Tornado.exe` (SHA-1 `20bf7200...06bc`); the report
 and both units' objdiff targets build without truncation panics.
+
+## Matching progress
+
+`Tongas2/MAPLOADER` has one exact function:
+
+- `?VectorTooLong@@YAXXZ` at `0x004f9210` (the `std::vector<T>` length
+  check, 100%). The Dinkumware template emits exactly the target code when a
+  vector operation in this unit forces `_Xlen` out of line. Its symbol size is
+  `0x6a`, not Ghidra's `0x69`: the compiler's trailing `int3` is part of the
+  function section and is what makes objdiff report 100% instead of 95.65%.
+
+`?Update@MAPLOADER@@QAEXM@Z` has a working translation of the decompiled
+timer, camera and path logic and scores 60.86% fuzzy; it is still partial.
+`?LoadMap@MAPLOADER@@QAEXPBD@Z` is still the empty scaffold. The unit is
+currently 2.73% exact, 17.08% fuzzy, 1/3 functions.
+
+The blockers are the same for both remaining functions: the class's identity
+and base class are unknown, and the two paths and the camera holder are
+opaque helper objects whose methods and types live in uncarved units. The
+`Update` translation uses descriptive helper names (`CAMERAOBJ`, `PATHOBJ`,
+`MAPRESOURCE`) and pairs them with the target's `FUN_` names through
+`symbol_mappings`; the stack layout of `MAPRESOURCE`'s 0xd0-byte construction
+and the matrix helpers are still guesses, and `LoadMap` is a 2,864-byte
+`std::string`-heavy parser that needs the same class layout before it can be
+written exactly.
