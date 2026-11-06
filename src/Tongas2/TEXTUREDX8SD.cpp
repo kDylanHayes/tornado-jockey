@@ -168,8 +168,9 @@ TEXTUREDX8SDMASTER::TEXTUREDX8SDMASTER(RESOURCEMANAGER *manager, const char *nam
         }
     }
 
+    const unsigned int *nameValue = (const unsigned int *)name;
     const unsigned int *rgbPrefix = (const unsigned int *)g_rgbPrefix;
-    if (*(const unsigned int *)name == *rgbPrefix) {
+    if (*nameValue == *rgbPrefix) {
         sscanf(name + 4, "%d %d %d %d %d",
                base + 0x6c, base + 0x70, base + 0x74, base + 0x78, base + 0x7c);
         *(bool *)(base + 0x68) = true;
