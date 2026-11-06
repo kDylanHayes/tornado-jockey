@@ -51,9 +51,17 @@ py tools\unit_status.py Tongas2/YOURUNIT --functions
 ```
 
 `unit_status.py` prints the unit's exact and fuzzy percentages and its
-unmatched functions, worst first. Fuzzy 100% is not the same as exact: a unit
-is complete only when objdiff reports 100% matched code and data. For a
-one-function look, `objdiff-cli diff` accepts the target and base objects:
+unmatched functions, worst first. `function_status.py` gives the exact
+per-function percentages from a one-shot objdiff diff; use it because a
+function can be fuzzy 100% and still not byte-exact:
+
+```powershell
+py tools\function_status.py Tongas2/YOURUNIT
+```
+
+Fuzzy 100% is not the same as exact: a unit is complete only when objdiff
+reports 100% matched code and data. For a one-function look, `objdiff-cli
+diff` accepts the target and base objects:
 
 ```powershell
 tools\objdiff\objdiff-cli.exe diff -1 build\target\Tongas2\YOURUNIT.obj -2 build\src\Tongas2\YOURUNIT.obj '?Symbol@@...' --format json-pretty
