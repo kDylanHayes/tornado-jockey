@@ -195,10 +195,16 @@ void OBJECT::SetAngles(ANG angles)
 
 void OBJECT::Init()
 {
-    m_lastPosition = V3(-100.0f, -100.0f, -100.0f);
-    m_lastScale = V3(-100.0f, -100.0f, -100.0f);
-    m_c0 = V3(-100.0f, -100.0f, -100.0f);
-    m_d8 = V3(-100.0f, -100.0f, -100.0f);
+    {
+        V3 minusHundred(-100.0f, -100.0f, -100.0f);
+        m_lastPosition = minusHundred;
+        m_lastScale = minusHundred;
+    }
+    {
+        V3 minusHundred(-100.0f, -100.0f, -100.0f);
+        m_c0 = minusHundred;
+        m_d8 = minusHundred;
+    }
     m_134 = ANG(-1.0f, -1.0f, -1.0f);
     m_lastLayer = -1;
     m_1a0 = -1;

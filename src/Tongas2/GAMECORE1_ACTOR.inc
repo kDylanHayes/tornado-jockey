@@ -387,7 +387,7 @@ int ACTOR::GetFactoryId()
 
 V2 V2::Normalized() const
 {
-    float length = (float)sqrt(y * y + x * x);
+    float length = (float)sqrt(x * x + y * y);
     if (length == 0.0f)
         return V2(0.0f, 0.0f);
     float r = 1.0f / length;
