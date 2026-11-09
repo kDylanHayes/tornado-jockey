@@ -39,7 +39,7 @@ public:
     virtual int Virtual08();
     virtual void *Virtual09(const char *name);
     virtual void Virtual13();
-    virtual void Virtual14();
+    virtual const char *Virtual14();
 
     // Masters of most types have no copies.
     virtual RESOURCE *CreateCopy(const RESHANDLE &handle);

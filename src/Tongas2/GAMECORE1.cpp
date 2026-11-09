@@ -12,11 +12,14 @@
 #include <string>
 #include <map>
 
+extern "C" __declspec(dllimport) void __stdcall Sleep(unsigned long);
+
 #include "Tongas2/ACTOR.h"
 #include "Tongas2/CSTRING.h"
 #include "Tongas2/CMDBASE.h"
 #include "Tongas2/CPRIMITIVE3.h"
 #include "Tongas2/FIXEDWSTRING.h"
+#include "Tongas2/RESOURCE.h"
 #include "Tongas2/SAFEINDEX.h"
 #include "Tongas2/STRING.h"
 #include "Tongas2/TOKENS.h"
@@ -287,8 +290,7 @@ void SRESULT::Assign(const SRESULT &other)
         char value = other.GetChar(0);
         if (m_type != SRT_CHAR) {
             FreeValue();
-            SRESULTTYPE type = SRT_CHAR;
-            SetType(type);
+            SetType(SRT_CHAR);
         }
         m_value.c = value;
         break;
@@ -297,8 +299,7 @@ void SRESULT::Assign(const SRESULT &other)
         int value = other.GetInt(0);
         if (m_type != SRT_INT) {
             FreeValue();
-            SRESULTTYPE type = SRT_INT;
-            SetType(type);
+            SetType(SRT_INT);
         }
         m_value.i = value;
         break;
@@ -313,8 +314,7 @@ void SRESULT::Assign(const SRESULT &other)
         float value = other.GetFloat(0.0f);
         if (m_type != SRT_FLOAT) {
             FreeValue();
-            SRESULTTYPE type = SRT_FLOAT;
-            SetType(type);
+            SetType(SRT_FLOAT);
         }
         m_value.f = value;
         break;
@@ -323,8 +323,7 @@ void SRESULT::Assign(const SRESULT &other)
         bool value = other.GetBool(false);
         if (m_type != SRT_BOOL) {
             FreeValue();
-            SRESULTTYPE type = SRT_BOOL;
-            SetType(type);
+            SetType(SRT_BOOL);
         }
         m_value.b = value;
         break;
@@ -333,8 +332,7 @@ void SRESULT::Assign(const SRESULT &other)
         V3 value = other.GetV3(V3(0.0f, 0.0f, 0.0f));
         if (m_type != SRT_V3) {
             FreeValue();
-            SRESULTTYPE type = SRT_V3;
-            SetType(type);
+            SetType(SRT_V3);
         }
         *m_value.v3 = value;
         break;
@@ -343,8 +341,7 @@ void SRESULT::Assign(const SRESULT &other)
         V2 value = other.GetV2(V2(0.0f, 0.0f));
         if (m_type != SRT_V2) {
             FreeValue();
-            SRESULTTYPE type = SRT_V2;
-            SetType(type);
+            SetType(SRT_V2);
         }
         *m_value.v2 = value;
         break;
@@ -353,8 +350,7 @@ void SRESULT::Assign(const SRESULT &other)
         ANG value = other.GetANG(ANG(0.0f, 0.0f, 0.0f));
         if (m_type != SRT_ANG) {
             FreeValue();
-            SRESULTTYPE type = SRT_ANG;
-            SetType(type);
+            SetType(SRT_ANG);
         }
         *m_value.ang = value;
         break;
@@ -363,8 +359,7 @@ void SRESULT::Assign(const SRESULT &other)
         RGB value = other.GetRGB(RGB());
         if (m_type != SRT_RGB) {
             FreeValue();
-            SRESULTTYPE type = SRT_RGB;
-            SetType(type);
+            SetType(SRT_RGB);
         }
         *m_value.rgb = value;
         break;
@@ -438,3 +433,35 @@ void MATRIX::LookAt(const V3 &dir, const V3 &up)
 }
 
 #include "GAMECORE1_ACTOR.inc"
+
+const char *CMDBASE::Virtual14()
+{
+    return m_name.c_str();
+}
+
+void RESOURCE::SetActive(bool active)
+{
+    if (active) {
+        if (!m_active) {
+            int i = 0;
+            while (!IsLoaded()) {
+                if (g_pLog) {
+                    g_pLog->Error("WARNING!!!! waiting for resource %s copy %d that is NOT loaded and must be activated",
+                                  m_master->m_name.c_str(), m_handle.index, m_handle.serial);
+                }
+                Sleep(50);
+                i++;
+                if (i == 50)
+                    break;
+            }
+            if (i == 50 && g_pLog)
+                g_pLog->Error("ERROR!!!! RESOURCE WAS NOT LOADED!!! MAYBE THIS WILL CRASH THE APP");
+            Start();
+            m_active = true;
+        }
+    }
+    else if (m_active) {
+        Stop();
+        m_active = false;
+    }
+}

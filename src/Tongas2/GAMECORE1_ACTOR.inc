@@ -403,6 +403,40 @@ PLANE::PLANE(const V3 &normal, const V3 &point)
 
 template void DYNAMICARRAY<int>::Clear();
 
+void MATRIX::Invert()
+{
+    float *m = &_11;
+    for (int i = 0; i < 4; i++) {
+        for (int j = i + 1; j < 4; j++) {
+            float t = m[j * 4 + i];
+            m[j * 4 + i] = m[i * 4 + j];
+            m[i * 4 + j] = t;
+        }
+    }
+}
+
+void MATRIX::ToEuler(float *z, float *y, float *x)
+{
+    *y = (float)asin(-_23);
+    if (*y < 1.5707964f) {
+        if (*y > -1.5707964f) {
+            *z = (float)atan2(_21, _22);
+            *x = (float)atan2(_13, _33);
+        }
+        else {
+            *x = 0.0f;
+            *z = -(float)atan2(-_31, _11);
+        }
+    }
+    else {
+        *x = 0.0f;
+        *z = (float)atan2(-_31, _11);
+    }
+    *y = -*y * 57.29578f;
+    *x = -*x * 57.29578f;
+    *z = -*z * 57.29578f;
+}
+
 void MATRIX::RotateY(float degrees)
 {
     float radians = -degrees;

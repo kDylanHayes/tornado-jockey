@@ -25,7 +25,11 @@ struct V3
 
     // The point transformed by m, translation included.
     V3 Transform(const MATRIX &m) const;
+#ifdef V3_ISZERO_OUTOFLINE
+    bool IsZero() const;
+#else
     bool IsZero() const { return x == 0.0f && y == 0.0f && z == 0.0f; }
+#endif
 #ifdef V3_LENGTH_OUTOFLINE
     float Length() const;
 #else

@@ -4,7 +4,7 @@
 0x00401f60 ??0STRING@@QAE@XZ function
 0x00401f80 ?Length@STRING@@QAEHXZ function 0x36
 0x00401fc0 ??0PRIMV2@@QAE@XZ function
-0x004024a0 ?SafeSwprintf@@YAHPAGPBGZZ function 0x1d
+0x004024a0 ?SafeSwprintf@@YAHPA_WPB_WZZ function 0x1d
 0x004024e0 ??_9@$BNM@AE function
 0x004024f0 ??_9@$BLM@AE function
 0x00402500 ??_9@$BJM@AE function
@@ -31,12 +31,12 @@
 0x00402730 ??1SRESULT@@UAE@XZ function 0xb
 0x00402740 ??_GSRESULT@@UAEPAXI@Z function 0x24
 0x00402770 ??4CSTRING@@QAEAAV0@PBD@Z function
-0x004027b0 ?SetActive@RESOURCE@@QAEX_N@Z function
+0x004027b0 ?SetActive@RESOURCE@@QAEX_N@Z function 0xc3
 0x00402880 ?SafeSprintf@@YAHPADPBDZZ function
 0x00402b80 ?Free@STRINGMANAGER@@QAEXAAH0@Z function
 0x00402c90 ?Normalize@V3@@QAEXXZ function
 0x00402cf0 ?Normalized@V3@@QBE?AU1@XZ function
-0x00402f00 ?Virtual14@CMDBASE@@UAEXXZ function
+0x00402f00 ?Virtual14@CMDBASE@@UAEPBDXZ function
 0x00402f10 ?Virtual08@RESOURCES@@UAEHXZ function
 0x004037d0 ?LookAt@MATRIX@@QAEXABUV3@@0@Z function
 0x00403ae0 ?SetName@CMDBASE@@UAEXABVCSTRING@@@Z function
@@ -127,7 +127,7 @@
 0x0040ad20 ?RotateY@MATRIX@@QAEXM@Z function
 0x0040add0 ?Clear@?$DYNAMICARRAY@UFONTCHAR@@@@QAEXXZ function 0x3a
 0x0040add0 ?Clear@?$DYNAMICARRAY@H@@QAEXXZ function 0x3a
-0x0040af70 ?Invert@MATRIX@@QAEXXZ function
+0x0040af70 ?Invert@MATRIX@@QAEXXZ function 0xc9
 0x0040b0a0 ??D@YA?AUMATRIX@@ABU0@0@Z function
 0x0040b380 ??_9@$BCEM@AE function
 0x0040b3b0 ??_9@$BCFA@AE function
@@ -146,12 +146,12 @@
 0x004103f0 ?Length@V3@@QBEMXZ function
 0x00410420 ??8@YA_NABURGB@@0@Z function
 0x00410730 ?GetFactoryId@ACTOR@@UAEHXZ function 0x6
-0x00410c30 ?ToEuler@MATRIX@@QAEXPAM00@Z function
+0x00410c30 ?ToEuler@MATRIX@@QAEXPAM00@Z function 0x9d
 0x00411980 ??0PLANE@@QAE@ABUV3@@0@Z function 0x4c
 0x00411ad0 ?Rotate@V3@@QBE?AU1@U1@M@Z function
 0x00411f70 ?GetEulerX@ANG@@QAEMXZ function
-0x00420d80 ?SetMaxSpawnTime@SPAWNER@@UAEXABM@Z function 0xd
-0x00420d90 ?SetMaxSpawns@SPAWNER@@UAEXABH@Z function 0xd
+0x00420d80 ?SetMaxSpawnTime@SPAWNER@@UAEXABM@Z function 0xf
+0x00420d90 ?SetMaxSpawns@SPAWNER@@UAEXABH@Z function 0xf
 0x004214f0 ??Y?$FIXEDSTRING@$0CAA@@@QAEXPBD@Z function
 0x004232a0 ?Virtual122@ACTOR@@UAEXXZ function
 0x004262f0 ??8@YA_NABUV3@@0@Z function
@@ -170,7 +170,7 @@
 0x0043c8d0 ??_9@$BJE@AE function
 0x0043cb20 ?SupportsICCProfiles@@YAJXZ function
 0x0043cb30 ?SetGroupMask@RESOURCEMASTER@@UAEXABH@Z function
-0x0043cb40 ?Virtual14@RESOURCEMASTER@@UAEXXZ function
+0x0043cb40 ?Virtual14@RESOURCEMASTER@@UAEPBDXZ function
 0x0043d2e0 ?Stop@BONEDMODELRESOURCE@@UAEXXZ function 0x8
 0x0043d540 ?Rotate@ANG@@QAEXABU1@@Z function
 0x0043d5d0 ??1CSTRING@@QAE@XZ function 0x1a

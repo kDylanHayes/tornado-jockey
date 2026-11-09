@@ -3667,7 +3667,9 @@
       "category": "game",
       "cflags": "/nologo /c /O2 /MT /GX /W3 /Zc:wchar_t",
       "symbol_mappings": {
-        "?SafeSwprintf@@YAHPAGPBGZZ": "?SafeSwprintf@@YAHPA_WPB_WZZ"
+        "?SafeSwprintf@@YAHPAGPBGZZ": "?SafeSwprintf@@YAHPA_WPB_WZZ",
+        "?GetUnicodeString@SRESULT@@QBEPBGPBG@Z": "?GetUnicodeString@SRESULT@@QBEPB_WPB_W@Z",
+        "?SetValue@SRESULT@@QAEXPBG@Z": "?SetValue@SRESULT@@QAEXPB_W@Z"
       }
     },
     {

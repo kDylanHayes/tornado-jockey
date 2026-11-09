@@ -149,7 +149,7 @@ public:
     virtual void GetShortStringAttribute(FIXEDSTRING<0x200> &out, const char *name, int index);
     virtual void Virtual13();
     // Defined elsewhere; DumpProperties calls it first.
-    virtual void Virtual14();
+    virtual const char *Virtual14();
     // The seteval command: sets a property to the value of an expression.
     virtual SRESULT SetEval(CMDCALL *call);
     // The set command: sets properties from their values' text.

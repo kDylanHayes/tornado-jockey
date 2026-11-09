@@ -68,8 +68,13 @@ public:
     virtual V3 GetSize() { return m_size; }
 
     virtual void SetWaitTime(const V2 &time) { m_waitTime = time; }
+#ifdef SPAWNER_SETTERS_OUTOFLINE
+    virtual void SetMaxSpawnTime(const float &time);
+    virtual void SetMaxSpawns(const int &max);
+#else
     virtual void SetMaxSpawnTime(const float &time) { m_maxSpawnTime = time; }
     virtual void SetMaxSpawns(const int &max) { m_maxSpawns = max; }
+#endif
     virtual void SetTargetCommand(const STRING &command) { m_targetCommand = command; }
     virtual void SetEnabled(const bool &enabled)
     {

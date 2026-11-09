@@ -83,6 +83,9 @@ struct ANG
         return euler.x;
     }
 #endif
+#ifdef ANG_EULER_OUTOFLINE
+    float GetEulerY();
+#else
     float GetEulerY()
     {
         if (flags & EULER_DIRTY) {
@@ -91,6 +94,10 @@ struct ANG
         }
         return euler.y;
     }
+#endif
+#ifdef ANG_EULER_OUTOFLINE
+    float GetEulerZ();
+#else
     float GetEulerZ()
     {
         if (flags & EULER_DIRTY) {
@@ -99,6 +106,10 @@ struct ANG
         }
         return euler.z;
     }
+#endif
+#ifdef ANG_EULER_OUTOFLINE
+    void GetEuler(float *x, float *y, float *z);
+#else
     void GetEuler(float *x, float *y, float *z)
     {
         if (flags & EULER_DIRTY) {
@@ -109,6 +120,7 @@ struct ANG
         *y = euler.y;
         *z = euler.z;
     }
+#endif
 #ifdef TONGAS2_CORE_OUTOFLINE
     MATRIX GetMatrix();
 #else
