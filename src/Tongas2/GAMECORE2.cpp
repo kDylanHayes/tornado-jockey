@@ -339,6 +339,16 @@ G2D2::~G2D2()
 {
 }
 
+class G2EFFECT : public ACTOR
+{
+public:
+    virtual ~G2EFFECT();
+};
+
+G2EFFECT::~G2EFFECT()
+{
+}
+
 struct ZEROV2 : V2
 {
     ZEROV2() : V2(0.0f, 0.0f) {}
