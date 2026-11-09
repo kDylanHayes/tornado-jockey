@@ -296,14 +296,37 @@ void G2START::Start()
     G2MID::Start();
     m_1150 = 0;
 }
+class BONEDMODELDX8PARTICLE
+{
+public:
+    void Destroy();
+};
+
 class G2D1 : public ACTOR
 {
 public:
     virtual ~G2D1();
+
+    void ClearParticle();
+
+    V3 m_ccc;
+    V3 m_cd8;
+    BONEDMODELDX8PARTICLE *m_ce4;
 };
 
 G2D1::~G2D1()
 {
+}
+
+void G2D1::ClearParticle()
+{
+    BONEDMODELDX8PARTICLE *particle = m_ce4;
+    if (particle) {
+        particle->Destroy();
+        free(particle);
+        m_ce4 = 0;
+    }
+    g_pRenderer->m_enabled = true;
 }
 
 class G2D2 : public ACTOR
@@ -1534,7 +1557,7 @@ void G2RULESOBJ::Update()
         position.y += (float)rand() * (200.0f / RAND_MAX) - 100.0f;
         position.z += (float)rand() * (200.0f / RAND_MAX) - 100.0f;
         ANG angles(0.0f, 0.0f, 0.0f);
-        angles.SetEuler((float)rand() * (360.0f / RAND_MAX), 0.0f, 0.0f);
+        angles.SetEuler(rand() * (360.0f / RAND_MAX), 0.0f, 0.0f);
         ACTOR *actor = g_pGame->CreateStormChaser(m_f48.m_buf, position, angles,
                                                   *(float *)((char *)tornado + 0x984));
         actor->SetActivation(1);
@@ -1659,8 +1682,8 @@ void G2CHAIN::D()
             continue;
         if (!forest->m_e3cc)
             continue;
-        V3 tornadoPos = tornado->GetPosition();
-        V3 forestPos = forest->GetPosition();
+        const V3 &tornadoPos = tornado->GetPosition();
+        const V3 &forestPos = forest->GetPosition();
         V2 delta(tornadoPos.x - forestPos.x, tornadoPos.z - forestPos.z);
         if (delta.Length() < best) {
             V2 screen(0.0f, 0.0f);
