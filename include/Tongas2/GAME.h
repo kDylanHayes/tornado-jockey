@@ -24,6 +24,8 @@ public:
     static void RegisterCommands();
     // The tornado actor the scene knows by the saved handle.
     ACTOR *GetTornado();
+    // The level rules actor the scene knows by the saved handle.
+    ACTOR *GetRules();
     // The scenario actor the scene knows by the saved handle.
     WTACTOR *GetScenario();
     // Makes the level rules current.

@@ -7850,3 +7850,6 @@
 0x0040d760 ?GetTerrainPosition@WTACTOR@@QAE?AUV3@@U2@@Z function 0x6a
 0x0042b4c0 ?CreatePowerup@G2FORESTOBJ@@QAEXXZ function 0xd6
 0x006ae868 ?s_factoryId@G2POWERUP@@2HA data 0x4
+0x0042b5d0 ?CheckTrees@G2FORESTOBJ@@QAEXXZ function 0xd8
+0x00402340 ?GetRules@GAME@@QAEPAVACTOR@@XZ function 0x49
+0x0042b6b0 ?LoadTrees@G2FORESTOBJ@@QAEXXZ function 0x117

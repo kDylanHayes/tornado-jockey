@@ -640,15 +640,38 @@ public:
     virtual void SetMaxCommands(const int &max);
     virtual void SetSpawnAngleDelta(const float &delta);
     virtual void SetWaitOnFirst(const bool &wait);
+
+    char m_0000[0xcd0 - 0xccc];
+    float m_cd0;
+};
+
+class G2FORESTOBJ;
+
+class G2RULEHOOK : public ACTOR
+{
+public:
+    virtual void Virtual143();
+    virtual void Virtual144();
+    virtual void Virtual145();
+    virtual void Virtual146();
+    virtual void Virtual147();
+    virtual void Virtual148();
+    virtual void Virtual149();
+    virtual void Virtual150();
+    virtual void AddForest(G2FORESTOBJ *forest);
 };
 
 class G2FORESTOBJ : public ACTOR
 {
 public:
     RESHANDLE m_handle;
-    char m_cd8[0xcec - 0xcd8];
+    bool m_cd8;
+    char m_cd9[0xce8 - 0xcd9];
+    int m_ce8;
     RESHANDLE m_handles[32];
-    char m_d64[0xdeb4 - 0xe6c];
+    char m_e6c[0x119c - 0xe6c];
+    char m_names[0xd99c - 0x119c];
+    int m_indices[0x146];
     int m_a[100];
     int m_b[100];
     char m_bytes[100];
@@ -657,11 +680,66 @@ public:
     unsigned char m_e3cc;
     char m_e3cd[0xe3d0 - 0xe3cd];
     int m_count;
+    char m_e3d4[0xe5dc - 0xe3d4];
+    int m_e5dc;
+    int m_e5e0;
 
     void Clear();
     void UpdateActors();
     void CreatePowerup();
+    void CheckTrees();
+    void LoadTrees();
 };
+
+void G2FORESTOBJ::LoadTrees()
+{
+    int *p = m_d;
+    int rows = 10;
+    do {
+        int c = 10;
+        do {
+            p[-0xe1] = 0;
+            *p = 0;
+            p++;
+        } while (--c);
+    } while (--rows);
+    for (int i = 0; i < m_ce8; i++) {
+        char *name = (char *)this + 0x119c + i * 0x200;
+        if (!g_pScene->FindActor(name)) {
+            if (g_pLog)
+                g_pLog->Error("Can't get tree %s!", (char *)this + 0x119c + i * 0x200);
+            return;
+        }
+        int idx = m_indices[i];
+        int col = idx % m_e5e0;
+        int row = (idx - col) / m_e5e0;
+        int cell = row * 10 + col;
+        float value = ((float *)m_a)[cell] + 10.0f;
+        m_d[cell] = m_d[cell] + 1;
+        ((float *)m_a)[cell] = value;
+    }
+}
+
+void G2FORESTOBJ::CheckTrees()
+{
+    m_cd8 = false;
+    for (int r = 0; r < m_e5dc; r++) {
+        for (int c = 0; c < m_e5e0; c++) {
+            if (m_bytes[r * 10 + c] != 0)
+                m_cd8 = true;
+        }
+    }
+    if (!m_cd8) {
+        G2RULEHOOK *rules = (G2RULEHOOK *)g_pGame->GetRules();
+        if (rules)
+            rules->AddForest(this);
+        G2POWERUP *actor = (G2POWERUP *)g_pScene->GetActor(m_handle);
+        if (actor && actor->GetFactoryId() == G2POWERUP::s_factoryId) {
+            actor->SetWaitOnFirst(false);
+            actor->m_cd0 = 0.1f;
+        }
+    }
+}
 
 void G2FORESTOBJ::CreatePowerup()
 {
