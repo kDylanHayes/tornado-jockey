@@ -4,6 +4,7 @@
 #define ANG_EULER_OUTOFLINE
 #define V3_ISZERO_OUTOFLINE
 #define SPAWNER_SETTERS_OUTOFLINE
+#define V2_ROTATE_OUTOFLINE
 
 #include <new>
 
@@ -347,7 +348,7 @@ public:
     virtual ~G2D5();
 
     char m_0000[0x113c - 0xccc];
-    void *m_113c;
+    void *volatile m_113c;
 };
 
 G2D5::~G2D5()
@@ -390,7 +391,77 @@ __declspec(noinline) void G2MID2::Stop()
     ACTOR::Stop();
 }
 
-class G2CHAIN
+class G2GAMEVT
+{
+public:
+    virtual void V00();
+    virtual void V01();
+    virtual void V02();
+    virtual void V03();
+    virtual void V04();
+    virtual void V05();
+    virtual void V06();
+    virtual void V07();
+    virtual void V08();
+    virtual void V09();
+    virtual void V10();
+    virtual void V11();
+    virtual void V12();
+    virtual void V13();
+    virtual void V14();
+    virtual void V15();
+    virtual void V16();
+    virtual void V17();
+    virtual void V18();
+    virtual void V19();
+    virtual void V20();
+    virtual void V21();
+    virtual void V22();
+    virtual void V23();
+    virtual void V24();
+    virtual bool V25();
+    virtual void V26();
+    virtual void V27();
+    virtual void V28();
+    virtual void V29();
+    virtual void V30();
+    virtual void V31();
+    virtual void V32();
+    virtual void V33();
+    virtual void V34();
+    virtual void V35();
+    virtual void V36();
+    virtual void V37();
+    virtual void V38();
+    virtual void V39();
+    virtual void V40();
+    virtual void V41();
+    virtual void V42();
+    virtual void V43();
+    virtual void V44();
+    virtual void V45();
+    virtual void V46();
+    virtual void V47();
+    virtual void V48();
+    virtual void V49();
+    virtual void V50();
+    virtual void V51();
+    virtual void V52();
+    virtual void V53();
+    virtual void V54();
+    virtual void V55();
+    virtual void V56();
+    virtual void V57();
+    virtual void V58();
+    virtual void V59();
+    virtual void V60();
+    virtual void V61();
+    virtual void V62();
+    virtual void V63();
+    virtual void V64();
+};
+
+class G2CHAIN : public ACTOR
 {
 public:
     void A();
@@ -399,7 +470,31 @@ public:
     void D();
     void E();
     void Run();
+
+    char m_0000[0x1bd8 - 0xccc];
+    int m_1bd8;
+    int m_1bdc;
 };
+
+__declspec(noinline) void G2CHAIN::A()
+{
+    ACTOR::Update();
+}
+
+void G2CHAIN::E()
+{
+    if (!((G2GAMEVT *)g_pGame)->V25())
+        return;
+    ACTOR *tornado = g_pGame->GetTornado();
+    if (!tornado)
+        return;
+    if (*(float *)((char *)tornado + 0x2a38) > 0.0f)
+        return;
+    if (m_1bdc < m_1bd8)
+        ((G2GAMEVT *)g_pGame)->V64();
+    else
+        g_pGame->ShowStageResult();
+}
 
 void G2CHAIN::Run()
 {
@@ -715,7 +810,38 @@ public:
     void CreateMaxPowerup();
     void DumpGrid();
     void LoadModels(const char *name);
+    V2 WorldToCell(V3 point);
 };
+
+V2 G2FORESTOBJ::WorldToCell(V3 point)
+{
+    float radius = 0.0f;
+    ACTOR *tornado = g_pGame->GetTornado();
+    if (tornado)
+        radius = *(float *)((char *)tornado + 0x25e0);
+
+    V2 offset = V2(m_position.x, m_position.z) -
+                V2(m_occludingBox.x, m_occludingBox.z).Rotate(m_angles.GetEulerX() * 0.017453292f) * 0.5f;
+    V2 local = V2(point.x, point.z) - offset;
+    const V2 &cell = local.Rotate(-m_angles.GetEulerX() * 0.017453292f);
+    float cx = cell.x;
+    float cy = cell.y;
+    if (cx < -radius || cy < -radius ||
+        cx > radius + m_occludingBox.x ||
+        cy > radius + m_occludingBox.z)
+        return V2(-1.0f, -1.0f);
+    int row = (int)floor((float)m_e5dc / m_occludingBox.x * cx);
+    int col = (int)floor((float)m_e5e0 / m_occludingBox.z * cy);
+    if (row < 0)
+        row = 0;
+    if (m_e5dc < row)
+        row = m_e5dc;
+    if (col < 0)
+        col = 0;
+    if (m_e5e0 < col)
+        col = m_e5e0;
+    return V2((float)row, (float)col);
+}
 
 void G2FORESTOBJ::DumpGrid()
 {

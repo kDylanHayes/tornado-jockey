@@ -24,6 +24,8 @@ public:
     static void RegisterCommands();
     // The tornado actor the scene knows by the saved handle.
     ACTOR *GetTornado();
+    // Shows the stage results screen.
+    void ShowStageResult();
     // The level rules actor the scene knows by the saved handle.
     ACTOR *GetRules();
     // The scenario actor the scene knows by the saved handle.

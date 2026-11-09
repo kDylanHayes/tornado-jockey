@@ -15,6 +15,10 @@ struct V2
     float Length() const { return (float)sqrt(x * x + y * y); }
     // The vector scaled to length 1; zero stays zero. Defined elsewhere.
     V2 Normalized() const;
+#ifdef V2_ROTATE_OUTOFLINE
+    // The vector turned by angle degrees. Defined elsewhere.
+    V2 Rotate(float angle) const;
+#endif
 };
 
 inline V2 operator-(const V2 &a, const V2 &b)

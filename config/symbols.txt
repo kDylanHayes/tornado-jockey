@@ -7859,3 +7859,6 @@
 0x0042bd20 ?DumpGrid@G2FORESTOBJ@@QAEXXZ function 0x8c
 0x0042bdb0 ?LoadModels@G2FORESTOBJ@@QAEXPBD@Z function 0x125
 0x006cb240 ?g_pTreeModels@@3PAVRESOURCEMANAGER@@A data 0x4
+0x0042bb10 ?WorldToCell@G2FORESTOBJ@@QAE?AUV2@@UV3@@@Z function 0x207
+0x00402010 ?Rotate@V2@@QBE?AU1@M@Z function 0x88
+0x00405230 ?ShowStageResult@GAME@@QAEXXZ function 0xe0
