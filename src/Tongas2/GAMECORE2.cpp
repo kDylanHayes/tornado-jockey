@@ -6,13 +6,9 @@
 #define SPAWNER_SETTERS_OUTOFLINE
 #define V2_ROTATE_OUTOFLINE
 
-// The contact the actor lists hold; only the list plumbing matters here.
-struct CONTACT
-{
-    int m_type;
-};
 
 #include <new>
+#include <wchar.h>
 
 #include "Tongas2/FIXEDSTRING.h"
 #include "Tongas2/MATHS.h"
@@ -133,44 +129,6 @@ int G2CSTRING::Length() const
     return (int)strlen(m_str);
 }
 
-struct G2VALUE
-{
-    unsigned int m_a, m_b, m_c;
-};
-
-struct G2NODE
-{
-    G2NODE *m_next;
-    G2NODE *m_prev;
-    G2VALUE m_value;
-};
-
-class G2LIST
-{
-public:
-    G2NODE *m_head;
-    G2NODE *Buynode();
-    G2NODE *InsertNode(G2NODE *next, G2NODE *prev, const G2VALUE &value);
-};
-
-G2NODE *G2LIST::Buynode()
-{
-    G2NODE *node = new G2NODE;
-    new (&node->m_next) G2NODE *(node);
-    new (&node->m_prev) G2NODE *(node);
-    return node;
-}
-
-G2NODE *G2LIST::InsertNode(G2NODE *next, G2NODE *prev, const G2VALUE &value)
-{
-    G2NODE *node = new G2NODE;
-    if (node) {
-        node->m_next = next;
-        node->m_prev = prev;
-        node->m_value = value;
-    }
-    return node;
-}
 struct G2V2F
 {
     float x, y;
@@ -503,9 +461,36 @@ public:
     virtual void V64();
 };
 
+struct ZEROV2 : V2
+{
+    ZEROV2() : V2(0.0f, 0.0f) {}
+    ZEROV2 &operator=(const V2 &v)
+    {
+        V2::operator=(v);
+        return *this;
+    }
+};
+
+template <int N>
+struct WIDESTRING
+{
+    WIDESTRING()
+    {
+        m_buf[0] = 0;
+        m_buf[N - 1] = 0;
+    }
+    void Set(const wchar_t *text)
+    {
+        wcsncpy(m_buf, text, N - 1);
+        m_buf[N - 1] = 0;
+    }
+    wchar_t m_buf[N];
+};
+
 class G2CHAIN : public G2RULESOBJBASE, public INPUTLISTENER
 {
 public:
+    G2CHAIN();
     virtual ~G2CHAIN();
 
     void A();
@@ -514,13 +499,70 @@ public:
     void D();
     void E();
     void Run();
+    void AddContact(const RESHANDLE &handle);
 
-    char m_0000[0x1bcc - 0xf44 - sizeof(INPUTLISTENER)];
-    std::list<CONTACT> m_contacts;
+    float m_f48;
+    int m_f4c;
+    ZEROV2 m_f50;
+    float m_f58;
+    int m_f5c;
+    ZEROV2 m_f60;
+    ZEROV2 m_f68;
+    ZEROV2 m_f70;
+    ZEROV2 m_f78;
+    int m_f80;
+    int m_f84;
+    bool m_f88;
+    char m_f89[0xf8a - 0xf89];
+    WIDESTRING<0x200> m_w1;
+    WIDESTRING<0x200> m_w2;
+    WIDESTRING<0x200> m_w3;
+    char m_1b8a[0x1b8c - 0x1b8a];
+    int m_1b8c[16];
+    std::list<RESHANDLE> m_contacts;
     int m_1bd8;
     int m_1bdc;
-    std::list<CONTACT> m_contacts2;
+    std::list<RESHANDLE> m_contacts2;
+    int m_1bec;
+    int m_1bf0;
+    RESHANDLE m_1bf4;
+    RESHANDLE m_1c00;
+    int m_1c0c;
 };
+
+void G2CHAIN::AddContact(const RESHANDLE &handle)
+{
+    m_contacts.push_back(handle);
+}
+
+G2CHAIN::G2CHAIN()
+{
+    m_f4c = 3;
+    m_f50 = V2(2.0f, 2.0f);
+    m_f60 = V2(30.0f, 60.0f);
+    m_f48 = 0.005f;
+    m_f58 = 120.0f;
+    m_f5c = 0;
+    m_f68 = V2(30.0f, 60.0f);
+    m_f70 = V2(60.0f, 120.0f);
+    m_f78 = V2(60.0f, 120.0f);
+    m_f80 = 1000000;
+    m_f84 = 100000;
+    m_f88 = true;
+    m_w1.Set(L"0");
+    m_w2.Set(L"0");
+    m_w3.Set(L"0");
+    for (int i = 0; i < 16; i++)
+        m_1b8c[i] = 0;
+    m_1bd8 = 0;
+    m_1bdc = 0;
+    m_1bec = 0;
+    m_1bf0 = 0;
+    m_1bf4 = RESHANDLE(-1, -1, 0);
+    m_1c00 = RESHANDLE(-1, -1, 0);
+    m_1c0c = 0;
+    SetPriority(5);
+}
 
 G2CHAIN::~G2CHAIN()
 {

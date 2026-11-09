@@ -7754,9 +7754,9 @@
 0x0042aec0 ?Set@?$G2PADC@$0BDIK@$0EAA@@@QAEXAAY0EAA@$$CBE@Z function 0x18
 0x0042aee0 ?Set@?$G2PADC@$0BHIK@$0EAA@@@QAEXAAY0EAA@$$CBE@Z function 0x18
 0x00421eb0 ?Length@G2CSTRING@@QBEHXZ function 0x1a
-0x0042a040 ?Buynode@G2LIST@@QAEPAUG2NODE@@XZ function 0x1a
+0x0042a040 ?_Buynode@?$list@URESHANDLE@@V?$allocator@URESHANDLE@@@std@@@std@@IAEPAU_Node@?$_List_nod@URESHANDLE@@V?$allocator@URESHANDLE@@@std@@@2@XZ function 0x1a
 0x0041fdf0 ?Update@G2ACTOR@@UAEXXZ function 0x13
-0x0042a060 ?InsertNode@G2LIST@@QAEPAUG2NODE@@PAU2@0ABUG2VALUE@@@Z function 0x37
+0x0042a060 ?_Buynode@?$list@URESHANDLE@@V?$allocator@URESHANDLE@@@std@@@std@@IAEPAU_Node@?$_List_nod@URESHANDLE@@V?$allocator@URESHANDLE@@@std@@@2@PAU342@0ABURESHANDLE@@@Z function 0x37
 0x004214c0 ?SetPosition2D@G2FLAGS@@QAEXXZ function 0x27
 0x00421b90 ?Set@G2PAIR@@QAEXHH@Z function 0x21
 0x0041fd30 ??1G2ACTOR@@UAE@XZ function 0x12
@@ -7869,3 +7869,4 @@
 0x0065b8e0 ??_7G2CHAIN@@6BCMDBASE@@@ data
 0x0065b8a0 ??_7G2CHAIN@@6BACTORLINK@@@ data
 0x0065bbac ??_7G2CHAIN@@6B@ data
+0x0042b060 ?_Incsize@?$list@URESHANDLE@@V?$allocator@URESHANDLE@@@std@@@std@@IAEXI@Z function 0x93

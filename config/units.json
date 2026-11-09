@@ -3681,7 +3681,8 @@
       "source": "src/Tongas2/GAMECORE2.cpp",
       "category": "game",
       "symbol_mappings": {
-        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z"
+        "?term_source@@YAXPAUjpeg_decompress_struct@@@Z": "?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z",
+        "?clear@?$list@UCONTACT@@V?$allocator@UCONTACT@@@std@@@std@@QAEXXZ": "?clear@?$list@URESHANDLE@@V?$allocator@URESHANDLE@@@std@@@std@@QAEXXZ"
       }
     },
     {
