@@ -9,6 +9,7 @@
 
 #include "Tongas2/FIXEDSTRING.h"
 #include "Tongas2/MATHS.h"
+#include "Tongas2/GAME.h"
 #include "Tongas2/RENDERER.h"
 #include "Tongas2/TIMER.h"
 #include "Tongas2/SPAWNER.h"
@@ -559,4 +560,66 @@ void G2FOREST::RegisterCommands()
     g_classCommands[s_classId] = s_commands;
     HashCommands(s_commands);
     RegisterClassName(s_commands, "FOREST", "ACTOR");
+}
+struct G2INT3
+{
+    int x, y, z;
+    G2INT3() {}
+    G2INT3(int x_, int y_, int z_) : x(x_), y(y_), z(z_) {}
+};
+
+class G2RULESOBJBASE : public ACTOR
+{
+public:
+    G2RULESOBJBASE();
+    virtual ~G2RULESOBJBASE();
+
+    FIXEDSTRING<0x200> m_name;
+    G2INT3 m_entries[10];
+};
+
+G2RULESOBJBASE::G2RULESOBJBASE()
+{
+    G2INT3 *p = m_entries;
+    for (int i = 10; i != 0; i--) {
+        p->x = -1;
+        p->y = -1;
+        p->z = 0;
+        p++;
+    }
+    m_name.Set("HudNormal");
+}
+
+__declspec(noinline) G2RULESOBJBASE::~G2RULESOBJBASE()
+{
+    if (g_pGame)
+        g_pGame->ResetRules();
+}
+
+class G2RULESOBJ : public G2RULESOBJBASE
+{
+public:
+    G2RULESOBJ();
+    virtual ~G2RULESOBJ();
+
+    int m_f44;
+    FIXEDSTRING<0x200> m_f48;
+    int m_1148;
+    float m_114c;
+    float m_1150;
+    int m_1154;
+};
+
+G2RULESOBJ::G2RULESOBJ()
+{
+    m_1150 = 0.0f;
+    m_1154 = 0;
+    m_f44 = 10;
+    m_f48.Set("");
+    m_1148 = 0;
+    m_114c = 1.0f;
+}
+
+G2RULESOBJ::~G2RULESOBJ()
+{
 }

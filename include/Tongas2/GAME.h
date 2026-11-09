@@ -19,6 +19,8 @@ public:
     virtual ~GAME();
 
     static void RegisterCommands();
+    // Resets the level rule pointers.
+    void ResetRules();
 
     virtual int GetClassId() { return s_classId; }
     virtual int GetParentClassId() { return g_classParents[s_classId]; }
