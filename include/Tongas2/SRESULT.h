@@ -209,6 +209,8 @@ struct ANG
     // The translation plus the right axis of the matrix.
     V3 GetRightPoint();
 #endif
+    // Sets the euler angles and marks the matrix dirty.
+    void SetEuler(const float &x, const float &y, const float &z);
     // Turns the angles to face a direction.
     void PointAt(const V3 &direction);
 

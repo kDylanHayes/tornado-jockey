@@ -601,6 +601,7 @@ class G2RULESOBJ : public G2RULESOBJBASE
 public:
     G2RULESOBJ();
     virtual ~G2RULESOBJ();
+    virtual void Update();
 
     int m_f44;
     FIXEDSTRING<0x200> m_f48;
@@ -676,4 +677,42 @@ void G2TORNADOCMD::HandleTornado(CMDCALL *call)
     ACTOR *tornado = g_pGame->GetTornado();
     if (tornado)
         return tornado->OnTornadoCreated(call);
+}
+__declspec(noinline) void ANG::SetEuler(const float &x, const float &y, const float &z)
+{
+    if (euler.x != x) {
+        euler.x = x;
+        flags = MATRIX_DIRTY;
+    }
+    if (euler.y != y) {
+        euler.y = y;
+        flags = MATRIX_DIRTY;
+    }
+    if (euler.z != z) {
+        euler.z = z;
+        flags = MATRIX_DIRTY;
+    }
+}
+
+void G2RULESOBJ::Update()
+{
+    ((G2CHAIN *)this)->A();
+    m_1150 -= g_pTimer->m_dt;
+    if (m_1150 <= 0.0f && m_1154 < m_f44) {
+        m_1150 = m_114c;
+        ACTOR *tornado = g_pGame->GetTornado();
+        if (!tornado)
+            return;
+        m_1154++;
+        V3 position = tornado->GetPosition();
+        position.x += (float)rand() * (200.0f / RAND_MAX) - 100.0f;
+        position.y += (float)rand() * (200.0f / RAND_MAX) - 100.0f;
+        position.z += (float)rand() * (200.0f / RAND_MAX) - 100.0f;
+        ANG angles(0.0f, 0.0f, 0.0f);
+        angles.SetEuler((float)rand() * (360.0f / RAND_MAX), 0.0f, 0.0f);
+        ACTOR *actor = g_pGame->CreateStormChaser(m_f48.m_buf, position, angles,
+                                                  *(float *)((char *)tornado + 0x984));
+        actor->SetActivation(1);
+        actor->SetDeactivation(1);
+    }
 }
