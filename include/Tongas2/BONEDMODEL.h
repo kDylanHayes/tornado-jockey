@@ -82,7 +82,11 @@ public:
     }
     // Follows the parent, then plays the animation asked for, if any.
     virtual void Start();
+#ifdef GC3_OUTOFLINE
+    virtual void Stop();
+#else
     virtual void Stop() { StopAnimation(); }
+#endif
     virtual void Update() { OBJECT::Update(); }
     virtual bool IsLoaded() { return true; }
     // Takes the parent's speed.

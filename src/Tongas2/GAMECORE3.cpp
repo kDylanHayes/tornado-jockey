@@ -4,12 +4,15 @@
 #define CSTRING_DTOR_OUTOFLINE
 #define RM_SETTERS_OUTOFLINE
 #define TRIGGER_SETTERS_OUTOFLINE
+#define GC3_OUTOFLINE
 
 #include <deque>
 
+#include "Tongas2/BONEDMODEL.h"
 #include "Tongas2/RESOURCE.h"
 
 #include "Tongas2/CMDBASE.h"
+#include "Tongas2/CWSTRING.h"
 #include "Tongas2/RESOURCES.h"
 #include "Tongas2/SCENE.h"
 #include "Tongas2/TRIGGER.h"
@@ -331,6 +334,27 @@ OBJECT::~OBJECT()
         delete m_tag;
         m_tag = 0;
     }
+}
+
+int RESOURCE::Virtual08()
+{
+    OBJECT *self = (OBJECT *)this;
+    WTACTOR *actor = g_pScene->GetActor(self->m_parent);
+    if (!actor)
+        return (int)(size_t)g_pResources;
+    return (int)(size_t)actor;
+}
+
+void BONEDMODELRESOURCE::Stop()
+{
+    StopAnimation();
+}
+
+CWSTRING &CWSTRING::operator=(const CWSTRING &other)
+{
+    if (*this != other)
+        *this = other.c_str();
+    return *this;
 }
 
 OBJECT::OBJECT(RESOURCEMASTER *master, RESHANDLE handle) : RESOURCE(master, handle)

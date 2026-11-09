@@ -38,12 +38,16 @@ public:
         }
         return *this;
     }
+#ifdef GC3_OUTOFLINE
+    CWSTRING &operator=(const CWSTRING &other);
+#else
     CWSTRING &operator=(const CWSTRING &other)
     {
         if (*this != other)
             *this = other.c_str();
         return *this;
     }
+#endif
     bool operator!=(const CWSTRING &other) const { return wcscmp(c_str(), other.c_str()) != 0; }
 
     const wchar_t *c_str() const { return m_str ? m_str : L""; }
