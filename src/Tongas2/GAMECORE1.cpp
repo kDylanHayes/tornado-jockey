@@ -266,6 +266,115 @@ void SRESULT::SetType(const SRESULTTYPE &type)
     }
 }
 
+void SRESULT::SetValue(const SRTEXTURE &value)
+{
+    SRESULTTYPE type = SRT_TEXTURE;
+    if (m_type != type) {
+        FreeValue();
+        SetType(type);
+    }
+    *m_value.tex = value;
+}
+
+void SRESULT::Assign(const SRESULT &other)
+{
+    switch (other.m_type) {
+    case SRT_NOTSET:
+        m_value.i = other.m_value.i;
+        m_type = other.m_type;
+        break;
+    case SRT_CHAR: {
+        char value = other.GetChar(0);
+        if (m_type != SRT_CHAR) {
+            FreeValue();
+            SRESULTTYPE type = SRT_CHAR;
+            SetType(type);
+        }
+        m_value.c = value;
+        break;
+    }
+    case SRT_INT: {
+        int value = other.GetInt(0);
+        if (m_type != SRT_INT) {
+            FreeValue();
+            SRESULTTYPE type = SRT_INT;
+            SetType(type);
+        }
+        m_value.i = value;
+        break;
+    }
+    case SRT_STRING:
+        SetValue(other.GetString(""));
+        break;
+    case SRT_UNICODESTRING:
+        SetValue(other.GetUnicodeString(L""));
+        break;
+    case SRT_FLOAT: {
+        float value = other.GetFloat(0.0f);
+        if (m_type != SRT_FLOAT) {
+            FreeValue();
+            SRESULTTYPE type = SRT_FLOAT;
+            SetType(type);
+        }
+        m_value.f = value;
+        break;
+    }
+    case SRT_BOOL: {
+        bool value = other.GetBool(false);
+        if (m_type != SRT_BOOL) {
+            FreeValue();
+            SRESULTTYPE type = SRT_BOOL;
+            SetType(type);
+        }
+        m_value.b = value;
+        break;
+    }
+    case SRT_V3: {
+        V3 value = other.GetV3(V3(0.0f, 0.0f, 0.0f));
+        if (m_type != SRT_V3) {
+            FreeValue();
+            SRESULTTYPE type = SRT_V3;
+            SetType(type);
+        }
+        *m_value.v3 = value;
+        break;
+    }
+    case SRT_V2: {
+        V2 value = other.GetV2(V2(0.0f, 0.0f));
+        if (m_type != SRT_V2) {
+            FreeValue();
+            SRESULTTYPE type = SRT_V2;
+            SetType(type);
+        }
+        *m_value.v2 = value;
+        break;
+    }
+    case SRT_ANG: {
+        ANG value = other.GetANG(ANG(0.0f, 0.0f, 0.0f));
+        if (m_type != SRT_ANG) {
+            FreeValue();
+            SRESULTTYPE type = SRT_ANG;
+            SetType(type);
+        }
+        *m_value.ang = value;
+        break;
+    }
+    case SRT_RGB: {
+        RGB value = other.GetRGB(RGB());
+        if (m_type != SRT_RGB) {
+            FreeValue();
+            SRESULTTYPE type = SRT_RGB;
+            SetType(type);
+        }
+        *m_value.rgb = value;
+        break;
+    }
+    case SRT_TEXTURE:
+        SetValue(other.GetTexture(SRTEXTURE()));
+        break;
+    }
+}
+
 template <int N>
 FIXEDSTRING<N> &FIXEDSTRING<N>::operator=(const char *text)
 {
@@ -282,6 +391,21 @@ template FIXEDSTRING<0x200>::FIXEDSTRING();
 template FIXEDSTRING<0x200> &FIXEDSTRING<0x200>::operator=(const char *);
 
 template FIXEDWSTRING<0x200>::FIXEDWSTRING();
+
+template <int N>
+FIXEDWSTRING<N> &FIXEDWSTRING<N>::operator=(const char *text)
+{
+    if (text) {
+        wcsncpy(m_buf, (const wchar_t *)text, N - 1);
+        m_buf[N - 1] = 0;
+        return *this;
+    }
+    m_buf[0] = 0;
+    m_buf[N - 1] = 0;
+    return *this;
+}
+
+template FIXEDWSTRING<0x200> &FIXEDWSTRING<0x200>::operator=(const char *);
 
 void CMDBASE::SetName(const CSTRING &name)
 {

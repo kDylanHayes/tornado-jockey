@@ -39,6 +39,10 @@ public:
         return *this;
     }
 
+#ifdef TONGAS2_CORE_OUTOFLINE
+    FIXEDWSTRING &operator=(const char *text);
+#endif
+
     // Takes text, either "WC" encoded or plain 8-bit text.
     void FromAnsi(const char *text)
     {

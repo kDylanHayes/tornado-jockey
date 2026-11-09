@@ -304,6 +304,7 @@ public:
 
     void SetValue(const wchar_t *value);
     void SetValue(const char *value);
+    void SetValue(const SRTEXTURE &value);
 
     SRESULTTYPE GetType() const { return m_type; }
     bool IsSet() const { return m_type != SRT_NOTSET ? true : false; }
