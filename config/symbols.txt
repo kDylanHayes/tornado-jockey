@@ -7739,3 +7739,4 @@
 0x004f1a10 ?ForwardTemp@MESHDX8SDMASTER@@QAEXXZ function 0x8
 0x0066c264 ??_C@_0M@DJODCEMH@data?1sound?1?$AA@ data 0xc
 0x006870e0 ??_C@_0CN@DGCAKNIP@assertion?5?$CCjb_ptr?5?$DN?$DN?5jb?$CL2?$CKm?$CC?5fai@ data 0x2d
+0x00403ab0 ??0CSTRING@@QAE@PBD@Z function 0x27

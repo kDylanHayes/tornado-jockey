@@ -10,7 +10,9 @@
 #include <stdio.h>
 
 #include "Tongas2/CSTRING.h"
+#include "Tongas2/CMDBASE.h"
 #include "Tongas2/CPRIMITIVE3.h"
+#include "Tongas2/FIXEDWSTRING.h"
 #include "Tongas2/SAFEINDEX.h"
 #include "Tongas2/SRESULT.h"
 #include "Tongas2/STRING.h"
@@ -148,4 +150,142 @@ int SafeSwprintf(wchar_t *buf, const wchar_t *format, ...) throw()
     va_list args;
     va_start(args, format);
     return vswprintf(buf, 0x1fe, format, args);
+}
+
+void V3::Normalize()
+{
+    float length = (float)sqrt(x * x + y * y + z * z);
+    if (length != 0.0f) {
+        x /= length;
+        y /= length;
+        z /= length;
+    }
+    else {
+        x = y = z = 0.0f;
+    }
+}
+
+V3 V3::Normalized() const
+{
+    V3 out = *this;
+    out.Normalize();
+    return out;
+}
+
+STRING::~STRING() throw()
+{
+    if (m_pages > 0)
+        Free();
+}
+
+CSTRING &CSTRING::operator=(const CSTRING &other)
+{
+    if (strcmp(c_str(), other.c_str()) != 0)
+        *this = other.c_str();
+    return *this;
+}
+
+CSTRING::CSTRING(const char *str)
+{
+    m_str = 0;
+    if (str && *str)
+        m_str = _strdup(str);
+}
+
+STRING::STRING(const char *text)
+{
+    m_block = -1;
+    m_pages = 0;
+    m_buf = 0;
+    m_length = 0;
+    m_lengthValid = true;
+    Reserve((int)strlen(text) + 1);
+    *this = text;
+}
+
+STRING &STRING::operator=(const char *text)
+{
+    if (!text) {
+        Free();
+        return *this;
+    }
+    int length = (int)strlen(text) + 1;
+    Reserve(length);
+    if (m_block >= 0) {
+        char *dst = m_buf;
+        const char *src = text;
+        while ((*dst++ = *src++) != 0) {
+        }
+        m_lengthValid = false;
+    }
+    else {
+        Free();
+    }
+    return *this;
+}
+
+TOKENS::~TOKENS()
+{
+    m_string.Free();
+}
+
+template <int N>
+FIXEDSTRING<N>::FIXEDSTRING()
+{
+    m_buf[0] = '\0';
+    m_buf[N - 1] = '\0';
+}
+
+template <int N>
+FIXEDSTRING<N> &FIXEDSTRING<N>::operator=(const char *text)
+{
+    if (!text) {
+        m_buf[0] = '\0';
+        return *this;
+    }
+    strncpy(m_buf, text, N - 1);
+    m_buf[N - 1] = '\0';
+    return *this;
+}
+
+template FIXEDSTRING<0x200>::FIXEDSTRING();
+template FIXEDSTRING<0x200> &FIXEDSTRING<0x200>::operator=(const char *);
+
+template <int N>
+FIXEDWSTRING<N>::FIXEDWSTRING()
+{
+    m_buf[0] = 0;
+    m_buf[N - 1] = 0;
+}
+
+template FIXEDWSTRING<0x200>::FIXEDWSTRING();
+
+void CMDBASE::SetName(const CSTRING &name)
+{
+    m_name = name;
+}
+
+static V3 Cross(const V3 &a, const V3 &b)
+{
+    return V3(a.y * b.z - a.z * b.y,
+              a.z * b.x - a.x * b.z,
+              a.x * b.y - a.y * b.x);
+}
+
+void MATRIX::LookAt(const V3 &dir, const V3 &up)
+{
+    V3 right = Cross(dir, up);
+    right.Normalize();
+    _11 = right.x;
+    _12 = right.y;
+    _13 = right.z;
+    _21 = dir.x;
+    _22 = dir.y;
+    _23 = dir.z;
+    _31 = up.x;
+    _32 = up.y;
+    _33 = up.z;
+    _14 = _24 = _34 = 0.0f;
+    _41 = _42 = _43 = 0.0f;
+    _44 = 1.0f;
 }

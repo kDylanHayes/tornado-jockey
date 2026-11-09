@@ -9,12 +9,16 @@ class CSTRING
 {
 public:
     CSTRING() : m_str(0) {}
+#ifdef TONGAS2_CORE_OUTOFLINE
+    CSTRING(const char *str);
+#else
     CSTRING(const char *str)
     {
         m_str = 0;
         if (str && *str)
             m_str = _strdup(str);
     }
+#endif
     ~CSTRING()
     {
         if (m_str) {
@@ -39,12 +43,16 @@ public:
         return *this;
     }
 #endif
+#ifdef TONGAS2_CORE_OUTOFLINE
+    CSTRING &operator=(const CSTRING &other);
+#else
     CSTRING &operator=(const CSTRING &other)
     {
         if (*this != other)
             *this = other.c_str();
         return *this;
     }
+#endif
     bool operator!=(const CSTRING &other) const { return strcmp(c_str(), other.c_str()) ? true : false; }
 
     const char *c_str() const { return m_str ? m_str : ""; }

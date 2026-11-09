@@ -129,7 +129,12 @@ public:
     virtual const char *GetClassName();
     // Runs a command from the class's table.
     virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
-    virtual void SetName(const CSTRING &name) { m_name = name; }
+    virtual void SetName(const CSTRING &name)
+#ifdef TONGAS2_CORE_OUTOFLINE
+        ;
+#else
+    { m_name = name; }
+#endif
     // Parses and runs a script command.
     virtual SRESULT Run(STRING command);
     // The object scripts reach as "parent" (a CMDBASE).

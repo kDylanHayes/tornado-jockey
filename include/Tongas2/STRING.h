@@ -86,6 +86,9 @@ public:
         m_lengthValid = true;
     }
 #endif
+#ifdef STRING_CORE_OUTOFLINE
+    STRING(const char *text);
+#else
     STRING(const char *text)
     {
         m_block = -1;
@@ -96,6 +99,7 @@ public:
         Reserve(strlen(text) + 1);
         *this = text;
     }
+#endif
     STRING(const STRING &other)
     {
         m_block = -1;
@@ -108,11 +112,15 @@ public:
             *this = other.c_str();
         }
     }
+#ifdef TONGAS2_CORE_OUTOFLINE
+    virtual ~STRING() throw();
+#else
     virtual ~STRING() throw()
     {
         if (m_pages > 0)
             Free();
     }
+#endif
 
     STRING &operator=(const STRING &other)
     {
