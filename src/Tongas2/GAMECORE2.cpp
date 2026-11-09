@@ -316,10 +316,45 @@ G2D2::~G2D2()
 {
 }
 
+extern int g_destructibleFactoryId;
+
+class G2DESTRUCTIBLE
+{
+public:
+    static int s_classId;
+    static CMDENTRY s_commands[];
+    static void RegisterCommands();
+};
+
 class G2D5 : public ACTOR
 {
 public:
     virtual ~G2D5();
+
+    virtual int GetClassId() { return G2DESTRUCTIBLE::s_classId; }
+    virtual int GetParentClassId() { return g_classParents[G2DESTRUCTIBLE::s_classId]; }
+    virtual const char *GetClassName() { return g_classNames[G2DESTRUCTIBLE::s_classId]; }
+    virtual int GetFactoryId() { return g_destructibleFactoryId; }
+    virtual int GetFactoryFlags() { return g_factoryFlags[g_destructibleFactoryId]; }
+
+    void SetTargetPoint(V3 value);
+    void SetSize(const V2 &value);
+    void SetFlag0(const bool &value);
+    void SetRate(const int &value);
+    void SetFlag1(const bool &value);
+    void SetFlag2(const bool &value);
+    void SetFlag3(const bool &value);
+    void SetFlag4(const bool &value);
+    void SetFlag5(const bool &value);
+    void SetSpeed(const float &value);
+    void SetAcceleration(const float &value);
+    void SetFlag6(const bool &value);
+    void SetFlag7(const bool &value);
+    void SetFriction(const float &value);
+    void SetFlag8(const bool &value);
+    void SetFlag9(const bool &value);
+    void SetColor(const V3I &value);
+    void SetOpacity(const float &value);
 
     char m_0000[0x113c - 0xccc];
     void *volatile m_113c;
@@ -332,6 +367,97 @@ G2D5::~G2D5()
         m_113c = 0;
     }
 }
+
+void G2D5::SetTargetPoint(V3 value)
+{
+    *(V3 *)((char *)this + 0x1364) = value;
+}
+
+void G2D5::SetSize(const V2 &value)
+{
+    *(V2 *)((char *)this + 0x1110) = value;
+}
+
+void G2D5::SetFlag0(const bool &value)
+{
+    *(bool *)((char *)this + 0x1120) = value;
+}
+
+void G2D5::SetRate(const int &value)
+{
+    *(int *)((char *)this + 0x1124) = value;
+}
+
+void G2D5::SetFlag1(const bool &value)
+{
+    *(bool *)((char *)this + 0x1128) = value;
+}
+
+void G2D5::SetFlag2(const bool &value)
+{
+    *(bool *)((char *)this + 0x1129) = value;
+}
+
+void G2D5::SetFlag3(const bool &value)
+{
+    *(bool *)((char *)this + 0x112a) = value;
+}
+
+void G2D5::SetFlag4(const bool &value)
+{
+    *(bool *)((char *)this + 0x112b) = value;
+}
+
+void G2D5::SetFlag5(const bool &value)
+{
+    *(bool *)((char *)this + 0x112c) = value;
+}
+
+void G2D5::SetSpeed(const float &value)
+{
+    *(float *)((char *)this + 0x1130) = value;
+}
+
+void G2D5::SetAcceleration(const float &value)
+{
+    *(float *)((char *)this + 0x1134) = value;
+}
+
+void G2D5::SetFlag6(const bool &value)
+{
+    *(bool *)((char *)this + 0x1138) = value;
+}
+
+void G2D5::SetFlag7(const bool &value)
+{
+    *(bool *)((char *)this + 0x1144) = value;
+}
+
+void G2D5::SetFriction(const float &value)
+{
+    *(float *)((char *)this + 0x1148) = value;
+}
+
+void G2D5::SetFlag8(const bool &value)
+{
+    *(bool *)((char *)this + 0x114c) = value;
+}
+
+void G2D5::SetFlag9(const bool &value)
+{
+    *(bool *)((char *)this + 0x114d) = value;
+}
+
+void G2D5::SetColor(const V3I &value)
+{
+    *(V3I *)((char *)this + 0x1150) = value;
+}
+
+void G2D5::SetOpacity(const float &value)
+{
+    *(float *)((char *)this + 0x115c) = value;
+}
+
 
 struct G2TIMESET
 {
@@ -825,14 +951,6 @@ void G2BUILDINGPIECE::RegisterCommands()
     HashCommands(s_commands);
     RegisterClassName(s_commands, "BUILDINGPIECE", "ACTOR");
 }
-
-class G2DESTRUCTIBLE
-{
-public:
-    static int s_classId;
-    static CMDENTRY s_commands[];
-    static void RegisterCommands();
-};
 
 void G2DESTRUCTIBLE::RegisterCommands()
 {
