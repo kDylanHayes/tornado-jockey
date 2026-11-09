@@ -38,6 +38,10 @@ struct V3
     float LengthSq() const { return x * x + y * y + z * z; }
     // Defined elsewhere: how far o is.
     float Distance(const V3 &o) const;
+#ifdef V3_DISTANCEXZ_OUTOFLINE
+    // Defined elsewhere: how far o is in the ground plane.
+    float DistanceXZ(const V3 &o) const;
+#endif
 
     // 0x402c90, out of line and called from everywhere.
     void Normalize();

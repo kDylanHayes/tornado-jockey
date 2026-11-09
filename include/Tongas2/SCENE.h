@@ -107,6 +107,11 @@ public:
     WTACTOR *GetActor(RESHANDLE handle);
     // The actor with a name, or 0.
     WTACTOR *FindActor(const char *name);
+#ifdef SCENE_FINDACTORS
+    // The actors of the factory, up to max of them, placed only if asked;
+    // returns how many there were.
+    int FindActors(int factoryId, ACTOR **actors, int max, bool placedOnly);
+#endif
     // Removes the actor with a handle; while the actors are being stepped,
     // once they all have been.
     void Remove(RESHANDLE handle);

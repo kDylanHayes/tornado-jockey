@@ -5,9 +5,12 @@
 #define V3_ISZERO_OUTOFLINE
 #define SPAWNER_SETTERS_OUTOFLINE
 #define V2_ROTATE_OUTOFLINE
+#define SCENE_FINDACTORS
+#define V3_DISTANCEXZ_OUTOFLINE
 
 
 #include <new>
+#include <stdlib.h>
 #include <wchar.h>
 
 #include "Tongas2/FIXEDSTRING.h"
@@ -22,6 +25,7 @@
 #include "Tongas2/GUIGROUP.h"
 #include "Tongas2/INPUT.h"
 #include "Tongas2/RESOURCES.h"
+#include "Tongas2/CAMERA.h"
 #include "Tongas2/SCENE.h"
 #include "Tongas2/SRESULT.h"
 
@@ -366,11 +370,27 @@ struct G2INT3
     G2INT3(int x_, int y_, int z_) : x(x_), y(y_), z(z_) {}
 };
 
+struct G2CONTACTARG;
+
 class G2RULESOBJBASE : public ACTOR
 {
 public:
     G2RULESOBJBASE();
     virtual ~G2RULESOBJBASE();
+
+    // The target bookkeeping virtuals the game objects add after ACTOR's.
+    virtual void SetNameBlock(const char *data) {}
+    virtual char *GetNameBlock() { return m_name.m_buf; }
+    virtual void HandleTornado(CMDCALL *call) {}
+    virtual void IncMainTarget(ACTOR *actor) {}
+    virtual void DecMainTarget(ACTOR *actor) {}
+    virtual void IncSecondaryTarget(ACTOR *actor) {}
+    virtual void DecSecondaryTarget(ACTOR *actor) {}
+    virtual void AddTarget(ACTOR *actor) {}
+    virtual void ResetTarget(ACTOR *actor) {}
+    virtual void SetContact(G2CONTACTARG *arg) {}
+    virtual void OnTargetDestroyed(G2CONTACTARG *arg) {}
+    virtual void AddEntry(CMDBASE *object) {}
 
     FIXEDSTRING<0x200> m_name;
     G2INT3 m_entries[10];
@@ -511,9 +531,11 @@ public:
     void D();
     void E();
     void Run();
-    void AddContact(G2CONTACTARG *obj);
+    virtual void SetContact(G2CONTACTARG *obj);
     void RemoveContact(const RESHANDLE &handle);
-    void OnTargetDestroyed(G2CONTACTARG *obj);
+    virtual void OnTargetDestroyed(G2CONTACTARG *obj);
+    virtual void AddTarget(ACTOR *actor);
+    virtual void Stop();
 
     float m_f48;
     int m_f4c;
@@ -532,7 +554,24 @@ public:
     WIDESTRING<0x200> m_w2;
     WIDESTRING<0x200> m_w3;
     char m_1b8a[0x1b8c - 0x1b8a];
-    int m_1b8c[16];
+    int m_1b8c;
+    int m_1b90;
+    int m_1b94;
+    int m_1b98;
+    int m_1b9c;
+    int m_1ba0;
+    int m_1ba4;
+    int m_1ba8;
+    // How long until the next target is picked.
+    float m_f1bac;
+    // How many targets have been picked.
+    int m_1bb0;
+    int m_1bb4;
+    int m_1bb8;
+    int m_1bbc;
+    int m_1bc0;
+    int m_1bc4;
+    int m_1bc8;
     std::list<RESHANDLE> m_contacts;
     int m_1bd8;
     int m_1bdc;
@@ -549,13 +588,13 @@ void G2CHAIN::RemoveContact(const RESHANDLE &handle)
     m_contacts2.remove(handle);
 }
 
-void G2CHAIN::AddContact(G2CONTACTARG *obj)
+void G2CHAIN::SetContact(G2CONTACTARG *obj)
 {
     if (obj->m_flag) {
         m_contacts.push_back(obj->m_handle);
         m_1bd8++;
-        m_1b8c[0]++;
-        m_1b8c[1]++;
+        m_1b8c++;
+        m_1b90++;
     } else {
         m_contacts2.push_back(obj->m_handle);
         m_1bec++;
@@ -584,8 +623,22 @@ G2CHAIN::G2CHAIN()
     m_w1.Set(L"0");
     m_w2.Set(L"0");
     m_w3.Set(L"0");
-    for (int i = 0; i < 16; i++)
-        m_1b8c[i] = 0;
+    m_1b8c = 0;
+    m_1b90 = 0;
+    m_1b94 = 0;
+    m_1b98 = 0;
+    m_1b9c = 0;
+    m_1ba0 = 0;
+    m_1ba4 = 0;
+    m_1ba8 = 0;
+    m_f1bac = 0.0f;
+    m_1bb0 = 0;
+    m_1bb4 = 0;
+    m_1bb8 = 0;
+    m_1bbc = 0;
+    m_1bc0 = 0;
+    m_1bc4 = 0;
+    m_1bc8 = 0;
     m_1bd8 = 0;
     m_1bdc = 0;
     m_1bec = 0;
@@ -604,6 +657,18 @@ __declspec(noinline) void G2CHAIN::A()
 {
     ACTOR::Update();
 }
+
+void G2CHAIN::AddTarget(ACTOR *actor)
+{
+    (void)actor;
+    m_1bb0++;
+}
+
+void G2CHAIN::Stop()
+{
+    ACTOR::Stop();
+}
+
 
 void G2CHAIN::E()
 {
@@ -844,6 +909,8 @@ class G2FORESTOBJ : public ACTOR
 {
 public:
     G2FORESTOBJ();
+
+    static int s_factoryId;
     virtual ~G2FORESTOBJ();
 
     // The spawner cell the forest made a powerup in.
@@ -1214,7 +1281,7 @@ void G2CHAIN::OnTargetDestroyed(G2CONTACTARG *obj)
             return;
         int count = ++m_1bdc;
         int left = m_1bd8 - count;
-        m_1b8c[0] = left;
+        m_1b8c = left;
         const char *title;
         if (left > 0) {
             title = "GGRP:TargetDestroyed";
@@ -1222,7 +1289,7 @@ void G2CHAIN::OnTargetDestroyed(G2CONTACTARG *obj)
             title = "GGRP:TargetDestroyedLast";
             ACTOR *tornado = g_pGame->GetTornado();
             if (tornado)
-                m_1b8c[13] = (int)(m_f80 * *(float *)((char *)tornado + 0x2a38) * 0.01f);
+                m_1bc0 = (int)(m_f80 * *(float *)((char *)tornado + 0x2a38) * 0.01f);
             g_pGui->HideControl("targets_hud", 1.0f);
         }
         GUICONTROL *control = (GUICONTROL *)g_pGui->GetObject(m_1bf4);
@@ -1237,7 +1304,7 @@ void G2CHAIN::OnTargetDestroyed(G2CONTACTARG *obj)
             return;
         int count = ++m_1bf0;
         int left = m_1bec - count;
-        m_1b8c[2] = left;
+        m_1b94 = left;
         const char *title;
         if (left > 0) {
             title = "GGRP:TargetSecDestroyed";
@@ -1251,4 +1318,53 @@ void G2CHAIN::OnTargetDestroyed(G2CONTACTARG *obj)
         if (group)
             m_1c00 = group->m_handle;
     }
+}
+
+void G2CHAIN::D()
+{
+    ACTOR *tornado = g_pGame->GetTornado();
+    if (!tornado)
+        return;
+    if (m_1bb0 > 1)
+        return;
+    m_f1bac -= g_pTimer->m_dt;
+    if (m_f1bac > 0.0f)
+        return;
+
+    ACTOR *actors[64];
+    int count = g_pScene->FindActors(G2FORESTOBJ::s_factoryId, actors, 64, false);
+    if (!count)
+        return;
+
+    float best = 1000.0f;
+    G2FORESTOBJ *bestActor = 0;
+    for (int i = 0; i < count; i++) {
+        G2FORESTOBJ *forest = (G2FORESTOBJ *)actors[i];
+        if (!forest)
+            continue;
+        if (!forest->m_e3cc)
+            continue;
+        V3 tornadoPos = tornado->GetPosition();
+        V3 forestPos = forest->GetPosition();
+        V2 delta(tornadoPos.x - forestPos.x, tornadoPos.z - forestPos.z);
+        if (delta.Length() < best) {
+            V2 screen(0.0f, 0.0f);
+            ((CAMERA *)g_pCamera)->WorldToScreen(forest->GetPosition(), &screen);
+            if (screen.x >= 0.0f && screen.x <= 1.0f &&
+                screen.y >= 0.0f && screen.y <= 1.0f) {
+                bestActor = forest;
+                best = forest->GetPosition().DistanceXZ(tornado->GetPosition());
+            }
+        }
+    }
+    if (!bestActor)
+        return;
+    bestActor->CreateMaxPowerup();
+    float wait;
+    if (m_f68.y > m_f68.x)
+        wait = m_f68.x + (m_f68.y - m_f68.x) * rand() * (1.0f / 32768.0f);
+    else
+        wait = m_f68.x;
+    m_f1bac = wait;
+    AddTarget(bestActor);
 }

@@ -7791,7 +7791,6 @@
 0x00424680 ?Stop@G2MID2@@UAEXXZ function 0x10
 0x00428cf0 ?A@G2CHAIN@@QAEXXZ function 0x5
 0x004295f0 ?E@G2CHAIN@@QAEXXZ function 0x58
-0x00429720 ?D@G2CHAIN@@QAEXXZ function 0x246
 0x00429970 ?C@G2CHAIN@@QAEXXZ function 0x2be
 0x0042a0a0 ?B@G2CHAIN@@QAEXXZ function 0x64d
 0x0042a7b0 ?Run@G2CHAIN@@QAEXXZ function 0x25
@@ -7870,7 +7869,12 @@
 0x0065b8a0 ??_7G2CHAIN@@6BACTORLINK@@@ data
 0x0065bbac ??_7G2CHAIN@@6B@ data
 0x0042b060 ?_Incsize@?$list@URESHANDLE@@V?$allocator@URESHANDLE@@@std@@@std@@IAEXI@Z function 0x93
-0x0042b100 ?AddContact@G2CHAIN@@QAEXPAUG2CONTACTARG@@@Z function 0xb0
+0x0042b100 ?SetContact@G2CHAIN@@UAEXPAUG2CONTACTARG@@@Z function 0xb0
 0x0042a750 ?remove@?$list@URESHANDLE@@V?$allocator@URESHANDLE@@@std@@@std@@QAEXABURESHANDLE@@@Z function 0x60
-0x0042a7e0 ?OnTargetDestroyed@G2CHAIN@@QAEXPAUG2CONTACTARG@@@Z function 0x1d4
+0x0042a7e0 ?OnTargetDestroyed@G2CHAIN@@UAEXPAUG2CONTACTARG@@@Z function 0x1d4
 0x0065b814 ??_C@_0BD@MEEJPFGM@targetsecdestroyed?$AA@ data
+0x0042a9c0 ??0G2CHAIN@@QAE@XZ function 0x300
+0x00428ce0 ?Stop@G2CHAIN@@UAEXXZ function 0x5
+0x00429720 ?D@G2CHAIN@@QAEXXZ function 0x246
+0x0040efd0 ?FindActors@SCENE@@QAEHHPAPAVACTOR@@H_N@Z function 0xa4
+0x0040f290 ?DistanceXZ@V3@@QBEMABU1@@Z function 0x21
