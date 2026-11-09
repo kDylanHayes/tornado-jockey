@@ -7737,3 +7737,4 @@
 0x004f1720 ?GetOne@HEIGHTMAPTEMP@@QAEPAUV3@@XZ function 0x6
 0x006bbe4c ?g_one@@3UV3@@A data 0xc
 0x004f1a10 ?ForwardTemp@MESHDX8SDMASTER@@QAEXXZ function 0x8
+0x0066c264 ??_C@_0M@DJODCEMH@data?1sound?1?$AA@ data 0xc
