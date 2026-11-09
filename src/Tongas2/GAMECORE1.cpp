@@ -229,6 +229,72 @@ TOKENS::~TOKENS()
     m_string.Free();
 }
 
+void SRESULT::SetType(const SRESULTTYPE &type)
+{
+    m_type = type;
+    switch (type) {
+    case SRT_UNICODESTRING:
+        m_value.wstr = (wchar_t *)malloc(0x400);
+        break;
+    case SRT_STRING:
+        m_value.str = (char *)malloc(0x200);
+        break;
+    case SRT_V3: {
+        V3 *v3 = (V3 *)::operator new(sizeof(V3));
+        if (v3) {
+            v3->x = 0.0f;
+            v3->y = 0.0f;
+            v3->z = 0.0f;
+        }
+        m_value.v3 = v3;
+        break;
+    }
+    case SRT_V2: {
+        V2 *v2 = (V2 *)::operator new(sizeof(V2));
+        if (v2) {
+            v2->x = 0.0f;
+            v2->y = 0.0f;
+        }
+        m_value.v2 = v2;
+        break;
+    }
+    case SRT_ANG: {
+        ANG *ang = (ANG *)::operator new(sizeof(ANG));
+        if (ang) {
+            ang->euler.x = 0.0f;
+            ang->euler.y = 0.0f;
+            ang->euler.z = 0.0f;
+            ang->flags = ANG::MATRIX_DIRTY;
+        }
+        m_value.ang = ang;
+        break;
+    }
+    case SRT_RGB: {
+        RGB *rgb = (RGB *)::operator new(sizeof(RGB));
+        if (rgb) {
+            rgb->b = 0;
+            rgb->g = 0;
+            rgb->r = 0;
+        }
+        m_value.rgb = rgb;
+        break;
+    }
+    case SRT_TEXTURE: {
+        SRTEXTURE *texture = (SRTEXTURE *)::operator new(sizeof(SRTEXTURE));
+        if (texture) {
+            texture->name.m_buf[0] = '\0';
+            texture->name.m_buf[0x1ff] = '\0';
+            texture->index = 0;
+        }
+        m_value.tex = texture;
+        break;
+    }
+    default:
+        m_value.i = 0;
+        break;
+    }
+}
+
 template <int N>
 FIXEDSTRING<N>::FIXEDSTRING()
 {
