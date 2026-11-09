@@ -310,6 +310,19 @@ float V3::Distance(const V3 &o) const
     return (float)sqrt(dx * dx + dy * dy + dz * dz);
 }
 
+V3 V3::Rotate(V3 axis, float angle) const
+{
+    V3 perpendicular = *this - axis * ((axis.x * x + axis.y * y + axis.z * z) / axis.Length());
+    V3 cross(axis.z * perpendicular.y - axis.y * perpendicular.z,
+             axis.x * perpendicular.z - axis.z * perpendicular.x,
+             axis.y * perpendicular.x - axis.x * perpendicular.y);
+    cross.Normalize();
+    cross = cross * perpendicular.Length();
+    float s = (float)sin(angle);
+    float c = (float)cos(angle);
+    return perpendicular * c + cross * s + (*this - perpendicular);
+}
+
 template <class T, int N, int H, int KIND>
 T *SAFEINDEX<T, N, H, KIND>::GetFirst(int *index)
 {

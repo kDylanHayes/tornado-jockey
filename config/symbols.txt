@@ -149,7 +149,7 @@
 0x00410c30 ?ToEuler@MATRIX@@QAEXPAM00@Z function 0x9d
 0x00410de0 ?UpdateEuler@ANG@@QAEXXZ function 0x1a
 0x00411980 ??0PLANE@@QAE@ABUV3@@0@Z function 0x4c
-0x00411ad0 ?Rotate@V3@@QBE?AU1@U1@M@Z function
+0x00411ad0 ?Rotate@V3@@QBE?AU1@U1@M@Z function 0x18e
 0x00411f70 ?GetEulerX@ANG@@QAEMXZ function
 0x00420d80 ?SetMaxSpawnTime@SPAWNER@@UAEXABM@Z function 0xf
 0x00420d90 ?SetMaxSpawns@SPAWNER@@UAEXABH@Z function 0xf
