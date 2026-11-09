@@ -623,3 +623,44 @@ G2RULESOBJ::G2RULESOBJ()
 G2RULESOBJ::~G2RULESOBJ()
 {
 }
+struct G2FORESTOBJ
+{
+    char m_0000[0xdeb4];
+    int m_a[100];
+    int m_b[100];
+    char m_bytes[100];
+    int m_d[100];
+
+    void Clear();
+};
+
+void G2FORESTOBJ::Clear()
+{
+    char *q = m_bytes;
+    int *p = m_b;
+    int rows = 10;
+    do {
+        int c = 0;
+        do {
+            p[-100] = 0;
+            *p = 0;
+            char *dst = q + c;
+            *dst = 0;
+            p[0x7d] = 0;
+            c++;
+            p++;
+        } while (c < 10);
+        q += 10;
+    } while (--rows);
+}
+struct G2STREQ
+{
+    char m_buf[0x40];
+
+    char Equals(const char *other) const;
+};
+
+char G2STREQ::Equals(const char *other) const
+{
+    return strcmp(m_buf, other) == 0;
+}
