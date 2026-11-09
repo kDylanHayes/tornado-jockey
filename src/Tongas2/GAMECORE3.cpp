@@ -358,34 +358,46 @@ CWSTRING &CWSTRING::operator=(const CWSTRING &other)
     return *this;
 }
 
-OBJECT::OBJECT(RESOURCEMASTER *master, RESHANDLE handle) : RESOURCE(master, handle)
+OBJECT::OBJECT(RESOURCEMASTER *master, RESHANDLE handle)
+    : RESOURCE(master, handle),
+      m_offset(0.0f, 0.0f, 0.0f),
+      m_scaleFactor(0.0f, 0.0f, 0.0f),
+      m_position(0.0f, 0.0f, 0.0f),
+      m_c0(0.0f, 0.0f, 0.0f),
+      m_scale(0.0f, 0.0f, 0.0f),
+      m_d8(0.0f, 0.0f, 0.0f),
+      m_184(0.0f, 0.0f, 0.0f),
+      m_190(0.0f, 0.0f, 0.0f),
+      m_drawPosition(0.0f, 0.0f, 0.0f),
+      m_drawScale(0.0f, 0.0f, 0.0f),
+      m_lastPosition(0.0f, 0.0f, 0.0f),
+      m_lastScale(0.0f, 0.0f, 0.0f),
+      m_parent(),
+      m_attached()
 {
-    m_parent = RESHANDLE();
-    m_offset = V3(0.0f, 0.0f, 0.0f);
-    m_scaleFactor = V3(1.0f, 1.0f, 1.0f);
-    m_54 = true;
-    m_a8 = true;
+    m_scaleFactor.x = 1.0f;
+    m_scaleFactor.y = 1.0f;
+    m_scaleFactor.z = 1.0f;
     m_ac = 0;
     m_alphaFactor = 1.0f;
-    m_position = V3(0.0f, 0.0f, 0.0f);
-    m_c0 = V3(0.0f, 0.0f, 0.0f);
-    m_scale = V3(1.0f, 1.0f, 1.0f);
-    m_d8 = V3(1.0f, 1.0f, 1.0f);
-    m_184 = V3(0.0f, 0.0f, 0.0f);
-    m_190 = V3(0.0f, 0.0f, 0.0f);
-    m_19c = 0;
+    m_scale.x = 1.0f;
+    m_scale.y = 1.0f;
+    m_scale.z = 1.0f;
+    m_d8.x = 1.0f;
+    m_d8.y = 1.0f;
+    m_d8.z = 1.0f;
+    m_lastScale.x = 1.0f;
+    m_lastScale.y = 1.0f;
+    m_lastScale.z = 1.0f;
+    m_layer = 255;    m_lastLayer = 255;
     m_1a0 = -1;
-    m_layer = 255;
-    m_lastLayer = 255;
-    m_1ac = 1;
-    m_fadeDistance = -1.0f;
+    m_19c = 0;
     m_1b4 = false;
-    m_drawPosition = V3(0.0f, 0.0f, 0.0f);
-    m_drawScale = V3(0.0f, 0.0f, 0.0f);
-    m_lastPosition = V3(0.0f, 0.0f, 0.0f);
-    m_lastScale = V3(1.0f, 1.0f, 1.0f);
-    m_1e8 = -1.0f;
     m_tag = 0;
-    m_attached = RESHANDLE();
     m_3fc = false;
+    m_fadeDistance = -1.0f;
+    m_a8 = true;
+    m_54 = true;
+    m_1e8 = -1.0f;
+    m_1ac = 1;
 }
