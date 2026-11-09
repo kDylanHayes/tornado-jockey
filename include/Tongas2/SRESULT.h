@@ -51,7 +51,13 @@ struct ANG
 #ifdef TONGAS2_CORE_OUTOFLINE
     ANG();
 #else
-    ANG() {}
+    ANG()
+    {
+        euler.x = 0.0f;
+        euler.y = 0.0f;
+        euler.z = 0.0f;
+        flags = MATRIX_DIRTY;
+    }
 #endif
     ANG(float x, float y, float z) : euler(x, y, z), flags(MATRIX_DIRTY) {}
     ANG(const MATRIX &m) : euler(0.0f, 0.0f, 0.0f), matrix(m), flags(EULER_DIRTY) {}

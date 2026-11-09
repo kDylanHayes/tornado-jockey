@@ -221,8 +221,7 @@ void OBJECT::Virtual20()
 
 bool operator!=(const ANG &a, const ANG &b)
 {
-    ANG ca = a;
-    if (ca.flags & ANG::EULER_DIRTY)
+    ANG ca = a;    if (ca.flags & ANG::EULER_DIRTY)
         ca.UpdateEuler();
     ANG cb = b;
     if (cb.flags & ANG::EULER_DIRTY)
@@ -304,4 +303,64 @@ V3 ANG::GetRightPoint()
         flags &= ~MATRIX_DIRTY;
     }
     return V3(matrix._41 + matrix._11, matrix._42 + matrix._12, matrix._43 + matrix._13);
+}
+
+RESOURCE::~RESOURCE()
+{
+    if (m_initialized) {
+        if (g_pLog)
+            g_pLog->Error("ERROR!!! - deleting used copy of %s!!!", m_master->m_name.c_str());
+        if (m_initialized) {
+            if (m_active) {
+                Stop();
+                m_active = false;
+            }
+            m_master->ReleaseCopy(this);
+            m_initialized = false;
+        }
+    }
+}
+
+OBJECT::~OBJECT()
+{
+    if (m_parent.IsValid()) {
+        if (g_pLog)
+            g_pLog->Error("ERROR!! deleting an attached resource!!! - must have been detached first!");
+    }
+    if (m_tag) {
+        delete m_tag;
+        m_tag = 0;
+    }
+}
+
+OBJECT::OBJECT(RESOURCEMASTER *master, RESHANDLE handle) : RESOURCE(master, handle)
+{
+    m_parent = RESHANDLE();
+    m_offset = V3(0.0f, 0.0f, 0.0f);
+    m_scaleFactor = V3(1.0f, 1.0f, 1.0f);
+    m_54 = true;
+    m_a8 = true;
+    m_ac = 0;
+    m_alphaFactor = 1.0f;
+    m_position = V3(0.0f, 0.0f, 0.0f);
+    m_c0 = V3(0.0f, 0.0f, 0.0f);
+    m_scale = V3(1.0f, 1.0f, 1.0f);
+    m_d8 = V3(1.0f, 1.0f, 1.0f);
+    m_184 = V3(0.0f, 0.0f, 0.0f);
+    m_190 = V3(0.0f, 0.0f, 0.0f);
+    m_19c = 0;
+    m_1a0 = -1;
+    m_layer = 255;
+    m_lastLayer = 255;
+    m_1ac = 1;
+    m_fadeDistance = -1.0f;
+    m_1b4 = false;
+    m_drawPosition = V3(0.0f, 0.0f, 0.0f);
+    m_drawScale = V3(0.0f, 0.0f, 0.0f);
+    m_lastPosition = V3(0.0f, 0.0f, 0.0f);
+    m_lastScale = V3(1.0f, 1.0f, 1.0f);
+    m_1e8 = -1.0f;
+    m_tag = 0;
+    m_attached = RESHANDLE();
+    m_3fc = false;
 }
