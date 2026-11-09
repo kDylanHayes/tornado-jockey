@@ -1537,10 +1537,28 @@ void G2FORESTOBJ::Clear()
 }
 struct G2STREQ
 {
-    char m_buf[0x40];
+    G2STREQ()
+    {
+        m_buf[0] = '\0';
+        m_buf[0x1ff] = '\0';
+    }
+    G2STREQ(const char *text);
 
     char Equals(const char *other) const;
+
+    char m_buf[0x200];
 };
+
+G2STREQ::G2STREQ(const char *text)
+{
+    if (text) {
+        strncpy(m_buf, text, 0x1ff);
+        m_buf[0x1ff] = '\0';
+    } else {
+        m_buf[0] = '\0';
+        m_buf[0x1ff] = '\0';
+    }
+}
 
 char G2STREQ::Equals(const char *other) const
 {
@@ -1904,4 +1922,194 @@ void G2MID2::AddActiveMesh()
     if (!item)
         return;
     g_pMIDList->Add(item, m_113c.c_str());
+}
+
+extern V3 g_up;
+extern int g_stormSpawnerFactoryId;
+extern int g_stormChaserFactoryId;
+extern unsigned int g_stormChaserCount;
+
+class G2STORMACTOR : public ACTOR
+{
+public:
+    virtual bool CanSpawn();
+    virtual void PrepareSpawn();
+    virtual void VirtualD2();
+    virtual void VirtualD3();
+    virtual void VirtualD4();
+    virtual void VirtualD5();
+    virtual void VirtualD6();
+    virtual void VirtualD7();
+    virtual void VirtualD8();
+    virtual void VirtualD9();
+    virtual void VirtualDA();
+    virtual void VirtualDB();
+    virtual void VirtualDC();
+    virtual void VirtualDD();
+    virtual void VirtualDE();
+    virtual void VirtualDF();
+    virtual void VirtualE0();
+    virtual void VirtualE1();
+    virtual void VirtualE2();
+    virtual void VirtualE3();
+    virtual void VirtualE4();
+    virtual void VirtualE5();
+    virtual void VirtualE6();
+    virtual void VirtualE7();
+    virtual void VirtualE8();
+    virtual void VirtualE9();
+    virtual void VirtualEA();
+    virtual void VirtualEB();
+    virtual void VirtualEC();
+    virtual void VirtualED();
+    virtual void VirtualEE();
+    virtual void VirtualEF();
+    virtual void VirtualF0();
+    virtual void VirtualF1();
+    virtual void VirtualF2();
+    virtual void VirtualF3();
+    virtual void VirtualF4();
+    virtual void VirtualF5();
+    virtual void VirtualF6();
+    virtual void InitChaser();
+    virtual void VirtualF8();
+    virtual void SetChaserParams(const G2STREQ &params);
+};
+
+void G2CHAIN::B()
+{
+    ACTOR *tornado = g_pGame->GetTornado();
+    if (!tornado)
+        return;
+    float &timer = *(float *)((char *)this + 0x1b9c);
+    float &spawnTimer = *(float *)((char *)this + 0x1b98);
+    timer = timer - g_pTimer->m_dt;
+    if (!(timer > 0.0f) || m_f5c != 0) {
+        if (m_1ba0 >= m_f4c) {
+            timer = m_f58;
+            int mode = *(int *)((char *)g_pGame + 0x240);
+            if (mode == 1) {
+                timer *= 1.5151515f;
+                return;
+            }
+            if (mode == 3)
+                timer *= 0.66f;
+            return;
+        }
+        spawnTimer = spawnTimer - g_pTimer->m_dt;
+        if (!(spawnTimer > 0.0f) || m_f5c != 0) {
+            float wait;
+            if (m_f50.y > m_f50.x)
+                wait = m_f50.x + (m_f50.y - m_f50.x) * rand() * (1.0f / 32768.0f);
+            else
+                wait = m_f50.x;
+            spawnTimer = wait;
+            int mode = *(int *)((char *)g_pGame + 0x240);
+            if (mode == 1)
+                spawnTimer = wait * 1.5151515f;
+            else if (mode == 3)
+                spawnTimer = wait * 0.66f;
+
+            int count;
+            ACTOR *actors[64];
+            count = g_pScene->FindActors(g_stormSpawnerFactoryId, actors, 64, false);
+            if (!count) {
+                if (g_pLog)
+                    g_pLog->Error("Missing STORM CHASER SPAWNER!!");
+                return;
+            }
+            G2STORMACTOR *best = 0;
+            float bestDist = 1000000.0f;
+            V2 screen(0.0f, 0.0f);
+            int i = 0;
+            if (count > 0) {
+                do {
+                    G2STORMACTOR *spawner = (G2STORMACTOR *)actors[i];
+                    ((CAMERA *)g_pCamera)->WorldToScreen(spawner->GetPosition(), &screen);
+                    if (screen.x >= -0.1f && screen.x <= 1.1f &&
+                        screen.y >= -0.1f && screen.y <= 1.1f)
+                        continue;
+                    V3 tornadoPos = tornado->GetPosition();
+                    V3 spawnerPos = spawner->GetPosition();
+                    float distSq =
+                        (tornadoPos.z - spawnerPos.z) * (tornadoPos.z - spawnerPos.z) +
+                        (tornadoPos.y - spawnerPos.y) * (tornadoPos.y - spawnerPos.y) +
+                        (tornadoPos.x - spawnerPos.x) * (tornadoPos.x - spawnerPos.x);
+                    if (bestDist > distSq && spawner && spawner->CanSpawn()) {
+                        best = spawner;
+                        bestDist = distSq;
+                    }
+                    i++;
+                } while (i < count);
+            }
+            if (!best) {
+                if (g_pLog)
+                    g_pLog->Error("Could not found a storm chaser spawner offscreen!");
+                return;
+            }
+            best->PrepareSpawn();
+            G2STORMACTOR *chaser =
+                (G2STORMACTOR *)g_pScene->CreateActor(g_stormChaserFactoryId);
+            if (!chaser) {
+                if (g_pLog)
+                    g_pLog->Error("Could not spawn STORM CHASER!!");
+                return;
+            }
+            G2STREQ name;
+            SafeSprintf(name.m_buf, "sc_%u", g_stormChaserCount++);
+            chaser->SetName(CSTRING(name.m_buf));
+            V3 position = best->GetPosition();
+            chaser->SetPosition(position);
+            chaser->InitChaser();
+            int one = 1;
+            chaser->SetActivation(one);
+            chaser->SetDeactivation(one);
+            V3 chaserPos = best->GetPosition();
+            V3 tornadoPos = tornado->GetPosition();
+            V3 direction(tornadoPos.x - chaserPos.x, 0.0f, tornadoPos.z - chaserPos.z);
+            direction.Normalize();
+            chaser->SetDirection(direction, g_up);
+            V3 scale = best->GetScale();
+            chaser->SetScale(scale);
+            int zsort = *(int *)((char *)best + 0x984);
+            chaser->SetZSort(zsort);
+            if (*(bool *)((char *)best + 0xcd0)) {
+                WTACTOR *scenario = g_pGame->GetScenario();
+                if (scenario) {
+                    int n = 0;
+                    while (n < 16) {
+                        G2STREQ empty("");
+                        if (((G2STREQ *)((char *)scenario + 0x1328 + n * 0x200))
+                                ->Equals(empty.m_buf))
+                            break;
+                        n++;
+                    }
+                    int idx = 0;
+                    if (n - 1 > 0)
+                        idx = rand() % n;
+                    char buf[0x200];
+                    const G2STREQ *selected =
+                        (const G2STREQ *)((char *)scenario + 0x1328 + idx * 0x200);
+                    if (selected)
+                        memcpy(buf, selected, 0x200);
+                    else
+                        buf[0] = '\0';
+                    if (m_f5c > 0) {
+                        int idx2 = 0;
+                        if (n - 2 > 0)
+                            idx2 = rand() % (n - 1);
+                        memcpy(buf, (char *)scenario + 0x1328 + idx2 * 0x200, 0x200);
+                    }
+                    if (n > 0) {
+                        G2STREQ params(buf);
+                        chaser->SetChaserParams(params);
+                    }
+                }
+            } else {
+                G2STREQ params((char *)best + 0xcd1);
+                chaser->SetChaserParams(params);
+            }
+            chaser->SetActive(true);
+        }
+    }
 }
