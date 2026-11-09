@@ -21,7 +21,9 @@ public:
     void *GetSurface();
 
     void *m_texture;
-    char m_04[0x34];
+    char m_04[0x28 - 0x04];
+    void *m_surface;
+    char m_2c[0x38 - 0x2c];
     bool m_38;
     char m_39[0x54 - 0x39];
 };

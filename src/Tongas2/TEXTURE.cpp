@@ -10,7 +10,7 @@
 
 void *TEXTUREDX8SDTEXTURE::GetSurface()
 {
-    return m_texture;
+    return m_surface;
 }
 
 TEXTUREDX8SDTEXTURE::~TEXTUREDX8SDTEXTURE()
