@@ -130,6 +130,9 @@ inline V3 operator*(const float &s, const V3 &v)
 #endif
 
 // Zero when divided by zero.
+#ifdef TONGAS2_CORE_OUTOFLINE
+V3 operator/(const V3 &v, const float &s);
+#else
 inline V3 operator/(const V3 &v, const float &s)
 {
     if (s == 0.0f)
@@ -137,6 +140,7 @@ inline V3 operator/(const V3 &v, const float &s)
     float r = 1.0f / s;
     return V3(r * v.x, r * v.y, r * v.z);
 }
+#endif
 
 // Componentwise.
 #ifdef TONGAS2_CORE_OUTOFLINE

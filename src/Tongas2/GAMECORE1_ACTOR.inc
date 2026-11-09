@@ -356,6 +356,51 @@ int ACTOR::GetFactoryId()
     return s_factoryId;
 }
 
+V2 V2::Normalized() const
+{
+    float length = (float)sqrt(y * y + x * x);
+    if (length == 0.0f)
+        return V2(0.0f, 0.0f);
+    float r = 1.0f / length;
+    return V2(x * r, y * r);
+}
+
+V3 operator/(const V3 &v, const float &s)
+{
+    if (s == 0.0f)
+        return V3(0.0f, 0.0f, 0.0f);
+    float r = 1.0f / s;
+    return V3(r * v.x, r * v.y, r * v.z);
+}
+
+float V3::Length() const
+{
+    return (float)sqrt(x * x + y * y + z * z);
+}
+
+bool operator==(const RGB &a, const RGB &b)
+{
+    return a.r == b.r && a.g == b.g && a.b == b.b;
+}
+
+float ANG::GetEulerX()
+{
+    if (flags & EULER_DIRTY) {
+        matrix.ToEuler(&euler.z, &euler.y, &euler.x);
+        flags &= ~EULER_DIRTY;
+    }
+    return euler.x;
+}
+
+PLANE::PLANE(const V3 &normal, const V3 &point)
+{
+    a = 0.0f;
+    b = 0.0f;
+    c = 0.0f;
+    memcpy(&a, &normal, sizeof(V3));
+    d = -(a * point.x + b * point.y + c * point.z);
+}
+
 template void DYNAMICARRAY<int>::Clear();
 
 void MATRIX::RotateY(float degrees)

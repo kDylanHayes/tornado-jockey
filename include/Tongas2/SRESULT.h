@@ -71,6 +71,9 @@ struct ANG
         return euler;
     }
     // Each euler angle, and all three.
+#ifdef TONGAS2_CORE_OUTOFLINE
+    float GetEulerX();
+#else
     float GetEulerX()
     {
         if (flags & EULER_DIRTY) {
@@ -79,6 +82,7 @@ struct ANG
         }
         return euler.x;
     }
+#endif
     float GetEulerY()
     {
         if (flags & EULER_DIRTY) {

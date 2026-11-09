@@ -5,9 +5,12 @@
 #define TONGAS2_CORE_OUTOFLINE
 #define STRING_CORE_OUTOFLINE
 #define PRIMV2_OUTOFLINE
+#define V3_LENGTH_OUTOFLINE
 
 #include <stdarg.h>
 #include <stdio.h>
+#include <string>
+#include <map>
 
 #include "Tongas2/ACTOR.h"
 #include "Tongas2/CSTRING.h"
@@ -17,6 +20,11 @@
 #include "Tongas2/SAFEINDEX.h"
 #include "Tongas2/STRING.h"
 #include "Tongas2/TOKENS.h"
+
+template class std::basic_string<char>;
+
+struct FITAG;
+template class std::map<std::basic_string<char>, FITAG *>;
 
 bool operator==(const RESHANDLE &a, const RESHANDLE &b)
 {
