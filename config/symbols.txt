@@ -7931,5 +7931,9 @@
 0x006ae878 ?g_destructibleFactoryId@@3HA data 0x4
 0x00422e60 ??0G2D5@@QAE@XZ function 0x292
 0x00420ee0 ?ClearParticle@G2D1@@QAEXXZ function 0x47
-0x00426000 ??1G2EFFECT@@UAE@XZ function 0x12
+0x00426000 ??1G2EFFECT@@UAE@XZ function 0x8a
 0x00426500 ??_GG2EFFECT@@UAEPAXI@Z function 0x1e
+0x0054b0e0 ??1G2EFFECTBASE@@UAE@XZ function 0x12
+0x0065ae20 ??_7G2EFFECT@@6BCMDBASE@@@ data
+0x0065ade0 ??_7G2EFFECT@@6BACTORLINK@@@ data
+0x005e7848 __ehhandler$??1G2EFFECT@@UAE@XZ function

@@ -339,14 +339,31 @@ G2D2::~G2D2()
 {
 }
 
-class G2EFFECT : public ACTOR
+class G2EFFECTBASE : public ACTOR
+{
+public:
+    virtual ~G2EFFECTBASE();
+};
+
+__declspec(noinline) G2EFFECTBASE::~G2EFFECTBASE()
+{
+}
+
+class G2EFFECT : public G2EFFECTBASE
 {
 public:
     virtual ~G2EFFECT();
+
+    char m_0000[0xd8c - 0xccc];
+    RESHANDLE m_d8c;
 };
 
 G2EFFECT::~G2EFFECT()
 {
+    RESOURCE *resource = g_pResources->GetResource(m_d8c);
+    if (resource)
+        resource->Virtual20();
+    m_d8c.Invalidate();
 }
 
 struct ZEROV2 : V2
