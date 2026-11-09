@@ -13,6 +13,8 @@
 #include "Tongas2/RENDERER.h"
 #include "Tongas2/TIMER.h"
 #include "Tongas2/SPAWNER.h"
+#include "Tongas2/RESOURCE.h"
+#include "Tongas2/SCENE.h"
 #include "Tongas2/SRESULT.h"
 
 float ANG::GetEulerY()
@@ -625,16 +627,68 @@ G2RULESOBJ::G2RULESOBJ()
 G2RULESOBJ::~G2RULESOBJ()
 {
 }
-struct G2FORESTOBJ
+// A powerup: a trigger that spawns its objects when touched. Only the
+// virtuals the forest calls are declared here.
+class G2POWERUP : public ACTOR
 {
-    char m_0000[0xdeb4];
+public:
+    static int s_factoryId;
+
+    virtual void Virtual143();
+    virtual void Virtual144();
+    virtual void Virtual145();
+    virtual void SetMaxCommands(const int &max);
+    virtual void SetSpawnAngleDelta(const float &delta);
+    virtual void SetWaitOnFirst(const bool &wait);
+};
+
+class G2FORESTOBJ : public ACTOR
+{
+public:
+    RESHANDLE m_handle;
+    char m_cd8[0xcec - 0xcd8];
+    RESHANDLE m_handles[32];
+    char m_d64[0xdeb4 - 0xe6c];
     int m_a[100];
     int m_b[100];
     char m_bytes[100];
     int m_d[100];
+    char m_e3c8[0xe3cc - 0xe3c8];
+    unsigned char m_e3cc;
+    char m_e3cd[0xe3d0 - 0xe3cd];
+    int m_count;
 
     void Clear();
+    void UpdateActors();
+    void CreatePowerup();
 };
+
+void G2FORESTOBJ::CreatePowerup()
+{
+    G2POWERUP *actor = (G2POWERUP *)g_pScene->CreateActor(G2POWERUP::s_factoryId);
+    if (actor) {
+        actor->SetPosition(GetPosition());
+        actor->SetSpawnAngleDelta(120.0f);
+        actor->SetMaxCommands(2);
+        actor->SetOccludingBox(V3(40.0f, 40.0f, 40.0f));
+        actor->SetWaitOnFirst(false);
+        actor->SetActive(true);
+        m_handle = actor->m_handle;
+        m_e3cc = false;
+    }
+}
+
+void G2FORESTOBJ::UpdateActors()
+{
+    for (int i = 0; i < m_count; i++) {
+        WTACTOR *actor = g_pScene->GetActor(m_handles[i]);
+        if (actor) {
+            V3 position = *(V3 *)((char *)actor + 0x28);
+            WTACTOR *scenario = g_pGame->GetScenario();
+            *(float *)((char *)actor + 0x2c) = scenario->GetTerrainPosition(position).y;
+        }
+    }
+}
 
 void G2FORESTOBJ::Clear()
 {

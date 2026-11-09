@@ -166,6 +166,8 @@ class WTACTOR : public RESOURCE
 public:
     // Steps the actor for a frame.
     void Step();
+    // The position on the terrain below a point.
+    V3 GetTerrainPosition(V3 position);
 
     virtual void Virtual29();
     virtual void Virtual30();

@@ -7845,3 +7845,8 @@
 0x00428ef0 ?Start@G2RULESOBJ@@UAEXXZ function 0xbc
 0x004038b0 ?SetRules@GAME@@QAEXPAVACTOR@@@Z function 0x92
 0x0065b418 ??_C@_05FLHPDFK@Rules?$AA@ data
+0x0042b400 ?UpdateActors@G2FORESTOBJ@@QAEXXZ function 0xbd
+0x004022f0 ?GetScenario@GAME@@QAEPAVWTACTOR@@XZ function 0x49
+0x0040d760 ?GetTerrainPosition@WTACTOR@@QAE?AUV3@@U2@@Z function 0x6a
+0x0042b4c0 ?CreatePowerup@G2FORESTOBJ@@QAEXXZ function 0xd6
+0x006ae868 ?s_factoryId@G2POWERUP@@2HA data 0x4

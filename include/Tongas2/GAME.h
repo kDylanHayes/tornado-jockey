@@ -11,6 +11,7 @@
 extern char g_classNames[][30];
 
 class ACTOR;
+class WTACTOR;
 struct V3;
 struct ANG;
 
@@ -23,6 +24,8 @@ public:
     static void RegisterCommands();
     // The tornado actor the scene knows by the saved handle.
     ACTOR *GetTornado();
+    // The scenario actor the scene knows by the saved handle.
+    WTACTOR *GetScenario();
     // Makes the level rules current.
     void SetRules(ACTOR *rules);
     // Spawns the storm chaser actor from the level rules.
