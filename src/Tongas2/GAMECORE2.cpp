@@ -153,13 +153,46 @@ G2NODE *G2LIST::InsertNode(G2NODE *next, G2NODE *prev, const G2VALUE &value)
     }
     return node;
 }
+struct G2V2F
+{
+    float x, y;
+    G2V2F(const float &x_, const float &y_) : x(x_), y(y_) {}
+};
+
 class G2ACTOR : public ACTOR
 {
 public:
+    G2ACTOR();
     virtual ~G2ACTOR();
     virtual void Virtual140();
     virtual void Update();
+
+    V3 m_ccc;
+    G2V2F m_cd8;
+    G2V2F m_ce0;
+    G2V2F m_ce8;
+    V3 m_cf0;
+    bool m_cfc;
+    bool m_cfd;
+    char m_cfe[2];
+    V3I m_d00;
 };
+
+G2ACTOR::G2ACTOR()
+    : m_cd8(0.0f, 0.0f),
+      m_ce0(0.0f, 0.0f),
+      m_ce8(0.0f, 0.0f),
+      m_d00(-1, -1, 0)
+{
+    m_d00 = V3I(-1, -1, 0);
+    m_cd8 = G2V2F(1.0f, 3.0f);
+    m_ce0 = G2V2F(1.0f, 1.0f);
+    m_ce8 = G2V2F(2.0f, 1.0f);
+    m_ccc = V3(0.0f, 0.0f, 0.0f);
+    m_cf0 = V3(0.0f, 0.0f, 0.0f);
+    m_cfc = false;
+    m_cfd = false;
+}
 
 G2ACTOR::~G2ACTOR()
 {
