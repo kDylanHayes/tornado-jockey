@@ -340,15 +340,6 @@ G2D2::~G2D2()
 {
 }
 
-class G2D3 : public ACTOR
-{
-public:
-    virtual ~G2D3();
-};
-
-G2D3::~G2D3()
-{
-}
 class G2D5 : public ACTOR
 {
 public:
@@ -664,25 +655,53 @@ public:
 class G2FORESTOBJ : public ACTOR
 {
 public:
+    G2FORESTOBJ();
+    virtual ~G2FORESTOBJ();
+
+    // The spawner cell the forest made a powerup in.
     RESHANDLE m_handle;
     bool m_cd8;
-    char m_cd9[0xce8 - 0xcd9];
+    char m_cd9[0xcdc - 0xcd9];
+    int m_cdc;
+    int m_ce0;
+    int m_ce4;
     int m_ce8;
-    RESHANDLE m_handles[32];
-    char m_e6c[0x119c - 0xe6c];
-    char m_names[0xd99c - 0x119c];
-    int m_indices[0x146];
-    int m_a[100];
-    int m_b[100];
-    char m_bytes[100];
-    int m_d[100];
-    char m_e3c8[0xe3cc - 0xe3c8];
-    unsigned char m_e3cc;
-    char m_e3cd[0xe3d0 - 0xe3cd];
+    // The trees: their handles, names and the cells they are in.
+    RESHANDLE m_handles[100];
+    FIXEDSTRING<0x200> m_names[100];
+    int m_index1[100];
+    int m_index2[100];
+    char m_bytes3[100];
+    int m_index4[100];
+    int m_deb0;
+    float m_scores[100];
+    float m_weights[100];
+    char m_occupied[100];
+    int m_counts[100];
+    int m_e3c8;
+    bool m_e3cc;
+    bool m_e3cd;
+    char m_e3ce[0xe3d0 - 0xe3ce];
     int m_count;
-    char m_e3d4[0xe5dc - 0xe3d4];
+    FIXEDSTRING<0x200> m_name;
+    bool m_e5d4;
+    bool m_e5d5;
+    char m_e5d6[0xe5d8 - 0xe5d6];
+    float m_e5d8;
     int m_e5dc;
     int m_e5e0;
+    bool m_e5e4;
+    char m_e5e5[0xe5e8 - 0xe5e5];
+    int m_e5e8;
+    bool m_e5ec;
+    char m_e5ed[0xe5f0 - 0xe5ed];
+    float m_e5f0;
+    int m_e5f4;
+    bool m_e5f8;
+    char m_e5f9[0xe5fc - 0xe5f9];
+    float m_e5fc;
+    RESHANDLE m_e600;
+    RESHANDLE m_e60c;
 
     void Clear();
     void UpdateActors();
@@ -699,19 +718,19 @@ void G2FORESTOBJ::CreateMaxPowerup()
     int col = 0;
     for (int r = 0; r < m_e5dc; r++) {
         for (int c = 0; c < m_e5e0; c++) {
-            if (((float *)m_a)[r * 10 + c] > ((float *)m_a)[row * 10 + col]) {
+            if (m_scores[r * 10 + c] > m_scores[row * 10 + col]) {
                 row = r;
                 col = c;
             }
         }
     }
-    ((float *)m_b)[row * 10 + col] = 100.0f;
+    m_weights[row * 10 + col] = 100.0f;
     CreatePowerup();
 }
 
 void G2FORESTOBJ::LoadTrees()
 {
-    int *p = m_d;
+    int *p = m_counts;
     int rows = 10;
     do {
         int c = 10;
@@ -728,13 +747,13 @@ void G2FORESTOBJ::LoadTrees()
                 g_pLog->Error("Can't get tree %s!", (char *)this + 0x119c + i * 0x200);
             return;
         }
-        int idx = m_indices[i];
+        int idx = m_index1[i];
         int col = idx % m_e5e0;
         int row = (idx - col) / m_e5e0;
         int cell = row * 10 + col;
-        float value = ((float *)m_a)[cell] + 10.0f;
-        m_d[cell] = m_d[cell] + 1;
-        ((float *)m_a)[cell] = value;
+        float value = m_scores[cell] + 10.0f;
+        m_counts[cell] = m_counts[cell] + 1;
+        m_scores[cell] = value;
     }
 }
 
@@ -743,7 +762,7 @@ void G2FORESTOBJ::CheckTrees()
     m_cd8 = false;
     for (int r = 0; r < m_e5dc; r++) {
         for (int c = 0; c < m_e5e0; c++) {
-            if (m_bytes[r * 10 + c] != 0)
+            if (m_occupied[r * 10 + c] != 0)
                 m_cd8 = true;
         }
     }
@@ -786,10 +805,51 @@ void G2FORESTOBJ::UpdateActors()
     }
 }
 
+G2FORESTOBJ::G2FORESTOBJ()
+{
+    m_cd8 = false;
+    m_cdc = 0;
+    m_ce0 = 0;
+    m_ce4 = 0;
+    m_ce8 = 0;
+    for (int i = 0; i < 100; i++) {
+        m_handles[i] = RESHANDLE(-1, -1, 0);
+        m_names[i].Set("");
+        m_index1[i] = 0;
+        m_index2[i] = 0;
+        m_bytes3[i] = 0;
+        m_index4[i] = 0;
+    }
+    m_deb0 = 0;
+    Clear();
+    m_e600 = RESHANDLE(-1, -1, 0);
+    m_e3c8 = -1;
+    m_e3cc = false;
+    m_e3cd = false;
+    m_count = 0;
+    m_name.Set("");
+    m_e5dc = 5;
+    m_e5e0 = 5;
+    m_e5d4 = false;
+    m_e5d5 = false;
+    m_e5e4 = false;
+    m_e5e8 = 0;
+    m_e5ec = false;
+    m_e5f4 = 0;
+    m_e5f8 = false;
+    m_e5d8 = 0.05f;
+    m_e5f0 = 45.0f;
+    m_e5fc = 1.5f;
+}
+
+G2FORESTOBJ::~G2FORESTOBJ()
+{
+}
+
 void G2FORESTOBJ::Clear()
 {
-    char *q = m_bytes;
-    int *p = m_b;
+    char *q = m_occupied;
+    int *p = (int *)m_weights;
     int rows = 10;
     int r = 0;
     do {
