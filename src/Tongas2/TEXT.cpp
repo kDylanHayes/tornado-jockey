@@ -586,7 +586,7 @@ void TEXT::Update()
 
 void TEXTMASTER::BuildCharacters()
 {
-    m_chars.Clear();
+    ((DYNAMICARRAY<int> *)&m_chars)->Clear();
     int count = 0x80;
     m_chars.Resize(count);
     memset(m_charIndex, 0xff, sizeof(m_charIndex));

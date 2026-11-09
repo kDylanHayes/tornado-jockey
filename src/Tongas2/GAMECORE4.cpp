@@ -22,6 +22,12 @@
 template class std::basic_string<char>;
 template class std::vector<std::basic_string<char> >;
 template class std::map<int, RESHANDLE>;
+template struct std::less<std::basic_string<char> >;
+template std::basic_string<char> std::operator+<char, std::char_traits<char>, std::allocator<char> >(
+    const std::basic_string<char> &, const std::basic_string<char> &);
+template std::basic_string<char> std::operator+<char, std::char_traits<char>, std::allocator<char> >(
+    const std::basic_string<char> &, const char *);
+template class CALLBACKLIST<RESOURCESCALLBACK>;
 
 int RESOURCES::GetClassId()
 {
