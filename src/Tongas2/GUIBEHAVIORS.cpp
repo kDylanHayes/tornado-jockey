@@ -215,7 +215,8 @@ void ORBITBEHAVIOR::Place()
     float s = (float)sin(angle);
     float c = (float)cos(angle);
     actor->SetPosition((m_u * c + m_v * s) * m_radius + m_center);
-    actor->m_angles.PointAt(m_center + m_lookAt - actor->GetPosition());
+    V3 target = m_center + m_lookAt - actor->GetPosition();
+    actor->m_angles.PointAt(target);
 }
 
 INTERPOLATEDGROWBEHAVIOR::INTERPOLATEDGROWBEHAVIOR(const RESHANDLE &owner, CMDCALL *call) : TIMEDBEHAVIOR(owner, call)
