@@ -7929,3 +7929,4 @@
 0x00423130 ?GetFactoryId@G2D5@@UAEHXZ function 0x6
 0x00423140 ?GetFactoryFlags@G2D5@@UAEHXZ function 0xd
 0x006ae878 ?g_destructibleFactoryId@@3HA data 0x4
+0x00422e60 ??0G2D5@@QAE@XZ function 0x292

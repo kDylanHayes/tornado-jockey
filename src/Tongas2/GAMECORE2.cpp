@@ -316,6 +316,32 @@ G2D2::~G2D2()
 {
 }
 
+struct ZEROV2 : V2
+{
+    ZEROV2() : V2(0.0f, 0.0f) {}
+    ZEROV2 &operator=(const V2 &v)
+    {
+        V2::operator=(v);
+        return *this;
+    }
+};
+
+template <int N>
+struct WIDESTRING
+{
+    WIDESTRING()
+    {
+        m_buf[0] = 0;
+        m_buf[N - 1] = 0;
+    }
+    void Set(const wchar_t *text)
+    {
+        wcsncpy(m_buf, text, N - 1);
+        m_buf[N - 1] = 0;
+    }
+    wchar_t m_buf[N];
+};
+
 extern int g_destructibleFactoryId;
 
 class G2DESTRUCTIBLE
@@ -329,6 +355,7 @@ public:
 class G2D5 : public ACTOR
 {
 public:
+    G2D5();
     virtual ~G2D5();
 
     virtual int GetClassId() { return G2DESTRUCTIBLE::s_classId; }
@@ -356,16 +383,113 @@ public:
     void SetColor(const V3I &value);
     void SetOpacity(const float &value);
 
-    char m_0000[0x113c - 0xccc];
-    void *volatile m_113c;
+    int m_ccc;
+    bool m_cd0;
+    bool m_cd1;
+    ZEROV3 m_cd4;
+    int m_ce0;
+    int m_ce4;
+    bool m_ce8;
+    int m_cec;
+    bool m_cf0;
+    bool m_cf1;
+    bool m_cf2;
+    ZEROV2 m_cf4;
+    bool m_cfc;
+    int m_d00;
+    bool m_d04;
+    int m_d08;
+    int m_d0c;
+    WIDESTRING<0x200> m_d10;
+    ZEROV2 m_1110;
+    int m_1118;
+    int m_111c;
+    bool m_1120;
+    int m_1124;
+    bool m_1128;
+    bool m_1129;
+    bool m_112a;
+    bool m_112b;
+    bool m_112c;
+    float m_1130;
+    int m_1134;
+    bool m_1138;
+    CSTRING m_113c;
+    int m_1140;
+    bool m_1144;
+    float m_1148;
+    bool m_114c;
+    bool m_114d;
+    V3I m_1150;
+    float m_115c;
+    FIXEDSTRING<0x200> m_1160;
+    bool m_1360;
+    RESHANDLE m_1364;
+    bool m_1370;
+    bool m_1371;
+    int m_1374;
+    RESHANDLE m_1378;
+    int m_1384;
+    int m_1388;
+    int m_138c;
+    RESHANDLE m_1390;
+    bool m_139c;
 };
+
+G2D5::G2D5()
+{
+    m_cd4 = V3(0.0f, 0.0f, 0.0f);
+    m_ccc = 0;
+    m_cd0 = false;
+    m_cd1 = false;
+    m_ce0 = 0;
+    m_ce4 = 0;
+    m_ce8 = false;
+    m_cec = 0;
+    m_cf0 = true;
+    m_cf1 = false;
+    m_cf2 = false;
+    m_cf4 = V2(0.0f, 0.0f);
+    m_cfc = false;
+    m_d00 = 0;
+    m_d04 = false;
+    m_d08 = 0;
+    m_d0c = 0;
+    m_1370 = false;
+    m_1374 = 0;
+    m_1384 = -1;
+    m_1388 = 0;
+    m_138c = 0;
+    m_1371 = false;
+    m_d10.Set(L"");
+    m_1110 = V2(0.0f, 6.0f);
+    m_1118 = 0;
+    m_111c = 0;
+    m_1120 = false;
+    m_1124 = 0;
+    m_1128 = false;
+    m_1129 = false;
+    m_112a = false;
+    m_112b = false;
+    m_112c = true;
+    m_1130 = 1.0f;
+    m_1134 = 0;
+    m_1138 = false;
+    m_113c = "";
+    m_1140 = -1;
+    m_1144 = false;
+    m_1148 = 1.5f;
+    m_114c = false;
+    m_114d = false;
+    m_1150 = V3I(255, 64, 64);
+    m_115c = 1.0f;
+    m_1160.Set("");
+    m_1360 = false;
+    m_139c = false;
+}
 
 G2D5::~G2D5()
 {
-    if (m_113c) {
-        free(m_113c);
-        m_113c = 0;
-    }
 }
 
 void G2D5::SetTargetPoint(V3 value)
@@ -457,7 +581,6 @@ void G2D5::SetOpacity(const float &value)
 {
     *(float *)((char *)this + 0x115c) = value;
 }
-
 
 struct G2TIMESET
 {
@@ -659,32 +782,6 @@ struct G2CONTACTARG
     char m_0001[0xdd1 - 8 - sizeof(RESHANDLE)];
     bool m_flag;
     bool m_dd2;
-};
-
-struct ZEROV2 : V2
-{
-    ZEROV2() : V2(0.0f, 0.0f) {}
-    ZEROV2 &operator=(const V2 &v)
-    {
-        V2::operator=(v);
-        return *this;
-    }
-};
-
-template <int N>
-struct WIDESTRING
-{
-    WIDESTRING()
-    {
-        m_buf[0] = 0;
-        m_buf[N - 1] = 0;
-    }
-    void Set(const wchar_t *text)
-    {
-        wcsncpy(m_buf, text, N - 1);
-        m_buf[N - 1] = 0;
-    }
-    wchar_t m_buf[N];
 };
 
 class G2CHAIN : public G2RULESOBJBASE, public INPUTLISTENER
