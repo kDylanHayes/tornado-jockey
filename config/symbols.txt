@@ -128,7 +128,7 @@
 0x0040add0 ?Clear@?$DYNAMICARRAY@UFONTCHAR@@@@QAEXXZ function 0x3a
 0x0040add0 ?Clear@?$DYNAMICARRAY@H@@QAEXXZ function 0x3a
 0x0040af70 ?Invert@MATRIX@@QAEXXZ function 0xc9
-0x0040b0a0 ??D@YA?AUMATRIX@@ABU0@0@Z function
+0x0040b0a0 ??D@YA?AUMATRIX@@ABU0@0@Z function 0x260
 0x0040b380 ??_9@$BCEM@AE function
 0x0040b3b0 ??_9@$BCFA@AE function
 0x0040b3e0 ??_9@$BCFE@AE function

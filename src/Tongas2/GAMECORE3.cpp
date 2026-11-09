@@ -5,6 +5,7 @@
 #define RM_SETTERS_OUTOFLINE
 #define TRIGGER_SETTERS_OUTOFLINE
 #define GC3_OUTOFLINE
+#define ANG_CTOR_INIT
 
 #include <deque>
 
