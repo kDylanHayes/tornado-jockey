@@ -7895,3 +7895,6 @@
 0x00429110 ??_EG2RULESOBJ@@WBM@AEPAXI@Z function 0x8
 0x00421e00 ?RotateY@MATRIX@@QAEXM@Z function 0x5a
 0x00422e20 ?SetEulerX@ANG@@QAEXABM@Z function 0x39
+0x004263b0 ?Transpose@MATRIX@@QAEXPAU1@@Z function 0x4d
+0x00422980 ?FindResource@G2MID2@@QAEXXZ function 0x6b
+0x006cb224 ?g_pActorResourceManager@@3PAVRESOURCEMANAGER@@A data 0x4

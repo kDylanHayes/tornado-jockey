@@ -8,6 +8,7 @@
 #define SCENE_FINDACTORS
 #define V3_DISTANCEXZ_OUTOFLINE
 #define ANG_SETEULERX_OUTOFLINE
+#define MATRIX_TRANSPOSE_OUTOFLINE
 
 
 #include <new>
@@ -348,13 +349,19 @@ void G2TIMESET::ResetSpeed()
         g_pTimer->SetSpeed(1.0f);
     m_fbc = 1.0f;
 }
+extern RESOURCEMANAGER *g_pActorResourceManager;
+
 class G2MID2 : public ACTOR
 {
 public:
     virtual void Stop();
     void Helper();
+    void FindResource();
 
-    char m_0000[0x1390 - 0xccc];
+    char m_0000[0x1384 - 0xccc];
+    // The handle slot the active resource was found in, or -1.
+    int m_1384;
+    char m_1388[0x1390 - 0x1388];
     RESHANDLE m_handle;
 };
 
@@ -1327,7 +1334,7 @@ void G2MID2::Helper()
     if (first)
         first->Virtual20();
     m_handle.Invalidate();
-    RESOURCE *second = g_pResources->GetResource(((RESHANDLE *)((char *)this + 0xb58))[*(int *)((char *)this + 0x1384)]);
+    RESOURCE *second = g_pResources->GetResource(((RESHANDLE *)((char *)this + 0xb58))[m_1384]);
     if (second)
         second->SetActive(true);
 }
@@ -1448,9 +1455,10 @@ void G2CHAIN::C()
         return;
     }
 
+    int i;
     float best = 1000.0f;
     G2SUPERCELL *bestActor = 0;
-    for (int i = 0; i < count; i++) {
+    for (i = 0; i < count; i++) {
         G2SUPERCELL *supercell = (G2SUPERCELL *)actors[i];
         if (!supercell)
             continue;
@@ -1516,5 +1524,40 @@ void ANG::SetEulerX(const float &x)
     if (x != euler.x) {
         euler.x = x;
         flags = MATRIX_DIRTY;
+    }
+}
+
+void MATRIX::Transpose(MATRIX *out)
+{
+    out->_11 = _11;
+    out->_21 = _12;
+    out->_31 = _13;
+    out->_12 = _21;
+    out->_22 = _22;
+    out->_32 = _23;
+    out->_13 = _31;
+    out->_23 = _32;
+    out->_33 = _33;
+    out->_14 = _41;
+    out->_24 = _42;
+    out->_34 = _43;
+}
+
+void G2MID2::FindResource()
+{
+    m_1384 = -1;
+    int i = 0;
+    RESHANDLE *handles = (RESHANDLE *)((char *)this + 0xb58);
+    while (i < 16) {
+        RESOURCE *resource = g_pResources->GetResource(*handles);
+        if (resource) {
+            int managerId = g_pActorResourceManager->m_id;
+            if (resource->GetManagerId() == managerId) {
+                m_1384 = i;
+                return;
+            }
+        }
+        i++;
+        handles++;
     }
 }

@@ -91,6 +91,10 @@ struct MATRIX
     void LookAt(const V3 &position, const V3 &direction);
     // Defined in another unit: the matrix of cofactors.
     MATRIX Adjoint();
+#ifdef MATRIX_TRANSPOSE_OUTOFLINE
+    // Writes the rotation and its translation transposed to out.
+    void Transpose(MATRIX *out);
+#endif
 #ifdef MATRIX_AXIS_METHODS
     // Defined in another unit: the translation plus the matrix's forward or
     // up axis.
