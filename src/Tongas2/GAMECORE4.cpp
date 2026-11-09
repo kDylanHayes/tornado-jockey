@@ -2,6 +2,8 @@
 // and tree members the original translation unit emitted out of line, and the
 // small resource accessors that live in the same block.
 #define GC4_OUTOFLINE
+#define MATRIX_AXIS_METHODS
+#define ANG_UPDATE_OUTOFLINE
 
 #include <map>
 #include <string>
@@ -142,4 +144,20 @@ void UNICODESTRING::Free()
     m_buf = 0;
     m_length = 0;
     m_lengthValid = true;
+}
+
+void ANG::GetAxes(V3 *forward, V3 *up)
+{
+    if (flags & MATRIX_DIRTY)
+        UpdateMatrix();
+    {
+        V3 axis = matrix.GetForward();
+        *forward = axis;
+    }
+    if (flags & MATRIX_DIRTY)
+        UpdateMatrix();
+    {
+        V3 axis = matrix.GetUp();
+        *up = axis;
+    }
 }

@@ -85,6 +85,12 @@ struct MATRIX
     void LookAt(const V3 &position, const V3 &direction);
     // Defined in another unit: the matrix of cofactors.
     MATRIX Adjoint();
+#ifdef MATRIX_AXIS_METHODS
+    // Defined in another unit: the translation plus the matrix's forward or
+    // up axis.
+    V3 GetForward();
+    V3 GetUp();
+#endif
     // Defined in another unit: an orthographic projection.
     void Ortho(float width, float height, float zNear, float zFar);
     // A perspective projection with fov (radians) the vertical field of view.

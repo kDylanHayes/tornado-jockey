@@ -164,6 +164,10 @@ struct ANG
     void Rotate(const MATRIX &m);
     // The forward and up axes of the rotation.
     void GetAxes(V3 *forward, V3 *up);
+#ifdef ANG_UPDATE_OUTOFLINE
+    // Rebuilds matrix from euler when it is dirty. Out of line.
+    void UpdateMatrix();
+#endif
 #if defined(ANG_INLINE_AXES) || defined(ANG_INLINE_DIRECTION)
     // ACTOR.cpp was built seeing these two inline, SIMPLEMODEL.cpp only
     // GetDirection; everywhere else they are out of line.

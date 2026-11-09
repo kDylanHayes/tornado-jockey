@@ -233,7 +233,7 @@
 0x004435a0 ?_Lrotate@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@IAEXPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@2@@Z function
 0x00443640 ?_Rrotate@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@IAEXPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@2@@Z function
 0x004436a0 ?_Inc@const_iterator@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@QAEXXZ function
-0x00443700 ?GetAxes@ANG@@QAEXPAUV3@@0@Z function
+0x00443700 ?GetAxes@ANG@@QAEXPAUV3@@0@Z function 0x72
 0x00443780 ?_Buynode@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@2@XZ function
 0x00443800 ??1SOUNDMASTER@@UAE@XZ function 0x28
 0x00443870 ?SetForceDuplicates@SCREENDECALMASTER@@UAEXAB_N@Z function 0xc
@@ -7743,3 +7743,6 @@
 0x006870e0 ??_C@_0CN@DGCAKNIP@assertion?5?$CCjb_ptr?5?$DN?$DN?5jb?$CL2?$CKm?$CC?5fai@ data 0x2d
 0x00403ab0 ??0CSTRING@@QAE@PBD@Z function 0x27
 0x00449410 ?size@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QBEIXZ function 0x21
+0x00408f20 ?GetUp@MATRIX@@QAE?AUV3@@XZ function 0x21
+0x00408f50 ?GetForward@MATRIX@@QAE?AUV3@@XZ function 0x21
+0x00408f80 ?UpdateMatrix@ANG@@QAEXXZ function 0x1c

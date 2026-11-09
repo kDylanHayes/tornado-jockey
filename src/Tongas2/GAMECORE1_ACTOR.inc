@@ -310,6 +310,22 @@ float V3::Distance(const V3 &o) const
     return (float)sqrt(dx * dx + dy * dy + dz * dz);
 }
 
+void ANG::UpdateMatrix()
+{
+    matrix.FromEuler(euler.z, euler.y, euler.x);
+    flags &= ~MATRIX_DIRTY;
+}
+
+V3 MATRIX::GetForward()
+{
+    return V3(_41 + _31, _42 + _32, _43 + _33);
+}
+
+V3 MATRIX::GetUp()
+{
+    return V3(_41 + _21, _42 + _22, _43 + _23);
+}
+
 V3 V3::Rotate(V3 axis, float angle) const
 {
     V3 perpendicular = *this - axis * ((axis.x * x + axis.y * y + axis.z * z) / axis.Length());

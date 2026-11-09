@@ -6,6 +6,8 @@
 #define STRING_CORE_OUTOFLINE
 #define PRIMV2_OUTOFLINE
 #define V3_LENGTH_OUTOFLINE
+#define MATRIX_AXIS_METHODS
+#define ANG_UPDATE_OUTOFLINE
 
 #include <stdarg.h>
 #include <stdio.h>
