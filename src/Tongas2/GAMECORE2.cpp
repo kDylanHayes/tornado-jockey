@@ -6,6 +6,12 @@
 #define SPAWNER_SETTERS_OUTOFLINE
 #define V2_ROTATE_OUTOFLINE
 
+// The contact the actor lists hold; only the list plumbing matters here.
+struct CONTACT
+{
+    int m_type;
+};
+
 #include <new>
 
 #include "Tongas2/FIXEDSTRING.h"
@@ -15,6 +21,7 @@
 #include "Tongas2/TIMER.h"
 #include "Tongas2/SPAWNER.h"
 #include "Tongas2/RESOURCE.h"
+#include "Tongas2/INPUT.h"
 #include "Tongas2/RESOURCES.h"
 #include "Tongas2/SCENE.h"
 #include "Tongas2/SRESULT.h"
@@ -391,6 +398,41 @@ __declspec(noinline) void G2MID2::Stop()
     ACTOR::Stop();
 }
 
+struct G2INT3
+{
+    int x, y, z;
+    G2INT3() {}
+    G2INT3(int x_, int y_, int z_) : x(x_), y(y_), z(z_) {}
+};
+
+class G2RULESOBJBASE : public ACTOR
+{
+public:
+    G2RULESOBJBASE();
+    virtual ~G2RULESOBJBASE();
+
+    FIXEDSTRING<0x200> m_name;
+    G2INT3 m_entries[10];
+};
+
+G2RULESOBJBASE::G2RULESOBJBASE()
+{
+    G2INT3 *p = m_entries;
+    for (int i = 10; i != 0; i--) {
+        p->x = -1;
+        p->y = -1;
+        p->z = 0;
+        p++;
+    }
+    m_name.Set("HudNormal");
+}
+
+__declspec(noinline) G2RULESOBJBASE::~G2RULESOBJBASE()
+{
+    if (g_pGame)
+        g_pGame->ResetRules();
+}
+
 class G2GAMEVT
 {
 public:
@@ -461,9 +503,11 @@ public:
     virtual void V64();
 };
 
-class G2CHAIN : public ACTOR
+class G2CHAIN : public G2RULESOBJBASE, public INPUTLISTENER
 {
 public:
+    virtual ~G2CHAIN();
+
     void A();
     void B();
     void C();
@@ -471,10 +515,16 @@ public:
     void E();
     void Run();
 
-    char m_0000[0x1bd8 - 0xccc];
+    char m_0000[0x1bcc - 0xf44 - sizeof(INPUTLISTENER)];
+    std::list<CONTACT> m_contacts;
     int m_1bd8;
     int m_1bdc;
+    std::list<CONTACT> m_contacts2;
 };
+
+G2CHAIN::~G2CHAIN()
+{
+}
 
 __declspec(noinline) void G2CHAIN::A()
 {
@@ -653,41 +703,6 @@ void G2FOREST::RegisterCommands()
     HashCommands(s_commands);
     RegisterClassName(s_commands, "FOREST", "ACTOR");
 }
-struct G2INT3
-{
-    int x, y, z;
-    G2INT3() {}
-    G2INT3(int x_, int y_, int z_) : x(x_), y(y_), z(z_) {}
-};
-
-class G2RULESOBJBASE : public ACTOR
-{
-public:
-    G2RULESOBJBASE();
-    virtual ~G2RULESOBJBASE();
-
-    FIXEDSTRING<0x200> m_name;
-    G2INT3 m_entries[10];
-};
-
-G2RULESOBJBASE::G2RULESOBJBASE()
-{
-    G2INT3 *p = m_entries;
-    for (int i = 10; i != 0; i--) {
-        p->x = -1;
-        p->y = -1;
-        p->z = 0;
-        p++;
-    }
-    m_name.Set("HudNormal");
-}
-
-__declspec(noinline) G2RULESOBJBASE::~G2RULESOBJBASE()
-{
-    if (g_pGame)
-        g_pGame->ResetRules();
-}
-
 class G2RULESOBJ : public G2RULESOBJBASE
 {
 public:
