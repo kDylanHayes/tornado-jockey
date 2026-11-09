@@ -23,6 +23,9 @@ public:
         }
     }
 
+#ifdef TONGAS2_CORE_OUTOFLINE
+    CSTRING &operator=(const char *str);
+#else
     CSTRING &operator=(const char *str)
     {
         if (str != m_str) {
@@ -35,6 +38,7 @@ public:
         }
         return *this;
     }
+#endif
     CSTRING &operator=(const CSTRING &other)
     {
         if (*this != other)

@@ -32,7 +32,11 @@ enum SRESULTTYPE
 // A color, each channel 0-255.
 struct RGB
 {
+#ifdef TONGAS2_CORE_OUTOFLINE
+    RGB();
+#else
     RGB() { r = g = b = 0; }
+#endif
     RGB(int r_, int g_, int b_) { r = r_; g = g_; b = b_; }
 
     int r, g, b;
@@ -48,7 +52,11 @@ struct ANG
         EULER_DIRTY = 2
     };
 
+#ifdef TONGAS2_CORE_OUTOFLINE
+    ANG();
+#else
     ANG() {}
+#endif
     ANG(float x, float y, float z) : euler(x, y, z), flags(MATRIX_DIRTY) {}
     ANG(const MATRIX &m) : euler(0.0f, 0.0f, 0.0f), matrix(m), flags(EULER_DIRTY) {}
     // Looking along direction from position.
@@ -231,11 +239,15 @@ public:
         m_type = SRT_NOTSET;
         m_value.i = 0;
     }
+#ifdef TONGAS2_CORE_OUTOFLINE
+    SRESULT(const bool &value);
+#else
     SRESULT(const bool &value)
     {
         SetType(SRT_BOOL);
         m_value.b = value;
     }
+#endif
     SRESULT(const int &value)
     {
         SetType(SRT_INT);
@@ -280,7 +292,11 @@ public:
     }
     SRESULT(const char *value);
     SRESULT(const wchar_t *value);
+#ifdef TONGAS2_CORE_OUTOFLINE
+    virtual ~SRESULT();
+#else
     virtual ~SRESULT() { FreeValue(); }
+#endif
 
     void SetValue(const wchar_t *value);
     void SetValue(const char *value);

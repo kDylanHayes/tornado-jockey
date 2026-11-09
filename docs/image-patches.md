@@ -123,6 +123,13 @@ Valid code resumes at `0x4def12` (`mov [esp+ebx*4+0x10], eax`) and
 `0x4e163b` (`mov ecx, [ebx+0x77c]`). These three functions, and therefore
 `Tongas2/HEIGHTMAPDX8`, stay partial.
 
+## SOUND
+
+`?EnableSounds@SOUNDMANAGER@@QAEX_N@Z` has a 16-byte run at
+`0x4b2e68-0x4b2e78`: the stream check and copy-loop setup are replaced by
+opaque bytes, while the tail (`test edx,edx` / `mov [ecx+0x225],bl` / `ret 4`)
+stays intact. It keeps `Tongas2/SOUND`'s code partial.
+
 ## Libraries
 
 The third-party libraries carry the same runs. Comparing every library unit

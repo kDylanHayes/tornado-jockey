@@ -58,11 +58,12 @@ public class ApplySymbols extends HeadlessScript {
 				// disassembled it (png error_handler, the _$E1 dynamic
 				// initializers); the delinker needs instructions to find
 				// its relocations, and Ghidra needs them for a function.
-				// (Analysis may have taken its bytes for a string.)
-				if (getDataAt(addr) != null && getDataAt(addr).isDefined()) {
-					clearListing(addr);
-				}
-				if (!disassemble(addr)) {
+				// (Analysis may have taken its bytes for a string, or a
+				// misdecoded instruction may cover the address from
+				// inside an earlier data item.)
+				clearListing(addr);
+				DisassembleCommand command = new DisassembleCommand(addr, null, true);
+				if (!command.applyTo(currentProgram, monitor)) {
 					printerr("Could not disassemble " + addr);
 				}
 			}

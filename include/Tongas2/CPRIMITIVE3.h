@@ -41,7 +41,11 @@ enum
 // A vector, zero until set.
 struct PRIMV3 : V3
 {
+#ifdef TONGAS2_CORE_OUTOFLINE
+    PRIMV3();
+#else
     PRIMV3() : V3(0.0f, 0.0f, 0.0f) {}
+#endif
     PRIMV3 &operator=(const V3 &other)
     {
         V3::operator=(other);
@@ -52,7 +56,11 @@ struct PRIMV3 : V3
 // A point on the screen, zero until set.
 struct PRIMV2 : V2
 {
+#ifdef PRIMV2_OUTOFLINE
+    PRIMV2();
+#else
     PRIMV2() : V2(0.0f, 0.0f) {}
+#endif
 };
 
 // Defined elsewhere: the up vector, and angles that do not turn.

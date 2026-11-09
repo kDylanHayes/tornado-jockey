@@ -74,6 +74,9 @@ extern UNICODESTRING_MANAGER g_UnicodeStringManager;
 class STRING
 {
 public:
+#ifdef STRING_CORE_OUTOFLINE
+    STRING();
+#else
     STRING()
     {
         m_block = -1;
@@ -82,6 +85,7 @@ public:
         m_length = 0;
         m_lengthValid = true;
     }
+#endif
     STRING(const char *text)
     {
         m_block = -1;
@@ -127,6 +131,9 @@ public:
 
     const char *c_str() const { return !m_buf ? "" : m_buf; }
 
+#ifdef STRING_CORE_OUTOFLINE
+    int Length();
+#else
     int Length()
     {
         if (m_lengthValid)
@@ -138,6 +145,7 @@ public:
         m_lengthValid = true;
         return m_length;
     }
+#endif
 
 #ifdef STRING_FREE_OUTOFLINE
     // The GUI behaviors were built seeing it out of line.

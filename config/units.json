@@ -3664,7 +3664,11 @@
       ],
       "target": "build/target/Tongas2/GAMECORE1.obj",
       "source": "src/Tongas2/GAMECORE1.cpp",
-      "category": "game"
+      "category": "game",
+      "cflags": "/nologo /c /O2 /MT /GX /W3 /Zc:wchar_t",
+      "symbol_mappings": {
+        "?SafeSwprintf@@YAHPAGPBGZZ": "?SafeSwprintf@@YAHPA_WPB_WZZ"
+      }
     },
     {
       "name": "Tongas2/GAMECORE2",

@@ -39,12 +39,16 @@ public:
     // Copies text, then rewrites it quoted and escaped for Parse.
     void Quote(STRING &text);
 
+#ifdef TONGAS2_CORE_OUTOFLINE
+    const char *GetToken(int i);
+#else
     const char *GetToken(int i)
     {
         if (i < 0 || i >= m_count)
             return "";
         return m_string.c_str() + m_offsets[i];
     }
+#endif
 
     STRING m_string;
     int m_count;
