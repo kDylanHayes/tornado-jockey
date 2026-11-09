@@ -7870,3 +7870,4 @@
 0x0065b8a0 ??_7G2CHAIN@@6BACTORLINK@@@ data
 0x0065bbac ??_7G2CHAIN@@6B@ data
 0x0042b060 ?_Incsize@?$list@URESHANDLE@@V?$allocator@URESHANDLE@@@std@@@std@@IAEXI@Z function 0x93
+0x0042b100 ?AddContact@G2CHAIN@@QAEXPAUG2CONTACTARG@@@Z function 0xb0

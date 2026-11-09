@@ -461,6 +461,14 @@ public:
     virtual void V64();
 };
 
+struct G2CONTACTARG
+{
+    char m_0000[8];
+    RESHANDLE m_handle;
+    char m_0001[0xdd1 - 8 - sizeof(RESHANDLE)];
+    bool m_flag;
+};
+
 struct ZEROV2 : V2
 {
     ZEROV2() : V2(0.0f, 0.0f) {}
@@ -499,7 +507,7 @@ public:
     void D();
     void E();
     void Run();
-    void AddContact(const RESHANDLE &handle);
+    void AddContact(G2CONTACTARG *obj);
 
     float m_f48;
     int m_f4c;
@@ -530,22 +538,35 @@ public:
     int m_1c0c;
 };
 
-void G2CHAIN::AddContact(const RESHANDLE &handle)
+void G2CHAIN::AddContact(G2CONTACTARG *obj)
 {
-    m_contacts.push_back(handle);
+    if (obj->m_flag) {
+        m_contacts.push_back(obj->m_handle);
+        m_1bd8++;
+        m_1b8c[0]++;
+        m_1b8c[1]++;
+    } else {
+        m_contacts2.push_back(obj->m_handle);
+        m_1bec++;
+    }
 }
 
 G2CHAIN::G2CHAIN()
 {
+    V2 speeds(2.0f, 2.0f);
     m_f4c = 3;
-    m_f50 = V2(2.0f, 2.0f);
-    m_f60 = V2(30.0f, 60.0f);
+    m_f50 = speeds;
+    speeds = V2(30.0f, 60.0f);
+    m_f60 = speeds;
     m_f48 = 0.005f;
     m_f58 = 120.0f;
     m_f5c = 0;
-    m_f68 = V2(30.0f, 60.0f);
-    m_f70 = V2(60.0f, 120.0f);
-    m_f78 = V2(60.0f, 120.0f);
+    speeds = V2(30.0f, 60.0f);
+    m_f68 = speeds;
+    speeds = V2(60.0f, 120.0f);
+    m_f70 = speeds;
+    speeds = V2(60.0f, 120.0f);
+    m_f78 = speeds;
     m_f80 = 1000000;
     m_f84 = 100000;
     m_f88 = true;
