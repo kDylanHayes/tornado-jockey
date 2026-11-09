@@ -3620,6 +3620,42 @@
       "target": "build/target/Tongas2/ODERAGDOLL.obj",
       "source": "src/Tongas2/ODERAGDOLL.cpp",
       "category": "engine"
+    },
+    {
+      "name": "Tongas2/TAIL1",
+      "ranges": [
+        "0x0054eec0-0x00551fbf"
+      ],
+      "target": "build/target/Tongas2/TAIL1.obj",
+      "source": "src/Tongas2/TAIL1.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/TAIL2",
+      "ranges": [
+        "0x00551fc0-0x0055401f"
+      ],
+      "target": "build/target/Tongas2/TAIL2.obj",
+      "source": "src/Tongas2/TAIL2.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/TAIL3",
+      "ranges": [
+        "0x00554020-0x0055604f"
+      ],
+      "target": "build/target/Tongas2/TAIL3.obj",
+      "source": "src/Tongas2/TAIL3.cpp",
+      "category": "engine"
+    },
+    {
+      "name": "Tongas2/TAIL4",
+      "ranges": [
+        "0x00556050-0x00559dff"
+      ],
+      "target": "build/target/Tongas2/TAIL4.obj",
+      "source": "src/Tongas2/TAIL4.cpp",
+      "category": "engine"
     }
   ]
 }
