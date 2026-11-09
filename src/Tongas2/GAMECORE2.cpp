@@ -14,6 +14,7 @@
 #include "Tongas2/TIMER.h"
 #include "Tongas2/SPAWNER.h"
 #include "Tongas2/RESOURCE.h"
+#include "Tongas2/RESOURCES.h"
 #include "Tongas2/SCENE.h"
 #include "Tongas2/SRESULT.h"
 
@@ -710,6 +711,7 @@ public:
     void LoadTrees();
     void CreateMaxPowerup();
     void DumpGrid();
+    void LoadModels(const char *name);
 };
 
 void G2FORESTOBJ::DumpGrid()
@@ -947,4 +949,30 @@ void G2RULESOBJ::Start()
     if (g_pGame)
         g_pGame->SetRules(this);
     *(bool *)((char *)this + 0x998) = true;
+}
+
+extern RESOURCEMANAGER *g_pTreeModels;
+
+void G2FORESTOBJ::LoadModels(const char *name)
+{
+    if (*name != '\0') {
+        LoadTrees();
+        DumpGrid();
+        int *index = m_index4;
+        char *tree = (char *)this + 0x119c;
+        for (int i = 100; i != 0; i--) {
+            RESOURCEMASTER *master = g_pTreeModels->GetMaster(m_name.m_buf);
+            WTACTOR *actor = g_pScene->FindActor(tree);
+            if (actor) {
+                const char *src = ((const char **)((char *)master + 0xac))[*index];
+                if (!src)
+                    src = "";
+                CSTRING resource(src);
+                ((ACTOR *)actor)->SetActorResourcesTemplate(resource);
+            }
+            index++;
+            tree += 0x200;
+        }
+        CreateMaxPowerup();
+    }
 }
