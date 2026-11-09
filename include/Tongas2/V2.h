@@ -28,11 +28,20 @@ inline V2 operator+(const V2 &a, const V2 &b)
 }
 
 // The GUI behaviors were built seeing their own (GUIBEHAVIOR.h).
+#ifdef TONGAS2_CORE_OUTOFLINE
+V2 operator*(const V2 &v, const float &f);
+#else
 #ifndef V2_GUIBEHAVIOR
 inline V2 operator*(const V2 &v, const float &f)
 {
     return V2(v.x * f, v.y * f);
 }
+#endif
+#endif
+
+// Zero when divided by zero.
+#ifdef TONGAS2_CORE_OUTOFLINE
+V2 operator/(const V2 &v, const float &f);
 #endif
 
 #endif

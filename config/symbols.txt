@@ -122,7 +122,7 @@
 0x0040a8a0 ??H@YA?AUV3@@ABU0@0@Z function
 0x0040a8d0 ??G@YA?AUV3@@ABU0@0@Z function
 0x0040a900 ??D@YA?AUV3@@ABU0@0@Z function
-0x0040a930 ??D@YA?AUV3@@ABU0@ABM@Z function
+0x0040a930 ??D@YA?AUV3@@ABU0@ABM@Z function 0x23
 0x0040ad20 ?RotateY@MATRIX@@QAEXM@Z function
 0x0040add0 ?Clear@?$DYNAMICARRAY@UFONTCHAR@@@@QAEXXZ function 0x3a
 0x0040add0 ?Clear@?$DYNAMICARRAY@H@@QAEXXZ function 0x3a

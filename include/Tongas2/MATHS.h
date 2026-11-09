@@ -101,6 +101,13 @@ struct MATRIX
     }
 };
 
+#ifdef TONGAS2_CORE_OUTOFLINE
+V3 operator+(const V3 &a, const V3 &b);
+V3 operator-(const V3 &a, const V3 &b);
+V3 operator*(const V3 &v, const float &s);
+V3 operator*(const float &s, const V3 &v);
+V3 operator*(const V3 &a, const V3 &b);
+#else
 inline V3 operator+(const V3 &a, const V3 &b)
 {
     return V3(a.x + b.x, a.y + b.y, a.z + b.z);
@@ -120,6 +127,7 @@ inline V3 operator*(const float &s, const V3 &v)
 {
     return V3(s * v.x, s * v.y, s * v.z);
 }
+#endif
 
 // Zero when divided by zero.
 inline V3 operator/(const V3 &v, const float &s)
@@ -131,10 +139,14 @@ inline V3 operator/(const V3 &v, const float &s)
 }
 
 // Componentwise.
+#ifdef TONGAS2_CORE_OUTOFLINE
+V3 operator*(const V3 &a, const V3 &b);
+#else
 inline V3 operator*(const V3 &a, const V3 &b)
 {
     return V3(a.x * b.x, a.y * b.y, a.z * b.z);
 }
+#endif
 
 inline V3 V3::Transform(const MATRIX &m) const
 {

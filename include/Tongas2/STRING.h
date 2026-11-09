@@ -122,12 +122,16 @@ public:
     }
 #endif
 
+#ifdef STRING_CORE_OUTOFLINE
+    STRING &operator=(const STRING &other);
+#else
     STRING &operator=(const STRING &other)
     {
         Reserve(const_cast<STRING &>(other).Length());
         *this = other.c_str();
         return *this;
     }
+#endif
     // Defined elsewhere.
     STRING &operator=(const char *text);
     // Defined elsewhere: appends text.

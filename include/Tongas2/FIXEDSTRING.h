@@ -9,15 +9,11 @@ template <int N>
 class FIXEDSTRING
 {
 public:
-#ifdef TONGAS2_CORE_OUTOFLINE
-    FIXEDSTRING();
-#else
     FIXEDSTRING()
     {
         m_buf[0] = '\0';
         m_buf[N - 1] = '\0';
     }
-#endif
     FIXEDSTRING(const char *text)
     {
         if (text)

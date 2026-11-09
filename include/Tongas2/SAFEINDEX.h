@@ -228,6 +228,9 @@ public:
     }
 
     // The first item and its slot, or 0 and -1.
+#ifdef TONGAS2_CORE_OUTOFLINE
+    T *GetFirst(int *index);
+#else
     T *GetFirst(int *index)
     {
         for (int i = 0; i < N; i++) {
@@ -239,7 +242,11 @@ public:
         *index = -1;
         return 0;
     }
+#endif
     // The item after the one in slot *index, and its slot, or 0 and -1.
+#ifdef TONGAS2_CORE_OUTOFLINE
+    T *GetNext(int *index);
+#else
     T *GetNext(int *index)
     {
         for (int i = *index + 1; i < N; i++) {
@@ -251,6 +258,7 @@ public:
         *index = -1;
         return 0;
     }
+#endif
 
     T *Get(const RESHANDLE &h)
     {

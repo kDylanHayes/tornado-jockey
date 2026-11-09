@@ -9,12 +9,12 @@
 #include <stdarg.h>
 #include <stdio.h>
 
+#include "Tongas2/ACTOR.h"
 #include "Tongas2/CSTRING.h"
 #include "Tongas2/CMDBASE.h"
 #include "Tongas2/CPRIMITIVE3.h"
 #include "Tongas2/FIXEDWSTRING.h"
 #include "Tongas2/SAFEINDEX.h"
-#include "Tongas2/SRESULT.h"
 #include "Tongas2/STRING.h"
 #include "Tongas2/TOKENS.h"
 
@@ -52,11 +52,6 @@ PRIMV2::PRIMV2()
 PRIMV3::PRIMV3()
     : V3(0.0f, 0.0f, 0.0f)
 {
-}
-
-RGB::RGB()
-{
-    r = g = b = 0;
 }
 
 ANG::ANG()
@@ -224,6 +219,12 @@ STRING &STRING::operator=(const char *text)
     return *this;
 }
 
+STRING &STRING::operator=(const STRING &other)
+{
+    Reserve(const_cast<STRING &>(other).Length());
+    return *this = other.c_str();
+}
+
 TOKENS::~TOKENS()
 {
     m_string.Free();
@@ -239,67 +240,22 @@ void SRESULT::SetType(const SRESULTTYPE &type)
     case SRT_STRING:
         m_value.str = (char *)malloc(0x200);
         break;
-    case SRT_V3: {
-        V3 *v3 = (V3 *)::operator new(sizeof(V3));
-        if (v3) {
-            v3->x = 0.0f;
-            v3->y = 0.0f;
-            v3->z = 0.0f;
-        }
-        m_value.v3 = v3;
+    case SRT_V3:
+        m_value.v3 = new V3(0.0f, 0.0f, 0.0f);
+        break;
+    case SRT_V2:
+        m_value.v2 = new V2(0.0f, 0.0f);
+        break;
+    case SRT_ANG:
+        m_value.ang = new ANG(0.0f, 0.0f, 0.0f);
+        break;
+    case SRT_RGB:
+        m_value.rgb = new RGB;
+        break;
+    case SRT_TEXTURE:
+        m_value.tex = new SRTEXTURE;
         break;
     }
-    case SRT_V2: {
-        V2 *v2 = (V2 *)::operator new(sizeof(V2));
-        if (v2) {
-            v2->x = 0.0f;
-            v2->y = 0.0f;
-        }
-        m_value.v2 = v2;
-        break;
-    }
-    case SRT_ANG: {
-        ANG *ang = (ANG *)::operator new(sizeof(ANG));
-        if (ang) {
-            ang->euler.x = 0.0f;
-            ang->euler.y = 0.0f;
-            ang->euler.z = 0.0f;
-            ang->flags = ANG::MATRIX_DIRTY;
-        }
-        m_value.ang = ang;
-        break;
-    }
-    case SRT_RGB: {
-        RGB *rgb = (RGB *)::operator new(sizeof(RGB));
-        if (rgb) {
-            rgb->b = 0;
-            rgb->g = 0;
-            rgb->r = 0;
-        }
-        m_value.rgb = rgb;
-        break;
-    }
-    case SRT_TEXTURE: {
-        SRTEXTURE *texture = (SRTEXTURE *)::operator new(sizeof(SRTEXTURE));
-        if (texture) {
-            texture->name.m_buf[0] = '\0';
-            texture->name.m_buf[0x1ff] = '\0';
-            texture->index = 0;
-        }
-        m_value.tex = texture;
-        break;
-    }
-    default:
-        m_value.i = 0;
-        break;
-    }
-}
-
-template <int N>
-FIXEDSTRING<N>::FIXEDSTRING()
-{
-    m_buf[0] = '\0';
-    m_buf[N - 1] = '\0';
 }
 
 template <int N>
@@ -316,13 +272,6 @@ FIXEDSTRING<N> &FIXEDSTRING<N>::operator=(const char *text)
 
 template FIXEDSTRING<0x200>::FIXEDSTRING();
 template FIXEDSTRING<0x200> &FIXEDSTRING<0x200>::operator=(const char *);
-
-template <int N>
-FIXEDWSTRING<N>::FIXEDWSTRING()
-{
-    m_buf[0] = 0;
-    m_buf[N - 1] = 0;
-}
 
 template FIXEDWSTRING<0x200>::FIXEDWSTRING();
 
@@ -355,3 +304,5 @@ void MATRIX::LookAt(const V3 &dir, const V3 &up)
     _41 = _42 = _43 = 0.0f;
     _44 = 1.0f;
 }
+
+#include "GAMECORE1_ACTOR.inc"

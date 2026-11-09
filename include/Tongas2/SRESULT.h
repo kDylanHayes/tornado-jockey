@@ -32,11 +32,7 @@ enum SRESULTTYPE
 // A color, each channel 0-255.
 struct RGB
 {
-#ifdef TONGAS2_CORE_OUTOFLINE
-    RGB();
-#else
     RGB() { r = g = b = 0; }
-#endif
     RGB(int r_, int g_, int b_) { r = r_; g = g_; b = b_; }
 
     int r, g, b;
@@ -109,6 +105,9 @@ struct ANG
         *y = euler.y;
         *z = euler.z;
     }
+#ifdef TONGAS2_CORE_OUTOFLINE
+    MATRIX GetMatrix();
+#else
     MATRIX GetMatrix()
     {
         if (flags & MATRIX_DIRTY) {
@@ -117,6 +116,7 @@ struct ANG
         }
         return matrix;
     }
+#endif
 
     void SetMatrix(const MATRIX &m)
     {
