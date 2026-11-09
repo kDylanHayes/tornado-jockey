@@ -1081,7 +1081,7 @@
       "source": "src/lib/ode/ode/src/obstack.cpp",
       "category": "lib",
       "cflags": "/nologo /c /O2 /MT /GX /W3 /DWIN32 /DNDEBUG /DdTRIMESH_ENABLED /Isrc/lib/ode/include /Isrc/lib/ode/OPCODE /Isrc/lib/ode/stub",
-      "complete": false
+      "complete": true
     },
     {
       "name": "lib/ode/util",
@@ -1967,7 +1967,7 @@
       "target": "build/target/Tongas2/SHELL.obj",
       "source": "src/Tongas2/SHELL.cpp",
       "category": "engine",
-      "complete": false
+      "complete": true
     },
     {
       "name": "Tongas2/UNICODESTRING",
