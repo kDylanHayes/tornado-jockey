@@ -218,3 +218,8 @@ void G2PAIR::Set(int first, int second)
         m_138c = second;
     }
 }
+bool ACTOR::Virtual122(CMDCALL *call)
+{
+    (void)call;
+    return true;
+}

@@ -279,7 +279,7 @@ public:
     virtual void OnContact(CONTACT *contact);
     // Moves the actor along its path.
     virtual void FollowPath();
-    virtual void Virtual122();
+    virtual bool Virtual122(CMDCALL *call);
     // The commands.
     virtual SRESULT Remove(CMDCALL *call);
     virtual SRESULT StopAnimation(CMDCALL *call);

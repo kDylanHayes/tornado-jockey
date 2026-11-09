@@ -154,7 +154,7 @@
 0x00420d80 ?SetMaxSpawnTime@SPAWNER@@UAEXABM@Z function 0xf
 0x00420d90 ?SetMaxSpawns@SPAWNER@@UAEXABH@Z function 0xf
 0x004214f0 ??Y?$FIXEDSTRING@$0CAA@@@QAEXPBD@Z function
-0x004232a0 ?Virtual122@ACTOR@@UAEXXZ function
+0x004232a0 ?Virtual122@ACTOR@@UAE_NPAUCMDCALL@@@Z function 0x5
 0x004262f0 ??8@YA_NABUV3@@0@Z function
 0x00426330 ?IsZero@V3@@QBE_NXZ function
 0x00426410 ??D@YA?AUV3@@ABU0@ABUMATRIX@@@Z function
