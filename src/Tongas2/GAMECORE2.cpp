@@ -10,6 +10,7 @@
 #include "Tongas2/FIXEDSTRING.h"
 #include "Tongas2/MATHS.h"
 #include "Tongas2/RENDERER.h"
+#include "Tongas2/TIMER.h"
 #include "Tongas2/SPAWNER.h"
 #include "Tongas2/SRESULT.h"
 
@@ -311,4 +312,66 @@ void G2START::Start()
 {
     G2MID::Start();
     m_1150 = 0;
+}
+class G2D1 : public ACTOR
+{
+public:
+    virtual ~G2D1();
+};
+
+G2D1::~G2D1()
+{
+}
+
+class G2D2 : public ACTOR
+{
+public:
+    virtual ~G2D2();
+};
+
+G2D2::~G2D2()
+{
+}
+
+class G2D3 : public ACTOR
+{
+public:
+    virtual ~G2D3();
+};
+
+G2D3::~G2D3()
+{
+}
+class G2D5 : public ACTOR
+{
+public:
+    virtual ~G2D5();
+
+    char m_0000[0x113c - 0xccc];
+    void *m_113c;
+};
+
+G2D5::~G2D5()
+{
+    if (m_113c) {
+        free(m_113c);
+        m_113c = 0;
+    }
+}
+
+struct G2TIMESET
+{
+    char m_0000[0xd84];
+    bool m_d84;
+    char m_d85[0xfbc - 0xd85];
+    float m_fbc;
+
+    void ResetSpeed();
+};
+
+void G2TIMESET::ResetSpeed()
+{
+    if (m_d84)
+        g_pTimer->SetSpeed(1.0f);
+    m_fbc = 1.0f;
 }
