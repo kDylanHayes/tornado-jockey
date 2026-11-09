@@ -17,6 +17,9 @@
 #include "Tongas2/TIMER.h"
 #include "Tongas2/SPAWNER.h"
 #include "Tongas2/RESOURCE.h"
+#include "Tongas2/GUI.h"
+#include "Tongas2/GUICONTROL.h"
+#include "Tongas2/GUIGROUP.h"
 #include "Tongas2/INPUT.h"
 #include "Tongas2/RESOURCES.h"
 #include "Tongas2/SCENE.h"
@@ -467,6 +470,7 @@ struct G2CONTACTARG
     RESHANDLE m_handle;
     char m_0001[0xdd1 - 8 - sizeof(RESHANDLE)];
     bool m_flag;
+    bool m_dd2;
 };
 
 struct ZEROV2 : V2
@@ -508,6 +512,8 @@ public:
     void E();
     void Run();
     void AddContact(G2CONTACTARG *obj);
+    void RemoveContact(const RESHANDLE &handle);
+    void OnTargetDestroyed(G2CONTACTARG *obj);
 
     float m_f48;
     int m_f4c;
@@ -537,6 +543,11 @@ public:
     RESHANDLE m_1c00;
     int m_1c0c;
 };
+
+void G2CHAIN::RemoveContact(const RESHANDLE &handle)
+{
+    m_contacts2.remove(handle);
+}
 
 void G2CHAIN::AddContact(G2CONTACTARG *obj)
 {
@@ -1193,4 +1204,51 @@ void G2MID2::Helper()
     RESOURCE *second = g_pResources->GetResource(((RESHANDLE *)((char *)this + 0xb58))[*(int *)((char *)this + 0x1384)]);
     if (second)
         second->SetActive(true);
+}
+
+void G2CHAIN::OnTargetDestroyed(G2CONTACTARG *obj)
+{
+    if (obj->m_flag) {
+        m_contacts.remove(obj->m_handle);
+        if (!obj->m_dd2)
+            return;
+        int count = ++m_1bdc;
+        int left = m_1bd8 - count;
+        m_1b8c[0] = left;
+        const char *title;
+        if (left > 0) {
+            title = "GGRP:TargetDestroyed";
+        } else {
+            title = "GGRP:TargetDestroyedLast";
+            ACTOR *tornado = g_pGame->GetTornado();
+            if (tornado)
+                m_1b8c[13] = (int)(m_f80 * *(float *)((char *)tornado + 0x2a38) * 0.01f);
+            g_pGui->HideControl("targets_hud", 1.0f);
+        }
+        GUICONTROL *control = (GUICONTROL *)g_pGui->GetObject(m_1bf4);
+        if (control)
+            control->Close();
+        GUIGROUP *group = g_pGui->AddGroup(title, "targetdestroyed", V2(0.5f, 0.5f), V2(1.0f, 1.0f), 1.0f, 0x50);
+        if (group)
+            m_1bf4 = group->m_handle;
+    } else {
+        m_contacts2.remove(obj->m_handle);
+        if (!obj->m_dd2)
+            return;
+        int count = ++m_1bf0;
+        int left = m_1bec - count;
+        m_1b8c[2] = left;
+        const char *title;
+        if (left > 0) {
+            title = "GGRP:TargetSecDestroyed";
+        } else {
+            title = "GGRP:TargetSecDestroyedLast";
+        }
+        GUICONTROL *control = (GUICONTROL *)g_pGui->GetObject(m_1c00);
+        if (control)
+            control->Close();
+        GUIGROUP *group = g_pGui->AddGroup(title, "targetsecdestroyed", V2(0.5f, 0.5f), V2(1.0f, 1.0f), 1.0f, 0x50);
+        if (group)
+            m_1c00 = group->m_handle;
+    }
 }

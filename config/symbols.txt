@@ -7871,3 +7871,6 @@
 0x0065bbac ??_7G2CHAIN@@6B@ data
 0x0042b060 ?_Incsize@?$list@URESHANDLE@@V?$allocator@URESHANDLE@@@std@@@std@@IAEXI@Z function 0x93
 0x0042b100 ?AddContact@G2CHAIN@@QAEXPAUG2CONTACTARG@@@Z function 0xb0
+0x0042a750 ?remove@?$list@URESHANDLE@@V?$allocator@URESHANDLE@@@std@@@std@@QAEXABURESHANDLE@@@Z function 0x60
+0x0042a7e0 ?OnTargetDestroyed@G2CHAIN@@QAEXPAUG2CONTACTARG@@@Z function 0x1d4
+0x0065b814 ??_C@_0BD@MEEJPFGM@targetsecdestroyed?$AA@ data
