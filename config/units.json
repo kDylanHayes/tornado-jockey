@@ -3656,6 +3656,42 @@
       "target": "build/target/Tongas2/TAIL4.obj",
       "source": "src/Tongas2/TAIL4.cpp",
       "category": "engine"
+    },
+    {
+      "name": "Tongas2/GAMECORE1",
+      "ranges": [
+        "0x00401d20-0x004162ef"
+      ],
+      "target": "build/target/Tongas2/GAMECORE1.obj",
+      "source": "src/Tongas2/GAMECORE1.cpp",
+      "category": "game"
+    },
+    {
+      "name": "Tongas2/GAMECORE2",
+      "ranges": [
+        "0x004162f0-0x0042c3ff"
+      ],
+      "target": "build/target/Tongas2/GAMECORE2.obj",
+      "source": "src/Tongas2/GAMECORE2.cpp",
+      "category": "game"
+    },
+    {
+      "name": "Tongas2/GAMECORE3",
+      "ranges": [
+        "0x0042c400-0x004410af"
+      ],
+      "target": "build/target/Tongas2/GAMECORE3.obj",
+      "source": "src/Tongas2/GAMECORE3.cpp",
+      "category": "game"
+    },
+    {
+      "name": "Tongas2/GAMECORE4",
+      "ranges": [
+        "0x004410b0-0x004543ff"
+      ],
+      "target": "build/target/Tongas2/GAMECORE4.obj",
+      "source": "src/Tongas2/GAMECORE4.cpp",
+      "category": "game"
     }
   ]
 }
