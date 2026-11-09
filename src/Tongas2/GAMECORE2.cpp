@@ -350,6 +350,33 @@ void G2TIMESET::ResetSpeed()
     m_fbc = 1.0f;
 }
 extern RESOURCEMANAGER *g_pActorResourceManager;
+extern RESOURCEMANAGER *g_pActorResourceManager2;
+extern RESOURCEMANAGER *g_pActorResourceManager3;
+
+// The mesh registry the actor submits one of its meshes to. Only the methods
+// this unit calls are declared here.
+class G2MIDITEM;
+
+class G2MIDMESH
+{
+public:
+    G2MIDITEM *GetItem();
+};
+
+class G2MIDRES
+{
+public:
+    G2MIDMESH *GetMIDMesh(int index);
+};
+
+class G2MIDLIST
+{
+public:
+    bool IsReady();
+    void Add(G2MIDITEM *item, const char *name);
+};
+
+extern G2MIDLIST *g_pMIDList;
 
 class G2MID2 : public ACTOR
 {
@@ -357,12 +384,19 @@ public:
     virtual void Stop();
     void Helper();
     void FindResource();
+    void SetResourcesActive(bool active);
+    void AddActiveMesh();
 
-    char m_0000[0x1384 - 0xccc];
+    char m_0000[0x113c - 0xccc];
+    CSTRING m_113c;
+    char m_1140[0x1371 - 0x1140];
+    bool m_1371;
+    char m_1372[0x1384 - 0x1372];
     // The handle slot the active resource was found in, or -1.
     int m_1384;
     char m_1388[0x1390 - 0x1388];
     RESHANDLE m_handle;
+    bool m_139c;
 };
 
 __declspec(noinline) void G2MID2::Stop()
@@ -1560,4 +1594,49 @@ void G2MID2::FindResource()
         i++;
         handles++;
     }
+}
+
+void G2MID2::SetResourcesActive(bool active)
+{
+    if (!*(bool *)((char *)this + 0x9a0)) {
+        m_1371 = false;
+        return;
+    }
+    if (m_1371 == active)
+        return;
+    int managerId;
+    RESHANDLE *handles = (RESHANDLE *)((char *)this + 0xb58);
+    for (int i = 16; i != 0; i--) {
+        RESOURCE *resource = g_pResources->GetResource(*handles);
+        if (resource) {
+            managerId = g_pActorResourceManager2->m_id;
+            if (resource->GetManagerId() == managerId)
+                resource->SetActive(active);
+        }
+        handles++;
+    }
+    m_1371 = active;
+}
+
+void G2MID2::AddActiveMesh()
+{
+    if (!g_pMIDList || !g_pMIDList->IsReady())
+        return;
+    if (m_139c)
+        return;
+    RESHANDLE handle = ((RESHANDLE *)((char *)this + 0xb58))[0];
+    m_139c = true;
+    RESOURCE *resource = g_pResources->GetResource(handle);
+    if (!resource)
+        return;
+    int managerId = g_pActorResourceManager3->m_id;
+    if (resource->GetManagerId() != managerId)
+        return;
+    G2MIDMESH *mesh = ((G2MIDRES *)resource)->GetMIDMesh(1);
+    if (!mesh)
+        return;
+    G2MIDITEM *item = mesh->GetItem();
+    if (!item)
+        return;
+    g_pMIDList->Add(item, m_113c.c_str());
 }

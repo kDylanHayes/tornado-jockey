@@ -7898,3 +7898,10 @@
 0x004263b0 ?Transpose@MATRIX@@QAEXPAU1@@Z function 0x4d
 0x00422980 ?FindResource@G2MID2@@QAEXXZ function 0x6b
 0x006cb224 ?g_pActorResourceManager@@3PAVRESOURCEMANAGER@@A data 0x4
+0x00422cc0 ?SetResourcesActive@G2MID2@@QAEX_N@Z function 0xa8
+0x00a0f170 ?g_pActorResourceManager2@@3PAVRESOURCEMANAGER@@A data 0x4
+0x00422d70 ?AddActiveMesh@G2MID2@@QAEXXZ function 0xa9
+0x00448a80 ?IsReady@G2MIDLIST@@QAE_NXZ function
+0x00449240 ?Add@G2MIDLIST@@QAEXPAVG2MIDITEM@@PBD@Z function
+0x006cb320 ?g_pMIDList@@3PAVG2MIDLIST@@A data 0x4
+0x00a01d5c ?g_pActorResourceManager3@@3PAVRESOURCEMANAGER@@A data 0x4
