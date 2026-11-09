@@ -9,6 +9,7 @@
 
 #include "Tongas2/FIXEDSTRING.h"
 #include "Tongas2/MATHS.h"
+#include "Tongas2/RENDERER.h"
 #include "Tongas2/SPAWNER.h"
 #include "Tongas2/SRESULT.h"
 
@@ -255,4 +256,59 @@ bool ACTOR::Virtual122(CMDCALL *call)
 {
     (void)call;
     return true;
+}
+struct G2ADDER
+{
+    char m_0000[0xf34];
+    float m_f34;
+    float m_f38;
+
+    void Add(float first, float second);
+};
+
+void G2ADDER::Add(float first, float second)
+{
+    m_f34 += first;
+    m_f38 += second;
+}
+
+struct G2FOG
+{
+    char m_0000[0x114d];
+    bool m_114d;
+
+    void UpdateFog(CMDCALL *call);
+};
+
+void G2FOG::UpdateFog(CMDCALL *call)
+{
+    (void)call;
+    if (m_114d)
+        g_pRenderer->ApplyFog();
+}
+
+class G2MID : public ACTOR
+{
+public:
+    virtual void Start();
+};
+
+__declspec(noinline) void G2MID::Start()
+{
+    ACTOR::Start();
+}
+
+class G2START : public G2MID
+{
+public:
+    virtual void Start();
+
+    char m_0000[0x1150 - 0xccc];
+    int m_1150;
+};
+
+void G2START::Start()
+{
+    G2MID::Start();
+    m_1150 = 0;
 }
