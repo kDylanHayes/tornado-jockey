@@ -7,6 +7,7 @@
 #define V2_ROTATE_OUTOFLINE
 #define SCENE_FINDACTORS
 #define V3_DISTANCEXZ_OUTOFLINE
+#define ANG_SETEULERX_OUTOFLINE
 
 
 #include <new>
@@ -1482,4 +1483,38 @@ void G2CHAIN::C()
         wait = m_f60.x;
     m_f1ba4 = wait + bestActor->m_cf4;
     IncSecondaryTarget(bestActor);
+}
+
+void MATRIX::RotateY(float degrees)
+{
+    float negated = -degrees;
+    float radians = negated * 0.017453292f;
+    float c = (float)cos(radians);
+    float s = (float)sin(radians);
+    _11 = 1.0f;
+    _12 = 0.0f;
+    _13 = 0.0f;
+    _14 = 0.0f;
+    _21 = 0.0f;
+    _22 = c;
+    _23 = -s;
+    _24 = 0.0f;
+    _31 = 0.0f;
+    _32 = s;
+    _33 = c;
+    _34 = 0.0f;
+    _41 = 0.0f;
+    _42 = 0.0f;
+    _43 = 0.0f;
+    _44 = 1.0f;
+}
+
+void ANG::SetEulerX(const float &x)
+{
+    matrix.ToEuler(&euler.z, &euler.y, &euler.x);
+    flags &= ~EULER_DIRTY;
+    if (x != euler.x) {
+        euler.x = x;
+        flags = MATRIX_DIRTY;
+    }
 }

@@ -157,4 +157,4 @@
 0x4e1625-0x4e163a   Tongas2/HEIGHTMAPDX8        ?UpdateBoxes@HEIGHTMAPDX8@@QAEXXZ                      code  observed
 0x5854d5-0x5854f9   lib/zlib/inffast            _inflate_fast                                           code  scan
 0x582db1-0x582dc2   lib/zlib/inflate            _updatewindow                                           code  scan
-
+0x567f1c-0x567f2b   lib/libpng/pngset            _png_set_oFFs                                          code  scan

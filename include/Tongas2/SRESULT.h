@@ -211,6 +211,10 @@ struct ANG
 #endif
     // Sets the euler angles and marks the matrix dirty.
     void SetEuler(const float &x, const float &y, const float &z);
+#ifdef ANG_SETEULERX_OUTOFLINE
+    // Sets one euler angle and marks the matrix dirty.
+    void SetEulerX(const float &x);
+#endif
     // Turns the angles to face a direction.
     void PointAt(const V3 &direction);
 
