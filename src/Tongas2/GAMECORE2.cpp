@@ -438,10 +438,10 @@ public:
 
 G2D5::G2D5()
 {
-    m_cd4 = V3(0.0f, 0.0f, 0.0f);
     m_ccc = 0;
     m_cd0 = false;
     m_cd1 = false;
+    m_cd4 = ZEROV3();
     m_ce0 = 0;
     m_ce4 = 0;
     m_ce8 = false;
@@ -449,7 +449,7 @@ G2D5::G2D5()
     m_cf0 = true;
     m_cf1 = false;
     m_cf2 = false;
-    m_cf4 = V2(0.0f, 0.0f);
+    m_cf4 = ZEROV2();
     m_cfc = false;
     m_d00 = 0;
     m_d04 = false;
