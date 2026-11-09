@@ -411,3 +411,152 @@ void G2CHAIN::Run()
     D();
     E();
 }
+class G2WIND
+{
+public:
+    static int s_classId;
+    static CMDENTRY s_commands[];
+
+    static void RegisterCommands();
+};
+
+void G2WIND::RegisterCommands()
+{
+    g_classParents[s_classId] = ACTOR::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "WIND", "ACTOR");
+}
+class G2ODEACTOR
+{
+public:
+    static int s_classId;
+};
+
+class G2WTINTRO
+{
+public:
+    static int s_classId;
+    static CMDENTRY s_commands[];
+    static void RegisterCommands();
+};
+
+void G2WTINTRO::RegisterCommands()
+{
+    g_classParents[s_classId] = ACTOR::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "WTINTRO", "ACTOR");
+}
+
+class G2BUILDINGPIECE
+{
+public:
+    static int s_classId;
+    static CMDENTRY s_commands[];
+    static void RegisterCommands();
+};
+
+void G2BUILDINGPIECE::RegisterCommands()
+{
+    g_classParents[s_classId] = ACTOR::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "BUILDINGPIECE", "ACTOR");
+}
+
+class G2DESTRUCTIBLE
+{
+public:
+    static int s_classId;
+    static CMDENTRY s_commands[];
+    static void RegisterCommands();
+};
+
+void G2DESTRUCTIBLE::RegisterCommands()
+{
+    g_classParents[s_classId] = ACTOR::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "DESTRUCTIBLE", "ACTOR");
+}
+
+class G2DESTRUCTIBLEPIECE
+{
+public:
+    static int s_classId;
+    static CMDENTRY s_commands[];
+    static void RegisterCommands();
+};
+
+void G2DESTRUCTIBLEPIECE::RegisterCommands()
+{
+    g_classParents[s_classId] = G2ODEACTOR::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "DESTRUCTIBLEPIECE", "ODEACTOR");
+}
+
+class G2RULES
+{
+public:
+    static int s_classId;
+    static CMDENTRY s_commands[];
+    static void RegisterCommands();
+};
+
+void G2RULES::RegisterCommands()
+{
+    g_classParents[s_classId] = ACTOR::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "RULES", "ACTOR");
+}
+
+class G2RULESBONUSCOLLECT
+{
+public:
+    static int s_classId;
+    static CMDENTRY s_commands[];
+    static void RegisterCommands();
+};
+
+void G2RULESBONUSCOLLECT::RegisterCommands()
+{
+    g_classParents[s_classId] = G2RULES::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "RULESBONUSCOLLECT", "RULES");
+}
+
+class G2RULESSTORY
+{
+public:
+    static int s_classId;
+    static CMDENTRY s_commands[];
+    static void RegisterCommands();
+};
+
+void G2RULESSTORY::RegisterCommands()
+{
+    g_classParents[s_classId] = G2RULES::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "RULESSTORY", "RULES");
+}
+
+class G2FOREST
+{
+public:
+    static int s_classId;
+    static CMDENTRY s_commands[];
+    static void RegisterCommands();
+};
+
+void G2FOREST::RegisterCommands()
+{
+    g_classParents[s_classId] = ACTOR::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "FOREST", "ACTOR");
+}

@@ -7795,3 +7795,31 @@
 0x00429970 ?C@G2CHAIN@@QAEXXZ function 0x2be
 0x0042a0a0 ?B@G2CHAIN@@QAEXXZ function 0x64d
 0x0042a7b0 ?Run@G2CHAIN@@QAEXXZ function 0x25
+0x0041fcf0 ?RegisterCommands@G2WIND@@SAXXZ function 0x3f
+0x006ad69c ?s_classId@G2WIND@@2HA data
+0x006caf50 ?s_commands@G2WIND@@2PAUCMDENTRY@@A data
+0x00420dd0 ?RegisterCommands@G2WTINTRO@@SAXXZ function 0x3f
+0x006ad6d8 ?s_classId@G2WTINTRO@@2HA data
+0x006caf70 ?s_commands@G2WTINTRO@@2PAUCMDENTRY@@A data
+0x004213a0 ?RegisterCommands@G2BUILDINGPIECE@@SAXXZ function 0x3f
+0x006ad6ac ?s_classId@G2BUILDINGPIECE@@2HA data
+0x006caf90 ?s_commands@G2BUILDINGPIECE@@2PAUCMDENTRY@@A data
+0x00421b40 ?RegisterCommands@G2DESTRUCTIBLE@@SAXXZ function 0x3f
+0x006ad6b4 ?s_classId@G2DESTRUCTIBLE@@2HA data
+0x006afaa8 ?s_commands@G2DESTRUCTIBLE@@2PAUCMDENTRY@@A data
+0x00425fc0 ?RegisterCommands@G2DESTRUCTIBLEPIECE@@SAXXZ function 0x3f
+0x006ad6b8 ?s_classId@G2DESTRUCTIBLEPIECE@@2HA data
+0x006b0160 ?s_commands@G2DESTRUCTIBLEPIECE@@2PAUCMDENTRY@@A data
+0x006c65ec ?s_classId@G2ODEACTOR@@2HA data
+0x00428d30 ?RegisterCommands@G2RULES@@SAXXZ function 0x3f
+0x006ad6e0 ?s_classId@G2RULES@@2HA data
+0x006cafb0 ?s_commands@G2RULES@@2PAUCMDENTRY@@A data
+0x00429140 ?RegisterCommands@G2RULESBONUSCOLLECT@@SAXXZ function 0x3f
+0x006ad6e8 ?s_classId@G2RULESBONUSCOLLECT@@2HA data
+0x006cafd0 ?s_commands@G2RULESBONUSCOLLECT@@2PAUCMDENTRY@@A data
+0x00429450 ?RegisterCommands@G2RULESSTORY@@SAXXZ function 0x3f
+0x006ad6e4 ?s_classId@G2RULESSTORY@@2HA data
+0x006b0540 ?s_commands@G2RULESSTORY@@2PAUCMDENTRY@@A data
+0x0042b1b0 ?RegisterCommands@G2FOREST@@SAXXZ function 0x3f
+0x006ad6a0 ?s_classId@G2FOREST@@2HA data
+0x006b09a8 ?s_commands@G2FOREST@@2PAUCMDENTRY@@A data
