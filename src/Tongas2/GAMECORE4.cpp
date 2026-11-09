@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "Tongas2/ACTOR.h"
+#include "Tongas2/ACTORLINK.h"
 #include "Tongas2/DECAL.h"
 #include "Tongas2/RESOURCES.h"
 #include "Tongas2/SAFEINDEX.h"
@@ -146,9 +147,24 @@ void UNICODESTRING::Free()
     m_lengthValid = true;
 }
 
-void ANG::GetAxes(V3 *forward, V3 *up)
+void *RESOURCE::Virtual09(const char *name)
 {
-    if (flags & MATRIX_DIRTY)
+    (void)name;
+    return 0;
+}
+
+void *RESOURCES::Virtual09(const char *name)
+{
+    return FindMaster(name);
+}
+
+float ACTORLINK::Link14()
+{
+    return 1.0f;
+}
+
+void ANG::GetAxes(V3 *forward, V3 *up)
+{    if (flags & MATRIX_DIRTY)
         UpdateMatrix();
     {
         V3 axis = matrix.GetForward();

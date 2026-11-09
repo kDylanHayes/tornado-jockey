@@ -220,7 +220,7 @@
 0x00440eb0 ??0OBJECT@@QAE@PAVRESOURCEMASTER@@URESHANDLE@@@Z function 0x1f7
 0x00441350 ?Execute@RESOURCE@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function
 0x00442130 ??1CPRIMITIVE3MASTER@@UAE@XZ function
-0x004422c0 ?Link14@ACTORLINK@@UAEMXZ function
+0x004422c0 ?Link14@ACTORLINK@@UAEMXZ function 0x7
 0x00442340 ?GetClassId@RESOURCES@@UAEHXZ function
 0x00442350 ?GetParentClassId@RESOURCES@@UAEHXZ function
 0x00442360 ?GetClassName@RESOURCES@@UAEPBDXZ function
@@ -228,7 +228,7 @@
 0x00442380 ?SetMusicVolume@RESOURCES@@UAEXABM@Z function
 0x00442390 ?GetMusicVolume@RESOURCES@@UAEMXZ function
 0x004423a0 ?GetSoundVolume@RESOURCES@@UAEMXZ function
-0x004423b0 ?Virtual09@RESOURCES@@UAEPAXPBD@Z function
+0x004423b0 ?Virtual09@RESOURCES@@UAEPAXPBD@Z function 0x5
 0x00442d60 ?Execute@RESOURCES@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function
 0x004435a0 ?_Lrotate@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@IAEXPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@2@@Z function
 0x00443640 ?_Rrotate@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@IAEXPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@2@@Z function
@@ -251,7 +251,7 @@
 0x004451b0 ?Free@UNICODESTRING@@QAEXXZ function 0x3f
 0x00445600 ??1UNICODESTRING@@UAE@XZ function 0x4d
 0x004484a0 ??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@XZ function
-0x00448570 ?Virtual09@RESOURCE@@UAEPAXPBD@Z function
+0x00448570 ?Virtual09@RESOURCE@@UAEPAXPBD@Z function 0x5
 0x004487b0 ?GetDPCodeName@WTINFO@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ function
 0x00448840 ?GetProductCodeName@WTINFO@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ function
 0x004494e0 ?compare@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBEHIIPBDI@Z function
