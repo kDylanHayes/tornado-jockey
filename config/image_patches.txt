@@ -155,3 +155,6 @@
 # stay partial. The displaced code resumes at 0x4def12 and 0x4e163b.
 0x4def00-0x4def11   Tongas2/HEIGHTMAPDX8        ?UpdateIndices@HEIGHTMAPDX8@@QAEXXZ                    code  observed
 0x4e1625-0x4e163a   Tongas2/HEIGHTMAPDX8        ?UpdateBoxes@HEIGHTMAPDX8@@QAEXXZ                      code  observed
+0x5854d5-0x5854f9   lib/zlib/inffast            _inflate_fast                                           code  scan
+0x582db1-0x582dc2   lib/zlib/inflate            _updatewindow                                           code  scan
+
