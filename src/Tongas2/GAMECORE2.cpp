@@ -709,7 +709,19 @@ public:
     void CheckTrees();
     void LoadTrees();
     void CreateMaxPowerup();
+    void DumpGrid();
 };
+
+void G2FORESTOBJ::DumpGrid()
+{
+    for (int row = 0; row < m_e5dc; row++) {
+        char text[0x200];
+        text[0x1ff] = 0;
+        text[0] = 0;
+        for (int col = 0; col < m_e5e0; col++)
+            SafeSprintf(text, "%s %.2f", text, m_scores[row * 10 + col]);
+    }
+}
 
 void G2FORESTOBJ::CreateMaxPowerup()
 {
