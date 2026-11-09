@@ -379,6 +379,9 @@ class G2MID2 : public ACTOR
 public:
     virtual void Stop();
     void Helper();
+
+    char m_0000[0x1390 - 0xccc];
+    RESHANDLE m_handle;
 };
 
 __declspec(noinline) void G2MID2::Stop()
@@ -975,4 +978,15 @@ void G2FORESTOBJ::LoadModels(const char *name)
         }
         CreateMaxPowerup();
     }
+}
+
+void G2MID2::Helper()
+{
+    RESOURCE *first = g_pResources->GetResource(m_handle);
+    if (first)
+        first->Virtual20();
+    m_handle.Invalidate();
+    RESOURCE *second = g_pResources->GetResource(((RESHANDLE *)((char *)this + 0xb58))[*(int *)((char *)this + 0x1384)]);
+    if (second)
+        second->SetActive(true);
 }
