@@ -59,6 +59,7 @@ struct MATRIX
     float _41, _42, _43, _44;
 
     MATRIX() {}
+#ifdef MATRIX_DIM_CTOR
     MATRIX(float m11, float m12, float m13, float m14,
            float m21, float m22, float m23, float m24,
            float m31, float m32, float m33, float m34,
@@ -69,6 +70,7 @@ struct MATRIX
           _41(m41), _42(m42), _43(m43), _44(m44)
     {
     }
+#endif
 
     // Defined in other units. The rotation from euler angles (in degrees),
     // as ANG passes them: z, y, then x.

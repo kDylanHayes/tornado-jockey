@@ -7,6 +7,7 @@
 #define PRIMV2_OUTOFLINE
 #define V3_LENGTH_OUTOFLINE
 #define MATRIX_AXIS_METHODS
+#define MATRIX_DIM_CTOR
 #define ANG_UPDATE_OUTOFLINE
 
 #include <stdarg.h>
