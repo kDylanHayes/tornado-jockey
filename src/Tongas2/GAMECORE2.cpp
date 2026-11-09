@@ -381,7 +381,7 @@ public:
     // The target bookkeeping virtuals the game objects add after ACTOR's.
     virtual void SetNameBlock(const char *data) {}
     virtual char *GetNameBlock() { return m_name.m_buf; }
-    virtual void HandleTornado(CMDCALL *call) {}
+    virtual void HandleTornado(CMDCALL *call);
     virtual void IncMainTarget(ACTOR *actor) {}
     virtual void DecMainTarget(ACTOR *actor) {}
     virtual void IncSecondaryTarget(ACTOR *actor) {}
@@ -535,6 +535,11 @@ public:
     void RemoveContact(const RESHANDLE &handle);
     virtual void OnTargetDestroyed(G2CONTACTARG *obj);
     virtual void AddTarget(ACTOR *actor);
+    virtual void IncMainTarget(ACTOR *actor);
+    virtual void DecMainTarget(ACTOR *actor);
+    virtual void IncSecondaryTarget(ACTOR *actor);
+    virtual void DecSecondaryTarget(ACTOR *actor);
+    virtual void ResetTarget(ACTOR *actor);
     virtual void Stop();
 
     float m_f48;
@@ -560,7 +565,8 @@ public:
     int m_1b98;
     int m_1b9c;
     int m_1ba0;
-    int m_1ba4;
+    // How long until the next supercell is picked.
+    float m_f1ba4;
     int m_1ba8;
     // How long until the next target is picked.
     float m_f1bac;
@@ -603,20 +609,15 @@ void G2CHAIN::SetContact(G2CONTACTARG *obj)
 
 G2CHAIN::G2CHAIN()
 {
-    V2 speeds(2.0f, 2.0f);
     m_f4c = 3;
-    m_f50 = speeds;
-    speeds = V2(30.0f, 60.0f);
-    m_f60 = speeds;
+    m_f50 = V2(2.0f, 2.0f);
+    m_f60 = V2(30.0f, 60.0f);
     m_f48 = 0.005f;
     m_f58 = 120.0f;
     m_f5c = 0;
-    speeds = V2(30.0f, 60.0f);
-    m_f68 = speeds;
-    speeds = V2(60.0f, 120.0f);
-    m_f70 = speeds;
-    speeds = V2(60.0f, 120.0f);
-    m_f78 = speeds;
+    m_f68 = V2(30.0f, 60.0f);
+    m_f70 = V2(60.0f, 120.0f);
+    m_f78 = V2(60.0f, 120.0f);
     m_f80 = 1000000;
     m_f84 = 100000;
     m_f88 = true;
@@ -629,7 +630,7 @@ G2CHAIN::G2CHAIN()
     m_1b98 = 0;
     m_1b9c = 0;
     m_1ba0 = 0;
-    m_1ba4 = 0;
+    m_f1ba4 = 0;
     m_1ba8 = 0;
     m_f1bac = 0.0f;
     m_1bb0 = 0;
@@ -643,8 +644,6 @@ G2CHAIN::G2CHAIN()
     m_1bdc = 0;
     m_1bec = 0;
     m_1bf0 = 0;
-    m_1bf4 = RESHANDLE(-1, -1, 0);
-    m_1c00 = RESHANDLE(-1, -1, 0);
     m_1c0c = 0;
     SetPriority(5);
 }
@@ -662,6 +661,44 @@ void G2CHAIN::AddTarget(ACTOR *actor)
 {
     (void)actor;
     m_1bb0++;
+}
+
+void G2CHAIN::IncMainTarget(ACTOR *actor)
+{
+    (void)actor;
+    m_1ba0++;
+}
+
+void G2CHAIN::DecMainTarget(ACTOR *actor)
+{
+    (void)actor;
+    m_1ba0--;
+}
+
+void G2CHAIN::IncSecondaryTarget(ACTOR *actor)
+{
+    (void)actor;
+    m_1ba8++;
+}
+
+void G2CHAIN::DecSecondaryTarget(ACTOR *actor)
+{
+    (void)actor;
+    m_1ba8--;
+    if (m_f60.y > m_f60.x)
+        m_f1ba4 = m_f60.x + (m_f60.y - m_f60.x) * rand() * (1.0f / 32768.0f);
+    else
+        m_f1ba4 = m_f60.x;
+}
+
+void G2CHAIN::ResetTarget(ACTOR *actor)
+{
+    (void)actor;
+    m_1bb0--;
+    if (m_f68.y > m_f68.x)
+        m_f1bac = m_f68.x + (m_f68.y - m_f68.x) * rand() * (1.0f / 32768.0f);
+    else
+        m_f1bac = m_f68.x;
 }
 
 void G2CHAIN::Stop()
@@ -849,6 +886,7 @@ public:
     virtual ~G2RULESOBJ();
     virtual void Update();
     virtual void Start();
+    virtual void HandleTornado(CMDCALL *call);
 
     int m_f44;
     FIXEDSTRING<0x200> m_f48;
@@ -871,6 +909,32 @@ G2RULESOBJ::G2RULESOBJ()
 G2RULESOBJ::~G2RULESOBJ()
 {
 }
+
+void G2RULESOBJ::HandleTornado(CMDCALL *call)
+{
+    G2RULESOBJBASE::HandleTornado(call);
+    m_1148++;
+    m_1154--;
+}
+// A supercell: the actor the chain gives a spawn time and starts. Only the
+// virtuals the chain calls are declared here.
+class G2SUPERCELL : public ACTOR
+{
+public:
+    static int s_factoryId;
+
+    virtual void Virtual143();
+    virtual void Virtual144();
+    virtual void Virtual145();
+    virtual void SetSpawnTime(const float &value);
+
+    char m_0000[0xce8 - 0xccc];
+    float m_ce8;
+    float m_cec;
+    float m_cf0;
+    float m_cf4;
+};
+
 // A powerup: a trigger that spawns its objects when touched. Only the
 // virtuals the forest calls are declared here.
 class G2POWERUP : public ACTOR
@@ -1175,13 +1239,7 @@ char G2STREQ::Equals(const char *other) const
 {
     return strcmp(m_buf, other) == 0;
 }
-class G2TORNADOCMD
-{
-public:
-    void HandleTornado(CMDCALL *call);
-};
-
-void G2TORNADOCMD::HandleTornado(CMDCALL *call)
+__declspec(noinline) void G2RULESOBJBASE::HandleTornado(CMDCALL *call)
 {
     (void)call;
     ACTOR *tornado = g_pGame->GetTornado();
@@ -1367,4 +1425,61 @@ void G2CHAIN::D()
         wait = m_f68.x;
     m_f1bac = wait;
     AddTarget(bestActor);
+}
+
+void G2CHAIN::C()
+{
+    ACTOR *tornado = g_pGame->GetTornado();
+    if (!tornado)
+        return;
+    if (m_1ba8 > 0)
+        return;
+    m_f1ba4 -= g_pTimer->m_dt;
+    if (m_f1ba4 > 0.0f)
+        return;
+
+    ACTOR *actors[64];
+    int count = g_pScene->FindActors(G2SUPERCELL::s_factoryId, actors, 64, false);
+    if (!count) {
+        if (g_pLog)
+            g_pLog->Error("Missing SUPERCELLS!!");
+        m_f1ba4 = 1000.0f;
+        return;
+    }
+
+    float best = 1000.0f;
+    G2SUPERCELL *bestActor = 0;
+    for (int i = 0; i < count; i++) {
+        G2SUPERCELL *supercell = (G2SUPERCELL *)actors[i];
+        if (!supercell)
+            continue;
+        V3 tornadoPos = tornado->GetPosition();
+        V3 supercellPos = supercell->GetPosition();
+        V2 delta(tornadoPos.x - supercellPos.x, tornadoPos.z - supercellPos.z);
+        if (delta.Length() < best) {
+            V2 screen(0.0f, 0.0f);
+            ((CAMERA *)g_pCamera)->WorldToScreen(supercell->GetPosition(), &screen);
+            if (screen.x >= 0.0f && screen.x <= 1.0f &&
+                screen.y >= 0.0f && screen.y <= 1.0f) {
+                bestActor = supercell;
+                best = supercell->GetPosition().DistanceXZ(tornado->GetPosition());
+            }
+        }
+    }
+    if (!bestActor)
+        return;
+    float spawn;
+    if (bestActor->m_cf0 > bestActor->m_cec)
+        spawn = bestActor->m_cec + (bestActor->m_cf0 - bestActor->m_cec) * rand() * (1.0f / 32768.0f);
+    else
+        spawn = bestActor->m_cec;
+    bestActor->SetSpawnTime(spawn);
+    bestActor->SetActive(true);
+    float wait;
+    if (m_f60.y > m_f60.x)
+        wait = m_f60.x + (m_f60.y - m_f60.x) * rand() * (1.0f / 32768.0f);
+    else
+        wait = m_f60.x;
+    m_f1ba4 = wait + bestActor->m_cf4;
+    IncSecondaryTarget(bestActor);
 }
