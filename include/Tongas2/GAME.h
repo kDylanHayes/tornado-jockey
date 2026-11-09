@@ -19,6 +19,8 @@ public:
     virtual ~GAME();
 
     static void RegisterCommands();
+    // The tornado actor the scene knows by the saved handle.
+    ACTOR *GetTornado();
     // Resets the level rule pointers.
     void ResetRules();
 

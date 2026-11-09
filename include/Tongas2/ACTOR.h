@@ -295,6 +295,9 @@ public:
     virtual SRESULT ChangeResourceMaterialCommand(CMDCALL *call);
     // Takes the resources of an actor resources template.
     virtual void ApplyResourcesTemplate(ACTORRESOURCESMASTER *master);
+    // Called when the game has just made the tornado.
+    void OnTornadoCreated(CMDCALL *call);
+
     virtual void Virtual136();
     virtual void Virtual137();
     virtual SRESULT QueueBehaviorCommand(CMDCALL *call);

@@ -117,7 +117,7 @@ const char *SOUNDMANAGER::GetTypeCode()
 
 bool SOUNDMANAGER::IsMyType(const char *name)
 {
-    return strstr(name, ".wav") != 0;
+    return strstr(name, ".wav");
 }
 
 UNICODESTRING::UNICODESTRING()

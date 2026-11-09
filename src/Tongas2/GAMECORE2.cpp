@@ -664,3 +664,16 @@ char G2STREQ::Equals(const char *other) const
 {
     return strcmp(m_buf, other) == 0;
 }
+class G2TORNADOCMD
+{
+public:
+    void HandleTornado(CMDCALL *call);
+};
+
+void G2TORNADOCMD::HandleTornado(CMDCALL *call)
+{
+    (void)call;
+    ACTOR *tornado = g_pGame->GetTornado();
+    if (tornado)
+        return tornado->OnTornadoCreated(call);
+}
