@@ -7853,3 +7853,4 @@
 0x0042b5d0 ?CheckTrees@G2FORESTOBJ@@QAEXXZ function 0xd8
 0x00402340 ?GetRules@GAME@@QAEPAVACTOR@@XZ function 0x49
 0x0042b6b0 ?LoadTrees@G2FORESTOBJ@@QAEXXZ function 0x117
+0x0042b880 ?CreateMaxPowerup@G2FORESTOBJ@@QAEXXZ function 0x8d

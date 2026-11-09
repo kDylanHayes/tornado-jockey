@@ -689,7 +689,25 @@ public:
     void CreatePowerup();
     void CheckTrees();
     void LoadTrees();
+    void CreateMaxPowerup();
 };
+
+void G2FORESTOBJ::CreateMaxPowerup()
+{
+    m_cd8 = true;
+    int row = 0;
+    int col = 0;
+    for (int r = 0; r < m_e5dc; r++) {
+        for (int c = 0; c < m_e5e0; c++) {
+            if (((float *)m_a)[r * 10 + c] > ((float *)m_a)[row * 10 + col]) {
+                row = r;
+                col = c;
+            }
+        }
+    }
+    ((float *)m_b)[row * 10 + col] = 100.0f;
+    CreatePowerup();
+}
 
 void G2FORESTOBJ::LoadTrees()
 {
@@ -773,18 +791,18 @@ void G2FORESTOBJ::Clear()
     char *q = m_bytes;
     int *p = m_b;
     int rows = 10;
+    int r = 0;
     do {
         int c = 0;
         do {
             p[-100] = 0;
             *p = 0;
-            char *dst = q + c;
-            *dst = 0;
+            q[r * 10 + c] = 0;
             p[0x7d] = 0;
             c++;
             p++;
         } while (c < 10);
-        q += 10;
+        r++;
     } while (--rows);
 }
 struct G2STREQ
