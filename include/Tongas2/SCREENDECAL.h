@@ -44,7 +44,11 @@ public:
             SetName(file);
         m_file = file;
     }
+#ifdef GC4_OUTOFLINE
+    virtual void SetForceDuplicates(const bool &force);
+#else
     virtual void SetForceDuplicates(const bool &force) { m_forceDuplicates = force; }
+#endif
     virtual void SetShifterSpeed(const V2 &speed);
     virtual void SetBlend(const int &blend) { m_blend = blend; }
     virtual void SetUserFolder(const bool &user) { m_userFolder = user; }

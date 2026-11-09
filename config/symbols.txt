@@ -162,8 +162,8 @@
 0x00426af0 ?GetEulerZ@ANG@@QAEMXZ function
 0x00426b20 ?GetEuler@ANG@@QAEXPAM00@Z function
 0x00432860 ?SetMaxCommands@TRIGGER@@UAEXABH@Z function 0xf
-0x00434430 ?Rotate@ANG@@QAEXABUMATRIX@@@Z function
-0x00434ea0 ?Transform@ANG@@QAE?AUV3@@U2@@Z function
+0x00434430 ?Rotate@ANG@@QAEXABUMATRIX@@@Z function 0x51
+0x00434ea0 ?Transform@ANG@@QAE?AUV3@@U2@@Z function 0xa4
 0x004381b0 ?_Tidy@?$deque@GV?$allocator@G@std@@@std@@IAEXXZ function
 0x0043c8a0 ??_9@$BII@AE function
 0x0043c8b0 ??_9@$BIM@AE function
@@ -176,7 +176,7 @@
 0x0043d540 ?Rotate@ANG@@QAEXABU1@@Z function
 0x0043d5d0 ??1CSTRING@@QAE@XZ function 0x1a
 0x0043e880 ??4CWSTRING@@QAEAAV0@ABV0@@Z function 0x6a
-0x0043ffc0 ?GetRightPoint@ANG@@QAE?AUV3@@XZ function
+0x0043ffc0 ?GetRightPoint@ANG@@QAE?AUV3@@XZ function 0x42
 0x00440060 ??1RESOURCE@@UAE@XZ function
 0x00440120 ?GetClassId@RESOURCE@@UAEHXZ function
 0x00440130 ?GetParentClassId@RESOURCE@@UAEHXZ function
@@ -235,20 +235,20 @@
 0x004436a0 ?_Inc@const_iterator@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@QAEXXZ function
 0x00443700 ?GetAxes@ANG@@QAEXPAUV3@@0@Z function
 0x00443780 ?_Buynode@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@2@XZ function
-0x00443800 ??1SOUNDMASTER@@UAE@XZ function
+0x00443800 ??1SOUNDMASTER@@UAE@XZ function 0x28
 0x00443870 ?SetForceDuplicates@SCREENDECALMASTER@@UAEXAB_N@Z function 0xc
-0x004438b0 ?SetLoop@DECALMASTER@@UAEXAB_N@Z function
-0x004438e0 ?SetIsTemplate@ACTOR@@UAEXAB_N@Z function
-0x004438f0 ?SetColliderColorOverride@ACTOR@@UAEXAB_N@Z function
+0x004438b0 ?SetLoop@DECALMASTER@@UAEXAB_N@Z function 0xf
+0x004438e0 ?SetIsTemplate@ACTOR@@UAEXAB_N@Z function 0xf
+0x004438f0 ?SetColliderColorOverride@ACTOR@@UAEXAB_N@Z function 0xf
 0x00443cb0 ?erase@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@QAE?AViterator@12@V312@0@Z function
-0x00443d70 ??0SOUNDMANAGER@@QAE@XZ function
-0x00443e00 ?CreateMaster@SOUNDMANAGER@@UAEPAVRESOURCEMASTER@@PBD@Z function
-0x00443e70 ?GetTypeCode@SOUNDMANAGER@@UAEPBDXZ function
-0x00443e80 ?IsMyType@SOUNDMANAGER@@UAE_NPBD@Z function
+0x00443d70 ??0SOUNDMANAGER@@QAE@XZ function 0x89
+0x00443e00 ?CreateMaster@SOUNDMANAGER@@UAEPAVRESOURCEMASTER@@PBD@Z function 0x69
+0x00443e70 ?GetTypeCode@SOUNDMANAGER@@UAEPBDXZ function 0x6
+0x00443e80 ?IsMyType@SOUNDMANAGER@@UAE_NPBD@Z function 0x1a
 0x00443ea0 ??_GSOUNDMANAGER@@UAEPAXI@Z function
-0x004442f0 ?SetAnimLen@DECALMASTER@@UAEXABM@Z function
-0x00444300 ?SetStartFrame@DECALMASTER@@UAEXABH@Z function
-0x004451b0 ?Free@UNICODESTRING@@QAEXXZ function
+0x004442f0 ?SetAnimLen@DECALMASTER@@UAEXABM@Z function 0xc
+0x00444300 ?SetStartFrame@DECALMASTER@@UAEXABH@Z function 0xc
+0x004451b0 ?Free@UNICODESTRING@@QAEXXZ function 0x3f
 0x00445600 ??1UNICODESTRING@@UAE@XZ function 0x4d
 0x004484a0 ??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@XZ function
 0x00448570 ?Virtual09@RESOURCE@@UAEPAXPBD@Z function

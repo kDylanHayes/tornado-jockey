@@ -46,7 +46,12 @@ public:
     virtual void Virtual20() {}
     // How many copies CreateCopies makes at a time.
     virtual int GetCopiesPerBatch() { return 1; }
-    virtual void SetGroupMask(const int &mask) { m_groupMask = mask; }
+    virtual void SetGroupMask(const int &mask)
+#ifdef RM_SETTERS_OUTOFLINE
+        ;
+#else
+    { m_groupMask = mask; }
+#endif
     virtual void SetMinCopies(const int &count);
     virtual void SetDescription(const int &description) {}
     virtual void SetPreview(const int &preview) {}

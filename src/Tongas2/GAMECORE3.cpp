@@ -1,12 +1,20 @@
 // Tongas2/GAMECORE3 -- the game-code block at 0x42c400. The OBJECT and
 // RESOURCE accessors the original translation unit emitted out of line.
 #define OBJECT_OUTOFLINE
+#define CSTRING_DTOR_OUTOFLINE
+#define RM_SETTERS_OUTOFLINE
+#define TRIGGER_SETTERS_OUTOFLINE
+
+#include <deque>
 
 #include "Tongas2/RESOURCE.h"
 
 #include "Tongas2/CMDBASE.h"
 #include "Tongas2/RESOURCES.h"
 #include "Tongas2/SCENE.h"
+#include "Tongas2/TRIGGER.h"
+
+template class std::deque<unsigned short>;
 
 int RESOURCE::GetClassId()
 {
@@ -220,4 +228,80 @@ bool operator!=(const ANG &a, const ANG &b)
     if (cb.flags & ANG::EULER_DIRTY)
         cb.UpdateEuler();
     return ca.euler.x != cb.euler.x || ca.euler.y != cb.euler.y || ca.euler.z != cb.euler.z;
+}
+
+CSTRING::~CSTRING()
+{
+    if (m_str) {
+        free(m_str);
+        m_str = 0;
+    }
+}
+
+void RESOURCEMASTER::SetGroupMask(const int &mask)
+{
+    m_groupMask = mask;
+}
+
+const char *RESOURCEMASTER::Virtual14()
+{
+    return m_fileName.c_str();
+}
+
+void TRIGGER::SetMaxCommands(const int &max)
+{
+    m_maxCommands = max;
+}
+
+long SupportsICCProfiles()
+{
+    return 1;
+}
+
+void ANG::Rotate(const MATRIX &m)
+{
+    if (flags & MATRIX_DIRTY) {
+        matrix.FromEuler(euler.z, euler.y, euler.x);
+        flags &= ~MATRIX_DIRTY;
+    }
+    matrix = m * matrix;
+    flags = EULER_DIRTY;
+}
+
+void ANG::Rotate(const ANG &other)
+{
+    if (flags & MATRIX_DIRTY) {
+        matrix.FromEuler(euler.z, euler.y, euler.x);
+        flags &= ~MATRIX_DIRTY;
+    }
+    ANG &o = const_cast<ANG &>(other);
+    if (o.flags & MATRIX_DIRTY) {
+        o.matrix.FromEuler(o.euler.z, o.euler.y, o.euler.x);
+        o.flags &= ~MATRIX_DIRTY;
+    }
+    MATRIX m = o.matrix;
+    matrix = m * matrix;
+    flags = EULER_DIRTY;
+}
+
+V3 ANG::Transform(V3 point)
+{
+    if (flags & MATRIX_DIRTY) {
+        matrix.FromEuler(euler.z, euler.y, euler.x);
+        flags &= ~MATRIX_DIRTY;
+    }
+    V3 result;
+    result.x = point.x * matrix._11 + point.z * matrix._31 + point.y * matrix._21 + matrix._41;
+    result.y = point.x * matrix._12 + point.z * matrix._32 + point.y * matrix._22 + matrix._42;
+    result.z = point.x * matrix._13 + point.z * matrix._33 + point.y * matrix._23 + matrix._43;
+    return result;
+}
+
+V3 ANG::GetRightPoint()
+{
+    if (flags & MATRIX_DIRTY) {
+        matrix.FromEuler(euler.z, euler.y, euler.x);
+        flags &= ~MATRIX_DIRTY;
+    }
+    return V3(matrix._41 + matrix._11, matrix._42 + matrix._12, matrix._43 + matrix._13);
 }

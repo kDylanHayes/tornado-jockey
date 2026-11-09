@@ -19,6 +19,9 @@ public:
             m_str = _strdup(str);
     }
 #endif
+#ifdef CSTRING_DTOR_OUTOFLINE
+    ~CSTRING();
+#else
     ~CSTRING()
     {
         if (m_str) {
@@ -26,6 +29,7 @@ public:
             m_str = 0;
         }
     }
+#endif
 
 #ifdef TONGAS2_CORE_OUTOFLINE
     CSTRING &operator=(const char *str);

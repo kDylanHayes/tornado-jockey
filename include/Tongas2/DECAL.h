@@ -84,10 +84,19 @@ public:
     virtual void SetNeverRotate(const bool &value) { m_neverRotate = value; }
     virtual void SetSimulate3D(const bool &value) { m_simulate3D = value; }
     virtual void SetDecalOrderForced(const int &value) { m_decalOrderForced = value; }
+#ifdef GC4_OUTOFLINE
+    virtual void SetAnimLen(const float &value);
+    virtual void SetStartFrame(const int &value);
+#else
     virtual void SetAnimLen(const float &value) { m_animLen = value; }
     virtual void SetStartFrame(const int &value) { m_startFrame = value; }
+#endif
     virtual void SetLastFrame(const int &value) { m_lastFrame = value; }
+#ifdef GC4_OUTOFLINE
+    virtual void SetLoop(const bool &value);
+#else
     virtual void SetLoop(const bool &value) { m_loop = value; }
+#endif
     virtual void SetFwBk(const bool &value) { m_fwBk = value; }
     virtual void SetRandomStartFrame(const bool &value) { m_randomStartFrame = value; }
     virtual void SetLocalRotation(const ANG &value) { m_localRotation = value; }

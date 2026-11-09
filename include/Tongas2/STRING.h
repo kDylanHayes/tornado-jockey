@@ -186,6 +186,9 @@ class UNICODESTRING
 {
 public:
     UNICODESTRING()
+#ifdef GC4_OUTOFLINE
+        ;
+#else
     {
         m_block = -1;
         m_pages = 0;
@@ -193,6 +196,7 @@ public:
         m_length = 0;
         m_lengthValid = true;
     }
+#endif
     UNICODESTRING(const wchar_t *text)
     {
         m_block = -1;
@@ -206,11 +210,15 @@ public:
     }
     // Seen as not throwing: the units that destroy one keep no unwind
     // state for it.
+#ifdef GC4_OUTOFLINE
+    virtual ~UNICODESTRING() throw();
+#else
     virtual ~UNICODESTRING() throw()
     {
         if (m_pages > 0)
             Free();
     }
+#endif
 
     // These three are defined in UNICODESTRING.h.
     void operator=(const UNICODESTRING &other);
@@ -233,6 +241,9 @@ public:
         return m_length;
     }
 
+#ifdef GC4_OUTOFLINE
+    void Free();
+#else
     void Free()
     {
         if (m_block >= 0)
@@ -243,6 +254,7 @@ public:
         m_length = 0;
         m_lengthValid = true;
     }
+#endif
 
     // Takes text, either "WC" and three characters per wide character (as
     // ToEncoded writes it) or plain 8-bit text.

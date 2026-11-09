@@ -22,7 +22,7 @@ class SOUNDMASTER : public RESOURCEMASTER
 {
 public:
     SOUNDMASTER(RESOURCEMANAGER *manager, const char *name);
-    virtual ~SOUNDMASTER() {}
+    virtual ~SOUNDMASTER();
 
     static void RegisterCommands();
 
@@ -122,16 +122,26 @@ class SOUNDMANAGER : public RESOURCEMANAGER
 {
 public:
     SOUNDMANAGER()
+#ifdef GC4_OUTOFLINE
+        ;
+#else
     {
         SafeSprintf(m_fileName, "SOUND.txt");
         m_8 = false;
         m_18 = true;
     }
+#endif
     virtual ~SOUNDMANAGER();
 
+#ifdef GC4_OUTOFLINE
+    virtual RESOURCEMASTER *CreateMaster(const char *name);
+    virtual const char *GetTypeCode();
+    virtual bool IsMyType(const char *name);
+#else
     virtual RESOURCEMASTER *CreateMaster(const char *name) { return new SOUNDMASTER(this, name); }
     virtual const char *GetTypeCode() { return "SNFX"; }
     virtual bool IsMyType(const char *name) { return strstr(name, ".wav") != 0; }
+#endif
     virtual void Init();
 
     // Turns the sounds (or the streams) on or off.

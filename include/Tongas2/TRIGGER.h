@@ -54,7 +54,12 @@ public:
     virtual void RunCommand();
     virtual void SetCommandCounter(const int &counter) { m_commandCounter = counter; }
     virtual void SetEnabled(const bool &enabled) { m_enabled = enabled; }
-    virtual void SetMaxCommands(const int &max) { m_maxCommands = max; }
+    virtual void SetMaxCommands(const int &max)
+#ifdef TRIGGER_SETTERS_OUTOFLINE
+        ;
+#else
+    { m_maxCommands = max; }
+#endif
     virtual void SetWaitTime(const V2 &time) { m_waitTime = time; }
     virtual void SetOncePerContact(const bool &once) { m_oncePerContact = once; }
     virtual void SetAlwaysTouched(const bool &always) { m_alwaysTouched = always; }
