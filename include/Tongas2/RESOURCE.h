@@ -320,7 +320,7 @@ public:
     // deletes the tag.
     virtual ~OBJECT();
     // Stops following the parent and the tag it was attached to.
-#ifdef TONGAS2_CORE_OUTOFLINE
+#if defined(TONGAS2_CORE_OUTOFLINE) || defined(OBJECT_OUTOFLINE)
     void Detach();
     void SetParent(RESHANDLE parent);
 #else

@@ -147,6 +147,7 @@
 0x00410420 ??8@YA_NABURGB@@0@Z function
 0x00410730 ?GetFactoryId@ACTOR@@UAEHXZ function 0x6
 0x00410c30 ?ToEuler@MATRIX@@QAEXPAM00@Z function 0x9d
+0x00410de0 ?UpdateEuler@ANG@@QAEXXZ function 0x1a
 0x00411980 ??0PLANE@@QAE@ABUV3@@0@Z function 0x4c
 0x00411ad0 ?Rotate@V3@@QBE?AU1@U1@M@Z function
 0x00411f70 ?GetEulerX@ANG@@QAEMXZ function
@@ -180,7 +181,7 @@
 0x00440120 ?GetClassId@RESOURCE@@UAEHXZ function
 0x00440130 ?GetParentClassId@RESOURCE@@UAEHXZ function
 0x00440140 ?GetClassName@RESOURCE@@UAEPBDXZ function
-0x00440150 ?Virtual08@RESOURCEMASTER@@UAEHXZ function
+0x00440150 ?Virtual08@RESOURCEMASTER@@UAEHXZ function 0x6
 0x00440190 ??1OBJECT@@UAE@XZ function
 0x00440220 ?Virtual08@RESOURCE@@UAEHXZ function
 0x00440250 ?SetFlag54@OBJECT@@UAEXAB_N@Z function
@@ -262,7 +263,7 @@
 0x0044a440 ??$?HDU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@ABV10@0@Z function
 0x0044a620 ?append@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@PBDI@Z function
 0x0044a730 ??$?HDU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@ABV10@PBD@Z function
-0x004513c0 ??$copy@PAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAV12@@std@@YAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PAV10@00@Z function
+0x004513c0 ??$copy@PAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAV12@@std@@YAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PAV10@00@Z function 0x1a5
 0x004536f0 ??R?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@QBE_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@0@Z function
 0x004540f0 ?NewNode@?$CALLBACKLIST@P6AXXZ@@QAEPAUNODE@1@P6AXXZ@Z function
 0x0045446b ??2@YAPAXI@Z function 0x24
@@ -7741,3 +7742,4 @@
 0x0066c264 ??_C@_0M@DJODCEMH@data?1sound?1?$AA@ data 0xc
 0x006870e0 ??_C@_0CN@DGCAKNIP@assertion?5?$CCjb_ptr?5?$DN?$DN?5jb?$CL2?$CKm?$CC?5fai@ data 0x2d
 0x00403ab0 ??0CSTRING@@QAE@PBD@Z function 0x27
+0x00449410 ?size@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QBEIXZ function 0x21

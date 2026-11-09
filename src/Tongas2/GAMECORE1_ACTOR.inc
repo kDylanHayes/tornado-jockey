@@ -415,6 +415,12 @@ void MATRIX::Invert()
     }
 }
 
+void ANG::UpdateEuler()
+{
+    matrix.ToEuler(&euler.z, &euler.y, &euler.x);
+    flags &= ~EULER_DIRTY;
+}
+
 void MATRIX::ToEuler(float *z, float *y, float *x)
 {
     *y = (float)asin(-_23);

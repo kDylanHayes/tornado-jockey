@@ -70,6 +70,8 @@ struct ANG
         }
         return euler;
     }
+    // Brings euler up to date from the matrix. Out of line.
+    void UpdateEuler();
     // Each euler angle, and all three.
 #ifdef TONGAS2_CORE_OUTOFLINE
     float GetEulerX();

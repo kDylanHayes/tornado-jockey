@@ -273,7 +273,7 @@ void LIGHTDX8MANAGER::LightVertex(const LIGHTRGB &ambient, const V3I &color, con
             break;
         LIGHTDX8RESOURCE *light = (LIGHTDX8RESOURCE *)g_pResources->GetResource(*it);
         if (light && (((LIGHTMASTER *)light->m_master)->m_lightMask & mask)) {
-            float dot = -(light->m_direction.x * normal.x + normal.y * light->m_direction.y +
+            float dot = -(normal.x * light->m_direction.x + normal.y * light->m_direction.y +
                           normal.z * light->m_direction.z);
             if (dot > 0.0f) {
                 unsigned int r = (unsigned int)(light->GetColor().r * dot);

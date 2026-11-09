@@ -113,8 +113,7 @@ void SETTINGSTABLE::Init()
 {
     int i;
     unsigned int offset;
-    offset = i = 0;
-    for (; offset < 0x69c; i++, offset += 0x24)
+    for (i = 0, offset = 0; offset < 0x69c; i++, offset += 0x24)
         m_1030[i] = *(int *)(g_settingRecords + offset);
     m_1034[0] = g_settingFloat0;
     m_1034[1] = g_settingFloat1;
