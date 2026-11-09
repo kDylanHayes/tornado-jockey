@@ -6,6 +6,8 @@
 #define TRIGGER_SETTERS_OUTOFLINE
 #define GC3_OUTOFLINE
 #define ANG_CTOR_INIT
+#define MATRIX_AXIS_METHODS
+#define ANG_UPDATE_OUTOFLINE
 
 #include <deque>
 
@@ -178,6 +180,17 @@ int OBJECT::GetVisibility()
 RESHANDLE OBJECT::GetParent()
 {
     return m_parent;
+}
+
+void OBJECT::SetAngles(ANG angles)
+{
+    m_angles = angles;
+    if (m_angles != m_134) {
+        if (m_angles.flags & ANG::MATRIX_DIRTY)
+            m_angles.UpdateMatrix();
+        m_184 = m_angles.matrix.GetForward();
+        m_190 = m_angles.GetUpPoint();
+    }
 }
 
 void OBJECT::Init()
