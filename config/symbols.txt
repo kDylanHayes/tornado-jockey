@@ -7842,3 +7842,6 @@
 0x00426470 ?SetEuler@ANG@@QAEXABM00@Z function 0x52
 0x004048c0 ?CreateStormChaser@GAME@@QAEPAVACTOR@@PBDABUV3@@ABUANG@@M@Z function 0x147
 0x0065977c __real@3bc80190 data
+0x00428ef0 ?Start@G2RULESOBJ@@UAEXXZ function 0xbc
+0x004038b0 ?SetRules@GAME@@QAEXPAVACTOR@@@Z function 0x92
+0x0065b418 ??_C@_05FLHPDFK@Rules?$AA@ data

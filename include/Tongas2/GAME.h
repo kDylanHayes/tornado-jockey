@@ -23,6 +23,8 @@ public:
     static void RegisterCommands();
     // The tornado actor the scene knows by the saved handle.
     ACTOR *GetTornado();
+    // Makes the level rules current.
+    void SetRules(ACTOR *rules);
     // Spawns the storm chaser actor from the level rules.
     ACTOR *CreateStormChaser(const char *name, const V3 &position, const ANG &angles, float value);
     // Resets the level rule pointers.

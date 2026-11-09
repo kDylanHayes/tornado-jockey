@@ -602,6 +602,7 @@ public:
     G2RULESOBJ();
     virtual ~G2RULESOBJ();
     virtual void Update();
+    virtual void Start();
 
     int m_f44;
     FIXEDSTRING<0x200> m_f48;
@@ -715,4 +716,13 @@ void G2RULESOBJ::Update()
         actor->SetActivation(1);
         actor->SetDeactivation(1);
     }
+}
+void G2RULESOBJ::Start()
+{
+    SetActivation(1);
+    SetDeactivation(1);
+    SetName(CSTRING("Rules"));
+    if (g_pGame)
+        g_pGame->SetRules(this);
+    *(bool *)((char *)this + 0x998) = true;
 }
