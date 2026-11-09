@@ -37,6 +37,20 @@ bool operator==(const RESHANDLE &a, const RESHANDLE &b)
     return a.serial == b.serial && a.index == b.index && a.kind == b.kind;
 }
 
+TOKENS::~TOKENS()
+{
+    m_string.Free();
+}
+
+SRESULT CMDBASE::Run(STRING command)
+{
+    TOKENS tokens;
+    if (!tokens.Parse(command, 0))
+        return SRESULT();
+    CMDCONTEXT context(&tokens, m_handle);
+    return context.Run(this);
+}
+
 STRING::STRING()
 {
     m_block = -1;
@@ -237,11 +251,6 @@ STRING &STRING::operator=(const STRING &other)
 {
     Reserve(const_cast<STRING &>(other).Length());
     return *this = other.c_str();
-}
-
-TOKENS::~TOKENS()
-{
-    m_string.Free();
 }
 
 void SRESULT::SetType(const SRESULTTYPE &type)

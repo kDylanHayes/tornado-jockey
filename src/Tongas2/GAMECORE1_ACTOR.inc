@@ -472,24 +472,27 @@ void ANG::UpdateEuler()
 
 void MATRIX::ToEuler(float *z, float *y, float *x)
 {
-    *y = (float)asin(-_23);
-    if (*y < 1.5707964f) {
-        if (*y > -1.5707964f) {
+    float value = (float)asin(-_23);
+    *y = value;
+    if (value < 1.5707964f) {
+        if (value > -1.5707964f) {
             *z = (float)atan2(_21, _22);
             *x = (float)atan2(_13, _33);
         }
         else {
+            float neg = -_31;
             *x = 0.0f;
-            *z = -(float)atan2(-_31, _11);
+            *z = -(float)atan2(neg, _11);
         }
     }
     else {
+        float neg = -_31;
         *x = 0.0f;
-        *z = (float)atan2(-_31, _11);
+        *z = (float)atan2(neg, _11);
     }
-    *y = -*y * 57.29578f;
-    *x = -*x * 57.29578f;
-    *z = -*z * 57.29578f;
+    *y = (0.0f - *y) * 57.29578f;
+    *x = (0.0f - *x) * 57.29578f;
+    *z = (0.0f - *z) * 57.29578f;
 }
 
 void MATRIX::RotateY(float degrees)
