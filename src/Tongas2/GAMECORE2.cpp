@@ -103,6 +103,10 @@ template struct G2PADC<0x138a, 0x400>;
 template void G2PADC<0x138a, 0x400>::Set(const unsigned char (&)[0x400]);
 template struct G2PADC<0x178a, 0x400>;
 template void G2PADC<0x178a, 0x400>::Set(const unsigned char (&)[0x400]);
+template struct G2PADC<0xdac, 0x200>;
+template void G2PADC<0xdac, 0x200>::Set(const unsigned char (&)[0x200]);
+template struct G2PADC<0xf48, 0x200>;
+template void G2PADC<0xf48, 0x200>::Set(const unsigned char (&)[0x200]);
 
 struct G2CSTRING
 {
@@ -374,4 +378,36 @@ void G2TIMESET::ResetSpeed()
     if (m_d84)
         g_pTimer->SetSpeed(1.0f);
     m_fbc = 1.0f;
+}
+class G2MID2 : public ACTOR
+{
+public:
+    virtual void Stop();
+    void Helper();
+};
+
+__declspec(noinline) void G2MID2::Stop()
+{
+    Helper();
+    ACTOR::Stop();
+}
+
+class G2CHAIN
+{
+public:
+    void A();
+    void B();
+    void C();
+    void D();
+    void E();
+    void Run();
+};
+
+void G2CHAIN::Run()
+{
+    A();
+    B();
+    C();
+    D();
+    E();
 }
