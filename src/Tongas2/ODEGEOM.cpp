@@ -387,3 +387,31 @@ bool GD549b40::IsAtOrigin()
         return false;
     return ((ODEWORLDFIND *)this)->FindActor() != 0;
 }
+
+class MATB
+{
+public:
+    void Build(const V3 &position, const MATRIX &matrix);
+
+    MATRIX m;
+};
+
+void MATB::Build(const V3 &position, const MATRIX &matrix)
+{
+    m._11 = matrix._11;
+    m._12 = matrix._21;
+    m._13 = matrix._31;
+    m._14 = 0.0f;
+    m._21 = matrix._12;
+    m._22 = matrix._22;
+    m._23 = matrix._32;
+    m._24 = 0.0f;
+    m._31 = matrix._13;
+    m._32 = matrix._23;
+    m._33 = matrix._33;
+    m._34 = 0.0f;
+    m._41 = position.x;
+    m._42 = position.y;
+    m._43 = position.z;
+    m._44 = 1.0f;
+}
