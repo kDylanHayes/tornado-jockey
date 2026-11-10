@@ -1,3 +1,4 @@
+#define SOUNDMASTER_NOVTABLE_DTOR
 #define OBJECT_GETPARENTACTOR
 #define DRM_OUTOFLINE
 #include <string.h>

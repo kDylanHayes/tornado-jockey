@@ -239,7 +239,7 @@
 0x004436a0 ?_Inc@const_iterator@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@QAEXXZ function
 0x00443700 ?GetAxes@ANG@@QAEXPAUV3@@0@Z function 0x72
 0x00443780 ?_Buynode@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@2@XZ function
-0x00443800 ??1SOUNDMASTER@@UAE@XZ function 0x28
+0x00443800 ??1SOUNDMASTER@@UAE@XZ function 0x3f
 0x00443870 ?SetForceDuplicates@SCREENDECALMASTER@@UAEXAB_N@Z function 0xc
 0x004438b0 ?SetLoop@DECALMASTER@@UAEXAB_N@Z function 0xf
 0x004438e0 ?SetIsTemplate@ACTOR@@UAEXAB_N@Z function 0xf

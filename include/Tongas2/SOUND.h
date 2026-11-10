@@ -18,7 +18,11 @@ extern char g_basePath[];
 // Defined elsewhere: replaces each from in s with to.
 void ReplaceChar(char *s, char from, char to);
 
+#ifdef SOUNDMASTER_NOVTABLE_DTOR
+class __declspec(novtable) SOUNDMASTER : public RESOURCEMASTER
+#else
 class SOUNDMASTER : public RESOURCEMASTER
+#endif
 {
 public:
     SOUNDMASTER(RESOURCEMANAGER *manager, const char *name);
