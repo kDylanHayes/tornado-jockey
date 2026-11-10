@@ -8932,3 +8932,11 @@
 0x004248f0 ?Command@G2CORE2SR5@@UAE?AVSRESULT@@H@Z function 0x3b
 0x00406e40 ?Has@CMDMGRX@@QAE_NPAX@Z function
 0x004067a0 ?Command@G2CORE1SR9@@UAE?AVSRESULT@@H@Z function 0x45
+0x00409690 ?GetParentClassId@G2CORE1J2@@UAEHXZ function 0xd
+0x004096a0 ?GetClassName@G2CORE1J2@@UAEPBDXZ function 0xe
+0x0040d370 ?GetParentClassId@G2CORE1K7@@UAEHXZ function 0xd
+0x0040d380 ?GetClassName@G2CORE1K7@@UAEPBDXZ function 0xe
+0x0040f720 ?GetParentClassId@G2CORE1K8@@UAEHXZ function 0xd
+0x0040f730 ?GetClassName@G2CORE1K8@@UAEPBDXZ function 0xe
+0x00410700 ?GetParentClassId@G2CORE1K9@@UAEHXZ function 0xd
+0x00410710 ?GetClassName@G2CORE1K9@@UAEPBDXZ function 0xe

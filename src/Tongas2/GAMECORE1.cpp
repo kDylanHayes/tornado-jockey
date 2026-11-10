@@ -702,6 +702,8 @@ public:
     virtual ~G2CORE1J2();
 
     virtual int GetClassId();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
     virtual int GetFactoryId();
     virtual int GetFactoryFlags();
 
@@ -1064,6 +1066,8 @@ public:
     virtual ~G2CORE1K7();
 
     virtual int GetClassId();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
     virtual int GetFactoryId();
     virtual int GetFactoryFlags();
     virtual void Set1328(const int &index, const void *src);
@@ -1108,6 +1112,8 @@ public:
     virtual ~G2CORE1K8();
 
     virtual int GetClassId();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
     virtual int GetFactoryId();
     virtual int GetFactoryFlags();
 
@@ -1140,6 +1146,8 @@ public:
     virtual ~G2CORE1K9();
 
     virtual int GetClassId();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
     virtual int GetFactoryId();
     virtual int GetFactoryFlags();
 
@@ -4932,4 +4940,44 @@ SRESULT G2CORE1SR9::Command(int value)
     bool ok = false;
     ok = ((CMDMGRX *)g_pCmdMgrX)->Has((char *)this + 0x1c);
     return SRESULT(ok);
+}
+
+int G2CORE1J2::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *G2CORE1J2::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
+int G2CORE1K7::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *G2CORE1K7::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
+int G2CORE1K8::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *G2CORE1K8::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
+int G2CORE1K9::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *G2CORE1K9::GetClassName()
+{
+    return g_classNames[s_classId];
 }
