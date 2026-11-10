@@ -953,6 +953,38 @@ __declspec(noinline) GD43f2f0::~GD43f2f0()
 {
 }
 
+// The non-polymorphic holder the 0x43f2f0 destructor belongs to: the
+// RESOURCEMASTER member is followed by CSTRING arrays at 0x88..0x12c.
+class GD43f2f0X
+{
+public:
+    ~GD43f2f0X();
+    GD43f2f0X *Destroy(bool flag);
+
+    RESOURCEMASTER m_master;
+    char pad_60[4];
+    CSTRINLINE m_64;
+    char pad_68[0x88 - 0x68];
+    CSTRING m_88[8];
+    char pad_a8[4];
+    CSTRING m_ac[8];
+    CSTRING m_cc[8];
+    CSTRING m_ec[8];
+    CSTRING m_10c[8];
+};
+
+__declspec(noinline) GD43f2f0X::~GD43f2f0X()
+{
+}
+
+GD43f2f0X *GD43f2f0X::Destroy(bool flag)
+{
+    this->~GD43f2f0X();
+    if (flag)
+        operator delete(this);
+    return this;
+}
+
 class GD43fad0 : public RESOURCEMANAGER
 {
 public:
