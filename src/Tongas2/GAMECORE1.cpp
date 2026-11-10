@@ -9,6 +9,7 @@
 #define MATRIX_AXIS_METHODS
 #define MATRIX_DIM_CTOR
 #define ANG_UPDATE_OUTOFLINE
+#define SCENE_OUTOFLINE
 
 #include <stdarg.h>
 #include <stdio.h>
@@ -4124,4 +4125,19 @@ bool G2APPKEY::Handle(const int &key)
         return true;
     }
     return true;
+}
+
+int SCENE::GetClassId()
+{
+    return s_classId;
+}
+
+int SCENE::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *SCENE::GetClassName()
+{
+    return g_classNames[s_classId];
 }

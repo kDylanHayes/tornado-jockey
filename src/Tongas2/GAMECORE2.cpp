@@ -1049,6 +1049,10 @@ void G2CHAIN::Run()
 class G2WIND
 {
 public:
+    virtual int GetClassId();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+
     static int s_classId;
     static CMDENTRY s_commands[];
 
@@ -1071,6 +1075,10 @@ public:
 class G2WTINTRO
 {
 public:
+    virtual int GetClassId();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+
     static int s_classId;
     static CMDENTRY s_commands[];
     static void RegisterCommands();
@@ -1087,6 +1095,10 @@ void G2WTINTRO::RegisterCommands()
 class G2BUILDINGPIECE
 {
 public:
+    virtual int GetClassId();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+
     static int s_classId;
     static CMDENTRY s_commands[];
     static void RegisterCommands();
@@ -1111,6 +1123,10 @@ void G2DESTRUCTIBLE::RegisterCommands()
 class G2DESTRUCTIBLEPIECE
 {
 public:
+    virtual int GetClassId();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+
     static int s_classId;
     static CMDENTRY s_commands[];
     static void RegisterCommands();
@@ -1127,6 +1143,10 @@ void G2DESTRUCTIBLEPIECE::RegisterCommands()
 class G2RULES
 {
 public:
+    virtual int GetClassId();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+
     static int s_classId;
     static CMDENTRY s_commands[];
     static void RegisterCommands();
@@ -1143,6 +1163,10 @@ void G2RULES::RegisterCommands()
 class G2RULESBONUSCOLLECT
 {
 public:
+    virtual int GetClassId();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+
     static int s_classId;
     static CMDENTRY s_commands[];
     static void RegisterCommands();
@@ -1159,6 +1183,10 @@ void G2RULESBONUSCOLLECT::RegisterCommands()
 class G2RULESSTORY
 {
 public:
+    virtual int GetClassId();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+
     static int s_classId;
     static CMDENTRY s_commands[];
     static void RegisterCommands();
@@ -1175,6 +1203,10 @@ void G2RULESSTORY::RegisterCommands()
 class G2FOREST
 {
 public:
+    virtual int GetClassId();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+
     static int s_classId;
     static CMDENTRY s_commands[];
     static void RegisterCommands();
@@ -2144,4 +2176,124 @@ void GC2SET::Set1(int value)
 void GC2SET::Set2(int value)
 {
     *(int *)((char *)this + 0xf4c) = value;
+}
+
+int G2WIND::GetClassId()
+{
+    return s_classId;
+}
+
+int G2WIND::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *G2WIND::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
+int G2WTINTRO::GetClassId()
+{
+    return s_classId;
+}
+
+int G2WTINTRO::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *G2WTINTRO::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
+int G2BUILDINGPIECE::GetClassId()
+{
+    return s_classId;
+}
+
+int G2BUILDINGPIECE::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *G2BUILDINGPIECE::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
+int G2DESTRUCTIBLEPIECE::GetClassId()
+{
+    return s_classId;
+}
+
+int G2DESTRUCTIBLEPIECE::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *G2DESTRUCTIBLEPIECE::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
+int G2RULES::GetClassId()
+{
+    return s_classId;
+}
+
+int G2RULES::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *G2RULES::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
+int G2RULESBONUSCOLLECT::GetClassId()
+{
+    return s_classId;
+}
+
+int G2RULESBONUSCOLLECT::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *G2RULESBONUSCOLLECT::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
+int G2RULESSTORY::GetClassId()
+{
+    return s_classId;
+}
+
+int G2RULESSTORY::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *G2RULESSTORY::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
+int G2FOREST::GetClassId()
+{
+    return s_classId;
+}
+
+int G2FOREST::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *G2FOREST::GetClassName()
+{
+    return g_classNames[s_classId];
 }

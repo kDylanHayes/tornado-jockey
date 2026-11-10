@@ -2,6 +2,9 @@
 //
 // Discovery scaffold: bodies are empty until the unit is matched.
 #include "Tongas2/ODEACTOR.h"
+#include "Tongas2/CMDBASE.h"
+
+extern char g_classNames[][30];
 
 void ODEACTORMASTER::RegisterCommands()
 {
@@ -71,4 +74,29 @@ struct G2ODEADJTGT
 void G2ODEADJ::Call(void *arg)
 {
     ((G2ODEADJTGT *)((char *)this + 4))->Call((char *)arg + 8);
+}
+
+class G2ODEACTOR
+{
+public:
+    virtual int GetClassId();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+
+    static int s_classId;
+};
+
+int G2ODEACTOR::GetClassId()
+{
+    return s_classId;
+}
+
+int G2ODEACTOR::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *G2ODEACTOR::GetClassName()
+{
+    return g_classNames[s_classId];
 }
