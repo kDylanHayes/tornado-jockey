@@ -15,6 +15,10 @@ void *TEXTUREDX8SDTEXTURE::GetSurface()
 
 TEXTUREDX8SDTEXTURE::~TEXTUREDX8SDTEXTURE()
 {
+    if (m_surface) {
+        m_surface->Release();
+        m_surface = 0;
+    }
 }
 
 void CTEXTURE::ConvertToFormat()

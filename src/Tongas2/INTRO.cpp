@@ -293,15 +293,18 @@ int SETTINGSTABLE::GetDetailLevel()
 
 SETTINGS::~SETTINGS()
 {
-    if (m_1030)
+    if (m_1030) {
         delete[] m_1030;
-    m_1030 = 0;
-    if (m_1034)
+        m_1030 = 0;
+    }
+    if (m_1034) {
         delete[] m_1034;
-    m_1034 = 0;
-    if (m_1038)
+        m_1034 = 0;
+    }
+    if (m_1038) {
         delete[] m_1038;
-    m_1038 = 0;
+        m_1038 = 0;
+    }
 }
 
 void INTRO::Load(const char *name, const char *path)

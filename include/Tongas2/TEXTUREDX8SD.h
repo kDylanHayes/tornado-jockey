@@ -6,9 +6,28 @@
 #ifndef TONGAS2_TEXTUREDX8SD_H
 #define TONGAS2_TEXTUREDX8SD_H
 
+#include <string>
 #include "Tongas2/CMDBASE.h"
 #include "Tongas2/RESOURCE.h"
 #include "Tongas2/RESOURCES.h"
+
+// The surface object's COM interface (IUnknown order).
+class TEXTURESURFACE
+{
+public:
+    virtual void __stdcall QueryInterface();
+    virtual void __stdcall AddRef();
+    virtual void __stdcall Release();
+};
+
+// The member at +0x3c; its destructor is out of line.
+class TEXTUREDX8SDTEXTUREMEMBER
+{
+public:
+    ~TEXTUREDX8SDTEXTUREMEMBER();
+
+    char pad[0x18];
+};
 
 // The Direct3D texture object owned by a master (destructor at 0x00534df0).
 class TEXTUREDX8SDTEXTURE
@@ -21,11 +40,14 @@ public:
     void *GetSurface();
 
     void *m_texture;
-    char m_04[0x28 - 0x04];
-    void *m_surface;
+    char m_04[4];
+    std::string m_08;
+    char m_24[4];
+    TEXTURESURFACE *m_surface;
     char m_2c[0x38 - 0x2c];
     bool m_38;
-    char m_39[0x54 - 0x39];
+    char m_39[0x3c - 0x39];
+    TEXTUREDX8SDTEXTUREMEMBER m_3c;
 };
 
 class TEXTUREDX8SDMASTER : public RESOURCEMASTER

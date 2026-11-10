@@ -403,13 +403,36 @@ __declspec(noinline) GD444e40X::~GD444e40X()
 {
 }
 
+class G2MIDITEM
+{
+public:
+    virtual void Release(int value);
+};
+
 class G2MIDLIST
 {
 public:
     ~G2MIDLIST();
+
+    G2MIDITEM *m_00;
+    G2MIDITEM *m_04;
+    char pad_08[0x20c - 0x08];
+    std::string m_20c;
 };
 
 extern G2MIDLIST *g_pMIDList;
+
+G2MIDLIST::~G2MIDLIST()
+{
+    if (m_04) {
+        m_04->Release(1);
+        m_04 = 0;
+        if (m_00) {
+            m_00->Release(1);
+            m_00 = 0;
+        }
+    }
+}
 
 class GD4451f0 : public GUI
 {
