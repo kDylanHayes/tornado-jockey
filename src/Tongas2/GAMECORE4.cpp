@@ -2837,3 +2837,37 @@ RESOURCEMANAGER *CreateTORNADO()
 {
     return new TORNADOMANAGER();
 }
+
+// The PROPSHADOW manager (0x00441440).
+class PROPSHADOWMANAGER : public RESOURCEMANAGER
+{
+public:
+    PROPSHADOWMANAGER()
+    {
+        SafeSprintf(m_fileName, "PROPSHADOW.txt");
+        m_8 = false;
+        m_18 = true;
+    }
+};
+
+RESOURCEMANAGER *CreatePROPSHADOW()
+{
+    return new PROPSHADOWMANAGER();
+}
+
+// The RADAR manager (0x00441d60).
+class RADARMANAGER : public RESOURCEMANAGER
+{
+public:
+    RADARMANAGER()
+    {
+        SafeSprintf(m_fileName, "RADAR.txt");
+        m_8 = false;
+        m_18 = true;
+    }
+};
+
+RESOURCEMANAGER *CreateRADAR()
+{
+    return new RADARMANAGER();
+}
