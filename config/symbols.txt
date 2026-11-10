@@ -8207,3 +8207,12 @@
 0x00559ae0 ??_GGD559aa0@@UAEPAXI@Z function 0x1e
 0x00659488 __real@3fc1f07c data 0x4
 0x0065b810 __real@3f28f5c3 data 0x4
+0x0065b7f0 ??_C@_0BP@FNKPFPAP@Missing?5STORM?5CHASER?5SPAWNER?$CB?$CB?$AA@ data
+0x0065b7b4 ??_C@_0DC@IOMPEJDE@Could?5not?5found?5a?5storm?5chaser?5s@ data
+0x0065b794 ??_C@_0BP@BAPBABDG@Could?5not?5spawn?5STORM?5CHASER?$CB?$CB?$AA@ data
+0x0065b78c ??_C@_05OCLJDKOC@sc_?$CFu?$AA@ data
+0x0065b7ec __real@bdcccccd data 0x4
+0x0065b7e8 __real@3f8ccccd data 0x4
+0x006ae888 ?g_stormSpawnerFactoryId@@3HA data 0x4
+0x006ae880 ?g_stormChaserFactoryId@@3HA data 0x4
+0x006caff0 ?g_stormChaserCount@@3IA data 0x4

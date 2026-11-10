@@ -2016,12 +2016,9 @@ void G2CHAIN::B()
                 if (screen.x >= -0.1f && screen.x <= 1.1f &&
                     screen.y >= -0.1f && screen.y <= 1.1f)
                     continue;
-                V3 tornadoPos = tornado->GetPosition();
-                V3 spawnerPos = spawner->GetPosition();
-                float distSq =
-                    (tornadoPos.z - spawnerPos.z) * (tornadoPos.z - spawnerPos.z) +
-                    (tornadoPos.y - spawnerPos.y) * (tornadoPos.y - spawnerPos.y) +
-                    (tornadoPos.x - spawnerPos.x) * (tornadoPos.x - spawnerPos.x);
+                V3 delta = tornado->GetPosition() - spawner->GetPosition();
+                float distSq = delta.x * delta.x + delta.y * delta.y +
+                               delta.z * delta.z;
                 if (bestDist > distSq && spawner && spawner->CanSpawn()) {
                     best = spawner;
                     bestDist = distSq;
