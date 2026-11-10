@@ -86,14 +86,29 @@ __declspec(noinline) GD54c9b0::~GD54c9b0() throw()
     }
 }
 
+extern "C" void _dSpaceDestroy(void *space);
+extern "C" void _dJointGroupDestroy(void *group);
+extern "C" void _dWorldDestroy(void *world);
+
 class GD54cb00
 {
 public:
-    virtual ~GD54cb00();
+    virtual ~GD54cb00() throw();
+
+    GD54c7b0 m_4;
+    char pad_14[0x20];
+    GD54c9b0 m_34;
+    char pad_44[0x18];
+    void *m_5c;
+    void *m_60;
+    void *m_64;
 };
 
-__declspec(noinline) GD54cb00::~GD54cb00()
+__declspec(noinline) GD54cb00::~GD54cb00() throw()
 {
+    _dSpaceDestroy(m_60);
+    _dJointGroupDestroy(m_64);
+    _dWorldDestroy(m_5c);
 }
 
 struct G2ODEACTORTGT
