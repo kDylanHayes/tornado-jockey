@@ -4553,3 +4553,67 @@ float G2CORE1M1::GetDE4()
 {
     return *(float *)((char *)this + 0xde4);
 }
+
+struct G2CORE1M2
+{
+    void Set177C(const V2 &value);
+    void Set1790(const V2 &value);
+    void Set25B8(const V2 &value);
+    void Set25C0(const V2 &value);
+    void Set25D0(const V2 &value);
+    void Set25D8(const V2 &value);
+    void Set25F0(const V2 &value);
+    void Set25F8(const V2 &value);
+    void Set2600(const V2 &value);
+    void Set2C48(const V2 &value);
+};
+
+void G2CORE1M2::Set177C(const V2 &value)
+{
+    *(V2 *)((char *)this + 0x177c) = value;
+}
+
+void G2CORE1M2::Set1790(const V2 &value)
+{
+    *(V2 *)((char *)this + 0x1790) = value;
+}
+
+void G2CORE1M2::Set25B8(const V2 &value)
+{
+    *(V2 *)((char *)this + 0x25b8) = value;
+}
+
+void G2CORE1M2::Set25C0(const V2 &value)
+{
+    *(V2 *)((char *)this + 0x25c0) = value;
+}
+
+void G2CORE1M2::Set25D0(const V2 &value)
+{
+    *(V2 *)((char *)this + 0x25d0) = value;
+}
+
+void G2CORE1M2::Set25D8(const V2 &value)
+{
+    *(V2 *)((char *)this + 0x25d8) = value;
+}
+
+void G2CORE1M2::Set25F0(const V2 &value)
+{
+    *(V2 *)((char *)this + 0x25f0) = value;
+}
+
+void G2CORE1M2::Set25F8(const V2 &value)
+{
+    *(V2 *)((char *)this + 0x25f8) = value;
+}
+
+void G2CORE1M2::Set2600(const V2 &value)
+{
+    *(V2 *)((char *)this + 0x2600) = value;
+}
+
+void G2CORE1M2::Set2C48(const V2 &value)
+{
+    *(V2 *)((char *)this + 0x2c48) = value;
+}

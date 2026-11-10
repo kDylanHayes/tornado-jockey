@@ -1782,3 +1782,55 @@ void G2CORE3M1::Set468(const int &value)
 {
     *(int *)((char *)this + 0x468) = value;
 }
+
+struct G2CORE3M2
+{
+    void SetD00(const V2 &value);
+    void SetEE4(const V2 &value);
+    void Set1120(const V2 &value);
+    void SetCEC(const V2 &value);
+    void Set15BC(const V2 &value);
+    void Set17E8(const V2 &value);
+    void SetD8(const V2 &value);
+    void Set12C(const V2 &value);
+};
+
+void G2CORE3M2::SetD00(const V2 &value)
+{
+    *(V2 *)((char *)this + 0xd00) = value;
+}
+
+void G2CORE3M2::SetEE4(const V2 &value)
+{
+    *(V2 *)((char *)this + 0xee4) = value;
+}
+
+void G2CORE3M2::Set1120(const V2 &value)
+{
+    *(V2 *)((char *)this + 0x1120) = value;
+}
+
+void G2CORE3M2::SetCEC(const V2 &value)
+{
+    *(V2 *)((char *)this + 0xcec) = value;
+}
+
+void G2CORE3M2::Set15BC(const V2 &value)
+{
+    *(V2 *)((char *)this + 0x15bc) = value;
+}
+
+void G2CORE3M2::Set17E8(const V2 &value)
+{
+    *(V2 *)((char *)this + 0x17e8) = value;
+}
+
+void G2CORE3M2::SetD8(const V2 &value)
+{
+    *(V2 *)((char *)this + 0xd8) = value;
+}
+
+void G2CORE3M2::Set12C(const V2 &value)
+{
+    *(V2 *)((char *)this + 0x12c) = value;
+}

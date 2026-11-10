@@ -1106,3 +1106,67 @@ void G2CORE4M1::Set1DCD8(const int &value)
 {
     *(int *)((char *)this + 0x1dcd8) = value;
 }
+
+struct G2CORE4M2
+{
+    void Set264(const V2 &value);
+    void Set280(const V2 &value);
+    void Set498(const V2 &value);
+    void Set4AC(const V2 &value);
+    void SetA4(const V2 &value);
+    void SetA8(const V2 &value);
+    void Set94(const V2 &value);
+    void Set9C(const V2 &value);
+    void SetC4(const V2 &value);
+    void Set310(const V2 &value);
+};
+
+void G2CORE4M2::Set264(const V2 &value)
+{
+    *(V2 *)((char *)this + 0x264) = value;
+}
+
+void G2CORE4M2::Set280(const V2 &value)
+{
+    *(V2 *)((char *)this + 0x280) = value;
+}
+
+void G2CORE4M2::Set498(const V2 &value)
+{
+    *(V2 *)((char *)this + 0x498) = value;
+}
+
+void G2CORE4M2::Set4AC(const V2 &value)
+{
+    *(V2 *)((char *)this + 0x4ac) = value;
+}
+
+void G2CORE4M2::SetA4(const V2 &value)
+{
+    *(V2 *)((char *)this + 0xa4) = value;
+}
+
+void G2CORE4M2::SetA8(const V2 &value)
+{
+    *(V2 *)((char *)this + 0xa8) = value;
+}
+
+void G2CORE4M2::Set94(const V2 &value)
+{
+    *(V2 *)((char *)this + 0x94) = value;
+}
+
+void G2CORE4M2::Set9C(const V2 &value)
+{
+    *(V2 *)((char *)this + 0x9c) = value;
+}
+
+void G2CORE4M2::SetC4(const V2 &value)
+{
+    *(V2 *)((char *)this + 0xc4) = value;
+}
+
+void G2CORE4M2::Set310(const V2 &value)
+{
+    *(V2 *)((char *)this + 0x310) = value;
+}

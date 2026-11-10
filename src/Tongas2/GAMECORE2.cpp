@@ -2594,3 +2594,43 @@ int G2FORESTOBJ::GetFactoryId()
 {
     return s_factoryId;
 }
+
+struct G2CORE2M2
+{
+    void SetFB0(const V2 &value);
+    void SetF50(const V2 &value);
+    void SetF60(const V2 &value);
+    void SetF68(const V2 &value);
+    void SetF70(const V2 &value);
+    void SetF78(const V2 &value);
+};
+
+void G2CORE2M2::SetFB0(const V2 &value)
+{
+    *(V2 *)((char *)this + 0xfb0) = value;
+}
+
+void G2CORE2M2::SetF50(const V2 &value)
+{
+    *(V2 *)((char *)this + 0xf50) = value;
+}
+
+void G2CORE2M2::SetF60(const V2 &value)
+{
+    *(V2 *)((char *)this + 0xf60) = value;
+}
+
+void G2CORE2M2::SetF68(const V2 &value)
+{
+    *(V2 *)((char *)this + 0xf68) = value;
+}
+
+void G2CORE2M2::SetF70(const V2 &value)
+{
+    *(V2 *)((char *)this + 0xf70) = value;
+}
+
+void G2CORE2M2::SetF78(const V2 &value)
+{
+    *(V2 *)((char *)this + 0xf78) = value;
+}
