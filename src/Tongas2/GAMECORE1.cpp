@@ -17,11 +17,20 @@
 
 extern "C" __declspec(dllimport) void __stdcall Sleep(unsigned long);
 
+#include "Tongas2/APP.h"
+#include "Tongas2/APPOPTIONS.h"
+#include "Tongas2/APPWINDOW.h"
+#include "Tongas2/GUI.h"
+#include "Tongas2/TIMER.h"
 #include "Tongas2/ACTOR.h"
 #include "Tongas2/CSTRING.h"
 #include "Tongas2/CMDBASE.h"
 #include "Tongas2/CPRIMITIVE3.h"
 #include "Tongas2/FIXEDWSTRING.h"
+#include "Tongas2/GAME.h"
+#include "Tongas2/SCENE.h"
+#include "Tongas2/LOG.h"
+#include "Tongas2/SCENE.h"
 #include "Tongas2/RESOURCE.h"
 #include "Tongas2/SAFEINDEX.h"
 #include "Tongas2/STRING.h"
@@ -677,14 +686,117 @@ G2CORE1K1::~G2CORE1K1()
 {
 }
 
-class G2CORE1K2 : public ACTOR
+class G2CORE1K2 : public GAME
 {
 public:
     virtual ~G2CORE1K2();
+
+    virtual int GetClassId();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+
+    virtual void Set230(const bool &value);
+    virtual void Set234(const int &value);
+    virtual void Set238(const bool &value);
+    virtual void Set23C(const int &value);
+    virtual void Set240(const int &value);
+    virtual void Set244(const int &value);
+    virtual void Set248(const int &value);
+    virtual void Set24C(const int &value);
+    virtual void SetE50(const int &value);
+    virtual void SetE54(const int &value);
+    virtual void SetE58(const int &value);
+    virtual void SetE5C(const int &value);
+    virtual void SetE60(const int &value);
+
+    static int s_classId;
 };
+
+int G2CORE1K2::s_classId = -1;
 
 G2CORE1K2::~G2CORE1K2()
 {
+    g_pScene->RemoveAll();
+}
+
+int G2CORE1K2::GetClassId()
+{
+    return s_classId;
+}
+
+int G2CORE1K2::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *G2CORE1K2::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
+void G2CORE1K2::Set230(const bool &value)
+{
+    *(bool *)((char *)this + 0x230) = value;
+}
+
+void G2CORE1K2::Set234(const int &value)
+{
+    *(int *)((char *)this + 0x234) = value;
+}
+
+void G2CORE1K2::Set238(const bool &value)
+{
+    *(bool *)((char *)this + 0x238) = value;
+}
+
+void G2CORE1K2::Set23C(const int &value)
+{
+    *(int *)((char *)this + 0x23c) = value;
+}
+
+void G2CORE1K2::Set240(const int &value)
+{
+    *(int *)((char *)this + 0x240) = value;
+}
+
+void G2CORE1K2::Set244(const int &value)
+{
+    *(int *)((char *)this + 0x244) = value;
+}
+
+void G2CORE1K2::Set248(const int &value)
+{
+    *(int *)((char *)this + 0x248) = value;
+}
+
+void G2CORE1K2::Set24C(const int &value)
+{
+    *(int *)((char *)this + 0x24c) = value;
+}
+
+void G2CORE1K2::SetE50(const int &value)
+{
+    *(int *)((char *)this + 0xe50) = value;
+}
+
+void G2CORE1K2::SetE54(const int &value)
+{
+    *(int *)((char *)this + 0xe54) = value;
+}
+
+void G2CORE1K2::SetE58(const int &value)
+{
+    *(int *)((char *)this + 0xe58) = value;
+}
+
+void G2CORE1K2::SetE5C(const int &value)
+{
+    *(int *)((char *)this + 0xe5c) = value;
+}
+
+void G2CORE1K2::SetE60(const int &value)
+{
+    *(int *)((char *)this + 0xe60) = value;
 }
 
 class G2CORE1K3 : public ACTOR
@@ -3558,4 +3670,296 @@ public:
 void G1K2b8::Thunk()
 {
     T();
+}
+
+class WTACTORV
+{
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void d36();
+    virtual void d37();
+    virtual void d38();
+    virtual void d39();
+    virtual void d40();
+    virtual void d41();
+    virtual void d42();
+    virtual void d43();
+    virtual void d44();
+    virtual void d45();
+    virtual void d46();
+    virtual void d47();
+    virtual void d48();
+    virtual void d49();
+    virtual void d50();
+    virtual void d51();
+    virtual void d52();
+    virtual void d53();
+    virtual void d54();
+    virtual void d55();
+    virtual void d56();
+    virtual void d57();
+    virtual void d58();
+    virtual void d59();
+    virtual void d60();
+    virtual void d61();
+    virtual void d62();
+    virtual void d63();
+    virtual void d64();
+    virtual void d65();
+    virtual void d66();
+    virtual void d67();
+    virtual void d68();
+    virtual void d69();
+    virtual void d70();
+    virtual void d71();
+    virtual void d72();
+    virtual void d73();
+    virtual void d74();
+    virtual void d75();
+    virtual void d76();
+    virtual void d77();
+    virtual void d78();
+    virtual void d79();
+    virtual void d80();
+    virtual void d81();
+    virtual void d82();
+    virtual void d83();
+    virtual void d84();
+    virtual void d85();
+    virtual void d86();
+    virtual void d87();
+    virtual void d88();
+    virtual void d89();
+    virtual void d90();
+    virtual void d91();
+    virtual void d92();
+    virtual void d93();
+    virtual void d94();
+    virtual void d95();
+    virtual void d96();
+    virtual void d97();
+    virtual void d98();
+    virtual void d99();
+    virtual void d100();
+    virtual void d101();
+    virtual void d102();
+    virtual void d103();
+    virtual void d104();
+    virtual void d105();
+    virtual void d106();
+    virtual void d107();
+    virtual void d108();
+    virtual void d109();
+    virtual void d110();
+    virtual void d111();
+    virtual void d112();
+    virtual void d113();
+    virtual void d114();
+    virtual void d115();
+    virtual void d116();
+    virtual void d117();
+    virtual void d118();
+    virtual void d119();
+    virtual void d120();
+    virtual void d121();
+    virtual void d122();
+    virtual void d123();
+    virtual void d124();
+    virtual void d125();
+    virtual void d126();
+    virtual void d127();
+    virtual void d128();
+    virtual void d129();
+    virtual void d130();
+    virtual void d131();
+    virtual void d132();
+    virtual void d133();
+    virtual void d134();
+    virtual void d135();
+    virtual void d136();
+    virtual void d137();
+    virtual void d138();
+    virtual void d139();
+    virtual void d140();
+    virtual void d141();
+    virtual void d142();
+    virtual void d143();
+    virtual void d144();
+    virtual void d145();
+    virtual void d146();
+    virtual void d147();
+    virtual void d148();
+    virtual void d149();
+    virtual void d150();
+    virtual void d151();
+    virtual void d152();
+    virtual void d153();
+    virtual void d154();
+    virtual void d155();
+    virtual void V();
+};
+
+struct G2GAMERULES
+{
+    void GetFromHandle();
+};
+
+void G2GAMERULES::GetFromHandle()
+{
+    if (!g_pScene) {
+        if (g_pLog)
+            g_pLog->Error("Error - GetRules, null scene");
+        return;
+    }
+    WTACTOR *actor =
+        g_pScene->GetActor(*(RESHANDLE *)((char *)this + 0x1e64));
+    if (!actor)
+        return;
+    ((WTACTORV *)actor)->V();
+}
+extern "C" __declspec(dllimport) long __stdcall SendMessageA(
+    void *window, unsigned int message, unsigned int wParam, long lParam);
+
+class DISPGET
+{
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void d36();
+    virtual void d37();
+    virtual void *GetWindow();
+};
+
+class GAMEEXT
+{
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual bool V();
+    void DebugKey(int value);
+};
+
+struct G2APPKEY
+{
+    bool Handle(const int &key);
+};
+
+bool G2APPKEY::Handle(const int &key)
+{
+    if (key == 0x46 ||
+        (key == 0x1b && g_pApp->m_pOptions->m_fullscreen)) {
+        g_pApp->SetFullscreen(!g_pApp->m_pOptions->m_fullscreen);
+        return true;
+    }
+    if (key == 0x50) {
+        if (!g_pGame || !*(bool *)((char *)g_pGame + 0x238))
+            g_pGui->Pause(true);
+        return true;
+    }
+    if (key == 0x51) {
+        if (!g_pGame || !((GAMEEXT *)g_pGame)->V()) {
+            SendMessageA(((DISPGET *)g_pDisplay)->GetWindow(), 0x10, 0, 0);
+        } else if (!*(bool *)((char *)g_pTimer + 0x28)) {
+            g_pGui->Pause(true);
+        }
+        return true;
+    }
+    if (key == 0x48) {
+        if (g_pGame)
+            ((GAMEEXT *)g_pGame)->DebugKey(0);
+        return true;
+    }
+    return true;
 }
