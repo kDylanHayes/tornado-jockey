@@ -337,7 +337,8 @@ void CAMERALENS::UpdateProjection()
 
 void CAMERALENS::UpdateView()
 {
-    m_view.View(V3(m_position), V3(m_position) + m_direction, m_up);
+    V3 at = V3(m_position) + m_direction;
+    m_view.View(V3(m_position), at, m_up);
     m_viewDirty = false;
 }
 
