@@ -591,6 +591,8 @@ class GD42ddd0 : public ACTOR
 {
 public:
     virtual ~GD42ddd0();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
     virtual int GetFactoryFlags();
 
     static int s_factoryId;
@@ -606,6 +608,8 @@ public:
     float m_ed0;
     float m_ed4;
     float m_ed8;
+
+    static int s_classId;
 };
 
 __declspec(noinline) GD42ddd0::~GD42ddd0()
@@ -634,6 +638,10 @@ class GD42e6e0
 {
 public:
     virtual ~GD42e6e0();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+
+    static int s_classId;
 };
 
 __declspec(noinline) GD42e6e0::~GD42e6e0()
@@ -644,9 +652,13 @@ class GD42f370
 {
 public:
     virtual ~GD42f370();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
     virtual int GetFactoryFlags();
 
     static int s_factoryId;
+
+    static int s_classId;
 };
 
 __declspec(noinline) GD42f370::~GD42f370()
@@ -657,9 +669,13 @@ class GD432870
 {
 public:
     virtual ~GD432870();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
     virtual int GetFactoryFlags();
 
     static int s_factoryId;
+
+    static int s_classId;
 };
 
 __declspec(noinline) GD432870::~GD432870()
@@ -670,9 +686,13 @@ class GD4331a0
 {
 public:
     virtual ~GD4331a0();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
     virtual int GetFactoryFlags();
 
     static int s_factoryId;
+
+    static int s_classId;
 };
 
 __declspec(noinline) GD4331a0::~GD4331a0()
@@ -683,7 +703,11 @@ class GD438ff0
 {
 public:
     virtual ~GD438ff0();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
     virtual int GetFactoryFlags();
+
+    static int s_classId;
 };
 
 __declspec(noinline) GD438ff0::~GD438ff0()
@@ -694,7 +718,11 @@ class GD43b550
 {
 public:
     virtual ~GD43b550();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
     virtual int GetFactoryFlags();
+
+    static int s_classId;
 };
 
 __declspec(noinline) GD43b550::~GD43b550()
@@ -705,9 +733,13 @@ class GD43b850
 {
 public:
     virtual ~GD43b850();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
     virtual int GetFactoryFlags();
 
     static int s_factoryId;
+
+    static int s_classId;
 };
 
 __declspec(noinline) GD43b850::~GD43b850()
@@ -718,9 +750,13 @@ class GD43bb40
 {
 public:
     virtual ~GD43bb40();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
     virtual int GetFactoryFlags();
 
     static int s_factoryId;
+
+    static int s_classId;
 };
 
 __declspec(noinline) GD43bb40::~GD43bb40()
@@ -731,6 +767,10 @@ class GD43cc30
 {
 public:
     virtual ~GD43cc30();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+
+    static int s_classId;
 };
 
 __declspec(noinline) GD43cc30::~GD43cc30()
@@ -741,6 +781,10 @@ class GD43ea30
 {
 public:
     virtual ~GD43ea30();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+
+    static int s_classId;
 };
 
 __declspec(noinline) GD43ea30::~GD43ea30()
@@ -751,6 +795,10 @@ class GD43f2f0
 {
 public:
     virtual ~GD43f2f0();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+
+    static int s_classId;
 };
 
 __declspec(noinline) GD43f2f0::~GD43f2f0()
@@ -761,6 +809,10 @@ class GD43fad0
 {
 public:
     virtual ~GD43fad0();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+
+    static int s_classId;
 };
 
 __declspec(noinline) GD43fad0::~GD43fad0()
@@ -771,6 +823,10 @@ class GD43fa60
 {
 public:
     virtual ~GD43fa60();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+
+    static int s_classId;
 };
 
 __declspec(noinline) GD43fa60::~GD43fa60()
@@ -1959,4 +2015,182 @@ int GD438ff0::GetFactoryFlags()
 int GD43b550::GetFactoryFlags()
 {
     return g_factoryFlags[g_stormSpawnerFactoryId];
+}
+
+class GD43f600
+{
+public:
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+
+    static int s_classId;
+};
+
+class GD43f601
+{
+public:
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+
+    static int s_classId;
+};
+
+int GD42ddd0::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *GD42ddd0::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
+int GD42e6e0::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *GD42e6e0::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
+int GD42f370::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *GD42f370::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
+int GD432870::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *GD432870::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
+int GD4331a0::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *GD4331a0::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
+int GD438ff0::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *GD438ff0::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
+int GD43b550::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *GD43b550::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
+int GD43b850::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *GD43b850::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
+int GD43bb40::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *GD43bb40::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
+int GD43cc30::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *GD43cc30::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
+int GD43ea30::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *GD43ea30::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
+int GD43f2f0::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *GD43f2f0::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
+int GD43f600::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *GD43f600::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
+int GD43f601::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *GD43f601::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
+int GD43fa60::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *GD43fa60::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
+int GD43fad0::GetParentClassId()
+{
+    return g_classParents[g_CMDBASEClassId];
+}
+
+const char *GD43fad0::GetClassName()
+{
+    return g_classNames[g_CMDBASEClassId];
 }
