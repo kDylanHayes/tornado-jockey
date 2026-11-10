@@ -1,6 +1,7 @@
 // Tongas2/SCENEMODELDX8SD -- the DX8 shadowed scene-model resources.
 //
 // Discovery scaffold: bodies are empty until the unit is matched.
+#include <vector>
 #include "Tongas2/SCENEMODELDX8SD.h"
 #include "Tongas2/RESOURCE.h"
 
@@ -30,6 +31,33 @@ void SCREENDECALMASTER::SetFileName(const CSTRING &name)
     if (name.Length() > 0)
         SetScreenName(name);
     m_fileName = name;
+}
+
+// One item of the object's list; its destructor is out of line at 0x5380a0.
+class GD507220ITEM
+{
+public:
+    ~GD507220ITEM();
+};
+
+// The object the display keeps at +0xb0: a list of items freed one by one.
+class GD507220OBJECT
+{
+public:
+    ~GD507220OBJECT() throw();
+
+    int m_0;
+    std::vector<GD507220ITEM *> m_4;
+};
+
+GD507220OBJECT::~GD507220OBJECT() throw()
+{
+    for (unsigned int i = 0; i < m_4.size(); i++) {
+        if (m_4[i]) {
+            delete m_4[i];
+            m_4[i] = 0;
+        }
+    }
 }
 
 // A resource master with two allocated names.
