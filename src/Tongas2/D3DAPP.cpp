@@ -55,3 +55,25 @@ GD507220::~GD507220()
         m_b0 = 0;
     }
 }
+
+// The display object game code reaches through g_pDisplay+0x44. Only the
+// resolution setter is in this block.
+class G2CORE4D3DAPP
+{
+public:
+    void SetResolution(int index);
+    // Rebuilds the swap chain for the stored mode (0x507df0).
+    void SetMode(int width, int height);
+
+    char pad_00[4];
+    int m_4;
+    char pad_08[0x1d0 - 0x08];
+    int m_1d0;
+    int m_1d4;
+};
+
+void G2CORE4D3DAPP::SetResolution(int index)
+{
+    m_4 = index;
+    SetMode(m_1d0, m_1d4);
+}

@@ -9429,3 +9429,6 @@
 0x00406dd0 _GD_TrimSpaces@4 function 0x61
 0x005e8c78 __ehhandler$??1GD4512e0MEMBER@@QAE@XZ function 0x8
 0x0044b610 ?FreeHeap@GD4512e0MEMBER@@QAEXXZ function 0x18
+0x0066230c _g_GD4512e0StopIID data 0x10
+0x005e8d58 __ehhandler$?Stop@GD4512e0MEMBER@@QAEXXZ function 0x8
+0x00507df0 ?SetMode@G2CORE4D3DAPP@@QAEXHH@Z function 0x24d

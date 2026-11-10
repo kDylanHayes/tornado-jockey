@@ -12,6 +12,7 @@ extern "C" {
 __declspec(dllimport) void __stdcall SysFreeString(unsigned short *bstr);
 __declspec(dllimport) HANDLE __stdcall GetProcessHeap(void);
 __declspec(dllimport) BOOL __stdcall HeapFree(HANDLE hHeap, DWORD dwFlags, void *lpMem);
+__declspec(dllimport) BOOL __stdcall DestroyAcceleratorTable(HANDLE hAccel);
 __declspec(dllimport) BOOL __stdcall IsWindow(HWND hWnd);
 __declspec(dllimport) BOOL __stdcall DestroyWindow(HWND hWnd);
 __declspec(dllimport) BOOL __stdcall PostThreadMessageA(DWORD idThread, UINT Msg,
@@ -647,9 +648,44 @@ __declspec(noinline) GD450e80::~GD450e80()
 class GD4512e0RELEASE
 {
 public:
-    virtual void __stdcall V0();
+    virtual void __stdcall V0(const void *iid, void **out);
     virtual void __stdcall V1();
     virtual void __stdcall Release();
+    virtual void __stdcall V3(int value);
+    virtual void __stdcall V4();
+    virtual void __stdcall V5();
+    virtual void __stdcall V6(int value);
+    virtual void __stdcall V7(int a, int b, int c);
+    virtual void __stdcall V8();
+    virtual void __stdcall V9();
+    virtual void __stdcall V10();
+    virtual void __stdcall V11();
+    virtual void __stdcall V12();
+    virtual void __stdcall V13();
+    virtual void __stdcall V14();
+    virtual void __stdcall V15();
+    virtual void __stdcall V16();
+    virtual void __stdcall V17();
+    virtual void __stdcall V18();
+    virtual void __stdcall V19();
+    virtual void __stdcall V20(int value);
+};
+
+void __stdcall GD452a90SetMedia(void *device, const void *format, int value);
+
+extern "C" const unsigned char g_GD4512e0StopIID[16] = {
+    0xa3, 0x01, 0x48, 0xfc, 0xa9, 0x2b, 0xcf, 0x11,
+    0xa2, 0x29, 0x00, 0xaa, 0x00, 0x3d, 0x73, 0x52
+};
+
+// A local interface pointer that releases itself when the block leaves.
+class GD4512e0PTR
+{
+public:
+    GD4512e0PTR() { m_p = 0; }
+    ~GD4512e0PTR() { if (m_p) m_p->Release(); }
+
+    GD4512e0RELEASE *m_p;
 };
 
 class GD4512e0MEMBER
@@ -680,7 +716,14 @@ public:
     GD4512e0RELEASE *m_74;
     GD4512e0RELEASE *m_78;
     GD4512e0RELEASE *m_7c;
-    char pad_80[0xd8 - 0x80];
+    char m_80[0x10];
+    int m_90;
+    int m_94;
+    int m_98;
+    int m_9c;
+    char pad_a0[0xc4 - 0xa0];
+    HANDLE m_c4;
+    char pad_c8[0xd8 - 0xc8];
     GD4512e0RELEASE *m_d8;
     GD4512e0RELEASE *m_dc;
     char pad_e0[0xe8 - 0xe0];
@@ -713,6 +756,73 @@ __declspec(noinline) GD4512e0MEMBER::~GD4512e0MEMBER()
     if (m_60) m_60->Release();
     if (m_54) m_54->Release();
     if (m_3c) m_3c->Release();
+}
+
+__declspec(noinline) void GD4512e0MEMBER::Stop()
+{
+    if (m_98 & 0x40)
+        return;
+    m_98 |= 0x40;
+
+    if (m_70)
+        m_70->V7(1, 0, 0);
+
+    if (m_94 != 0xcdcdcdcd) {
+        GD4512e0RELEASE *device = m_60;
+        GD452a90SetMedia(device, m_80, m_94);
+        m_94 = 0xcdcdcdcd;
+    }
+
+    if (m_64) {
+        m_64->V20(m_9c);
+        m_64->V6(1);
+        m_64->V3(0);
+    }
+
+    if (m_60) {
+        GD4512e0PTR ptr;
+        m_60->V0(g_GD4512e0StopIID, (void **)&ptr.m_p);
+        if (ptr.m_p)
+            ptr.m_p->V3(0);
+    }
+
+    GD4512e0RELEASE *release;
+    if (m_70) {
+        release = m_70;
+        m_70 = 0;
+        release->Release();
+    }
+    m_90 = 0;
+    if (m_74) {
+        release = m_74;
+        m_74 = 0;
+        release->Release();
+    }
+    if (m_64) {
+        release = m_64;
+        m_64 = 0;
+        release->Release();
+    }
+    if (m_60) {
+        release = m_60;
+        m_60 = 0;
+        release->Release();
+    }
+    if (m_6c) {
+        release = m_6c;
+        m_6c = 0;
+        release->Release();
+    }
+    if (m_68) {
+        release = m_68;
+        m_68 = 0;
+        release->Release();
+    }
+    m_98 &= ~0x5b;
+    if (m_c4) {
+        DestroyAcceleratorTable(m_c4);
+        m_c4 = 0;
+    }
 }
 
 class GD4512e0
@@ -822,7 +932,6 @@ struct GD452a90A4 : public GD452a90COM
 };
 
 extern const char g_GD452a90Format[];
-void __stdcall GD452a90SetMedia(void *device, const void *format, int value);
 
 class GD452a90
 {
