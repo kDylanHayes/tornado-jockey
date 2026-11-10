@@ -536,9 +536,29 @@ struct G2GC4REL
     void Release();
 };
 
-void G2GC4REL::Release()
+__declspec(noinline) void G2GC4REL::Release()
 {
     char *p = *(char **)this;
     if (p)
         (*(G2GC4RELEASEFN *)((char *)*(void **)p + 8))(p);
+}
+
+struct G2GC4JMPREL
+{
+    void Release();
+};
+
+void G2GC4JMPREL::Release()
+{
+    ((G2GC4REL *)this)->Release();
+}
+
+class APPOPTIONS
+{
+public:
+    virtual ~APPOPTIONS();
+};
+
+APPOPTIONS::~APPOPTIONS()
+{
 }

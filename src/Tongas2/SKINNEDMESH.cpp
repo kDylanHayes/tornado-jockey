@@ -71,3 +71,34 @@ void * G2SKMGET::Get4(int index)
     table += index;
     return *table;
 }
+
+struct G2SKMLIST
+{
+    void Add(void *item);
+};
+
+struct G2SKMADD
+{
+    void *Add(void *item);
+};
+
+void *G2SKMADD::Add(void *item)
+{
+    ((G2SKMLIST *)*(void **)((char *)this + 0x14))->Add(item);
+    return item;
+}
+
+struct G2SKMCLEAR
+{
+    void Clear();
+};
+
+struct G2SKMTHUNK
+{
+    void Clear();
+};
+
+void G2SKMTHUNK::Clear()
+{
+    ((G2SKMCLEAR *)*(void **)((char *)this + 0x14))->Clear();
+}
