@@ -3,6 +3,7 @@
 // Discovery scaffold: bodies are empty until the unit is matched; each
 // function has its exact target size in config/symbols.txt.
 #include "Tongas2/ODEGEOM.h"
+#include "Tongas2/MATHS.h"
 
 void ODEGEOMMASTER::RegisterCommands()
 {
@@ -52,4 +53,38 @@ extern "C" char DAT_0067c1dc;
 void *GetD0067c1dc()
 {
     return &DAT_0067c1dc;
+}
+
+extern int g_classParents[];
+extern char g_classNames[][30];
+
+class ODEGEOMCID
+{
+public:
+    virtual int GetClassId();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+    void Set6C(const V3 &value);
+
+    static int s_classId;
+};
+
+int ODEGEOMCID::GetClassId()
+{
+    return s_classId;
+}
+
+int ODEGEOMCID::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *ODEGEOMCID::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
+void ODEGEOMCID::Set6C(const V3 &value)
+{
+    *(V3 *)((char *)this + 0x6c) = value;
 }

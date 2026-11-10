@@ -27,3 +27,31 @@ void *GetD00679fdc()
 {
     return &DAT_00679fdc;
 }
+
+extern int g_classParents[];
+extern char g_classNames[][30];
+
+class VERTEXMODELDX8CID
+{
+public:
+    virtual int GetClassId();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+
+    static int s_classId;
+};
+
+int VERTEXMODELDX8CID::GetClassId()
+{
+    return s_classId;
+}
+
+int VERTEXMODELDX8CID::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *VERTEXMODELDX8CID::GetClassName()
+{
+    return g_classNames[s_classId];
+}

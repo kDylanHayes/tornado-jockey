@@ -82,3 +82,31 @@ void *GetD0067cda8()
 {
     return &DAT_0067cda8;
 }
+
+extern int g_classParents[];
+extern char g_classNames[][30];
+
+class ODERAGDOLLCID
+{
+public:
+    virtual int GetClassId();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+
+    static int s_classId;
+};
+
+int ODERAGDOLLCID::GetClassId()
+{
+    return s_classId;
+}
+
+int ODERAGDOLLCID::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *ODERAGDOLLCID::GetClassName()
+{
+    return g_classNames[s_classId];
+}

@@ -47,3 +47,43 @@ void *SMDPTR::Get0()
 {
     return (char *)this - 0x23c;
 }
+
+extern int g_classParents[];
+extern char g_classNames[][30];
+
+class SCENEMODELDX8CID
+{
+public:
+    virtual int GetClassId();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+    void Set65(const bool &value);
+    void Set6F(const bool &value);
+
+    static int s_classId;
+};
+
+int SCENEMODELDX8CID::GetClassId()
+{
+    return s_classId;
+}
+
+int SCENEMODELDX8CID::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *SCENEMODELDX8CID::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
+void SCENEMODELDX8CID::Set65(const bool &value)
+{
+    *(bool *)((char *)this + 0x65) = value;
+}
+
+void SCENEMODELDX8CID::Set6F(const bool &value)
+{
+    *(bool *)((char *)this + 0x6f) = value;
+}

@@ -57,3 +57,31 @@ void CSDSET::Set0(int value)
 {
     *(int *)((char *)this - 0x264) = value;
 }
+
+extern int g_classParents[];
+extern char g_classNames[][30];
+
+class COLLISIONSCENEDX8CID
+{
+public:
+    virtual int GetClassId();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+
+    static int s_classId;
+};
+
+int COLLISIONSCENEDX8CID::GetClassId()
+{
+    return s_classId;
+}
+
+int COLLISIONSCENEDX8CID::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *COLLISIONSCENEDX8CID::GetClassName()
+{
+    return g_classNames[s_classId];
+}
