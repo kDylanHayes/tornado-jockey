@@ -70,7 +70,7 @@ public:
     virtual ~V554E60();
 };
 
-V554E60::~V554E60()
+__declspec(noinline) V554E60::~V554E60()
 {
 }
 
