@@ -270,14 +270,10 @@ void SIMPLEMODELDX8RESOURCE::AddMeshPart()
     } else {
         mesh->SetVertices((DECALVERTEX *)&DAT_006c37a8, 0x2a, (const short *)&DAT_006c2740, 0x50);
     }
-    SetActive(true);
+    mesh->SetActive(true);
     m_lastLayer = -1;
-    m_lastPosition.x = -1.0f;
-    m_lastPosition.y = -1.0f;
-    m_lastPosition.z = -1.0f;
-    m_lastScale.x = -1.0f;
-    m_lastScale.y = -1.0f;
-    m_lastScale.z = -1.0f;
+    m_lastPosition.Set(-1.0f, -1.0f, -1.0f);
+    m_lastScale.Set(-1.0f, -1.0f, -1.0f);
     m_134 = ANG(-1.0f, -1.0f, -1.0f);
     m_mesh = mesh->m_handle;
     return;
