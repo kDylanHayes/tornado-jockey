@@ -2634,3 +2634,16 @@ void G2CORE2M2::SetF78(const V2 &value)
 {
     *(V2 *)((char *)this + 0xf78) = value;
 }
+
+struct G2CORE2M3
+{
+    virtual SRESULT SomeCommand(int value);
+    void Check10();
+};
+
+SRESULT G2CORE2M3::SomeCommand(int value)
+{
+    int unused = 0;
+    Check10();
+    return SRESULT(true);
+}

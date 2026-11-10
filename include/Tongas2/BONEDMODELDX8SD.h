@@ -146,6 +146,7 @@ public:
     virtual void Virtual104();
     virtual void Virtual105();
     virtual SRESULT LoadExtraAnimation(CMDCALL *call);
+    virtual SRESULT SomeCommand(int value);
 
     static int s_classId;
     static CMDENTRY s_commands[];

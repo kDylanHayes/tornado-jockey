@@ -1200,3 +1200,10 @@ void BMDSET::Set0(int value)
 {
     *(int *)((char *)this - 0x274) = value;
 }
+
+SRESULT BONEDMODELDX8SDRESOURCE::SomeCommand(int value)
+{
+    int unused = 0;
+    DestroyAnimations();
+    return SRESULT(true);
+}

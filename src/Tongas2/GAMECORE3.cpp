@@ -511,7 +511,9 @@ public:
 
     virtual void SetPreviewForest(const bool &preview);
     virtual void SetClearForest(const bool &clear);
+    virtual SRESULT SomeCommand(int value);
 
+    void CreateMaxPowerup();
     void CreateTree(int index);
     void RemoveTree(int index);
     void Clear();
@@ -1833,4 +1835,11 @@ void G2CORE3M2::SetD8(const V2 &value)
 void G2CORE3M2::Set12C(const V2 &value)
 {
     *(V2 *)((char *)this + 0x12c) = value;
+}
+
+SRESULT G2FORESTOBJ::SomeCommand(int value)
+{
+    int unused = 0;
+    CreateMaxPowerup();
+    return SRESULT(true);
 }

@@ -799,6 +799,9 @@ public:
     virtual void SetE64(const int &index, const void *src);
     virtual void Set1664(const int &index, const void *src);
 
+    virtual SRESULT SomeCommand(int value);
+    void UpdateState();
+
     static int s_classId;
 };
 
@@ -937,6 +940,13 @@ void G2CORE1K2::Set1664(const int &index, const void *src)
     memcpy((char *)this + 0x1664 + index * 0x400, src, 0x400);
 }
 
+SRESULT G2CORE1K2::SomeCommand(int value)
+{
+    int unused = 0;
+    UpdateState();
+    return SRESULT(true);
+}
+
 struct G2CORE1R1
 {
     int m_0;
@@ -959,6 +969,9 @@ public:
     virtual const char *GetClassName();
 
     virtual void Set41C(const int &index, const void *src);
+
+    virtual SRESULT OtherCommand(int value);
+    bool CheckReady();
 
     static int s_classId;
 };
@@ -987,6 +1000,13 @@ const char *G2CORE1K3::GetClassName()
 void G2CORE1K3::Set41C(const int &index, const void *src)
 {
     memcpy((char *)this + 0x41c + index * 0x400, src, 0x400);
+}
+
+SRESULT G2CORE1K3::OtherCommand(int value)
+{
+    bool ok = false;
+    ok = CheckReady();
+    return SRESULT(ok);
 }
 
 class G2CORE1K4 : public ACTOR
@@ -4616,4 +4636,26 @@ void G2CORE1M2::Set2600(const V2 &value)
 void G2CORE1M2::Set2C48(const V2 &value)
 {
     *(V2 *)((char *)this + 0x2c48) = value;
+}
+
+struct G2CORE1M3
+{
+    virtual SRESULT SomeCommand(int value);
+    virtual SRESULT OtherCommand(int value);
+    bool Check10();
+    void Check11();
+};
+
+SRESULT G2CORE1M3::SomeCommand(int value)
+{
+    bool ok = false;
+    ok = Check10();
+    return SRESULT(ok);
+}
+
+SRESULT G2CORE1M3::OtherCommand(int value)
+{
+    int unused = 0;
+    Check11();
+    return SRESULT(true);
 }
