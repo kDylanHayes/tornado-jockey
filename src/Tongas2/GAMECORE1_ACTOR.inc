@@ -416,7 +416,8 @@ float V3::Length() const
 
 bool operator==(const RGB &a, const RGB &b)
 {
-    return a.r == b.r && a.g == b.g && a.b == b.b;
+    bool equal = a.r == b.r && a.g == b.g && a.b == b.b;
+    return equal;
 }
 
 float ANG::GetEulerX()

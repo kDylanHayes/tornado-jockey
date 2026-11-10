@@ -1154,7 +1154,8 @@ bool G2CORE1K2::CanAdvanceState()
         return false;
     if (*(int *)((char *)this + 0x1e88) - 1)
         return true;
-    return false;
+    else
+        return false;
 }
 
 void G2CORE1K2::SetE64(const int &index, const void *src)
