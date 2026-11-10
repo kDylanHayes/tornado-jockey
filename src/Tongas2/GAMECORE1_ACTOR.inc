@@ -317,7 +317,7 @@ float V3::DistanceXZ(const V3 &o) const
     return (float)sqrt(dx * dx + dz * dz);
 }
 
-void ANG::UpdateMatrix()
+__declspec(noinline) void ANG::UpdateMatrix()
 {
     matrix.FromEuler(euler.z, euler.y, euler.x);
     flags &= ~MATRIX_DIRTY;

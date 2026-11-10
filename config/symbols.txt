@@ -111,7 +111,7 @@
 0x004093a0 ?SetOnActivate@ACTOR@@UAEXABVCSTRING@@@Z function
 0x004093b0 ?GetDirection@ACTOR@@UAE?AUV3@@XZ function
 0x00409400 ?GetUp@ACTOR@@UAE?AUV3@@XZ function
-0x00409450 ?Virtual96@ACTOR@@UAEXXZ function
+0x00409450 ?Method@GD409450@@QAE?AUV3@@XZ function 0x2a
 0x00409720 ??_9@$BCDM@AE function
 0x00409730 ??_9@$BCEA@AE function
 0x00409740 ??_9@$BCEE@AE function
@@ -9533,3 +9533,4 @@
 0x005285c0 ??0GD5285c0@@QAE@XZ function 0xf
 0x005285d0 ?Unlink@GD5285f0@@QAEXXZ function 0x7
 0x005285e0 ?V06@GD5285f0@@QAEXXZ function 0x7
+0x00409480 ?Get@GD409450OBJ@@QAE?AUV3@@XZ function 0x20

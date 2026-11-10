@@ -5856,6 +5856,40 @@ void G2CORE1M13::DisableBonedModel(RESOURCE *resource)
     }
 }
 
+// The object whose two V3s are added for the caller (0x409480).
+struct GD409450OBJ
+{
+    V3 m_0;
+    char pad_c[0x30 - 0xc];
+    V3 m_30;
+
+    V3 Get();
+};
+
+
+
+// The scene helper at 0x409450: updates the angle matrix when the flag is set
+// and asks the object at +0x40 for its position.
+class GD409450
+{
+public:
+    V3 Method();
+};
+
+V3 GD409450::Method()
+{
+    ANG *angles = (ANG *)((char *)this + 0x34);
+    if (*(unsigned char *)((char *)this + 0x80) & 1)
+        angles->UpdateMatrix();
+    return ((GD409450OBJ *)((char *)angles + 0xc))->Get();
+}
+
+// Defined after Method so the call is treated as an unknown body.
+__declspec(noinline) V3 GD409450OBJ::Get()
+{
+    return V3(m_0.x + m_30.x, m_0.y + m_30.y, m_0.z + m_30.z);
+}
+
 // Trims the surrounding spaces of a wide string and lowercases it (0x406dd0).
 extern "C" void __stdcall GD_TrimSpaces(unsigned short *text)
 {
