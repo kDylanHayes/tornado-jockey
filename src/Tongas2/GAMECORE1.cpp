@@ -652,10 +652,33 @@ class G2CORE1J1 : public ACTOR
 {
 public:
     virtual ~G2CORE1J1();
+
+    virtual int GetClassId();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+
+    static int s_classId;
 };
+
+int G2CORE1J1::s_classId = -1;
 
 G2CORE1J1::~G2CORE1J1()
 {
+}
+
+int G2CORE1J1::GetClassId()
+{
+    return s_classId;
+}
+
+int G2CORE1J1::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *G2CORE1J1::GetClassName()
+{
+    return g_classNames[s_classId];
 }
 
 class G2CORE1J2 : public ACTOR
@@ -672,10 +695,33 @@ class G2CORE1J3 : public ACTOR
 {
 public:
     virtual ~G2CORE1J3();
+
+    virtual int GetClassId();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+
+    static int s_classId;
 };
+
+int G2CORE1J3::s_classId = -1;
 
 G2CORE1J3::~G2CORE1J3()
 {
+}
+
+int G2CORE1J3::GetClassId()
+{
+    return s_classId;
+}
+
+int G2CORE1J3::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *G2CORE1J3::GetClassName()
+{
+    return g_classNames[s_classId];
 }
 
 class G2CORE1K1 : public ACTOR
@@ -863,10 +909,33 @@ class G2CORE1K3 : public ACTOR
 {
 public:
     virtual ~G2CORE1K3();
+
+    virtual int GetClassId();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+
+    static int s_classId;
 };
+
+int G2CORE1K3::s_classId = -1;
 
 G2CORE1K3::~G2CORE1K3()
 {
+}
+
+int G2CORE1K3::GetClassId()
+{
+    return s_classId;
+}
+
+int G2CORE1K3::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *G2CORE1K3::GetClassName()
+{
+    return g_classNames[s_classId];
 }
 
 class G2CORE1K4 : public ACTOR
