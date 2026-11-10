@@ -2219,6 +2219,20 @@ public:
     static int s_classId;
 };
 
+// The non-polymorphic holder the 0x43f600 destructor belongs to.
+class GD43f600X
+{
+public:
+    ~GD43f600X();
+
+    RESOURCEMASTER m_master;
+    CSTRING m_60;
+};
+
+__declspec(noinline) GD43f600X::~GD43f600X()
+{
+}
+
 class GD43f601
 {
 public:
