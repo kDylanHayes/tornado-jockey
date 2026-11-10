@@ -53,7 +53,12 @@ public:
     { m_groupMask = mask; }
 #endif
     virtual void SetMinCopies(const int &count);
-    virtual void SetDescription(const int &description) {}
+    virtual void SetDescription(const int &description)
+#ifdef RM_SETDESCRIPTION_OUTOFLINE
+        ;
+#else
+    {}
+#endif
     virtual void SetPreview(const int &preview) {}
     // Calls Update on the active copies.
     virtual void UpdateCopies();

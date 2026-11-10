@@ -9231,3 +9231,5 @@
 0x005f8f2b __ehhandler$?CreateG2ODEACTOR@@YAPAVACTOR@@XZ function 0xa
 0x006cb250 ?g_pCameraOptionTemplates@@3PAVRESOURCEMANAGER@@A data 0x4
 0x004f2370 ??0MESHDX8SDT3@@QAE@XZ function 0x21
+0x004f23e0 ?SetLayer@MESHDX8SDSETTERX@@UAEXABH@Z function 0x1f
+0x004eb9b0 ?SetLayer@HMTEMPX@@QAEXABH@Z function 0x6a

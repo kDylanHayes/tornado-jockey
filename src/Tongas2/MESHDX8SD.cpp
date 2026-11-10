@@ -1,3 +1,4 @@
+#define RM_SETDESCRIPTION_OUTOFLINE
 #include "Tongas2/MESHDX8SD.h"
 #include "Tongas2/RENDERER.h"
 #include "Tongas2/TIMER.h"
@@ -512,4 +513,22 @@ MESHDX8SDT3::MESHDX8SDT3()
     *(int *)((char *)this) = 0;
     *(int *)((char *)this + 0x10) = -1;
     *(float *)((char *)this + 0xc) = 1.0f;
+}
+
+class HMTEMPX
+{
+public:
+    void SetLayer(const int &layer);
+};
+
+class MESHDX8SDSETTERX : public RESOURCEMASTER
+{
+public:
+    virtual void SetLayer(const int &layer);
+};
+
+void MESHDX8SDSETTERX::SetLayer(const int &layer)
+{
+    RESOURCEMASTER::SetDescription(layer);
+    ((HMTEMPX *)((char *)this + 0x418))->SetLayer(layer);
 }
