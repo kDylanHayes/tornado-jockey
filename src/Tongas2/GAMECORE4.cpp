@@ -539,14 +539,41 @@ __declspec(noinline) GD450e80::~GD450e80()
 {
 }
 
+// The engine object the dtor talks to at 0x6cb318; only its third virtual
+// matters here.
+class GD4512e0GLOBAL
+{
+public:
+    virtual void V0();
+    virtual void V1();
+    virtual void V2();
+};
+
+extern GD4512e0GLOBAL *g_pGD4512e0Global;
+
+// The 0x44f840/0x44bb50 member at +8: Stop runs first, the destructor is the
+// compiler's own call.
+class GD4512e0MEMBER
+{
+public:
+    ~GD4512e0MEMBER();
+    void Stop();
+};
+
 class GD4512e0
 {
 public:
     virtual ~GD4512e0();
+
+    int m_4;
+    GD4512e0MEMBER m_8;
 };
 
-__declspec(noinline) GD4512e0::~GD4512e0()
+GD4512e0::~GD4512e0()
 {
+    m_4 = 0xc0000001;
+    m_8.Stop();
+    g_pGD4512e0Global->V2();
 }
 
 class GD4516f0
