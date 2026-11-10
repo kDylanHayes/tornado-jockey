@@ -495,3 +495,22 @@ void G2GC4SET::SetF0(int value)
 {
     *(int *)((char *)this + 0xf0) = value;
 }
+
+extern "C" void (__stdcall *g_fn656294)(void *);
+extern "C" void (__stdcall *g_fn656284)(void *);
+
+struct G2GC4CALL
+{
+    void CallA();
+    void CallB();
+};
+
+void G2GC4CALL::CallA()
+{
+    g_fn656294(*(void **)this);
+}
+
+void G2GC4CALL::CallB()
+{
+    g_fn656284(this);
+}

@@ -49,3 +49,15 @@ void G2TL3SET::Set4c(int value)
 {
     *(int *)((char *)this + 0x4c) = value;
 }
+
+extern "C" void (__stdcall *g_fn6561b4)(void *);
+
+struct G2TL3CALL
+{
+    void Call();
+};
+
+void G2TL3CALL::Call()
+{
+    g_fn6561b4((char *)this + 4);
+}
