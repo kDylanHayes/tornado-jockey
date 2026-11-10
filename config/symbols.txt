@@ -8697,3 +8697,5 @@
 0x006ae8a4 ?s_factoryId@G2RULESOBJBASE@@2HA data 0x4
 0x006ae8a8 ?s_factoryId@G2CHAIN@@2HA data 0x4
 0x006ae8ac ?s_factoryId@G2RULESOBJ@@2HA data 0x4
+0x00426270 ?SetD3C@G2EFFECT@@UAEXUV3@@@Z function 0x24
+0x004262a0 ?SetD48@G2EFFECT@@UAEXUV3@@0_N@Z function 0x48

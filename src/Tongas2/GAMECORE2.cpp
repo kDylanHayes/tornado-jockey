@@ -365,11 +365,34 @@ public:
     virtual ~G2EFFECT();
     virtual int GetFactoryId();
 
+    virtual void SetD3C(V3 position);
+    virtual void SetD48(V3 position, V3 other, bool flag);
+
     static int s_factoryId;
 
-    char m_0000[0xd8c - 0xccc];
+    char m_0000[0xd38 - 0xccc];
+    bool m_d38;
+    char m_d39[0xd3c - 0xd39];
+    V3 m_d3c;
+    V3 m_d48;
+    bool m_d54;
+    char m_d55[0xd8c - 0xd55];
     RESHANDLE m_d8c;
 };
+
+void G2EFFECT::SetD3C(V3 position)
+{
+    m_d38 = true;
+    m_d3c = position;
+}
+
+void G2EFFECT::SetD48(V3 position, V3 other, bool flag)
+{
+    m_d48 = position;
+    m_d3c = other;
+    m_d38 = true;
+    m_d54 = flag;
+}
 
 G2EFFECT::~G2EFFECT()
 {
