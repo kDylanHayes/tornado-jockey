@@ -14,11 +14,27 @@ void DYNAMICARRAY::Insert(void *item)
 class GD548fc0
 {
 public:
-    virtual ~GD548fc0();
+    virtual ~GD548fc0() throw();
+
+    char *m_4;
+    char *m_8;
+    char *m_c;
 };
 
-__declspec(noinline) GD548fc0::~GD548fc0()
+__declspec(noinline) GD548fc0::~GD548fc0() throw()
 {
+    if (m_c) {
+        delete[] m_c;
+        m_c = 0;
+    }
+    if (m_8) {
+        delete[] m_8;
+        m_8 = 0;
+    }
+    if (m_4) {
+        delete[] m_4;
+        m_4 = 0;
+    }
 }
 
 extern "C" void dCloseODE();
@@ -159,14 +175,34 @@ SRESULT ODEGEOMRESOURCEMASTERX::Execute(CMDENTRY *command, TOKENS **args)
     return (this->*(SRESULT (ODEGEOMRESOURCEMASTERX::*)(TOKENS **))command->func)(args);
 }
 
-class GD549b40
+extern "C" void dGeomDestroy(void *geom);
+extern "C" void dGeomTriMeshDataDestroy(void *data);
+
+class GD549b40 : public OBJECT
 {
 public:
-    virtual ~GD549b40();
+    virtual ~GD549b40() throw();
+
+    void Cleanup();
+
+    char pad_400[0x28];
+    void *m_428;
+    void *m_42c;
+    char pad_430[4];
+    void *m_434;
+    void *m_438;
+    char pad_43c[0x14];
+    GD548fc0 m_holder;
 };
 
-__declspec(noinline) GD549b40::~GD549b40()
+__declspec(noinline) GD549b40::~GD549b40() throw()
 {
+    if (m_42c)
+        dGeomDestroy(m_42c);
+    Cleanup();
+    dGeomDestroy(m_428);
+    if (m_438)
+        dGeomTriMeshDataDestroy(m_438);
 }
 
 extern "C" char DAT_0067c1dc;
