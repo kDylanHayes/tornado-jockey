@@ -158,3 +158,7 @@
 0x5854d5-0x5854f9   lib/zlib/inffast            _inflate_fast                                           code  scan
 0x582db1-0x582dc2   lib/zlib/inflate            _updatewindow                                           code  scan
 0x567f1c-0x567f2b   lib/libpng/pngset            _png_set_oFFs                                          code  scan
+#
+# Found by the near-match pass (dCollideTTL is 99.83%; the patched run
+# overwrites the fstp store's offset byte and the 17-byte loop tail):
+0x5a036d-0x5a037e   lib/ode/collision_trimesh_trimesh ?dCollideTTL@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z  code  observed
