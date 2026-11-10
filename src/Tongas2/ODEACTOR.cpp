@@ -137,7 +137,7 @@ struct G2ODEADJTGT
     void Call(void *arg);
 };
 
-void G2ODEADJ::Call(void *arg)
+__declspec(noinline) void G2ODEADJ::Call(void *arg)
 {
     ((G2ODEADJTGT *)((char *)this + 4))->Call((char *)arg + 8);
 }
@@ -162,6 +162,7 @@ class G2ODEACTOR : public ACTOR
 public:
     // Out of line at 0x0054aff0.
     G2ODEACTOR();
+    virtual ~G2ODEACTOR();
 
     virtual int GetClassId();
     virtual int GetParentClassId();
@@ -662,4 +663,18 @@ public:
 V3 BONEDMODELRESOURCE::Virtual82(int value)
 {
     return V3(0.0f, 0.0f, 0.0f);
+}
+
+extern "C" void dBodyDestroy(void *body);
+
+__declspec(noinline) G2ODEACTOR::~G2ODEACTOR()
+{
+    if (m_body)
+        dBodyDestroy(m_body);
+    ((G2ODEADJ *)g_pOdeWorldX)->Call(this);
+}
+
+void DeleteG2ODEACTOR(G2ODEACTOR *actor)
+{
+    delete actor;
 }
