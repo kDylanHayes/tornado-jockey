@@ -208,3 +208,14 @@ ODEWORLDRESET::ODEWORLDRESET()
     m_c = -1;
     m_10 = -1;
 }
+
+struct G2CORE2M7
+{
+    void SetD18(const float &value);
+};
+
+void G2CORE2M7::SetD18(const float &value)
+{
+    *(float *)((char *)this + 0xd18) = value;
+    *(bool *)((char *)this + 0xd14) = false;
+}

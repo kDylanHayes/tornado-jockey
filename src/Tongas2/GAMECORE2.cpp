@@ -3418,3 +3418,25 @@ void G2CORE2M6::Set2A40(const FIXED204 &value)
     memcpy(dst->m_buf, value.m_buf, 0x200);
     dst->m_200 = value.m_200;
 }
+
+struct G2CORE2M7
+{
+    void Update(float dt);
+    void Set(const float &value);
+    void SetD18(const float &value);
+};
+
+void G2CORE2M7::Update(float dt)
+{
+    if (*(int *)((char *)this + 0xd88) == 1 &&
+        !(*(float *)((char *)this + 0xfbc) >= 6.0f))
+        g_pRenderer->ApplyFog();
+}
+
+void G2CORE2M7::Set(const float &value)
+{
+    float v = value * 0.01f;
+    if (v < 1.0f)
+        v = 1.0f;
+    SetD18(v);
+}
