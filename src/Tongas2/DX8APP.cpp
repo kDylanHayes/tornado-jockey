@@ -66,3 +66,13 @@ void G2DX8TH2::Call()
 {
     ((G2DX8T2 *)*(void **)((char *)this + 0x4c))->Call();
 }
+
+struct DX8APPM1
+{
+    float Get258();
+};
+
+float DX8APPM1::Get258()
+{
+    return *(float *)((char *)this + 0x258);
+}

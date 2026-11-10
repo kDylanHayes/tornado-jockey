@@ -3,6 +3,9 @@
 // Discovery scaffold: bodies are empty until the unit is matched.
 #include "Tongas2/ODEWORLD.h"
 
+#include "Tongas2/ACTOR.h"
+#include "Tongas2/CMDBASE.h"
+
 void ODEWORLDMASTER::RegisterCommands()
 {
 }
@@ -11,7 +14,46 @@ class GD548620
 {
 public:
     virtual ~GD548620();
+    virtual int GetClassId();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+
+    static int s_classId;
 };
+
+int GD548620::GetClassId()
+{
+    return s_classId;
+}
+
+int GD548620::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *GD548620::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
+class ODEWORLDR
+{
+public:
+    virtual int GetClassId();
+    virtual int GetFactoryFlags();
+
+    static int s_classId;
+};
+
+int ODEWORLDR::GetClassId()
+{
+    return s_classId;
+}
+
+int ODEWORLDR::GetFactoryFlags()
+{
+    return g_factoryFlags[s_classId];
+}
 
 __declspec(noinline) GD548620::~GD548620()
 {

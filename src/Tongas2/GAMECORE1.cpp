@@ -4144,6 +4144,11 @@ const char *SCENE::GetClassName()
 
 struct G2CORE1M1
 {
+    float GetDD8();
+    float GetDDC();
+    float GetDE0();
+    float GetDE4();
+
     void Set841C(const int &value);
     void Set8420(const int &value);
     void SetCCC(const bool &value);
@@ -4450,4 +4455,24 @@ void G2CORE1M1::Set2C50(const int &value)
 void G2CORE1M1::Set2C54(const int &value)
 {
     *(int *)((char *)this + 0x2c54) = value;
+}
+
+float G2CORE1M1::GetDD8()
+{
+    return *(float *)((char *)this + 0xdd8);
+}
+
+float G2CORE1M1::GetDDC()
+{
+    return *(float *)((char *)this + 0xddc);
+}
+
+float G2CORE1M1::GetDE0()
+{
+    return *(float *)((char *)this + 0xde0);
+}
+
+float G2CORE1M1::GetDE4()
+{
+    return *(float *)((char *)this + 0xde4);
 }
