@@ -5274,9 +5274,15 @@ void G2CORE1M12::Start()
 struct G2CORE1SW2
 {
     CSTRING &SetDD8(const CSTRING &value);
+    STRING &SetF10(const STRING &value);
 };
 
 CSTRING &G2CORE1SW2::SetDD8(const CSTRING &value)
 {
     return *(CSTRING *)((char *)this + 0xdd8) = value;
+}
+
+STRING &G2CORE1SW2::SetF10(const STRING &value)
+{
+    return *(STRING *)((char *)this + 0xf10) = value;
 }

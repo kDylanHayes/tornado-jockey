@@ -28,6 +28,15 @@
 #include "Tongas2/GUIGROUP.h"
 #include "Tongas2/INPUT.h"
 #include "Tongas2/RESOURCES.h"
+
+extern RESOURCEMANAGER *g_pEMITTER;
+
+class EMITTER
+{
+public:
+    void StartEmitting();
+    void StopEmitting();
+};
 #include "Tongas2/CAMERA.h"
 #include "Tongas2/SCENE.h"
 #include "Tongas2/SRESULT.h"
@@ -472,6 +481,9 @@ public:
     void SetFlag9(const bool &value);
     void SetColor(const V3I &value);
     void SetOpacity(const float &value);
+
+    virtual void Start();
+    virtual void Stop();
 
     int m_ccc;
     bool m_cd0;
@@ -3552,4 +3564,38 @@ struct G2CORE2SW
 CSTRING &G2CORE2SW::Set113C(const CSTRING &value)
 {
     return *(CSTRING *)((char *)this + 0x113c) = value;
+}
+
+void G2D5::Start()
+{
+    RESHANDLE *handles = (RESHANDLE *)((char *)this + 0xb58);
+    for (int i = 16; i != 0; i--) {
+        RESOURCE *resource = g_pResources->GetResource(*handles);
+        if (resource) {
+            int managerId = g_pEMITTER->m_id;
+            if (resource->GetManagerId() == managerId) {
+                if (!*(bool *)((char *)this + 0x1370))
+                    ((EMITTER *)resource)->StartEmitting();
+                *(int *)((char *)resource + 0x410) =
+                    *(int *)((char *)this + 0xce4);
+            }
+        }
+        handles++;
+    }
+    *(bool *)((char *)this + 0x1370) = true;
+}
+
+void G2D5::Stop()
+{
+    RESHANDLE *handles = (RESHANDLE *)((char *)this + 0xb58);
+    for (int i = 16; i != 0; i--) {
+        RESOURCE *resource = g_pResources->GetResource(*handles);
+        if (resource) {
+            int managerId = g_pEMITTER->m_id;
+            if (resource->GetManagerId() == managerId)
+                ((EMITTER *)resource)->StopEmitting();
+        }
+        handles++;
+    }
+    *(bool *)((char *)this + 0x1370) = false;
 }
