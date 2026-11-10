@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdexcept>
 
 #include "Tongas2/MATHS.h"
 
@@ -200,4 +201,14 @@ public:
 bool TAIL1X::HasC()
 {
     return *(int *)((char *)this + 0xc) != 0;
+}
+
+class TAIL1ERR : public std::logic_error
+{
+public:
+    TAIL1ERR(const TAIL1ERR &other);
+};
+
+TAIL1ERR::TAIL1ERR(const TAIL1ERR &other) : std::logic_error(other)
+{
 }

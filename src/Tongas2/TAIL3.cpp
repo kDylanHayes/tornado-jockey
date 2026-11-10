@@ -6,9 +6,28 @@ class V5547C0
 {
 public:
     virtual ~V5547C0();
+    V5547C0(const V5547C0 &other);
+
+    int m_4;
 };
 
 V5547C0::~V5547C0()
+{
+}
+
+V5547C0::V5547C0(const V5547C0 &other)
+{
+    m_4 = other.m_4;
+}
+
+class V5547C4 : public V5547C0
+{
+public:
+    virtual ~V5547C4();
+    V5547C4(const V5547C4 &other);
+};
+
+V5547C4::V5547C4(const V5547C4 &other) : V5547C0(other)
 {
 }
 
