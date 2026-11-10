@@ -1190,3 +1190,13 @@ void *BMDPTR::Get0()
 {
     return (char *)this - 0x24c;
 }
+
+struct BMDSET
+{
+    void Set0(int value);
+};
+
+void BMDSET::Set0(int value)
+{
+    *(int *)((char *)this - 0x274) = value;
+}

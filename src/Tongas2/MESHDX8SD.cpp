@@ -486,3 +486,13 @@ int MD8GET::Get0(void)
 {
     return *(int *)((char *)this - 0x27c);
 }
+
+struct MD8SET
+{
+    void Set0(int value);
+};
+
+void MD8SET::Set0(int value)
+{
+    *(int *)((char *)this - 0x27c) = value;
+}

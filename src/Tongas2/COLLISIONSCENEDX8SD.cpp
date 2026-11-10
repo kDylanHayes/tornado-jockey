@@ -47,3 +47,13 @@ int CSDGET::Get0(void)
 {
     return *(int *)((char *)this - 0x264);
 }
+
+struct CSDSET
+{
+    void Set0(int value);
+};
+
+void CSDSET::Set0(int value)
+{
+    *(int *)((char *)this - 0x264) = value;
+}

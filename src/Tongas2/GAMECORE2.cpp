@@ -2123,3 +2123,25 @@ int GC2GET::Get1(void)
 {
     return *(int *)((char *)this + 0x1b8c);
 }
+
+struct GC2SET
+{
+    void Set0(int value);
+    void Set1(int value);
+    void Set2(int value);
+};
+
+void GC2SET::Set0(int value)
+{
+    *(int *)((char *)this + 0xfbc) = value;
+}
+
+void GC2SET::Set1(int value)
+{
+    *(int *)((char *)this + 0xfc0) = value;
+}
+
+void GC2SET::Set2(int value)
+{
+    *(int *)((char *)this + 0xf4c) = value;
+}

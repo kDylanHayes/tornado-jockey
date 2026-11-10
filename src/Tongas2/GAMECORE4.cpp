@@ -737,3 +737,13 @@ void G4SET::Set0()
 {
     *(bool *)((char *)this + 0x242) = true;
 }
+
+struct GC4SET
+{
+    void Set0(int value);
+};
+
+void GC4SET::Set0(int value)
+{
+    *(int *)((char *)this + 0x410) = value;
+}
