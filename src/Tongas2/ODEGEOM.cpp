@@ -119,6 +119,7 @@ class ODEGEOMRESOURCEMASTERX : public RESOURCEMASTER
 {
 public:
     ODEGEOMRESOURCEMASTERX(RESOURCEMANAGER *manager, const char *name);
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
 
     int m_60;
     int m_64;
@@ -151,6 +152,11 @@ ODEGEOMRESOURCEMASTERX::ODEGEOMRESOURCEMASTERX(RESOURCEMANAGER *manager, const c
 RESOURCEMASTER *GD548f90::CreateMaster(const char *name)
 {
     return new ODEGEOMRESOURCEMASTERX(this, name);
+}
+
+SRESULT ODEGEOMRESOURCEMASTERX::Execute(CMDENTRY *command, TOKENS **args)
+{
+    return (this->*(SRESULT (ODEGEOMRESOURCEMASTERX::*)(TOKENS **))command->func)(args);
 }
 
 class GD549b40
