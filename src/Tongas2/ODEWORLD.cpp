@@ -319,11 +319,17 @@ void ODEWORLDM2::SetD00(const V3 &value)
 class ODEGEOMRESOURCE : public CPRIMITIVE3RESOURCE
 {
 public:
+    virtual ~ODEGEOMRESOURCE();
+
     void RemoveGeom();
     virtual void SetOffsetV(V3 offset);
     virtual void SetScaleFactorV(V3 scale);
     virtual void SetRelAngles(ANG angles);
 };
+
+ODEGEOMRESOURCE::~ODEGEOMRESOURCE()
+{
+}
 
 void ODEGEOMRESOURCE::RemoveGeom()
 {
