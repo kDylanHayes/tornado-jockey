@@ -175,8 +175,11 @@ SRESULT ODEGEOMRESOURCEMASTERX::Execute(CMDENTRY *command, TOKENS **args)
     return (this->*(SRESULT (ODEGEOMRESOURCEMASTERX::*)(TOKENS **))command->func)(args);
 }
 
+
 extern "C" void dGeomDestroy(void *geom);
 extern "C" void dGeomTriMeshDataDestroy(void *data);
+extern "C" void dGeomTriMeshClearTCCache(void *geom);
+extern "C" void dGeomTriMeshSetData(void *geom, void *data);
 
 class GD549b40 : public OBJECT
 {
@@ -191,7 +194,10 @@ public:
     char pad_430[4];
     void *m_434;
     void *m_438;
-    char pad_43c[0x14];
+    void *m_43c;
+    char pad_440[4];
+    void *m_444;
+    char pad_448[8];
     GD548fc0 m_holder;
 };
 
@@ -204,6 +210,29 @@ __declspec(noinline) GD549b40::~GD549b40() throw()
     if (m_438)
         dGeomTriMeshDataDestroy(m_438);
 }
+
+void GD549b40::Cleanup()
+{
+    if (!m_master)
+        return;
+    if (((ODEGEOMRESOURCEMASTERX *)m_master)->m_60 != 5)
+        return;
+    if (m_434 && m_434 != m_438) {
+        dGeomTriMeshClearTCCache(m_428);
+        dGeomTriMeshSetData(m_428, m_438);
+        dGeomTriMeshDataDestroy(m_434);
+        m_434 = 0;
+    }
+    if (m_444) {
+        delete[] (char *)m_444;
+        m_444 = 0;
+    }
+    if (m_43c) {
+        delete[] (char *)m_43c;
+        m_43c = 0;
+    }
+}
+
 
 extern "C" char DAT_0067c1dc;
 void *GetD0067c1dc()
