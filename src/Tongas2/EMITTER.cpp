@@ -1243,3 +1243,7 @@ void EMITTER::Update()
             StopEmitting();
     }
 }
+
+struct EMITTERSW
+{
+};

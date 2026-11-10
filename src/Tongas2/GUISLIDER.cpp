@@ -72,3 +72,7 @@ const char *GUISLIDERMASTER::GetClassName()
 {
     return g_classNames[s_classId];
 }
+
+struct GUISLIDERSW
+{
+};

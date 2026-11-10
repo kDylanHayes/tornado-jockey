@@ -2284,3 +2284,91 @@ int GD43fa60::GetClassId()
 {
     return s_classId;
 }
+
+struct G2CORE3SW
+{
+    CSTRING &Set10D8(const CSTRING &value);
+    CSTRING &SetA0(const CSTRING &value);
+    CSTRING &SetA4(const CSTRING &value);
+    CSTRING &Set2A8(const CSTRING &value);
+    CSTRING &Set64(const CSTRING &value);
+    CSTRING &SetCC(const CSTRING &value);
+    CSTRING &SetFC(const CSTRING &value);
+    CSTRING &Set100(const CSTRING &value);
+    CSTRING &Set104(const CSTRING &value);
+    CSTRING &Set108(const CSTRING &value);
+    CSTRING &Set314(const CSTRING &value);
+    CSTRING &Set31C(const CSTRING &value);
+    CSTRING &SetA04(const CSTRING &value);
+    CSTRING &SetA98(const CSTRING &value);
+};
+
+CSTRING &G2CORE3SW::Set10D8(const CSTRING &value)
+{
+    return *(CSTRING *)((char *)this + 0x10d8) = value;
+}
+
+CSTRING &G2CORE3SW::SetA0(const CSTRING &value)
+{
+    return *(CSTRING *)((char *)this + 0xa0) = value;
+}
+
+CSTRING &G2CORE3SW::SetA4(const CSTRING &value)
+{
+    return *(CSTRING *)((char *)this + 0xa4) = value;
+}
+
+CSTRING &G2CORE3SW::Set2A8(const CSTRING &value)
+{
+    return *(CSTRING *)((char *)this + 0x2a8) = value;
+}
+
+CSTRING &G2CORE3SW::Set64(const CSTRING &value)
+{
+    return *(CSTRING *)((char *)this + 0x64) = value;
+}
+
+CSTRING &G2CORE3SW::SetCC(const CSTRING &value)
+{
+    return *(CSTRING *)((char *)this + 0xcc) = value;
+}
+
+CSTRING &G2CORE3SW::SetFC(const CSTRING &value)
+{
+    return *(CSTRING *)((char *)this + 0xfc) = value;
+}
+
+CSTRING &G2CORE3SW::Set100(const CSTRING &value)
+{
+    return *(CSTRING *)((char *)this + 0x100) = value;
+}
+
+CSTRING &G2CORE3SW::Set104(const CSTRING &value)
+{
+    return *(CSTRING *)((char *)this + 0x104) = value;
+}
+
+CSTRING &G2CORE3SW::Set108(const CSTRING &value)
+{
+    return *(CSTRING *)((char *)this + 0x108) = value;
+}
+
+CSTRING &G2CORE3SW::Set314(const CSTRING &value)
+{
+    return *(CSTRING *)((char *)this + 0x314) = value;
+}
+
+CSTRING &G2CORE3SW::Set31C(const CSTRING &value)
+{
+    return *(CSTRING *)((char *)this + 0x31c) = value;
+}
+
+CSTRING &G2CORE3SW::SetA04(const CSTRING &value)
+{
+    return *(CSTRING *)((char *)this + 0xa04) = value;
+}
+
+CSTRING &G2CORE3SW::SetA98(const CSTRING &value)
+{
+    return *(CSTRING *)((char *)this + 0xa98) = value;
+}

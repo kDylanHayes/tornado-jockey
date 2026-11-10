@@ -3543,3 +3543,13 @@ void G2CORE2M8::Init()
     ((G2CORE2M8Base *)this)->SetFlag(true);
     *(float *)((char *)this + 0xfbc) = 10.0f;
 }
+
+struct G2CORE2SW
+{
+    CSTRING &Set113C(const CSTRING &value);
+};
+
+CSTRING &G2CORE2SW::Set113C(const CSTRING &value)
+{
+    return *(CSTRING *)((char *)this + 0x113c) = value;
+}

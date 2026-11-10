@@ -1772,3 +1772,67 @@ SRESULT G2CORE4CM15::ShowTipCommand(int value)
     }
     return SRESULT(true);
 }
+
+struct G2CORE4SW
+{
+    CSTRING &Set60(const CSTRING &value);
+    CSTRING &Set98(const CSTRING &value);
+    CSTRING &SetAC(const CSTRING &value);
+    CSTRING &SetB0(const CSTRING &value);
+    CSTRING &Set9C(const CSTRING &value);
+    CSTRING &Set6C(const CSTRING &value);
+    CSTRING &Set74(const CSTRING &value);
+    CSTRING &Set7C(const CSTRING &value);
+    CSTRING &Set84(const CSTRING &value);
+    CSTRING &Set8C(const CSTRING &value);
+};
+
+CSTRING &G2CORE4SW::Set60(const CSTRING &value)
+{
+    return *(CSTRING *)((char *)this + 0x60) = value;
+}
+
+CSTRING &G2CORE4SW::Set98(const CSTRING &value)
+{
+    return *(CSTRING *)((char *)this + 0x98) = value;
+}
+
+CSTRING &G2CORE4SW::SetAC(const CSTRING &value)
+{
+    return *(CSTRING *)((char *)this + 0xac) = value;
+}
+
+CSTRING &G2CORE4SW::SetB0(const CSTRING &value)
+{
+    return *(CSTRING *)((char *)this + 0xb0) = value;
+}
+
+CSTRING &G2CORE4SW::Set9C(const CSTRING &value)
+{
+    return *(CSTRING *)((char *)this + 0x9c) = value;
+}
+
+CSTRING &G2CORE4SW::Set6C(const CSTRING &value)
+{
+    return *(CSTRING *)((char *)this + 0x6c) = value;
+}
+
+CSTRING &G2CORE4SW::Set74(const CSTRING &value)
+{
+    return *(CSTRING *)((char *)this + 0x74) = value;
+}
+
+CSTRING &G2CORE4SW::Set7C(const CSTRING &value)
+{
+    return *(CSTRING *)((char *)this + 0x7c) = value;
+}
+
+CSTRING &G2CORE4SW::Set84(const CSTRING &value)
+{
+    return *(CSTRING *)((char *)this + 0x84) = value;
+}
+
+CSTRING &G2CORE4SW::Set8C(const CSTRING &value)
+{
+    return *(CSTRING *)((char *)this + 0x8c) = value;
+}

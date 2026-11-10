@@ -5270,3 +5270,13 @@ void G2CORE1M12::Start()
     }
     *(V3 *)((char *)this + 0xdc0) = ((G2CORE1M12B *)this)->GetPosition();
 }
+
+struct G2CORE1SW2
+{
+    CSTRING &SetDD8(const CSTRING &value);
+};
+
+CSTRING &G2CORE1SW2::SetDD8(const CSTRING &value)
+{
+    return *(CSTRING *)((char *)this + 0xdd8) = value;
+}
