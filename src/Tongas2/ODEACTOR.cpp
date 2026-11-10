@@ -655,12 +655,18 @@ void G2ODEACTOR::AddForce(float x, float y, float z)
 }
 
 // Kept abstract here so this unit does not emit the class's vtable.
-class BONEDMODELRESOURCE
+class BONEDMODELRESOURCE : public OBJECT
 {
 public:
     virtual ~BONEDMODELRESOURCE();
     virtual V3 Virtual82(int value);
+    virtual void Update();
 };
+
+void BONEDMODELRESOURCE::Update()
+{
+    OBJECT::Update();
+}
 
 V3 BONEDMODELRESOURCE::Virtual82(int value)
 {
