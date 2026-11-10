@@ -9427,3 +9427,5 @@
 0x0044a530 ?Insert@G2MIDLISTIMPL@@QAE_NPAVG2MIDITEM@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z function 0x2f
 0x0044c050 ?Insert@G2MIDTABLE@@QAE_NPAVG2MIDITEM@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z function 0x151
 0x00406dd0 _GD_TrimSpaces@4 function 0x61
+0x005e8c78 __ehhandler$??1GD4512e0MEMBER@@QAE@XZ function 0x8
+0x0044b610 ?FreeHeap@GD4512e0MEMBER@@QAEXXZ function 0x18

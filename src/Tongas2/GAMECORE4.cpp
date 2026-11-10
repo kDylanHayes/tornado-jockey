@@ -9,6 +9,9 @@
 #endif
 
 extern "C" {
+__declspec(dllimport) void __stdcall SysFreeString(unsigned short *bstr);
+__declspec(dllimport) HANDLE __stdcall GetProcessHeap(void);
+__declspec(dllimport) BOOL __stdcall HeapFree(HANDLE hHeap, DWORD dwFlags, void *lpMem);
 __declspec(dllimport) BOOL __stdcall IsWindow(HWND hWnd);
 __declspec(dllimport) BOOL __stdcall DestroyWindow(HWND hWnd);
 __declspec(dllimport) BOOL __stdcall PostThreadMessageA(DWORD idThread, UINT Msg,
@@ -641,12 +644,76 @@ __declspec(noinline) GD450e80::~GD450e80()
 
 // The 0x44f840/0x44bb50 member at +8: Stop runs first, the destructor is the
 // compiler's own call.
+class GD4512e0RELEASE
+{
+public:
+    virtual void __stdcall V0();
+    virtual void __stdcall V1();
+    virtual void __stdcall Release();
+};
+
 class GD4512e0MEMBER
 {
 public:
     ~GD4512e0MEMBER();
     void Stop();
+
+    // Releases the heap block at 0x14 (0x44b610).
+    void FreeHeap()
+    {
+        if (m_14)
+            HeapFree(GetProcessHeap(), 0, m_14);
+    }
+
+    char pad_00[0x14];
+    void *m_14;
+    char pad_18[0x3c - 0x18];
+    GD4512e0RELEASE *m_3c;
+    char pad_40[0x54 - 0x40];
+    GD4512e0RELEASE *m_54;
+    char pad_58[0x60 - 0x58];
+    GD4512e0RELEASE *m_60;
+    GD4512e0RELEASE *m_64;
+    GD4512e0RELEASE *m_68;
+    GD4512e0RELEASE *m_6c;
+    GD4512e0RELEASE *m_70;
+    GD4512e0RELEASE *m_74;
+    GD4512e0RELEASE *m_78;
+    GD4512e0RELEASE *m_7c;
+    char pad_80[0xd8 - 0x80];
+    GD4512e0RELEASE *m_d8;
+    GD4512e0RELEASE *m_dc;
+    char pad_e0[0xe8 - 0xe0];
+    unsigned short *m_e8;
 };
+
+// Frees the member's heap block when the destructor leaves, on any path.
+class GD4512e0GUARD
+{
+public:
+    GD4512e0GUARD(GD4512e0MEMBER *owner) : m_owner(owner) {}
+    ~GD4512e0GUARD() { m_owner->FreeHeap(); }
+
+    GD4512e0MEMBER *m_owner;
+};
+
+__declspec(noinline) GD4512e0MEMBER::~GD4512e0MEMBER()
+{
+    GD4512e0GUARD guard(this);
+    SysFreeString(m_e8);
+    if (m_dc) m_dc->Release();
+    if (m_d8) m_d8->Release();
+    if (m_7c) m_7c->Release();
+    if (m_78) m_78->Release();
+    if (m_74) m_74->Release();
+    if (m_70) m_70->Release();
+    if (m_6c) m_6c->Release();
+    if (m_68) m_68->Release();
+    if (m_64) m_64->Release();
+    if (m_60) m_60->Release();
+    if (m_54) m_54->Release();
+    if (m_3c) m_3c->Release();
+}
 
 class GD4512e0
 {
