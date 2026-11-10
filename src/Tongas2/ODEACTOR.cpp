@@ -2,6 +2,8 @@
 //
 // Discovery scaffold: bodies are empty until the unit is matched.
 #define DYNAMICARRAY_REMOVE
+#define DYNAMICARRAY_CLEAR_NOINLINE
+#include <stdarg.h>
 #include "Tongas2/ODEACTOR.h"
 #include "Tongas2/ACTOR.h"
 #include "Tongas2/CMDBASE.h"
@@ -43,12 +45,34 @@ void ODEACTOR::SetFlag(const char *flag)
 class GD54c7b0
 {
 public:
+    GD54c7b0();
     virtual ~GD54c7b0() throw();
 
     char *m_4;
     char *m_8;
     char *m_c;
+    int m_10;
+    int m_14;
+    int m_18;
+    int m_1c;
+    int m_20;
+    int m_24;
+    int m_28;
+    int m_2c;
 };
+
+GD54c7b0::GD54c7b0()
+{
+    m_28 = 0;
+    m_20 = -1;
+    m_24 = -1;
+    m_4 = 0;
+    m_8 = 0;
+    m_c = 0;
+    m_10 = 0;
+    m_2c = 0;
+    ((DYNAMICARRAY<int> *)(void *)this)->Clear();
+}
 
 __declspec(noinline) GD54c7b0::~GD54c7b0() throw()
 {
@@ -69,12 +93,29 @@ __declspec(noinline) GD54c7b0::~GD54c7b0() throw()
 class GD54c9b0
 {
 public:
+    GD54c9b0();
     virtual ~GD54c9b0() throw();
 
     char *m_4;
     char *m_8;
     char *m_c;
+    int m_10;
+    int m_14;
+    int m_18;
+    int m_1c;
+    int m_20;
+    int m_24;
 };
+
+GD54c9b0::GD54c9b0()
+{
+    m_4 = 0;
+    m_8 = 0;
+    m_c = 0;
+    m_10 = 0;
+    m_24 = 0;
+    ((DYNAMICARRAY<int> *)(void *)this)->Clear();
+}
 
 __declspec(noinline) GD54c9b0::~GD54c9b0() throw()
 {
@@ -95,27 +136,6 @@ __declspec(noinline) GD54c9b0::~GD54c9b0() throw()
 extern "C" void _dSpaceDestroy(void *space);
 extern "C" void _dJointGroupDestroy(void *group);
 extern "C" void _dWorldDestroy(void *world);
-
-class GD54cb00
-{
-public:
-    virtual ~GD54cb00() throw();
-
-    GD54c7b0 m_4;
-    char pad_14[0x20];
-    GD54c9b0 m_34;
-    char pad_44[0x18];
-    void *m_5c;
-    void *m_60;
-    void *m_64;
-};
-
-__declspec(noinline) GD54cb00::~GD54cb00() throw()
-{
-    _dSpaceDestroy(m_60);
-    _dJointGroupDestroy(m_64);
-    _dWorldDestroy(m_5c);
-}
 
 struct G2ODEACTORTGT
 {
@@ -307,17 +327,85 @@ class ODEWORLDX
 {
 public:
     ODEWORLDX();
-    virtual ~ODEWORLDX();
+    virtual ~ODEWORLDX() throw();
     void Shutdown();
     void AddActor(void *actor);
     void Reset();
 
-    char pad_04[0x5c];
+    GD54c7b0 m_4;
+    GD54c9b0 m_34;
+    void *m_5c;
     void *m_60;
-    char pad_64[4];
+    void *m_64;
     bool m_68;
-    char pad_69[0x88 - 0x69];
+    bool m_69;
+    char pad_6a[2];
+    int m_6c;
+    int m_70;
+    int m_74;
+    int m_78;
+    int m_7c;
+    int m_80;
+    int m_84;
 };
+
+extern "C" void _dSetMessageHandler(void (*handler)(int, const char *, va_list));
+extern "C" void _dSetErrorHandler(void (*handler)(int, const char *, va_list));
+extern "C" void _dSetDebugHandler(void (*handler)(int, const char *, va_list));
+extern "C" void *_dWorldCreate();
+extern "C" void *_dJointGroupCreate(int max);
+extern "C" int __vsnprintf(char *buffer, unsigned int count, const char *format, va_list ap);
+
+static void OdeDebugHandler(int num, const char *message, va_list args)
+{
+    char buffer[0x200];
+    buffer[0] = 0;
+    buffer[0x1ff] = 0;
+    __vsnprintf(buffer, 0x200, message, args);
+    ((int *)g_pOdeWorldX)[0x6c / 4]++;
+}
+
+static void OdeErrorHandler(int num, const char *message, va_list args)
+{
+    char buffer[0x200];
+    buffer[0] = 0;
+    buffer[0x1ff] = 0;
+    __vsnprintf(buffer, 0x200, message, args);
+    ((int *)g_pOdeWorldX)[0x70 / 4]++;
+}
+
+static void OdeMessageHandler(int num, const char *message, va_list args)
+{
+    char buffer[0x200];
+    buffer[0] = 0;
+    buffer[0x1ff] = 0;
+    __vsnprintf(buffer, 0x200, message, args);
+    ((int *)g_pOdeWorldX)[0x74 / 4]++;
+}
+
+__declspec(noinline) ODEWORLDX::~ODEWORLDX() throw()
+{
+    _dSpaceDestroy(m_60);
+    _dJointGroupDestroy(m_64);
+    _dWorldDestroy(m_5c);
+}
+
+ODEWORLDX::ODEWORLDX()
+{
+    _dSetMessageHandler(OdeMessageHandler);
+    _dSetErrorHandler(OdeErrorHandler);
+    _dSetDebugHandler(OdeDebugHandler);
+    m_5c = _dWorldCreate();
+    m_64 = _dJointGroupCreate(0);
+    m_60 = 0;
+    m_68 = false;
+    int size = 100;
+    ((DYNAMICARRAY<G2CORE1R1> *)(void *)&m_4)->Resize(size);
+    m_4.m_2c = size;
+    m_69 = true;
+    m_80 = 4;
+    m_84 = 10000;
+}
 
 extern GD548620 *g_pOdeWorld;
 extern "C" void _dSpaceDestroy(void *space);

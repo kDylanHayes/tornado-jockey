@@ -96,6 +96,9 @@ DYNAMICARRAY<T>::~DYNAMICARRAY()
 }
 
 template <class T>
+#ifdef DYNAMICARRAY_CLEAR_NOINLINE
+__declspec(noinline)
+#endif
 void DYNAMICARRAY<T>::Clear()
 {
     if (m_used) {
