@@ -47,3 +47,18 @@ void * G2SGGET::Get8()
 {
     return (char *)*(void **)((char *)this + 0xc) + 8;
 }
+
+struct G2DX8GET
+{
+    void *Get54(int index);
+};
+
+struct G2SGTHUNK
+{
+    void *Get(int index);
+};
+
+void *G2SGTHUNK::Get(int index)
+{
+    return ((G2DX8GET *)*(void **)((char *)this + 0xc))->Get54(index);
+}

@@ -61,3 +61,33 @@ void G2TL3CALL::Call()
 {
     g_fn6561b4((char *)this + 4);
 }
+
+struct G2TL3TGT1
+{
+    void Call();
+};
+
+struct G2TL3TG2
+{
+    void Call();
+};
+
+struct G2TL3TH1
+{
+    void Call();
+};
+
+struct G2TL3TH2
+{
+    void Call();
+};
+
+void G2TL3TH1::Call()
+{
+    ((G2TL3TGT1 *)((char *)this + 0xc))->Call();
+}
+
+void G2TL3TH2::Call()
+{
+    ((G2TL3TG2 *)((char *)this + 0xc))->Call();
+}

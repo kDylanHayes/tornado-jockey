@@ -44,3 +44,18 @@ void * G2AGTGET::Get4()
 {
     return (char *)*(void **)((char *)this + 0xc) + 4;
 }
+
+struct G2TFGET
+{
+    void *Get5c(int index);
+};
+
+struct G2AGTTHUNK
+{
+    void *Get(int index);
+};
+
+void *G2AGTTHUNK::Get(int index)
+{
+    return ((G2TFGET *)*(void **)((char *)this + 0xc))->Get5c(index);
+}
