@@ -449,16 +449,66 @@ public:
     virtual void Release(int value);
 };
 
+// The table at +0x28 of the MID list.
+class G2MIDTABLE
+{
+public:
+    bool Insert(G2MIDITEM *item, const std::string &name, int flag);
+
+    char pad_00[0xa0];
+};
+
+// The object G2MIDLIST holds at +4: a released item and, at +0x28, the
+// table the items are inserted into.
+class G2MIDLISTIMPL
+{
+public:
+    virtual void Release(int value);
+
+    __declspec(noinline) bool Insert(G2MIDITEM *item, const std::string &name, int flag);
+
+    char pad_04[0x28 - 0x04];
+    G2MIDTABLE m_28;
+    char pad_c8[0x130 - (0x28 + 0xa0)];
+    bool m_130;
+    bool m_131;
+};
+
+bool G2MIDLISTIMPL::Insert(G2MIDITEM *item, const std::string &name, int flag)
+{
+    if (!m_131 || !item)
+        return false;
+    m_28.Insert(item, name, flag);
+    return true;
+}
+
 class G2MIDLIST
 {
 public:
     ~G2MIDLIST();
+    void Add(G2MIDITEM *item, const char *name);
+    bool IsReady();
 
     G2MIDITEM *m_00;
-    G2MIDITEM *m_04;
+    G2MIDLISTIMPL *m_04;
     char pad_08[0x20c - 0x08];
     std::string m_20c;
 };
+
+void G2MIDLIST::Add(G2MIDITEM *item, const char *name)
+{
+    if (m_04) {
+        std::string key(name);
+        m_04->Insert(item, key, 0);
+    }
+}
+
+bool G2MIDLIST::IsReady()
+{
+    if (!m_04)
+        return false;
+    return m_04->m_130;
+}
 
 extern G2MIDLIST *g_pMIDList;
 
