@@ -67,6 +67,7 @@ void G2TL2CALL::Call()
 struct DRMPALX
 {
     void ViewGlobalScoresError();
+    void PostGlobalScoresError();
 };
 
 void DRMPALX::ViewGlobalScoresError()
@@ -77,6 +78,18 @@ void DRMPALX::ViewGlobalScoresError()
         g_pLog->Error("CRITIC ERROR: DRMPAL::ViewGlobalScores method called");
     if (g_pLog)
         g_pLog->Error("You must overload this class with an apropiate information to call ViewToGlobalScores");
+    if (g_pLog)
+        g_pLog->Error("************************************************");
+}
+
+void DRMPALX::PostGlobalScoresError()
+{
+    if (g_pLog)
+        g_pLog->Error("************************************************");
+    if (g_pLog)
+        g_pLog->Error("CRITIC ERROR: DRMPAL::PostGlobalScores method called");
+    if (g_pLog)
+        g_pLog->Error("You must overload this class with an apropiate information to call SendToGlobalScores");
     if (g_pLog)
         g_pLog->Error("************************************************");
 }

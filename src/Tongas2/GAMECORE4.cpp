@@ -1674,15 +1674,15 @@ wchar_t *G2CORE4CM15::GetTipText(wchar_t *text, int index, int year)
     buffer[0] = 0;
     buffer[0x1ff] = 0;
     if (year == 0) {
-        wchar_t *tip = g_tipTextTable[index];
-        if (tip == 0)
+        if (g_tipTextTable[index] == 0)
             buffer[0] = 0;
         else {
-            wcsncpy(buffer, tip, 0x1ff);
+            wcsncpy(buffer, g_tipTextTable[index], 0x1ff);
             buffer[0x1ff] = 0;
         }
     } else {
-        SafeSwprintf(buffer, L"%s - Year %d", g_tipTextTable[index], year);
+        SafeSwprintf(buffer, L"%s - Year %d",
+                     &g_tipTextTable[index][0], year);
     }
     memcpy(text, buffer, sizeof(buffer));
     return text;

@@ -5,6 +5,7 @@
 #include "Tongas2/CMDBASE.h"
 
 extern char g_classNames[][30];
+extern int g_factoryFlags[];
 
 class EMITTERMASTER
 {
@@ -233,4 +234,30 @@ void ODEACTORM2::SetD1C(const bool &enabled)
     void *body = *(void **)((char *)this + 0xccc);
     if (body)
         dBodySetGravityMode(body, enabled);
+}
+
+class ODEACTORM3
+{
+public:
+    virtual int GetClassId();
+    virtual int GetFactoryFlags();
+
+    bool Predicate(int a, int b, int c, int d);
+
+    static int s_classId;
+};
+
+int ODEACTORM3::GetClassId()
+{
+    return s_classId;
+}
+
+int ODEACTORM3::GetFactoryFlags()
+{
+    return g_factoryFlags[s_classId];
+}
+
+bool ODEACTORM3::Predicate(int a, int b, int c, int d)
+{
+    return true;
 }

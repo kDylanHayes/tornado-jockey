@@ -173,6 +173,8 @@ struct ODEWORLDM2
     void SetCF0(const float &value);
     void SetCE8(const int &value);
     void SetCEC(const int &value);
+    void SetCF4(const V3 &value);
+    void SetD00(const V3 &value);
 };
 
 void ODEWORLDM2::SetCD8(const float &value)
@@ -228,4 +230,16 @@ void ODEWORLDM2::SetCEC(const int &value)
 {
     *(int *)((char *)this + 0xcec) = value;
     *(int *)((char *)g_pOdeWorldX + 0x84) = value;
+}
+
+void ODEWORLDM2::SetCF4(const V3 &value)
+{
+    *(V3 *)((char *)this + 0xcf4) = value;
+    *(bool *)((char *)g_pOdeWorldX + 0x68) = false;
+}
+
+void ODEWORLDM2::SetD00(const V3 &value)
+{
+    *(V3 *)((char *)this + 0xd00) = value;
+    *(bool *)((char *)g_pOdeWorldX + 0x68) = false;
 }
