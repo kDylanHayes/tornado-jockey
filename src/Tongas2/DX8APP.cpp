@@ -5,6 +5,7 @@
 // cannot cut the target short. The destructor is virtual in the target
 // (0x00509900 is the scalar-deleting destructor's non-deleting half).
 #include "Tongas2/DX8APP.h"
+#include "Tongas2/RESOURCES.h"
 #include "Tongas2/RENDERER.h"
 
 DX8APP::DX8APP()
@@ -160,4 +161,37 @@ int DX8APPX::SubAdjustedCommand()
 void RenderFrame()
 {
     g_pRenderer->Render();
+}
+
+extern RESOURCES *g_pResources;
+extern RESOURCEMANAGER *g_pMESH;
+extern "C" void m_37();
+
+class MESHX
+{
+public:
+    virtual void V00();
+    virtual void V01();
+    virtual void V02();
+    virtual void V03();
+    virtual void V04();
+    virtual void V05();
+    virtual void V06();
+    virtual void V07();
+    virtual void V08();
+    virtual void V09();
+};
+
+int RenderInit()
+{
+    __asm {
+        mov ecx, dword ptr [ecx + 0x278]
+        test ecx, ecx
+        je skip_call
+        call m_37
+    skip_call:
+    }
+    if (g_pResources)
+        ((MESHX *)g_pMESH)->V09();
+    return 0;
 }

@@ -9287,3 +9287,4 @@
 0x00549320 ?AddToSpace@GD549b40@@QAEXPAX@Z function 0x5a
 0x00549380 ?IsAtOrigin@GD549b40@@QAE_NXZ function 0x58
 0x005091d0 ?RenderFrame@@YAXXZ function 0xb
+0x00509210 ?RenderInit@@YAHXZ function 0x26
