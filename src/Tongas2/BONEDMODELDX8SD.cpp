@@ -1170,3 +1170,23 @@ int BMDGET::Get0(void)
 {
     return *(int *)((char *)this - 0x274);
 }
+
+struct BMSET
+{
+    void Set0();
+};
+
+void BMSET::Set0()
+{
+    *(bool *)((char *)this + 0x648) = false;
+}
+
+struct BMDPTR
+{
+    void *Get0();
+};
+
+void *BMDPTR::Get0()
+{
+    return (char *)this - 0x24c;
+}

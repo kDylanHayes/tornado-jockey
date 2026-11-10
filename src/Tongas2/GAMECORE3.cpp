@@ -1241,3 +1241,19 @@ void *GetD0065f86c()
 {
     return &DAT_0065f86c;
 }
+
+struct G3SET
+{
+    void Set0();
+    void Set1();
+};
+
+void G3SET::Set0()
+{
+    *(int *)((char *)this + 0xccc) = 0;
+}
+
+void G3SET::Set1()
+{
+    *(bool *)((char *)this + 0x2c) = true;
+}

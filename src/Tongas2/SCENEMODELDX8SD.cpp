@@ -37,3 +37,13 @@ void *GetD0067a410()
 {
     return &DAT_0067a410;
 }
+
+struct SMDPTR
+{
+    void *Get0();
+};
+
+void *SMDPTR::Get0()
+{
+    return (char *)this - 0x23c;
+}

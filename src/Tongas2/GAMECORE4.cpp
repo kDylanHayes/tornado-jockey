@@ -727,3 +727,13 @@ int GC4GET::Get4(void)
 {
     return *(int *)((char *)this + 0x50);
 }
+
+struct G4SET
+{
+    void Set0();
+};
+
+void G4SET::Set0()
+{
+    *(bool *)((char *)this + 0x242) = true;
+}

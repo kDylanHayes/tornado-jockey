@@ -125,3 +125,19 @@ int TL3GET::Get2(void)
 {
     return *(int *)((char *)this + 0x4);
 }
+
+struct TL3PTR
+{
+    void *Get0();
+    void *Get1();
+};
+
+void *TL3PTR::Get0()
+{
+    return (char *)this + 0x10;
+}
+
+void *TL3PTR::Get1()
+{
+    return (char *)this + 0x2c;
+}
