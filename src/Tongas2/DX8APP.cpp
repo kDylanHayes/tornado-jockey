@@ -5,6 +5,7 @@
 // cannot cut the target short. The destructor is virtual in the target
 // (0x00509900 is the scalar-deleting destructor's non-deleting half).
 #include "Tongas2/DX8APP.h"
+#include "Tongas2/RENDERER.h"
 
 DX8APP::DX8APP()
 {
@@ -154,4 +155,9 @@ int DX8APPX::SubAdjustedCommand()
 {
     ((DX8SUB *)((char *)this - 0x44))->V22();
     return 0;
+}
+
+void RenderFrame()
+{
+    g_pRenderer->Render();
 }
