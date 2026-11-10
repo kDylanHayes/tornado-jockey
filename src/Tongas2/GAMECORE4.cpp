@@ -873,3 +873,236 @@ void PROPSHADOW::Update()
     decal->SetAngles(angles);
     decal->SetPosition(position);
 }
+
+// The core object's scalar fields that its properties write one at a time.
+struct G2CORE4M1
+{
+    void Set9C(const int &value);
+    void Set88(const bool &value);
+    void Set89(const bool &value);
+    void Set90(const int &value);
+    void Set94(const int &value);
+    void Set98(const int &value);
+    void SetA0(const int &value);
+    void SetA4(const int &value);
+    void SetBC(const int &value);
+    void SetB0(const int &value);
+    void SetA8(const int &value);
+    void SetAC(const int &value);
+    void SetB8(const int &value);
+    void SetC0(const int &value);
+    void SetDC(const int &value);
+    void SetE0(const int &value);
+    void Set30C(const int &value);
+    void Set1CCB4(const int &value);
+    void Set1288C(const int &value);
+    void Set12890(const int &value);
+    void Set12894(const int &value);
+    void Set12898(const int &value);
+    void Set1289C(const int &value);
+    void Set128A0(const bool &value);
+    void Set128A4(const int &value);
+    void Set128A8(const bool &value);
+    void Set128A9(const bool &value);
+    void Set128AC(const int &value);
+    void Set128B0(const bool &value);
+    void Set1DCB8(const int &value);
+    void Set1DCBC(const int &value);
+    void Set1DCC0(const int &value);
+    void Set1DCC4(const int &value);
+    void Set1DCC8(const int &value);
+    void Set1DCCC(const int &value);
+    void Set1DCD0(const int &value);
+    void Set1DCD4(const int &value);
+    void Set1DCD8(const int &value);
+};
+
+void G2CORE4M1::Set9C(const int &value)
+{
+    *(int *)((char *)this + 0x9c) = value;
+}
+
+void G2CORE4M1::Set88(const bool &value)
+{
+    *(bool *)((char *)this + 0x88) = value;
+}
+
+void G2CORE4M1::Set89(const bool &value)
+{
+    *(bool *)((char *)this + 0x89) = value;
+}
+
+void G2CORE4M1::Set90(const int &value)
+{
+    *(int *)((char *)this + 0x90) = value;
+}
+
+void G2CORE4M1::Set94(const int &value)
+{
+    *(int *)((char *)this + 0x94) = value;
+}
+
+void G2CORE4M1::Set98(const int &value)
+{
+    *(int *)((char *)this + 0x98) = value;
+}
+
+void G2CORE4M1::SetA0(const int &value)
+{
+    *(int *)((char *)this + 0xa0) = value;
+}
+
+void G2CORE4M1::SetA4(const int &value)
+{
+    *(int *)((char *)this + 0xa4) = value;
+}
+
+void G2CORE4M1::SetBC(const int &value)
+{
+    *(int *)((char *)this + 0xbc) = value;
+}
+
+void G2CORE4M1::SetB0(const int &value)
+{
+    *(int *)((char *)this + 0xb0) = value;
+}
+
+void G2CORE4M1::SetA8(const int &value)
+{
+    *(int *)((char *)this + 0xa8) = value;
+}
+
+void G2CORE4M1::SetAC(const int &value)
+{
+    *(int *)((char *)this + 0xac) = value;
+}
+
+void G2CORE4M1::SetB8(const int &value)
+{
+    *(int *)((char *)this + 0xb8) = value;
+}
+
+void G2CORE4M1::SetC0(const int &value)
+{
+    *(int *)((char *)this + 0xc0) = value;
+}
+
+void G2CORE4M1::SetDC(const int &value)
+{
+    *(int *)((char *)this + 0xdc) = value;
+}
+
+void G2CORE4M1::SetE0(const int &value)
+{
+    *(int *)((char *)this + 0xe0) = value;
+}
+
+void G2CORE4M1::Set30C(const int &value)
+{
+    *(int *)((char *)this + 0x30c) = value;
+}
+
+void G2CORE4M1::Set1CCB4(const int &value)
+{
+    *(int *)((char *)this + 0x1ccb4) = value;
+}
+
+void G2CORE4M1::Set1288C(const int &value)
+{
+    *(int *)((char *)this + 0x1288c) = value;
+}
+
+void G2CORE4M1::Set12890(const int &value)
+{
+    *(int *)((char *)this + 0x12890) = value;
+}
+
+void G2CORE4M1::Set12894(const int &value)
+{
+    *(int *)((char *)this + 0x12894) = value;
+}
+
+void G2CORE4M1::Set12898(const int &value)
+{
+    *(int *)((char *)this + 0x12898) = value;
+}
+
+void G2CORE4M1::Set1289C(const int &value)
+{
+    *(int *)((char *)this + 0x1289c) = value;
+}
+
+void G2CORE4M1::Set128A0(const bool &value)
+{
+    *(bool *)((char *)this + 0x128a0) = value;
+}
+
+void G2CORE4M1::Set128A4(const int &value)
+{
+    *(int *)((char *)this + 0x128a4) = value;
+}
+
+void G2CORE4M1::Set128A8(const bool &value)
+{
+    *(bool *)((char *)this + 0x128a8) = value;
+}
+
+void G2CORE4M1::Set128A9(const bool &value)
+{
+    *(bool *)((char *)this + 0x128a9) = value;
+}
+
+void G2CORE4M1::Set128AC(const int &value)
+{
+    *(int *)((char *)this + 0x128ac) = value;
+}
+
+void G2CORE4M1::Set128B0(const bool &value)
+{
+    *(bool *)((char *)this + 0x128b0) = value;
+}
+
+void G2CORE4M1::Set1DCB8(const int &value)
+{
+    *(int *)((char *)this + 0x1dcb8) = value;
+}
+
+void G2CORE4M1::Set1DCBC(const int &value)
+{
+    *(int *)((char *)this + 0x1dcbc) = value;
+}
+
+void G2CORE4M1::Set1DCC0(const int &value)
+{
+    *(int *)((char *)this + 0x1dcc0) = value;
+}
+
+void G2CORE4M1::Set1DCC4(const int &value)
+{
+    *(int *)((char *)this + 0x1dcc4) = value;
+}
+
+void G2CORE4M1::Set1DCC8(const int &value)
+{
+    *(int *)((char *)this + 0x1dcc8) = value;
+}
+
+void G2CORE4M1::Set1DCCC(const int &value)
+{
+    *(int *)((char *)this + 0x1dccc) = value;
+}
+
+void G2CORE4M1::Set1DCD0(const int &value)
+{
+    *(int *)((char *)this + 0x1dcd0) = value;
+}
+
+void G2CORE4M1::Set1DCD4(const int &value)
+{
+    *(int *)((char *)this + 0x1dcd4) = value;
+}
+
+void G2CORE4M1::Set1DCD8(const int &value)
+{
+    *(int *)((char *)this + 0x1dcd8) = value;
+}
