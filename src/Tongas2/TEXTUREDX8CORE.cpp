@@ -4,6 +4,7 @@
 // function has its exact target size in config/symbols.txt so a later delink
 // cannot cut the target short. CreateTexture's extent includes its switch
 // table.
+#include <deque>
 #include "Tongas2/TEXTUREDX8CORE.h"
 
 int CreateTexture()
@@ -73,4 +74,22 @@ void G2DX8DEVICE::CreateTexture(G2DX8OBJECT *object)
     m_4 = true;
     if (object->CreateTexture(0x5dc00, 0x208, 0x112, 0, this) < 0)
         m_4 = false;
+}
+
+// A texture staging block: an owned buffer and the scanline queue.
+class TEXTUREDX8SDTEXTUREMEMBER
+{
+public:
+    ~TEXTUREDX8SDTEXTUREMEMBER();
+
+    char *m_0;
+    std::deque<unsigned short> m_4;
+};
+
+TEXTUREDX8SDTEXTUREMEMBER::~TEXTUREDX8SDTEXTUREMEMBER()
+{
+    if (m_0) {
+        delete[] m_0;
+        m_0 = 0;
+    }
 }
