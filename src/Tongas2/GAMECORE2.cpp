@@ -1001,7 +1001,7 @@ void G2CHAIN::DecSecondaryTarget(ACTOR *actor)
     (void)actor;
     m_1ba8--;
     if (m_f60.y > m_f60.x)
-        m_f1ba4 = m_f60.x + (m_f60.y - m_f60.x) * rand() * (1.0f / 32768.0f);
+        m_f1ba4 = m_f60.x + (m_f60.y - m_f60.x) * rand() * (1.0f / RAND_MAX);
     else
         m_f1ba4 = m_f60.x;
 }
@@ -1011,7 +1011,7 @@ void G2CHAIN::ResetTarget(ACTOR *actor)
     (void)actor;
     m_1bb0--;
     if (m_f68.y > m_f68.x)
-        m_f1bac = m_f68.x + (m_f68.y - m_f68.x) * rand() * (1.0f / 32768.0f);
+        m_f1bac = m_f68.x + (m_f68.y - m_f68.x) * rand() * (1.0f / RAND_MAX);
     else
         m_f1bac = m_f68.x;
 }
@@ -1734,7 +1734,7 @@ void G2CHAIN::D()
     bestActor->CreateMaxPowerup();
     float wait;
     if (m_f68.y > m_f68.x)
-        wait = m_f68.x + (m_f68.y - m_f68.x) * rand() * (1.0f / 32768.0f);
+        wait = m_f68.x + (m_f68.y - m_f68.x) * rand() * (1.0f / RAND_MAX);
     else
         wait = m_f68.x;
     m_f1bac = wait;
@@ -1785,14 +1785,14 @@ void G2CHAIN::C()
         return;
     float spawn;
     if (bestActor->m_cf0 > bestActor->m_cec)
-        spawn = bestActor->m_cec + (bestActor->m_cf0 - bestActor->m_cec) * rand() * (1.0f / 32768.0f);
+        spawn = bestActor->m_cec + (bestActor->m_cf0 - bestActor->m_cec) * rand() * (1.0f / RAND_MAX);
     else
         spawn = bestActor->m_cec;
     bestActor->SetSpawnTime(spawn);
     bestActor->SetActive(true);
     float wait;
     if (m_f60.y > m_f60.x)
-        wait = m_f60.x + (m_f60.y - m_f60.x) * rand() * (1.0f / 32768.0f);
+        wait = m_f60.x + (m_f60.y - m_f60.x) * rand() * (1.0f / RAND_MAX);
     else
         wait = m_f60.x;
     m_f1ba4 = wait + bestActor->m_cf4;
@@ -1989,7 +1989,7 @@ void G2CHAIN::B()
         if (!(m_f1b98 > 0.0f) || m_f5c != 0) {
             float wait;
             if (m_f50.y > m_f50.x)
-                wait = m_f50.x + (m_f50.y - m_f50.x) * rand() * (1.0f / 32768.0f);
+                wait = m_f50.x + (m_f50.y - m_f50.x) * rand() * (1.0f / RAND_MAX);
             else
                 wait = m_f50.x;
             m_f1b98 = wait;
@@ -2058,8 +2058,7 @@ void G2CHAIN::B()
             direction.Normalize();
             chaser->SetDirection(direction, g_up);
             chaser->SetScale(best->GetScale());
-            int zsort = *(int *)((char *)best + 0x984);
-            chaser->SetZSort(zsort);
+            chaser->SetZSort(*(int *)((char *)best + 0x984));
             if (*(bool *)((char *)best + 0xcd0)) {
                 WTACTOR *scenario = g_pGame->GetScenario();
                 if (scenario) {
