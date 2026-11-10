@@ -4,6 +4,7 @@
 // function has its exact target size in config/symbols.txt so a later delink
 // cannot cut the target short.
 #include "Tongas2/RENDERTEXTUREDX8SD.h"
+#include "Tongas2/APPWINDOW.h"
 
 RENDERTEXTUREDX8SDMASTER *CreateRENDERTEXTUREDX8SDMaster()
 {
@@ -80,4 +81,21 @@ extern "C" char DAT_0067abb8;
 void *GetD0067abb8()
 {
     return &DAT_0067abb8;
+}
+
+class SETTINGSTABLE
+{
+public:
+    int GetInt(int index);
+};
+
+bool DisplaySetting10()
+{
+    SETTINGSTABLE *table = *(SETTINGSTABLE **)((char *)g_pDisplay + 0x2c0);
+    return table->GetInt(10) != 0;
+}
+
+void *DisplayFieldEC()
+{
+    return *(void **)((char *)g_pDisplay + 0xec);
 }

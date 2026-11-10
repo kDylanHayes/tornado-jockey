@@ -1207,3 +1207,13 @@ SRESULT BONEDMODELDX8SDRESOURCE::SomeCommand(int value)
     DestroyAnimations();
     return SRESULT(true);
 }
+
+struct BONEDM3
+{
+    bool HasAnimation();
+};
+
+bool BONEDM3::HasAnimation()
+{
+    return *(void **)((char *)this + 0x43c) != 0;
+}

@@ -8865,3 +8865,8 @@
 0x004420f0 ?Set4A0@G2CORE4M5@@QAEXABUV3@@@Z function 0x1d
 0x00444380 ?SetB0@G2CORE4M5@@QAEXABUV3@@@Z function 0x1d
 0x0054ef00 ?Set828@TAIL1M5@@QAEXABUV3@@@Z function 0x1d
+0x00527150 ?FUNC527150@@YGXH@Z function
+0x00508f40 ?InitGraphics6@@YAXXZ function 0x8
+0x0053a090 ?DisplaySetting10@@YA_NXZ function 0x19
+0x0053a0b0 ?DisplayFieldEC@@YAPAXXZ function 0xc
+0x004f4780 ?HasAnimation@BONEDM3@@QAE_NXZ function 0xe

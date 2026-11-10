@@ -76,3 +76,10 @@ float DX8APPM1::Get258()
 {
     return *(float *)((char *)this + 0x258);
 }
+
+void __stdcall FUNC527150(int value);
+
+void InitGraphics6()
+{
+    FUNC527150(6);
+}
