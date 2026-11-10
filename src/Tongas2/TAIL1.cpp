@@ -108,3 +108,20 @@ public:
 G2TL1C2::G2TL1C2()
 {
 }
+
+extern void *g_6c65e4;
+
+void *GetGlobal()
+{
+    return g_6c65e4;
+}
+
+struct G2TL1SELF
+{
+    void *Self(int arg);
+};
+
+void *G2TL1SELF::Self(int arg)
+{
+    return this;
+}

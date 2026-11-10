@@ -8285,3 +8285,14 @@
 0x0054cc30 ?Call@G2ODEADJTGT@@QAEXPAX@Z function 0x7c
 0x0054db20 ?Run@G2RDX@@QAEXXZ function 0x10
 0x0054d7d0 ?Cleanup@G2RDBASE2@@QAEXXZ function
+0x0052fef0 ?Tidy@G2AGTDEQ@@QAEXXZ function 0x5
+0x00548b20 ?Init@G2ODEINIT@@QAEPAU1@XZ function 0x27
+0x00548af0 ?Swap@G2ODESWAP@@QAEXXZ function 0x2f
+0x00402560 ?Thunk@T104@@QAEXXZ function 0x8
+0x004025b0 ?Thunk@T108@@QAEXXZ function 0x8
+0x004025e0 ?Thunk@T10c@@QAEXXZ function 0x8
+0x00402610 ?Thunk@T110@@QAEXXZ function 0x8
+0x0054f060 ?GetGlobal@@YAPAXXZ function 0x6
+0x006c65e4 ?g_6c65e4@@3PAXA data 0x4
+0x0054f4c0 ?Self@G2TL1SELF@@QAEPAXH@Z function 0x5
+0x0042dec0 ?Set998@G2GC3FLAG@@QAEXXZ function 0x8

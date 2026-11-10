@@ -1,3 +1,5 @@
+#include <deque>
+
 // Tongas2/ANIMATEDGEOMETRY -- the animated-geometry loader and accessors.
 //
 // Discovery scaffold: bodies are empty until the unit is matched; each
@@ -58,4 +60,15 @@ struct G2AGTTHUNK
 void *G2AGTTHUNK::Get(int index)
 {
     return ((G2TFGET *)*(void **)((char *)this + 0xc))->Get5c(index);
+}
+
+class G2AGTDEQ : public std::deque<unsigned short>
+{
+public:
+    void Tidy();
+};
+
+void G2AGTDEQ::Tidy()
+{
+    _Tidy();
 }

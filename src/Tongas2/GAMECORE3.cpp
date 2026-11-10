@@ -671,3 +671,13 @@ void G2GC3STOP::StopAndFlag()
     ACTOR::Stop();
     *(bool *)((char *)this + 0xcbc) = true;
 }
+
+struct G2GC3FLAG
+{
+    void Set998();
+};
+
+void G2GC3FLAG::Set998()
+{
+    *(bool *)((char *)this + 0x998) = true;
+}
