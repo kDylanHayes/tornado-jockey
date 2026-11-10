@@ -1692,3 +1692,8 @@ void T258::Thunk()
 {
     T();
 }
+
+void G2Core1RefCmdContext(CMDCONTEXT *context)
+{
+    context->~CMDCONTEXT();
+}

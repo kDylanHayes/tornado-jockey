@@ -8026,3 +8026,10 @@
 0x0043c8b0 ?Thunk@T8c@@QAEXXZ function 0x8
 0x0043c8c0 ?Thunk@T90@@QAEXXZ function 0x8
 0x0043c8d0 ?Thunk@T94@@QAEXXZ function 0x8
+0x0044ac00 ??1V44AC00@@UAE@XZ function 0x7
+0x00661f08 ??_7V44AC00@@6B@ data
+0x005547c0 ??1V5547C0@@UAE@XZ function 0x7
+0x0067dd60 ??_7V5547C0@@6B@ data
+0x00554e60 ??1V554E60@@UAE@XZ function 0x7
+0x0067ddc8 ??_7V554E60@@6B@ data
+0x004061b0 ??1CMDCONTEXT@@UAE@XZ function 0x7

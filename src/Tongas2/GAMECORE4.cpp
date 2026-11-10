@@ -183,3 +183,13 @@ void ANG::GetAxes(V3 *forward, V3 *up)
         *up = axis;
     }
 }
+
+class V44AC00
+{
+public:
+    virtual ~V44AC00();
+};
+
+V44AC00::~V44AC00()
+{
+}
