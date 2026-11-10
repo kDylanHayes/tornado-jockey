@@ -233,7 +233,15 @@ public:
     static int s_classId;
     static int s_factoryId;
 
-    char m_pad[0xd18];
+    char pad_0000[0xcf0];
+    int m_cf0;
+    float m_cf4;
+    float m_cf8;
+    float m_cfc;
+    float m_d00;
+    float m_d04;
+    float m_d08;
+    char pad_d0c[0xd18 - 0xd0c];
 };
 
 ACTOR *CreateG2ODEACTOR()
@@ -302,8 +310,25 @@ public:
     virtual ~ODEWORLDX();
     void Shutdown();
     void AddActor(void *actor);
+    void Reset();
 
-    char pad_04[0x84];
+    char pad_04[0x5c];
+    void *m_60;
+    char pad_64[4];
+    bool m_68;
+    char pad_69[0x88 - 0x69];
+};
+
+extern GD548620 *g_pOdeWorld;
+extern "C" void _dSpaceDestroy(void *space);
+extern "C" void *_dQuadTreeSpaceCreate(void *space, const float *center,
+                                       const float *extents, int depth);
+extern "C" void _dSpaceSetCleanup(void *space, int mode);
+
+class ODELISTX
+{
+public:
+    void VisitAll(int arg);
 };
 
 __declspec(noinline) void ODEWORLDX::AddActor(void *actor)
@@ -317,6 +342,45 @@ __declspec(noinline) void ODEWORLDX::AddActor(void *actor)
 void CreateOdeWorld()
 {
     g_pOdeWorldX = new ODEWORLDX();
+}
+
+extern RESOURCEMANAGER *g_pActorResourceManager2;
+
+void ODEWORLDX::Reset()
+{
+    if (m_60) {
+        ((ODELISTX *)g_pActorResourceManager2)->VisitAll(0);
+        _dSpaceDestroy(m_60);
+        m_60 = 0;
+    }
+    float extents[4];
+    float center[4];
+    int depth;
+    if (g_pOdeWorld) {
+        center[0] = g_pOdeWorld->m_d00;
+        center[1] = g_pOdeWorld->m_d04;
+        center[2] = g_pOdeWorld->m_d08;
+        center[3] = 0.0f;
+        extents[0] = g_pOdeWorld->m_cf4;
+        extents[1] = g_pOdeWorld->m_cf8;
+        extents[2] = g_pOdeWorld->m_cfc;
+        extents[3] = 0.0f;
+        depth = g_pOdeWorld->m_cf0;
+    } else {
+        center[0] = 0.0f;
+        center[1] = 0.0f;
+        center[2] = 0.0f;
+        center[3] = 0.0f;
+        extents[0] = 1000.0f;
+        extents[1] = 1000.0f;
+        extents[2] = 1000.0f;
+        extents[3] = 0.0f;
+        depth = 5;
+    }
+    m_60 = _dQuadTreeSpaceCreate(0, center, extents, depth);
+    _dSpaceSetCleanup(m_60, 0);
+    ((ODELISTX *)g_pActorResourceManager2)->VisitAll((int)m_60);
+    m_68 = true;
 }
 
 int __stdcall FirstOfTwo(int first, int second)
