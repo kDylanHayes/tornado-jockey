@@ -807,7 +807,7 @@ __declspec(noinline) GD43bb40::~GD43bb40() throw()
     }
 }
 
-class GD43cc30
+class GD43cc30 : public RESOURCEMASTER
 {
 public:
     virtual ~GD43cc30();
@@ -818,7 +818,27 @@ public:
     static int s_classId;
 };
 
-__declspec(noinline) GD43cc30::~GD43cc30()
+__declspec(noinline) GD43cc30::~GD43cc30() throw()
+{
+}
+
+// The exe's destructor at 0x43cc30 does not store a vptr: it frees the three
+// names and then runs the base destructor. A class with the master as its
+// first member (rather than its base) emits exactly that shape.
+class GD43cc30X
+{
+public:
+    ~GD43cc30X();
+
+    RESOURCEMASTER m_master;
+    char pad_a0[0xa0 - sizeof(RESOURCEMASTER)];
+    CSTRING m_a0;
+    CSTRING m_a4;
+    char pad_2a8[0x2a8 - 0xa8];
+    CSTRING m_2a8;
+};
+
+__declspec(noinline) GD43cc30X::~GD43cc30X()
 {
 }
 
