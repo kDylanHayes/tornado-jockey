@@ -224,23 +224,23 @@ __declspec(noinline) GD440960::~GD440960()
 {
 }
 
-class GD4413d0
+class GD4413d0 : public RESOURCEMASTER
 {
 public:
-    virtual ~GD4413d0();
+    virtual ~GD4413d0() throw();
 };
 
-__declspec(noinline) GD4413d0::~GD4413d0()
+__declspec(noinline) GD4413d0::~GD4413d0() throw()
 {
 }
 
-class GD441630
+class GD441630 : public OBJECT
 {
 public:
-    virtual ~GD441630();
+    virtual ~GD441630() throw();
 };
 
-__declspec(noinline) GD441630::~GD441630()
+__declspec(noinline) GD441630::~GD441630() throw()
 {
 }
 
@@ -417,13 +417,13 @@ __declspec(noinline) GD4477d0::~GD4477d0()
 {
 }
 
-class GD447e50
+class GD447e50 : public APP
 {
 public:
-    virtual ~GD447e50();
+    virtual ~GD447e50() throw();
 };
 
-__declspec(noinline) GD447e50::~GD447e50()
+__declspec(noinline) GD447e50::~GD447e50() throw()
 {
 }
 

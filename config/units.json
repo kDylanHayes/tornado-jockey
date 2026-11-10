@@ -3565,7 +3565,10 @@
       ],
       "target": "build/target/Tongas2/SHADERDX8SD.obj",
       "source": "src/Tongas2/SHADERDX8SD.cpp",
-      "category": "engine"
+      "category": "engine",
+      "symbol_mappings": {
+        "??_7SHADER@@6B@": "??_7GD53aa10@@6B@"
+      }
     },
     {
       "name": "Tongas2/TEXTUREDX8CORE",

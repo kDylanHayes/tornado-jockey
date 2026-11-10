@@ -21,13 +21,20 @@ int GetRENDERTEXTUREFormat()
     return 0;
 }
 
-class GD539e70
+// The engine's renderer base; only its destructor matters here.
+class RENDERER
 {
 public:
-    virtual ~GD539e70();
+    virtual ~RENDERER();
 };
 
-__declspec(noinline) GD539e70::~GD539e70()
+class GD539e70 : public RENDERER
+{
+public:
+    virtual ~GD539e70() throw();
+};
+
+__declspec(noinline) GD539e70::~GD539e70() throw()
 {
 }
 

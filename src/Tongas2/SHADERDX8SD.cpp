@@ -14,23 +14,36 @@ void *CreateSHADERDX8SD()
     return 0;
 }
 
-class GD53aa10
+// The engine bases; only their destructors matter here.
+class RESOURCE
 {
 public:
-    virtual ~GD53aa10();
+    virtual ~RESOURCE();
 };
 
-__declspec(noinline) GD53aa10::~GD53aa10()
+class SHADERMASTER
+{
+public:
+    virtual ~SHADERMASTER();
+};
+
+class GD53aa10 : public RESOURCE
+{
+public:
+    virtual ~GD53aa10() throw();
+};
+
+__declspec(noinline) GD53aa10::~GD53aa10() throw()
 {
 }
 
-class GD53b2d0
+class GD53b2d0 : public SHADERMASTER
 {
 public:
-    virtual ~GD53b2d0();
+    virtual ~GD53b2d0() throw();
 };
 
-__declspec(noinline) GD53b2d0::~GD53b2d0()
+__declspec(noinline) GD53b2d0::~GD53b2d0() throw()
 {
 }
 

@@ -872,10 +872,10 @@ __declspec(noinline) GD43f2f0::~GD43f2f0()
 {
 }
 
-class GD43fad0
+class GD43fad0 : public RESOURCEMANAGER
 {
 public:
-    virtual ~GD43fad0();
+    virtual ~GD43fad0() throw();
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
@@ -883,14 +883,24 @@ public:
     static int s_classId;
 };
 
-__declspec(noinline) GD43fad0::~GD43fad0()
+__declspec(noinline) GD43fad0::~GD43fad0() throw()
 {
 }
 
-class GD43fa60
+class GD440960 : public OBJECT
 {
 public:
-    virtual ~GD43fa60();
+    virtual ~GD440960() throw();
+};
+
+__declspec(noinline) GD440960::~GD440960() throw()
+{
+}
+
+class GD43fa60 : public RESOURCEMASTER
+{
+public:
+    virtual ~GD43fa60() throw();
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
@@ -898,7 +908,7 @@ public:
     static int s_classId;
 };
 
-__declspec(noinline) GD43fa60::~GD43fa60()
+__declspec(noinline) GD43fa60::~GD43fa60() throw()
 {
 }
 

@@ -24,13 +24,13 @@ int PlaySample(const char *name)
     return 0;
 }
 
-class GD5479c0
+class GD5479c0 : public SOUND
 {
 public:
-    virtual ~GD5479c0();
+    virtual ~GD5479c0() throw();
 };
 
-__declspec(noinline) GD5479c0::~GD5479c0()
+__declspec(noinline) GD5479c0::~GD5479c0() throw()
 {
 }
 
