@@ -8205,3 +8205,5 @@
 0x00559ab0 ??_GGD559ad0@@UAEPAXI@Z function 0x1e
 0x00559aa0 ??1GD559aa0@@UAE@XZ function 0x6
 0x00559ae0 ??_GGD559aa0@@UAEPAXI@Z function 0x1e
+0x00659488 __real@3fc1f07c data 0x4
+0x0065b810 __real@3f28f5c3 data 0x4

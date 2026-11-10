@@ -1970,7 +1970,8 @@ void G2CHAIN::B()
     ACTOR *tornado = g_pGame->GetTornado();
     if (!tornado)
         return;
-    m_f1b9c -= g_pTimer->m_dt;
+    float delta = g_pTimer->m_dt;
+    m_f1b9c -= delta;
     if (!(m_f1b9c > 0.0f) || m_f5c != 0) {
         if (m_1ba0 >= m_f4c) {
             m_f1b9c = m_f58;
@@ -1983,7 +1984,8 @@ void G2CHAIN::B()
                 m_f1b9c *= 0.66f;
             return;
         }
-        m_f1b98 -= g_pTimer->m_dt;
+        float delta2 = g_pTimer->m_dt;
+        m_f1b98 -= delta2;
         if (!(m_f1b98 > 0.0f) || m_f5c != 0) {
             float wait;
             if (m_f50.y > m_f50.x)
@@ -2045,8 +2047,7 @@ void G2CHAIN::B()
             G2STREQ name;
             SafeSprintf(name.m_buf, "sc_%u", g_stormChaserCount++);
             chaser->SetName(CSTRING(name.m_buf));
-            V3 position = best->GetPosition();
-            chaser->SetPosition(position);
+            chaser->SetPosition(best->GetPosition());
             chaser->InitChaser();
             int one = 1;
             chaser->SetActivation(one);
@@ -2056,8 +2057,7 @@ void G2CHAIN::B()
             V3 direction(tornadoPos.x - chaserPos.x, 0.0f, tornadoPos.z - chaserPos.z);
             direction.Normalize();
             chaser->SetDirection(direction, g_up);
-            V3 scale = best->GetScale();
-            chaser->SetScale(scale);
+            chaser->SetScale(best->GetScale());
             int zsort = *(int *)((char *)best + 0x984);
             chaser->SetZSort(zsort);
             if (*(bool *)((char *)best + 0xcd0)) {
