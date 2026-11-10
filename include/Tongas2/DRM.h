@@ -15,9 +15,15 @@ public:
 
     static void RegisterCommands();
 
+#ifdef DRM_OUTOFLINE
+    virtual int GetClassId();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+#else
     virtual int GetClassId() { return s_classId; }
     virtual int GetParentClassId() { return g_classParents[s_classId]; }
     virtual const char *GetClassName() { return g_classNames[s_classId]; }
+#endif
     virtual SRESULT Execute(CMDENTRY *command, TOKENS **args)
     {
         return (this->*(SRESULT (DRM::*)(TOKENS **))command->func)(args);

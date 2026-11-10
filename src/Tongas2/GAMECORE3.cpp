@@ -585,6 +585,12 @@ public:
 extern RESOURCEMANAGER *g_pMinitornadoTemplates;
 extern int g_factoryFlags[];
 extern int g_stormChaserFactoryId;
+
+class G2POWERUP
+{
+public:
+    static int s_factoryId;
+};
 extern int g_stormSpawnerFactoryId;
 
 class GD42ddd0 : public ACTOR
@@ -594,6 +600,7 @@ public:
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
+    virtual int GetFactoryId();
     virtual int GetFactoryFlags();
 
     static int s_factoryId;
@@ -639,6 +646,7 @@ class GD42e6e0
 {
 public:
     virtual ~GD42e6e0();
+    virtual int GetFactoryId();
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
@@ -657,6 +665,7 @@ public:
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
+    virtual int GetFactoryId();
     virtual int GetFactoryFlags();
 
     static int s_factoryId;
@@ -675,6 +684,7 @@ public:
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
+    virtual int GetFactoryId();
     virtual int GetFactoryFlags();
 
     static int s_factoryId;
@@ -693,6 +703,7 @@ public:
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
+    virtual int GetFactoryId();
     virtual int GetFactoryFlags();
 
     static int s_factoryId;
@@ -711,6 +722,7 @@ public:
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
+    virtual int GetFactoryId();
     virtual int GetFactoryFlags();
 
     static int s_classId;
@@ -727,6 +739,7 @@ public:
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
+    virtual int GetFactoryId();
     virtual int GetFactoryFlags();
 
     static int s_classId;
@@ -743,6 +756,7 @@ public:
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
+    virtual int GetFactoryId();
     virtual int GetFactoryFlags();
 
     static int s_factoryId;
@@ -761,6 +775,7 @@ public:
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
+    virtual int GetFactoryId();
     virtual int GetFactoryFlags();
 
     static int s_factoryId;
@@ -2371,4 +2386,49 @@ CSTRING &G2CORE3SW::SetA04(const CSTRING &value)
 CSTRING &G2CORE3SW::SetA98(const CSTRING &value)
 {
     return *(CSTRING *)((char *)this + 0xa98) = value;
+}
+
+int GD42ddd0::GetFactoryId()
+{
+    return s_factoryId;
+}
+
+int GD42e6e0::GetFactoryId()
+{
+    return G2POWERUP::s_factoryId;
+}
+
+int GD42f370::GetFactoryId()
+{
+    return s_factoryId;
+}
+
+int GD432870::GetFactoryId()
+{
+    return s_factoryId;
+}
+
+int GD4331a0::GetFactoryId()
+{
+    return s_factoryId;
+}
+
+int GD438ff0::GetFactoryId()
+{
+    return g_stormChaserFactoryId;
+}
+
+int GD43b550::GetFactoryId()
+{
+    return g_stormSpawnerFactoryId;
+}
+
+int GD43b850::GetFactoryId()
+{
+    return s_factoryId;
+}
+
+int GD43bb40::GetFactoryId()
+{
+    return s_factoryId;
 }

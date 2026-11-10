@@ -1,4 +1,5 @@
 #define OBJECT_GETPARENTACTOR
+#define DRM_OUTOFLINE
 #include <string.h>
 
 // Tongas2/GAMECORE4 -- the game-code block at 0x4410b0. The string, vector
@@ -1836,3 +1837,123 @@ CSTRING &G2CORE4SW::Set8C(const CSTRING &value)
 {
     return *(CSTRING *)((char *)this + 0x8c) = value;
 }
+
+int DRM::GetClassId()
+{
+    return s_classId;
+}
+
+int DRM::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *DRM::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
+class G2CORE4FID1
+{
+public:
+    virtual int GetFactoryId();
+
+    static int s_factoryId;
+};
+
+int G2CORE4FID1::GetFactoryId()
+{
+    return s_factoryId;
+}
+
+class G2CORE4FID2
+{
+public:
+    virtual int GetFactoryId();
+
+    static int s_factoryId;
+};
+
+int G2CORE4FID2::GetFactoryId()
+{
+    return s_factoryId;
+}
+
+class G2CORE4FID3
+{
+public:
+    virtual int GetFactoryId();
+
+    static int s_factoryId;
+};
+
+int G2CORE4FID3::GetFactoryId()
+{
+    return s_factoryId;
+}
+
+class G2CORE4FID4
+{
+public:
+    virtual int GetFactoryId();
+
+    static int s_factoryId;
+};
+
+int G2CORE4FID4::GetFactoryId()
+{
+    return s_factoryId;
+}
+
+class G2CORE4FID5
+{
+public:
+    virtual int GetFactoryId();
+
+    static int s_factoryId;
+};
+
+int G2CORE4FID5::GetFactoryId()
+{
+    return s_factoryId;
+}
+
+class G2CORE4FID6
+{
+public:
+    virtual int GetFactoryId();
+
+    static int s_factoryId;
+};
+
+int G2CORE4FID6::GetFactoryId()
+{
+    return s_factoryId;
+}
+
+class G2CORE4FID7
+{
+public:
+    virtual int GetFactoryId();
+
+    static int s_factoryId;
+};
+
+int G2CORE4FID7::GetFactoryId()
+{
+    return s_factoryId;
+}
+
+class G2CORE4FID8
+{
+public:
+    virtual int GetFactoryId();
+
+    static int s_factoryId;
+};
+
+int G2CORE4FID8::GetFactoryId()
+{
+    return s_factoryId;
+}
+
