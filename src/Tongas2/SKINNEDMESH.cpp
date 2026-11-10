@@ -61,8 +61,7 @@ struct G2SKMGET
 void * G2SKMGET::Get14(int index)
 {
     void **table = *(void ***)((char *)this + 0x14);
-    table += index;
-    return *table;
+    return table[index];
 }
 
 void * G2SKMGET::Get4(int index)

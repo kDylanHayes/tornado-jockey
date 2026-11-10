@@ -57,3 +57,18 @@ void G2ODEACTORX::Check()
     if (!*(void **)((char *)this + 0xccc))
         ((G2ODEACTORTGT *)this)->Call();
 }
+
+struct G2ODEADJ
+{
+    void Call(void *arg);
+};
+
+struct G2ODEADJTGT
+{
+    void Call(void *arg);
+};
+
+void G2ODEADJ::Call(void *arg)
+{
+    ((G2ODEADJTGT *)((char *)this + 4))->Call((char *)arg + 8);
+}
