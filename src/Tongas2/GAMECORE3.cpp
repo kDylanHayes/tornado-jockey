@@ -336,7 +336,7 @@ RESOURCE::~RESOURCE()
             g_pLog->Error("ERROR!!! - deleting used copy of %s!!!", m_master->m_name.c_str());
         if (m_initialized) {
             if (m_active) {
-                Stop();
+                ((OBJECT *)this)->Stop();
                 m_active = false;
             }
             m_master->ReleaseCopy(this);
