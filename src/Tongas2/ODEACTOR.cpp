@@ -41,3 +41,19 @@ public:
 __declspec(noinline) GD54cb00::~GD54cb00()
 {
 }
+
+struct G2ODEACTORTGT
+{
+    void Call();
+};
+
+struct G2ODEACTORX
+{
+    void Check();
+};
+
+void G2ODEACTORX::Check()
+{
+    if (!*(void **)((char *)this + 0xccc))
+        ((G2ODEACTORTGT *)this)->Call();
+}
