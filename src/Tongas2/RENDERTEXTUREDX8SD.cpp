@@ -6,6 +6,7 @@
 #include "Tongas2/RENDERTEXTUREDX8SD.h"
 #include "Tongas2/APPWINDOW.h"
 #include "Tongas2/RESOURCES.h"
+#include "Tongas2/RENDERTEXTURE.h"
 
 int SafeSprintf(char *buf, const char *format, ...);
 
@@ -24,17 +25,35 @@ RENDERTEXTUREMANAGER::RENDERTEXTUREMANAGER()
     m_18 = true;
 }
 
+// The SD renderer's render-texture master. It adds one word after the
+// RENDERTEXTUREMASTER layout and its own vtable (0x67a760).
+class RENDERTEXTUREDX8SDMASTER : public RENDERTEXTUREMASTER
+{
+public:
+    RENDERTEXTUREDX8SDMASTER(RESOURCEMANAGER *manager, const char *name)
+        : RENDERTEXTUREMASTER(manager, name)
+    {
+        m_8c = 0;
+    }
+
+    virtual ~RENDERTEXTUREDX8SDMASTER();
+
+    int m_8c;
+};
+
 class RENDERTEXTUREDX8SDMANAGER : public RENDERTEXTUREMANAGER
 {
 public:
     RENDERTEXTUREDX8SDMANAGER()
     {
     }
+
+    virtual RESOURCEMASTER *CreateMaster(const char *name);
 };
 
-RENDERTEXTUREDX8SDMASTER *CreateRENDERTEXTUREDX8SDMaster()
+RESOURCEMASTER *RENDERTEXTUREDX8SDMANAGER::CreateMaster(const char *name)
 {
-    return 0;
+    return new RENDERTEXTUREDX8SDMASTER(this, name);
 }
 
 void *CreateRENDERTEXTUREDX8SD()
