@@ -36,3 +36,33 @@ void * G2DX8GET::Get54(int index)
 {
     return (char *)*(void **)((char *)this + 0x54) + index * 0x1c;
 }
+
+struct G2DX8T1
+{
+    void Call();
+};
+
+struct G2DX8T2
+{
+    void Call();
+};
+
+struct G2DX8TH1
+{
+    void Call();
+};
+
+struct G2DX8TH2
+{
+    void Call();
+};
+
+void G2DX8TH1::Call()
+{
+    ((G2DX8T1 *)*(void **)((char *)this + 0x4c))->Call();
+}
+
+void G2DX8TH2::Call()
+{
+    ((G2DX8T2 *)*(void **)((char *)this + 0x4c))->Call();
+}

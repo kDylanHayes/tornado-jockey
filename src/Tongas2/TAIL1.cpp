@@ -81,3 +81,30 @@ void G2TL1FREE::Free()
 {
     free(*(void **)this);
 }
+
+class G2TL1BASE
+{
+public:
+    G2TL1BASE();
+    virtual void V();
+};
+
+class G2TL1C1 : public G2TL1BASE
+{
+public:
+    G2TL1C1();
+};
+
+G2TL1C1::G2TL1C1()
+{
+}
+
+class G2TL1C2 : public G2TL1BASE
+{
+public:
+    G2TL1C2();
+};
+
+G2TL1C2::G2TL1C2()
+{
+}
