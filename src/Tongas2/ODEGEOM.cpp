@@ -47,3 +47,9 @@ public:
 __declspec(noinline) GD549b40::~GD549b40()
 {
 }
+
+extern "C" char DAT_0067c1dc;
+void *GetD0067c1dc()
+{
+    return &DAT_0067c1dc;
+}

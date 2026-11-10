@@ -103,3 +103,25 @@ void *G2TL3ALLOC::Alloc(unsigned int n)
 {
     return operator new(n * 2);
 }
+
+struct TL3GET
+{
+    int Get0(void);
+    char Get1(void);
+    int Get2(void);
+};
+
+int TL3GET::Get0(void)
+{
+    return *(int *)((char *)this + 0x8);
+}
+
+char TL3GET::Get1(void)
+{
+    return *(char *)((char *)this + 0x50);
+}
+
+int TL3GET::Get2(void)
+{
+    return *(int *)((char *)this + 0x4);
+}

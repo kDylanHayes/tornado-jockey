@@ -21,3 +21,9 @@ public:
 __declspec(noinline) GD535df0::~GD535df0()
 {
 }
+
+extern "C" char DAT_00679fdc;
+void *GetD00679fdc()
+{
+    return &DAT_00679fdc;
+}

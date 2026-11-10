@@ -76,3 +76,9 @@ void G2RDX::Run()
     Cleanup();
     V20();
 }
+
+extern "C" char DAT_0067cda8;
+void *GetD0067cda8()
+{
+    return &DAT_0067cda8;
+}

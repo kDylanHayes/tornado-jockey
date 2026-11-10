@@ -75,3 +75,9 @@ void RTKc0::Thunk()
 {
     T();
 }
+
+extern "C" char DAT_0067abb8;
+void *GetD0067abb8()
+{
+    return &DAT_0067abb8;
+}

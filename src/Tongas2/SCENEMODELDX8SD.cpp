@@ -31,3 +31,9 @@ public:
 __declspec(noinline) GD536d90::~GD536d90()
 {
 }
+
+extern "C" char DAT_0067a410;
+void *GetD0067a410()
+{
+    return &DAT_0067a410;
+}

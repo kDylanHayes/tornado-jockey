@@ -2107,3 +2107,19 @@ void G2CHAIN::B()
         }
     }
 }
+
+struct GC2GET
+{
+    int Get0(void);
+    int Get1(void);
+};
+
+int GC2GET::Get0(void)
+{
+    return *(int *)((char *)this + 0xf4c);
+}
+
+int GC2GET::Get1(void)
+{
+    return *(int *)((char *)this + 0x1b8c);
+}

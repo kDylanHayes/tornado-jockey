@@ -511,3 +511,9 @@ void G2RSJMP::Run()
 {
     ((G2RSTGT *)this)->Run();
 }
+
+extern "C" char DAT_0067550c;
+void *GetD0067550c()
+{
+    return &DAT_0067550c;
+}

@@ -1193,3 +1193,51 @@ void G3K138::Thunk()
 {
     T();
 }
+
+extern "C" char DAT_0065e96c;
+void *GetD0065e96c()
+{
+    return &DAT_0065e96c;
+}
+
+extern "C" char DAT_0065eb98;
+void *GetD0065eb98()
+{
+    return &DAT_0065eb98;
+}
+
+extern "C" char DAT_0065ec70;
+void *GetD0065ec70()
+{
+    return &DAT_0065ec70;
+}
+
+extern "C" char DAT_0065eeb4;
+void *GetD0065eeb4()
+{
+    return &DAT_0065eeb4;
+}
+
+extern "C" char DAT_0065f37c;
+void *GetD0065f37c()
+{
+    return &DAT_0065f37c;
+}
+
+extern "C" char DAT_0065f564;
+void *GetD0065f564()
+{
+    return &DAT_0065f564;
+}
+
+extern "C" char DAT_0065f64c;
+void *GetD0065f64c()
+{
+    return &DAT_0065f64c;
+}
+
+extern "C" char DAT_0065f86c;
+void *GetD0065f86c()
+{
+    return &DAT_0065f86c;
+}

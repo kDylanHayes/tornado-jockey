@@ -1160,3 +1160,13 @@ void BMK1a8::Thunk()
 {
     T();
 }
+
+struct BMDGET
+{
+    int Get0(void);
+};
+
+int BMDGET::Get0(void)
+{
+    return *(int *)((char *)this - 0x274);
+}

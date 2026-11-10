@@ -629,3 +629,101 @@ void G4K84::Thunk()
 {
     T();
 }
+
+extern "C" char DAT_0065fd58;
+void *GetD0065fd58()
+{
+    return &DAT_0065fd58;
+}
+
+extern "C" char DAT_006601e4;
+void *GetD006601e4()
+{
+    return &DAT_006601e4;
+}
+
+extern "C" char DAT_00660438;
+void *GetD00660438()
+{
+    return &DAT_00660438;
+}
+
+extern "C" char DAT_006609a0;
+void *GetD006609a0()
+{
+    return &DAT_006609a0;
+}
+
+extern "C" char DAT_00660ae0;
+void *GetD00660ae0()
+{
+    return &DAT_00660ae0;
+}
+
+extern "C" char DAT_00660bc8;
+void *GetD00660bc8()
+{
+    return &DAT_00660bc8;
+}
+
+extern "C" char DAT_00661ae4;
+void *GetD00661ae4()
+{
+    return &DAT_00661ae4;
+}
+
+extern "C" char DAT_00661b24;
+void *GetD00661b24()
+{
+    return &DAT_00661b24;
+}
+
+extern "C" void FUN_0044e2c0();
+void *GetF0044e2c0()
+{
+    return (void *)&FUN_0044e2c0;
+}
+
+int GetK5a()
+{
+    return 0x5a;
+}
+
+int GetK3()
+{
+    return 0x3;
+}
+
+struct GC4GET
+{
+    char Get0(void);
+    char Get1(void);
+    int Get2(void);
+    int Get3(void);
+    int Get4(void);
+};
+
+char GC4GET::Get0(void)
+{
+    return *(char *)((char *)this + 0x71);
+}
+
+char GC4GET::Get1(void)
+{
+    return *(char *)((char *)this + 0x1c);
+}
+
+int GC4GET::Get2(void)
+{
+    return *(int *)((char *)this + 0x1ec);
+}
+
+int GC4GET::Get3(void)
+{
+    return *(int *)((char *)this + 0xe8);
+}
+
+int GC4GET::Get4(void)
+{
+    return *(int *)((char *)this + 0x50);
+}

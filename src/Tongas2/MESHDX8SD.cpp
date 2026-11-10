@@ -476,3 +476,13 @@ void MESHDX8SDMASTER::ForwardTemp()
 {
     ((HEIGHTMAPTEMP *)((char *)this + 0x70))->Touch();
 }
+
+struct MD8GET
+{
+    int Get0(void);
+};
+
+int MD8GET::Get0(void)
+{
+    return *(int *)((char *)this - 0x27c);
+}

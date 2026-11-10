@@ -125,3 +125,9 @@ void *G2TL1SELF::Self(int arg)
 {
     return this;
 }
+
+extern "C" char DAT_0067d0dc;
+void *GetD0067d0dc()
+{
+    return &DAT_0067d0dc;
+}
