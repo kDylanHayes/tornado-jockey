@@ -780,3 +780,15 @@ bool AABBQuantizedNoLeafTree::Walk(GenericWalkingCallback callback, void* user_d
 	Local::_Walk(mNodes, callback, user_data);
 	return true;
 }
+
+// The engine reserves this virtual for type checks; this plugin reports none.
+class RESOURCEMANAGER
+{
+public:
+    virtual bool IsMyType(const char *name);
+};
+
+bool RESOURCEMANAGER::IsMyType(const char *name)
+{
+    return false;
+}

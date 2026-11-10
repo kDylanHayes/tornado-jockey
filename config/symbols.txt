@@ -3219,7 +3219,7 @@
 0x00548d70 ?GetScaleFactor@CPRIMITIVE3RESOURCE@@UAE?AUV3@@XZ function
 0x0054d310 ?Virtual82@BONEDMODELRESOURCE@@UAE?AUV3@@H@Z function 0x11
 0x0054d340 ?Update@BONEDMODELRESOURCE@@UAEXXZ function 0x5
-0x0054f1f0 ??1WTINFO@@QAE@XZ function
+0x0054f1f0 ??1WTINFO@@UAE@XZ function 0x53
 0x00550520 ??0WTINFO@@QAE@_N@Z function
 0x00550e40 ?IsOpen@FILELOADER@@UAE_NXZ function 0xb
 0x00554320 ?GetUserFolder@@YI?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z function
@@ -9362,3 +9362,4 @@
 0x00661d20 ??_7GD4484c0@@6B@ data
 0x0067dd64 ??_7GD557e70@@6BV5547C4@@@ data
 0x0067dd78 ??_7GD557e70@@6BGD557e70BASE@@@ data
+0x0067d1b8 ??_7WTINFO@@6B@ data

@@ -1,3 +1,4 @@
+#include <string>
 #include <stdlib.h>
 #include <stdexcept>
 
@@ -16,6 +17,8 @@ class V5547C4
 {
 public:
     virtual ~V5547C4();
+
+    int m_4;
 };
 
 class GD54f0b0
@@ -223,4 +226,17 @@ TAIL1ERR::TAIL1ERR(const TAIL1ERR &other) : std::logic_error(other)
 bool FILELOADER::IsOpen()
 {
     return m_fp != 0;
+}
+
+class WTINFO : public V5547C4
+{
+public:
+    ~WTINFO();
+
+    std::string m_08;
+    std::string m_24;
+};
+
+WTINFO::~WTINFO()
+{
 }
