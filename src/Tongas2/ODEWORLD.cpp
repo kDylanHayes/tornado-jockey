@@ -94,3 +94,19 @@ void G2ODESWAP::Swap()
         *(int *)(p + 4) = a;
     }
 }
+
+struct ODEWORLDM1
+{
+    void SetD0C(const bool &value);
+    void SetD14(const int &value);
+};
+
+void ODEWORLDM1::SetD0C(const bool &value)
+{
+    *(bool *)((char *)this + 0xd0c) = value;
+}
+
+void ODEWORLDM1::SetD14(const int &value)
+{
+    *(int *)((char *)this + 0xd14) = value;
+}

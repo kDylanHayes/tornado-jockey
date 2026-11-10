@@ -131,3 +131,31 @@ void *GetD0067d0dc()
 {
     return &DAT_0067d0dc;
 }
+
+struct TAIL1M1
+{
+    void Set825(const bool &value);
+    void Set834(const bool &value);
+    void Set820(const int &value);
+    void Set824(const bool &value);
+};
+
+void TAIL1M1::Set825(const bool &value)
+{
+    *(bool *)((char *)this + 0x825) = value;
+}
+
+void TAIL1M1::Set834(const bool &value)
+{
+    *(bool *)((char *)this + 0x834) = value;
+}
+
+void TAIL1M1::Set820(const int &value)
+{
+    *(int *)((char *)this + 0x820) = value;
+}
+
+void TAIL1M1::Set824(const bool &value)
+{
+    *(bool *)((char *)this + 0x824) = value;
+}
