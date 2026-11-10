@@ -30,6 +30,8 @@ public:
     virtual ~TEXTURERESIZER();
 
     void UpdateTextures();
+    // Unlinks and frees the node whose key is key.
+    void Remove(int key);
 
     TEXTURERESIZERNODE *m_4;
 };

@@ -48,3 +48,25 @@ void DeleteTextureResizer(TEXTURERESIZER *resizer)
 {
     delete resizer;
 }
+
+void TEXTURERESIZER::Remove(int key)
+{
+    if (!key)
+        return;
+    TEXTURERESIZERNODE *prev = 0;
+    TEXTURERESIZERNODE *node = m_4;
+    if (!node)
+        return;
+    do {
+        if (node->m_0 == key) {
+            if (prev)
+                prev->m_4 = node->m_4;
+            else
+                m_4 = node->m_4;
+            delete node;
+            return;
+        }
+        prev = node;
+        node = node->m_4;
+    } while (node);
+}
