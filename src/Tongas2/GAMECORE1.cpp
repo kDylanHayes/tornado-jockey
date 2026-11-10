@@ -496,3 +496,263 @@ G2STREQ::G2STREQ(const char *text)
         m_buf[0x1ff] = '\0';
     }
 }
+
+struct G2CORE1B
+{
+    float Get();
+};
+
+float G2CORE1B::Get()
+{
+    return (float)*(int *)((char *)this + 0xd20) + *(float *)((char *)this + 0x1778);
+}
+
+struct G2CORE1C
+{
+    void Set(const int &value);
+};
+
+void G2CORE1C::Set(const int &value)
+{
+    *(int *)((char *)this + 0x1e88) = value;
+}
+
+struct G2CORE1D
+{
+    void Clear();
+};
+
+void G2CORE1D::Clear()
+{
+    *(int *)((char *)this + 0x1e7c) = -1;
+    *(int *)((char *)this + 0x1e80) = -1;
+}
+
+struct G2CORE1E
+{
+    int GetC();
+};
+
+int G2CORE1E::GetC()
+{
+    return *(int *)((char *)this + 0xc);
+}
+
+struct G2CORE1SET
+{
+    void Set250(const void *src);
+    void Set650(const void *src);
+    void SetA50(const void *src);
+    void Set1C(const void *src);
+    void SetCD8(const void *src);
+    void SetED8(const void *src);
+    void Set10DC(const void *src);
+    void SetD04(const void *src);
+    void SetF28(const void *src);
+    void Set1128(const void *src);
+    void Set3770(const void *src);
+    void Set17A0(const void *src);
+    void Set2620(const void *src);
+};
+
+void G2CORE1SET::Set250(const void *src)
+{
+    memcpy((char *)this + 0x250, src, 0x400);
+}
+
+void G2CORE1SET::Set650(const void *src)
+{
+    memcpy((char *)this + 0x650, src, 0x400);
+}
+
+void G2CORE1SET::SetA50(const void *src)
+{
+    memcpy((char *)this + 0xa50, src, 0x400);
+}
+
+void G2CORE1SET::Set1C(const void *src)
+{
+    memcpy((char *)this + 0x1c, src, 0x400);
+}
+
+void G2CORE1SET::SetCD8(const void *src)
+{
+    memcpy((char *)this + 0xcd8, src, 0x200);
+}
+
+void G2CORE1SET::SetED8(const void *src)
+{
+    memcpy((char *)this + 0xed8, src, 0x200);
+}
+
+void G2CORE1SET::Set10DC(const void *src)
+{
+    memcpy((char *)this + 0x10dc, src, 0x200);
+}
+
+void G2CORE1SET::SetD04(const void *src)
+{
+    memcpy((char *)this + 0xd04, src, 0x200);
+}
+
+void G2CORE1SET::SetF28(const void *src)
+{
+    memcpy((char *)this + 0xf28, src, 0x200);
+}
+
+void G2CORE1SET::Set1128(const void *src)
+{
+    memcpy((char *)this + 0x1128, src, 0x200);
+}
+
+void G2CORE1SET::Set3770(const void *src)
+{
+    memcpy((char *)this + 0x3770, src, 0x200);
+}
+
+void G2CORE1SET::Set17A0(const void *src)
+{
+    memcpy((char *)this + 0x17a0, src, 0x200);
+}
+
+void G2CORE1SET::Set2620(const void *src)
+{
+    memcpy((char *)this + 0x2620, src, 0x400);
+}
+
+void GAME::ResetRules()
+{
+    *(int *)((char *)this + 0x1e64) = -1;
+    *(int *)((char *)this + 0x1e68) = -1;
+}
+
+struct G2CORE1F
+{
+    void Clear();
+};
+
+void G2CORE1F::Clear()
+{
+    *(int *)((char *)this + 0x1e70) = -1;
+    *(int *)((char *)this + 0x1e74) = -1;
+}
+
+class G2CORE1J1 : public ACTOR
+{
+public:
+    virtual ~G2CORE1J1();
+};
+
+G2CORE1J1::~G2CORE1J1()
+{
+}
+
+class G2CORE1J2 : public ACTOR
+{
+public:
+    virtual ~G2CORE1J2();
+};
+
+G2CORE1J2::~G2CORE1J2()
+{
+}
+
+class G2CORE1J3 : public ACTOR
+{
+public:
+    virtual ~G2CORE1J3();
+};
+
+G2CORE1J3::~G2CORE1J3()
+{
+}
+
+class G2CORE1K1 : public ACTOR
+{
+public:
+    virtual ~G2CORE1K1();
+};
+
+G2CORE1K1::~G2CORE1K1()
+{
+}
+
+class G2CORE1K2 : public ACTOR
+{
+public:
+    virtual ~G2CORE1K2();
+};
+
+G2CORE1K2::~G2CORE1K2()
+{
+}
+
+class G2CORE1K3 : public ACTOR
+{
+public:
+    virtual ~G2CORE1K3();
+};
+
+G2CORE1K3::~G2CORE1K3()
+{
+}
+
+class G2CORE1K4 : public ACTOR
+{
+public:
+    virtual ~G2CORE1K4();
+};
+
+G2CORE1K4::~G2CORE1K4()
+{
+}
+
+class G2CORE1K5 : public ACTOR
+{
+public:
+    virtual ~G2CORE1K5();
+};
+
+G2CORE1K5::~G2CORE1K5()
+{
+}
+
+class G2CORE1K6 : public ACTOR
+{
+public:
+    virtual ~G2CORE1K6();
+};
+
+G2CORE1K6::~G2CORE1K6()
+{
+}
+
+class G2CORE1K7 : public ACTOR
+{
+public:
+    virtual ~G2CORE1K7();
+};
+
+G2CORE1K7::~G2CORE1K7()
+{
+}
+
+class G2CORE1K8 : public ACTOR
+{
+public:
+    virtual ~G2CORE1K8();
+};
+
+G2CORE1K8::~G2CORE1K8()
+{
+}
+
+class G2CORE1K9 : public ACTOR
+{
+public:
+    virtual ~G2CORE1K9();
+};
+
+G2CORE1K9::~G2CORE1K9()
+{
+}
