@@ -8870,3 +8870,7 @@
 0x0053a090 ?DisplaySetting10@@YA_NXZ function 0x19
 0x0053a0b0 ?DisplayFieldEC@@YAPAXXZ function 0xc
 0x004f4780 ?HasAnimation@BONEDM3@@QAE_NXZ function 0xe
+0x0054af10 ?SetForceAndClear@ODEACTORM1@@QAEXABUV3@@@Z function 0x18
+0x0054af30 ?SetResourcesPosAndClear@ODEACTORM1@@QAEXHABUV3@@@Z function 0x1f
+0x0054af50 ?SetResourcesAngAndClear@ODEACTORM1@@QAEXHABUANG@@@Z function 0x1f
+0x0054af70 ?SetResourcesScaleAndClear@ODEACTORM1@@QAEXHABUV3@@@Z function 0x1f

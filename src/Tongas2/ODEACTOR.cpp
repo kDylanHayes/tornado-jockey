@@ -6,6 +6,20 @@
 
 extern char g_classNames[][30];
 
+class EMITTERMASTER
+{
+public:
+    void SetForce(const V3 &value);
+};
+
+class ACTORX
+{
+public:
+    void SetResourcesPos(const int &index, const V3 &position);
+    void SetResourcesAng(const int &index, const ANG &angles);
+    void SetResourcesScale(const int &index, const V3 &scale);
+};
+
 void ODEACTORMASTER::RegisterCommands()
 {
 }
@@ -99,4 +113,36 @@ int G2ODEACTOR::GetParentClassId()
 const char *G2ODEACTOR::GetClassName()
 {
     return g_classNames[s_classId];
+}
+
+struct ODEACTORM1
+{
+    void SetForceAndClear(const V3 &value);
+    void SetResourcesPosAndClear(int index, const V3 &position);
+    void SetResourcesAngAndClear(int index, const ANG &angles);
+    void SetResourcesScaleAndClear(int index, const V3 &scale);
+};
+
+void ODEACTORM1::SetForceAndClear(const V3 &value)
+{
+    ((EMITTERMASTER *)this)->SetForce(value);
+    *(bool *)((char *)this + 0xd14) = false;
+}
+
+void ODEACTORM1::SetResourcesPosAndClear(int index, const V3 &position)
+{
+    ((ACTORX *)this)->SetResourcesPos(index, position);
+    *(bool *)((char *)this + 0xd14) = false;
+}
+
+void ODEACTORM1::SetResourcesAngAndClear(int index, const ANG &angles)
+{
+    ((ACTORX *)this)->SetResourcesAng(index, angles);
+    *(bool *)((char *)this + 0xd14) = false;
+}
+
+void ODEACTORM1::SetResourcesScaleAndClear(int index, const V3 &scale)
+{
+    ((ACTORX *)this)->SetResourcesScale(index, scale);
+    *(bool *)((char *)this + 0xd14) = false;
 }
