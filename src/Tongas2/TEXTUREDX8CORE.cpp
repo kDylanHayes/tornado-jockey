@@ -57,7 +57,7 @@ public:
     bool m_4;
 };
 
-void G2DX8DEVICE::ReleaseTexture()
+__declspec(noinline) void G2DX8DEVICE::ReleaseTexture()
 {
     if (m_0) {
         G2DX8IFACE *texture = m_0;
@@ -67,7 +67,7 @@ void G2DX8DEVICE::ReleaseTexture()
     m_4 = false;
 }
 
-void G2DX8DEVICE::CreateTexture(G2DX8OBJECT *object)
+__declspec(noinline) void G2DX8DEVICE::CreateTexture(G2DX8OBJECT *object)
 {
     if (m_4)
         return;
@@ -92,4 +92,113 @@ TEXTUREDX8SDTEXTUREMEMBER::~TEXTUREDX8SDTEXTUREMEMBER()
         delete[] m_0;
         m_0 = 0;
     }
+}
+
+// Two more wrappers over the texture device: the first pair holds the device
+// at +0x40 and a flag at +0x5c, the second at +8 and +0x25.
+class TEXWRAPB1
+{
+public:
+    void Call();
+
+    char pad_00[0x40];
+    G2DX8DEVICE *m_40;
+    char pad_44[0x5c - 0x44];
+    bool m_5c;
+};
+
+class TEXWRAPB2
+{
+public:
+    void Call(int arg);
+
+    char pad_00[0x40];
+    G2DX8DEVICE *m_40;
+    char pad_44[0x5c - 0x44];
+    bool m_5c;
+};
+
+void TEXWRAPB1::Call()
+{
+    if (m_5c)
+        m_40->ReleaseTexture();
+}
+
+void TEXWRAPB2::Call(int arg)
+{
+    if (m_5c)
+        m_40->CreateTexture((G2DX8OBJECT *)arg);
+}
+
+class TEXWRAPA1
+{
+public:
+    void Call();
+
+    char pad_00[8];
+    G2DX8DEVICE *m_8;
+    char pad_c[0x25 - 0xc];
+    bool m_25;
+};
+
+class TEXWRAPA2
+{
+public:
+    void Call(int arg);
+
+    char pad_00[8];
+    G2DX8DEVICE *m_8;
+    char pad_c[0x25 - 0xc];
+    bool m_25;
+};
+
+void TEXWRAPA1::Call()
+{
+    if (m_25)
+        m_8->ReleaseTexture();
+}
+
+void TEXWRAPA2::Call(int arg)
+{
+    if (m_25)
+        m_8->CreateTexture((G2DX8OBJECT *)arg);
+}
+
+// The stage block: five cleared words (the word at +4 is not touched here).
+class TEXSTAGE
+{
+public:
+    TEXSTAGE();
+
+    int m_0;
+    int m_4;
+    int m_8;
+    int m_c;
+    int m_10;
+    int m_14;
+};
+
+TEXSTAGE::TEXSTAGE()
+{
+    m_8 = 0;
+    m_c = 0;
+    m_10 = 0;
+    m_14 = 0;
+    m_0 = 0;
+}
+
+// A table of byte cells reached through the pointer array at +0x84.
+class TEXSTAGES
+{
+public:
+    void SetValue(int index, char value);
+
+    char pad_00[0x84];
+    char **m_84;
+};
+
+void TEXSTAGES::SetValue(int index, char value)
+{
+    char *&cell = m_84[index];
+    *cell = value;
 }
