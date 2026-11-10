@@ -298,9 +298,12 @@ extern void *g_pOdeWorldX;
 class ODEWORLDX
 {
 public:
+    ODEWORLDX();
     virtual ~ODEWORLDX();
     void Shutdown();
     void AddActor(void *actor);
+
+    char pad_04[0x84];
 };
 
 __declspec(noinline) void ODEWORLDX::AddActor(void *actor)
@@ -309,6 +312,11 @@ __declspec(noinline) void ODEWORLDX::AddActor(void *actor)
     G2ODEADJTGT *list = (G2ODEADJTGT *)((char *)this + 4);
     if (!list->Contains(*value))
         ((DYNAMICARRAY<G2CORE1R1> *)list)->Insert(*value);
+}
+
+void CreateOdeWorld()
+{
+    g_pOdeWorldX = new ODEWORLDX();
 }
 
 int __stdcall FirstOfTwo(int first, int second)
