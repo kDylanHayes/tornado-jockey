@@ -661,6 +661,36 @@ void GAME::ResetRules()
     *(int *)((char *)this + 0x1e68) = -1;
 }
 
+__declspec(noinline) ACTOR *GAME::GetTornado()
+{
+    if (!g_pScene) {
+        if (g_pLog)
+            g_pLog->Error("Error - GetTornado, null scene");
+        return 0;
+    }
+    return (ACTOR *)g_pScene->GetActor(*(RESHANDLE *)((char *)this + 0x1e70));
+}
+
+__declspec(noinline) WTACTOR *GAME::GetScenario()
+{
+    if (!g_pScene) {
+        if (g_pLog)
+            g_pLog->Error("Error - GetScenario, null scene");
+        return 0;
+    }
+    return g_pScene->GetActor(*(RESHANDLE *)((char *)this + 0x1e7c));
+}
+
+__declspec(noinline) ACTOR *GAME::GetRules()
+{
+    if (!g_pScene) {
+        if (g_pLog)
+            g_pLog->Error("Error - GetRules, null scene");
+        return 0;
+    }
+    return (ACTOR *)g_pScene->GetActor(*(RESHANDLE *)((char *)this + 0x1e64));
+}
+
 struct G2CORE1F
 {
     __declspec(noinline) void Clear();
