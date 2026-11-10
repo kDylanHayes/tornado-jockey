@@ -9049,3 +9049,7 @@
 0x0040b650 ?SetCD0@G2CORE1M11@@QAEXABUV3@@@Z function 0x3b
 0x0040ab10 ?Method1@G2CORE1M11@@QAEXXZ function
 0x0040bef0 ?Method2@G2CORE1M11@@QAEXXZ function
+0x00552a00 ?ViewGlobalScoresError@DRMPALX@@QAEXXZ function 0x5d
+0x0067d7a8 ??_C@_0FG@LNIJBDCI@You?5must?5overload?5this?5class?5wit@ data 0x56
+0x0067d800 ??_C@_0DF@MOIIDFCK@CRITIC?5ERROR?3?5DRMPAL?3?3ViewGlobal@ data 0x35
+0x0067d838 ??_C@_0DB@JMGAOILA@?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK@ data 0x31

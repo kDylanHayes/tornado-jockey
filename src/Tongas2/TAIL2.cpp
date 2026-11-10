@@ -1,3 +1,5 @@
+// Tongas2/TAIL2
+#include "Tongas2/LOG.h"
 // Tongas2/TAIL2 -- discovery scaffold for the remaining 0x54eec0-range code.
 
 class GD5529f0
@@ -60,4 +62,21 @@ struct G2TL2CALL
 void G2TL2CALL::Call()
 {
     g_fn656140(*(void **)((char *)this + 4));
+}
+
+struct DRMPALX
+{
+    void ViewGlobalScoresError();
+};
+
+void DRMPALX::ViewGlobalScoresError()
+{
+    if (g_pLog)
+        g_pLog->Error("************************************************");
+    if (g_pLog)
+        g_pLog->Error("CRITIC ERROR: DRMPAL::ViewGlobalScores method called");
+    if (g_pLog)
+        g_pLog->Error("You must overload this class with an apropiate information to call ViewToGlobalScores");
+    if (g_pLog)
+        g_pLog->Error("************************************************");
 }
