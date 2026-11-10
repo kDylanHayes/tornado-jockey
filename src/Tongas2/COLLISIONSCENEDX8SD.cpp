@@ -2,6 +2,7 @@
 //
 // Discovery scaffold: bodies are empty until the unit is matched.
 #include "Tongas2/COLLISIONSCENEDX8SD.h"
+#include "Tongas2/RESOURCE.h"
 
 void COLLISIONSCENEDX8SDMASTER::RegisterCommands()
 {
@@ -12,13 +13,17 @@ RESOURCEMANAGER *CreateCOLLISIONSCENEDX8SD()
     return 0;
 }
 
-class GD5368a0
+// A resource master with two allocated names.
+class GD5368a0 : public RESOURCEMASTER
 {
 public:
-    virtual ~GD5368a0();
+    virtual ~GD5368a0() throw();
+
+    CSTRING m_60;
+    CSTRING m_64;
 };
 
-__declspec(noinline) GD5368a0::~GD5368a0()
+__declspec(noinline) GD5368a0::~GD5368a0() throw()
 {
 }
 
