@@ -692,6 +692,26 @@ __declspec(noinline) ACTOR *GAME::GetRules()
     return (ACTOR *)g_pScene->GetActor(*(RESHANDLE *)((char *)this + 0x1e64));
 }
 
+__declspec(noinline) void GAME::SetRules(ACTOR *rules)
+{
+    if (!rules) {
+        if (g_pLog)
+            g_pLog->Error("Error - Registering a null rules");
+        return;
+    }
+    if (!g_pScene) {
+        if (g_pLog)
+            g_pLog->Error("Error - RegisterRules, null scene");
+        return;
+    }
+    if (!GetRules()) {
+        *(RESHANDLE *)((char *)this + 0x1e64) = *(RESHANDLE *)((char *)rules + 8);
+        return;
+    }
+    if (g_pLog)
+        g_pLog->Error("Error - Registering a rules when there exists one");
+}
+
 struct G2CORE1F
 {
     __declspec(noinline) void Clear();
