@@ -9530,3 +9530,6 @@
 0x00555040 ??_GV554E60@@UAEPAXI@Z function 0x1e
 0x00554260 ?GetTail3Root@@YAPAXXZ function 0xb5
 0x005285f0 ?Release@GD5285f0@@QAEXXZ function 0x1e
+0x005285c0 ??0GD5285c0@@QAE@XZ function 0xf
+0x005285d0 ?Unlink@GD5285f0@@QAEXXZ function 0x7
+0x005285e0 ?V06@GD5285f0@@QAEXXZ function 0x7

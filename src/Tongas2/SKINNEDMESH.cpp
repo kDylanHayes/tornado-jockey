@@ -20,7 +20,36 @@ struct GD5285f0
     GD5285f0OBJ *m_0;
 
     void Release();
+    void Unlink();
+    void V06();
 };
+
+void GD5285f0::Unlink()
+{
+    m_0->Unlink();
+}
+
+void GD5285f0::V06()
+{
+    m_0->V06();
+}
+
+class FILELOADER;
+
+// Creates a FILELOADER and keeps it (0x5285c0).
+struct GD5285c0
+{
+    FILELOADER *m_0;
+
+    GD5285c0();
+};
+
+FILELOADER *(*g_pfnCreateFileLoader)();
+
+GD5285c0::GD5285c0()
+{
+    m_0 = g_pfnCreateFileLoader();
+}
 
 void GD5285f0::Release()
 {
