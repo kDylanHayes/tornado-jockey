@@ -1,6 +1,7 @@
 // Tongas2/ODEACTOR -- the ODE actor object.
 //
 // Discovery scaffold: bodies are empty until the unit is matched.
+#define DYNAMICARRAY_REMOVE
 #include "Tongas2/ODEACTOR.h"
 #include "Tongas2/ACTOR.h"
 #include "Tongas2/CMDBASE.h"
@@ -694,4 +695,16 @@ public:
 
 template G2CORE1R1 *DYNAMICARRAY<G2CORE1R1>::Set(const G2CORE1R1 &item, const int &slot);
 template G2CORE1R1 *DYNAMICARRAY<G2CORE1R1>::Insert(const G2CORE1R1 &item);
+template <>
+void DYNAMICARRAY<G2CORE1R1>::Remove(const int &slot)
+{
+    if (!IsValid(slot))
+        return;
+    m_used[slot] = false;
+    m_data[slot] = m_empty;
+    if (IsValid(++m_freeTop))
+        m_free[m_freeTop] = slot;
+    m_count--;
+}
+
 

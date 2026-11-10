@@ -27,6 +27,10 @@ public:
     void Resize(const int &size);
     // Puts a copy of item in the slot.
     T *Set(const T &item, const int &slot);
+#ifdef DYNAMICARRAY_REMOVE
+    // Frees the slot and gives it back to the free stack.
+    void Remove(const int &slot);
+#endif
     // Puts a copy of item in a free slot, growing the table if it may.
     T *Insert(const T &item);
     // Whether i is a slot of the table.
