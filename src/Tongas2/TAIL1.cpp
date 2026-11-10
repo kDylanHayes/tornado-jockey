@@ -2,6 +2,7 @@
 #include <stdexcept>
 
 #include "Tongas2/MATHS.h"
+#include "Tongas2/FILELOADER.h"
 
 // Tongas2/TAIL1 -- discovery scaffold for the remaining 0x54eec0-range code.
 
@@ -217,4 +218,9 @@ public:
 
 TAIL1ERR::TAIL1ERR(const TAIL1ERR &other) : std::logic_error(other)
 {
+}
+
+bool FILELOADER::IsOpen()
+{
+    return m_fp != 0;
 }

@@ -8,7 +8,11 @@
 class CSTRING
 {
 public:
+#ifdef CSTRING_CTOR_OUTOFLINE
+    CSTRING();
+#else
     CSTRING() : m_str(0) {}
+#endif
 #ifdef TONGAS2_CORE_OUTOFLINE
     CSTRING(const char *str);
 #else

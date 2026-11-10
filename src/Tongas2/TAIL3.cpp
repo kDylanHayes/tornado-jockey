@@ -1,4 +1,7 @@
+#define CSTRING_CTOR_OUTOFLINE
 #include <new>
+
+#include "Tongas2/CSTRING.h"
 
 // Tongas2/TAIL3 -- discovery scaffold for the remaining 0x54eec0-range code.
 
@@ -182,4 +185,8 @@ void TAIL3X::Call4C(int a)
     void (__fastcall *func)(int) = *(void (__fastcall **)(int))((char *)this + 0x4c);
     if (func)
         func(a);
+}
+
+CSTRING::CSTRING() : m_str(0)
+{
 }
