@@ -9528,3 +9528,4 @@
 0x005c44dc _aligned_free function 0x14
 0x006561ac _g_fn6561ac data 0x4
 0x00555040 ??_GV554E60@@UAEPAXI@Z function 0x1e
+0x00554260 ?GetTail3Root@@YAPAXXZ function 0xb5

@@ -4,6 +4,8 @@
 #include <malloc.h>
 
 #include "Tongas2/CSTRING.h"
+#include <string>
+#include <stdexcept>
 
 // IAT thunks the retail objects call through (InterlockedIncrement/Decrement).
 extern "C" void (__stdcall *g_fn6561b4)(void *);
@@ -234,4 +236,28 @@ void TAIL3X::Call4C(int a)
 
 CSTRING::CSTRING() : m_str(0)
 {
+}
+
+class TAIL1ERR : public std::logic_error
+{
+public:
+    TAIL1ERR(const std::string &message) : std::logic_error(message) {}
+    TAIL1ERR(const TAIL1ERR &other);
+};
+
+void *GetTail3Root();
+
+// The per-user folder under the game's root path (0x554320).
+std::string __fastcall GetUserFolder(int folder)
+{
+    if (folder < 0 || folder >= 2) {
+        std::string message("CSaveFile::GetRootPath called with invalid Type");
+        throw TAIL1ERR(message);
+    }
+    std::string result(*(std::string *)((char *)GetTail3Root() + 0x28));
+    if (folder == 0)
+        result.append("\\Cache", 6);
+    else
+        result.append("\\Persistent", 11);
+    return result;
 }
