@@ -3661,7 +3661,10 @@
       ],
       "target": "build/target/Tongas2/TAIL1.obj",
       "source": "src/Tongas2/TAIL1.cpp",
-      "category": "engine"
+      "category": "engine",
+      "symbol_mappings": {
+        "FUN_005c0905": "??1GD551d70BASE@@UAE@XZ"
+      }
     },
     {
       "name": "Tongas2/TAIL2",

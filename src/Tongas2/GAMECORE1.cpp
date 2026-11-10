@@ -1258,14 +1258,30 @@ G2CORE1K5::~G2CORE1K5()
 {
 }
 
-class G2CORE1K6 : public ACTOR
+class G2CORE1K6
 {
 public:
     virtual ~G2CORE1K6();
+
+    char *m_4;
+    char *m_8;
+    char *m_c;
 };
 
 G2CORE1K6::~G2CORE1K6()
 {
+    if (m_c) {
+        delete[] m_c;
+        m_c = 0;
+    }
+    if (m_8) {
+        delete[] m_8;
+        m_8 = 0;
+    }
+    if (m_4) {
+        delete[] m_4;
+        m_4 = 0;
+    }
 }
 
 class G2CORE1K7 : public ACTOR

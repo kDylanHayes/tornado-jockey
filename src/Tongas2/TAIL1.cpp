@@ -75,13 +75,35 @@ __declspec(noinline) GD551920::~GD551920() throw()
 {
 }
 
-class GD551d70
+class GD551d70BASE
+{
+public:
+    virtual ~GD551d70BASE();
+
+    char pad_04[8];
+};
+
+class GD551d70 : public GD551d70BASE
 {
 public:
     virtual ~GD551d70();
+
+    std::string m_10;
 };
 
-__declspec(noinline) GD551d70::~GD551d70()
+GD551d70::~GD551d70()
+{
+}
+
+class G2CORE1K4 : public GD551d70BASE
+{
+public:
+    virtual ~G2CORE1K4();
+
+    std::string m_10;
+};
+
+G2CORE1K4::~G2CORE1K4()
 {
 }
 
