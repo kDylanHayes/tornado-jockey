@@ -454,20 +454,125 @@ __declspec(noinline) GD444e40X::~GD444e40X()
 {
 }
 
+// The resolved object the table stores against a record; slot 2 releases it.
+class G2MIDRESOLVED
+{
+public:
+    virtual void __stdcall V0();
+    virtual void __stdcall V1();
+    virtual void __stdcall Release();
+};
+
 class G2MIDITEM
 {
 public:
     virtual void Release(int value);
+    virtual void V01(); virtual void V02(); virtual void V03(); virtual void V04();
+    virtual void V05(); virtual void V06(); virtual void V07(); virtual void V08();
+    virtual void V09(); virtual void V10(); virtual void V11(); virtual void V12();
+    virtual void V13(); virtual void V14();
+    // Resolves the item into a storable object at slot 0x3c.
+    virtual int __stdcall Resolve(int index, void **out);
+};
+
+struct G2MIDRECORD
+{
+    int m_0;
+    int m_4;
+    int m_8;
+    int m_c;
 };
 
 // The table at +0x28 of the MID list.
 class G2MIDTABLE
 {
 public:
-    bool Insert(G2MIDITEM *item, const std::string &name, int flag);
+    void Insert(G2MIDITEM *item, const std::string &name, int flag);
+    // Resolves a name while the table is not built yet (0x44bd80), then
+    // inserts the item straight away (0x44ad60).
+    bool ResolveName(const std::string &name, G2MIDRECORD *found);
+    void InsertDirect(G2MIDITEM *item, int flag, G2MIDRECORD *found);
+    // Stores a record for a resolved object (0x44acf0).
+    void Store(G2MIDRESOLVED *object, int flag, const G2MIDRECORD *record);
+    // Rebuilds the record table (0x44acb0).
+    void Prepare();
 
-    char pad_00[0xa0];
+    char pad_00[8];
+    void *m_8;
+    void *m_c;
+    char pad_10[0x44 - 0x10];
+    int m_44;
+    int m_48;
+    char pad_4c[0x50 - 0x4c];
+    void *m_50;
+    void *m_54;
+    char pad_58[0x74 - 0x58];
+    std::vector<std::string> m_74;
+    char pad_84[0x88 - 0x84];
+    G2MIDRECORD *m_88;
+    char pad_8c[0x98 - 0x8c];
+    bool m_98;
+    char pad_99[0xa0 - 0x99];
 };
+
+void G2MIDTABLE::Insert(G2MIDITEM *item, const std::string &name, int flag)
+{
+    if (m_98) {
+        for (unsigned int i = 0; i < m_74.size(); i++) {
+            if (m_74[i].compare(name) != 0)
+                continue;
+            G2MIDRECORD *base = &m_88[i];
+            G2MIDRECORD record;
+            record.m_0 = base->m_0;
+            record.m_4 = base->m_4;
+            record.m_8 = base->m_8;
+            record.m_c = base->m_c;
+            if (!record.m_0 && !record.m_4 && !record.m_8 && !record.m_c)
+                continue;
+            if (!m_50)
+                continue;
+            G2MIDRESOLVED *out = 0;
+            if (item->Resolve(0, (void **)&out) != 0)
+                continue;
+            Store(out, flag, &record);
+            out->Release();
+        }
+    } else {
+        G2MIDRECORD found;
+        if (ResolveName(name, &found))
+            InsertDirect(item, flag, &found);
+    }
+}
+
+void G2MIDTABLE::InsertDirect(G2MIDITEM *item, int flag, G2MIDRECORD *found)
+{
+    if (!m_50)
+        return;
+    G2MIDRESOLVED *out = 0;
+    if (item->Resolve(0, (void **)&out) == 0) {
+        Store(out, flag, found);
+        out->Release();
+    }
+}
+
+// The table's worker (0x454806); it takes the record and the table's mode.
+extern "C" int __stdcall GD454806Store(void *object, int zero, int flag,
+                                       void *device, int op, int stride,
+                                       int zero2, const G2MIDRECORD *record,
+                                       int two, int mask);
+
+void G2MIDTABLE::Store(G2MIDRESOLVED *object, int flag, const G2MIDRECORD *record)
+{
+    if (!m_50)
+        return;
+    if (!m_98)
+        Prepare();
+    if (GD454806Store(object, 0, flag, m_c, 0x16, m_44 * 4, 0, record,
+                      2, 0xffff00ff) < 0) {
+        if (g_pLog)
+            g_pLog->Error("not rendered surface in html rendering!");
+    }
+}
 
 // The object G2MIDLIST holds at +4: a released item and, at +0x28, the
 // table the items are inserted into.
