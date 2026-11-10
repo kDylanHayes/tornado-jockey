@@ -2,6 +2,7 @@
 //
 // Discovery scaffold: bodies are empty until the unit is matched.
 #include "Tongas2/ODEACTOR.h"
+#include "Tongas2/ACTOR.h"
 #include "Tongas2/CMDBASE.h"
 #include "Tongas2/RESOURCES.h"
 #include "Tongas2/SCENE.h"
@@ -94,7 +95,22 @@ void G2ODEADJ::Call(void *arg)
     ((G2ODEADJTGT *)((char *)this + 4))->Call((char *)arg + 8);
 }
 
-class G2ODEACTOR
+// A dMass, as the ODE library lays it out: mass, centre of gravity, inertia.
+struct G2ODEMASS
+{
+    int m_words[0x11];
+
+    G2ODEMASS();
+};
+
+extern "C" void dMassSetZero(G2ODEMASS *mass);
+
+G2ODEMASS::G2ODEMASS()
+{
+    dMassSetZero(this);
+}
+
+class G2ODEACTOR : public ACTOR
 {
 public:
     // Out of line at 0x0054aff0.
@@ -107,8 +123,26 @@ public:
     static int s_classId;
     static int s_factoryId;
 
-    char m_pad[0xd24];
+    void *m_body;       // 0xccc
+    G2ODEMASS m_mass;   // 0xcd0
+    bool m_d14;         // 0xd14
+    float m_d18;        // 0xd18
+    bool m_d1c;         // 0xd1c
+    CSTRING m_name;     // 0xd20
+    bool m_d24;         // 0xd24
+    bool m_d25;         // 0xd25
 };
+
+G2ODEACTOR::G2ODEACTOR()
+{
+    m_d18 = 1.0f;
+    m_d1c = true;
+    m_name = "";
+    m_d25 = false;
+    m_body = 0;
+    m_d14 = false;
+    m_d24 = true;
+}
 
 class GD548620
 {
