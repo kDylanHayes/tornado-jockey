@@ -1,3 +1,5 @@
+#include <string.h>
+
 // Tongas2/GAMECORE4 -- the game-code block at 0x4410b0. The string, vector
 // and tree members the original translation unit emitted out of line, and the
 // small resource accessors that live in the same block.
@@ -561,4 +563,36 @@ public:
 
 APPOPTIONS::~APPOPTIONS()
 {
+}
+
+struct G2GC4CPY
+{
+    void Set60(const void *src);
+};
+
+void G2GC4CPY::Set60(const void *src)
+{
+    char *dest = (char *)this + 0x60;
+    memcpy(dest, src, 0x200);
+    *(int *)(dest + 0x200) = *(int *)((char *)src + 0x200);
+}
+
+struct G2GC4GETC
+{
+    void *GetConst();
+    void *GetGlobal();
+};
+
+extern "C" char DAT_0065fefc;
+
+void *G2GC4GETC::GetConst()
+{
+    return &DAT_0065fefc;
+}
+
+extern void *g_6ad674;
+
+void *G2GC4GETC::GetGlobal()
+{
+    return g_6ad674;
 }
