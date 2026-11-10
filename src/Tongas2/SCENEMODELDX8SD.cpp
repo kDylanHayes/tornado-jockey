@@ -231,3 +231,40 @@ void SCENEMODELDX8SDMASTER::RegisterCommands()
     HashCommands(s_commands);
     RegisterClassName(s_commands, "SCENEMODELDX8SDMASTER", "RESOURCEMASTER");
 }
+
+// The value vector at +0x34 of the render object; its add is 0x537f70.
+class GD5383VEC
+{
+public:
+    void Add(const int &value);
+};
+
+// The render-state selector at 0x5383e0.
+class GD5383e0
+{
+public:
+    void Method(void *object, void *render);
+
+    char pad_0[0x2c];
+    bool m_2c;
+};
+
+void GD5383e0::Method(void *object, void *render)
+{
+    int flags = *(int *)((char *)object + 0x24);
+    int value;
+    if (flags & 0x10000) {
+        if (flags & 0x100000) {
+            value = 3;
+            ((GD5383VEC *)((char *)render + 0x34))->Add(value);
+        }
+        value = 2;
+        ((GD5383VEC *)((char *)render + 0x34))->Add(value);
+        if (m_2c) {
+            value = 1;
+            ((GD5383VEC *)((char *)render + 0x34))->Add(value);
+        }
+    }
+    value = 0;
+    ((GD5383VEC *)((char *)render + 0x34))->Add(value);
+}
