@@ -115,6 +115,44 @@ void *CreateODEGEOM()
     return new GD548f90;
 }
 
+class ODEGEOMRESOURCEMASTERX : public RESOURCEMASTER
+{
+public:
+    ODEGEOMRESOURCEMASTERX(RESOURCEMANAGER *manager, const char *name);
+
+    int m_60;
+    int m_64;
+    int m_68;
+    int m_6c;
+    int m_70;
+    int m_74;
+    float m_78;
+    float m_7c;
+    float m_80;
+    float m_84;
+    float m_88;
+};
+
+ODEGEOMRESOURCEMASTERX::ODEGEOMRESOURCEMASTERX(RESOURCEMANAGER *manager, const char *name)
+    : RESOURCEMASTER(manager, name)
+{
+    m_74 = m_70 = m_6c = 0;
+    m_60 = m_64 = m_68 = 0;
+    m_6c = 0xff;
+    m_70 = 100;
+    m_74 = 200;
+    m_78 = 8000.0f;
+    m_7c = 0.3f;
+    m_80 = 0.05f;
+    m_84 = 0.2f;
+    m_88 = 0.0001f;
+}
+
+RESOURCEMASTER *GD548f90::CreateMaster(const char *name)
+{
+    return new ODEGEOMRESOURCEMASTERX(this, name);
+}
+
 class GD549b40
 {
 public:

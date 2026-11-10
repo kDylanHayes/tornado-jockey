@@ -5062,5 +5062,30 @@
    "matched_code": 3417,
    "total_code": 596467
   }
+ },
+ {
+  "time": "2026-11-10T10:26:41+00:00",
+  "commit": "bf0c037cd16d5a2a555590bea9cfa43a3f280a40",
+  "percent": 31.5765,
+  "code": {
+   "matched_code": 742027,
+   "total_code": 2349938
+  },
+  "game": {
+   "matched_code": 388333,
+   "total_code": 1191352
+  },
+  "lib": {
+   "matched_code": 350277,
+   "total_code": 403049
+  },
+  "crt": {
+   "matched_code": 0,
+   "total_code": 159070
+  },
+  "sdk": {
+   "matched_code": 3417,
+   "total_code": 596467
+  }
  }
 ]
