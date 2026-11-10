@@ -403,14 +403,26 @@ __declspec(noinline) GD444e40X::~GD444e40X()
 {
 }
 
-class GD4451f0
+class G2MIDLIST
+{
+public:
+    ~G2MIDLIST();
+};
+
+extern G2MIDLIST *g_pMIDList;
+
+class GD4451f0 : public GUI
 {
 public:
     virtual ~GD4451f0();
 };
 
-__declspec(noinline) GD4451f0::~GD4451f0()
+GD4451f0::~GD4451f0()
 {
+    if (g_pMIDList) {
+        delete g_pMIDList;
+        g_pMIDList = 0;
+    }
 }
 
 class GD4477d0

@@ -27,14 +27,34 @@ __declspec(noinline) GD5368a0::~GD5368a0() throw()
 {
 }
 
-class GD536790
+// The handle owner the display keeps at +0x2bc.
+class GD536790DISPLAY
+{
+public:
+    void m_45(void *arg);
+};
+
+class APPWINDOW
+{
+public:
+    char pad_2bc[0x2bc];
+    GD536790DISPLAY *m_2bc;
+};
+
+extern APPWINDOW *g_pDisplay;
+
+class GD536790 : public OBJECT
 {
 public:
     virtual ~GD536790();
+
+    void *m_400;
 };
 
-__declspec(noinline) GD536790::~GD536790()
+GD536790::~GD536790()
 {
+    GD536790DISPLAY *display = g_pDisplay->m_2bc;
+    display->m_45(m_400);
 }
 
 extern "C" char DAT_0067a16c;

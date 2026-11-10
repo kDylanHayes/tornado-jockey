@@ -3532,7 +3532,10 @@
       ],
       "target": "build/target/Tongas2/COLLISIONSCENEDX8SD.obj",
       "source": "src/Tongas2/COLLISIONSCENEDX8SD.cpp",
-      "category": "engine"
+      "category": "engine",
+      "symbol_mappings": {
+        "_m_45": "?m_45@GD536790DISPLAY@@QAEXPAX@Z"
+      }
     },
     {
       "name": "Tongas2/SCENEMODELDX8SD",
@@ -3541,7 +3544,10 @@
       ],
       "target": "build/target/Tongas2/SCENEMODELDX8SD.obj",
       "source": "src/Tongas2/SCENEMODELDX8SD.cpp",
-      "category": "engine"
+      "category": "engine",
+      "symbol_mappings": {
+        "_m_44": "?m_44@GD536D90DISPLAY@@QAEXPAX@Z"
+      }
     },
     {
       "name": "Tongas2/DXVERSION",

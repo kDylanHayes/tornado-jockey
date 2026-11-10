@@ -28,14 +28,41 @@ __declspec(noinline) GD537230::~GD537230() throw()
 {
 }
 
-class GD536d90
+class GD536D90DISPLAY
+{
+public:
+    void m_44(void *arg);
+};
+
+class APPWINDOW
+{
+public:
+    char pad_2bc[0x2bc];
+    GD536D90DISPLAY *m_2bc;
+};
+
+extern APPWINDOW *g_pDisplay;
+
+// The second base; only its vptr, destructor and +0x2c handle matter here.
+class HEIGHTMAPTEMP
+{
+public:
+    virtual ~HEIGHTMAPTEMP();
+
+    char pad_04[0x28];
+    void *m_2c;
+};
+
+class GD536d90 : public OBJECT, public HEIGHTMAPTEMP
 {
 public:
     virtual ~GD536d90();
 };
 
-__declspec(noinline) GD536d90::~GD536d90()
+GD536d90::~GD536d90()
 {
+    GD536D90DISPLAY *display = g_pDisplay->m_2bc;
+    display->m_44(m_2c);
 }
 
 extern "C" char DAT_0067a410;

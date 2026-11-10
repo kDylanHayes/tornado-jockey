@@ -12,6 +12,7 @@
 #include <deque>
 
 #include "Tongas2/BONEDMODEL.h"
+#include "Tongas2/INPUT.h"
 #include "Tongas2/RESOURCE.h"
 
 #include "Tongas2/CMDBASE.h"
@@ -658,7 +659,7 @@ __declspec(noinline) GD42e6e0::~GD42e6e0() throw()
 {
 }
 
-class GD42f370
+class GD42f370 : public ACTOR, public INPUTLISTENER
 {
 public:
     virtual ~GD42f370();
