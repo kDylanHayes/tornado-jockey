@@ -5,6 +5,18 @@
 
 // Tongas2/TAIL1 -- discovery scaffold for the remaining 0x54eec0-range code.
 
+class GD556050
+{
+public:
+    virtual ~GD556050();
+};
+
+class V5547C4
+{
+public:
+    virtual ~V5547C4();
+};
+
 class GD54f0b0
 {
 public:
@@ -15,23 +27,17 @@ __declspec(noinline) GD54f0b0::~GD54f0b0()
 {
 }
 
-class GD5545a0
-{
-public:
-    virtual ~GD5545a0();
-};
-
-__declspec(noinline) GD5545a0::~GD5545a0()
+__declspec(noinline) V5547C4::~V5547C4()
 {
 }
 
-class GD550820
+class GD550820 : public GD556050
 {
 public:
-    virtual ~GD550820();
+    virtual ~GD550820() throw();
 };
 
-__declspec(noinline) GD550820::~GD550820()
+__declspec(noinline) GD550820::~GD550820() throw()
 {
 }
 
@@ -45,23 +51,23 @@ __declspec(noinline) GD550e70::~GD550e70()
 {
 }
 
-class GD5517a0
+class GD5517a0 : public GD556050
 {
 public:
-    virtual ~GD5517a0();
+    virtual ~GD5517a0() throw();
 };
 
-__declspec(noinline) GD5517a0::~GD5517a0()
+__declspec(noinline) GD5517a0::~GD5517a0() throw()
 {
 }
 
-class GD551920
+class GD551920 : public GD556050
 {
 public:
-    virtual ~GD551920();
+    virtual ~GD551920() throw();
 };
 
-__declspec(noinline) GD551920::~GD551920()
+__declspec(noinline) GD551920::~GD551920() throw()
 {
 }
 

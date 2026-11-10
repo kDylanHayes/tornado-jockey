@@ -294,13 +294,19 @@ __declspec(noinline) GD4433c0X::~GD4433c0X()
 {
 }
 
-class GD4434d0
+class GD5479c0
 {
 public:
-    virtual ~GD4434d0();
+    virtual ~GD5479c0();
 };
 
-__declspec(noinline) GD4434d0::~GD4434d0()
+class GD4434d0 : public GD5479c0
+{
+public:
+    virtual ~GD4434d0() throw();
+};
+
+__declspec(noinline) GD4434d0::~GD4434d0() throw()
 {
 }
 

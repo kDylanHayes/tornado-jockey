@@ -2,6 +2,12 @@
 
 // Tongas2/TAIL3 -- discovery scaffold for the remaining 0x54eec0-range code.
 
+class GD556050
+{
+public:
+    virtual ~GD556050();
+};
+
 class V5547C0
 {
 public:
@@ -11,7 +17,7 @@ public:
     int m_4;
 };
 
-V5547C0::~V5547C0()
+__declspec(noinline) V5547C0::~V5547C0()
 {
 }
 
@@ -28,6 +34,10 @@ public:
 };
 
 V5547C4::V5547C4(const V5547C4 &other) : V5547C0(other)
+{
+}
+
+__declspec(noinline) V5547C4::~V5547C4()
 {
 }
 
@@ -51,13 +61,13 @@ __declspec(noinline) GD557e70::~GD557e70()
 {
 }
 
-class GD5545d0
+class GD5545d0 : public GD556050
 {
 public:
-    virtual ~GD5545d0();
+    virtual ~GD5545d0() throw();
 };
 
-__declspec(noinline) GD5545d0::~GD5545d0()
+__declspec(noinline) GD5545d0::~GD5545d0() throw()
 {
 }
 
