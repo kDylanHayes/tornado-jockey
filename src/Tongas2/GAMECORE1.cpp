@@ -1235,10 +1235,11 @@ bool G2CORE1K2::CanAdvanceState()
     int state = *(int *)((char *)this + 0x1c);
     if (state == 0 || state == 1 || state == 2 || state == 5 || state == 6)
         return false;
-    if (*(int *)((char *)this + 0x1e88) - 1)
-        return true;
-    else
+    switch (*(int *)((char *)this + 0x1e88)) {
+    case 1:
         return false;
+    }
+    return true;
 }
 
 void G2CORE1K2::SetE64(const int &index, const void *src)
