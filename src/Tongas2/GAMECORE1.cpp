@@ -4234,7 +4234,7 @@ public:
     virtual void d22();
     virtual void d23();
     virtual void d24();
-    virtual bool V();
+    virtual char V();
     void DebugKey(int value);
 };
 
@@ -5093,4 +5093,39 @@ CSTRING &G2CORE1M10::SetDEC(const int &index, const CSTRING &value)
 void G2CORE1M10::Set19A0(const int &index, const void *src)
 {
     memcpy((char *)this + 0x19a0 + index * 0x200, src, 0x200);
+}
+
+struct GAMEEXT2
+{
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual char V();
+};
+
+bool __stdcall IsPlaying5(int a, int b, int c, int d, int e)
+{
+    return ((GAMEEXT2 *)g_pGame)->V();
 }
