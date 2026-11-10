@@ -8929,7 +8929,7 @@
 0x00548850 ?SetCE8@ODEWORLDM2@@QAEXABH@Z function 0x1d
 0x00548870 ?SetCEC@ODEWORLDM2@@QAEXABH@Z function 0x1d
 0x004248f0 ?Command@G2CORE2SR5@@UAE?AVSRESULT@@H@Z function 0x3b
-0x00406e40 ?Has@CMDMGRX@@QAE_NPAX@Z function
+0x00406e40 ?Has@CMDMGRX@@QAE_NPAX@Z function 0x1d
 0x004067a0 ?Command@G2CORE1SR9@@UAE?AVSRESULT@@H@Z function 0x45
 0x00409690 ?GetParentClassId@G2CORE1J2@@UAEHXZ function 0xd
 0x004096a0 ?GetClassName@G2CORE1J2@@UAEPBDXZ function 0xe
@@ -9426,3 +9426,4 @@
 0x0043fec0 ?UpdateDecal@PROGRESSBAR@@QAEXABURESHANDLE@@@Z function 0x60
 0x0044a530 ?Insert@G2MIDLISTIMPL@@QAE_NPAVG2MIDITEM@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z function 0x2f
 0x0044c050 ?Insert@G2MIDTABLE@@QAE_NPAVG2MIDITEM@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z function 0x151
+0x00406dd0 _GD_TrimSpaces@4 function 0x61

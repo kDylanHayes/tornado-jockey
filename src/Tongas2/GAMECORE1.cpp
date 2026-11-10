@@ -17,6 +17,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <string>
+#include <wchar.h>
 #include <map>
 
 extern "C" __declspec(dllimport) void __stdcall Sleep(unsigned long);
@@ -5146,6 +5147,16 @@ public:
     void *Find(void *arg);
     bool Has(void *arg);
 };
+
+// Strips the leading spaces from a command name (0x406dd0).
+extern "C" void __stdcall GD_TrimSpaces(unsigned short *text);
+
+__declspec(noinline) bool CMDMGRX::Has(void *arg)
+{
+    GD_TrimSpaces((unsigned short *)arg);
+    bool ok = (int)wcslen((const wchar_t *)arg) > 0;
+    return ok;
+}
 
 struct G2CORE1SR3
 {
