@@ -494,14 +494,132 @@ void T94::Thunk()
     T();
 }
 
-class GD42ddd0
+// The forest object's ClearForest and PreviewForest properties. Their vtable
+// slots follow the setters GAMECORE2's G2FORESTOBJ defines; the layout is the
+// same class, only the members these two methods touch are repeated here.
+class G2FORESTOBJ : public ACTOR
+{
+public:
+    virtual ~G2FORESTOBJ();
+
+    virtual SRESULT Virtual140(CMDCALL *call);
+    virtual void SetDescription(const int &description);
+    virtual void SetE3cc(const bool &value);
+    virtual void SetE3cd(const bool &value);
+    virtual void SetNumTrees(const int &count);
+    virtual void SetForestTemplate(const FIXEDSTRING<0x200> &name);
+
+    virtual void SetPreviewForest(const bool &preview);
+    virtual void SetClearForest(const bool &clear);
+
+    void CreateTree(int index);
+    void RemoveTree(int index);
+    void Clear();
+
+    RESHANDLE m_handle;
+    bool m_cd8;
+    char m_cd9[0xcdc - 0xcd9];
+    int m_cdc;
+    int m_ce0;
+    int m_ce4;
+    int m_ce8;
+    RESHANDLE m_handles[100];
+    FIXEDSTRING<0x200> m_names[100];
+    int m_index1[100];
+    int m_index2[100];
+    char m_bytes3[100];
+    int m_index4[100];
+    int m_deb0;
+    float m_scores[100];
+    float m_weights[100];
+    char m_occupied[100];
+    int m_counts[100];
+    int m_e3c8;
+    bool m_e3cc;
+    bool m_e3cd;
+    char m_e3ce[0xe3d0 - 0xe3ce];
+    int m_count;
+    FIXEDSTRING<0x200> m_name;
+    bool m_e5d4;
+    bool m_e5d5;
+};
+
+// Lays out the preview trees the forest would place, once the standing ones
+// are removed.
+void G2FORESTOBJ::SetPreviewForest(const bool &preview)
+{
+    if (!preview)
+        return;
+    SetClearForest(true);
+    for (int i = 0; i < m_count; i++)
+        CreateTree(i);
+    m_e5d4 = false;
+    m_placed = true;
+}
+
+// Removes the trees standing in the grid and clears the grid itself.
+void G2FORESTOBJ::SetClearForest(const bool &clear)
+{
+    if (!clear)
+        return;
+    for (int i = m_ce8 - 1; i >= 0; i--)
+        RemoveTree(i);
+    Clear();
+    m_e5d5 = false;
+}
+
+// A minitornado's resource master: the actor resources template it hands the
+// minitornado, then the four parameters the tornado copies for its movement.
+class MINITORNADOMASTER : public RESOURCEMASTER
+{
+public:
+    CSTRING m_template;
+    float m_64;
+    float m_68;
+    float m_6c;
+    float m_70;
+};
+
+extern RESOURCEMANAGER *g_pMinitornadoTemplates;
+
+class GD42ddd0 : public ACTOR
 {
 public:
     virtual ~GD42ddd0();
+
+    virtual void SetTemplate(const FIXEDSTRING<0x200> &name);
+    virtual void SetEcc(const float &value);
+    virtual void SetEd0(const float &value);
+    virtual void SetEd4(const float &value);
+    virtual void SetEd8(const float &value);
+
+    FIXEDSTRING<0x200> m_name;
+    float m_ecc;
+    float m_ed0;
+    float m_ed4;
+    float m_ed8;
 };
 
 __declspec(noinline) GD42ddd0::~GD42ddd0()
 {
+}
+
+// Takes the named minitornado template: its actor resources template and the
+// four parameters that go with it.
+void GD42ddd0::SetTemplate(const FIXEDSTRING<0x200> &name)
+{
+    m_name = name;
+    MINITORNADOMASTER *master = (MINITORNADOMASTER *)g_pMinitornadoTemplates->GetMaster(name.m_buf);
+    if (master) {
+        SetActorResourcesTemplate(CSTRING(master->m_template.c_str()));
+        SetEcc(master->m_64);
+        SetEd0(master->m_68);
+        SetEd4(master->m_6c);
+        SetEd8(master->m_70);
+    }
+    else if (g_pLog) {
+        g_pLog->Error("INVALID MINITORNADO TEMPLATE '%s'", name.m_buf);
+    }
 }
 
 class GD42e6e0
