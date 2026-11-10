@@ -483,6 +483,27 @@ struct G2MIDRECORD
     int m_c;
 };
 
+// The four-word scratch record the table hands to its worker.
+struct G2MIDPREPAREV4
+{
+    int m_0;
+    int m_4;
+    int m_8;
+    int m_c;
+};
+
+// The interface the table keeps at +0x50.
+class G2MIDPREPAREIFACE
+{
+public:
+    virtual void __stdcall V0();
+    virtual void __stdcall V1();
+    virtual void __stdcall V2();
+    virtual void __stdcall V3(int one, int minusOne, int zero1, int zero2,
+                              int zero3, void *other, G2MIDPREPAREV4 *scratch,
+                              int zero4, int zero5, int zero6);
+};
+
 // The table at +0x28 of the MID list.
 class G2MIDTABLE
 {
@@ -572,6 +593,12 @@ void G2MIDTABLE::Store(G2MIDRESOLVED *object, int flag, const G2MIDRECORD *recor
         if (g_pLog)
             g_pLog->Error("not rendered surface in html rendering!");
     }
+}
+
+void G2MIDTABLE::Prepare()
+{
+    G2MIDPREPAREV4 temp = { 0, 0, m_44, m_48 };
+    ((G2MIDPREPAREIFACE *)m_50)->V3(1, -1, 0, 0, 0, m_8, &temp, 0, 0, 0);
 }
 
 // The object G2MIDLIST holds at +4: a released item and, at +0x28, the
