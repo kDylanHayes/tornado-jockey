@@ -1,3 +1,5 @@
+#include <new>
+
 // Tongas2/TAIL3 -- discovery scaffold for the remaining 0x54eec0-range code.
 
 class V5547C0
@@ -90,4 +92,14 @@ void G2TL3TH1::Call()
 void G2TL3TH2::Call()
 {
     ((G2TL3TG2 *)((char *)this + 0xc))->Call();
+}
+
+struct G2TL3ALLOC
+{
+    void *Alloc(unsigned int n);
+};
+
+void *G2TL3ALLOC::Alloc(unsigned int n)
+{
+    return operator new(n * 2);
 }

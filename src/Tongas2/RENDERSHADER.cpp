@@ -496,3 +496,18 @@ extern "C" __declspec(naked) void helper_004ebbb0() {
         ret 4
     }
 }
+
+struct G2RSTGT
+{
+    void Run();
+};
+
+struct G2RSJMP
+{
+    void Run();
+};
+
+void G2RSJMP::Run()
+{
+    ((G2RSTGT *)this)->Run();
+}
