@@ -653,6 +653,25 @@ __declspec(noinline) GD451880::~GD451880()
     Destroy();
 }
 
+// One of the COM-like objects released through slot +8.
+class GD452a90COM
+{
+public:
+    virtual void __stdcall V0();
+    virtual void __stdcall V1();
+    virtual void __stdcall Release();
+};
+
+// The object at +0xa4: a media sample with its format at +0x28.
+struct GD452a90A4 : public GD452a90COM
+{
+    char pad_04[0x28 - 0x04];
+    int m_28;
+};
+
+extern const char g_GD452a90Format[];
+void __stdcall GD452a90SetMedia(void *device, const void *format, int value);
+
 class GD452a90
 {
 public:
@@ -662,9 +681,15 @@ public:
     void Close();
     void CloseDirect();
 
-    char pad_04[0x4c - 0x04];
+    char pad_04[0x08 - 0x04];
+    HDC m_8;
+    char pad_0c[0x3c - 0x0c];
+    HGDIOBJ m_3c;
+    HBITMAP m_40;
+    char pad_44[0x4c - 0x44];
     HWND m_4c;
-    char pad_50[0x58 - 0x50];
+    GD452a90COM *m_50;
+    GD452a90COM *m_54;
     std::string m_58;
     std::vector<std::string> m_74;
     std::vector<int> m_84;
@@ -673,7 +698,7 @@ public:
     char pad_99[0x9c - 0x99];
     DWORD m_9c;
     HANDLE m_a0;
-    char pad_a4[0xa8 - 0xa4];
+    GD452a90A4 *m_a4;
     V44AC00 m_a8;
 };
 
@@ -698,6 +723,36 @@ void GD452a90::Close()
     if (IsWindow(m_4c)) {
         if (DestroyWindow(m_4c))
             m_4c = 0;
+    }
+}
+void GD452a90::CloseDirect()
+{
+    GD452a90COM *first = m_50;
+    if (first) {
+        first->Release();
+        m_50 = 0;
+    }
+    GD452a90A4 *sample = m_a4;
+    if (sample) {
+        GD452a90SetMedia(m_54, g_GD452a90Format, sample->m_28);
+        sample->m_28 = 0xfefefefe;
+        m_a4->Release();
+        m_a4 = 0;
+    }
+    GD452a90COM *second = m_54;
+    if (second) {
+        second->Release();
+        m_54 = 0;
+    }
+    if (m_40) {
+        SelectObject(m_8, m_40);
+        DeleteDC(m_8);
+        m_8 = 0;
+        m_40 = 0;
+    }
+    if (m_3c) {
+        DeleteObject(m_3c);
+        m_3c = 0;
     }
 }
 

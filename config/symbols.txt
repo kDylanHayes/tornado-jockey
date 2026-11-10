@@ -9419,3 +9419,5 @@
 0x006563a8 __imp__DestroyWindow@4 data 0x4
 0x006563b4 __imp__PostThreadMessageA@16 data 0x4
 0x00656098 __imp__WaitForSingleObject@8 data 0x4
+0x0044b590 ?GD452a90SetMedia@@YGXPAXPBXH@Z function 0x7f
+0x00687a50 ?g_GD452a90Format@@3PADA data 0x10
