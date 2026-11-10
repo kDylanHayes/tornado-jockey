@@ -5152,3 +5152,121 @@ void G2CORE1M11::Set3975(const void *src)
         Method2();
     }
 }
+
+struct G2CORE1M12B
+{
+    virtual void W00();
+    virtual void W01();
+    virtual void W02();
+    virtual void W03();
+    virtual void W04();
+    virtual void W05();
+    virtual void W06();
+    virtual void W07();
+    virtual void W08();
+    virtual void W09();
+    virtual void W10();
+    virtual void W11();
+    virtual void W12();
+    virtual void W13();
+    virtual void W14();
+    virtual void W15();
+    virtual void W16();
+    virtual void W17();
+    virtual void W18();
+    virtual void W19();
+    virtual void W20();
+    virtual void W21();
+    virtual void W22();
+    virtual void W23();
+    virtual void W24();
+    virtual void W25();
+    virtual void W26();
+    virtual void W27();
+    virtual void W28();
+    virtual void W29();
+    virtual void W30();
+    virtual void W31();
+    virtual void W32();
+    virtual void W33();
+    virtual void W34();
+    virtual void W35();
+    virtual void W36();
+    virtual void W37();
+    virtual void W38();
+    virtual void W39();
+    virtual void W40();
+    virtual void W41();
+    virtual void W42();
+    virtual void W43();
+    virtual void W44();
+    virtual void W45();
+    virtual void W46();
+    virtual void W47();
+    virtual void W48();
+    virtual void W49();
+    virtual void W50();
+    virtual void W51();
+    virtual void W52();
+    virtual void W53();
+    virtual void W54();
+    virtual void W55();
+    virtual void W56();
+    virtual void W57();
+    virtual void W58();
+    virtual void W59();
+    virtual void W60();
+    virtual void W61();
+    virtual void W62();
+    virtual void W63();
+    virtual void W64();
+    virtual void W65();
+    virtual void W66();
+    virtual void W67();
+    virtual void W68();
+    virtual void W69();
+    virtual void W70();
+    virtual void W71();
+    virtual void W72();
+    virtual void W73();
+    virtual void W74();
+    virtual void W75();
+    virtual void W76();
+    virtual void W77();
+    virtual void W78();
+    virtual void W79();
+    virtual void W80();
+    virtual void W81();
+    virtual void W82();
+    virtual void W83();
+    virtual void W84();
+    virtual void W85();
+    virtual void W86();
+    virtual void W87();
+    virtual void W88();
+    virtual void W89();
+    virtual V3 GetPosition();
+};
+
+class WTACTORX
+{
+public:
+    int CreateTornado(ACTOR *actor, int mode, float scale);
+};
+
+struct G2CORE1M12
+{
+    void Start();
+};
+
+void G2CORE1M12::Start()
+{
+    ((ACTOR *)this)->ACTOR::Start();
+    WTACTOR *scenario = g_pGame->GetScenario();
+    if (scenario) {
+        int mode = (*(bool *)((char *)this + 0xdd1) == 0) + 1;
+        *(int *)((char *)this + 0xdbc) =
+            ((WTACTORX *)scenario)->CreateTornado((ACTOR *)this, mode, 1.0f);
+    }
+    *(V3 *)((char *)this + 0xdc0) = ((G2CORE1M12B *)this)->GetPosition();
+}
