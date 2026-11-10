@@ -39,6 +39,7 @@ extern "C" __declspec(dllimport) void __stdcall Sleep(unsigned long);
 #include "Tongas2/LOG.h"
 #include "Tongas2/SCENE.h"
 #include "Tongas2/RESOURCE.h"
+#include "Tongas2/RESOURCES.h"
 #include "Tongas2/SAFEINDEX.h"
 #include "Tongas2/STRING.h"
 #include "Tongas2/TOKENS.h"
@@ -644,7 +645,7 @@ void GAME::ResetRules()
 
 struct G2CORE1F
 {
-    void Clear();
+    __declspec(noinline) void Clear();
 };
 
 void G2CORE1F::Clear()
@@ -1384,7 +1385,15 @@ int G2CORE1K8::GetFactoryFlags()
     return g_factoryFlags[s_factoryId];
 }
 
-class G2CORE1K9 : public ACTOR
+// The scenario side of the delete call: the game's scenario owns the
+// container at +0x3bc0 and the actor to remove.
+class G2CORE1K9SCENARIO
+{
+public:
+    void Remove(void *object);
+};
+
+class G2CORE1K9 : public ACTOR, public MOUSELISTENER, public INPUTLISTENER
 {
 public:
     virtual ~G2CORE1K9();
@@ -1397,10 +1406,43 @@ public:
 
     static int s_classId;
     static int s_factoryId;
+
+    char pad_0cd4[0x1010 - 0xcd4];
+    RESHANDLE m_1010[8];
+    char pad_1070[0x1314 - 0x1070];
+    RESHANDLE m_1314[0x40];
+    char pad_1614[0x172c - 0x1614];
+    RESHANDLE m_172c;
+    char pad_1738[0x1774 - 0x1738];
+    void *m_1774;
 };
 
 G2CORE1K9::~G2CORE1K9()
 {
+    ((G2CORE1F *)g_pGame)->Clear();
+
+    G2CORE1K9SCENARIO *scenario = (G2CORE1K9SCENARIO *)g_pGame->GetScenario();
+    if (scenario && m_1774)
+        scenario->Remove(m_1774);
+
+    for (int i = 0; i < 0x40; i++) {
+        RESOURCE *resource = g_pResources->GetResource(m_1314[i]);
+        if (resource)
+            resource->Virtual20();
+        m_1314[i].Invalidate();
+    }
+
+    for (int i = 0; i < 8; i++) {
+        RESOURCE *resource = g_pResources->GetResource(m_1010[i]);
+        if (resource)
+            resource->Virtual20();
+        m_1010[i].Invalidate();
+    }
+
+    RESOURCE *resource = g_pResources->GetResource(m_172c);
+    if (resource)
+        resource->Virtual20();
+    m_172c.Invalidate();
 }
 
 int G2CORE1K9::GetClassId()
