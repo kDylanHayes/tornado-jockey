@@ -172,6 +172,11 @@ SRESULT ODEGEOMRESOURCEMASTERX::Execute(CMDENTRY *command, TOKENS **args)
 }
 
 
+extern "C" void dGeomSetBody(void *geom, void *body);
+extern "C" void dSpaceAdd(void *space, void *geom);
+extern "C" void dGeomEnable(void *geom);
+extern RESOURCEMANAGER *g_pActorResourceManager2;
+
 extern "C" void dGeomDestroy(void *geom);
 extern "C" void dGeomTriMeshDataDestroy(void *data);
 extern "C" void dGeomTriMeshClearTCCache(void *geom);
@@ -184,6 +189,8 @@ public:
 
     void Cleanup();
     void ShowHelpers(int arg);
+    void AddToSpace(void *space);
+    bool IsAtOrigin();
 
     char pad_400[0x28];
     void *m_428;
@@ -210,18 +217,40 @@ __declspec(noinline) GD549b40::~GD549b40() throw()
         dGeomTriMeshDataDestroy(m_438);
 }
 
-class DYNINT : public DYNAMICARRAY<int>
+struct G2ODEINIT
 {
-public:
-    void Build(const int &arg);
+    G2ODEINIT();
+    int m_00;
+    int m_04;
+    int m_08;
+    int m_0c;
+    int m_10;
+    int m_14;
+    int m_18;
+    int m_1c;
+    int m_20;
+    int m_24;
 };
+
+G2ODEINIT::G2ODEINIT()
+{
+    m_00 = -1;
+    m_04 = -1;
+    m_08 = 0;
+    m_0c = 0;
+    m_10 = 0;
+    m_14 = 0;
+    m_18 = 0;
+    m_1c = 0;
+    m_20 = 0;
+}
 
 void GD549b40::ShowHelpers(int arg)
 {
     m_44c = true;
-    DYNAMICARRAY<int> *array = (DYNAMICARRAY<int> *)((char *)this + 0x450);
+    DYNAMICARRAY<G2ODEINIT> *array = (DYNAMICARRAY<G2ODEINIT> *)((char *)this + 0x450);
     array->Clear();
-    ((DYNINT *)array)->Build(arg);
+    array->Resize(arg);
 }
 
 void GD549b40::Cleanup()
@@ -327,4 +356,34 @@ void ODELISTX::VisitAll(int arg)
         node->Visit(arg);
         node = next;
     }
+}
+
+class ODEWORLDFIND
+{
+public:
+    WTACTOR *FindActor();
+};
+
+void GD549b40::AddToSpace(void *space)
+{
+    void *geom = m_42c ? m_42c : m_428;
+    dSpaceAdd(space, geom);
+    dGeomEnable(geom);
+    ++*(int *)((char *)g_pActorResourceManager2 + 0x228);
+    WTACTOR *actor = ((ODEWORLDFIND *)this)->FindActor();
+    if (actor)
+        dGeomSetBody(geom, *(void **)((char *)actor + 0xccc));
+}
+
+bool GD549b40::IsAtOrigin()
+{
+    if (m_offset.x != 0.0f)
+        return false;
+    if (m_offset.y != 0.0f)
+        return false;
+    if (m_offset.z != 0.0f)
+        return false;
+    if (m_relAngles.IsZero())
+        return false;
+    return ((ODEWORLDFIND *)this)->FindActor() != 0;
 }
