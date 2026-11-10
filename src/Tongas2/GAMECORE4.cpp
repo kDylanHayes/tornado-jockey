@@ -310,7 +310,25 @@ public:
     virtual ~GD444450();
 };
 
-__declspec(noinline) GD444450::~GD444450()
+__declspec(noinline) GD444450::~GD444450() throw()
+{
+}
+
+// As at 0x43cc30: the exe's destructor leaves the vptr alone, so the master
+// is a member here and the three names sit at 0x60/0x64/0x9c.
+class GD444450X
+{
+public:
+    ~GD444450X();
+
+    RESOURCEMASTER m_master;
+    CSTRING m_60;
+    CSTRING m_64;
+    char pad_9c[0x9c - 0x68];
+    CSTRING m_9c;
+};
+
+__declspec(noinline) GD444450X::~GD444450X()
 {
 }
 
