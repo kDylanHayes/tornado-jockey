@@ -1,3 +1,5 @@
+#include <string>
+
 // Tongas2/TAIL4 -- discovery scaffold for the remaining 0x54eec0-range code.
 
 class GD556050
@@ -14,6 +16,8 @@ class V5547C4
 {
 public:
     virtual ~V5547C4();
+
+    int m_4;
 };
 
 class GD559a10
@@ -120,4 +124,27 @@ public:
 int TAIL4X::ReturnArg(int a)
 {
     return a;
+}
+
+class GD557e70BASE
+{
+public:
+    virtual ~GD557e70BASE();
+
+    char pad_04[8];
+};
+
+class GD557e70 : public V5547C4, public GD557e70BASE
+{
+public:
+    virtual ~GD557e70();
+
+    std::string m_14;
+    std::string m_30;
+    char pad_4c[4];
+    std::string m_50;
+};
+
+GD557e70::~GD557e70()
+{
 }

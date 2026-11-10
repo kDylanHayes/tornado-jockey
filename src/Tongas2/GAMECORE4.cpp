@@ -455,13 +455,24 @@ __declspec(noinline) GD4482b0::~GD4482b0()
 {
 }
 
-class GD4484c0
+class GD5529f0
+{
+public:
+    virtual ~GD5529f0();
+};
+
+// Two strings live at 0x62c and 0x648; the rest is the base and padding.
+class GD4484c0 : public GD5529f0
 {
 public:
     virtual ~GD4484c0();
+
+    char pad_00[0x62c - sizeof(GD5529f0)];
+    std::string m_62c;
+    std::string m_648;
 };
 
-__declspec(noinline) GD4484c0::~GD4484c0()
+GD4484c0::~GD4484c0()
 {
 }
 
