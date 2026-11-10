@@ -287,8 +287,38 @@ void ODEWORLDM2::SetD00(const V3 &value)
 class ODEGEOMRESOURCE : public CPRIMITIVE3RESOURCE
 {
 public:
+    virtual void SetOffsetV(V3 offset);
+    virtual void SetScaleFactorV(V3 scale);
     virtual void SetRelAngles(ANG angles);
 };
+
+void ODEGEOMRESOURCE::SetOffsetV(V3 offset)
+{
+    m_offset = offset;
+    if (*(bool *)((char *)this + 0x424)) {
+        RESHANDLE *handle = (RESHANDLE *)((char *)this + 0x400);
+        for (int i = 0; i < CPRIMITIVE3_MAX_HELPERS; i++) {
+            OBJECT *copy = (OBJECT *)g_pResources->GetResource(handle[i]);
+            if (copy)
+                copy->SetOffsetV(offset);
+        }
+    }
+    *(bool *)((char *)this + 0x431) = true;
+}
+
+void ODEGEOMRESOURCE::SetScaleFactorV(V3 scale)
+{
+    m_scaleFactor = scale;
+    if (*(bool *)((char *)this + 0x424)) {
+        RESHANDLE *handle = (RESHANDLE *)((char *)this + 0x400);
+        for (int i = 0; i < CPRIMITIVE3_MAX_HELPERS; i++) {
+            OBJECT *copy = (OBJECT *)g_pResources->GetResource(handle[i]);
+            if (copy)
+                copy->SetScaleFactorV(scale);
+        }
+    }
+    *(bool *)((char *)this + 0x431) = true;
+}
 
 void ODEGEOMRESOURCE::SetRelAngles(ANG angles)
 {
