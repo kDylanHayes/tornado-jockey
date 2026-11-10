@@ -6,10 +6,14 @@
 #define GC4_OUTOFLINE
 #define MATRIX_AXIS_METHODS
 #define ANG_UPDATE_OUTOFLINE
+#define V2_ROTATE_OUTOFLINE
 
+#include <math.h>
 #include <map>
 #include <string>
 #include <vector>
+
+#include "Tongas2/V2.h"
 
 #include "Tongas2/ACTOR.h"
 #include "Tongas2/ACTORLINK.h"
@@ -746,4 +750,125 @@ struct GC4SET
 void GC4SET::Set0(int value)
 {
     *(int *)((char *)this + 0x410) = value;
+}
+
+// The progress bar's master names the two decals it draws with.
+class PROGRESSBARMASTER : public RESOURCEMASTER
+{
+public:
+    FIXEDSTRING<0x200> m_bgDecal;
+    FIXEDSTRING<0x200> m_fgDecal;
+};
+
+// One progress bar: a background and a foreground decal.
+class PROGRESSBAR : public OBJECT
+{
+public:
+    void Start();
+    void SetDecal(RESHANDLE &handle, const char *name, bool active);
+
+    float m_400;
+    float m_404;
+    RESHANDLE m_bgDecal;
+    RESHANDLE m_fgDecal;
+    int m_420;
+    float m_424;
+    int m_428;
+    float m_42c;
+};
+
+void PROGRESSBAR::Start()
+{
+    PROGRESSBARMASTER *master = (PROGRESSBARMASTER *)m_master;
+    if (!master)
+        return;
+    m_bgDecal.Invalidate();
+    if ((int)strlen(master->m_bgDecal) > 0)
+        SetDecal(m_bgDecal, master->m_bgDecal, false);
+    m_fgDecal.Invalidate();
+    if ((int)strlen(master->m_fgDecal) > 0)
+        SetDecal(m_fgDecal, master->m_fgDecal, false);
+}
+
+// What a shadow prop's file sets: the decal and the pivot it is placed by.
+class PROPSHADOWMASTER : public RESOURCEMASTER
+{
+public:
+    FIXEDSTRING<0x200> m_decalName;
+    int m_260;
+    V2 m_pivot;
+};
+
+// A decal placed under an actor to stand in for its shadow.
+class PROPSHADOW : public OBJECT
+{
+public:
+    void Stop();
+    void Update();
+
+    FIXEDSTRING<0x200> m_name;
+    int m_600;
+    RESHANDLE m_decal;
+    RESHANDLE m_610;
+    float m_angle;
+};
+
+void PROPSHADOW::Stop()
+{
+    RESOURCE *decal = g_pResources->GetResource(m_decal);
+    if (decal)
+        decal->Virtual20();
+    m_decal.Invalidate();
+}
+
+static __forceinline float G2GC4ShadowAngle(WTACTOR *parent)
+{
+    V3 direction = parent->GetWorldAngles().GetDirection();
+    return atan2f(direction.x, direction.z) * 57.29578f;
+}
+
+void PROPSHADOW::Update()
+{
+    OBJECT::Update();
+    if (!m_active)
+        return;
+    DECAL *decal = (DECAL *)g_pResources->GetResource(m_decal);
+    if (!decal)
+        return;
+    WTACTOR *parent = GetParentActor();
+    if (!parent)
+        return;
+    decal->SetAlpha(GetAlpha());
+    decal->SetLayer(GetLayer());
+    decal->SetScaleV(GetScale());
+    PROPSHADOWMASTER *master = (PROPSHADOWMASTER *)m_master;
+    float angle = G2GC4ShadowAngle(parent) + m_angle;
+    if (angle < 0.0f)
+        angle += 360.0f;
+    else if (angle > 360.0f)
+        angle -= 360.0f;
+    bool flip = (angle > 45.0f && angle < 135.0f) || (angle > 225.0f && angle < 315.0f);
+    V2 offset;
+    offset.x = (master->m_pivot.x - 0.5f) * GetScale().x;
+    offset.y = (master->m_pivot.y - 0.5f) * GetScale().y;
+    if (m_angle != 0.0f)
+        offset = offset.Rotate(m_angle * 0.017453292f);
+    V3 position = GetPosition();
+    ANG angles(0.0f, 0.0f, 0.0f);
+    if (!flip) {
+        angles.SetEuler(180.0f, 90.0f, 0.0f);
+        position.x -= offset.x;
+        position.z += offset.y;
+    } else {
+        angles.SetEuler(-90.0f, 0.0f, 90.0f);
+        position.z += offset.x;
+        position.x -= offset.y;
+    }
+    if (m_angle != 0.0f) {
+        MATRIX m;
+        m.RotateY(m_angle);
+        angles.SetMatrix(m * angles.GetMatrix());
+    }
+    decal->SetAngles(angles);
+    decal->SetPosition(position);
 }
