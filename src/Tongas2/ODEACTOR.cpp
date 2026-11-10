@@ -4,6 +4,7 @@
 #include "Tongas2/ODEACTOR.h"
 #include "Tongas2/ACTOR.h"
 #include "Tongas2/CMDBASE.h"
+#include "Tongas2/DYNAMICARRAY.h"
 #include "Tongas2/RESOURCES.h"
 #include "Tongas2/SCENE.h"
 #include "Tongas2/LOG.h"
@@ -678,3 +679,19 @@ void DeleteG2ODEACTOR(G2ODEACTOR *actor)
 {
     delete actor;
 }
+
+// The retail unit instantiates this table; emit its members so the delinked
+// symbols can be compared (the call sites are not part of this unit yet).
+class G2CORE1R1
+{
+public:
+    G2CORE1R1();
+
+    float m_0;
+    float m_4;
+    float m_8;
+};
+
+template G2CORE1R1 *DYNAMICARRAY<G2CORE1R1>::Set(const G2CORE1R1 &item, const int &slot);
+template G2CORE1R1 *DYNAMICARRAY<G2CORE1R1>::Insert(const G2CORE1R1 &item);
+
