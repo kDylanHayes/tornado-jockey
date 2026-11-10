@@ -39,3 +39,13 @@ public:
 __declspec(noinline) GD5545d0::~GD5545d0()
 {
 }
+
+struct G2TL3SET
+{
+    void Set4c(int value);
+};
+
+void G2TL3SET::Set4c(int value)
+{
+    *(int *)((char *)this + 0x4c) = value;
+}

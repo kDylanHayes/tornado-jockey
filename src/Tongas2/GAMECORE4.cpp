@@ -463,3 +463,35 @@ public:
 __declspec(noinline) GD453c50::~GD453c50()
 {
 }
+
+struct G2GC4GET
+{
+    char Get31();
+    char Get30();
+};
+
+char G2GC4GET::Get31()
+{
+    char *p = *(char **)((char *)this + 0xa4);
+    if (p)
+        return p[0x31];
+    return 0;
+}
+
+char G2GC4GET::Get30()
+{
+    char *p = *(char **)((char *)this + 0xa4);
+    if (p)
+        return p[0x30];
+    return 0;
+}
+
+struct G2GC4SET
+{
+    void SetF0(int value);
+};
+
+void G2GC4SET::SetF0(int value)
+{
+    *(int *)((char *)this + 0xf0) = value;
+}

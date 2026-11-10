@@ -28,3 +28,19 @@ int ANIMATEDGEOMETRY::GetVertexCount()
 {
     return 0;
 }
+
+struct G2AGTGET
+{
+    void * Get10();
+    void * Get4();
+};
+
+void * G2AGTGET::Get10()
+{
+    return (char *)*(void **)((char *)this + 0xc) + 0x10;
+}
+
+void * G2AGTGET::Get4()
+{
+    return (char *)*(void **)((char *)this + 0xc) + 4;
+}

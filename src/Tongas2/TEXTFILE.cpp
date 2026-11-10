@@ -341,3 +341,15 @@ void VECVEC::PushBack(const VI &value)
 {
     push_back(value);
 }
+
+struct G2TFGET
+{
+    void * Get5c(int index);
+};
+
+void * G2TFGET::Get5c(int index)
+{
+    void **table = *(void ***)((char *)this + 0x4c);
+    table += index;
+    return (char *)*table + 0x5c;
+}

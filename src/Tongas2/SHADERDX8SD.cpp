@@ -43,3 +43,25 @@ public:
 __declspec(noinline) GD53b5a0::~GD53b5a0()
 {
 }
+
+struct G2SD8GET
+{
+    void * Get3c(int index);
+    void * Get2c(int index);
+    void * Get1c(int index);
+};
+
+void * G2SD8GET::Get3c(int index)
+{
+    return (char *)*(void **)((char *)this + 0x3c) + index * 0xc;
+}
+
+void * G2SD8GET::Get2c(int index)
+{
+    return (char *)*(void **)((char *)this + 0x2c) + index * 0xc;
+}
+
+void * G2SD8GET::Get1c(int index)
+{
+    return (char *)*(void **)((char *)this + 0x1c) + index * 0xc;
+}

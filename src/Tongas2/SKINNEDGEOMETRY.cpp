@@ -37,3 +37,13 @@ __declspec(naked) int SKINNEDGEOMETRY::GetVertexCount()
         ret
     }
 }
+
+struct G2SGGET
+{
+    void * Get8();
+};
+
+void * G2SGGET::Get8()
+{
+    return (char *)*(void **)((char *)this + 0xc) + 8;
+}

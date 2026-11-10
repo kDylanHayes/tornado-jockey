@@ -633,3 +633,29 @@ public:
 __declspec(noinline) GD43fa60::~GD43fa60()
 {
 }
+
+struct G2CORE3SCAN
+{
+    void Scan();
+    int Get();
+};
+
+void G2CORE3SCAN::Scan()
+{
+    *(int *)((char *)this + 0xa9c) = 0;
+    int i = 7;
+    float *p = (float *)((char *)this + 0x84);
+    while (i >= 0) {
+        if (*p > 0.0f) {
+            *(int *)((char *)this + 0xa9c) = i + 1;
+            return;
+        }
+        i--;
+        p--;
+    }
+}
+
+int G2CORE3SCAN::Get()
+{
+    return *(int *)((char *)this + 0xa9c);
+}

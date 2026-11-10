@@ -51,3 +51,23 @@ public:
 __declspec(noinline) GD515e70::~GD515e70()
 {
 }
+
+struct G2SKMGET
+{
+    void * Get14(int index);
+    void * Get4(int index);
+};
+
+void * G2SKMGET::Get14(int index)
+{
+    void **table = *(void ***)((char *)this + 0x14);
+    table += index;
+    return *table;
+}
+
+void * G2SKMGET::Get4(int index)
+{
+    void **table = *(void ***)((char *)this + 4);
+    table += index;
+    return *table;
+}

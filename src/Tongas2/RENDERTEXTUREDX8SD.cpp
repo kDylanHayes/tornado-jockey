@@ -29,3 +29,13 @@ public:
 __declspec(noinline) GD539e70::~GD539e70()
 {
 }
+
+struct G2RTDSET
+{
+    void Set31d0(int value);
+};
+
+void G2RTDSET::Set31d0(int value)
+{
+    *(int *)((char *)this + 0x31d0) = value;
+}

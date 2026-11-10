@@ -26,3 +26,13 @@ DX8APP *CreateDX8APP()
 void RegisterDX8Plugin()
 {
 }
+
+struct G2DX8GET
+{
+    void * Get54(int index);
+};
+
+void * G2DX8GET::Get54(int index)
+{
+    return (char *)*(void **)((char *)this + 0x54) + index * 0x1c;
+}
