@@ -1,3 +1,4 @@
+#include <stdlib.h>
 // Tongas2/SKINNEDMESH -- the CSkinnedMesh object and its helpers.
 //
 // Discovery scaffold: bodies are empty until the unit is matched; each
@@ -98,10 +99,32 @@ void *G2SKMADD::Add(void *item)
     return item;
 }
 
+struct G2SKMLISTNODE
+{
+    void *m_value;
+    G2SKMLISTNODE *m_next;
+    G2SKMLISTNODE *m_prev;
+};
+
 struct G2SKMCLEAR
 {
     void Clear();
+
+    G2SKMLISTNODE *m_head;
 };
+
+void G2SKMCLEAR::Clear()
+{
+    G2SKMLISTNODE *node = m_head;
+    while (node) {
+        G2SKMLISTNODE *next = node->m_next;
+        node->m_next = 0;
+        node->m_prev = 0;
+        free(node);
+        node = next;
+    }
+    m_head = 0;
+}
 
 struct G2SKMTHUNK
 {
