@@ -152,3 +152,80 @@ void ODEWORLDM1::SetD14(const int &value)
 {
     *(int *)((char *)this + 0xd14) = value;
 }
+
+extern "C" void dWorldSetERP(void *world, float value);
+extern "C" void dWorldSetCFM(void *world, float value);
+extern "C" void dWorldSetContactSurfaceLayer(void *world, float value);
+extern "C" void dWorldSetContactMaxCorrectingVel(void *world, float value);
+extern "C" void dWorldSetQuickStepNumIterations(void *world, int value);
+extern "C" void dWorldSetGravity(void *world, float x, float y, float z);
+
+extern void *g_pOdeWorldX;
+
+struct ODEWORLDM2
+{
+    void SetCD8(const float &value);
+    void SetCDC(const float &value);
+    void SetCE4(const float &value);
+    void SetCE0(const float &value);
+    void SetD10(const int &value);
+    void SetCCC(const V3 &value);
+    void SetCF0(const float &value);
+    void SetCE8(const int &value);
+    void SetCEC(const int &value);
+};
+
+void ODEWORLDM2::SetCD8(const float &value)
+{
+    *(float *)((char *)this + 0xcd8) = value;
+    dWorldSetERP(*(void **)((char *)g_pOdeWorldX + 0x5c), value);
+}
+
+void ODEWORLDM2::SetCDC(const float &value)
+{
+    *(float *)((char *)this + 0xcdc) = value;
+    dWorldSetCFM(*(void **)((char *)g_pOdeWorldX + 0x5c), value);
+}
+
+void ODEWORLDM2::SetCE4(const float &value)
+{
+    *(float *)((char *)this + 0xce4) = value;
+    dWorldSetContactSurfaceLayer(*(void **)((char *)g_pOdeWorldX + 0x5c), value);
+}
+
+void ODEWORLDM2::SetCE0(const float &value)
+{
+    *(float *)((char *)this + 0xce0) = value;
+    dWorldSetContactMaxCorrectingVel(*(void **)((char *)g_pOdeWorldX + 0x5c), value);
+}
+
+void ODEWORLDM2::SetD10(const int &value)
+{
+    *(int *)((char *)this + 0xd10) = value;
+    dWorldSetQuickStepNumIterations(*(void **)((char *)g_pOdeWorldX + 0x5c), value);
+}
+
+void ODEWORLDM2::SetCCC(const V3 &value)
+{
+    *(V3 *)((char *)this + 0xccc) = value;
+    dWorldSetGravity(*(void **)((char *)g_pOdeWorldX + 0x5c),
+                     value.x, value.y, value.z);
+}
+
+void ODEWORLDM2::SetCF0(const float &value)
+{
+    *(float *)((char *)this + 0xcf0) = value;
+    *(bool *)((char *)g_pOdeWorldX + 0x68) = false;
+}
+
+void ODEWORLDM2::SetCE8(const int &value)
+{
+    *(int *)((char *)this + 0xce8) = value;
+    *(int *)((char *)g_pOdeWorldX + 0x80) = value;
+}
+
+void ODEWORLDM2::SetCEC(const int &value)
+{
+    *(int *)((char *)this + 0xcec) = value;
+    *(int *)((char *)g_pOdeWorldX + 0x84) = value;
+}
