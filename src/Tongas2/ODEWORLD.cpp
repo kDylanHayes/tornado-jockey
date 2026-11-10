@@ -1,3 +1,4 @@
+#define SRESULT_FREEVALUE_MAY_THROW
 // Tongas2/ODEWORLD -- the ODE world object.
 //
 // Discovery scaffold: bodies are empty until the unit is matched.
@@ -14,6 +15,7 @@ extern "C" void dGeomDisable(void *geom);
 extern "C" void *dGeomGetSpace(void *geom);
 extern "C" void dSpaceRemove(void *space, void *geom);
 extern RESOURCEMANAGER *g_pActorResourceManager2;
+extern RESOURCEMANAGER *g_pActorResourceManagerX;
 
 class G2ODEACTOR
 {
@@ -40,6 +42,37 @@ WTACTOR *ODEWORLDFIND::FindActor()
                : 0;
 }
 
+
+typedef RESOURCEMANAGER *(*CREATEMANAGER)();
+extern CREATEMANAGER g_pfnCreateODEGEOM;
+extern CREATEMANAGER g_pfnCreateODEACTORTEMPLATE;
+extern CREATEMANAGER g_pfnCreateODERAGDOLL;
+extern RESOURCEMANAGER *g_pODERAGDOLL;
+
+#define LOAD_ODE_MANAGER(PTR, GLOBAL, FLAGS, NAME) \
+    { \
+        RESOURCES::s_managers[RESOURCES::s_numManagers] = (*PTR)(); \
+        RESOURCES::s_managerSlots[RESOURCES::s_numManagers] = &GLOBAL; \
+        GLOBAL = RESOURCES::s_managers[RESOURCES::s_numManagers]; \
+        GLOBAL->Init(); \
+        RESOURCES::s_managerFlags[RESOURCES::s_numManagers] = FLAGS; \
+        if (RESOURCES::s_managers[RESOURCES::s_numManagers]->m_18) \
+            RESOURCES::s_managerFlags[RESOURCES::s_numManagers] |= 4; \
+        strncpy(RESOURCES::s_managerNames[RESOURCES::s_numManagers], NAME, 20); \
+        int id = RESOURCES::s_numManagers++; \
+        GLOBAL->m_id = id; \
+    }
+
+void LoadODEManagers()
+{
+    LOAD_ODE_MANAGER(g_pfnCreateODEGEOM, g_pActorResourceManager2, 1, "ODEGEOM")
+    LOAD_ODE_MANAGER(g_pfnCreateODEACTORTEMPLATE, g_pActorResourceManagerX, 0x10, "ODEACTORTEMPLATE")
+    LOAD_ODE_MANAGER(g_pfnCreateODERAGDOLL, g_pODERAGDOLL, 1, "ODERAGDOLL")
+
+    if (RESOURCES::s_numManagers >= RESOURCES_MAX_MANAGERS && g_pLog)
+        g_pLog->Error("ERROR!! RESOURCES::LoadManagers>FATAL ERROR, max number of supported resource managers exceded");
+}
+
 void ODEWORLDMASTER::RegisterCommands()
 {
 }
@@ -54,6 +87,7 @@ public:
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
 
     static int s_classId;
 
@@ -90,6 +124,11 @@ GD548620::GD548620()
     m_d0c = true;
     m_d10 = 20;
     m_d14 = 0.01f;
+}
+
+SRESULT GD548620::Execute(CMDENTRY *command, TOKENS **args)
+{
+    return (this->*(SRESULT (GD548620::*)(TOKENS **))command->func)(args);
 }
 
 int GD548620::GetClassId()
