@@ -2051,9 +2051,8 @@ void G2CHAIN::B()
             chaser->SetName(CSTRING(name));
             chaser->SetPosition(best->GetPosition());
             chaser->InitChaser();
-            int one = 1;
-            chaser->SetActivation(one);
-            chaser->SetDeactivation(one);
+            chaser->SetActivation(1);
+            chaser->SetDeactivation(1);
             V3 direction = tornado->GetPosition() - best->GetPosition();
             direction.y = 0.0f;
             direction.Normalize();
