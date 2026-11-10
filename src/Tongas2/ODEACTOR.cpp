@@ -30,7 +30,14 @@ public:
 
 void ODEACTOR::SetFlag(const char *flag)
 {
-    (void)flag;
+    typedef void (__fastcall *FLAGFN)(void *);
+    if (*(bool *)((char *)this + 0x9a0)) {
+        if (*flag)
+            ((FLAGFN)(*(void ***)this)[0x238 / 4])(this);
+        else
+            ((FLAGFN)(*(void ***)this)[0x23c / 4])(this);
+    }
+    *(char *)((char *)this + 0xd24) = *flag;
 }
 
 class GD54c7b0
