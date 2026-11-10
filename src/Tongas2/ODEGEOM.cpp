@@ -182,6 +182,14 @@ extern "C" void dGeomTriMeshDataDestroy(void *data);
 extern "C" void dGeomTriMeshClearTCCache(void *geom);
 extern "C" void dGeomTriMeshSetData(void *geom, void *data);
 
+struct ODEHELPERITEM
+{
+    V3 m_pos;
+    V3 m_dir;
+    V3 m_scale;
+    int m_value;
+};
+
 class GD549b40 : public OBJECT
 {
 public:
@@ -191,11 +199,17 @@ public:
     void ShowHelpers(int arg);
     void AddToSpace(void *space);
     bool IsAtOrigin();
+    void AddHelper(void *source, const V3 &dir, const V3 &scale, int value);
 
-    char pad_400[0x28];
+    char pad_400[0x24];
+    bool m_424;
+    bool m_425;
+    char pad_426[2];
     void *m_428;
     void *m_42c;
-    char pad_430[4];
+    bool m_430;
+    bool m_431;
+    char pad_432[2];
     void *m_434;
     void *m_438;
     void *m_43c;
@@ -414,4 +428,19 @@ void MATB::Build(const V3 &position, const MATRIX &matrix)
     m._42 = position.y;
     m._43 = position.z;
     m._44 = 1.0f;
+}
+
+void GD549b40::AddHelper(void *source, const V3 &dir, const V3 &scale, int value)
+{
+    m_430 = true;
+    if (!m_44c)
+        return;
+    if (*(int *)((char *)this + 0x464) == *(int *)((char *)this + 0x460))
+        return;
+    ODEHELPERITEM item;
+    item.m_pos = *(V3 *)((char *)source + 8);
+    item.m_dir = dir;
+    item.m_scale = scale;
+    item.m_value = value;
+    ((DYNAMICARRAY<ODEHELPERITEM> *)((char *)this + 0x450))->Insert(item);
 }
