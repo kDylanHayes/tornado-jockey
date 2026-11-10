@@ -4,6 +4,7 @@
 // function has its exact target size in config/symbols.txt so a later delink
 // cannot cut the target short.
 #include "Tongas2/SOUNDFMOD.h"
+#include "Tongas2/SOUND.h"
 
 const char *FMODErrorString(int code)
 {
@@ -44,4 +45,17 @@ struct G2FMODSET
 void G2FMODSET::Set()
 {
     g_fmodFactory = V5483b0;
+}
+
+extern "C" int FSOUND_Close(void);
+
+class GD548040 : public SOUNDMANAGER
+{
+public:
+    virtual ~GD548040();
+};
+
+__declspec(noinline) GD548040::~GD548040()
+{
+    FSOUND_Close();
 }

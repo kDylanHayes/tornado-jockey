@@ -696,10 +696,10 @@ __declspec(noinline) GD432870::~GD432870()
 {
 }
 
-class GD4331a0
+class GD4331a0 : public ACTOR
 {
 public:
-    virtual ~GD4331a0();
+    virtual ~GD4331a0() throw();
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
@@ -709,9 +709,12 @@ public:
     static int s_factoryId;
 
     static int s_classId;
+
+    char pad_10d8[0x10d8 - sizeof(ACTOR)];
+    CSTRING m_10d8;
 };
 
-__declspec(noinline) GD4331a0::~GD4331a0()
+__declspec(noinline) GD4331a0::~GD4331a0() throw()
 {
 }
 
