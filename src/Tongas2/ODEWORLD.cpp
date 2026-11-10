@@ -7,6 +7,38 @@
 #include "Tongas2/CMDBASE.h"
 #include "Tongas2/CPRIMITIVE3.h"
 #include "Tongas2/RESOURCES.h"
+#include "Tongas2/SCENE.h"
+
+extern "C" void dGeomSetBody(void *geom, void *body);
+extern "C" void dGeomDisable(void *geom);
+extern "C" void *dGeomGetSpace(void *geom);
+extern "C" void dSpaceRemove(void *space, void *geom);
+extern RESOURCEMANAGER *g_pActorResourceManager2;
+
+class G2ODEACTOR
+{
+public:
+    static int s_classId;
+};
+
+extern int FindCommonClass(int classId, int otherClassId);
+
+class ODEWORLDFIND
+{
+public:
+    WTACTOR *FindActor();
+};
+
+WTACTOR *ODEWORLDFIND::FindActor()
+{
+    WTACTOR *actor = g_pScene->GetActor(*(RESHANDLE *)((char *)this + 0x30));
+    if (!actor)
+        return 0;
+    return FindCommonClass(actor->GetClassId(), G2ODEACTOR::s_classId)
+                   == G2ODEACTOR::s_classId
+               ? actor
+               : 0;
+}
 
 void ODEWORLDMASTER::RegisterCommands()
 {
@@ -287,10 +319,22 @@ void ODEWORLDM2::SetD00(const V3 &value)
 class ODEGEOMRESOURCE : public CPRIMITIVE3RESOURCE
 {
 public:
+    void RemoveGeom();
     virtual void SetOffsetV(V3 offset);
     virtual void SetScaleFactorV(V3 scale);
     virtual void SetRelAngles(ANG angles);
 };
+
+void ODEGEOMRESOURCE::RemoveGeom()
+{
+    void *geom = *(void **)((char *)this + 0x42c);
+    if (!geom)
+        geom = *(void **)((char *)this + 0x428);
+    dGeomSetBody(geom, 0);
+    dGeomDisable(geom);
+    dSpaceRemove(dGeomGetSpace(geom), geom);
+    --*(int *)((char *)g_pActorResourceManager2 + 0x228);
+}
 
 void ODEGEOMRESOURCE::SetOffsetV(V3 offset)
 {
