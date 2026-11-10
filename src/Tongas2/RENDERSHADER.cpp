@@ -517,3 +517,56 @@ void *GetD0067550c()
 {
     return &DAT_0067550c;
 }
+
+class RSX
+{
+public:
+    void Update();
+
+    void Set10EC(const V3 &value);
+    void Set10F8(const int &value);
+    void Set10FC(const V3 &value);
+    void Set1108(const V3 &value);
+    void Set1114(const V3 &value);
+    void Set1120(const int &value);
+};
+
+void RSX::Set10EC(const V3 &value)
+{
+    V3 *dst = (V3 *)((char *)this + 0x10ec);
+    *dst = value;
+    Update();
+}
+
+void RSX::Set10F8(const int &value)
+{
+    *(int *)((char *)this + 0x10f8) = value;
+    Update();
+}
+
+void RSX::Set10FC(const V3 &value)
+{
+    V3 *dst = (V3 *)((char *)this + 0x10fc);
+    *dst = value;
+    Update();
+}
+
+void RSX::Set1108(const V3 &value)
+{
+    V3 *dst = (V3 *)((char *)this + 0x1108);
+    *dst = value;
+    Update();
+}
+
+void RSX::Set1114(const V3 &value)
+{
+    V3 *dst = (V3 *)((char *)this + 0x1114);
+    *dst = value;
+    Update();
+}
+
+void RSX::Set1120(const int &value)
+{
+    *(int *)((char *)this + 0x1120) = value;
+    Update();
+}
