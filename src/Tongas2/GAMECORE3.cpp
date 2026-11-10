@@ -659,3 +659,15 @@ int G2CORE3SCAN::Get()
 {
     return *(int *)((char *)this + 0xa9c);
 }
+
+class G2GC3STOP : public ACTOR
+{
+public:
+    void StopAndFlag();
+};
+
+void G2GC3STOP::StopAndFlag()
+{
+    ACTOR::Stop();
+    *(bool *)((char *)this + 0xcbc) = true;
+}

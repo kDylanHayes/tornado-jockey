@@ -8252,3 +8252,5 @@
 0x00656140 _g_fn656140 data 0x4
 0x00656120 _g_fn656120 data 0x4
 0x005483b0 ?V5483b0@@YAXXZ function
+0x00432ce0 ?StopAndFlag@G2GC3STOP@@QAEXXZ function 0x11
+0x00558fc0 ?IsSeparator@@YIHD@Z function 0x13

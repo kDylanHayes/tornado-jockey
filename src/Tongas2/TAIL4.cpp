@@ -99,3 +99,8 @@ public:
 __declspec(noinline) GD559aa0::~GD559aa0()
 {
 }
+
+int __fastcall IsSeparator(char c)
+{
+    return c == '\\' || c == '/';
+}
