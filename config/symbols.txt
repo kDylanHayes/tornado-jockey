@@ -9289,3 +9289,6 @@
 0x005091d0 ?RenderFrame@@YAXXZ function 0xb
 0x00509210 ?RenderInit@@YAHXZ function 0x26
 0x0054ab20 ?Build@MATB@@QAEXABUV3@@ABUMATRIX@@@Z function 0x64
+0x0054a4d0 ?Build@GD549b40@@QAEXHPBXH0_N@Z function 0x126
+0x0054a600 ?Activate@GD549b40@@QAEXXZ function 0x7f
+0x00549c40 ?UpdateGeom@GD549b40@@QAEXXZ function 0x6b0

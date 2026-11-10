@@ -3598,11 +3598,22 @@
     {
       "name": "Tongas2/ODEGEOM",
       "ranges": [
-        "0x00548e40-0x0054ab8f"
+        "0x00548e40-0x0054a4cf",
+        "0x0054a680-0x0054ab8f"
       ],
       "target": "build/target/Tongas2/ODEGEOM.obj",
       "source": "src/Tongas2/ODEGEOM.cpp",
       "category": "engine"
+    },
+    {
+      "name": "Tongas2/ODEGEOMBUILD",
+      "ranges": [
+        "0x0054a4d0-0x0054a67f"
+      ],
+      "target": "build/target/Tongas2/ODEGEOMBUILD.obj",
+      "source": "src/Tongas2/ODEGEOMBUILD.cpp",
+      "category": "engine",
+      "complete": true
     },
     {
       "name": "Tongas2/ODEACTOR",
