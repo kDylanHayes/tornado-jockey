@@ -1087,9 +1087,33 @@ public:
     virtual void Virtual29();
     // Prepares the map buffers. Out of line at 0x00404f60.
     void PrepareMap();
+    // Copies one map block's handles (0x403440).
+    void SetupMapPart(int index, void *a, void *b, void *c);
 
     static int s_classId;
 };
+
+// The GUI vtable as PrepareMap sees it: the name setter at offset 0x50.
+class G2CORE1K2GUINAME
+{
+public:
+    virtual void V00(); virtual void V01(); virtual void V02(); virtual void V03();
+    virtual void V04(); virtual void V05(); virtual void V06(); virtual void V07();
+    virtual void V08(); virtual void V09(); virtual void V10(); virtual void V11();
+    virtual void V12(); virtual void V13(); virtual void V14(); virtual void V15();
+    virtual void V16(); virtual void V17(); virtual void V18(); virtual void V19();
+    virtual void SetName(const char *name);
+};
+
+void G2CORE1K2::PrepareMap()
+{
+    char name[0x200];
+    strncpy(name, "Loading", 0x1ff);
+    name[0x1ff] = 0;
+    ((G2CORE1K2GUINAME *)g_pGui)->SetName(name);
+    SetupMapPart(0, (char *)this + 0xe64, (char *)this + 0x1f7c, (char *)this + 0x1fac);
+    SetupMapPart(1, (char *)this + 0x1664, (char *)this + 0x1f48, (char *)this + 0x1f78);
+}
 
 int G2CORE1K2::s_classId = -1;
 
