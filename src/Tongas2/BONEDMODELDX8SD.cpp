@@ -197,8 +197,8 @@ BONEDMODELDX8SDRESOURCE::~BONEDMODELDX8SDRESOURCE()
 {
     if (m_model) {
         DestroyAnimations();
-        BONEDMODELDX8DISPLAY *display = g_pDisplay;
-        display->m_2bc->ReleaseModel(m_model);
+        BONEDMODELDX8DISPLAYCTX *display = g_pDisplay->m_2bc;
+        display->ReleaseModel(m_model);
         m_model = 0;
     }
     if (m_loader) {
@@ -209,8 +209,10 @@ BONEDMODELDX8SDRESOURCE::~BONEDMODELDX8SDRESOURCE()
         operator delete[](m_materials);
         m_materials = 0;
     }
-    delete[] m_tags;
-    m_tags = 0;
+    if (m_tags) {
+        delete[] m_tags;
+        m_tags = 0;
+    }
 }
 
 int BONEDMODELDX8SDRESOURCE::GetClassId()
