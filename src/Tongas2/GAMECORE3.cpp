@@ -10,6 +10,7 @@
 #define ANG_UPDATE_OUTOFLINE
 
 #include <deque>
+#include <map>
 
 #include "Tongas2/BONEDMODEL.h"
 #include "Tongas2/INPUT.h"
@@ -719,23 +720,6 @@ __declspec(noinline) GD4331a0::~GD4331a0() throw()
 {
 }
 
-class GD438ff0
-{
-public:
-    virtual ~GD438ff0();
-    virtual int GetClassId();
-    virtual int GetParentClassId();
-    virtual const char *GetClassName();
-    virtual int GetFactoryId();
-    virtual int GetFactoryFlags();
-
-    static int s_classId;
-};
-
-__declspec(noinline) GD438ff0::~GD438ff0()
-{
-}
-
 class GD43b550 : public ACTOR
 {
 public:
@@ -760,6 +744,34 @@ class G2D5 : public ACTOR
 public:
     virtual ~G2D5();
 };
+
+// The first base fills out to 0x13a0 bytes before the INPUTLISTENER base.
+class GD438ff0BASE : public G2D5
+{
+public:
+    char pad_04[0x13a0 - sizeof(G2D5)];
+};
+
+class GD438ff0 : public GD438ff0BASE, public INPUTLISTENER
+{
+public:
+    virtual ~GD438ff0();
+    virtual int GetClassId();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+    virtual int GetFactoryId();
+    virtual int GetFactoryFlags();
+
+    static int s_classId;
+
+    char pad_13a4[0x18dc - 0x13a4];
+    std::map<int, V2> m_18dc;
+    std::deque<unsigned short> m_18e8;
+};
+
+__declspec(noinline) GD438ff0::~GD438ff0()
+{
+}
 
 class GD43b850 : public G2D5
 {

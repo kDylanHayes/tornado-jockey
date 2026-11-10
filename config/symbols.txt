@@ -8056,7 +8056,7 @@
 0x004329d0 ??_GGD432870@@UAEPAXI@Z function 0x1e
 0x004331a0 ??1GD4331a0@@UAE@XZ function 0x35
 0x004337b0 ??_GGD4331a0@@UAEPAXI@Z function 0x1e
-0x00438ff0 ??1GD438ff0@@UAE@XZ function 0x7
+0x00438ff0 ??1GD438ff0@@UAE@XZ function 0xa9
 0x004397e0 ??_GGD438ff0@@UAEPAXI@Z function 0x1e
 0x0043b550 ??1GD43b550@@UAE@XZ function 0x12
 0x0043b640 ??_GGD43b550@@UAEPAXI@Z function 0x1e
@@ -9369,3 +9369,7 @@
 0x00658020 ??_7G2CORE1K6@@6B@ data
 0x00679df8 ??_7GD535df0@@6BBONEDMODELRESOURCE@@@ data
 0x00679dd4 ??_7GD535df0@@6BBONEDMODELDX8ANIMBASE@@@ data
+0x00438930 ?erase@?$_Tree@V?$_Tmap_traits@HUV2@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHUV2@@@std@@@3@$0A@@std@@@std@@QAE?AViterator@12@V312@0@Z function 0xb7
+0x0065dbf0 ??_7GD438ff0@@6BCMDBASE@@@ data 0x230
+0x0065dbb0 ??_7GD438ff0@@6BACTORLINK@@@ data 0x3c
+0x0065dba0 ??_7GD438ff0@@6B@ data 0x10
