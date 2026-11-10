@@ -31,11 +31,13 @@ struct GD556050ARRAY
     GD556050ITEM *m_end;
     GD556050ITEM *m_cap;
 
-    void Clear()
+    __forceinline void Clear()
     {
-        unsigned int count = m_begin ? (unsigned int)(m_end - m_begin) : 0;
-        for (unsigned int i = 0; i < count; i++)
-            free(m_begin[i].m_4);
+        int count = m_begin ? (int)(m_end - m_begin) : 0;
+        for (int i = 0; i < count; i++) {
+            GD556050ITEM *item = m_begin + i;
+            free(item->m_4);
+        }
         if (m_begin)
             free(m_begin);
         m_begin = 0;
@@ -87,17 +89,7 @@ public:
 
 __declspec(noinline) GD556050::~GD556050()
 {
-    int i;
-    int count = m_54.m_begin ? (int)(m_54.m_end - m_54.m_begin) : 0;
-    for (i = 0; i < count; i++) {
-        GD556050ITEM *item = m_54.m_begin + i;
-        free(item->m_4);
-    }
-    if (m_54.m_begin)
-        free(m_54.m_begin);
-    m_54.m_begin = 0;
-    m_54.m_end = 0;
-    m_54.m_cap = 0;
+    m_54.Clear();
 }
 
 class V5547C4
