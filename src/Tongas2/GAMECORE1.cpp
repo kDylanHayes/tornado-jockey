@@ -21,6 +21,8 @@ extern "C" __declspec(dllimport) void __stdcall Sleep(unsigned long);
 #include "Tongas2/APPOPTIONS.h"
 #include "Tongas2/APPWINDOW.h"
 #include "Tongas2/GUI.h"
+#include "Tongas2/GUICONTROL.h"
+#include "Tongas2/INPUT.h"
 #include "Tongas2/TIMER.h"
 #include "Tongas2/ACTOR.h"
 #include "Tongas2/CSTRING.h"
@@ -709,6 +711,14 @@ public:
     virtual void SetE5C(const int &value);
     virtual void SetE60(const int &value);
 
+    virtual bool IsState3();
+    virtual bool IsState5();
+    virtual bool IsState6();
+    virtual bool IsState2();
+
+    virtual void CloseGuiObject();
+    virtual bool CanAdvanceState();
+
     static int s_classId;
 };
 
@@ -797,6 +807,56 @@ void G2CORE1K2::SetE5C(const int &value)
 void G2CORE1K2::SetE60(const int &value)
 {
     *(int *)((char *)this + 0xe60) = value;
+}
+
+bool G2CORE1K2::IsState3()
+{
+    return *(int *)((char *)this + 0x1c) == 3;
+}
+
+bool G2CORE1K2::IsState5()
+{
+    return *(int *)((char *)this + 0x1c) == 5;
+}
+
+bool G2CORE1K2::IsState6()
+{
+    return *(int *)((char *)this + 0x1c) == 6;
+}
+
+bool G2CORE1K2::IsState2()
+{
+    return *(int *)((char *)this + 0x1c) == 2;
+}
+
+void G2CORE1K2::CloseGuiObject()
+{
+    CMDBASE *object = g_pGui->GetObject(*(RESHANDLE *)((char *)this + 0x1e8c));
+    if (object)
+        ((GUICONTROL *)object)->Close();
+    g_pInput->SetMouseCapture(false);
+}
+
+bool G2CORE1K2::CanAdvanceState()
+{
+    int state = *(int *)((char *)this + 0x1c);
+    if (state == 0 || state == 1 || state == 2 || state == 5 || state == 6)
+        return false;
+    if (*(int *)((char *)this + 0x1e88) - 1)
+        return true;
+    return false;
+}
+
+struct G2CORE1R1
+{
+    int m_0;
+    int m_4;
+    int m_8;
+    G2CORE1R1();
+};
+
+G2CORE1R1::G2CORE1R1() : m_0(-1), m_4(-1), m_8(0)
+{
 }
 
 class G2CORE1K3 : public ACTOR
