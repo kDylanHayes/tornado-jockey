@@ -1478,3 +1478,67 @@ SRESULT G2CORE4CM15::PreviousTipCommand(int value)
     NextTip();
     return SRESULT(true);
 }
+
+extern void *g_pSoundX;
+extern void *g_pMusicX;
+
+struct SOUNDX
+{
+    virtual void W00();
+    virtual void W01();
+    virtual void W02();
+    virtual void W03();
+    virtual void W04();
+    virtual void W05();
+    virtual void W06();
+    virtual void W07();
+    virtual void W08();
+    virtual void W09();
+    virtual void W10();
+    virtual void W11();
+    virtual void W12();
+    virtual void W13();
+    virtual void W14();
+    virtual void W15();
+    virtual void W16();
+    virtual void W17();
+    virtual void W18();
+    virtual void W19();
+    virtual void W20();
+    virtual void W21();
+    virtual void W22();
+    virtual void W23();
+    virtual void W24();
+    virtual void W25();
+    virtual void W26();
+    virtual void W27();
+    virtual void W28();
+    virtual void W29();
+    virtual void W30();
+    virtual void W31();
+    virtual void W32();
+    virtual void W33();
+    virtual void W34();
+    virtual void W35();
+    virtual void SetTime(float time);
+};
+
+struct MUSICX
+{
+    void Update();
+};
+
+__declspec(noinline) void G2CORE4APP::SetOption68(int value)
+{
+    if (*(int *)((char *)g_pApp->m_pOptions + 0x5268) != value) {
+        *(int *)((char *)g_pApp->m_pOptions + 0x5268) = value;
+        ((SOUNDX *)g_pSoundX)->SetTime(*(float *)((char *)g_pTimer + 0x14));
+        if (g_pMusicX)
+            ((MUSICX *)g_pMusicX)->Update();
+    }
+}
+
+__declspec(noinline) void G2CORE4APP::SetOption74(bool value)
+{
+    *(bool *)((char *)g_pApp->m_pOptions + 0x5274) = value;
+}

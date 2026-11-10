@@ -9030,3 +9030,6 @@
 0x004480c0 ?SetOption70@G2CORE4APP@@QAEXH@Z function 0xcd
 0x00447ee0 ?SetOption74@G2CORE4APP@@QAEX_N@Z function 0x15
 0x00442c50 ?ApplyOptions@G2CORE4RES@@QAEXAAHAA_N01@Z function
+0x007e0aa8 ?g_pSoundX@@3PAXA data 0x4
+0x00a01d68 ?g_pMusicX@@3PAXA data 0x4
+0x00504c90 ?Update@MUSICX@@QAEXXZ function
