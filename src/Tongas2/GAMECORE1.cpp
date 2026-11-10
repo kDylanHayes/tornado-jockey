@@ -31,6 +31,7 @@ extern "C" __declspec(dllimport) void __stdcall Sleep(unsigned long);
 #include "Tongas2/CPRIMITIVE3.h"
 #include "Tongas2/FIXEDWSTRING.h"
 #include "Tongas2/GAME.h"
+#include "Tongas2/KERNELCOMMANDS.h"
 #include "Tongas2/RENDERER.h"
 #include "Tongas2/DRM.h"
 #include "Tongas2/SCENE.h"
@@ -5050,4 +5051,30 @@ void G2CORE1M8::SetColor(const V3I &color)
     g_pRenderer->SetFog(*(bool *)((char *)this + 0xcdc), color,
                         *(float *)((char *)this + 0xcec),
                         *(float *)((char *)this + 0xcf0));
+}
+
+struct FOUNDX
+{
+    int m_0;
+    int m_4;
+    int m_8;
+    int m_c;
+};
+
+struct G2CORE1M9
+{
+    virtual SRESULT Command(CMDCALL *call);
+};
+
+SRESULT G2CORE1M9::Command(CMDCALL *call)
+{
+    int unused = 0;
+    FOUNDX *found = (FOUNDX *)((CMDMGRX *)g_pCmdMgrX)->Find((char *)this + 0x1c);
+    if (found) {
+        found->m_4 = 1;
+        found->m_0 = 1;
+        found->m_8 = 0;
+        found->m_c = 0;
+    }
+    return ((KERNELCOMMANDS *)this)->KERNELCOMMANDS::StartGame(call);
 }
