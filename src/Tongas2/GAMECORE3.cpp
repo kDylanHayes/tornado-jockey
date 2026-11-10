@@ -2665,3 +2665,33 @@ const char *G2CORE3CID2::GetClassName()
 {
     return g_classNames[s_classId];
 }
+
+// The progress bar lives in the game-code block at 0x440da0; its master and
+// the rest of its body are in the neighbouring unit. Only the decal setter
+// is emitted here.
+extern RESOURCEMANAGER *g_pDECAL;
+
+class PROGRESSBAR : public OBJECT
+{
+public:
+    void SetDecal(RESHANDLE &handle, const char *name, bool active);
+
+    // The two decal render helpers SetDecal calls.
+    void SetDecalTextures(const RESHANDLE &handle, bool active);
+    void UpdateDecal(const RESHANDLE &handle);
+};
+
+void PROGRESSBAR::SetDecal(RESHANDLE &handle, const char *name, bool active)
+{
+    RESOURCE *resource = g_pDECAL->GetResource(name);
+    if (resource) {
+        handle = *(RESHANDLE *)((char *)resource + 8);
+        SetDecalTextures(handle, active);
+        resource->SetActive(true);
+        if (active)
+            UpdateDecal(handle);
+    } else {
+        if (g_pLog)
+            g_pLog->Error("could not create progress bar decal %s ", name);
+    }
+}

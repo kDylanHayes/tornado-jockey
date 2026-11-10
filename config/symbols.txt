@@ -220,7 +220,7 @@
 0x00440da0 ?SetDecal@PROGRESSBAR@@QAEXAAURESHANDLE@@PBD_N@Z function 0x7c
 0x00440eb0 ??0OBJECT@@QAE@PAVRESOURCEMASTER@@URESHANDLE@@@Z function 0x1f7
 0x004411d0 ?Start@PROGRESSBAR@@UAEXXZ function 0x7d
-0x00441350 ?Execute@RESOURCE@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function
+0x00441350 ?Execute@RESOURCE@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function 0x73
 0x00441550 ?Stop@PROPSHADOW@@UAEXXZ function 0x43
 0x00441710 ?Update@PROPSHADOW@@UAEXXZ function 0x368
 0x00442130 ??1CPRIMITIVE3MASTER@@UAE@XZ function
@@ -233,7 +233,7 @@
 0x00442390 ?GetMusicVolume@RESOURCES@@UAEMXZ function
 0x004423a0 ?GetSoundVolume@RESOURCES@@UAEMXZ function
 0x004423b0 ?Virtual09@RESOURCES@@UAEPAXPBD@Z function 0x5
-0x00442d60 ?Execute@RESOURCES@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function
+0x00442d60 ?Execute@RESOURCES@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function 0x73
 0x004435a0 ?_Lrotate@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@IAEXPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@2@@Z function
 0x00443640 ?_Rrotate@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@IAEXPAU_Node@?$_Tree_nod@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@2@@Z function
 0x004436a0 ?_Inc@const_iterator@?$_Tree@V?$_Tmap_traits@HURESHANDLE@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHURESHANDLE@@@std@@@3@$0A@@std@@@std@@QAEXXZ function
@@ -9422,3 +9422,5 @@
 0x0044b590 ?GD452a90SetMedia@@YGXPAXPBXH@Z function 0x7f
 0x00687a50 ?g_GD452a90Format@@3PADA data 0x10
 0x0054f8c0 ?GetString@WTINFO@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV12@@Z function 0x182
+0x0043f960 ?SetDecalTextures@PROGRESSBAR@@QAEXABURESHANDLE@@_N@Z function 0xfd
+0x0043fec0 ?UpdateDecal@PROGRESSBAR@@QAEXABURESHANDLE@@@Z function 0x60

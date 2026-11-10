@@ -58,6 +58,18 @@ __declspec(dllimport) DWORD __stdcall WaitForSingleObject(HANDLE hHandle,
 #include "Tongas2/STRING.h"
 #include "Tongas2/UNICODESTRING.h"
 
+// The two resource Execute overrides in this block forward to the command
+// table entry the caller named, exactly as RESOURCEMASTER::Execute does.
+SRESULT RESOURCE::Execute(CMDENTRY *command, TOKENS **args)
+{
+    return (this->*(SRESULT (RESOURCE::*)(TOKENS **))command->func)(args);
+}
+
+SRESULT RESOURCES::Execute(CMDENTRY *command, TOKENS **args)
+{
+    return (this->*(SRESULT (RESOURCES::*)(TOKENS **))command->func)(args);
+}
+
 template class std::basic_string<char>;
 template class std::vector<std::basic_string<char> >;
 template class std::map<int, RESHANDLE>;
