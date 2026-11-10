@@ -3440,3 +3440,106 @@ void G2CORE2M7::Set(const float &value)
         v = 1.0f;
     SetD18(v);
 }
+
+struct G2CORE2M8Base
+{
+    virtual void W000();
+    virtual void W001();
+    virtual void W002();
+    virtual void W003();
+    virtual void W004();
+    virtual void W005();
+    virtual void W006();
+    virtual void W007();
+    virtual void W008();
+    virtual void W009();
+    virtual void W010();
+    virtual void W011();
+    virtual void W012();
+    virtual void W013();
+    virtual void W014();
+    virtual void W015();
+    virtual void W016();
+    virtual void W017();
+    virtual void W018();
+    virtual void W019();
+    virtual void W020();
+    virtual void W021();
+    virtual void W022();
+    virtual void W023();
+    virtual void W024();
+    virtual void W025();
+    virtual void W026();
+    virtual void W027();
+    virtual void W028();
+    virtual void W029();
+    virtual void W030();
+    virtual void W031();
+    virtual void W032();
+    virtual void W033();
+    virtual void W034();
+    virtual void W035();
+    virtual void W036();
+    virtual void W037();
+    virtual void W038();
+    virtual void W039();
+    virtual void SetOpaque(const int &value);
+    virtual void SetVisible(const int &value);
+    virtual void W042();
+    virtual void W043();
+    virtual void W044();
+    virtual void W045();
+    virtual void W046();
+    virtual void W047();
+    virtual void W048();
+    virtual void W049();
+    virtual void W050();
+    virtual void W051();
+    virtual void W052();
+    virtual void W053();
+    virtual void W054();
+    virtual void W055();
+    virtual void W056();
+    virtual void W057();
+    virtual void W058();
+    virtual void W059();
+    virtual void W060();
+    virtual void W061();
+    virtual void W062();
+    virtual void W063();
+    virtual void W064();
+    virtual void W065();
+    virtual void W066();
+    virtual void W067();
+    virtual void W068();
+    virtual void W069();
+    virtual void W070();
+    virtual void W071();
+    virtual void W072();
+    virtual void W073();
+    virtual void W074();
+    virtual void W075();
+    virtual void W076();
+    virtual void W077();
+    virtual void W078();
+    virtual void W079();
+    virtual void W080();
+    virtual void W081();
+    virtual void W082();
+    virtual void SetFlag(const bool &value);
+};
+
+struct G2CORE2M8
+{
+    void Init();
+    void Setup();
+};
+
+void G2CORE2M8::Init()
+{
+    Setup();
+    ((G2CORE2M8Base *)this)->SetOpaque(1);
+    ((G2CORE2M8Base *)this)->SetVisible(1);
+    ((G2CORE2M8Base *)this)->SetFlag(true);
+    *(float *)((char *)this + 0xfbc) = 10.0f;
+}
