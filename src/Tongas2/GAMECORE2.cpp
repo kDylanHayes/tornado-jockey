@@ -2025,10 +2025,12 @@ void G2CHAIN::B()
                            tornado->GetPosition();
                 distSq = delta.x * delta.x + delta.y * delta.y +
                          delta.z * delta.z;
-                if (bestDist > distSq && actors[i] &&
-                    ((G2STORMACTOR *)actors[i])->CanSpawn()) {
-                    best = (G2STORMACTOR *)actors[i];
-                    bestDist = distSq;
+                if (bestDist > distSq) {
+                    G2STORMACTOR *candidate = (G2STORMACTOR *)actors[i];
+                    if (candidate && candidate->CanSpawn()) {
+                        best = (G2STORMACTOR *)actors[i];
+                        bestDist = distSq;
+                    }
                 }
             }
             if (!best) {
@@ -2063,16 +2065,18 @@ void G2CHAIN::B()
                 WTACTOR *scenario = g_pGame->GetScenario();
                 if (scenario) {
                     int n = 0;
-                    while (n < 16) {
+                    do {
                         G2STREQ empty("");
                         if (((G2STREQ *)((char *)scenario + 0x1328 + n * 0x200))
                                 ->Equals(empty.m_buf))
                             break;
                         n++;
-                    }
-                    int idx = 0;
+                    } while (n < 16);
+                    int idx;
                     if (n - 1 > 0)
                         idx = rand() % n;
+                    else
+                        idx = 0;
                     char buf[0x200];
                     const G2STREQ *selected =
                         (const G2STREQ *)((char *)scenario + 0x1328 + idx * 0x200);
@@ -2081,9 +2085,11 @@ void G2CHAIN::B()
                     else
                         buf[0] = '\0';
                     if (m_f5c > 0) {
-                        int idx2 = 0;
+                        int idx2;
                         if (n - 2 > 0)
                             idx2 = rand() % (n - 1);
+                        else
+                            idx2 = 0;
                         memcpy(buf, (char *)scenario + 0x1328 + idx2 * 0x200, 0x200);
                     }
                     if (n > 0) {

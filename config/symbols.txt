@@ -7792,7 +7792,7 @@
 0x00428cf0 ?A@G2CHAIN@@QAEXXZ function 0x5
 0x004295f0 ?E@G2CHAIN@@QAEXXZ function 0x58
 0x00429970 ?C@G2CHAIN@@QAEXXZ function 0x2be
-0x0042a0a0 ?B@G2CHAIN@@QAEXXZ function 0x64d
+0x0042a0a0 ?B@G2CHAIN@@QAEXXZ function 0x650
 0x0042a7b0 ?Run@G2CHAIN@@QAEXXZ function 0x25
 0x0041fcf0 ?RegisterCommands@G2WIND@@SAXXZ function 0x3f
 0x006ad69c ?s_classId@G2WIND@@2HA data
