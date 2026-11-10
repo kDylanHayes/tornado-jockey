@@ -4,6 +4,8 @@
 #include "Tongas2/ODEACTOR.h"
 #include "Tongas2/CMDBASE.h"
 #include "Tongas2/RESOURCES.h"
+#include "Tongas2/SCENE.h"
+#include "Tongas2/LOG.h"
 
 extern char g_classNames[][30];
 extern int g_factoryFlags[];
@@ -100,7 +102,18 @@ public:
     virtual const char *GetClassName();
 
     static int s_classId;
+    static int s_factoryId;
 };
+
+class GD548620
+{
+public:
+    static int s_classId;
+    static int s_factoryId;
+};
+
+ACTOR *CreateG2ODEACTOR();
+ACTOR *CreateGD548620();
 
 int G2ODEACTOR::GetClassId()
 {
@@ -508,4 +521,24 @@ void ODEACTORM5::SetTemplate(const CSTRING &name)
         v->S74((char *)master + 0x825);
         v->S21C(master);
     }
+}
+
+void RegisterODEActors()
+{
+    g_factoryCreators[g_numFactories] = CreateG2ODEACTOR;
+    g_factoryFlags[g_numFactories] = 1;
+    g_factoryClassIds[g_numFactories] = G2ODEACTOR::s_classId;
+    g_classFactoryIds[G2ODEACTOR::s_classId] = g_numFactories;
+    strncpy(g_factoryNames[g_numFactories], "ODEACTOR", 30);
+    G2ODEACTOR::s_factoryId = g_numFactories++;
+
+    g_factoryCreators[g_numFactories] = CreateGD548620;
+    g_factoryFlags[g_numFactories] = 1;
+    g_factoryClassIds[g_numFactories] = GD548620::s_classId;
+    g_classFactoryIds[GD548620::s_classId] = g_numFactories;
+    strncpy(g_factoryNames[g_numFactories], "ODEWORLD", 30);
+    GD548620::s_factoryId = g_numFactories++;
+
+    if (g_numFactories >= MAX_ACTOR_FACTORIES && g_pLog)
+        g_pLog->Error("ERROR!! SCENE::LoadActorsInformation>FATAL ERROR, max number of supported actor types exceeded");
 }
