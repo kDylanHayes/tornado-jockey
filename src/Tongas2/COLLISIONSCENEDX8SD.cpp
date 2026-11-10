@@ -7,7 +7,7 @@
 
 RESOURCEMANAGER *CreateCOLLISIONSCENEDX8SD()
 {
-    return 0;
+    return new COLLISIONSCENEDX8SDMASTER();
 }
 
 // A resource master with two allocated names.

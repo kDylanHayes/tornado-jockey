@@ -7,7 +7,7 @@
 
 RESOURCEMANAGER *CreateVERTEXMODELDX8SD()
 {
-    return 0;
+    return new VERTEXMODELDX8SDMASTER();
 }
 
 class GD535df0

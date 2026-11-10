@@ -9,12 +9,18 @@
 #define TONGAS2_VERTEXMODELDX8SD_H
 
 #include "Tongas2/CMDBASE.h"
+#include "Tongas2/RESOURCES.h"
 
-class RESOURCEMANAGER;
-
-class VERTEXMODELDX8SDMASTER
+class VERTEXMODELDX8SDMASTER : public RESOURCEMANAGER
 {
 public:
+    VERTEXMODELDX8SDMASTER()
+    {
+        SafeSprintf(m_fileName, "VERTEXMODELDX8SD.txt");
+        m_8 = false;
+        m_18 = true;
+    }
+
     static void RegisterCommands();
 
     static CMDENTRY s_commands[];

@@ -10,12 +10,18 @@
 #define TONGAS2_SCENEMODELDX8SD_H
 
 #include "Tongas2/CMDBASE.h"
+#include "Tongas2/RESOURCES.h"
 
-class RESOURCEMANAGER;
-
-class SCENEMODELDX8SDMASTER
+class SCENEMODELDX8SDMASTER : public RESOURCEMANAGER
 {
 public:
+    SCENEMODELDX8SDMASTER()
+    {
+        SafeSprintf(m_fileName, "SCENEMODELDX8SD.txt");
+        m_8 = false;
+        m_18 = true;
+    }
+
     static void RegisterCommands();
 
     static CMDENTRY s_commands[];

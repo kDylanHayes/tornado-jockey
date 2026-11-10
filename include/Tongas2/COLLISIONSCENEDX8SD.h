@@ -9,12 +9,18 @@
 #define TONGAS2_COLLISIONSCENEDX8SD_H
 
 #include "Tongas2/CMDBASE.h"
+#include "Tongas2/RESOURCES.h"
 
-class RESOURCEMANAGER;
-
-class COLLISIONSCENEDX8SDMASTER
+class COLLISIONSCENEDX8SDMASTER : public RESOURCEMANAGER
 {
 public:
+    COLLISIONSCENEDX8SDMASTER()
+    {
+        SafeSprintf(m_fileName, "COLLISIONSCENEDX8SD.txt");
+        m_8 = false;
+        m_18 = true;
+    }
+
     static void RegisterCommands();
 
     static CMDENTRY s_commands[];

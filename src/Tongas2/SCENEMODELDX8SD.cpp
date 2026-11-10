@@ -8,7 +8,7 @@
 
 RESOURCEMANAGER *CreateSCENEMODELDX8SD()
 {
-    return 0;
+    return new SCENEMODELDX8SDMASTER();
 }
 
 // The master's screen-decal side: the file-name setter at 0x537270. Only the
