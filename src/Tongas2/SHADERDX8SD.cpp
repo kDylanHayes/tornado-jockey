@@ -5,13 +5,68 @@
 // cannot cut the target short. Apply's extent includes its switch tables.
 #include "Tongas2/SHADERDX8SD.h"
 
+#include "Tongas2/SAFEINDEX.h"
+
+// The manager base, defined in another unit; only its virtual order and the
+// fields the factory touches matter here.
+class RESOURCEMASTER;
+class FILELOADER;
+class RESOURCEMANAGER
+{
+public:
+    RESOURCEMANAGER();
+
+    virtual RESOURCEMASTER *CreateMaster(const char *name);
+    virtual const char *GetTypeCode();
+    virtual ~RESOURCEMANAGER();
+    virtual void Update();
+    virtual bool Load();
+    virtual bool IsMyType(const char *name);
+    virtual void Virtual06();
+    virtual void Init();
+
+    int m_id;
+    bool m_8;
+    RESOURCEMASTER *m_first;
+    RESOURCEMASTER *m_last;
+    int m_count;
+    bool m_18;
+    FILELOADER *m_loader;
+    bool m_loaded;
+    bool m_initialized;
+    char m_fileName[0x200];
+};
+
+// The plain shader manager and its SD subclass; the factory builds the latter
+// (0x53a980).
+class SHADERMANAGER : public RESOURCEMANAGER
+{
+public:
+    SHADERMANAGER();
+};
+
+SHADERMANAGER::SHADERMANAGER()
+{
+    SafeSprintf(m_fileName, "SHADER.txt");
+    m_8 = false;
+    m_18 = true;
+}
+
+class SHADERDX8SDMANAGER : public SHADERMANAGER
+{
+public:
+    SHADERDX8SDMANAGER()
+    {
+    }
+};
+
 void SHADERDX8SDRESOURCE::Apply()
 {
 }
 
 void *CreateSHADERDX8SD()
 {
-    return 0;
+    return new SHADERDX8SDMANAGER();
 }
 
 // The engine bases; only their destructors matter here.

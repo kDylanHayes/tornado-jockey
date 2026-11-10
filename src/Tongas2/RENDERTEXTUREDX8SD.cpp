@@ -5,6 +5,32 @@
 // cannot cut the target short.
 #include "Tongas2/RENDERTEXTUREDX8SD.h"
 #include "Tongas2/APPWINDOW.h"
+#include "Tongas2/RESOURCES.h"
+
+int SafeSprintf(char *buf, const char *format, ...);
+
+// The plain render-texture manager and its SD subclass; the factory builds
+// the latter (0x539950).
+class RENDERTEXTUREMANAGER : public RESOURCEMANAGER
+{
+public:
+    RENDERTEXTUREMANAGER();
+};
+
+RENDERTEXTUREMANAGER::RENDERTEXTUREMANAGER()
+{
+    SafeSprintf(m_fileName, "RENDERTEXTURE.txt");
+    m_8 = false;
+    m_18 = true;
+}
+
+class RENDERTEXTUREDX8SDMANAGER : public RENDERTEXTUREMANAGER
+{
+public:
+    RENDERTEXTUREDX8SDMANAGER()
+    {
+    }
+};
 
 RENDERTEXTUREDX8SDMASTER *CreateRENDERTEXTUREDX8SDMaster()
 {
@@ -13,7 +39,7 @@ RENDERTEXTUREDX8SDMASTER *CreateRENDERTEXTUREDX8SDMaster()
 
 void *CreateRENDERTEXTUREDX8SD()
 {
-    return 0;
+    return new RENDERTEXTUREDX8SDMANAGER();
 }
 
 int GetRENDERTEXTUREFormat()

@@ -8,10 +8,18 @@
 #define TONGAS2_ODERAGDOLL_H
 
 #include "Tongas2/CMDBASE.h"
+#include "Tongas2/RESOURCES.h"
 
-class ODERAGDOLLMASTER
+class ODERAGDOLLMASTER : public RESOURCEMANAGER
 {
 public:
+    ODERAGDOLLMASTER()
+    {
+        SafeSprintf(m_fileName, "ODERAGDOLL.txt");
+        m_8 = false;
+        m_18 = true;
+    }
+
     static void RegisterCommands();
 
     static CMDENTRY s_commands[];

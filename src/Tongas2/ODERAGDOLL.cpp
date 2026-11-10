@@ -13,7 +13,7 @@ void ODERAGDOLLRESOURCE::_BuildDoll()
 
 void *CreateODERAGDOLL()
 {
-    return 0;
+    return new ODERAGDOLLMASTER();
 }
 
 class GD54dcf0
