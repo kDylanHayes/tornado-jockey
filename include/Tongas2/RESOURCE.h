@@ -413,8 +413,6 @@ public:
 
     // The inverse of the object's rotation.
     MATRIX GetWorldMatrix();
-    // The actor this object follows, or 0.
-    WTACTOR *GetParentActor();
     void AttachTo(WTACTOR *actor, const char *tag);
 
     RESHANDLE m_parent;
@@ -449,6 +447,11 @@ public:
     FIXEDSTRING<0x200> m_tagName;
     RESHANDLE m_attached;
     bool m_3fc;
+
+#ifdef OBJECT_GETPARENTACTOR
+    // The actor this object follows, or 0.
+    WTACTOR *GetParentActor();
+#endif
 };
 
 #include "Tongas2/ACTOR.h"

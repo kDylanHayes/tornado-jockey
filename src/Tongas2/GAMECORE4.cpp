@@ -1,3 +1,4 @@
+#define OBJECT_GETPARENTACTOR
 #include <string.h>
 
 // Tongas2/GAMECORE4 -- the game-code block at 0x4410b0. The string, vector
