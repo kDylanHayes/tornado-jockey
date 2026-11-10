@@ -1967,6 +1967,10 @@ public:
 
 void G2CHAIN::B()
 {
+    V2 screen;
+    float bestDist;
+    float distSq;
+    int count;
     ACTOR *tornado = g_pGame->GetTornado();
     if (!tornado)
         return;
@@ -1999,7 +2003,6 @@ void G2CHAIN::B()
             else if (mode == 3)
                 m_f1b98 = wait * 0.66f;
 
-            int count;
             ACTOR *actors[64];
             count = g_pScene->FindActors(g_stormSpawnerFactoryId, actors, 64, false);
             if (!count) {
@@ -2008,19 +2011,23 @@ void G2CHAIN::B()
                 return;
             }
             G2STORMACTOR *best = 0;
-            float bestDist = 1000000.0f;
-            V2 screen(0.0f, 0.0f);
+            bestDist = 1000000.0f;
+            screen.x = 0.0f;
+            screen.y = 0.0f;
             for (int i = 0; i < count; i++) {
-                G2STORMACTOR *spawner = (G2STORMACTOR *)actors[i];
-                ((CAMERA *)g_pCamera)->WorldToScreen(spawner->GetPosition(), &screen);
+                ((CAMERA *)g_pCamera)
+                    ->WorldToScreen(((G2STORMACTOR *)actors[i])->GetPosition(),
+                                    &screen);
                 if (screen.x >= -0.1f && screen.x <= 1.1f &&
                     screen.y >= -0.1f && screen.y <= 1.1f)
                     continue;
-                V3 delta = tornado->GetPosition() - spawner->GetPosition();
-                float distSq = delta.x * delta.x + delta.y * delta.y +
-                               delta.z * delta.z;
-                if (bestDist > distSq && spawner && spawner->CanSpawn()) {
-                    best = spawner;
+                V3 delta = ((G2STORMACTOR *)actors[i])->GetPosition() -
+                           tornado->GetPosition();
+                distSq = delta.x * delta.x + delta.y * delta.y +
+                         delta.z * delta.z;
+                if (bestDist > distSq && actors[i] &&
+                    ((G2STORMACTOR *)actors[i])->CanSpawn()) {
+                    best = (G2STORMACTOR *)actors[i];
                     bestDist = distSq;
                 }
             }
@@ -2047,9 +2054,8 @@ void G2CHAIN::B()
             int one = 1;
             chaser->SetActivation(one);
             chaser->SetDeactivation(one);
-            V3 chaserPos = best->GetPosition();
-            V3 tornadoPos = tornado->GetPosition();
-            V3 direction(tornadoPos.x - chaserPos.x, 0.0f, tornadoPos.z - chaserPos.z);
+            V3 direction = tornado->GetPosition() - best->GetPosition();
+            direction.y = 0.0f;
             direction.Normalize();
             chaser->SetDirection(direction, g_up);
             chaser->SetScale(best->GetScale());
