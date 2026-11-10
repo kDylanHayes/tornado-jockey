@@ -1523,6 +1523,43 @@ public:
     void Remove(void *object);
 };
 
+// The container the scenario keeps at +0x3bc0 (0x40bac0).
+class G2CORE1K9CONTAINER
+{
+public:
+    void Remove(void **object);
+};
+
+// The resource as Remove sees it: the unregister hook at vtable offset 0x50.
+class G2CORE1K9RESOURCEVIEW
+{
+public:
+    virtual void V00(); virtual void V01(); virtual void V02(); virtual void V03();
+    virtual void V04(); virtual void V05(); virtual void V06(); virtual void V07();
+    virtual void V08(); virtual void V09(); virtual void V10(); virtual void V11();
+    virtual void V12(); virtual void V13(); virtual void V14(); virtual void V15();
+    virtual void V16(); virtual void V17(); virtual void V18(); virtual void V19();
+    virtual void Unregister();
+};
+
+__declspec(noinline) void G2CORE1K9SCENARIO::Remove(void *object)
+{
+    if (!object)
+        return;
+    RESHANDLE *handle = (RESHANDLE *)((char *)object + 0x24);
+    if (!handle->IsValid()) {
+        if (g_pLog)
+            g_pLog->Error("Unregistering radarObject, iconId not valid");
+    } else {
+        RESOURCE *resource = g_pResources->GetResource(*handle);
+        if (resource)
+            ((G2CORE1K9RESOURCEVIEW *)resource)->Unregister();
+        handle->Invalidate();
+    }
+    ((G2CORE1K9CONTAINER *)((char *)this + 0x3bc0))->Remove(&object);
+    delete object;
+}
+
 class G2CORE1K9 : public ACTOR, public MOUSELISTENER, public INPUTLISTENER
 {
 public:

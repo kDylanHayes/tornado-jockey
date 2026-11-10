@@ -10,6 +10,28 @@ RESOURCEMANAGER *CreateSCENEMODELDX8SD()
     return 0;
 }
 
+// The master's screen-decal side: the file-name setter at 0x537270. Only the
+// name setter is in this block.
+class SCREENDECALMASTER
+{
+public:
+    virtual void V00(); virtual void V01(); virtual void V02();
+    virtual void V03(); virtual void V04(); virtual void V05();
+    // Slot 0x18: the cooked name.
+    virtual void SetScreenName(const CSTRING &name);
+    virtual void SetFileName(const CSTRING &name);
+
+    char pad_04[0x60 - 4];
+    CSTRING m_fileName;
+};
+
+void SCREENDECALMASTER::SetFileName(const CSTRING &name)
+{
+    if (name.Length() > 0)
+        SetScreenName(name);
+    m_fileName = name;
+}
+
 // A resource master with two allocated names.
 class GD537230 : public RESOURCEMASTER
 {
