@@ -4806,3 +4806,43 @@ SRESULT G2CORE1SR4::Command(int value)
     ok = ((CMDMGRX *)g_pCmdMgrX)->Call((char *)this + 0x1c) != 0;
     return SRESULT(ok);
 }
+
+struct G2CORE1SR5
+{
+    virtual SRESULT Command(int value);
+};
+
+SRESULT G2CORE1SR5::Command(int value)
+{
+    int unused = 0;
+    g_pScene->RemoveAll();
+    return SRESULT(true);
+}
+
+struct APPOPTIONSX
+{
+    virtual void A00();
+    virtual void A01();
+    virtual void A02();
+    virtual void A03();
+    virtual void A04();
+    virtual void A05();
+    virtual void A06();
+    virtual void A07();
+    virtual void A08();
+    virtual void A09();
+    virtual bool Call(int flag, int value);
+};
+
+struct G2CORE1SR6
+{
+    virtual SRESULT Command(int value);
+};
+
+SRESULT G2CORE1SR6::Command(int value)
+{
+    int unused = 0;
+    bool ok = ((APPOPTIONSX *)g_pApp->m_pOptions)->Call(
+        *(unsigned char *)((char *)this + 0x230) != 0, *(int *)((char *)this + 0x228));
+    return SRESULT(ok);
+}
