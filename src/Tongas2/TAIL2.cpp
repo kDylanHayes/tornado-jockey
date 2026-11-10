@@ -1,4 +1,6 @@
 // Tongas2/TAIL2
+#include <string.h>
+
 #include "Tongas2/LOG.h"
 // Tongas2/TAIL2 -- discovery scaffold for the remaining 0x54eec0-range code.
 
@@ -68,6 +70,8 @@ struct DRMPALX
 {
     void ViewGlobalScoresError();
     void PostGlobalScoresError();
+    char *GetClearKey(char *out);
+    char *GetClearLeaderBoardsKey(char *out);
 };
 
 void DRMPALX::ViewGlobalScoresError()
@@ -92,4 +96,40 @@ void DRMPALX::PostGlobalScoresError()
         g_pLog->Error("You must overload this class with an apropiate information to call SendToGlobalScores");
     if (g_pLog)
         g_pLog->Error("************************************************");
+}
+
+char *DRMPALX::GetClearKey(char *out)
+{
+    if (g_pLog)
+        g_pLog->Error("************************************************");
+    if (g_pLog)
+        g_pLog->Error("CRITIC ERROR: DRMPAL::GetClearKey method called");
+    if (g_pLog)
+        g_pLog->Error("You must overload this class with an apropiate GetClearKey method");
+    if (g_pLog)
+        g_pLog->Error("************************************************");
+
+    char buffer[0x200];
+    strncpy(buffer, "ERROR-ERROR-ERROR-ERROR", 0x1ff);
+    buffer[0x1ff] = 0;
+    memcpy(out, buffer, sizeof(buffer));
+    return out;
+}
+
+char *DRMPALX::GetClearLeaderBoardsKey(char *out)
+{
+    if (g_pLog)
+        g_pLog->Error("************************************************");
+    if (g_pLog)
+        g_pLog->Error("CRITIC ERROR: DRMPAL::GetClearLeaderBoardsKey method called");
+    if (g_pLog)
+        g_pLog->Error("You must overload this class with an apropiate GetClearLeaderBoardsKey method");
+    if (g_pLog)
+        g_pLog->Error("************************************************");
+
+    char buffer[0x200];
+    strncpy(buffer, "-ERROR--", 0x1ff);
+    buffer[0x1ff] = 0;
+    memcpy(out, buffer, sizeof(buffer));
+    return out;
 }
