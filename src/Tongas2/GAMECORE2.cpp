@@ -3400,3 +3400,21 @@ SRESULT G2CORE2SR5::Command(int value)
     Call();
     return SRESULT(true);
 }
+
+struct FIXED204
+{
+    char m_buf[0x200];
+    int m_200;
+};
+
+struct G2CORE2M6
+{
+    void Set2A40(const FIXED204 &value);
+};
+
+void G2CORE2M6::Set2A40(const FIXED204 &value)
+{
+    FIXED204 *dst = (FIXED204 *)((char *)this + 0x2a40);
+    memcpy(dst->m_buf, value.m_buf, 0x200);
+    dst->m_200 = value.m_200;
+}

@@ -9033,3 +9033,4 @@
 0x007e0aa8 ?g_pSoundX@@3PAXA data 0x4
 0x00a01d68 ?g_pMusicX@@3PAXA data 0x4
 0x00504c90 ?Update@MUSICX@@QAEXXZ function
+0x00417760 ?Set2A40@G2CORE2M6@@QAEXABUFIXED204@@@Z function 0x28
