@@ -310,6 +310,13 @@ float V3::Distance(const V3 &o) const
     return (float)sqrt(dx * dx + dy * dy + dz * dz);
 }
 
+float V3::DistanceXZ(const V3 &o) const
+{
+    float dx = o.x - x;
+    float dz = o.z - z;
+    return (float)sqrt(dx * dx + dz * dz);
+}
+
 void ANG::UpdateMatrix()
 {
     matrix.FromEuler(euler.z, euler.y, euler.x);

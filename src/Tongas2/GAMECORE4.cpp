@@ -28,6 +28,9 @@ __declspec(dllimport) DWORD __stdcall WaitForSingleObject(HANDLE hHandle,
 #define MATRIX_AXIS_METHODS
 #define ANG_UPDATE_OUTOFLINE
 #define V2_ROTATE_OUTOFLINE
+// The retail link kept the master's implicit destructor in this block.
+#define CPRIMITIVE3MASTER_NOVTABLE
+#include "Tongas2/CPRIMITIVE3.h"
 
 // The tips' wide text conversion is defined with the other out-of-line core
 // string operations; only this translation unit needs to see it declared.
@@ -57,6 +60,10 @@ __declspec(dllimport) DWORD __stdcall WaitForSingleObject(HANDLE hHandle,
 #include "Tongas2/SOUND.h"
 #include "Tongas2/STRING.h"
 #include "Tongas2/UNICODESTRING.h"
+
+__declspec(noinline) CPRIMITIVE3MASTER::~CPRIMITIVE3MASTER()
+{
+}
 
 // The two resource Execute overrides in this block forward to the command
 // table entry the caller named, exactly as RESOURCEMASTER::Execute does.

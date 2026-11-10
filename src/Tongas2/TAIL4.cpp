@@ -205,3 +205,19 @@ public:
 GD557e70::~GD557e70()
 {
 }
+
+class __declspec(novtable) GD558000 : public GD557e70
+{
+public:
+    virtual ~GD558000();
+};
+
+__declspec(noinline) GD558000::~GD558000()
+{
+}
+
+// The retail link kept GD558000's destructor in this block.
+void GD558000Release(GD558000 *object)
+{
+    object->~GD558000();
+}

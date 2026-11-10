@@ -384,10 +384,15 @@ public:
 
 extern RESOURCEMANAGER *g_pCPRIMITIVE3;
 
+#ifdef CPRIMITIVE3MASTER_NOVTABLE
+class __declspec(novtable) CPRIMITIVE3MASTER : public RESOURCEMASTER
+#else
 class CPRIMITIVE3MASTER : public RESOURCEMASTER
+#endif
 {
 public:
     CPRIMITIVE3MASTER(RESOURCEMANAGER *manager, const char *name);
+    virtual ~CPRIMITIVE3MASTER();
 
     static void RegisterCommands();
 

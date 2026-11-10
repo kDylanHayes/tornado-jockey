@@ -11,6 +11,8 @@
 #define MATRIX_DIM_CTOR
 #define ANG_UPDATE_OUTOFLINE
 #define SCENE_OUTOFLINE
+#define V2_ROTATE_OUTOFLINE
+#define V3_DISTANCEXZ_OUTOFLINE
 
 #include <stdarg.h>
 #include <stdio.h>
@@ -210,6 +212,20 @@ V3 V3::Normalized() const
     V3 out = *this;
     out.Normalize();
     return out;
+}
+
+V2 V2::Rotate(float angle) const
+{
+    float s, c;
+    float length = (float)sqrt(x * x + y * y);
+    float a = (float)atan2(x, y) + angle;
+    while (a > 3.14159265f)
+        a -= 6.28318531f;
+    while (a < -3.14159265f)
+        a += 6.28318531f;
+    c = (float)cos(a);
+    s = (float)sin(a);
+    return V2(s * length, c * length);
 }
 
 STRING::~STRING() throw()
