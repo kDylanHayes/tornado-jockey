@@ -2895,6 +2895,23 @@ SRESULT G2CORE2SR2::Command(int value)
     return SRESULT(true);
 }
 
+__declspec(noinline) void G2CORE2M3::Check10()
+{
+    ACTOR *tornado = g_pGame->GetTornado();
+    if (tornado) {
+        if (tornado->CheckTornado(*(RESHANDLE *)((char *)this + 8),
+                                  *(int *)((char *)this + 0xd00))) {
+            *(bool *)((char *)this + 0xce8) = true;
+            *(int *)((char *)this + 0xcec) = *(int *)((char *)this + 0xc28);
+            return;
+        }
+        ((G2CORE2SR2 *)this)->Call3(0, 0, 0);
+    } else {
+        if (g_pLog)
+            g_pLog->Error("Can't get tornado");
+    }
+}
+
 struct G2CORE2SR3
 {
     virtual void W000();

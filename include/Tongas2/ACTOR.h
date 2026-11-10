@@ -334,6 +334,8 @@ public:
     bool UpdateAttachTag();
     // Attaches it to the actor with the handle.
     void AttachTo(const RESHANDLE &parent);
+    // Checks a handle against the actor (0x41ad30).
+    bool CheckTornado(RESHANDLE handle, int value);
     // The copy made by the manager with the id.
     RESOURCE *FindResourceCopy(int managerId);
     // Pauses or resumes resource i's animation.
