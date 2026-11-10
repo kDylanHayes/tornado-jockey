@@ -207,3 +207,20 @@ int RenderInit()
         ((MESHX *)g_pMESH)->V09();
     return 0;
 }
+
+// Copies count ints from value to dest (0x509f70). The retail call site passes
+// two extra unused arguments, so the definition keeps them.
+class GD5383VEC;
+
+extern "C" void GD5383CopyN(int *dest, unsigned int count, const int &value,
+                            GD5383VEC *self, const int &value2)
+{
+    (void)self;
+    (void)value2;
+    while (count > 0) {
+        if (dest)
+            *dest = value;
+        dest++;
+        count--;
+    }
+}

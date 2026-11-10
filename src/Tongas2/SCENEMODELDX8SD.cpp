@@ -233,11 +233,37 @@ void SCENEMODELDX8SDMASTER::RegisterCommands()
 }
 
 // The value vector at +0x34 of the render object; its add is 0x537f70.
+// The value list at render+0x34: a 4-byte header word, then begin/end/cap.
+// Add appends one value; the copy and the grow path are the retail helpers.
+class GD5383VEC;
+
+extern "C" void GD5383CopyN(int *dest, unsigned int count, const void *value,
+                            GD5383VEC *self, const void *value2);
+
 class GD5383VEC
 {
 public:
     void Add(const int &value);
+    void InsertAt(int *position, int count, const int &value);
+
+    int m_0;
+    int *m_begin;
+    int *m_end;
+    int *m_cap;
 };
+
+void GD5383VEC::Add(const int &value)
+{
+    unsigned int count = !m_begin ? 0 : (unsigned int)(m_end - m_begin);
+    unsigned int capacity = !m_begin ? 0 : (unsigned int)(m_cap - m_begin);
+    if (count < capacity) {
+        int *last = m_end;
+        GD5383CopyN(last, 1, &value, this, &value);
+        m_end = last + 1;
+    } else {
+        InsertAt(m_end, 1, value);
+    }
+}
 
 // The render-state selector at 0x5383e0.
 class GD5383e0
