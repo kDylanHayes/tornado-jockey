@@ -270,7 +270,27 @@ public:
     virtual ~GD4433c0();
 };
 
-__declspec(noinline) GD4433c0::~GD4433c0()
+__declspec(noinline) GD4433c0::~GD4433c0() throw()
+{
+}
+
+// As at 0x43cc30: no vptr store; the master is a member and the four names
+// sit at 0x60/0x98/0xac/0xb0.
+class GD4433c0X
+{
+public:
+    ~GD4433c0X();
+
+    RESOURCEMASTER m_master;
+    CSTRING m_60;
+    char pad_98[0x98 - 0x64];
+    CSTRING m_98;
+    char pad_ac[0xac - 0x9c];
+    CSTRING m_ac;
+    CSTRING m_b0;
+};
+
+__declspec(noinline) GD4433c0X::~GD4433c0X()
 {
 }
 
