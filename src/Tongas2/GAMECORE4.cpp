@@ -577,24 +577,62 @@ GD4512e0::~GD4512e0()
     g_pGD4512e0Global->V2();
 }
 
-class GD4516f0
+// The primary base (0..0x24) and the interface base at 0x24. Both have
+// polymorphic vtables but trivial destructors, so the derived dtor only
+// stores their vptrs and never calls a base dtor.
+class GD4516f0PRIMARY
+{
+public:
+    virtual void V0();
+    virtual void V1();
+    virtual void V2();
+
+    void Cleanup();
+    void Destroy();
+
+    char pad_04[0x24 - 0x04];
+};
+
+class GD4516f0IFACE
+{
+public:
+    virtual void W0();
+    virtual void W1();
+    virtual void W2();
+};
+
+class GD4516f0 : public GD4516f0PRIMARY, public GD4516f0IFACE
 {
 public:
     virtual ~GD4516f0();
+
+    int m_28;
+    char pad_2c[0x48 - 0x2c];
 };
 
 __declspec(noinline) GD4516f0::~GD4516f0()
 {
+    m_28 = 0xc0000001;
+    Cleanup();
+    g_pGD4512e0Global->V2();
+    Destroy();
 }
 
-class GD451880
+class GD451880 : public GD4516f0PRIMARY, public GD4516f0IFACE
 {
 public:
     virtual ~GD451880();
+
+    int m_28;
+    char pad_2c[0x48 - 0x2c];
 };
 
 __declspec(noinline) GD451880::~GD451880()
 {
+    m_28 = 0xc0000001;
+    Cleanup();
+    g_pGD4512e0Global->V2();
+    Destroy();
 }
 
 class GD452a90
