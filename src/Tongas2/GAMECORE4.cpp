@@ -207,12 +207,8 @@ void ANG::GetAxes(V3 *forward, V3 *up)
 class V44AC00
 {
 public:
-    virtual ~V44AC00();
+    virtual ~V44AC00() {}
 };
-
-V44AC00::~V44AC00()
-{
-}
 
 class GD440960
 {
@@ -509,15 +505,6 @@ __declspec(noinline) GD449130::~GD449130()
 {
 }
 
-class GD44a560
-{
-public:
-    virtual ~GD44a560();
-};
-
-__declspec(noinline) GD44a560::~GD44a560()
-{
-}
 
 class GD44c1b0
 {
@@ -600,10 +587,21 @@ class GD452a90
 {
 public:
     virtual ~GD452a90();
+
+    // Releases the handles in the member fields.
+    void Close();
+
+    char pad_04[0x58 - 0x04];
+    std::string m_58;
+    std::vector<std::string> m_74;
+    std::vector<int> m_84;
+    char pad_94[0xa8 - 0x94];
+    V44AC00 m_a8;
 };
 
 __declspec(noinline) GD452a90::~GD452a90()
 {
+    Close();
 }
 
 // A COM-like value: Release is the third virtual.
@@ -661,6 +659,25 @@ __declspec(noinline) GD453c50::~GD453c50()
         m_10 = 0;
     }
     m_4.clear();
+}
+
+class GD44a560 : public GD453360, public GD453c50
+{
+public:
+    virtual ~GD44a560();
+
+    char pad_24[0x28 - 0x24];
+    GD452a90 m_28;
+    char pad_34[0x130 - (0x28 + sizeof(GD452a90))];
+    bool m_130;
+    bool m_131;
+};
+
+__declspec(noinline) GD44a560::~GD44a560()
+{
+    m_28.Close();
+    m_130 = false;
+    m_131 = false;
 }
 
 struct G2GC4GET
