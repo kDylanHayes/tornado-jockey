@@ -138,9 +138,21 @@ struct G2ODEADJ
     void Call(void *arg);
 };
 
+// One entry of the ODE actor adjustment table.
+class G2CORE1R1
+{
+public:
+    G2CORE1R1();
+
+    float m_0;
+    float m_4;
+    float m_8;
+};
+
 struct G2ODEADJTGT
 {
     void Call(void *arg);
+    bool Contains(const G2CORE1R1 &value);
 };
 
 __declspec(noinline) void G2ODEADJ::Call(void *arg)
@@ -290,6 +302,14 @@ public:
     void Shutdown();
     void AddActor(void *actor);
 };
+
+__declspec(noinline) void ODEWORLDX::AddActor(void *actor)
+{
+    G2CORE1R1 *value = (G2CORE1R1 *)((char *)actor + 8);
+    G2ODEADJTGT *list = (G2ODEADJTGT *)((char *)this + 4);
+    if (!list->Contains(*value))
+        ((DYNAMICARRAY<G2CORE1R1> *)list)->Insert(*value);
+}
 
 int __stdcall FirstOfTwo(int first, int second)
 {
@@ -704,17 +724,6 @@ void DeleteG2ODEACTOR(G2ODEACTOR *actor)
     delete actor;
 }
 
-// The retail unit instantiates this table; emit its members so the delinked
-// symbols can be compared (the call sites are not part of this unit yet).
-class G2CORE1R1
-{
-public:
-    G2CORE1R1();
-
-    float m_0;
-    float m_4;
-    float m_8;
-};
 
 template G2CORE1R1 *DYNAMICARRAY<G2CORE1R1>::Set(const G2CORE1R1 &item, const int &slot);
 template G2CORE1R1 *DYNAMICARRAY<G2CORE1R1>::Insert(const G2CORE1R1 &item);
