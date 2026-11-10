@@ -1334,3 +1334,126 @@ void BONEDM5::GetPosition(V3 *out)
     out->y = ((V3 *)((char *)this - 0x258))->y;
     out->z = ((V3 *)((char *)this - 0x258))->z;
 }
+
+class BD8X
+{
+public:
+    void Play3(const char *name, int a, int b);
+    void Play2(const char *name, int a);
+
+    virtual void D00();
+    virtual void D01();
+    virtual void D02();
+    virtual void D03();
+    virtual void D04();
+    virtual void D05();
+    virtual void D06();
+    virtual void D07();
+    virtual void D08();
+    virtual void D09();
+    virtual void D10();
+    virtual void D11();
+    virtual void D12();
+    virtual void D13();
+    virtual void D14();
+    virtual void D15();
+    virtual void D16();
+    virtual void D17();
+    virtual void D18();
+    virtual void D19();
+    virtual void D20();
+    virtual void D21();
+    virtual void D22();
+    virtual void D23();
+    virtual void D24();
+    virtual void D25();
+    virtual void D26();
+    virtual void D27();
+    virtual void D28();
+    virtual void D29();
+    virtual void D30();
+    virtual void D31();
+    virtual void D32();
+    virtual void D33();
+    virtual void D34();
+    virtual void D35();
+    virtual void D36();
+    virtual void D37();
+    virtual void D38();
+    virtual void D39();
+    virtual void D40();
+    virtual void D41();
+    virtual void D42();
+    virtual void D43();
+    virtual void D44();
+    virtual void D45();
+    virtual void D46();
+    virtual void D47();
+    virtual void D48();
+    virtual void D49();
+    virtual void D50();
+    virtual void D51();
+    virtual void D52();
+    virtual void D53();
+    virtual void D54();
+    virtual void D55();
+    virtual void D56();
+    virtual void D57();
+    virtual void D58();
+    virtual void D59();
+    virtual void D60();
+    virtual void D61();
+    virtual void D62();
+    virtual void D63();
+    virtual void D64();
+    virtual void D65();
+    virtual void D66();
+    virtual void D67();
+    virtual void D68();
+    virtual void D69();
+    virtual void D70();
+    virtual void D71();
+    virtual void D72();
+    virtual void D73();
+    virtual void D74();
+    virtual void D75();
+    virtual void D76();
+    virtual void D77();
+    virtual void D78();
+    virtual int V79(const char *name);
+    virtual void D80();
+    virtual void D81();
+    virtual void D82();
+    virtual void D83();
+    virtual void D84();
+    virtual void D85();
+    virtual void D86();
+    virtual void D87();
+    virtual void D88();
+    virtual void D89();
+    virtual void V90(int index, int a, int b);
+    virtual void V91(int index, int a);
+};
+
+void BD8X::Play3(const char *name, int a, int b)
+{
+    if (!name)
+        return;
+    int index = V79(name);
+    *(int *)((char *)this + 0x444) = index;
+    if (index < 0)
+        return;
+    V90(index, a, b);
+}
+
+void BD8X::Play2(const char *name, int a)
+{
+    if (!name)
+        return;
+    int index = V79(name);
+    *(int *)((char *)this + 0x444) = index;
+    if (index < 0)
+        return;
+    V91(index, a);
+    *(bool *)((char *)this + 0x648) = true;
+}

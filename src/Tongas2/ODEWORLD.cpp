@@ -4,6 +4,7 @@
 #include "Tongas2/ODEWORLD.h"
 
 #include "Tongas2/ACTOR.h"
+#include "Tongas2/RESOURCES.h"
 #include "Tongas2/CMDBASE.h"
 
 void ODEWORLDMASTER::RegisterCommands()
@@ -274,4 +275,73 @@ void ODEWORLDM2::SetD00(const V3 &value)
 {
     *(V3 *)((char *)this + 0xd00) = value;
     *(bool *)((char *)g_pOdeWorldX + 0x68) = false;
+}
+
+struct ODEWORLDDATA
+{
+    int m_words[0x14];
+};
+
+class GD549b40
+{
+public:
+    virtual void D00();
+    virtual void D01();
+    virtual void D02();
+    virtual void D03();
+    virtual void D04();
+    virtual void D05();
+    virtual void D06();
+    virtual void D07();
+    virtual void D08();
+    virtual void D09();
+    virtual void D10();
+    virtual void D11();
+    virtual void D12();
+    virtual void D13();
+    virtual void D14();
+    virtual void D15();
+    virtual void D16();
+    virtual void D17();
+    virtual void D18();
+    virtual void D19();
+    virtual void D20();
+    virtual void D21();
+    virtual void D22();
+    virtual void D23();
+    virtual void D24();
+    virtual void D25();
+    virtual void D26();
+    virtual void D27();
+    virtual void D28();
+    virtual void D29();
+    virtual void D30();
+    virtual void D31();
+    virtual void D32();
+    virtual void D33();
+    virtual void D34();
+    virtual void D35();
+    virtual void D36();
+    virtual void D37();
+    virtual void D38();
+    virtual void D39();
+    virtual void D40();
+    virtual void D41();
+    virtual void D42();
+    virtual void SetData(ODEWORLDDATA data);
+};
+
+void GD549b40::SetData(ODEWORLDDATA data)
+{
+    *(ODEWORLDDATA *)((char *)this + 0x58) = data;
+    if (*(bool *)((char *)this + 0x424)) {
+        RESHANDLE *handles = (RESHANDLE *)((char *)this + 0x400);
+        for (int i = 3; i != 0; i--) {
+            RESOURCE *resource = g_pResources->GetResource(*handles);
+            if (resource)
+                ((GD549b40 *)resource)->SetData(data);
+            handles++;
+        }
+    }
+    *(bool *)((char *)this + 0x431) = true;
 }
