@@ -3519,7 +3519,10 @@
       ],
       "target": "build/target/Tongas2/TEXTURERESIZER.obj",
       "source": "src/Tongas2/TEXTURERESIZER.cpp",
-      "category": "engine"
+      "category": "engine",
+      "symbol_mappings": {
+        "_m_47": "?m_47@GD535df0CTX@@QAEXPAX@Z"
+      }
     },
     {
       "name": "Tongas2/VERTEXMODELDX8SD",

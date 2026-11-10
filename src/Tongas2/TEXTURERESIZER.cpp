@@ -5,6 +5,8 @@
 // function has its exact target size in config/symbols.txt so a later delink
 // cannot cut the target short.
 #include "Tongas2/TEXTURERESIZER.h"
+#include "Tongas2/BONEDMODELDX8SD.h"
+#include "Tongas2/APPWINDOW.h"
 
 void TEXTURERESIZER::UpdateTextures()
 {
@@ -74,4 +76,27 @@ int TRX::F10(int a, const int &b)
 {
     ((TRINNER *)*(void **)((char *)this + 0x668))->M10(a, b);
     return a;
+}
+
+class GD535df0CTX
+{
+public:
+    void m_47(void *arg);
+};
+
+class GD535df0 : public BONEDMODELDX8SDRESOURCE
+{
+public:
+    virtual ~GD535df0();
+
+    void *m_668;
+};
+
+GD535df0::~GD535df0()
+{
+    void *value = m_668;
+    if (value) {
+        GD535df0CTX *display = (GD535df0CTX *)*(void **)((char *)g_pDisplay + 0x2bc);
+        display->m_47(value);
+    }
 }
