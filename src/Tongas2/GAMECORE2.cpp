@@ -877,8 +877,8 @@ public:
     int m_1b8c;
     int m_1b90;
     int m_1b94;
-    int m_1b98;
-    int m_1b9c;
+    float m_f1b98;
+    float m_f1b9c;
     int m_1ba0;
     // How long until the next supercell is picked.
     float m_f1ba4;
@@ -942,8 +942,8 @@ G2CHAIN::G2CHAIN()
     m_1b8c = 0;
     m_1b90 = 0;
     m_1b94 = 0;
-    m_1b98 = 0;
-    m_1b9c = 0;
+    m_f1b98 = 0.0f;
+    m_f1b9c = 0.0f;
     m_1ba0 = 0;
     m_f1ba4 = 0;
     m_1ba8 = 0;
@@ -1549,17 +1549,6 @@ struct G2STREQ
     char m_buf[0x200];
 };
 
-G2STREQ::G2STREQ(const char *text)
-{
-    if (text) {
-        strncpy(m_buf, text, 0x1ff);
-        m_buf[0x1ff] = '\0';
-    } else {
-        m_buf[0] = '\0';
-        m_buf[0x1ff] = '\0';
-    }
-}
-
 char G2STREQ::Equals(const char *other) const
 {
     return strcmp(m_buf, other) == 0;
@@ -1981,34 +1970,32 @@ void G2CHAIN::B()
     ACTOR *tornado = g_pGame->GetTornado();
     if (!tornado)
         return;
-    float &timer = *(float *)((char *)this + 0x1b9c);
-    float &spawnTimer = *(float *)((char *)this + 0x1b98);
-    timer = timer - g_pTimer->m_dt;
-    if (!(timer > 0.0f) || m_f5c != 0) {
+    m_f1b9c -= g_pTimer->m_dt;
+    if (!(m_f1b9c > 0.0f) || m_f5c != 0) {
         if (m_1ba0 >= m_f4c) {
-            timer = m_f58;
+            m_f1b9c = m_f58;
             int mode = *(int *)((char *)g_pGame + 0x240);
             if (mode == 1) {
-                timer *= 1.5151515f;
+                m_f1b9c *= 1.5151515f;
                 return;
             }
             if (mode == 3)
-                timer *= 0.66f;
+                m_f1b9c *= 0.66f;
             return;
         }
-        spawnTimer = spawnTimer - g_pTimer->m_dt;
-        if (!(spawnTimer > 0.0f) || m_f5c != 0) {
+        m_f1b98 -= g_pTimer->m_dt;
+        if (!(m_f1b98 > 0.0f) || m_f5c != 0) {
             float wait;
             if (m_f50.y > m_f50.x)
                 wait = m_f50.x + (m_f50.y - m_f50.x) * rand() * (1.0f / 32768.0f);
             else
                 wait = m_f50.x;
-            spawnTimer = wait;
+            m_f1b98 = wait;
             int mode = *(int *)((char *)g_pGame + 0x240);
             if (mode == 1)
-                spawnTimer = wait * 1.5151515f;
+                m_f1b98 = wait * 1.5151515f;
             else if (mode == 3)
-                spawnTimer = wait * 0.66f;
+                m_f1b98 = wait * 0.66f;
 
             int count;
             ACTOR *actors[64];

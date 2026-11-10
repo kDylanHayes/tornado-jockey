@@ -477,3 +477,22 @@ void RESOURCE::SetActive(bool active)
         m_active = false;
     }
 }
+
+struct G2STREQ
+{
+    G2STREQ(const char *text);
+    char Equals(const char *other) const;
+
+    char m_buf[0x200];
+};
+
+G2STREQ::G2STREQ(const char *text)
+{
+    if (text) {
+        strncpy(m_buf, text, 0x1ff);
+        m_buf[0x1ff] = '\0';
+    } else {
+        m_buf[0] = '\0';
+        m_buf[0x1ff] = '\0';
+    }
+}
