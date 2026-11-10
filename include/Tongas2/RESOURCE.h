@@ -413,6 +413,8 @@ public:
 
     // The inverse of the object's rotation.
     MATRIX GetWorldMatrix();
+    // The actor this object follows, or 0.
+    WTACTOR *GetParentActor();
     void AttachTo(WTACTOR *actor, const char *tag);
 
     RESHANDLE m_parent;
