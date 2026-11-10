@@ -55,6 +55,7 @@ __declspec(noinline) GD550e70::~GD550e70()
 {
 }
 
+
 class GD5517a0 : public GD556050
 {
 public:

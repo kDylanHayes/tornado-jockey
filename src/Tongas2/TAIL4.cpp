@@ -1,11 +1,60 @@
 #include <string>
+#include <vector>
+#include <map>
 
 // Tongas2/TAIL4 -- discovery scaffold for the remaining 0x54eec0-range code.
 
-class GD556050
+// The object the +0x04 pointer releases; slot 0 takes the count.
+class GD556050OBJ
+{
+public:
+    virtual void Release(int value);
+};
+
+// One element of the vector at 0x54: an int and an owned buffer.
+class GD556050ITEMVALUE
+{
+};
+
+struct GD556050ITEM
+{
+    int m_0;
+    GD556050ITEMVALUE *m_4;
+
+    ~GD556050ITEM()
+    {
+        delete m_4;
+    }
+};
+
+// The non-polymorphic part of the object, shifted to +4 by the derived vptr.
+class GD556050BASE
+{
+public:
+    __forceinline ~GD556050BASE() throw()
+    {
+        if (m_04)
+            m_04->Release(1);
+        delete m_c;
+    }
+
+    GD556050OBJ *m_04;
+    int m_08;
+    char *m_c;
+    std::string m_10;
+    std::string m_2c;
+    int m_48;
+    int m_4c;
+    bool m_50;
+    char pad_51[0x54 - 0x51];
+};
+
+class GD556050 : public GD556050BASE
 {
 public:
     virtual ~GD556050();
+
+    std::vector<GD556050ITEM> m_54;
 };
 
 __declspec(noinline) GD556050::~GD556050()
@@ -20,10 +69,18 @@ public:
     int m_4;
 };
 
-class GD559a10
+class V554E60
+{
+public:
+    virtual ~V554E60() {}
+};
+
+class GD559a10 : public V5547C4, public V554E60
 {
 public:
     virtual ~GD559a10();
+
+    std::map<int, int> m_c;
 };
 
 __declspec(noinline) GD559a10::~GD559a10()

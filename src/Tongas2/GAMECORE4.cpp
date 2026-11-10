@@ -516,15 +516,6 @@ __declspec(noinline) GD44c1b0::~GD44c1b0()
 {
 }
 
-class GD450e80
-{
-public:
-    virtual ~GD450e80();
-};
-
-__declspec(noinline) GD450e80::~GD450e80()
-{
-}
 
 // The engine object the dtor talks to at 0x6cb318; only its third virtual
 // matters here.
@@ -537,6 +528,24 @@ public:
 };
 
 extern GD4512e0GLOBAL *g_pGD4512e0Global;
+
+class GD450e80
+{
+public:
+    virtual ~GD450e80();
+
+    void Destroy();
+
+    char pad_04[0x18 - 0x04];
+    int m_18;
+};
+
+__declspec(noinline) GD450e80::~GD450e80()
+{
+    m_18 = 0xc0000001;
+    g_pGD4512e0Global->V2();
+    Destroy();
+}
 
 // The 0x44f840/0x44bb50 member at +8: Stop runs first, the destructor is the
 // compiler's own call.
