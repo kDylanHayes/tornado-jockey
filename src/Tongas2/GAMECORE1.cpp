@@ -31,6 +31,7 @@ extern "C" __declspec(dllimport) void __stdcall Sleep(unsigned long);
 #include "Tongas2/CPRIMITIVE3.h"
 #include "Tongas2/FIXEDWSTRING.h"
 #include "Tongas2/GAME.h"
+#include "Tongas2/DRM.h"
 #include "Tongas2/SCENE.h"
 #include "Tongas2/LOG.h"
 #include "Tongas2/SCENE.h"
@@ -4688,4 +4689,120 @@ void G2CORE1M5::SetLookAt(const V3 &position, const V3 &direction)
 {
     ((MATRIX *)((char *)this + 0xc))->LookAt(direction, position);
     *(char *)((char *)this + 0x4c) = 2;
+}
+
+struct G2CORE1SR
+{
+    virtual void Virtual00();
+    virtual void Virtual01();
+    virtual void Virtual02();
+    virtual void Virtual03();
+    virtual void Virtual04();
+    virtual void Virtual05();
+    virtual void Virtual06();
+    virtual void Virtual07();
+    virtual void Virtual08();
+    virtual void Virtual09();
+    virtual void Virtual10();
+    virtual void Virtual11();
+    virtual void Virtual12();
+    virtual void Virtual13();
+    virtual void Virtual14();
+    virtual void Virtual15();
+    virtual void Virtual16();
+    virtual void Virtual17();
+    virtual void Virtual18();
+    virtual void Virtual19();
+    virtual void Virtual20();
+    virtual void Virtual21();
+    virtual void Virtual22();
+    virtual void Virtual23();
+    virtual void Virtual24();
+    virtual void Virtual25();
+    virtual void Virtual26();
+    virtual void Virtual27();
+    virtual void Virtual28();
+    virtual void Virtual29();
+    virtual void Virtual30();
+    virtual void Call();
+    virtual SRESULT Command(int value);
+};
+
+SRESULT G2CORE1SR::Command(int value)
+{
+    int unused = 0;
+    Call();
+    return SRESULT(true);
+}
+
+struct G2CORE1SR2
+{
+    virtual void W00();
+    virtual void W01();
+    virtual void W02();
+    virtual void W03();
+    virtual void W04();
+    virtual void W05();
+    virtual void W06();
+    virtual void W07();
+    virtual void W08();
+    virtual void W09();
+    virtual void W10();
+    virtual void W11();
+    virtual void W12();
+    virtual void W13();
+    virtual void W14();
+    virtual void W15();
+    virtual void W16();
+    virtual void W17();
+    virtual void W18();
+    virtual void W19();
+    virtual void W20();
+    virtual void W21();
+    virtual void W22();
+    virtual void W23();
+    virtual void W24();
+    virtual void W25();
+    virtual void V();
+    virtual SRESULT Other(int value);
+};
+
+SRESULT G2CORE1SR2::Other(int value)
+{
+    int unused = 0;
+    ((G2CORE1SR2 *)g_pDrm)->V();
+    return SRESULT(true);
+}
+
+extern void *g_pCmdMgrX;
+
+class CMDMGRX
+{
+public:
+    int Call(void *arg);
+};
+
+struct G2CORE1SR3
+{
+    virtual SRESULT Command(int value);
+};
+
+SRESULT G2CORE1SR3::Command(int value)
+{
+    int unused = 0;
+    if (g_pGame)
+        return SRESULT(true);
+    return SRESULT(false);
+}
+
+struct G2CORE1SR4
+{
+    virtual SRESULT Command(int value);
+};
+
+SRESULT G2CORE1SR4::Command(int value)
+{
+    bool ok = false;
+    ok = ((CMDMGRX *)g_pCmdMgrX)->Call((char *)this + 0x1c) != 0;
+    return SRESULT(ok);
 }

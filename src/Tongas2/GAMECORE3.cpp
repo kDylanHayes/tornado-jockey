@@ -1871,3 +1871,29 @@ void G2CORE3M5::SetA14(const V3 &value)
 {
     *(V3 *)((char *)this + 0xa14) = value;
 }
+
+struct G2CORE3SR
+{
+    virtual void W00();
+    virtual void W01();
+    virtual void W02();
+    virtual void W03();
+    virtual void W04();
+    virtual void W05();
+    virtual SRESULT CommandCF8(int value);
+    virtual SRESULT CommandCF4(int value);
+};
+
+SRESULT G2CORE3SR::CommandCF8(int value)
+{
+    int unused = 0;
+    *(float *)((char *)this + 0xcf8) = 30.0f;
+    return SRESULT(true);
+}
+
+SRESULT G2CORE3SR::CommandCF4(int value)
+{
+    int unused = 0;
+    *(float *)((char *)this + 0xcf4) = 30.0f;
+    return SRESULT(true);
+}
