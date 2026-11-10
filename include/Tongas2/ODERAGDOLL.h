@@ -7,10 +7,14 @@
 #ifndef TONGAS2_ODERAGDOLL_H
 #define TONGAS2_ODERAGDOLL_H
 
+#include "Tongas2/CMDBASE.h"
+
 class ODERAGDOLLMASTER
 {
 public:
     static void RegisterCommands();
+
+    static CMDENTRY s_commands[];
 };
 
 class ODERAGDOLLRESOURCE

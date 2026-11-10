@@ -4,9 +4,6 @@
 #include "Tongas2/SCENEMODELDX8SD.h"
 #include "Tongas2/RESOURCE.h"
 
-void SCENEMODELDX8SDMASTER::RegisterCommands()
-{
-}
 
 RESOURCEMANAGER *CreateSCENEMODELDX8SD()
 {
@@ -119,4 +116,16 @@ void SCENEMODELDX8CID::Set65(const bool &value)
 void SCENEMODELDX8CID::Set6F(const bool &value)
 {
     *(bool *)((char *)this + 0x6f) = value;
+}
+
+CMDENTRY SCENEMODELDX8SDMASTER::s_commands[] = {
+    { 0, 0, 0, 0, 0 },
+};
+
+void SCENEMODELDX8SDMASTER::RegisterCommands()
+{
+    g_classParents[SCENEMODELDX8CID::s_classId] = RESOURCEMASTER::s_classId;
+    g_classCommands[SCENEMODELDX8CID::s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "SCENEMODELDX8SDMASTER", "RESOURCEMASTER");
 }

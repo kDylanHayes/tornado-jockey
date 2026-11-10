@@ -8,12 +8,16 @@
 #ifndef TONGAS2_VERTEXMODELDX8SD_H
 #define TONGAS2_VERTEXMODELDX8SD_H
 
+#include "Tongas2/CMDBASE.h"
+
 class RESOURCEMANAGER;
 
 class VERTEXMODELDX8SDMASTER
 {
 public:
     static void RegisterCommands();
+
+    static CMDENTRY s_commands[];
 };
 
 RESOURCEMANAGER *CreateVERTEXMODELDX8SD();

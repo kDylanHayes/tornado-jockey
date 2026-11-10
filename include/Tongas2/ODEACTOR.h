@@ -6,10 +6,14 @@
 #ifndef TONGAS2_ODEACTOR_H
 #define TONGAS2_ODEACTOR_H
 
+#include "Tongas2/CMDBASE.h"
+
 class ODEACTORMASTER
 {
 public:
     static void RegisterCommands();
+
+    static CMDENTRY s_commands[];
 };
 
 class ODEACTOR

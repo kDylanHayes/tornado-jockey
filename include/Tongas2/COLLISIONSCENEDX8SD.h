@@ -8,12 +8,16 @@
 #ifndef TONGAS2_COLLISIONSCENEDX8SD_H
 #define TONGAS2_COLLISIONSCENEDX8SD_H
 
+#include "Tongas2/CMDBASE.h"
+
 class RESOURCEMANAGER;
 
 class COLLISIONSCENEDX8SDMASTER
 {
 public:
     static void RegisterCommands();
+
+    static CMDENTRY s_commands[];
 };
 
 RESOURCEMANAGER *CreateCOLLISIONSCENEDX8SD();

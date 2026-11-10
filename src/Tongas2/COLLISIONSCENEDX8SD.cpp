@@ -4,9 +4,6 @@
 #include "Tongas2/COLLISIONSCENEDX8SD.h"
 #include "Tongas2/RESOURCE.h"
 
-void COLLISIONSCENEDX8SDMASTER::RegisterCommands()
-{
-}
 
 RESOURCEMANAGER *CreateCOLLISIONSCENEDX8SD()
 {
@@ -109,4 +106,16 @@ int COLLISIONSCENEDX8CID::GetParentClassId()
 const char *COLLISIONSCENEDX8CID::GetClassName()
 {
     return g_classNames[s_classId];
+}
+
+CMDENTRY COLLISIONSCENEDX8SDMASTER::s_commands[] = {
+    { 0, 0, 0, 0, 0 },
+};
+
+void COLLISIONSCENEDX8SDMASTER::RegisterCommands()
+{
+    g_classParents[COLLISIONSCENEDX8CID::s_classId] = RESOURCEMASTER::s_classId;
+    g_classCommands[COLLISIONSCENEDX8CID::s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "COLLISIONSCENEDX8SDMASTER", "RESOURCEMASTER");
 }

@@ -9,12 +9,16 @@
 #ifndef TONGAS2_SCENEMODELDX8SD_H
 #define TONGAS2_SCENEMODELDX8SD_H
 
+#include "Tongas2/CMDBASE.h"
+
 class RESOURCEMANAGER;
 
 class SCENEMODELDX8SDMASTER
 {
 public:
     static void RegisterCommands();
+
+    static CMDENTRY s_commands[];
 };
 
 RESOURCEMANAGER *CreateSCENEMODELDX8SD();

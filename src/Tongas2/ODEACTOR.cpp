@@ -27,9 +27,6 @@ public:
     void SetResourcesScale(const int &index, const V3 &scale);
 };
 
-void ODEACTORMASTER::RegisterCommands()
-{
-}
 
 void ODEACTOR::SetFlag(const char *flag)
 {
@@ -194,6 +191,18 @@ G2ODEACTOR::G2ODEACTOR()
     m_body = 0;
     m_d14 = false;
     m_d24 = true;
+}
+
+CMDENTRY ODEACTORMASTER::s_commands[] = {
+    { 0, 0, 0, 0, 0 },
+};
+
+void ODEACTORMASTER::RegisterCommands()
+{
+    g_classParents[G2ODEACTOR::s_classId] = ACTOR::s_classId;
+    g_classCommands[G2ODEACTOR::s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "ODEACTOR", "ACTOR");
 }
 
 class GD548620

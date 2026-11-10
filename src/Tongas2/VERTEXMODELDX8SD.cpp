@@ -2,10 +2,8 @@
 //
 // Discovery scaffold: bodies are empty until the unit is matched.
 #include "Tongas2/VERTEXMODELDX8SD.h"
+#include "Tongas2/BONEDMODEL.h"
 
-void VERTEXMODELDX8SDMASTER::RegisterCommands()
-{
-}
 
 RESOURCEMANAGER *CreateVERTEXMODELDX8SD()
 {
@@ -54,4 +52,16 @@ int VERTEXMODELDX8CID::GetParentClassId()
 const char *VERTEXMODELDX8CID::GetClassName()
 {
     return g_classNames[s_classId];
+}
+
+CMDENTRY VERTEXMODELDX8SDMASTER::s_commands[] = {
+    { 0, 0, 0, 0, 0 },
+};
+
+void VERTEXMODELDX8SDMASTER::RegisterCommands()
+{
+    g_classParents[VERTEXMODELDX8CID::s_classId] = BONEDMODELMASTER::s_classId;
+    g_classCommands[VERTEXMODELDX8CID::s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "VERTEXMODELDX8SDMASTER", "BONEDMODELMASTER");
 }

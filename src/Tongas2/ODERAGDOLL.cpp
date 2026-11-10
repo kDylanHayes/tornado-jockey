@@ -6,9 +6,6 @@
 #include "Tongas2/ODERAGDOLL.h"
 #include "Tongas2/RESOURCE.h"
 
-void ODERAGDOLLMASTER::RegisterCommands()
-{
-}
 
 void ODERAGDOLLRESOURCE::_BuildDoll()
 {
@@ -126,4 +123,16 @@ public:
 
 __declspec(noinline) GD54dcf0X::~GD54dcf0X()
 {
+}
+
+CMDENTRY ODERAGDOLLMASTER::s_commands[] = {
+    { 0, 0, 0, 0, 0 },
+};
+
+void ODERAGDOLLMASTER::RegisterCommands()
+{
+    g_classParents[ODERAGDOLLCID::s_classId] = RESOURCEMASTER::s_classId;
+    g_classCommands[ODERAGDOLLCID::s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "ODERAGDOLLMASTER", "RESOURCEMASTER");
 }
