@@ -33,12 +33,32 @@ void SCREENDECALMASTER::SetFileName(const CSTRING &name)
     m_fileName = name;
 }
 
+// The leaf objects the sub list holds; its destructor is at 0x537790.
+class GD507220LEAF
+{
+public:
+    ~GD507220LEAF();
+};
+
 // The objects the item's list holds; its destructor is at 0x537e90.
 class GD507220SUB
 {
 public:
-    ~GD507220SUB();
+    ~GD507220SUB() throw();
+
+    char pad_0[0xdc];
+    std::vector<GD507220LEAF *> m_dc;
 };
+
+GD507220SUB::~GD507220SUB() throw()
+{
+    for (unsigned int i = 0; i < m_dc.size(); i++) {
+        if (m_dc[i]) {
+            delete m_dc[i];
+            m_dc[i] = 0;
+        }
+    }
+}
 
 // One item of the object's list; its destructor is out of line at 0x5380a0.
 class GD507220ITEM
