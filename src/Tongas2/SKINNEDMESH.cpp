@@ -4,6 +4,9 @@
 // function has its exact target size in config/symbols.txt so a later delink
 // cannot cut the target short. The sizes of RemoveAnimations and
 // LoadExtraAnimations include their exception-handler tails.
+#include <string.h>
+
+#include "Tongas2/MATHS.h"
 #include "Tongas2/SKINNEDMESH.h"
 
 int SKINNEDMESH::GetAnimationIndex(const char *name)
@@ -100,4 +103,58 @@ struct G2SKMTHUNK
 void G2SKMTHUNK::Clear()
 {
     ((G2SKMCLEAR *)*(void **)((char *)this + 0x14))->Clear();
+}
+
+struct SKA
+{
+    char pad[0x38];
+    void *m_38;
+};
+
+struct SKARR
+{
+    int *m_data;
+    int &operator[](int index) { return m_data[index]; }
+};
+
+struct SKB
+{
+    char pad[0x18];
+    SKARR m_18;
+};
+
+struct SKD
+{
+    char pad[4];
+    void *m_4;
+    char pad2[0x1c];
+    SKARR m_24;
+};
+
+class SKX
+{
+public:
+    void *GetVertexData(void *out, int index);
+    V3 *GetBonePos(V3 *out, int index);
+};
+
+void *SKX::GetVertexData(void *out, int index)
+{
+    SKA *a = (SKA *)*(void **)((char *)this + 0xc);
+    SKB *b = (SKB *)a->m_38;
+    int offset = b->m_18[index];
+    SKD *d = (SKD *)*(void **)((char *)this + 0x10);
+    memcpy(out, (char *)d->m_4 + offset * 0x40, 0x40);
+    return out;
+}
+
+V3 *SKX::GetBonePos(V3 *out, int index)
+{
+    SKA *a = (SKA *)*(void **)((char *)this + 0xc);
+    SKB *b = (SKB *)a->m_38;
+    int bone = b->m_18[index];
+    SKD *d = (SKD *)*(void **)((char *)this + 0x10);
+    V3 *src = (V3 *)((char *)d->m_24.m_data + bone * 0xc);
+    *out = *src;
+    return out;
 }
