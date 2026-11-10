@@ -97,23 +97,40 @@ void G2ODEADJ::Call(void *arg)
 class G2ODEACTOR
 {
 public:
+    // Out of line at 0x0054aff0.
+    G2ODEACTOR();
+
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
 
     static int s_classId;
     static int s_factoryId;
+
+    char m_pad[0xd24];
 };
 
 class GD548620
 {
 public:
+    // Out of line at 0x00548460.
+    GD548620();
+
     static int s_classId;
     static int s_factoryId;
+
+    char m_pad[0xd18];
 };
 
-ACTOR *CreateG2ODEACTOR();
-ACTOR *CreateGD548620();
+ACTOR *CreateG2ODEACTOR()
+{
+    return (ACTOR *)new G2ODEACTOR;
+}
+
+ACTOR *CreateGD548620()
+{
+    return (ACTOR *)new GD548620;
+}
 
 int G2ODEACTOR::GetClassId()
 {
