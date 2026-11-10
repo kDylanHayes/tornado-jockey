@@ -836,6 +836,7 @@ class GD43fad0
 {
 public:
     virtual ~GD43fad0();
+    virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
 
@@ -2215,6 +2216,11 @@ const char *GD43fa60::GetClassName()
     return g_classNames[s_classId];
 }
 
+int GD43fad0::GetClassId()
+{
+    return g_CMDBASEClassId;
+}
+
 int GD43fad0::GetParentClassId()
 {
     return g_classParents[g_CMDBASEClassId];
@@ -2431,4 +2437,54 @@ int GD43b850::GetFactoryId()
 int GD43bb40::GetFactoryId()
 {
     return s_factoryId;
+}
+
+class G2CORE3CID1
+{
+public:
+    virtual int GetClassId();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+
+    static int s_classId;
+};
+
+int G2CORE3CID1::GetClassId()
+{
+    return s_classId;
+}
+
+int G2CORE3CID1::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *G2CORE3CID1::GetClassName()
+{
+    return g_classNames[s_classId];
+}
+
+class G2CORE3CID2
+{
+public:
+    virtual int GetClassId();
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+
+    static int s_classId;
+};
+
+int G2CORE3CID2::GetClassId()
+{
+    return s_classId;
+}
+
+int G2CORE3CID2::GetParentClassId()
+{
+    return g_classParents[s_classId];
+}
+
+const char *G2CORE3CID2::GetClassName()
+{
+    return g_classNames[s_classId];
 }
