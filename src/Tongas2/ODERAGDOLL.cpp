@@ -4,6 +4,7 @@
 // function has its exact target size in config/symbols.txt. _BuildDoll's
 // extent includes its switch tables.
 #include "Tongas2/ODERAGDOLL.h"
+#include "Tongas2/RESOURCE.h"
 
 void ODERAGDOLLMASTER::RegisterCommands()
 {
@@ -109,4 +110,20 @@ int ODERAGDOLLCID::GetParentClassId()
 const char *ODERAGDOLLCID::GetClassName()
 {
     return g_classNames[s_classId];
+}
+
+// The exe's destructor at 0x54dcf0 leaves the vptr alone; the master is a
+// member and the name is at 0x6c.
+class GD54dcf0X
+{
+public:
+    ~GD54dcf0X();
+
+    RESOURCEMASTER m_master;
+    char pad_6c[0x6c - sizeof(RESOURCEMASTER)];
+    CSTRING m_6c;
+};
+
+__declspec(noinline) GD54dcf0X::~GD54dcf0X()
+{
 }

@@ -368,7 +368,32 @@ public:
     virtual ~GD444e40();
 };
 
-__declspec(noinline) GD444e40::~GD444e40()
+__declspec(noinline) GD444e40::~GD444e40() throw()
+{
+}
+
+// As at 0x43cc30: no vptr store; seven names at 0x60..0x8c.
+class GD444e40X
+{
+public:
+    ~GD444e40X();
+
+    RESOURCEMASTER m_master;
+    CSTRING m_60;
+    CSTRING m_64;
+    char pad_6c[0x6c - 0x68];
+    CSTRING m_6c;
+    char pad_74[0x74 - 0x70];
+    CSTRING m_74;
+    char pad_7c[0x7c - 0x78];
+    CSTRING m_7c;
+    char pad_84[0x84 - 0x80];
+    CSTRING m_84;
+    char pad_8c[0x8c - 0x88];
+    CSTRING m_8c;
+};
+
+__declspec(noinline) GD444e40X::~GD444e40X()
 {
 }
 
