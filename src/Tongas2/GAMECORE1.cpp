@@ -5129,3 +5129,26 @@ bool __stdcall IsPlaying5(int a, int b, int c, int d, int e)
 {
     return ((GAMEEXT2 *)g_pGame)->V();
 }
+
+struct G2CORE1M11
+{
+    void SetCD0(const V3 &value);
+    void Set3975(const void *src);
+    void Method1();
+    void Method2();
+};
+
+void G2CORE1M11::SetCD0(const V3 &value)
+{
+    *(V3 *)((char *)g_pDisplay + 0x38) = value;
+    *(V3 *)((char *)this + 0xcd0) = value;
+}
+
+void G2CORE1M11::Set3975(const void *src)
+{
+    memcpy((char *)this + 0x3975, src, 0x200);
+    if (*(bool *)((char *)this + 0x9a0)) {
+        Method1();
+        Method2();
+    }
+}
