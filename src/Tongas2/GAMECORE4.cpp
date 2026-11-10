@@ -354,14 +354,27 @@ __declspec(noinline) GD444450X::~GD444450X()
 {
 }
 
-class GD444730
+class GD444730X
 {
 public:
-    virtual ~GD444730();
+    ~GD444730X();
+    GD444730X *Destroy(bool flag);
+
+    RESOURCEMASTER m_master;
+    CSTRING m_60;
+    CSTRING m_64;
 };
 
-__declspec(noinline) GD444730::~GD444730()
+__declspec(noinline) GD444730X::~GD444730X()
 {
+}
+
+GD444730X *GD444730X::Destroy(bool flag)
+{
+    this->~GD444730X();
+    if (flag)
+        operator delete(this);
+    return this;
 }
 
 class GD444e40
@@ -444,15 +457,6 @@ GD4451f0::~GD4451f0()
     }
 }
 
-class GD4477d0
-{
-public:
-    virtual ~GD4477d0();
-};
-
-__declspec(noinline) GD4477d0::~GD4477d0()
-{
-}
 
 class GD447e50 : public APP
 {
@@ -781,12 +785,31 @@ void G2GC4JMPREL::Release()
 class APPOPTIONS
 {
 public:
-    virtual ~APPOPTIONS();
+    virtual ~APPOPTIONS() {}
     void Save();
 };
 
-APPOPTIONS::~APPOPTIONS()
+// The object the +0x? global points at; slot 0 takes the count.
+class GD4477d0GLOBAL
 {
+public:
+    virtual void Release(int value);
+};
+
+extern GD4477d0GLOBAL *g_pGD4477d0Global;
+
+class GD4477d0 : public APPOPTIONS
+{
+public:
+    virtual ~GD4477d0();
+};
+
+__declspec(noinline) GD4477d0::~GD4477d0()
+{
+    if (g_pGD4477d0Global) {
+        g_pGD4477d0Global->Release(1);
+        g_pGD4477d0Global = 0;
+    }
 }
 
 struct G2GC4CPY
