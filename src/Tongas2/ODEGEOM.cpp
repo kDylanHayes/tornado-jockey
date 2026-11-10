@@ -4,12 +4,8 @@
 // function has its exact target size in config/symbols.txt.
 #include "Tongas2/ODEGEOM.h"
 #include "Tongas2/MATHS.h"
+#include "Tongas2/DYNAMICARRAY.h"
 #include "Tongas2/RESOURCES.h"
-
-void DYNAMICARRAY::Insert(void *item)
-{
-    (void)item;
-}
 
 class GD548fc0
 {
@@ -187,6 +183,7 @@ public:
     virtual ~GD549b40() throw();
 
     void Cleanup();
+    void ShowHelpers(int arg);
 
     char pad_400[0x28];
     void *m_428;
@@ -197,7 +194,9 @@ public:
     void *m_43c;
     char pad_440[4];
     void *m_444;
-    char pad_448[8];
+    char pad_448[4];
+    bool m_44c;
+    char pad_44d[3];
     GD548fc0 m_holder;
 };
 
@@ -209,6 +208,20 @@ __declspec(noinline) GD549b40::~GD549b40() throw()
     dGeomDestroy(m_428);
     if (m_438)
         dGeomTriMeshDataDestroy(m_438);
+}
+
+class DYNINT : public DYNAMICARRAY<int>
+{
+public:
+    void Build(const int &arg);
+};
+
+void GD549b40::ShowHelpers(int arg)
+{
+    m_44c = true;
+    DYNAMICARRAY<int> *array = (DYNAMICARRAY<int> *)((char *)this + 0x450);
+    array->Clear();
+    ((DYNINT *)array)->Build(arg);
 }
 
 void GD549b40::Cleanup()

@@ -16,12 +16,6 @@ public:
     static CMDENTRY s_commands[];
 };
 
-class DYNAMICARRAY
-{
-public:
-    void Insert(void *item);
-};
-
 void *CreateODEGEOM();
 
 #endif
