@@ -150,6 +150,9 @@ class G2ACTOR : public ACTOR
 public:
     G2ACTOR();
     virtual ~G2ACTOR();
+    virtual int GetFactoryId();
+
+    static int s_factoryId;
     virtual void Virtual140();
     virtual void Update();
 
@@ -307,6 +310,9 @@ class G2D1 : public ACTOR
 {
 public:
     virtual ~G2D1();
+    virtual int GetFactoryId();
+
+    static int s_factoryId;
 
     void ClearParticle();
 
@@ -334,6 +340,9 @@ class G2D2 : public ACTOR
 {
 public:
     virtual ~G2D2();
+    virtual int GetFactoryId();
+
+    static int s_factoryId;
 };
 
 G2D2::~G2D2()
@@ -354,6 +363,9 @@ class G2EFFECT : public G2EFFECTBASE
 {
 public:
     virtual ~G2EFFECT();
+    virtual int GetFactoryId();
+
+    static int s_factoryId;
 
     char m_0000[0xd8c - 0xccc];
     RESHANDLE m_d8c;
@@ -719,6 +731,9 @@ class G2RULESOBJBASE : public ACTOR
 public:
     G2RULESOBJBASE();
     virtual ~G2RULESOBJBASE();
+    virtual int GetFactoryId();
+
+    static int s_factoryId;
 
     // The target bookkeeping virtuals the game objects add after ACTOR's.
     virtual void SetNameBlock(const char *data) {}
@@ -840,6 +855,9 @@ class G2CHAIN : public G2RULESOBJBASE, public INPUTLISTENER
 public:
     G2CHAIN();
     virtual ~G2CHAIN();
+    virtual int GetFactoryId();
+
+    static int s_factoryId;
 
     void A();
     void B();
@@ -1224,6 +1242,7 @@ class G2RULESOBJ : public G2RULESOBJBASE
 public:
     G2RULESOBJ();
     virtual ~G2RULESOBJ();
+    virtual int GetFactoryId();
     virtual void Update();
     virtual void Start();
     virtual void HandleTornado(CMDCALL *call);
@@ -1316,6 +1335,7 @@ public:
 
     static int s_factoryId;
     virtual ~G2FORESTOBJ();
+    virtual int GetFactoryId();
 
     // The spawner cell the forest made a powerup in.
     RESHANDLE m_handle;
@@ -2510,4 +2530,44 @@ void G2CORE2M1::SetE5F8(const bool &value)
 void G2CORE2M1::SetE5FC(const int &value)
 {
     *(int *)((char *)this + 0xe5fc) = value;
+}
+
+int G2ACTOR::GetFactoryId()
+{
+    return s_factoryId;
+}
+
+int G2D1::GetFactoryId()
+{
+    return s_factoryId;
+}
+
+int G2D2::GetFactoryId()
+{
+    return s_factoryId;
+}
+
+int G2EFFECT::GetFactoryId()
+{
+    return s_factoryId;
+}
+
+int G2RULESOBJ::GetFactoryId()
+{
+    return s_factoryId;
+}
+
+int G2RULESOBJBASE::GetFactoryId()
+{
+    return s_factoryId;
+}
+
+int G2CHAIN::GetFactoryId()
+{
+    return s_factoryId;
+}
+
+int G2FORESTOBJ::GetFactoryId()
+{
+    return s_factoryId;
 }

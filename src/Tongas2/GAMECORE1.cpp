@@ -657,8 +657,10 @@ public:
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
+    virtual int GetFactoryId();
 
     static int s_classId;
+    static int s_factoryId;
 };
 
 int G2CORE1J1::s_classId = -1;
@@ -670,6 +672,11 @@ G2CORE1J1::~G2CORE1J1()
 int G2CORE1J1::GetClassId()
 {
     return s_classId;
+}
+
+int G2CORE1J1::GetFactoryId()
+{
+    return s_factoryId;
 }
 
 int G2CORE1J1::GetParentClassId()
@@ -686,10 +693,26 @@ class G2CORE1J2 : public ACTOR
 {
 public:
     virtual ~G2CORE1J2();
+
+    virtual int GetClassId();
+    virtual int GetFactoryId();
+
+    static int s_classId;
+    static int s_factoryId;
 };
 
 G2CORE1J2::~G2CORE1J2()
 {
+}
+
+int G2CORE1J2::GetClassId()
+{
+    return s_classId;
+}
+
+int G2CORE1J2::GetFactoryId()
+{
+    return s_factoryId;
 }
 
 class G2CORE1J3 : public ACTOR
@@ -700,8 +723,10 @@ public:
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
+    virtual int GetFactoryId();
 
     static int s_classId;
+    static int s_factoryId;
 };
 
 int G2CORE1J3::s_classId = -1;
@@ -713,6 +738,11 @@ G2CORE1J3::~G2CORE1J3()
 int G2CORE1J3::GetClassId()
 {
     return s_classId;
+}
+
+int G2CORE1J3::GetFactoryId()
+{
+    return s_factoryId;
 }
 
 int G2CORE1J3::GetParentClassId()
@@ -994,12 +1024,27 @@ class G2CORE1K7 : public ACTOR
 public:
     virtual ~G2CORE1K7();
 
+    virtual int GetClassId();
+    virtual int GetFactoryId();
     virtual void Set1328(const int &index, const void *src);
     virtual CSTRING &Set332C(const int &index, const CSTRING &value);
+
+    static int s_classId;
+    static int s_factoryId;
 };
 
 G2CORE1K7::~G2CORE1K7()
 {
+}
+
+int G2CORE1K7::GetClassId()
+{
+    return s_classId;
+}
+
+int G2CORE1K7::GetFactoryId()
+{
+    return s_factoryId;
 }
 
 void G2CORE1K7::Set1328(const int &index, const void *src)
@@ -1016,20 +1061,52 @@ class G2CORE1K8 : public ACTOR
 {
 public:
     virtual ~G2CORE1K8();
+
+    virtual int GetClassId();
+    virtual int GetFactoryId();
+
+    static int s_classId;
+    static int s_factoryId;
 };
 
 G2CORE1K8::~G2CORE1K8()
 {
 }
 
+int G2CORE1K8::GetClassId()
+{
+    return s_classId;
+}
+
+int G2CORE1K8::GetFactoryId()
+{
+    return s_factoryId;
+}
+
 class G2CORE1K9 : public ACTOR
 {
 public:
     virtual ~G2CORE1K9();
+
+    virtual int GetClassId();
+    virtual int GetFactoryId();
+
+    static int s_classId;
+    static int s_factoryId;
 };
 
 G2CORE1K9::~G2CORE1K9()
 {
+}
+
+int G2CORE1K9::GetClassId()
+{
+    return s_classId;
+}
+
+int G2CORE1K9::GetFactoryId()
+{
+    return s_factoryId;
 }
 
 class Tdc
