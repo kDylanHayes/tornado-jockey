@@ -33,12 +33,33 @@ void SCREENDECALMASTER::SetFileName(const CSTRING &name)
     m_fileName = name;
 }
 
+// The objects the item's list holds; its destructor is at 0x537e90.
+class GD507220SUB
+{
+public:
+    ~GD507220SUB();
+};
+
 // One item of the object's list; its destructor is out of line at 0x5380a0.
 class GD507220ITEM
 {
 public:
-    ~GD507220ITEM();
+    ~GD507220ITEM() throw();
+
+    char pad_0[0x430];
+    std::vector<int> m_430;
+    std::vector<GD507220SUB *> m_440;
 };
+
+GD507220ITEM::~GD507220ITEM() throw()
+{
+    for (unsigned int i = 0; i < m_440.size(); i++) {
+        if (m_440[i]) {
+            delete m_440[i];
+            m_440[i] = 0;
+        }
+    }
+}
 
 // The object the display keeps at +0xb0: a list of items freed one by one.
 class GD507220OBJECT
