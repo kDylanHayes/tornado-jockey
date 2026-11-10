@@ -9,9 +9,35 @@
 // resource-manager factories. The template instantiations that follow it run
 // through 0x0050b3df.
 #ifndef TONGAS2_DX8APP_H
+
+#include <string>
+#include "Tongas2/HARDWARE.h"
+#include "Tongas2/SETTINGS.h"
 #define TONGAS2_DX8APP_H
 
-class DX8APP
+// The primary base (0x44 bytes) and the secondary base at +0x44. Their
+// destructors are the functions at 0x4e62d0 and 0x507220.
+class DX8APPBASE1
+{
+public:
+    virtual ~DX8APPBASE1();
+
+    char pad_04[0x40];
+};
+
+class GD507220
+{
+public:
+    virtual ~GD507220();
+};
+
+class DX8APPSTRING
+{
+public:
+    ~DX8APPSTRING();
+};
+
+class DX8APP : public DX8APPBASE1, public GD507220
 {
 public:
     DX8APP();
@@ -19,7 +45,10 @@ public:
     void Init();
 
 private:
-    char m_000[0x2c4];
+    char pad_48[0x2b8 - 0x48];
+    DX8APPSTRING *m_2b8;
+    HARDWARE *m_2bc;
+    SETTINGS *m_2c0;
 };
 
 DX8APP *CreateDX8APP();

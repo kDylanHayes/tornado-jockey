@@ -14,6 +14,18 @@ DX8APP::DX8APP()
 
 DX8APP::~DX8APP()
 {
+    if (m_2bc) {
+        delete m_2bc;
+        m_2bc = 0;
+    }
+    if (m_2c0) {
+        delete m_2c0;
+        m_2c0 = 0;
+    }
+    if (m_2b8) {
+        delete m_2b8;
+        m_2b8 = 0;
+    }
 }
 
 void DX8APP::Init()

@@ -16,6 +16,7 @@ class HARDWARE
 {
 public:
     HARDWARE();
+    ~HARDWARE();
     void Detect();
 
 private:

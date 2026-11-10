@@ -3408,7 +3408,12 @@
       ],
       "target": "build/target/Tongas2/DX8APP.obj",
       "source": "src/Tongas2/DX8APP.cpp",
-      "category": "engine"
+      "category": "engine",
+      "symbol_mappings": {
+        "FUN_004e62d0": "??1DX8APPBASE1@@UAE@XZ",
+        "_m_39": "??1HARDWARE@@QAE@XZ",
+        "??1?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@XZ": "??1DX8APPSTRING@@QAE@XZ"
+      }
     },
     {
       "name": "Tongas2/SCROOT",
