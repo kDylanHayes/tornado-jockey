@@ -2753,3 +2753,87 @@ int G2CORE4FID8::GetFactoryId()
     return s_factoryId;
 }
 
+// The SCRIPTS manager (0x00442df0).
+class SCRIPTSMANAGER : public RESOURCEMANAGER
+{
+public:
+    SCRIPTSMANAGER()
+    {
+        SafeSprintf(m_fileName, "SCRIPTS.txt");
+        m_8 = false;
+        m_18 = true;
+    }
+};
+
+RESOURCEMANAGER *CreateSCRIPTS()
+{
+    return new SCRIPTSMANAGER();
+}
+
+// The SIDEKICK manager (0x00443030).
+class SIDEKICKMANAGER : public RESOURCEMANAGER
+{
+public:
+    SIDEKICKMANAGER()
+    {
+        SafeSprintf(m_fileName, "SIDEKICK.txt");
+        m_8 = false;
+        m_18 = true;
+    }
+};
+
+RESOURCEMANAGER *CreateSIDEKICK()
+{
+    return new SIDEKICKMANAGER();
+}
+
+// The STORMCHASER manager (0x00444050).
+class STORMCHASERMANAGER : public RESOURCEMANAGER
+{
+public:
+    STORMCHASERMANAGER()
+    {
+        SafeSprintf(m_fileName, "STORMCHASER.txt");
+        m_8 = false;
+        m_18 = true;
+    }
+};
+
+RESOURCEMANAGER *CreateSTORMCHASER()
+{
+    return new STORMCHASERMANAGER();
+}
+
+// The TOOLTIPS manager (0x00444540).
+class TOOLTIPSMANAGER : public RESOURCEMANAGER
+{
+public:
+    TOOLTIPSMANAGER()
+    {
+        SafeSprintf(m_fileName, "TOOLTIPS.txt");
+        m_8 = false;
+        m_18 = true;
+    }
+};
+
+RESOURCEMANAGER *CreateTOOLTIPS()
+{
+    return new TOOLTIPSMANAGER();
+}
+
+// The TORNADO manager (0x00444810).
+class TORNADOMANAGER : public RESOURCEMANAGER
+{
+public:
+    TORNADOMANAGER()
+    {
+        SafeSprintf(m_fileName, "TORNADO.txt");
+        m_8 = false;
+        m_18 = true;
+    }
+};
+
+RESOURCEMANAGER *CreateTORNADO()
+{
+    return new TORNADOMANAGER();
+}

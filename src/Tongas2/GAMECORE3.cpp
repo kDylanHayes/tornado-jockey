@@ -2695,3 +2695,139 @@ void PROGRESSBAR::SetDecal(RESHANDLE &handle, const char *name, bool active)
             g_pLog->Error("could not create progress bar decal %s ", name);
     }
 }
+
+// The ANTITORNADOAMMO manager (0x0043c8f0).
+class ANTITORNADOAMMOMANAGER : public RESOURCEMANAGER
+{
+public:
+    ANTITORNADOAMMOMANAGER()
+    {
+        SafeSprintf(m_fileName, "ANTITORNADOAMMO.txt");
+        m_8 = false;
+        m_18 = true;
+    }
+};
+
+RESOURCEMANAGER *CreateANTITORNADOAMMO()
+{
+    return new ANTITORNADOAMMOMANAGER();
+}
+
+// The CAMERAOPTION manager (0x0043ce00).
+class CAMERAOPTIONMANAGER : public RESOURCEMANAGER
+{
+public:
+    CAMERAOPTIONMANAGER()
+    {
+        SafeSprintf(m_fileName, "CAMERAOPTION.txt");
+        m_8 = false;
+        m_18 = true;
+    }
+};
+
+RESOURCEMANAGER *CreateCAMERAOPTION()
+{
+    return new CAMERAOPTIONMANAGER();
+}
+
+// The CURSOR manager (0x0043cf50).
+class CURSORMANAGER : public RESOURCEMANAGER
+{
+public:
+    CURSORMANAGER()
+    {
+        SafeSprintf(m_fileName, "CURSOR.txt");
+        m_8 = false;
+        m_18 = true;
+    }
+};
+
+RESOURCEMANAGER *CreateCURSOR()
+{
+    return new CURSORMANAGER();
+}
+
+// The DESTRUCTIBLE manager (0x0043d380).
+class DESTRUCTIBLEMANAGER : public RESOURCEMANAGER
+{
+public:
+    DESTRUCTIBLEMANAGER()
+    {
+        SafeSprintf(m_fileName, "DESTRUCTIBLE.txt");
+        m_8 = false;
+        m_18 = true;
+    }
+};
+
+RESOURCEMANAGER *CreateDESTRUCTIBLE()
+{
+    return new DESTRUCTIBLEMANAGER();
+}
+
+// The FOREST manager (0x0043edd0).
+class FORESTMANAGER : public RESOURCEMANAGER
+{
+public:
+    FORESTMANAGER()
+    {
+        SafeSprintf(m_fileName, "FOREST.txt");
+        m_8 = false;
+        m_18 = true;
+    }
+};
+
+RESOURCEMANAGER *CreateFOREST()
+{
+    return new FORESTMANAGER();
+}
+
+// The LOADINGTIPS manager (0x0043f460).
+class LOADINGTIPSMANAGER : public RESOURCEMANAGER
+{
+public:
+    LOADINGTIPSMANAGER()
+    {
+        SafeSprintf(m_fileName, "LOADINGTIPS.txt");
+        m_8 = false;
+        m_18 = true;
+    }
+};
+
+RESOURCEMANAGER *CreateLOADINGTIPS()
+{
+    return new LOADINGTIPSMANAGER();
+}
+
+// The MINITORNADO manager (0x0043f6c0).
+class MINITORNADOMANAGER : public RESOURCEMANAGER
+{
+public:
+    MINITORNADOMANAGER()
+    {
+        SafeSprintf(m_fileName, "MINITORNADO.txt");
+        m_8 = false;
+        m_18 = true;
+    }
+};
+
+RESOURCEMANAGER *CreateMINITORNADO()
+{
+    return new MINITORNADOMANAGER();
+}
+
+// The PROGRESSBAR manager (0x0043fb50).
+class PROGRESSBARMANAGER : public RESOURCEMANAGER
+{
+public:
+    PROGRESSBARMANAGER()
+    {
+        SafeSprintf(m_fileName, "PROGRESSBAR.txt");
+        m_8 = false;
+        m_18 = true;
+    }
+};
+
+RESOURCEMANAGER *CreatePROGRESSBAR()
+{
+    return new PROGRESSBARMANAGER();
+}
