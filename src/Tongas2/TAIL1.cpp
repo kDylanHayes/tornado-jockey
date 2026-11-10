@@ -112,6 +112,8 @@ G2TL1C2::G2TL1C2()
 }
 
 extern void *g_6c65e4;
+extern int g_classParents[];
+extern char g_classNames[][30];
 
 void *GetGlobal()
 {
@@ -170,4 +172,32 @@ struct TAIL1M5
 void TAIL1M5::Set828(const V3 &value)
 {
     *(V3 *)((char *)this + 0x828) = value;
+}
+
+class TAIL1CID
+{
+public:
+    virtual int GetParentClassId();
+    virtual const char *GetClassName();
+};
+
+int TAIL1CID::GetParentClassId()
+{
+    return g_classParents[(int)g_6c65e4];
+}
+
+const char *TAIL1CID::GetClassName()
+{
+    return g_classNames[(int)g_6c65e4];
+}
+
+class TAIL1X
+{
+public:
+    bool HasC();
+};
+
+bool TAIL1X::HasC()
+{
+    return *(int *)((char *)this + 0xc) != 0;
 }
