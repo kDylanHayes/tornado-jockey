@@ -288,6 +288,7 @@ class ODEWORLDX
 public:
     virtual ~ODEWORLDX();
     void Shutdown();
+    void AddActor(void *actor);
 };
 
 int __stdcall FirstOfTwo(int first, int second)
@@ -889,6 +890,9 @@ struct G2CORE2M8
     void Setup();
 };
 
+extern "C" void *_dBodyCreate(void *world);
+extern "C" void _dBodySetData(void *body, void *data);
+
 extern "C" void __fastcall GD54b320(void *self);
 
 void G2CORE2M8::Setup()
@@ -905,4 +909,32 @@ void G2CORE2M8::Setup()
         vt->V142();
     else
         vt->V143();
+}
+
+struct ODEWORLDCAST
+{
+    char pad_0[0x5c];
+    void *m_world;
+};
+
+void G2ODEACTORTGT::Call()
+{
+    if (*(void **)((char *)this + 0xccc))
+        return;
+    ((ODEWORLDX *)g_pOdeWorldX)->AddActor(this);
+    ODEWORLDCAST *world = (ODEWORLDCAST *)g_pOdeWorldX;
+    void *body = _dBodyCreate(world->m_world);
+    *(void **)((char *)this + 0xccc) = body;
+    _dBodySetData(body, this);
+    G2CORE2M8VT *vt = (G2CORE2M8VT *)this;
+    if (*(char *)((char *)this + 0xd24))
+        vt->V142();
+    else
+        vt->V143();
+    vt->V022((char *)this + 0x28);
+    vt->V024((char *)this + 0x34);
+    vt->V046((char *)this + 0x13c);
+    vt->V047((char *)this + 0x148);
+    vt->V148((char *)this + 0xd1c);
+    GD54b320(this);
 }
