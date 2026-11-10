@@ -73,8 +73,15 @@ void LoadODEManagers()
         g_pLog->Error("ERROR!! RESOURCES::LoadManagers>FATAL ERROR, max number of supported resource managers exceded");
 }
 
-void ODEWORLDMASTER::RegisterCommands()
+class G2MID : public ACTOR
 {
+public:
+    virtual void Start();
+};
+
+void G2MID::Start()
+{
+    ACTOR::Start();
 }
 
 class GD548620 : public ACTOR
@@ -165,8 +172,12 @@ int ODEWORLDR::GetFactoryFlags()
     return g_factoryFlags[s_classId];
 }
 
+extern GD548620 *g_pOdeWorld;
+
 __declspec(noinline) GD548620::~GD548620()
 {
+    if (g_pOdeWorld == this)
+        g_pOdeWorld = 0;
 }
 
 struct G2ODEWGET
@@ -421,4 +432,18 @@ void ODEGEOMRESOURCE::SetRelAngles(ANG angles)
         }
     }
     *(bool *)((char *)this + 0x431) = true;
+}
+
+void RegisterClassName(CMDENTRY *commands, const char *type, const char *parent);
+
+CMDENTRY ODEWORLDMASTER::s_commands[] = {
+    { 0, 0, 0, 0, 0 },
+};
+
+void ODEWORLDMASTER::RegisterCommands()
+{
+    g_classParents[GD548620::s_classId] = ACTOR::s_classId;
+    g_classCommands[GD548620::s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "ODEWORLD", "ACTOR");
 }

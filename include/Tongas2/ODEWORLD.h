@@ -6,10 +6,13 @@
 #ifndef TONGAS2_ODEWORLD_H
 #define TONGAS2_ODEWORLD_H
 
+struct CMDENTRY;
+
 class ODEWORLDMASTER
 {
 public:
     static void RegisterCommands();
+    static CMDENTRY s_commands[];
 };
 
 #endif
