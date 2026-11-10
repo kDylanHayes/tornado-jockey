@@ -7,15 +7,31 @@
 #ifndef TONGAS2_TEXTURERESIZER_H
 #define TONGAS2_TEXTURERESIZER_H
 
+#include <string>
+
+// One node of the resizer's list of per-size textures. The list link is at
+// +4 and the two names at +8 and +0x24.
+class TEXTURERESIZERNODE
+{
+public:
+    TEXTURERESIZERNODE();
+    ~TEXTURERESIZERNODE();
+
+    int m_0;
+    TEXTURERESIZERNODE *m_4;
+    std::string m_8;
+    std::string m_24;
+};
+
 class TEXTURERESIZER
 {
 public:
-    void UpdateTextures();
-    void Create();
-    void Destroy();
+    TEXTURERESIZER();
+    virtual ~TEXTURERESIZER();
 
-private:
-    char m_000[0x10];
+    void UpdateTextures();
+
+    TEXTURERESIZERNODE *m_4;
 };
 
 #endif

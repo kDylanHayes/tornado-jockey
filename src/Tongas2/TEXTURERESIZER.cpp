@@ -12,12 +12,17 @@ void TEXTURERESIZER::UpdateTextures()
 {
 }
 
-void TEXTURERESIZER::Create()
+TEXTURERESIZERNODE::TEXTURERESIZERNODE()
 {
+    m_0 = 0;
+    m_4 = 0;
+    m_8 = "";
+    m_24 = "";
 }
 
-void TEXTURERESIZER::Destroy()
+TEXTURERESIZER::TEXTURERESIZER()
 {
+    m_4 = new TEXTURERESIZERNODE();
 }
 
 class G2AGTGET

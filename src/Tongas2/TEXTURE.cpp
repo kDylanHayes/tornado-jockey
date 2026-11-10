@@ -7,6 +7,7 @@
 #include "Tongas2/TEXTURE.h"
 
 #include "Tongas2/TEXTUREDX8SD.h"
+#include "Tongas2/TEXTURERESIZER.h"
 
 void *TEXTUREDX8SDTEXTURE::GetSurface()
 {
@@ -23,4 +24,27 @@ TEXTUREDX8SDTEXTURE::~TEXTUREDX8SDTEXTURE()
 
 void CTEXTURE::ConvertToFormat()
 {
+}
+
+// The resizer node's destructor (0x535800) and the resizer's deleting
+// destructor (0x5358a0) are compiled in this object.
+TEXTURERESIZERNODE::~TEXTURERESIZERNODE()
+{
+}
+
+TEXTURERESIZER::~TEXTURERESIZER()
+{
+    TEXTURERESIZERNODE *node = m_4;
+    while (node) {
+        TEXTURERESIZERNODE *next = node->m_4;
+        delete node;
+        node = next;
+    }
+}
+
+// Makes the compiler emit the resizer's scalar deleting destructor in this
+// object, as the retail build does.
+void DeleteTextureResizer(TEXTURERESIZER *resizer)
+{
+    delete resizer;
 }
