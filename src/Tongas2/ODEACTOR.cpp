@@ -3,6 +3,7 @@
 // Discovery scaffold: bodies are empty until the unit is matched.
 #include "Tongas2/ODEACTOR.h"
 #include "Tongas2/CMDBASE.h"
+#include "Tongas2/RESOURCES.h"
 
 extern char g_classNames[][30];
 extern int g_factoryFlags[];
@@ -260,4 +261,251 @@ int ODEACTORM3::GetFactoryFlags()
 bool ODEACTORM3::Predicate(int a, int b, int c, int d)
 {
     return true;
+}
+
+extern "C" void _dBodySetLinearVel(void *body, float x, float y, float z);
+extern "C" void _dBodySetAngularVel(void *body, float x, float y, float z);
+extern "C" void _dBodyDisable(void *body);
+
+extern RESOURCES *g_pResources;
+extern RESOURCEMANAGER *g_pActorResourceManager2;
+
+class RESX
+{
+public:
+    virtual void V00();
+    virtual void V01();
+    virtual void V02();
+    virtual void V03();
+    virtual void V04();
+    virtual void V05();
+    virtual void V06();
+    virtual void V07();
+    virtual void V08();
+    virtual void V09();
+    virtual void V10();
+    virtual void V11();
+    virtual void V12();
+    virtual void V13();
+    virtual void V14();
+    virtual void V15();
+    virtual void V16();
+    virtual void V17();
+    virtual void V18();
+    virtual void V19();
+    virtual void V20();
+    virtual void V21();
+    virtual void V22();
+    virtual void V23();
+};
+
+class ODEACTORM4
+{
+public:
+    virtual void Stop();
+};
+
+void ODEACTORM4::Stop()
+{
+    if (*(bool *)((char *)this + 0xd24)) {
+        *(bool *)((char *)this + 0xd24) = false;
+        _dBodySetLinearVel(*(void **)((char *)this + 0xccc), 0.0f, 0.0f, 0.0f);
+        _dBodySetAngularVel(*(void **)((char *)this + 0xccc), 0.0f, 0.0f, 0.0f);
+        _dBodyDisable(*(void **)((char *)this + 0xccc));
+        RESHANDLE *handles = (RESHANDLE *)((char *)this + 0xb58);
+        for (int i = 16; i != 0; i--) {
+            if (handles->IsValid()) {
+                RESOURCE *resource = g_pResources->GetResource(*handles);
+                if (resource) {
+                    int managerId = g_pActorResourceManager2->m_id;
+                    if (resource->GetManagerId() == managerId) {
+                        RESX *x = (RESX *)resource;
+                        if (*(bool *)((char *)resource + 0x1c)) {
+                            x->V23();
+                            *(bool *)((char *)resource + 0x1c) = false;
+                        }
+                    }
+                }
+            }
+            handles++;
+        }
+    }
+}
+
+extern RESOURCEMANAGER *g_pActorResourceManagerX;
+
+class ODEV
+{
+public:
+    virtual void D000();
+    virtual void D001();
+    virtual void D002();
+    virtual void D003();
+    virtual void D004();
+    virtual void D005();
+    virtual void D006();
+    virtual void D007();
+    virtual void D008();
+    virtual void D009();
+    virtual void D010();
+    virtual void D011();
+    virtual void D012();
+    virtual void D013();
+    virtual void D014();
+    virtual void D015();
+    virtual void D016();
+    virtual void D017();
+    virtual void D018();
+    virtual void D019();
+    virtual void D020();
+    virtual void D021();
+    virtual void D022();
+    virtual void D023();
+    virtual void D024();
+    virtual void D025();
+    virtual void D026();
+    virtual void D027();
+    virtual void D028();
+    virtual void S74(const void *p);
+    virtual void S78(const void *p);
+    virtual void S7C(const void *p);
+    virtual void D032();
+    virtual void D033();
+    virtual void D034();
+    virtual void D035();
+    virtual void D036();
+    virtual void D037();
+    virtual void D038();
+    virtual void D039();
+    virtual void D040();
+    virtual void D041();
+    virtual void D042();
+    virtual void D043();
+    virtual void D044();
+    virtual void D045();
+    virtual void D046();
+    virtual void D047();
+    virtual void D048();
+    virtual void D049();
+    virtual void D050();
+    virtual void D051();
+    virtual void D052();
+    virtual void D053();
+    virtual void D054();
+    virtual void D055();
+    virtual void D056();
+    virtual void D057();
+    virtual void D058();
+    virtual void D059();
+    virtual void D060();
+    virtual void D061();
+    virtual void D062();
+    virtual void D063();
+    virtual void D064();
+    virtual void D065();
+    virtual void D066();
+    virtual void D067();
+    virtual void D068();
+    virtual void D069();
+    virtual void D070();
+    virtual void D071();
+    virtual void D072();
+    virtual void D073();
+    virtual void D074();
+    virtual void D075();
+    virtual void D076();
+    virtual void D077();
+    virtual void D078();
+    virtual void D079();
+    virtual void D080();
+    virtual void D081();
+    virtual void D082();
+    virtual void D083();
+    virtual void D084();
+    virtual void D085();
+    virtual void D086();
+    virtual void D087();
+    virtual void D088();
+    virtual void D089();
+    virtual void D090();
+    virtual void D091();
+    virtual void D092();
+    virtual void D093();
+    virtual void D094();
+    virtual void D095();
+    virtual void D096();
+    virtual void D097();
+    virtual void D098();
+    virtual void D099();
+    virtual void D100();
+    virtual void D101();
+    virtual void D102();
+    virtual void D103();
+    virtual void D104();
+    virtual void D105();
+    virtual void D106();
+    virtual void D107();
+    virtual void D108();
+    virtual void D109();
+    virtual void D110();
+    virtual void D111();
+    virtual void D112();
+    virtual void D113();
+    virtual void D114();
+    virtual void D115();
+    virtual void D116();
+    virtual void D117();
+    virtual void D118();
+    virtual void D119();
+    virtual void D120();
+    virtual void D121();
+    virtual void D122();
+    virtual void D123();
+    virtual void D124();
+    virtual void D125();
+    virtual void D126();
+    virtual void D127();
+    virtual void D128();
+    virtual void D129();
+    virtual void D130();
+    virtual void D131();
+    virtual void D132();
+    virtual void D133();
+    virtual void D134();
+    virtual void S21C(const void *p);
+    virtual void D136();
+    virtual void D137();
+    virtual void D138();
+    virtual void D139();
+    virtual void D140();
+    virtual void D141();
+    virtual void D142();
+    virtual void D143();
+    virtual void D144();
+    virtual void D145();
+    virtual void D146();
+    virtual void S24C(const void *p);
+    virtual void S250(const void *p);
+};
+
+class ODEACTORM5
+{
+public:
+    void SetTemplate(const CSTRING &name);
+};
+
+void ODEACTORM5::SetTemplate(const CSTRING &name)
+{
+    *(CSTRING *)((char *)this + 0xd20) = name;
+    RESOURCEMASTER *master =
+        g_pActorResourceManagerX->GetMaster(name.c_str());
+    if (master) {
+        ODEV *v = (ODEV *)this;
+        v->S24C((char *)master + 0x820);
+        v->S250((char *)master + 0x824);
+        v->S7C((char *)master + 0x834);
+        v->S78((char *)master + 0x828);
+        v->S74((char *)master + 0x825);
+        v->S21C(master);
+    }
 }
