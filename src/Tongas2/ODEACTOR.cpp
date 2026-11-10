@@ -37,21 +37,53 @@ void ODEACTOR::SetFlag(const char *flag)
 class GD54c7b0
 {
 public:
-    virtual ~GD54c7b0();
+    virtual ~GD54c7b0() throw();
+
+    char *m_4;
+    char *m_8;
+    char *m_c;
 };
 
-__declspec(noinline) GD54c7b0::~GD54c7b0()
+__declspec(noinline) GD54c7b0::~GD54c7b0() throw()
 {
+    if (m_c) {
+        delete[] m_c;
+        m_c = 0;
+    }
+    if (m_8) {
+        delete[] m_8;
+        m_8 = 0;
+    }
+    if (m_4) {
+        delete[] m_4;
+        m_4 = 0;
+    }
 }
 
 class GD54c9b0
 {
 public:
-    virtual ~GD54c9b0();
+    virtual ~GD54c9b0() throw();
+
+    char *m_4;
+    char *m_8;
+    char *m_c;
 };
 
-__declspec(noinline) GD54c9b0::~GD54c9b0()
+__declspec(noinline) GD54c9b0::~GD54c9b0() throw()
 {
+    if (m_c) {
+        delete[] m_c;
+        m_c = 0;
+    }
+    if (m_8) {
+        delete[] m_8;
+        m_8 = 0;
+    }
+    if (m_4) {
+        delete[] m_4;
+        m_4 = 0;
+    }
 }
 
 class GD54cb00
