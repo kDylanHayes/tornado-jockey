@@ -4,6 +4,7 @@
 
 #include "Tongas2/MATHS.h"
 #include "Tongas2/FILELOADER.h"
+#include "Tongas2/RESOURCES.h"
 
 // Tongas2/TAIL1 -- discovery scaffold for the remaining 0x54eec0-range code.
 
@@ -267,4 +268,21 @@ public:
 
 WTINFO::~WTINFO()
 {
+}
+
+// The ODE actor-template manager factory (0x54ef70).
+class ODEACTORTEMPLATEMANAGER : public RESOURCEMANAGER
+{
+public:
+    ODEACTORTEMPLATEMANAGER()
+    {
+        SafeSprintf(m_fileName, "ODEACTORTEMPLATE.txt");
+        m_8 = false;
+        m_18 = true;
+    }
+};
+
+RESOURCEMANAGER *CreateODEACTORTEMPLATE()
+{
+    return new ODEACTORTEMPLATEMANAGER();
 }
