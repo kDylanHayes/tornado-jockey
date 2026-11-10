@@ -9,6 +9,12 @@
 #define ANG_UPDATE_OUTOFLINE
 #define V2_ROTATE_OUTOFLINE
 
+// The tips' wide text conversion is defined with the other out-of-line core
+// string operations; only this translation unit needs to see it declared.
+#define TONGAS2_CORE_OUTOFLINE
+#include "Tongas2/FIXEDWSTRING.h"
+#undef TONGAS2_CORE_OUTOFLINE
+
 #include <math.h>
 #include <map>
 #include <string>
@@ -20,6 +26,7 @@
 #include "Tongas2/ACTORLINK.h"
 #include "Tongas2/APP.h"
 #include "Tongas2/APPWINDOW.h"
+#include "Tongas2/CAMERA.h"
 #include "Tongas2/DECAL.h"
 #include "Tongas2/DRM.h"
 #include "Tongas2/GUI.h"
@@ -1451,8 +1458,12 @@ struct G2CORE4CM15
     virtual void W40(); virtual void W41(); virtual void W42(); virtual void W43(); virtual void W44(); virtual void W45(); virtual void W46(); virtual void W47();
     virtual void W48();
     virtual void SetTipText(FIXEDWSTRING<0x200> &text);
+    virtual void SetTipName(FIXEDWSTRING<0x200> &text);
+    virtual void SetTipDescription(FIXEDWSTRING<0x200> &text);
     virtual SRESULT NextTipCommand(int value);
     virtual SRESULT PreviousTipCommand(int value);
+    virtual SRESULT ShowTipCommand(int value);
+    wchar_t *GetTipText(wchar_t *text, int index, int year);
     void NextTip();
 };
 
@@ -1541,4 +1552,223 @@ __declspec(noinline) void G2CORE4APP::SetOption68(int value)
 __declspec(noinline) void G2CORE4APP::SetOption74(bool value)
 {
     *(bool *)((char *)g_pApp->m_pOptions + 0x5274) = value;
+}
+
+// The engine's saved setting table, and the hardware capability table it
+// points at. Only the calls the core object makes are declared here.
+class SETTINGSTABLE
+{
+public:
+    void SetInt(int index, int value);
+    int GetDetailLevel();
+
+    char m_000[0xff0];
+    void *m_ff0;
+};
+
+class HARDWARE
+{
+public:
+    bool IsSupported(int feature);
+};
+
+class G2CORE4D3DAPP
+{
+public:
+    void SetResolution(int index);
+};
+
+void G2CORE4RES::ApplyOptions(int &a, bool &b, int &c, bool &d)
+{
+    switch (((SETTINGSTABLE *)*(void **)((char *)g_pDisplay + 0x2c0))->GetDetailLevel()) {
+    case 4:
+        a = 2;
+        b = true;
+        c = 0;
+        d = true;
+        return;
+    case 3:
+        a = 2;
+        b = false;
+        c = 0;
+        d = true;
+        return;
+    case 2:
+        a = 1;
+        b = false;
+        c = 0;
+        d = false;
+        return;
+    case 0:
+    case 1:
+        a = 0;
+        b = false;
+        c = 0;
+        d = false;
+        break;
+    }
+}
+
+__declspec(noinline) void G2CORE4APP::SetOption6C(bool value)
+{
+    ((SETTINGSTABLE *)*(void **)((char *)g_pDisplay + 0x2c0))->SetInt(0xb, value);
+    ((SETTINGSTABLE *)*(void **)((char *)g_pDisplay + 0x2c0))->SetInt(0x20, value);
+    ((SETTINGSTABLE *)*(void **)((char *)g_pDisplay + 0x2c0))->SetInt(0xf, value);
+    ((SETTINGSTABLE *)*(void **)((char *)g_pDisplay + 0x2c0))->SetInt(0x15, value);
+    ((SETTINGSTABLE *)*(void **)((char *)g_pDisplay + 0x2c0))->SetInt(0xc, value);
+    if (!((HARDWARE *)((SETTINGSTABLE *)*(void **)((char *)g_pDisplay + 0x2c0))->m_ff0)->IsSupported(0)) {
+        ((SETTINGSTABLE *)*(void **)((char *)g_pDisplay + 0x2c0))->SetInt(0x20, 0);
+        ((SETTINGSTABLE *)*(void **)((char *)g_pDisplay + 0x2c0))->SetInt(0x20, 0);
+    }
+    if (!((HARDWARE *)((SETTINGSTABLE *)*(void **)((char *)g_pDisplay + 0x2c0))->m_ff0)->IsSupported(0x13)) {
+        ((SETTINGSTABLE *)*(void **)((char *)g_pDisplay + 0x2c0))->SetInt(0x15, 0);
+        ((SETTINGSTABLE *)*(void **)((char *)g_pDisplay + 0x2c0))->SetInt(0xc, 0);
+    }
+    *(bool *)((char *)g_pApp->m_pOptions + 0x526c) = value;
+}
+
+__declspec(noinline) void G2CORE4APP::SetOption70(int value)
+{
+    switch (value) {
+    case 0:
+        ((SETTINGSTABLE *)*(void **)((char *)g_pDisplay + 0x2c0))->SetInt(9, 0);
+        ((G2CORE4D3DAPP *)((char *)g_pDisplay + 0x44))->SetResolution(0);
+        break;
+    case 1:
+        ((SETTINGSTABLE *)*(void **)((char *)g_pDisplay + 0x2c0))->SetInt(9, 1);
+        ((G2CORE4D3DAPP *)((char *)g_pDisplay + 0x44))->SetResolution(2);
+        break;
+    case 2:
+        ((SETTINGSTABLE *)*(void **)((char *)g_pDisplay + 0x2c0))->SetInt(9, 1);
+        ((G2CORE4D3DAPP *)((char *)g_pDisplay + 0x44))->SetResolution(4);
+        break;
+    }
+    *(int *)((char *)g_pApp->m_pOptions + 0x5270) = value;
+}
+
+// The managers and wide text the tips use.
+extern RESOURCEMANAGER *g_pStormChaserResources;
+extern RESOURCEMANAGER *g_pDestructibleResources;
+extern RESOURCEMANAGER *g_pACTORRESOURCES;
+extern wchar_t g_tipTextTable[][50];
+
+static __forceinline char *G2CORE4TipName(WTACTOR *scenario, int index)
+{
+    char *name = *(char **)((char *)scenario + 0x332c + index * 4);
+    return name ? name : "";
+}
+
+static __forceinline char *G2CORE4TipString(char *text)
+{
+    return text ? text : "";
+}
+
+static __forceinline wchar_t *G2CORE4TipWide(wchar_t *text)
+{
+    return text ? text : L"";
+}
+
+wchar_t *G2CORE4CM15::GetTipText(wchar_t *text, int index, int year)
+{
+    wchar_t buffer[0x200];
+    buffer[0] = 0;
+    buffer[0x1ff] = 0;
+    if (year == 0) {
+        wchar_t *tip = g_tipTextTable[index];
+        if (tip == 0)
+            buffer[0] = 0;
+        else {
+            wcsncpy(buffer, tip, 0x1ff);
+            buffer[0x1ff] = 0;
+        }
+    } else {
+        SafeSwprintf(buffer, L"%s - Year %d", g_tipTextTable[index], year);
+    }
+    memcpy(text, buffer, sizeof(buffer));
+    return text;
+}
+
+__declspec(noinline) void G2CORE4CM15::NextTip()
+{
+    float scale;
+    WTACTOR *scenario = g_pGame->GetScenario();
+    if (!scenario)
+        return;
+    wchar_t textStorage[0x200];
+    RESOURCEMASTER *resources;
+    RESOURCEMASTER *storm = g_pStormChaserResources->GetMaster(
+        G2CORE4TipName(scenario, *(int *)((char *)this + 0x1dce8)));
+    if (!storm) {
+        if (g_pLog)
+            g_pLog->Error("start map - could not find storm chaser master %s",
+                G2CORE4TipName(scenario, *(int *)((char *)this + 0x1dce8)));
+        return;
+    }
+    RESOURCEMASTER *destructible = g_pDestructibleResources->GetMaster(
+        G2CORE4TipString(*(char **)((char *)storm + 0x60)));
+    if (!destructible) {
+        if (g_pLog)
+            g_pLog->Error("start map - could not find destructible master %s",
+                G2CORE4TipString(*(char **)((char *)storm + 0x60)));
+        return;
+    }
+    resources = g_pACTORRESOURCES->GetMaster(
+        G2CORE4TipString(*(char **)((char *)destructible + 0xfc)));
+    if (!resources) {
+        if (g_pLog)
+            g_pLog->Error("start map - could not find actor resources master %s",
+                G2CORE4TipString(*(char **)((char *)destructible + 0xfc)));
+        return;
+    }
+    FIXEDWSTRING<0x200> *text = (FIXEDWSTRING<0x200> *)textStorage;
+    *text = (const char *)G2CORE4TipWide(*(wchar_t **)((char *)destructible + 0xb4));
+    SetTipName(*text);
+    *text = (const char *)G2CORE4TipWide(*(wchar_t **)((char *)storm + 0x64));
+    SetTipDescription(*text);
+    ((ACTOR *)g_pCamera)->SetAngles(ANG(0.0f, 0.0f, 0.0f));
+    ACTOR *actor = (ACTOR *)g_pScene->GetActor(*(RESHANDLE *)((char *)this + 0x1dcdc));
+    if (!actor) {
+        actor = g_pScene->CreateActor(ACTOR::s_factoryId);
+        if (!actor) {
+            if (g_pLog)
+                g_pLog->Error("start map - could not create actor!");
+            return;
+        }
+        V3 position(0.0f, 0.0f, 0.0f);
+        position = ((CAMERA *)g_pCamera)->ScreenToWorld(V2(0.68f, 0.65f), 2.0f);
+        actor->SetPosition(position);
+        actor->SetAngles(ANG(0.0f, -30.0f, 0.0f));
+        actor->SetBehavior(0);
+        actor->SetAngVel(V3(90.0f, 0.0f, 0.0f));
+        actor->SetZSort(100);
+        actor->SetActive(true);
+        *(RESHANDLE *)((char *)this + 0x1dcdc) = actor->m_handle;
+    }
+    scale = *(float *)((char *)storm + 0x68) * 0.035f;
+    actor->SetScale(V3(scale, scale, scale));
+    actor->ApplyResourcesTemplate((ACTORRESOURCESMASTER *)resources);
+}
+
+SRESULT G2CORE4CM15::ShowTipCommand(int value)
+{
+    int unused = 0;
+    wchar_t text[0x200];
+    wchar_t *source = GetTipText(text, *(int *)((char *)g_pGame + 0x23c),
+        *(unsigned char *)((char *)g_pGame + 0x230) ? 0 : *(int *)((char *)g_pGame + 0x240));
+    FIXEDWSTRING<0x200> tip(source);
+    SetTipText(tip);
+    *(int *)((char *)this + 0x1dce8) = 0;
+    NextTip();
+    WTACTOR *scenario = g_pGame->GetScenario();
+    if (!scenario)
+        return SRESULT(false);
+    *(int *)((char *)this + 0x1dcec) = 16;
+    for (int i = 0; i < 16; i++) {
+        char *name = *(char **)((char *)scenario + 0x332c + i * 4);
+        if (!name || (int)strlen(name) <= 0) {
+            *(int *)((char *)this + 0x1dcec) = i;
+            break;
+        }
+    }
+    return SRESULT(true);
 }
