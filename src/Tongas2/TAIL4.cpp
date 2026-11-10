@@ -104,3 +104,14 @@ int __fastcall IsSeparator(char c)
 {
     return c == '\\' || c == '/';
 }
+
+class TAIL4X
+{
+public:
+    int ReturnArg(int a);
+};
+
+int TAIL4X::ReturnArg(int a)
+{
+    return a;
+}

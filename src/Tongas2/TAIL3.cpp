@@ -141,3 +141,16 @@ void *TL3PTR::Get1()
 {
     return (char *)this + 0x2c;
 }
+
+class TAIL3X
+{
+public:
+    void Call4C(int a);
+};
+
+void TAIL3X::Call4C(int a)
+{
+    void (__fastcall *func)(int) = *(void (__fastcall **)(int))((char *)this + 0x4c);
+    if (func)
+        func(a);
+}

@@ -9208,3 +9208,5 @@
 0x0054f070 ?GetParentClassId@TAIL1CID@@UAEHXZ function 0xd
 0x0054f080 ?GetClassName@TAIL1CID@@UAEPBDXZ function 0xe
 0x00550e30 ?HasC@TAIL1X@@QAE_NXZ function 0xb
+0x00554ee0 ?Call4C@TAIL3X@@QAEXH@Z function 0x10
+0x00557e50 ?ReturnArg@TAIL4X@@QAEHH@Z function 0x7
