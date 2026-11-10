@@ -642,10 +642,10 @@ void GD42ddd0::SetTemplate(const FIXEDSTRING<0x200> &name)
     }
 }
 
-class GD42e6e0
+class GD42e6e0 : public ACTOR
 {
 public:
-    virtual ~GD42e6e0();
+    virtual ~GD42e6e0() throw();
     virtual int GetFactoryId();
     virtual int GetClassId();
     virtual int GetParentClassId();
@@ -654,7 +654,7 @@ public:
     static int s_classId;
 };
 
-__declspec(noinline) GD42e6e0::~GD42e6e0()
+__declspec(noinline) GD42e6e0::~GD42e6e0() throw()
 {
 }
 
@@ -677,10 +677,10 @@ __declspec(noinline) GD42f370::~GD42f370()
 {
 }
 
-class GD432870
+class GD432870 : public ACTOR
 {
 public:
-    virtual ~GD432870();
+    virtual ~GD432870() throw();
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
@@ -692,7 +692,7 @@ public:
     static int s_classId;
 };
 
-__declspec(noinline) GD432870::~GD432870()
+__declspec(noinline) GD432870::~GD432870() throw()
 {
 }
 
@@ -735,10 +735,10 @@ __declspec(noinline) GD438ff0::~GD438ff0()
 {
 }
 
-class GD43b550
+class GD43b550 : public ACTOR
 {
 public:
-    virtual ~GD43b550();
+    virtual ~GD43b550() throw();
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
@@ -748,7 +748,7 @@ public:
     static int s_classId;
 };
 
-__declspec(noinline) GD43b550::~GD43b550()
+__declspec(noinline) GD43b550::~GD43b550() throw()
 {
 }
 
