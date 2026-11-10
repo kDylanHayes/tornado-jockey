@@ -19,6 +19,7 @@
 #include <string>
 #include <wchar.h>
 #include <map>
+#include <new>
 
 extern "C" __declspec(dllimport) void __stdcall Sleep(unsigned long);
 
@@ -1276,6 +1277,17 @@ public:
 
     std::map<std::string, FITAG *> m_4;
 };
+
+void G2CORE1K5::Clear()
+{
+    for (std::map<std::string, FITAG *>::iterator it = m_4.begin(); it != m_4.end(); ++it) {
+        if (it->second) {
+            ::operator delete(it->second);
+            it->second = 0;
+        }
+    }
+    m_4.clear();
+}
 
 G2CORE1K5::~G2CORE1K5()
 {
