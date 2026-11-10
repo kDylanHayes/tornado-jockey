@@ -1,7 +1,7 @@
 // Tongas2/ODEGEOM -- the ODE geometry resources.
 //
-// Discovery scaffold: bodies are empty until the unit is matched; each
-// function has its exact target size in config/symbols.txt.
+// The unit is being filled in function by function; each function has its
+// exact target size in config/symbols.txt.
 #include "Tongas2/ODEGEOM.h"
 #include "Tongas2/MATHS.h"
 #include "Tongas2/DYNAMICARRAY.h"
@@ -82,14 +82,28 @@ void GD548f90::Update()
         ToggleHelpers();
 }
 
-struct ODEHELPNODE
+// The ODE geometry resource: an object whose collision shape can show a
+// helper model. GD549b40 adds the fields the ODE geometry keeps past it.
+class ODEHELPNODE : public OBJECT
 {
-    char pad[0x1c];
-    bool m_1c;
-    char pad2[3];
-    ODEHELPNODE *m_20;
-
+public:
     void ShowHelpers(bool *visible);
+
+    // The helper model shown while the collision shape is.
+    RESHANDLE m_helper;
+    char pad_40c[0x18];
+    bool m_helpersShown;
+    char pad_425[3];
+    void *m_428;
+    void *m_42c;
+    char pad_430[4];
+    void *m_434;
+    void *m_438;
+    // The custom trimesh: its faces (three indices each), and its vertices.
+    void *m_indices;
+    int m_numFaces;
+    void *m_vertices;
+    int m_numVertices;
 };
 
 struct ODEMASTERNODE
@@ -108,8 +122,8 @@ void GD548f90::ToggleHelpers()
         ODEMASTERNODE *nextMaster = master->m_38;
         ODEHELPNODE *node = master->m_40;
         while (node) {
-            ODEHELPNODE *next = node->m_20;
-            if (node->m_1c)
+            ODEHELPNODE *next = (ODEHELPNODE *)node->m_next;
+            if (node->m_active)
                 node->ShowHelpers(&m_224);
             node = next;
         }
@@ -132,6 +146,9 @@ class ODEGEOMRESOURCEMASTERX : public RESOURCEMASTER
 public:
     ODEGEOMRESOURCEMASTERX(RESOURCEMANAGER *manager, const char *name);
     virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
+
+    // The colour the helpers are drawn in unless the actor colours them.
+    V3I &GetColor() { return *(V3I *)((char *)this + 0x6c); }
 
     int m_60;
     int m_64;
@@ -182,15 +199,7 @@ extern "C" void dGeomTriMeshDataDestroy(void *data);
 extern "C" void dGeomTriMeshClearTCCache(void *geom);
 extern "C" void dGeomTriMeshSetData(void *geom, void *data);
 
-struct ODEHELPERITEM
-{
-    V3 m_pos;
-    V3 m_dir;
-    V3 m_scale;
-    int m_value;
-};
-
-class GD549b40 : public OBJECT
+class GD549b40 : public ODEHELPNODE
 {
 public:
     virtual ~GD549b40() throw();
@@ -199,23 +208,7 @@ public:
     void ShowHelpers(int arg);
     void AddToSpace(void *space);
     bool IsAtOrigin();
-    void AddHelper(void *source, const V3 &dir, const V3 &scale, int value);
 
-    char pad_400[0x24];
-    bool m_424;
-    bool m_425;
-    char pad_426[2];
-    void *m_428;
-    void *m_42c;
-    bool m_430;
-    bool m_431;
-    char pad_432[2];
-    void *m_434;
-    void *m_438;
-    void *m_43c;
-    char pad_440[4];
-    void *m_444;
-    char pad_448[4];
     bool m_44c;
     char pad_44d[3];
     GD548fc0 m_holder;
@@ -279,13 +272,13 @@ void GD549b40::Cleanup()
         dGeomTriMeshDataDestroy(m_434);
         m_434 = 0;
     }
-    if (m_444) {
-        delete[] (char *)m_444;
-        m_444 = 0;
+    if (m_vertices) {
+        delete[] (char *)m_vertices;
+        m_vertices = 0;
     }
-    if (m_43c) {
-        delete[] (char *)m_43c;
-        m_43c = 0;
+    if (m_indices) {
+        delete[] (char *)m_indices;
+        m_indices = 0;
     }
 }
 
@@ -430,17 +423,133 @@ void MATB::Build(const V3 &position, const MATRIX &matrix)
     m._44 = 1.0f;
 }
 
-void GD549b40::AddHelper(void *source, const V3 &dir, const V3 &scale, int value)
+
+extern RESOURCEMANAGER *g_pSIMPLEMODEL;
+
+// The primitive types, in the order s_typeNames names them. The ray has no
+// helper.
+enum
 {
-    m_430 = true;
-    if (!m_44c)
-        return;
-    if (*(int *)((char *)this + 0x464) == *(int *)((char *)this + 0x460))
-        return;
-    ODEHELPERITEM item;
-    item.m_pos = *(V3 *)((char *)source + 8);
-    item.m_dir = dir;
-    item.m_scale = scale;
-    item.m_value = value;
-    ((DYNAMICARRAY<ODEHELPERITEM> *)((char *)this + 0x450))->Insert(item);
+    ODEGEOM_BOX,
+    ODEGEOM_SPHERE,
+    ODEGEOM_PLANE,
+    ODEGEOM_CAPPEDCYLINDER,
+    ODEGEOM_RAY,
+    ODEGEOM_TRIMESH,
+    ODEGEOM_NUMTYPES
+};
+
+// The primitive types' names for the log, and for the master's
+// PrimitiveType property.
+static const char s_typeNames[][30] = {
+    "BOX",
+    "SPHERE",
+    "PLANE",
+    "CAPPEDCYLINDER",
+    "RAY",
+    "TRIMESH",
+    "",
+};
+
+// A type's name for the log.
+static inline const char *TypeName(int type)
+{
+    return type >= 0 && type < ODEGEOM_NUMTYPES ? s_typeNames[type] : "Not valid primitive";
+}
+
+// A helper model: a copy of an engine simple model. Only the methods the
+// geometry helpers use are declared here; the engine class has one more
+// virtual after them.
+class ODEHELPMODEL : public OBJECT
+{
+public:
+    virtual void SetColor(V3I color);
+    virtual void SetCustomData(void *vertices, int numVertices, void *indices, int numFaces);
+    virtual void Virtual72(int a, int b, int c, int d) {}
+
+    V3 m_pivot;
+    V3 m_40c;
+};
+
+// Defined elsewhere: the simple models' master, which makes their copies.
+class ODEHELPMODELMASTER : public RESOURCEMASTER
+{
+public:
+    virtual RESOURCE *CreateCopy(const RESHANDLE &handle);
+};
+
+// Defined in ODEWORLD: turns each face of the custom trimesh the other way
+// round for ODE.
+struct G2ODESWAP
+{
+    void Swap();
+};
+
+void ODEHELPNODE::ShowHelpers(bool *visible)
+{
+    WTACTOR *actor = g_pScene->GetActor(m_parent);
+    bool show = *visible;
+    if (actor)
+        show &= actor->m_a8;
+    if (show) {
+        if (m_helpersShown)
+            return;
+        ODEHELPMODEL *helper;
+        ODEGEOMRESOURCEMASTERX *master = (ODEGEOMRESOURCEMASTERX *)m_master;
+        switch (master ? master->m_60 : -1) {
+        case ODEGEOM_SPHERE:
+            helper = (ODEHELPMODEL *)g_pSIMPLEMODEL->GetResource("sph");
+            helper->SetScaleFactor(GetSize().x, GetSize().x, GetSize().x);
+            break;
+        case ODEGEOM_PLANE:
+            helper = (ODEHELPMODEL *)g_pSIMPLEMODEL->GetResource("box");
+            helper->SetScaleFactor(100.0f, 0.01f, 100.0f);
+            break;
+        case ODEGEOM_BOX:
+            helper = (ODEHELPMODEL *)g_pSIMPLEMODEL->GetResource("box");
+            helper->SetScaleFactorV(GetSize());
+            break;
+        case ODEGEOM_CAPPEDCYLINDER:
+            helper = (ODEHELPMODEL *)g_pSIMPLEMODEL->GetResource("cylinderZ");
+            helper->SetScaleFactorV(V3(GetSize().x * 2.0f, GetSize().x * 2.0f,
+                                       GetSize().z * 2.0f));
+            break;
+        case ODEGEOM_TRIMESH:
+            helper = (ODEHELPMODEL *)g_pSIMPLEMODEL->GetResource("custom");
+            ((G2ODESWAP *)this)->Swap();
+            helper->SetCustomData(m_vertices, m_numVertices, m_indices,
+                                  m_numFaces);
+            ((G2ODESWAP *)this)->Swap();
+            break;
+        default:
+            if (g_pLog)
+                g_pLog->Error("Error - ODEGEOMRESOURCE::ShowHelpers> Primitive %s not supported",
+                              TypeName(master->m_60));
+            return;
+        }
+        V3I color;
+        if (actor && actor->m_98)
+            color = actor->m_9c;
+        else
+            color = ((ODEGEOMRESOURCEMASTERX *)m_master)->GetColor();
+        helper->SetColor(color);
+        helper->SetAlphaFactor(0.5f);
+        helper->SetOffsetV(GetOffset());
+        helper->SetRelAngles(GetRelAngles());
+        helper->SetParent(m_parent);
+        helper->m_a8 = false;
+        helper->SetRelLayer(125);
+        WTACTOR *attached = (WTACTOR *)g_pResources->GetResource(m_attached);
+        if (attached)
+            helper->AttachTo(attached, m_tagName);
+        helper->SetActive(true);
+        m_helper = helper->m_handle;
+        m_helpersShown = true;
+    } else if (m_helpersShown) {
+        RESOURCE *helper = g_pResources->GetResource(m_helper);
+        if (helper)
+            helper->Virtual20();
+        m_helper.Invalidate();
+        m_helpersShown = false;
+    }
 }

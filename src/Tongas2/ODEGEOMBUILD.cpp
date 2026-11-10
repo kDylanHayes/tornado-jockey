@@ -8,6 +8,7 @@
 #include "Tongas2/ACTOR.h"
 #include "Tongas2/MATHS.h"
 #include "Tongas2/RESOURCE.h"
+#include "Tongas2/DYNAMICARRAY.h"
 
 extern "C" void *dGeomTriMeshDataCreate(void);
 extern "C" void dGeomTriMeshDataBuildSingle(void *data, const void *vertices,
@@ -44,6 +45,14 @@ public:
     void Swap();
 };
 
+struct ODEHELPERITEM
+{
+    V3 m_pos;
+    V3 m_dir;
+    V3 m_scale;
+    int m_value;
+};
+
 class GD549b40 : public OBJECT
 {
 public:
@@ -53,6 +62,7 @@ public:
     void AddToSpace(void *space);
     void Activate();
     void UpdateGeom();
+    void AddHelper(void *source, const V3 &dir, const V3 &scale, int value);
 
     char pad_00[0x24];
     bool m_424;
@@ -122,3 +132,19 @@ void GD549b40::Activate()
     }
     m_431 = true;
 }
+
+void GD549b40::AddHelper(void *source, const V3 &dir, const V3 &scale, int value)
+{
+    m_430 = true;
+    if (!m_44c)
+        return;
+    if (*(int *)((char *)this + 0x464) == *(int *)((char *)this + 0x460))
+        return;
+    ODEHELPERITEM item;
+    item.m_pos = *(V3 *)((char *)source + 8);
+    item.m_dir = dir;
+    item.m_scale = scale;
+    item.m_value = value;
+    ((DYNAMICARRAY<ODEHELPERITEM> *)((char *)this + 0x450))->Insert(item);
+}
+template ODEHELPERITEM *DYNAMICARRAY<ODEHELPERITEM>::Insert(const ODEHELPERITEM &item);

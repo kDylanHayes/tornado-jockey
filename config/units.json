@@ -3598,7 +3598,9 @@
     {
       "name": "Tongas2/ODEGEOM",
       "ranges": [
-        "0x00548e40-0x0054a4cf",
+        "0x00548e40-0x0054995f",
+        "0x00549a9b-0x00549b9f",
+        "0x00549c29-0x0054a4cf",
         "0x0054a680-0x0054ab8f"
       ],
       "target": "build/target/Tongas2/ODEGEOM.obj",
@@ -3608,6 +3610,8 @@
     {
       "name": "Tongas2/ODEGEOMBUILD",
       "ranges": [
+        "0x00549960-0x00549a9a",
+        "0x00549ba0-0x00549c28",
         "0x0054a4d0-0x0054a67f"
       ],
       "target": "build/target/Tongas2/ODEGEOMBUILD.obj",
