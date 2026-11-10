@@ -4903,3 +4903,20 @@ SRESULT G2CORE1SR7::Command(int value)
     }
     return SRESULT(true);
 }
+
+struct G2CORE1SR8
+{
+    virtual SRESULT Command(int value);
+};
+
+SRESULT G2CORE1SR8::Command(int value)
+{
+    int unused = 0;
+    if (*(int *)((char *)g_pApp->m_pOptions + 0x527c) < 5)
+        *(int *)((char *)g_pApp->m_pOptions + 0x527c) = 5;
+    if (*(int *)((char *)g_pApp->m_pOptions + 0x5278) < 6)
+        *(int *)((char *)g_pApp->m_pOptions + 0x5278) = 6;
+    if (*(int *)((char *)g_pApp->m_pOptions + 0x5280) < 3)
+        *(int *)((char *)g_pApp->m_pOptions + 0x5280) = 3;
+    return SRESULT(true);
+}

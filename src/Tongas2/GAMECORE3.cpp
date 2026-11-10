@@ -583,11 +583,17 @@ public:
 };
 
 extern RESOURCEMANAGER *g_pMinitornadoTemplates;
+extern int g_factoryFlags[];
+extern int g_stormChaserFactoryId;
+extern int g_stormSpawnerFactoryId;
 
 class GD42ddd0 : public ACTOR
 {
 public:
     virtual ~GD42ddd0();
+    virtual int GetFactoryFlags();
+
+    static int s_factoryId;
 
     virtual void SetTemplate(const FIXEDSTRING<0x200> &name);
     virtual void SetEcc(const float &value);
@@ -638,6 +644,9 @@ class GD42f370
 {
 public:
     virtual ~GD42f370();
+    virtual int GetFactoryFlags();
+
+    static int s_factoryId;
 };
 
 __declspec(noinline) GD42f370::~GD42f370()
@@ -648,6 +657,9 @@ class GD432870
 {
 public:
     virtual ~GD432870();
+    virtual int GetFactoryFlags();
+
+    static int s_factoryId;
 };
 
 __declspec(noinline) GD432870::~GD432870()
@@ -658,6 +670,9 @@ class GD4331a0
 {
 public:
     virtual ~GD4331a0();
+    virtual int GetFactoryFlags();
+
+    static int s_factoryId;
 };
 
 __declspec(noinline) GD4331a0::~GD4331a0()
@@ -668,6 +683,7 @@ class GD438ff0
 {
 public:
     virtual ~GD438ff0();
+    virtual int GetFactoryFlags();
 };
 
 __declspec(noinline) GD438ff0::~GD438ff0()
@@ -678,6 +694,7 @@ class GD43b550
 {
 public:
     virtual ~GD43b550();
+    virtual int GetFactoryFlags();
 };
 
 __declspec(noinline) GD43b550::~GD43b550()
@@ -688,6 +705,9 @@ class GD43b850
 {
 public:
     virtual ~GD43b850();
+    virtual int GetFactoryFlags();
+
+    static int s_factoryId;
 };
 
 __declspec(noinline) GD43b850::~GD43b850()
@@ -698,6 +718,9 @@ class GD43bb40
 {
 public:
     virtual ~GD43bb40();
+    virtual int GetFactoryFlags();
+
+    static int s_factoryId;
 };
 
 __declspec(noinline) GD43bb40::~GD43bb40()
@@ -1896,4 +1919,44 @@ SRESULT G2CORE3SR::CommandCF4(int value)
     int unused = 0;
     *(float *)((char *)this + 0xcf4) = 30.0f;
     return SRESULT(true);
+}
+
+int GD42ddd0::GetFactoryFlags()
+{
+    return g_factoryFlags[s_factoryId];
+}
+
+int GD42f370::GetFactoryFlags()
+{
+    return g_factoryFlags[s_factoryId];
+}
+
+int GD432870::GetFactoryFlags()
+{
+    return g_factoryFlags[s_factoryId];
+}
+
+int GD4331a0::GetFactoryFlags()
+{
+    return g_factoryFlags[s_factoryId];
+}
+
+int GD43b850::GetFactoryFlags()
+{
+    return g_factoryFlags[s_factoryId];
+}
+
+int GD43bb40::GetFactoryFlags()
+{
+    return g_factoryFlags[s_factoryId];
+}
+
+int GD438ff0::GetFactoryFlags()
+{
+    return g_factoryFlags[g_stormChaserFactoryId];
+}
+
+int GD43b550::GetFactoryFlags()
+{
+    return g_factoryFlags[g_stormSpawnerFactoryId];
 }
