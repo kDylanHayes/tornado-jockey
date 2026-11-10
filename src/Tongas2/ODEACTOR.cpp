@@ -167,6 +167,8 @@ public:
     virtual int GetParentClassId();
     virtual const char *GetClassName();
 
+    void AddForce(float x, float y, float z);
+
     static int s_classId;
     static int s_factoryId;
 
@@ -639,4 +641,25 @@ void RegisterODEActors()
 
     if (g_numFactories >= MAX_ACTOR_FACTORIES && g_pLog)
         g_pLog->Error("ERROR!! SCENE::LoadActorsInformation>FATAL ERROR, max number of supported actor types exceeded");
+}
+
+extern "C" void dBodyAddForce(void *body, float x, float y, float z);
+
+void G2ODEACTOR::AddForce(float x, float y, float z)
+{
+    if (m_body)
+        dBodyAddForce(m_body, x, y, z);
+}
+
+// Kept abstract here so this unit does not emit the class's vtable.
+class BONEDMODELRESOURCE
+{
+public:
+    virtual ~BONEDMODELRESOURCE();
+    virtual V3 Virtual82(int value);
+};
+
+V3 BONEDMODELRESOURCE::Virtual82(int value)
+{
+    return V3(0.0f, 0.0f, 0.0f);
 }

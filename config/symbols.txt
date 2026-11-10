@@ -9297,3 +9297,4 @@
 0x0067cbd8 ??_7GD54c7b0@@6B@ data 0x4
 0x0067cbdc ??_7GD54c9b0@@6B@ data 0x4
 0x0067cbe0 ??_7GD54cb00@@6B@ data 0x4
+0x0054afc0 ?AddForce@G2ODEACTOR@@QAEXMMM@Z function 0x25
