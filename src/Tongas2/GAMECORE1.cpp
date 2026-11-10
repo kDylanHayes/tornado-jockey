@@ -5286,3 +5286,101 @@ STRING &G2CORE1SW2::SetF10(const STRING &value)
 {
     return *(STRING *)((char *)this + 0xf10) = value;
 }
+
+extern RESOURCEMANAGER *g_pBONEDMODEL;
+
+class RENDX
+{
+public:
+    virtual void V0();
+    virtual void V1();
+    virtual void V2();
+    virtual void V3();
+    virtual void V4();
+    virtual void V5();
+    virtual void V6();
+    virtual void *V7();
+};
+
+class RENDERINT
+{
+public:
+    virtual void W0();
+    virtual void W1();
+    virtual void W2();
+    virtual void W3();
+    virtual void W4();
+    virtual void W5();
+    virtual void W6();
+    virtual void W7();
+    virtual void W8();
+    virtual void W9();
+    virtual void W10();
+    virtual void W11();
+    virtual void W12();
+    virtual void W13();
+    virtual void W14();
+    virtual void W15();
+    virtual void W16();
+    virtual void W17();
+    virtual void W18();
+    virtual void W19();
+    virtual void W20();
+    virtual void W21();
+    virtual void W22();
+    virtual void W23();
+    virtual void W24();
+    virtual void W25();
+    virtual void W26();
+    virtual void W27();
+    virtual void W28();
+    virtual void W29();
+    virtual void W30();
+    virtual void W31();
+    virtual void W32();
+    virtual void W33();
+    virtual void W34();
+    virtual void W35();
+    virtual void W36();
+    virtual void W37();
+    virtual void W38();
+    virtual void W39();
+    virtual void W40();
+    virtual void W41();
+    virtual void W42();
+    virtual void W43();
+    virtual void W44();
+    virtual void W45();
+    virtual void W46();
+    virtual void W47();
+    virtual void W48();
+    virtual void W49();
+    virtual void W50(void *obj, int a, int b);
+};
+
+class G2CORE1M13
+{
+public:
+    void EnableBonedModel(RESOURCE *resource);
+    void DisableBonedModel(RESOURCE *resource);
+};
+
+typedef void (__stdcall *VTBLFN)(void *obj, int a, int b);
+
+void G2CORE1M13::EnableBonedModel(RESOURCE *resource)
+{
+    int managerId = g_pBONEDMODEL->m_id;
+    if (resource->GetManagerId() == managerId) {
+        void *obj = ((RENDX *)g_pRenderer)->V7();
+        ((VTBLFN *)*(void **)obj)[50](obj, 0x1d, 1);
+    }
+}
+
+void G2CORE1M13::DisableBonedModel(RESOURCE *resource)
+{
+    int managerId = g_pBONEDMODEL->m_id;
+    if (resource->GetManagerId() == managerId) {
+        void *obj = ((RENDX *)g_pRenderer)->V7();
+        ((VTBLFN *)*(void **)obj)[50](obj, 0x1d, 0);
+    }
+}
