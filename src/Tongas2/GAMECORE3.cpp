@@ -15,6 +15,8 @@
 #include "Tongas2/BONEDMODEL.h"
 #include "Tongas2/INPUT.h"
 #include "Tongas2/RESOURCE.h"
+#include "Tongas2/DECAL.h"
+#include "Tongas2/SHADER.h"
 
 #include "Tongas2/CMDBASE.h"
 #include "Tongas2/CWSTRING.h"
@@ -2693,6 +2695,19 @@ void PROGRESSBAR::SetDecal(RESHANDLE &handle, const char *name, bool active)
     } else {
         if (g_pLog)
             g_pLog->Error("could not create progress bar decal %s ", name);
+    }
+}
+
+void PROGRESSBAR::UpdateDecal(const RESHANDLE &handle)
+{
+    RESOURCE *resource = g_pResources->GetResource(handle);
+    if (resource) {
+        DECAL *decal = (DECAL *)resource;
+        SHADER *shader = (SHADER *)g_pResources->GetResource(decal->GetShaderHandle());
+        if (shader) {
+            int frameIndex = *(int *)((char *)decal + 0x46c);
+            *(UVRECT *)((char *)this + 0x420) = shader->GetFrame(frameIndex);
+        }
     }
 }
 
