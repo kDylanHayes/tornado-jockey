@@ -1,7 +1,13 @@
 #define CSTRING_CTOR_OUTOFLINE
 #include <new>
+#include <string>
+#include <malloc.h>
 
 #include "Tongas2/CSTRING.h"
+
+// IAT thunks the retail objects call through (InterlockedIncrement/Decrement).
+extern "C" void (__stdcall *g_fn6561b4)(void *);
+extern "C" long (__stdcall *g_fn6561ac)(long *);
 
 // Tongas2/TAIL3 -- discovery scaffold for the remaining 0x54eec0-range code.
 
@@ -40,6 +46,8 @@ class V5547C4 : public V5547C0
 public:
     virtual ~V5547C4();
     V5547C4(const V5547C4 &other);
+    // Drops the reference count; deletes this at zero (0x5547e0).
+    void Release();
 };
 
 V5547C4::V5547C4(const V5547C4 &other) : V5547C0(other)
@@ -48,6 +56,12 @@ V5547C4::V5547C4(const V5547C4 &other) : V5547C0(other)
 
 __declspec(noinline) V5547C4::~V5547C4()
 {
+}
+
+__declspec(noinline) void V5547C4::Release()
+{
+    if (g_fn6561ac((long *)&m_4) == 0)
+        delete this;
 }
 
 class V554E60
@@ -104,13 +118,38 @@ void G2TL3CALL::Call()
 
 struct G2TL3TGT1
 {
-    void Call();
+    ~G2TL3TGT1();
+
+    std::string m_0;
+    V5547C4 *m_1c;
+    void *m_20;
 };
+
+G2TL3TGT1::~G2TL3TGT1()
+{
+    V5547C4 *sub = m_1c;
+    if (m_20) {
+        if (g_fn6561ac((long *)m_20) == 0) {
+            delete sub;
+            _aligned_free(m_20);
+            m_20 = 0;
+        }
+    }
+}
 
 struct G2TL3TG2
 {
-    void Call();
+    ~G2TL3TG2();
+
+    std::string m_0;
+    V5547C4 *m_1c;
 };
+
+G2TL3TG2::~G2TL3TG2()
+{
+    if (m_1c)
+        m_1c->Release();
+}
 
 struct G2TL3TH1
 {
@@ -124,12 +163,12 @@ struct G2TL3TH2
 
 void G2TL3TH1::Call()
 {
-    ((G2TL3TGT1 *)((char *)this + 0xc))->Call();
+    ((G2TL3TGT1 *)((char *)this + 0xc))->~G2TL3TGT1();
 }
 
 void G2TL3TH2::Call()
 {
-    ((G2TL3TG2 *)((char *)this + 0xc))->Call();
+    ((G2TL3TG2 *)((char *)this + 0xc))->~G2TL3TG2();
 }
 
 struct G2TL3ALLOC
