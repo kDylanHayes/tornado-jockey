@@ -1,3 +1,4 @@
+#define RESOURCES_NODE_CTOR_NEXT_FIRST
 #include "lib/freeimage/FreeImage.h"
 #include <windows.h>
 

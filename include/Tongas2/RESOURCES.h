@@ -95,7 +95,17 @@ class CALLBACKLIST
 public:
     struct NODE
     {
+#ifdef RESOURCES_NODE_CTOR_NEXT_FIRST
+        // GAMECORE4's retail object zeroes next before prev.
+        NODE()
+        {
+            next = 0;
+            prev = 0;
+            data = 0;
+        }
+#else
         NODE() : prev(0), next(0), data(0) {}
+#endif
         NODE *prev;
         NODE *next;
         T data;
