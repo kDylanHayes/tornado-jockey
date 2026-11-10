@@ -1,3 +1,21 @@
+#include "lib/freeimage/FreeImage.h"
+#include <windows.h>
+
+#ifndef INFINITE
+#define INFINITE 0xFFFFFFFF
+#endif
+#ifndef WM_QUIT
+#define WM_QUIT 0x0012
+#endif
+
+extern "C" {
+__declspec(dllimport) BOOL __stdcall IsWindow(HWND hWnd);
+__declspec(dllimport) BOOL __stdcall DestroyWindow(HWND hWnd);
+__declspec(dllimport) BOOL __stdcall PostThreadMessageA(DWORD idThread, UINT Msg,
+                                                        WPARAM wParam, LPARAM lParam);
+__declspec(dllimport) DWORD __stdcall WaitForSingleObject(HANDLE hHandle,
+                                                          DWORD dwMilliseconds);
+}
 #define SOUNDMASTER_NOVTABLE_DTOR
 #define OBJECT_GETPARENTACTOR
 #define DRM_OUTOFLINE
@@ -642,18 +660,45 @@ public:
 
     // Releases the handles in the member fields.
     void Close();
+    void CloseDirect();
 
-    char pad_04[0x58 - 0x04];
+    char pad_04[0x4c - 0x04];
+    HWND m_4c;
+    char pad_50[0x58 - 0x50];
     std::string m_58;
     std::vector<std::string> m_74;
     std::vector<int> m_84;
-    char pad_94[0xa8 - 0x94];
+    char pad_94[0x98 - 0x94];
+    bool m_98;
+    char pad_99[0x9c - 0x99];
+    DWORD m_9c;
+    HANDLE m_a0;
+    char pad_a4[0xa8 - 0xa4];
     V44AC00 m_a8;
 };
 
 __declspec(noinline) GD452a90::~GD452a90()
 {
     Close();
+}
+
+void GD452a90::Close()
+{
+    if (m_98) {
+        if (m_a0) {
+            PostThreadMessageA(m_9c, WM_QUIT, 0, 0);
+            WaitForSingleObject(m_a0, INFINITE);
+            CloseHandle(m_a0);
+            m_a0 = 0;
+            m_9c = 0;
+        }
+    } else {
+        CloseDirect();
+    }
+    if (IsWindow(m_4c)) {
+        if (DestroyWindow(m_4c))
+            m_4c = 0;
+    }
 }
 
 // A COM-like value: Release is the third virtual.
