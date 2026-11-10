@@ -1791,3 +1791,14 @@ void T110::Thunk()
 {
     T();
 }
+
+struct G2CORE1G
+{
+    int IsZeroOrOne();
+};
+
+int G2CORE1G::IsZeroOrOne()
+{
+    return *(int *)((char *)this + 0x1c) == 0 ||
+           *(int *)((char *)this + 0x1c) == 1;
+}

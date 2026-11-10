@@ -8301,3 +8301,4 @@
 0x00442020 ?GetGlobal@G2GC4GETC@@QAEPAXXZ function 0x6
 0x006ad674 ?g_6ad674@@3PAXA data 0x4
 0x0065fefc _DAT_0065fefc data
+0x00402180 ?IsZeroOrOne@G2CORE1G@@QAEHXZ function 0x15
