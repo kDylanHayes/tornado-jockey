@@ -32,3 +32,16 @@ public:
 __declspec(noinline) GD5479c0::~GD5479c0()
 {
 }
+
+extern void V5483b0();
+extern void (*g_fmodFactory)();
+
+struct G2FMODSET
+{
+    void Set();
+};
+
+void G2FMODSET::Set()
+{
+    g_fmodFactory = V5483b0;
+}

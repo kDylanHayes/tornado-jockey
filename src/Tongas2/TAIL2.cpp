@@ -49,3 +49,15 @@ public:
 __declspec(noinline) GD553e60::~GD553e60()
 {
 }
+
+extern "C" void (__stdcall *g_fn656140)(void *);
+
+struct G2TL2CALL
+{
+    void Call();
+};
+
+void G2TL2CALL::Call()
+{
+    g_fn656140(*(void **)((char *)this + 4));
+}

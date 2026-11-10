@@ -8244,3 +8244,11 @@
 0x00656294 _g_fn656294 data 0x4
 0x00656284 _g_fn656284 data 0x4
 0x006561b4 _g_fn6561b4 data 0x4
+0x005507f0 ?Free@G2TL1FREE@@QAEXXZ function 0xa
+0x005532f0 ?Call@G2TL2CALL@@QAEXXZ function 0xb
+0x00548410 ?Set@G2FMODSET@@QAEXXZ function 0xb
+0x0044afc0 ?Init@G2GC4INIT@@QAEHXZ function 0x14
+0x006bd5e0 ?g_fmodFactory@@3P6AXXZA data 0x4
+0x00656140 _g_fn656140 data 0x4
+0x00656120 _g_fn656120 data 0x4
+0x005483b0 ?V5483b0@@YAXXZ function

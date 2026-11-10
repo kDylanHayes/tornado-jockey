@@ -514,3 +514,17 @@ void G2GC4CALL::CallB()
 {
     g_fn656284(this);
 }
+
+extern "C" void (__stdcall *g_fn656120)(void *);
+
+struct G2GC4INIT
+{
+    int Init();
+};
+
+int G2GC4INIT::Init()
+{
+    g_fn656120(*(void **)this);
+    *(char *)((char *)this + 4) = 1;
+    return 0;
+}

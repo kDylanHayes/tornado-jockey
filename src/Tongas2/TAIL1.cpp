@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 // Tongas2/TAIL1 -- discovery scaffold for the remaining 0x54eec0-range code.
 
 class GD54f0b0
@@ -68,4 +70,14 @@ public:
 
 __declspec(noinline) GD551d70::~GD551d70()
 {
+}
+
+struct G2TL1FREE
+{
+    void Free();
+};
+
+void G2TL1FREE::Free()
+{
+    free(*(void **)this);
 }
