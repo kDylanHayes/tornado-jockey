@@ -300,3 +300,31 @@ void ODEGEOMMASTER::RegisterCommands()
     HashCommands(s_commands);
     RegisterClassName(s_commands, "ODEGEOMMASTER", "RESOURCEMASTER");
 }
+
+class ODEHELPNODE2
+{
+public:
+    char pad[0x38];
+    ODEHELPNODE2 *m_38;
+
+    void Visit(int arg);
+};
+
+class ODELISTX
+{
+public:
+    char pad[0xc];
+    ODEHELPNODE2 *m_c;
+
+    void VisitAll(int arg);
+};
+
+void ODELISTX::VisitAll(int arg)
+{
+    ODEHELPNODE2 *node = m_c;
+    while (node) {
+        ODEHELPNODE2 *next = node->m_38;
+        node->Visit(arg);
+        node = next;
+    }
+}
