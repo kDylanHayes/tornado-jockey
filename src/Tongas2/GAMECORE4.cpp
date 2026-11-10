@@ -741,10 +741,12 @@ public:
     virtual void V1();
     virtual void V2();
 
-    void Cleanup();
     void Destroy();
 
-    char pad_04[0x24 - 0x04];
+    HWND m_4;
+    char pad_8[0x14 - 0x8];
+    void *m_14;
+    char pad_18[0x24 - 0x18];
 };
 
 class GD4516f0IFACE
@@ -760,9 +762,23 @@ class GD4516f0 : public GD4516f0PRIMARY, public GD4516f0IFACE
 public:
     virtual ~GD4516f0();
 
+    void Cleanup();
+
     int m_28;
-    char pad_2c[0x48 - 0x2c];
+    char pad_2c[0x44 - 0x2c];
+    GD4512e0RELEASE *m_44;
 };
+
+__declspec(noinline) void GD4516f0::Cleanup()
+{
+    GD4512e0RELEASE *release = m_44;
+    if (release) {
+        m_44 = 0;
+        release->Release();
+    }
+    if (m_4)
+        DestroyWindow(m_4);
+}
 
 __declspec(noinline) GD4516f0::~GD4516f0()
 {
@@ -784,7 +800,7 @@ public:
 __declspec(noinline) GD451880::~GD451880()
 {
     m_28 = 0xc0000001;
-    Cleanup();
+    ((GD4516f0 *)this)->Cleanup();
     g_pGD4512e0Global->V2();
     Destroy();
 }
