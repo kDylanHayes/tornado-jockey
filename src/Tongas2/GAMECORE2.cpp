@@ -151,6 +151,7 @@ public:
     G2ACTOR();
     virtual ~G2ACTOR();
     virtual int GetFactoryId();
+    virtual int GetFactoryFlags();
 
     static int s_factoryId;
     virtual void Virtual140();
@@ -311,6 +312,7 @@ class G2D1 : public ACTOR
 public:
     virtual ~G2D1();
     virtual int GetFactoryId();
+    virtual int GetFactoryFlags();
 
     static int s_factoryId;
 
@@ -341,6 +343,7 @@ class G2D2 : public ACTOR
 public:
     virtual ~G2D2();
     virtual int GetFactoryId();
+    virtual int GetFactoryFlags();
 
     static int s_factoryId;
 };
@@ -364,6 +367,7 @@ class G2EFFECT : public G2EFFECTBASE
 public:
     virtual ~G2EFFECT();
     virtual int GetFactoryId();
+    virtual int GetFactoryFlags();
 
     virtual void SetD3C(V3 position);
     virtual void SetD48(V3 position, V3 other, bool flag);
@@ -755,6 +759,7 @@ public:
     G2RULESOBJBASE();
     virtual ~G2RULESOBJBASE();
     virtual int GetFactoryId();
+    virtual int GetFactoryFlags();
 
     static int s_factoryId;
 
@@ -879,6 +884,7 @@ public:
     G2CHAIN();
     virtual ~G2CHAIN();
     virtual int GetFactoryId();
+    virtual int GetFactoryFlags();
 
     static int s_factoryId;
 
@@ -1266,6 +1272,7 @@ public:
     G2RULESOBJ();
     virtual ~G2RULESOBJ();
     virtual int GetFactoryId();
+    virtual int GetFactoryFlags();
     virtual void Update();
     virtual void Start();
     virtual void HandleTornado(CMDCALL *call);
@@ -1359,6 +1366,7 @@ public:
     static int s_factoryId;
     virtual ~G2FORESTOBJ();
     virtual int GetFactoryId();
+    virtual int GetFactoryFlags();
 
     // The spawner cell the forest made a powerup in.
     RESHANDLE m_handle;
@@ -2560,9 +2568,19 @@ int G2ACTOR::GetFactoryId()
     return s_factoryId;
 }
 
+int G2ACTOR::GetFactoryFlags()
+{
+    return g_factoryFlags[s_factoryId];
+}
+
 int G2D1::GetFactoryId()
 {
     return s_factoryId;
+}
+
+int G2D1::GetFactoryFlags()
+{
+    return g_factoryFlags[s_factoryId];
 }
 
 int G2D2::GetFactoryId()
@@ -2570,9 +2588,19 @@ int G2D2::GetFactoryId()
     return s_factoryId;
 }
 
+int G2D2::GetFactoryFlags()
+{
+    return g_factoryFlags[s_factoryId];
+}
+
 int G2EFFECT::GetFactoryId()
 {
     return s_factoryId;
+}
+
+int G2EFFECT::GetFactoryFlags()
+{
+    return g_factoryFlags[s_factoryId];
 }
 
 int G2RULESOBJ::GetFactoryId()
@@ -2580,9 +2608,19 @@ int G2RULESOBJ::GetFactoryId()
     return s_factoryId;
 }
 
+int G2RULESOBJ::GetFactoryFlags()
+{
+    return g_factoryFlags[s_factoryId];
+}
+
 int G2RULESOBJBASE::GetFactoryId()
 {
     return s_factoryId;
+}
+
+int G2RULESOBJBASE::GetFactoryFlags()
+{
+    return g_factoryFlags[s_factoryId];
 }
 
 int G2CHAIN::GetFactoryId()
@@ -2590,9 +2628,19 @@ int G2CHAIN::GetFactoryId()
     return s_factoryId;
 }
 
+int G2CHAIN::GetFactoryFlags()
+{
+    return g_factoryFlags[s_factoryId];
+}
+
 int G2FORESTOBJ::GetFactoryId()
 {
     return s_factoryId;
+}
+
+int G2FORESTOBJ::GetFactoryFlags()
+{
+    return g_factoryFlags[s_factoryId];
 }
 
 struct G2CORE2M2

@@ -659,6 +659,7 @@ public:
     virtual int GetParentClassId();
     virtual const char *GetClassName();
     virtual int GetFactoryId();
+    virtual int GetFactoryFlags();
 
     static int s_classId;
     static int s_factoryId;
@@ -680,6 +681,11 @@ int G2CORE1J1::GetFactoryId()
     return s_factoryId;
 }
 
+int G2CORE1J1::GetFactoryFlags()
+{
+    return g_factoryFlags[s_factoryId];
+}
+
 int G2CORE1J1::GetParentClassId()
 {
     return g_classParents[s_classId];
@@ -697,6 +703,7 @@ public:
 
     virtual int GetClassId();
     virtual int GetFactoryId();
+    virtual int GetFactoryFlags();
 
     static int s_classId;
     static int s_factoryId;
@@ -716,6 +723,11 @@ int G2CORE1J2::GetFactoryId()
     return s_factoryId;
 }
 
+int G2CORE1J2::GetFactoryFlags()
+{
+    return g_factoryFlags[s_factoryId];
+}
+
 class G2CORE1J3 : public ACTOR
 {
 public:
@@ -725,6 +737,7 @@ public:
     virtual int GetParentClassId();
     virtual const char *GetClassName();
     virtual int GetFactoryId();
+    virtual int GetFactoryFlags();
 
     static int s_classId;
     static int s_factoryId;
@@ -744,6 +757,11 @@ int G2CORE1J3::GetClassId()
 int G2CORE1J3::GetFactoryId()
 {
     return s_factoryId;
+}
+
+int G2CORE1J3::GetFactoryFlags()
+{
+    return g_factoryFlags[s_factoryId];
 }
 
 int G2CORE1J3::GetParentClassId()
@@ -1047,6 +1065,7 @@ public:
 
     virtual int GetClassId();
     virtual int GetFactoryId();
+    virtual int GetFactoryFlags();
     virtual void Set1328(const int &index, const void *src);
     virtual CSTRING &Set332C(const int &index, const CSTRING &value);
 
@@ -1068,6 +1087,11 @@ int G2CORE1K7::GetFactoryId()
     return s_factoryId;
 }
 
+int G2CORE1K7::GetFactoryFlags()
+{
+    return g_factoryFlags[s_factoryId];
+}
+
 void G2CORE1K7::Set1328(const int &index, const void *src)
 {
     memcpy((char *)this + 0x1328 + index * 0x200, src, 0x200);
@@ -1085,6 +1109,7 @@ public:
 
     virtual int GetClassId();
     virtual int GetFactoryId();
+    virtual int GetFactoryFlags();
 
     static int s_classId;
     static int s_factoryId;
@@ -1104,6 +1129,11 @@ int G2CORE1K8::GetFactoryId()
     return s_factoryId;
 }
 
+int G2CORE1K8::GetFactoryFlags()
+{
+    return g_factoryFlags[s_factoryId];
+}
+
 class G2CORE1K9 : public ACTOR
 {
 public:
@@ -1111,6 +1141,7 @@ public:
 
     virtual int GetClassId();
     virtual int GetFactoryId();
+    virtual int GetFactoryFlags();
 
     static int s_classId;
     static int s_factoryId;
@@ -1128,6 +1159,11 @@ int G2CORE1K9::GetClassId()
 int G2CORE1K9::GetFactoryId()
 {
     return s_factoryId;
+}
+
+int G2CORE1K9::GetFactoryFlags()
+{
+    return g_factoryFlags[s_factoryId];
 }
 
 class Tdc
@@ -4780,6 +4816,7 @@ class CMDMGRX
 {
 public:
     int Call(void *arg);
+    void *Find(void *arg);
 };
 
 struct G2CORE1SR3
@@ -4845,4 +4882,24 @@ SRESULT G2CORE1SR6::Command(int value)
     bool ok = ((APPOPTIONSX *)g_pApp->m_pOptions)->Call(
         *(unsigned char *)((char *)this + 0x230) != 0, *(int *)((char *)this + 0x228));
     return SRESULT(ok);
+}
+
+struct G2CORE1SR7
+{
+    virtual SRESULT Command(int value);
+};
+
+SRESULT G2CORE1SR7::Command(int value)
+{
+    int unused = 0;
+    bool flag = *(bool *)((char *)this + 0x230);
+    *(bool *)((char *)this + 0x238) = false;
+    if (!flag) {
+        void *found = ((CMDMGRX *)g_pCmdMgrX)->Find((char *)g_pScriptRoot + 0x1c);
+        if (found) {
+            *(bool *)((char *)found + 0x10) = true;
+            g_pApp->m_pOptions->Save();
+        }
+    }
+    return SRESULT(true);
 }
