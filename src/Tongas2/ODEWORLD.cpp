@@ -10,16 +10,48 @@ void ODEWORLDMASTER::RegisterCommands()
 {
 }
 
-class GD548620
+class GD548620 : public ACTOR
 {
 public:
+    GD548620();
     virtual ~GD548620();
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
 
     static int s_classId;
+
+    ZEROV3 m_gravity;   // 0xccc
+    float m_cd8;        // 0xcd8
+    float m_cdc;        // 0xcdc
+    float m_ce0;        // 0xce0
+    float m_ce4;        // 0xce4
+    int m_ce8;          // 0xce8
+    int m_cec;          // 0xcec
+    int m_cf0;          // 0xcf0
+    ZEROV3 m_high;      // 0xcf4
+    ZEROV3 m_low;       // 0xd00
+    bool m_d0c;         // 0xd0c
+    int m_d10;          // 0xd10
+    float m_d14;        // 0xd14
 };
+
+GD548620::GD548620()
+{
+    m_gravity = V3(0.0f, -9.81f, 0.0f);
+    m_high = V3(100.0f, 100.0f, 100.0f);
+    m_low = V3(0.0f, 0.0f, 0.0f);
+    m_cd8 = 0.2f;
+    m_cdc = 0.0001f;
+    m_ce0 = 0.1f;
+    m_ce4 = 0.001f;
+    m_ce8 = 4;
+    m_cec = 10000;
+    m_cf0 = 5;
+    m_d0c = true;
+    m_d10 = 20;
+    m_d14 = 0.01f;
+}
 
 int GD548620::GetClassId()
 {
