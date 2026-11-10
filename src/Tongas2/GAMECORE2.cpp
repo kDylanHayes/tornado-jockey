@@ -2010,26 +2010,22 @@ void G2CHAIN::B()
             G2STORMACTOR *best = 0;
             float bestDist = 1000000.0f;
             V2 screen(0.0f, 0.0f);
-            int i = 0;
-            if (count > 0) {
-                do {
-                    G2STORMACTOR *spawner = (G2STORMACTOR *)actors[i];
-                    ((CAMERA *)g_pCamera)->WorldToScreen(spawner->GetPosition(), &screen);
-                    if (screen.x >= -0.1f && screen.x <= 1.1f &&
-                        screen.y >= -0.1f && screen.y <= 1.1f)
-                        continue;
-                    V3 tornadoPos = tornado->GetPosition();
-                    V3 spawnerPos = spawner->GetPosition();
-                    float distSq =
-                        (tornadoPos.z - spawnerPos.z) * (tornadoPos.z - spawnerPos.z) +
-                        (tornadoPos.y - spawnerPos.y) * (tornadoPos.y - spawnerPos.y) +
-                        (tornadoPos.x - spawnerPos.x) * (tornadoPos.x - spawnerPos.x);
-                    if (bestDist > distSq && spawner && spawner->CanSpawn()) {
-                        best = spawner;
-                        bestDist = distSq;
-                    }
-                    i++;
-                } while (i < count);
+            for (int i = 0; i < count; i++) {
+                G2STORMACTOR *spawner = (G2STORMACTOR *)actors[i];
+                ((CAMERA *)g_pCamera)->WorldToScreen(spawner->GetPosition(), &screen);
+                if (screen.x >= -0.1f && screen.x <= 1.1f &&
+                    screen.y >= -0.1f && screen.y <= 1.1f)
+                    continue;
+                V3 tornadoPos = tornado->GetPosition();
+                V3 spawnerPos = spawner->GetPosition();
+                float distSq =
+                    (tornadoPos.z - spawnerPos.z) * (tornadoPos.z - spawnerPos.z) +
+                    (tornadoPos.y - spawnerPos.y) * (tornadoPos.y - spawnerPos.y) +
+                    (tornadoPos.x - spawnerPos.x) * (tornadoPos.x - spawnerPos.x);
+                if (bestDist > distSq && spawner && spawner->CanSpawn()) {
+                    best = spawner;
+                    bestDist = distSq;
+                }
             }
             if (!best) {
                 if (g_pLog)
@@ -2044,9 +2040,11 @@ void G2CHAIN::B()
                     g_pLog->Error("Could not spawn STORM CHASER!!");
                 return;
             }
-            G2STREQ name;
-            SafeSprintf(name.m_buf, "sc_%u", g_stormChaserCount++);
-            chaser->SetName(CSTRING(name.m_buf));
+            char name[0x200];
+            name[0] = '\0';
+            name[0x1ff] = '\0';
+            SafeSprintf(name, "sc_%u", g_stormChaserCount++);
+            chaser->SetName(CSTRING(name));
             chaser->SetPosition(best->GetPosition());
             chaser->InitChaser();
             int one = 1;
