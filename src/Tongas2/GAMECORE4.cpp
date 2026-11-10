@@ -18,9 +18,14 @@
 
 #include "Tongas2/ACTOR.h"
 #include "Tongas2/ACTORLINK.h"
+#include "Tongas2/APP.h"
+#include "Tongas2/APPWINDOW.h"
 #include "Tongas2/DECAL.h"
+#include "Tongas2/DRM.h"
+#include "Tongas2/GUI.h"
 #include "Tongas2/RESOURCES.h"
 #include "Tongas2/SAFEINDEX.h"
+#include "Tongas2/SCENE.h"
 #include "Tongas2/SCREENDECAL.h"
 #include "Tongas2/SOUND.h"
 #include "Tongas2/STRING.h"
@@ -564,6 +569,7 @@ class APPOPTIONS
 {
 public:
     virtual ~APPOPTIONS();
+    void Save();
 };
 
 APPOPTIONS::~APPOPTIONS()
@@ -1197,4 +1203,278 @@ void G2CORE4M5::Set4A0(const V3 &value)
 void G2CORE4M5::SetB0(const V3 &value)
 {
     *(V3 *)((char *)this + 0xb0) = value;
+}
+
+// Starts the program .htm files open with (SHELL.cpp).
+void OpenURL(const char *url);
+
+// The game's core object runs these from the options screens, the tips and
+// the scene. Placeholder class names: each class carries only the virtuals
+// its command calls through a pointer, so its vtable is just a slot count.
+struct G2CORE4CM1
+{
+    virtual SRESULT Command(CMDCALL *call);
+};
+
+SRESULT G2CORE4CM1::Command(CMDCALL *call)
+{
+    int unused = 0;
+    g_pApp->SetFullscreen(false);
+    g_pDisplay->Virtual22();
+    OpenURL(call->tokens->GetToken(1));
+    return SRESULT(true);
+}
+
+struct G2CORE4CM2
+{
+    virtual SRESULT Command(CMDCALL *call);
+};
+
+SRESULT G2CORE4CM2::Command(CMDCALL *call)
+{
+    int unused = 0;
+    g_pApp->SetFullscreen(false);
+    g_pDisplay->Virtual22();
+    FIXEDSTRING<0x200> url;
+    SafeSprintf(url, "file://%s%s", g_basePath, call->tokens->GetToken(1));
+    OpenURL(url);
+    return SRESULT(true);
+}
+
+// The options the core object copies out of the saved ones.
+struct G2CORE4CM3
+{
+    virtual SRESULT Command(int value);
+};
+
+SRESULT G2CORE4CM3::Command(int value)
+{
+    int unused = 0;
+    *(int *)((char *)this + 0x1289c) = *(int *)((char *)g_pApp->m_pOptions + 0x5268);
+    *(bool *)((char *)this + 0x128a0) = *(bool *)((char *)g_pApp->m_pOptions + 0x526c);
+    *(int *)((char *)this + 0x128a4) = *(int *)((char *)g_pApp->m_pOptions + 0x5270);
+    *(bool *)((char *)this + 0x128a8) = *(bool *)((char *)g_pApp->m_pOptions + 0x5274);
+    return SRESULT(true);
+}
+
+// The setters that take one of those options and apply it.
+struct G2CORE4APP
+{
+    void SetOption68(int value);
+    void SetOption6C(bool value);
+    void SetOption70(int value);
+    void SetOption74(bool value);
+};
+
+struct G2CORE4CM4
+{
+    virtual SRESULT Command(int value);
+};
+
+SRESULT G2CORE4CM4::Command(int value)
+{
+    int unused = 0;
+    ((G2CORE4APP *)g_pApp)->SetOption68(*(int *)((char *)this + 0x1289c));
+    ((G2CORE4APP *)g_pApp)->SetOption6C(*(bool *)((char *)this + 0x128a0));
+    ((G2CORE4APP *)g_pApp)->SetOption70(*(int *)((char *)this + 0x128a4));
+    ((G2CORE4APP *)g_pApp)->SetOption74(*(bool *)((char *)this + 0x128a8));
+    return SRESULT(true);
+}
+
+struct G2CORE4CM5
+{
+    virtual SRESULT Command(int value);
+};
+
+SRESULT G2CORE4CM5::Command(int value)
+{
+    int unused = 0;
+    *(bool *)((char *)this + 0x128a9) = *(bool *)((char *)g_pApp->m_pOptions + 0x110);
+    *(int *)((char *)this + 0x128ac) = *(int *)((char *)g_pApp->m_pOptions + 0x10c);
+    *(bool *)((char *)this + 0x128b0) = *(bool *)((char *)g_pApp->m_pOptions + 0x5275);
+    return SRESULT(true);
+}
+
+// The resource manager's side of those options.
+struct G2CORE4RES
+{
+    void ApplyOptions(int &a, bool &b, int &c, bool &d);
+};
+
+struct G2CORE4CM6
+{
+    virtual SRESULT Command(int value);
+};
+
+SRESULT G2CORE4CM6::Command(int value)
+{
+    int unused = 0;
+    ((G2CORE4RES *)g_pResources)->ApplyOptions(
+        *(int *)((char *)this + 0x1289c),
+        *(bool *)((char *)this + 0x128a0),
+        *(int *)((char *)this + 0x128a4),
+        *(bool *)((char *)this + 0x128a8));
+    return SRESULT(true);
+}
+
+struct G2CORE4CM7
+{
+    virtual SRESULT Command(int value);
+};
+
+SRESULT G2CORE4CM7::Command(int value)
+{
+    int unused = 0;
+    *(int *)((char *)this + 0x12890) = *(int *)((char *)g_pApp->m_pOptions + 0x5278);
+    *(int *)((char *)this + 0x12898) = *(int *)((char *)g_pApp->m_pOptions + 0x527c);
+    if (*(int *)((char *)this + 0x1288c) > *(int *)((char *)this + 0x12890))
+        *(int *)((char *)this + 0x1288c) = *(int *)((char *)this + 0x12890);
+    if (*(int *)((char *)this + 0x12894) > *(int *)((char *)this + 0x12898))
+        *(int *)((char *)this + 0x12894) = *(int *)((char *)this + 0x12898);
+    return SRESULT(true);
+}
+
+// The game's copy protection, which adds its own virtuals after the base's.
+struct G2CORE4DRM
+{
+    virtual void W00(); virtual void W01(); virtual void W02(); virtual void W03(); virtual void W04(); virtual void W05(); virtual void W06(); virtual void W07();
+    virtual void W08(); virtual void W09(); virtual void W10(); virtual void W11(); virtual void W12(); virtual void W13(); virtual void W14(); virtual void W15();
+    virtual void W16(); virtual void W17(); virtual void W18(); virtual void W19(); virtual void W20(); virtual void W21(); virtual void W22(); virtual void W23();
+    virtual void W24(); virtual void W25(); virtual void W26(); virtual void W27(); virtual void W28();
+    virtual void Virtual29();
+};
+
+struct G2CORE4CM8
+{
+    virtual SRESULT Command(int value);
+};
+
+SRESULT G2CORE4CM8::Command(int value)
+{
+    int unused = 0;
+    ((G2CORE4DRM *)g_pDrm)->Virtual29();
+    return SRESULT(true);
+}
+
+struct G2CORE4CM10
+{
+    virtual SRESULT Command(int value);
+};
+
+SRESULT G2CORE4CM10::Command(int value)
+{
+    int unused = 0;
+    g_pScene->Remove(*(RESHANDLE *)((char *)this + 0x1dcdc));
+    return SRESULT(true);
+}
+
+struct G2CORE4CM11
+{
+    virtual SRESULT Command(int value);
+};
+
+SRESULT G2CORE4CM11::Command(int value)
+{
+    int unused = 0;
+    WTACTOR *actor = g_pScene->GetActor(*(RESHANDLE *)((char *)this + 0x1dcdc));
+    if (actor)
+        ((ACTOR *)actor)->Step();
+    return SRESULT(true);
+}
+
+struct G2CORE4CM12
+{
+    virtual SRESULT Command(int value);
+};
+
+SRESULT G2CORE4CM12::Command(int value)
+{
+    int unused = 0;
+    bool ok = false;
+    ok = g_pDrm->Virtual25();
+    if (!ok)
+        return SRESULT(false);
+    return SRESULT(*(bool *)((char *)this + 0x1dcf0));
+}
+
+struct G2CORE4DRM2
+{
+    virtual void W00(); virtual void W01(); virtual void W02(); virtual void W03(); virtual void W04(); virtual void W05(); virtual void W06(); virtual void W07();
+    virtual void W08(); virtual void W09(); virtual void W10(); virtual void W11(); virtual void W12(); virtual void W13(); virtual void W14(); virtual void W15();
+    virtual void W16(); virtual void W17(); virtual void W18(); virtual void W19(); virtual void W20(); virtual void W21(); virtual void W22(); virtual void W23();
+    virtual void W24(); virtual void W25(); virtual void W26(); virtual void W27(); virtual void W28(); virtual void W29();
+    virtual void Virtual30();
+};
+
+struct G2CORE4CM13
+{
+    virtual SRESULT Command(int value);
+};
+
+SRESULT G2CORE4CM13::Command(int value)
+{
+    int unused = 0;
+    g_pApp->SetFullscreen(false);
+    g_pDisplay->Virtual22();
+    ((G2CORE4DRM2 *)g_pDrm)->Virtual30();
+    return SRESULT(true);
+}
+
+struct G2CORE4OPTS
+{
+    virtual void W0(); virtual void W1(); virtual void W2(); virtual void W3(); virtual void W4(); virtual void W5(); virtual void W6(); virtual void W7();
+    virtual void W8();
+    virtual void Virtual09();
+};
+
+struct G2CORE4CM14
+{
+    virtual SRESULT Command(int value);
+};
+
+SRESULT G2CORE4CM14::Command(int value)
+{
+    int unused = 0;
+    ((G2CORE4OPTS *)g_pApp->m_pOptions)->Virtual09();
+    g_pApp->m_pOptions->Save();
+    return SRESULT(true);
+}
+
+// The tips: the core object steps through a scenario's tip names.
+struct G2CORE4CM15
+{
+    virtual void W00(); virtual void W01(); virtual void W02(); virtual void W03(); virtual void W04(); virtual void W05(); virtual void W06(); virtual void W07();
+    virtual void W08(); virtual void W09(); virtual void W10(); virtual void W11(); virtual void W12(); virtual void W13(); virtual void W14(); virtual void W15();
+    virtual void W16(); virtual void W17(); virtual void W18(); virtual void W19(); virtual void W20(); virtual void W21(); virtual void W22(); virtual void W23();
+    virtual void W24(); virtual void W25(); virtual void W26(); virtual void W27(); virtual void W28(); virtual void W29(); virtual void W30(); virtual void W31();
+    virtual void W32(); virtual void W33(); virtual void W34(); virtual void W35(); virtual void W36(); virtual void W37(); virtual void W38(); virtual void W39();
+    virtual void W40(); virtual void W41(); virtual void W42(); virtual void W43(); virtual void W44(); virtual void W45(); virtual void W46(); virtual void W47();
+    virtual void W48();
+    virtual void SetTipText(FIXEDWSTRING<0x200> &text);
+    virtual SRESULT NextTipCommand(int value);
+    virtual SRESULT PreviousTipCommand(int value);
+    void NextTip();
+};
+
+SRESULT G2CORE4CM15::NextTipCommand(int value)
+{
+    int unused = 0;
+    if (!g_pGame->GetScenario())
+        return SRESULT(false);
+    *(int *)((char *)this + 0x1dce8) = *(int *)((char *)this + 0x1dce8) + 1;
+    if (*(int *)((char *)this + 0x1dce8) >= *(int *)((char *)this + 0x1dcec))
+        *(int *)((char *)this + 0x1dce8) = 0;
+    NextTip();
+    return SRESULT(true);
+}
+
+SRESULT G2CORE4CM15::PreviousTipCommand(int value)
+{
+    int unused = 0;
+    if (!g_pGame->GetScenario())
+        return SRESULT(false);
+    if (--*(int *)((char *)this + 0x1dce8) < 0)
+        *(int *)((char *)this + 0x1dce8) = *(int *)((char *)this + 0x1dcec) - 1;
+    NextTip();
+    return SRESULT(true);
 }
