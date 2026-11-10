@@ -8,9 +8,6 @@
 #include "Tongas2/RESOURCES.h"
 #include "Tongas2/RENDERER.h"
 
-DX8APP::DX8APP()
-{
-}
 
 DX8APP::~DX8APP()
 {
@@ -34,7 +31,7 @@ void DX8APP::Init()
 
 DX8APP *CreateDX8APP()
 {
-    return 0;
+    return new DX8APP;
 }
 
 void RegisterDX8Plugin()
