@@ -496,3 +496,20 @@ void MD8SET::Set0(int value)
 {
     *(int *)((char *)this - 0x27c) = value;
 }
+
+class MESHDX8SDT3
+{
+public:
+    MESHDX8SDT3();
+};
+
+MESHDX8SDT3::MESHDX8SDT3()
+{
+    *(int *)((char *)this + 0x18) = 0;
+    *(int *)((char *)this + 0x14) = 0;
+    *(int *)((char *)this + 8) = 0;
+    *(int *)((char *)this + 4) = 0;
+    *(int *)((char *)this) = 0;
+    *(int *)((char *)this + 0x10) = -1;
+    *(float *)((char *)this + 0xc) = 1.0f;
+}
