@@ -9024,7 +9024,7 @@
 0x00446cf0 ?PreviousTipCommand@G2CORE4CM15@@UAE?AVSRESULT@@H@Z function 0x89
 0x00446b10 ?ShowTipCommand@G2CORE4CM15@@UAE?AVSRESULT@@H@Z function 0x132
 0x004460d0 ?NextTip@G2CORE4CM15@@QAEXXZ function 0x36b
-0x00446440 ?GetTipText@G2CORE4CM15@@QAEXAAV?$FIXEDWSTRING@$0CAA@@@@HPA_W@Z function
+0x00446440 ?GetTipText@G2CORE4CM15@@QAEPAGPAGHH@Z function
 0x00447f50 ?SetOption68@G2CORE4APP@@QAEXH@Z function 0x43
 0x00447fa0 ?SetOption6C@G2CORE4APP@@QAEX_N@Z function 0x11e
 0x004480c0 ?SetOption70@G2CORE4APP@@QAEXH@Z function 0xcd
@@ -9033,3 +9033,14 @@
 0x007e0aa8 ?g_pSoundX@@3PAXA data 0x4
 0x00a01d68 ?g_pMusicX@@3PAXA data 0x4
 0x00504c90 ?Update@MUSICX@@QAEXXZ function
+0x00504f50 ?IsSupported@HARDWARE@@QAE_NH@Z function 0x36
+0x00508a50 ?SetResolution@G2CORE4D3DAPP@@QAEXH@Z function 0x1d
+0x00660e2c ?g_tipTextTable@@3PAY0DC@GA data 0x1
+0x006614f0 __real@3d0f5c29 data 0x4
+0x006614f4 ??_C@_0CE@EELFKMAI@start?5map?5?9?5could?5not?5create?5act@ data 0x24
+0x00661518 ??_C@_0DF@KJINNKGM@start?5map?5?9?5could?5not?5find?5actor@ data 0x35
+0x00661550 ??_C@_0DC@JGGJKNB@start?5map?5?9?5could?5not?5find?5destr@ data 0x32
+0x00661584 ??_C@_0DC@JCJDDKEN@start?5map?5?9?5could?5not?5find?5storm@ data 0x32
+0x006615b8 ??_C@_1BK@NCAAKLAB@?$AA?$CF?$AAs?$AA?5?$AA?9?$AA?5?$AAY?$AAe?$AAa?$AAr?$AA?5?$AA?$CF?$AAd?$AA?$AA@ data 0x1a
+0x006cb234 ?g_pStormChaserResources@@3PAVRESOURCEMANAGER@@A data 0x4
+0x006cb23c ?g_pDestructibleResources@@3PAVRESOURCEMANAGER@@A data 0x4
