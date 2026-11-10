@@ -81,11 +81,13 @@ void * G2SD8GET::Get1c(int index)
 
 // The texture device the shader helpers talk to; its two texture calls live
 // at 0x5478c0 and 0x547880 in the texture unit.
+class G2DX8OBJECT;
+
 class G2DX8DEVICE
 {
 public:
     void ReleaseTexture();
-    void CreateTexture(int index);
+    void CreateTexture(G2DX8OBJECT *object);
 
     char pad_00[4];
     bool m_4;
@@ -123,5 +125,5 @@ void G2DX8T1::Call()
 void G2DX8T2::Call(int index)
 {
     if (m_54)
-        m_30->CreateTexture(index);
+        m_30->CreateTexture((G2DX8OBJECT *)index);
 }

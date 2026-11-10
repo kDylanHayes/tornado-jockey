@@ -115,17 +115,22 @@ struct G2TL1FREE
 
 void G2TL1FREE::Free()
 {
-    free(*(void **)this);
+    ::operator delete(*(void **)this);
 }
 
-class G2TL1BASE
+// The base the two descriptor classes share (its constructor lives with the
+// 0x5547b0 block).
+class V5547C0
 {
 public:
-    G2TL1BASE();
-    virtual void V();
+    V5547C0();
+    virtual ~V5547C0();
+    V5547C0(const V5547C0 &other);
+
+    int m_4;
 };
 
-class G2TL1C1 : public G2TL1BASE
+class G2TL1C1 : public V5547C0
 {
 public:
     G2TL1C1();
@@ -135,7 +140,7 @@ G2TL1C1::G2TL1C1()
 {
 }
 
-class G2TL1C2 : public G2TL1BASE
+class G2TL1C2 : public V5547C0
 {
 public:
     G2TL1C2();
