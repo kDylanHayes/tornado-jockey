@@ -1170,3 +1170,31 @@ void G2CORE4M2::Set310(const V2 &value)
 {
     *(V2 *)((char *)this + 0x310) = value;
 }
+
+struct G2CORE4M5
+{
+    void Set274(const V3 &value);
+    void Set48C(const V3 &value);
+    void Set4A0(const V3 &value);
+    void SetB0(const V3 &value);
+};
+
+void G2CORE4M5::Set274(const V3 &value)
+{
+    *(V3 *)((char *)this + 0x274) = value;
+}
+
+void G2CORE4M5::Set48C(const V3 &value)
+{
+    *(V3 *)((char *)this + 0x48c) = value;
+}
+
+void G2CORE4M5::Set4A0(const V3 &value)
+{
+    *(V3 *)((char *)this + 0x4a0) = value;
+}
+
+void G2CORE4M5::SetB0(const V3 &value)
+{
+    *(V3 *)((char *)this + 0xb0) = value;
+}

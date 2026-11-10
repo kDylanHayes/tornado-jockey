@@ -1843,3 +1843,31 @@ SRESULT G2FORESTOBJ::SomeCommand(int value)
     CreateMaxPowerup();
     return SRESULT(true);
 }
+
+struct G2CORE3M5
+{
+    void Set17F4(const V3 &value);
+    void SetCD0(const V3 &value);
+    void SetA08(const V3 &value);
+    void SetA14(const V3 &value);
+};
+
+void G2CORE3M5::Set17F4(const V3 &value)
+{
+    *(V3 *)((char *)this + 0x17f4) = value;
+}
+
+void G2CORE3M5::SetCD0(const V3 &value)
+{
+    *(V3 *)((char *)this + 0xcd0) = value;
+}
+
+void G2CORE3M5::SetA08(const V3 &value)
+{
+    *(V3 *)((char *)this + 0xa08) = value;
+}
+
+void G2CORE3M5::SetA14(const V3 &value)
+{
+    *(V3 *)((char *)this + 0xa14) = value;
+}

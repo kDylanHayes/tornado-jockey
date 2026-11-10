@@ -2647,3 +2647,19 @@ SRESULT G2CORE2M3::SomeCommand(int value)
     Check10();
     return SRESULT(true);
 }
+
+struct G2CORE2M5
+{
+    void SetCD8(const V3 &value);
+    void SetCE4(const V3 &value);
+};
+
+void G2CORE2M5::SetCD8(const V3 &value)
+{
+    *(V3 *)((char *)this + 0xcd8) = value;
+}
+
+void G2CORE2M5::SetCE4(const V3 &value)
+{
+    *(V3 *)((char *)this + 0xce4) = value;
+}

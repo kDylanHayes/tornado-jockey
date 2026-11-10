@@ -1,5 +1,7 @@
 #include <stdlib.h>
 
+#include "Tongas2/MATHS.h"
+
 // Tongas2/TAIL1 -- discovery scaffold for the remaining 0x54eec0-range code.
 
 class GD54f0b0
@@ -158,4 +160,14 @@ void TAIL1M1::Set820(const int &value)
 void TAIL1M1::Set824(const bool &value)
 {
     *(bool *)((char *)this + 0x824) = value;
+}
+
+struct TAIL1M5
+{
+    void Set828(const V3 &value);
+};
+
+void TAIL1M5::Set828(const V3 &value)
+{
+    *(V3 *)((char *)this + 0x828) = value;
 }

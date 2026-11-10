@@ -4659,3 +4659,33 @@ SRESULT G2CORE1M3::OtherCommand(int value)
     Check11();
     return SRESULT(true);
 }
+
+struct G2CORE1M5
+{
+    void SetCF4(const V3 &value);
+    void Set25A8(const V3 &value);
+    void Set10D8(const int &value);
+    void SetLookAt(const V3 &position, const V3 &direction);
+};
+
+void G2CORE1M5::SetCF4(const V3 &value)
+{
+    *(V3 *)((char *)this + 0xcf4) = value;
+}
+
+void G2CORE1M5::Set25A8(const V3 &value)
+{
+    *(V3 *)((char *)this + 0x25a8) = value;
+}
+
+void G2CORE1M5::Set10D8(const int &value)
+{
+    if (*(int *)((char *)this + 0x10d8) != value)
+        *(int *)((char *)this + 0x10d8) = value;
+}
+
+void G2CORE1M5::SetLookAt(const V3 &position, const V3 &direction)
+{
+    ((MATRIX *)((char *)this + 0xc))->LookAt(direction, position);
+    *(char *)((char *)this + 0x4c) = 2;
+}
