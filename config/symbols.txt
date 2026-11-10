@@ -9002,3 +9002,8 @@
 0x0043f520 ?GetClassId@GD43f600@@UAEHXZ function 0x6
 0x0043f7f0 ?GetClassId@GD43f601@@UAEHXZ function 0x6
 0x0043fa70 ?GetClassId@GD43fa60@@UAEHXZ function 0x6
+0x0054d330 ?FirstOfTwo@@YGHHH@Z function 0x7
+0x0054cef0 ?Shutdown@ODEWORLDX@@QAEXXZ function
+0x0054c300 ?ShutdownOdeWorld@@YAXXZ function 0xb
+0x0054c790 ?DestroyOdeWorld@@YAXXZ function 0x1b
+0x0054d2e0 ??0ODEWORLDRESET@@QAE@XZ function 0x2c

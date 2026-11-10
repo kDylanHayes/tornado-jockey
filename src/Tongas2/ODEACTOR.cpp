@@ -146,3 +146,65 @@ void ODEACTORM1::SetResourcesScaleAndClear(int index, const V3 &scale)
     ((ACTORX *)this)->SetResourcesScale(index, scale);
     *(bool *)((char *)this + 0xd14) = false;
 }
+
+extern void *g_pOdeWorldX;
+
+class ODEWORLDX
+{
+public:
+    virtual ~ODEWORLDX();
+    void Shutdown();
+};
+
+int __stdcall FirstOfTwo(int first, int second)
+{
+    return first;
+}
+
+void ShutdownOdeWorld()
+{
+    ((ODEWORLDX *)g_pOdeWorldX)->Shutdown();
+}
+
+void DestroyOdeWorld()
+{
+    if (g_pOdeWorldX) {
+        delete (ODEWORLDX *)g_pOdeWorldX;
+        g_pOdeWorldX = 0;
+    }
+}
+
+struct ODEWORLDRESET
+{
+    int m_0;
+    int m_4;
+    int m_8;
+    int m_c;
+    int m_10;
+    int m_14;
+    int m_18;
+    int m_1c;
+    int m_20;
+    int m_24;
+    int m_28;
+    char m_2c[0x6c - 0x2c];
+    bool m_6c;
+
+    ODEWORLDRESET();
+};
+
+ODEWORLDRESET::ODEWORLDRESET()
+{
+    m_8 = 0;
+    m_0 = -1;
+    m_4 = -1;
+    m_14 = 0;
+    m_18 = 0;
+    m_1c = 0;
+    m_20 = 0;
+    m_24 = 0;
+    m_28 = 0;
+    m_6c = true;
+    m_c = -1;
+    m_10 = -1;
+}
