@@ -27,6 +27,7 @@ extern "C" __declspec(dllimport) void __stdcall Sleep(unsigned long);
 #include "Tongas2/APPOPTIONS.h"
 #include "Tongas2/APPWINDOW.h"
 #include "Tongas2/GUI.h"
+#include "Tongas2/GUIGROUP.h"
 #include "Tongas2/GUICONTROL.h"
 #include "Tongas2/INPUT.h"
 #include "Tongas2/TIMER.h"
@@ -1016,6 +1017,14 @@ public:
     char m_pad[0xda0];
     G2CAMERACAM *m_control;
 };
+
+__declspec(noinline) void G2CAMERAV::SetActive(bool active)
+{
+    *(bool *)((char *)this + 0xdd8) = active;
+    RESOURCE *resource = g_pResources->GetResource(*(RESHANDLE *)((char *)this + 0xdbc));
+    if (resource)
+        resource->SetActive(active);
+}
 
 class G2CORE1K2 : public GAME
 {
@@ -5066,6 +5075,15 @@ SRESULT G2CORE1M3::OtherCommand(int value)
     int unused = 0;
     Check11();
     return SRESULT(true);
+}
+
+__declspec(noinline) void G2CORE1M3::Check11()
+{
+    GUIGROUP *group = *(GUIGROUP **)((char *)g_pGui + 0x2644);
+    if (group && group->FindControl("quitgameconfirm"))
+        return;
+    g_pGui->AddGroup("pause_confirm_quitToDesktop", "quitgameconfirm",
+                     V2(0.5f, 0.5f), V2(1.0f, 1.0f), 1.0f, 0x82);
 }
 
 struct G2CORE1M5
