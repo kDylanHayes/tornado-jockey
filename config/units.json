@@ -3435,7 +3435,10 @@
       ],
       "target": "build/target/Tongas2/SKINNEDMESH.obj",
       "source": "src/Tongas2/SKINNEDMESH.cpp",
-      "category": "engine"
+      "category": "engine",
+      "symbol_mappings": {
+        "FUN_004e6e00": "??1GD515e70BASE@@UAE@XZ"
+      }
     },
     {
       "name": "Tongas2/TEXTFILE",

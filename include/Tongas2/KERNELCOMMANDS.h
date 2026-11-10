@@ -14,7 +14,11 @@ class KERNELCOMMANDS : public CMDBASE
 {
 public:
     KERNELCOMMANDS() {}
+#ifdef KERNELCOMMANDS_DTOR_OUTOFLINE
+    virtual ~KERNELCOMMANDS();
+#else
     virtual ~KERNELCOMMANDS() {}
+#endif
 
     static void RegisterCommands();
 

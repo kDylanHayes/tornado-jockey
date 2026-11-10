@@ -752,10 +752,18 @@ __declspec(noinline) GD43b550::~GD43b550() throw()
 {
 }
 
-class GD43b850
+// The dodge/trigger base this actor comes from; only its destructor is
+// needed here (it is defined in GAMECORE2's translation unit).
+class G2D5 : public ACTOR
 {
 public:
-    virtual ~GD43b850();
+    virtual ~G2D5();
+};
+
+class GD43b850 : public G2D5
+{
+public:
+    virtual ~GD43b850() throw();
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
@@ -767,7 +775,7 @@ public:
     static int s_classId;
 };
 
-__declspec(noinline) GD43b850::~GD43b850()
+__declspec(noinline) GD43b850::~GD43b850() throw()
 {
 }
 

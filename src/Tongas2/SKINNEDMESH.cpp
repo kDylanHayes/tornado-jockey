@@ -45,13 +45,21 @@ int SKINNEDMESH::LoadExtraAnimations(const char *name)
     return 0;
 }
 
-class GD515e70
+// The engine class GD515e70 derives from; its destructor is at 0x4e6e00 and
+// has no name in the symbol file, so the unit maps it onto this one.
+class GD515e70BASE
 {
 public:
-    virtual ~GD515e70();
+    virtual ~GD515e70BASE();
 };
 
-__declspec(noinline) GD515e70::~GD515e70()
+class GD515e70 : public GD515e70BASE
+{
+public:
+    virtual ~GD515e70() throw();
+};
+
+__declspec(noinline) GD515e70::~GD515e70() throw()
 {
 }
 

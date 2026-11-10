@@ -1,3 +1,4 @@
+#define KERNELCOMMANDS_DTOR_OUTOFLINE
 // Tongas2/GAMECORE1 -- the core engine block at 0x401d20: small string,
 // handle, primitive and result support code. The class definitions live in
 // their usual headers; TONGAS2_CORE_OUTOFLINE makes the compiler emit these
@@ -1187,7 +1188,7 @@ G2CORE1R1::G2CORE1R1() : m_0(-1), m_4(-1), m_8(0)
 {
 }
 
-class G2CORE1K3 : public ACTOR
+class G2CORE1K3 : public KERNELCOMMANDS
 {
 public:
     virtual ~G2CORE1K3();
