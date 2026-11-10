@@ -23,7 +23,11 @@ The retail installer ships `Tornado.exe` with its code sections empty; the WildT
 
 ## Status
 
-FreeImage 3.7.0 matches 100%: its own C++ code (21 units) and its bundled zlib 1.2.2, libpng 1.2.8 and libjpeg 6b (59 units). So does ODE 0.5 with OPCODE (49 units), the first seven engine units, `APPOPTIONS`, `SRESULT`, `SYSMONITOR`, `TOKENS`, `FILELOADER`, `FILELOADERWKZ` and `WKZ`, and the three units of WildTangent's leaderboard SDK: 139 units in all. The older libpng copy turned out to be part of Microsoft's prebuilt D3DX8 library, so it gets linked rather than rebuilt. See [docs/roadmap.md](docs/roadmap.md).
+**30.79%** of the exe's code matches byte for byte: 705.3 KB of 2.24 MB, 4,577 of 14,169 functions, with 137 units complete. Libraries are at 86.91%.
+
+Finished units include FreeImage 3.7.0's own C++ code (21 units) and its bundled zlib 1.2.2, libpng 1.2.8 and libjpeg 6b (59 units); ODE 0.5 with OPCODE (49 units); the first seven engine units; `APPOPTIONS`, `SRESULT`, `SYSMONITOR`, `TOKENS`, `FILELOADER`, `FILELOADERWKZ`, `WKZ`, `GAME`, `DRM`, `SHELL`, `ACTORLINK` and `RENDERSHADER`; and the three units of WildTangent's leaderboard SDK. The older libpng copy turned out to be part of Microsoft's prebuilt D3DX8 library, so it gets linked rather than rebuilt.
+
+The game and engine code is the main remaining work. `GAMECORE2` leads at 10.98% exact, including a byte-exact `G2CHAIN::B` (the 1,616-byte storm-chaser spawner); `GAMECORE1` is at 9.60%, `GAMECORE4` at 5.17% and `GAMECORE3` at 3.40%. See [progress/README.md](progress/README.md) for the per-unit table and [docs/roadmap.md](docs/roadmap.md) for what each unit contains.
 
 ## Getting started
 
