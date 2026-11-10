@@ -5854,3 +5854,24 @@ void G2CORE1M13::DisableBonedModel(RESOURCE *resource)
         ((VTBLFN *)*(void **)obj)[50](obj, 0x1d, 0);
     }
 }
+
+// Trims the surrounding spaces of a wide string and lowercases it (0x406dd0).
+extern "C" void __stdcall GD_TrimSpaces(unsigned short *text)
+{
+    wchar_t *str = (wchar_t *)text;
+    wchar_t *start = str;
+    while (*start == L' ')
+        start++;
+    wcsncpy(str, start, 0x1ff);
+    str[0x1ff] = 0;
+    wchar_t *end = str + wcslen(start) - 1;
+    if (end >= str) {
+        do {
+            if (*end != L' ')
+                break;
+            end--;
+        } while (end >= str);
+    }
+    end[1] = 0;
+    _wcslwr(str);
+}
