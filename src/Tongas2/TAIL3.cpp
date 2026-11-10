@@ -14,11 +14,17 @@ public:
 class V5547C0
 {
 public:
+    V5547C0();
     virtual ~V5547C0();
     V5547C0(const V5547C0 &other);
 
     int m_4;
 };
+
+V5547C0::V5547C0()
+{
+    m_4 = 0;
+}
 
 __declspec(noinline) V5547C0::~V5547C0()
 {

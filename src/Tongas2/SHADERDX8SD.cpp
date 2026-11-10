@@ -78,3 +78,50 @@ void * G2SD8GET::Get1c(int index)
 {
     return (char *)*(void **)((char *)this + 0x1c) + index * 0xc;
 }
+
+// The texture device the shader helpers talk to; its two texture calls live
+// at 0x5478c0 and 0x547880 in the texture unit.
+class G2DX8DEVICE
+{
+public:
+    void ReleaseTexture();
+    void CreateTexture(int index);
+
+    char pad_00[4];
+    bool m_4;
+};
+
+// The two shader variants both hold the device at +0x30 and a flag at +0x54.
+class G2DX8T1
+{
+public:
+    void Call();
+
+    char pad_00[0x30];
+    G2DX8DEVICE *m_30;
+    char pad_34[0x54 - 0x34];
+    bool m_54;
+};
+
+class G2DX8T2
+{
+public:
+    void Call(int index);
+
+    char pad_00[0x30];
+    G2DX8DEVICE *m_30;
+    char pad_34[0x54 - 0x34];
+    bool m_54;
+};
+
+void G2DX8T1::Call()
+{
+    if (m_54)
+        m_30->ReleaseTexture();
+}
+
+void G2DX8T2::Call(int index)
+{
+    if (m_54)
+        m_30->CreateTexture(index);
+}

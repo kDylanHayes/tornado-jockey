@@ -7705,8 +7705,8 @@
 
 # Tongas2/TEXTUREDX8CORE (0x0053dfe0-0x005478df)
 0x00546ea0 ?CreateTexture@@YAHXZ function 0x9d4
-0x00547880 ?TextureFormatA@@YAHXZ function 0x36
-0x005478c0 ?TextureFormatB@@YAHXZ function 0x1b
+0x00547880 ?CreateTexture@G2DX8DEVICE@@QAEXH@Z function 0x36
+0x005478c0 ?ReleaseTexture@G2DX8DEVICE@@QAEXXZ function 0x1b
 
 # Tongas2/SOUNDFMOD (0x005478e0-0x0054841f)
 0x005478e0 ?FMODErrorString@@YAPBDH@Z function 0xe0
@@ -8284,13 +8284,13 @@
 0x00447720 ??1APPOPTIONS@@UAE@XZ function 0x7
 0x00550d90 ??0G2TL1C1@@QAE@XZ function 0x12
 0x00550db0 ??0G2TL1C2@@QAE@XZ function 0x12
-0x005547b0 ??0G2TL1BASE@@QAE@XZ function
+0x005547b0 ??0V5547C0@@QAE@XZ function 0x10
 0x0067d4a8 ??_7G2TL1C1@@6B@ data
 0x0067d4d0 ??_7G2TL1C2@@6B@ data
 0x00509e60 ?Call@G2DX8TH1@@QAEXXZ function 0x8
 0x00509e70 ?Call@G2DX8TH2@@QAEXXZ function 0x8
 0x0053b5b0 ?Call@G2DX8T1@@QAEXXZ function 0x10
-0x0053b5c0 ?Call@G2DX8T2@@QAEXXZ function 0x12
+0x0053b5c0 ?Call@G2DX8T2@@QAEXH@Z function 0x12
 0x00554800 ?Alloc@G2TL3ALLOC@@QAEPAXI@Z function 0x13
 0x004eb570 ?Run@G2RSJMP@@QAEXXZ function 0x5
 0x004ea450 ?Run@G2RSTGT@@QAEXXZ function 0x9d0
