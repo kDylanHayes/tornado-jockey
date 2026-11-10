@@ -756,6 +756,30 @@ void GD452a90::CloseDirect()
     }
 }
 
+// The WildTangent info blob the two code-name accessors belong to. Its
+// GetString lives in the 0x54f8c0 block; only the accessors are here.
+class WTINFO
+{
+public:
+    virtual ~WTINFO();
+
+    std::string GetString(const std::string &key);
+    std::string GetDPCodeName();
+    std::string GetProductCodeName();
+};
+
+std::string WTINFO::GetDPCodeName()
+{
+    std::string key("DPCodeName", 10);
+    return GetString(key);
+}
+
+std::string WTINFO::GetProductCodeName()
+{
+    std::string key("ProductCodeName", 15);
+    return GetString(key);
+}
+
 // A COM-like value: Release is the third virtual.
 class GD453360VALUE
 {
@@ -789,11 +813,22 @@ struct GD453c50VALUE
     char m_00[0x1c];
 };
 
+typedef std::vector<std::string> GD453c50OBJECTLIST;
+
 class GD453c50OBJECT
 {
 public:
     ~GD453c50OBJECT();
+
+    int m_0;
+    GD453c50OBJECTLIST m_4;
 };
+
+GD453c50OBJECT::~GD453c50OBJECT()
+{
+    m_4.~GD453c50OBJECTLIST();
+    m_0 = 0;
+}
 
 class GD453c50
 {
@@ -2022,7 +2057,8 @@ extern wchar_t g_tipTextTable[][50];
 
 static __forceinline char *G2CORE4TipName(WTACTOR *scenario, int index)
 {
-    char *name = *(char **)((char *)scenario + 0x332c + index * 4);
+    char **names = (char **)((char *)scenario + 0x332c);
+    char *&name = names[index];
     return name ? name : "";
 }
 
