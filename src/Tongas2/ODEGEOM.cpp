@@ -4,19 +4,11 @@
 // function has its exact target size in config/symbols.txt.
 #include "Tongas2/ODEGEOM.h"
 #include "Tongas2/MATHS.h"
-
-void ODEGEOMMASTER::RegisterCommands()
-{
-}
+#include "Tongas2/RESOURCES.h"
 
 void DYNAMICARRAY::Insert(void *item)
 {
     (void)item;
-}
-
-void *CreateODEGEOM()
-{
-    return 0;
 }
 
 class GD548fc0
@@ -29,14 +21,98 @@ __declspec(noinline) GD548fc0::~GD548fc0()
 {
 }
 
-class GD548f90
+extern "C" void dCloseODE();
+int SafeSprintf(char *buffer, const char *format, ...);
+
+class GD548f90 : public RESOURCEMANAGER
 {
 public:
+    GD548f90()
+    {
+        SafeSprintf(m_fileName, "ODEGEOM.txt");
+        m_8 = 0;
+        m_18 = 1;
+    }
+
+    virtual RESOURCEMASTER *CreateMaster(const char *name);
+    virtual const char *GetTypeCode();
     virtual ~GD548f90();
+    virtual void Update();
+    virtual void Init();
+
+    void ToggleHelpers();
+
+    bool m_224;
+    int m_228;
 };
+
+extern void *g_pOdeWorldX;
+extern RESOURCEMANAGER *g_pCPRIMITIVE3;
+
+class ODEWORLDX
+{
+public:
+    void Reset();
+};
+
+void GD548f90::Init()
+{
+    RESOURCEMANAGER::Init();
+    ((ODEWORLDX *)g_pOdeWorldX)->Reset();
+    m_224 = false;
+    m_228 = 0;
+}
+
+void GD548f90::Update()
+{
+    RESOURCEMANAGER::Update();
+    if (*(bool *)((char *)g_pCPRIMITIVE3 + 0x274) != m_224)
+        ToggleHelpers();
+}
+
+struct ODEHELPNODE
+{
+    char pad[0x1c];
+    bool m_1c;
+    char pad2[3];
+    ODEHELPNODE *m_20;
+
+    void ShowHelpers(bool *visible);
+};
+
+struct ODEMASTERNODE
+{
+    char pad[0x38];
+    ODEMASTERNODE *m_38;
+    char pad2[4];
+    ODEHELPNODE *m_40;
+};
+
+void GD548f90::ToggleHelpers()
+{
+    m_224 = !m_224;
+    ODEMASTERNODE *master = *(ODEMASTERNODE **)((char *)this + 0xc);
+    while (master) {
+        ODEMASTERNODE *nextMaster = master->m_38;
+        ODEHELPNODE *node = master->m_40;
+        while (node) {
+            ODEHELPNODE *next = node->m_20;
+            if (node->m_1c)
+                node->ShowHelpers(&m_224);
+            node = next;
+        }
+        master = nextMaster;
+    }
+}
 
 __declspec(noinline) GD548f90::~GD548f90()
 {
+    dCloseODE();
+}
+
+void *CreateODEGEOM()
+{
+    return new GD548f90;
 }
 
 class GD549b40
@@ -87,4 +163,18 @@ const char *ODEGEOMCID::GetClassName()
 void ODEGEOMCID::Set6C(const V3 &value)
 {
     *(V3 *)((char *)this + 0x6c) = value;
+}
+
+void RegisterClassName(CMDENTRY *commands, const char *type, const char *parent);
+
+CMDENTRY ODEGEOMMASTER::s_commands[] = {
+    { 0, 0, 0, 0, 0 },
+};
+
+void ODEGEOMMASTER::RegisterCommands()
+{
+    g_classParents[ODEGEOMCID::s_classId] = RESOURCEMASTER::s_classId;
+    g_classCommands[ODEGEOMCID::s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "ODEGEOMMASTER", "RESOURCEMASTER");
 }

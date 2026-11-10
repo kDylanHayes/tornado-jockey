@@ -7,10 +7,13 @@
 #ifndef TONGAS2_ODEGEOM_H
 #define TONGAS2_ODEGEOM_H
 
+struct CMDENTRY;
+
 class ODEGEOMMASTER
 {
 public:
     static void RegisterCommands();
+    static CMDENTRY s_commands[];
 };
 
 class DYNAMICARRAY
