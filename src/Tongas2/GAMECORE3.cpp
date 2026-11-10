@@ -771,10 +771,10 @@ __declspec(noinline) GD43b850::~GD43b850()
 {
 }
 
-class GD43bb40
+class GD43bb40 : public ACTOR
 {
 public:
-    virtual ~GD43bb40();
+    virtual ~GD43bb40() throw();
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
@@ -784,10 +784,27 @@ public:
     static int s_factoryId;
 
     static int s_classId;
+
+    char pad_ee4[0xee4 - sizeof(ACTOR)];
+    char *m_ee4;
+    char *m_ee8;
+    char *m_eec;
 };
 
-__declspec(noinline) GD43bb40::~GD43bb40()
+__declspec(noinline) GD43bb40::~GD43bb40() throw()
 {
+    if (m_ee4) {
+        delete[] m_ee4;
+        m_ee4 = 0;
+    }
+    if (m_ee8) {
+        delete[] m_ee8;
+        m_ee8 = 0;
+    }
+    if (m_eec) {
+        delete[] m_eec;
+        m_eec = 0;
+    }
 }
 
 class GD43cc30

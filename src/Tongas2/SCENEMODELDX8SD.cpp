@@ -2,6 +2,7 @@
 //
 // Discovery scaffold: bodies are empty until the unit is matched.
 #include "Tongas2/SCENEMODELDX8SD.h"
+#include "Tongas2/RESOURCE.h"
 
 void SCENEMODELDX8SDMASTER::RegisterCommands()
 {
@@ -12,13 +13,18 @@ RESOURCEMANAGER *CreateSCENEMODELDX8SD()
     return 0;
 }
 
-class GD537230
+// A resource master with two allocated names.
+class GD537230 : public RESOURCEMASTER
 {
 public:
-    virtual ~GD537230();
+    virtual ~GD537230() throw();
+
+    CSTRING m_60;
+    char pad_64[0xc];
+    CSTRING m_70;
 };
 
-__declspec(noinline) GD537230::~GD537230()
+__declspec(noinline) GD537230::~GD537230() throw()
 {
 }
 
