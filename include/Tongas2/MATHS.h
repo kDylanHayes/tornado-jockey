@@ -22,6 +22,10 @@ struct V3
 
     V3 &operator+=(const V3 &o) { x += o.x; y += o.y; z += o.z; return *this; }
     V3 &operator-=(const V3 &o) { x -= o.x; y -= o.y; z -= o.z; return *this; }
+#ifdef V3_SUB_MEMBER
+    // o - *this, written as a member call (the argument is the minuend).
+    V3 DiffFrom(const V3 &o) const;
+#endif
 
     // The point transformed by m, translation included.
     V3 Transform(const MATRIX &m) const;
@@ -147,6 +151,13 @@ inline V3 operator-(const V3 &a, const V3 &b)
 {
     return V3(a.x - b.x, a.y - b.y, a.z - b.z);
 }
+
+#ifdef V3_SUB_MEMBER
+inline V3 V3::DiffFrom(const V3 &o) const
+{
+    return o - *this;
+}
+#endif
 
 inline V3 operator*(const V3 &v, const float &s)
 {

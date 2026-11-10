@@ -9,6 +9,7 @@
 #define V3_DISTANCEXZ_OUTOFLINE
 #define ANG_SETEULERX_OUTOFLINE
 #define MATRIX_TRANSPOSE_OUTOFLINE
+#define V3_SUB_MEMBER
 
 
 #include <new>
@@ -2021,8 +2022,9 @@ void G2CHAIN::B()
                 if (screen.x >= -0.1f && screen.x <= 1.1f &&
                     screen.y >= -0.1f && screen.y <= 1.1f)
                     continue;
-                V3 delta = ((G2STORMACTOR *)actors[i])->GetPosition() -
-                           tornado->GetPosition();
+                V3 delta = ((G2STORMACTOR *)actors[i])
+                               ->GetPosition()
+                               .DiffFrom(tornado->GetPosition());
                 distSq = delta.x * delta.x + delta.y * delta.y +
                          delta.z * delta.z;
                 if (bestDist > distSq) {
