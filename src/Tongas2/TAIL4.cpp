@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <string>
 #include <vector>
 #include <map>
@@ -19,34 +20,61 @@ class GD556050ITEMVALUE
 struct GD556050ITEM
 {
     int m_0;
-    GD556050ITEMVALUE *m_4;
+    void *m_4;
+};
 
-    ~GD556050ITEM()
+// The growable array at +0x58: begin/end/capacity, cleared by freeing each
+// element's buffer and then the storage.
+struct GD556050ARRAY
+{
+    GD556050ITEM *m_begin;
+    GD556050ITEM *m_end;
+    GD556050ITEM *m_cap;
+
+    void Clear()
     {
-        delete m_4;
+        unsigned int count = m_begin ? (unsigned int)(m_end - m_begin) : 0;
+        for (unsigned int i = 0; i < count; i++)
+            free(m_begin[i].m_4);
+        if (m_begin)
+            free(m_begin);
+        m_begin = 0;
+        m_end = 0;
+        m_cap = 0;
     }
+};
+
+// Owns a heap buffer and frees it in its destructor (the word at +0xc).
+class GD556050FREE
+{
+public:
+    ~GD556050FREE()
+    {
+        free(m_p);
+    }
+
+    void *m_p;
 };
 
 // The non-polymorphic part of the object, shifted to +4 by the derived vptr.
 class GD556050BASE
 {
 public:
-    __forceinline ~GD556050BASE() throw()
+    __forceinline ~GD556050BASE()
     {
         if (m_04)
             m_04->Release(1);
-        delete m_c;
     }
 
     GD556050OBJ *m_04;
     int m_08;
-    char *m_c;
+    GD556050FREE m_c;
     std::string m_10;
     std::string m_2c;
     int m_48;
     int m_4c;
     bool m_50;
-    char pad_51[0x54 - 0x51];
+    char pad_51[0x58 - 0x51];
 };
 
 class GD556050 : public GD556050BASE
@@ -54,11 +82,22 @@ class GD556050 : public GD556050BASE
 public:
     virtual ~GD556050();
 
-    std::vector<GD556050ITEM> m_54;
+    GD556050ARRAY m_54;
 };
 
 __declspec(noinline) GD556050::~GD556050()
 {
+    int i;
+    int count = m_54.m_begin ? (int)(m_54.m_end - m_54.m_begin) : 0;
+    for (i = 0; i < count; i++) {
+        GD556050ITEM *item = m_54.m_begin + i;
+        free(item->m_4);
+    }
+    if (m_54.m_begin)
+        free(m_54.m_begin);
+    m_54.m_begin = 0;
+    m_54.m_end = 0;
+    m_54.m_cap = 0;
 }
 
 class V5547C4
