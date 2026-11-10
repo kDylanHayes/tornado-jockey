@@ -5078,3 +5078,19 @@ SRESULT G2CORE1M9::Command(CMDCALL *call)
     }
     return ((KERNELCOMMANDS *)this)->KERNELCOMMANDS::StartGame(call);
 }
+
+struct G2CORE1M10
+{
+    CSTRING &SetDEC(const int &index, const CSTRING &value);
+    void Set19A0(const int &index, const void *src);
+};
+
+CSTRING &G2CORE1M10::SetDEC(const int &index, const CSTRING &value)
+{
+    return ((CSTRING *)((char *)this + 0xdec))[index] = value;
+}
+
+void G2CORE1M10::Set19A0(const int &index, const void *src)
+{
+    memcpy((char *)this + 0x19a0 + index * 0x200, src, 0x200);
+}
