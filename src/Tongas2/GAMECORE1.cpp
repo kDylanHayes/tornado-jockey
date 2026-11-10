@@ -536,7 +536,7 @@ void G2CORE1C::Set(const int &value)
 
 struct G2CORE1D
 {
-    void Clear();
+    __declspec(noinline) void Clear();
 };
 
 void G2CORE1D::Clear()
@@ -1249,20 +1249,26 @@ G2CORE1K4::~G2CORE1K4()
 {
 }
 
-class G2CORE1K5 : public ACTOR
+class G2CORE1K5
 {
 public:
     virtual ~G2CORE1K5();
+
+    // Frees the FITAG values and empties the tree.
+    void Clear();
+
+    std::map<std::string, FITAG *> m_4;
 };
 
 G2CORE1K5::~G2CORE1K5()
 {
+    Clear();
 }
 
 class G2CORE1K6
 {
 public:
-    virtual ~G2CORE1K6();
+    __declspec(noinline) virtual ~G2CORE1K6();
 
     char *m_4;
     char *m_8;
@@ -1300,12 +1306,23 @@ public:
     // Points the camera at a camera-option template. Slot 0x280.
     virtual void SetCameraOptions(const FIXEDSTRING<0x200> &name);
 
+    void Clear();
+
     static int s_classId;
     static int s_factoryId;
+
+    char pad_0ccc[0xf10 - 0xccc];
+    STRING m_f10;
+    char pad_f28[0x332c - (0xf10 + 0x18)];
+    CSTRING m_332c[0x10];
+    char pad_336c[0x3bc0 - (0x332c + 0x40)];
+    G2CORE1K6 m_3bc0;
 };
 
 G2CORE1K7::~G2CORE1K7()
 {
+    ((G2CORE1D *)g_pGame)->Clear();
+    Clear();
 }
 
 int G2CORE1K7::GetClassId()
