@@ -866,6 +866,66 @@ __declspec(noinline) GD43ea30::~GD43ea30()
 {
 }
 
+struct CSTRINLINE
+{
+    char *m_str;
+
+    ~CSTRINLINE()
+    {
+        if (m_str) {
+            free(m_str);
+            m_str = 0;
+        }
+    }
+};
+
+class GD43ea30X
+{
+public:
+    ~GD43ea30X();
+    GD43ea30X *Destroy(bool flag);
+
+    RESOURCEMASTER m_master;
+    char pad_60[4];
+    CSTRINLINE m_64;
+    char pad_68[0x88 - 0x68];
+    CSTRING m_88[8];
+    char pad_a8[0xb4 - 0xa8];
+    CSTRINLINE m_b4;
+    char pad_b8[0xcc - 0xb8];
+    CSTRINLINE m_cc;
+    char pad_d0[0xfc - 0xd0];
+    CSTRINLINE m_fc;
+    CSTRINLINE m_100;
+    CSTRINLINE m_104;
+    CSTRINLINE m_108;
+    char pad_10c[0x314 - 0x10c];
+    CSTRINLINE m_314;
+    char pad_318[4];
+    CSTRINLINE m_31c;
+    CSTRING m_320[16];
+    char pad_360[0x9e0 - 0x360];
+    CSTRING m_9e0[4];
+    char pad_9f0[0xa04 - 0x9f0];
+    CSTRINLINE m_a04;
+    char pad_a08[0xa70 - 0xa08];
+    CSTRING m_a70[4];
+    char pad_a80[0xa98 - 0xa80];
+    CSTRINLINE m_a98;
+};
+
+GD43ea30X::~GD43ea30X()
+{
+}
+
+GD43ea30X *GD43ea30X::Destroy(bool flag)
+{
+    this->~GD43ea30X();
+    if (flag)
+        operator delete(this);
+    return this;
+}
+
 class GD43f2f0
 {
 public:
