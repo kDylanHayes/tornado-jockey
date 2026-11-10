@@ -33,12 +33,23 @@ void SCREENDECALMASTER::SetFileName(const CSTRING &name)
     m_fileName = name;
 }
 
-// The leaf objects the sub list holds; its destructor is at 0x537790.
+// The leaf objects the sub list holds; its destructor is at 0x537790 and
+// only releases its four POD vectors.
 class GD507220LEAF
 {
 public:
-    ~GD507220LEAF();
+    ~GD507220LEAF() throw();
+
+    char pad_0[0x14];
+    std::vector<int> m_14;
+    std::vector<int> m_24;
+    std::vector<int> m_34;
+    std::vector<int> m_44;
 };
+
+GD507220LEAF::~GD507220LEAF() throw()
+{
+}
 
 // The objects the item's list holds; its destructor is at 0x537e90.
 class GD507220SUB
