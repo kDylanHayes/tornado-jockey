@@ -163,11 +163,7 @@ public:
     // The GUI behaviors were built seeing it out of line.
     void Free();
 #else
-#ifdef STRING_FREE_NOTHROW_SPEC
-    void Free() throw()
-#else
     void Free()
-#endif
     {
         if (m_block >= 0)
             g_StringManager.Free(m_block, m_pages);
