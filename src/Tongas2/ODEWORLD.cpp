@@ -4,8 +4,9 @@
 #include "Tongas2/ODEWORLD.h"
 
 #include "Tongas2/ACTOR.h"
-#include "Tongas2/RESOURCES.h"
 #include "Tongas2/CMDBASE.h"
+#include "Tongas2/CPRIMITIVE3.h"
+#include "Tongas2/RESOURCES.h"
 
 void ODEWORLDMASTER::RegisterCommands()
 {
@@ -14,7 +15,9 @@ void ODEWORLDMASTER::RegisterCommands()
 class GD548620 : public ACTOR
 {
 public:
+    // Out of line at 0x00548460.
     GD548620();
+
     virtual ~GD548620();
     virtual int GetClassId();
     virtual int GetParentClassId();
@@ -22,33 +25,36 @@ public:
 
     static int s_classId;
 
-    ZEROV3 m_gravity;   // 0xccc
-    float m_cd8;        // 0xcd8
-    float m_cdc;        // 0xcdc
-    float m_ce0;        // 0xce0
-    float m_ce4;        // 0xce4
-    int m_ce8;          // 0xce8
-    int m_cec;          // 0xcec
-    int m_cf0;          // 0xcf0
-    ZEROV3 m_high;      // 0xcf4
-    ZEROV3 m_low;       // 0xd00
-    bool m_d0c;         // 0xd0c
-    int m_d10;          // 0xd10
-    float m_d14;        // 0xd14
+    V3 m_gravity;
+    float m_erp;
+    float m_cfm;
+    float m_contactMaxCorrectingVel;
+    float m_contactSurfaceLayer;
+    int m_maxContacts;
+    int m_maxContactsPerBody;
+    int m_maxPairs;
+    V3 m_cf4;
+    V3 m_d00;
+    bool m_d0c;
+    int m_d10;
+    float m_d14;
 };
 
 GD548620::GD548620()
+    : m_gravity(0.0f, 0.0f, 0.0f),
+      m_cf4(0.0f, 0.0f, 0.0f),
+      m_d00(0.0f, 0.0f, 0.0f)
 {
     m_gravity = V3(0.0f, -9.81f, 0.0f);
-    m_high = V3(100.0f, 100.0f, 100.0f);
-    m_low = V3(0.0f, 0.0f, 0.0f);
-    m_cd8 = 0.2f;
-    m_cdc = 0.0001f;
-    m_ce0 = 0.1f;
-    m_ce4 = 0.001f;
-    m_ce8 = 4;
-    m_cec = 10000;
-    m_cf0 = 5;
+    m_cf4 = V3(100.0f, 100.0f, 100.0f);
+    m_erp = 0.2f;
+    m_cfm = 0.0001f;
+    m_contactMaxCorrectingVel = 0.1f;
+    m_contactSurfaceLayer = 0.001f;
+    m_maxContacts = 4;
+    m_maxContactsPerBody = 10000;
+    m_maxPairs = 5;
+    m_d00 = V3(0.0f, 0.0f, 0.0f);
     m_d0c = true;
     m_d10 = 20;
     m_d14 = 0.01f;
@@ -277,70 +283,22 @@ void ODEWORLDM2::SetD00(const V3 &value)
     *(bool *)((char *)g_pOdeWorldX + 0x68) = false;
 }
 
-struct ODEWORLDDATA
-{
-    int m_words[0x14];
-};
-
-class GD549b40
+// The ODE geometry resource a world actor makes its bodies from.
+class ODEGEOMRESOURCE : public CPRIMITIVE3RESOURCE
 {
 public:
-    virtual void D00();
-    virtual void D01();
-    virtual void D02();
-    virtual void D03();
-    virtual void D04();
-    virtual void D05();
-    virtual void D06();
-    virtual void D07();
-    virtual void D08();
-    virtual void D09();
-    virtual void D10();
-    virtual void D11();
-    virtual void D12();
-    virtual void D13();
-    virtual void D14();
-    virtual void D15();
-    virtual void D16();
-    virtual void D17();
-    virtual void D18();
-    virtual void D19();
-    virtual void D20();
-    virtual void D21();
-    virtual void D22();
-    virtual void D23();
-    virtual void D24();
-    virtual void D25();
-    virtual void D26();
-    virtual void D27();
-    virtual void D28();
-    virtual void D29();
-    virtual void D30();
-    virtual void D31();
-    virtual void D32();
-    virtual void D33();
-    virtual void D34();
-    virtual void D35();
-    virtual void D36();
-    virtual void D37();
-    virtual void D38();
-    virtual void D39();
-    virtual void D40();
-    virtual void D41();
-    virtual void D42();
-    virtual void SetData(ODEWORLDDATA data);
+    virtual void SetRelAngles(ANG angles);
 };
 
-void GD549b40::SetData(ODEWORLDDATA data)
+void ODEGEOMRESOURCE::SetRelAngles(ANG angles)
 {
-    *(ODEWORLDDATA *)((char *)this + 0x58) = data;
+    m_relAngles = angles;
     if (*(bool *)((char *)this + 0x424)) {
-        RESHANDLE *handles = (RESHANDLE *)((char *)this + 0x400);
-        for (int i = 3; i != 0; i--) {
-            RESOURCE *resource = g_pResources->GetResource(*handles);
-            if (resource)
-                ((GD549b40 *)resource)->SetData(data);
-            handles++;
+        RESHANDLE *handle = (RESHANDLE *)((char *)this + 0x400);
+        for (int i = 0; i < CPRIMITIVE3_MAX_HELPERS; i++) {
+            OBJECT *copy = (OBJECT *)g_pResources->GetResource(handle[i]);
+            if (copy)
+                copy->SetRelAngles(angles);
         }
     }
     *(bool *)((char *)this + 0x431) = true;
