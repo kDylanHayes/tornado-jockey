@@ -765,6 +765,9 @@ public:
     virtual void CloseGuiObject();
     virtual bool CanAdvanceState();
 
+    virtual void SetE64(const int &index, const void *src);
+    virtual void Set1664(const int &index, const void *src);
+
     static int s_classId;
 };
 
@@ -893,6 +896,16 @@ bool G2CORE1K2::CanAdvanceState()
     return false;
 }
 
+void G2CORE1K2::SetE64(const int &index, const void *src)
+{
+    memcpy((char *)this + 0xe64 + index * 0x400, src, 0x400);
+}
+
+void G2CORE1K2::Set1664(const int &index, const void *src)
+{
+    memcpy((char *)this + 0x1664 + index * 0x400, src, 0x400);
+}
+
 struct G2CORE1R1
 {
     int m_0;
@@ -913,6 +926,8 @@ public:
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
+
+    virtual void Set41C(const int &index, const void *src);
 
     static int s_classId;
 };
@@ -936,6 +951,11 @@ int G2CORE1K3::GetParentClassId()
 const char *G2CORE1K3::GetClassName()
 {
     return g_classNames[s_classId];
+}
+
+void G2CORE1K3::Set41C(const int &index, const void *src)
+{
+    memcpy((char *)this + 0x41c + index * 0x400, src, 0x400);
 }
 
 class G2CORE1K4 : public ACTOR
@@ -972,10 +992,23 @@ class G2CORE1K7 : public ACTOR
 {
 public:
     virtual ~G2CORE1K7();
+
+    virtual void Set1328(const int &index, const void *src);
+    virtual CSTRING &Set332C(const int &index, const CSTRING &value);
 };
 
 G2CORE1K7::~G2CORE1K7()
 {
+}
+
+void G2CORE1K7::Set1328(const int &index, const void *src)
+{
+    memcpy((char *)this + 0x1328 + index * 0x200, src, 0x200);
+}
+
+CSTRING &G2CORE1K7::Set332C(const int &index, const CSTRING &value)
+{
+    return ((CSTRING *)((char *)this + 0x332c))[index] = value;
 }
 
 class G2CORE1K8 : public ACTOR
