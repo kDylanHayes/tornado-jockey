@@ -427,6 +427,7 @@ bool ODEACTORM3::Predicate(int a, int b, int c, int d)
 extern "C" void _dBodySetLinearVel(void *body, float x, float y, float z);
 extern "C" void _dBodySetAngularVel(void *body, float x, float y, float z);
 extern "C" void _dBodyDisable(void *body);
+extern "C" void _dBodyEnable(void *body);
 
 extern RESOURCES *g_pResources;
 extern RESOURCEMANAGER *g_pActorResourceManager2;
@@ -463,8 +464,29 @@ public:
 class ODEACTORM4
 {
 public:
+    virtual void Start();
     virtual void Stop();
 };
+
+void ODEACTORM4::Start()
+{
+    if (*(bool *)((char *)this + 0xd24))
+        return;
+    *(bool *)((char *)this + 0xd24) = true;
+    _dBodyEnable(*(void **)((char *)this + 0xccc));
+    RESHANDLE *handles = (RESHANDLE *)((char *)this + 0xb58);
+    for (int i = 16; i != 0; i--) {
+        if (handles->IsValid()) {
+            RESOURCE *resource = g_pResources->GetResource(*handles);
+            if (resource) {
+                int managerId = g_pActorResourceManager2->m_id;
+                if (resource->GetManagerId() == managerId)
+                    resource->SetActive(true);
+            }
+        }
+        handles++;
+    }
+}
 
 void ODEACTORM4::Stop()
 {

@@ -9540,3 +9540,4 @@
 0x0054ccb0 ?Contains@G2ODEADJTGT@@QAE_NABVG2CORE1R1@@@Z function 0x60
 0x0054d110 ?CreateOdeWorld@@YAXXZ function 0x63
 0x0054cdd0 ??0ODEWORLDX@@QAE@XZ function 0xf6
+0x0054abd0 ?Start@ODEACTORM4@@UAEXXZ function 0x8d
