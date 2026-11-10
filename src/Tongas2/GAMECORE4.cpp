@@ -606,24 +606,61 @@ __declspec(noinline) GD452a90::~GD452a90()
 {
 }
 
+// A COM-like value: Release is the third virtual.
+class GD453360VALUE
+{
+public:
+    virtual void __stdcall QueryInterface();
+    virtual void __stdcall AddRef();
+    virtual void __stdcall Release();
+};
+
 class GD453360
 {
 public:
     virtual ~GD453360();
+
+    std::map<std::string, GD453360VALUE *> m_4;
 };
 
 __declspec(noinline) GD453360::~GD453360()
 {
+    for (std::map<std::string, GD453360VALUE *>::iterator it = m_4.begin(); it != m_4.end(); ++it) {
+        if (it->second) {
+            it->second->Release();
+            it->second = 0;
+        }
+    }
+    m_4.clear();
 }
+
+struct GD453c50VALUE
+{
+    char m_00[0x1c];
+};
+
+class GD453c50OBJECT
+{
+public:
+    ~GD453c50OBJECT();
+};
 
 class GD453c50
 {
 public:
     virtual ~GD453c50();
+
+    std::map<std::string, GD453c50VALUE> m_4;
+    GD453c50OBJECT *m_10;
 };
 
 __declspec(noinline) GD453c50::~GD453c50()
 {
+    if (m_10) {
+        delete m_10;
+        m_10 = 0;
+    }
+    m_4.clear();
 }
 
 struct G2GC4GET
