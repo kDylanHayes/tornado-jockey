@@ -1,4 +1,35 @@
 #include <stdlib.h>
+
+// The object whose slot 0x1c unlinks it and whose deleting destructor runs at
+// slot 0; the wrapper at 0x5285f0 releases it.
+class GD5285f0OBJ
+{
+public:
+    virtual ~GD5285f0OBJ();
+    virtual void V01();
+    virtual void V02();
+    virtual void V03();
+    virtual void V04();
+    virtual void V05();
+    virtual void V06();
+    virtual void Unlink();
+};
+
+struct GD5285f0
+{
+    GD5285f0OBJ *m_0;
+
+    void Release();
+};
+
+void GD5285f0::Release()
+{
+    m_0->Unlink();
+    if (m_0) {
+        delete m_0;
+        m_0 = 0;
+    }
+}
 // Tongas2/SKINNEDMESH -- the CSkinnedMesh object and its helpers.
 //
 // Discovery scaffold: bodies are empty until the unit is matched; each

@@ -9529,3 +9529,4 @@
 0x006561ac _g_fn6561ac data 0x4
 0x00555040 ??_GV554E60@@UAEPAXI@Z function 0x1e
 0x00554260 ?GetTail3Root@@YAPAXXZ function 0xb5
+0x005285f0 ?Release@GD5285f0@@QAEXXZ function 0x1e
