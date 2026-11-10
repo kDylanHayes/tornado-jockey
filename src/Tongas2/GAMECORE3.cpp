@@ -493,3 +493,143 @@ void T94::Thunk()
 {
     T();
 }
+
+class GD42ddd0
+{
+public:
+    virtual ~GD42ddd0();
+};
+
+__declspec(noinline) GD42ddd0::~GD42ddd0()
+{
+}
+
+class GD42e6e0
+{
+public:
+    virtual ~GD42e6e0();
+};
+
+__declspec(noinline) GD42e6e0::~GD42e6e0()
+{
+}
+
+class GD42f370
+{
+public:
+    virtual ~GD42f370();
+};
+
+__declspec(noinline) GD42f370::~GD42f370()
+{
+}
+
+class GD432870
+{
+public:
+    virtual ~GD432870();
+};
+
+__declspec(noinline) GD432870::~GD432870()
+{
+}
+
+class GD4331a0
+{
+public:
+    virtual ~GD4331a0();
+};
+
+__declspec(noinline) GD4331a0::~GD4331a0()
+{
+}
+
+class GD438ff0
+{
+public:
+    virtual ~GD438ff0();
+};
+
+__declspec(noinline) GD438ff0::~GD438ff0()
+{
+}
+
+class GD43b550
+{
+public:
+    virtual ~GD43b550();
+};
+
+__declspec(noinline) GD43b550::~GD43b550()
+{
+}
+
+class GD43b850
+{
+public:
+    virtual ~GD43b850();
+};
+
+__declspec(noinline) GD43b850::~GD43b850()
+{
+}
+
+class GD43bb40
+{
+public:
+    virtual ~GD43bb40();
+};
+
+__declspec(noinline) GD43bb40::~GD43bb40()
+{
+}
+
+class GD43cc30
+{
+public:
+    virtual ~GD43cc30();
+};
+
+__declspec(noinline) GD43cc30::~GD43cc30()
+{
+}
+
+class GD43ea30
+{
+public:
+    virtual ~GD43ea30();
+};
+
+__declspec(noinline) GD43ea30::~GD43ea30()
+{
+}
+
+class GD43f2f0
+{
+public:
+    virtual ~GD43f2f0();
+};
+
+__declspec(noinline) GD43f2f0::~GD43f2f0()
+{
+}
+
+class GD43fad0
+{
+public:
+    virtual ~GD43fad0();
+};
+
+__declspec(noinline) GD43fad0::~GD43fad0()
+{
+}
+
+class GD43fa60
+{
+public:
+    virtual ~GD43fa60();
+};
+
+__declspec(noinline) GD43fa60::~GD43fa60()
+{
+}

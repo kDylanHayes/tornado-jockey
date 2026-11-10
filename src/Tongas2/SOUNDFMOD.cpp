@@ -22,3 +22,13 @@ int PlaySample(const char *name)
     (void)name;
     return 0;
 }
+
+class GD5479c0
+{
+public:
+    virtual ~GD5479c0();
+};
+
+__declspec(noinline) GD5479c0::~GD5479c0()
+{
+}

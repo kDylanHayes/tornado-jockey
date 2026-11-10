@@ -1,11 +1,11 @@
 # Progress
 
-**30.32%** of `Tornado.exe`'s code matches byte for byte: 700.4 KB of 2.26 MB, 4,431 of 14,153 functions, 137 units complete.
+**30.66%** of `Tornado.exe`'s code matches byte for byte: 702.9 KB of 2.24 MB, 4,517 of 14,153 functions, 137 units complete.
 
 | | | Matched | Code | Functions |
 |---|---|---:|---:|---:|
-| All code | `██████░░░░░░░░░░░░░░` | 30.32% | 700.4 KB / 2.26 MB | 4,431 / 14,153 |
-| Game and engine | `██████░░░░░░░░░░░░░░` | 30.12% | 355.0 KB / 1.15 MB | 3,182 / 5,647 |
+| All code | `██████░░░░░░░░░░░░░░` | 30.66% | 702.9 KB / 2.24 MB | 4,517 / 14,153 |
+| Game and engine | `██████░░░░░░░░░░░░░░` | 30.79% | 357.5 KB / 1.13 MB | 3,268 / 5,647 |
 | Libraries | `█████████████████░░░` | 86.91% | 342.1 KB / 393.6 KB | 1,237 / 1,282 |
 | C/C++ runtime | `░░░░░░░░░░░░░░░░░░░░` | 0.00% | 0.0 KB / 155.3 KB | 0 / 713 |
 | SDK libraries | `░░░░░░░░░░░░░░░░░░░░` | 0.57% | 3.3 KB / 582.5 KB | 12 / 6,511 |
@@ -38,11 +38,11 @@
 | `Tongas2/CANIMATEDMESH` | 7.5 KB | 0.00% |  |
 | `Tongas2/CMDBASE` | 20.6 KB | 29.15% |  |
 | `Tongas2/CMDMGR` | 7.9 KB | 54.85% |  |
-| `Tongas2/COLLISIONSCENEDX8SD` | 1.4 KB | 0.00% |  |
+| `Tongas2/COLLISIONSCENEDX8SD` | 1.1 KB | 5.38% |  |
 | `Tongas2/CONSOLE` | 3.1 KB | 79.77% |  |
 | `Tongas2/CPRIMITIVE3` | 10.7 KB | 50.63% |  |
 | `Tongas2/CURVE` | 4.0 KB | 61.83% |  |
-| `Tongas2/D3DAPP` | 10.1 KB | 0.00% |  |
+| `Tongas2/D3DAPP` | 9.9 KB | 0.29% |  |
 | `Tongas2/DECAL` | 7.2 KB | 66.27% |  |
 | `Tongas2/DISTSEGBOX` | 4.2 KB | 30.23% |  |
 | `Tongas2/DRM` | 0.5 KB | 100.00% | yes |
@@ -56,8 +56,8 @@
 | `Tongas2/GAME` | 0.8 KB | 100.00% | yes |
 | `Tongas2/GAMECORE1` | 70.9 KB | 9.53% |  |
 | `Tongas2/GAMECORE2` | 83.5 KB | 9.09% |  |
-| `Tongas2/GAMECORE3` | 80.3 KB | 2.54% |  |
-| `Tongas2/GAMECORE4` | 73.6 KB | 3.34% |  |
+| `Tongas2/GAMECORE3` | 74.8 KB | 3.27% |  |
+| `Tongas2/GAMECORE4` | 67.3 KB | 4.82% |  |
 | `Tongas2/GEOMETRY` | 20.2 KB | 30.99% |  |
 | `Tongas2/GLOBALDEFS` | 0.8 KB | 100.00% | yes |
 | `Tongas2/GUI` | 8.4 KB | 95.02% |  |
@@ -101,10 +101,10 @@
 | `Tongas2/MODEL` | 29.6 KB | 100.00% | yes |
 | `Tongas2/MODELDX8SD` | 4.9 KB | 100.00% | yes |
 | `Tongas2/OCTREE` | 2.6 KB | 94.22% |  |
-| `Tongas2/ODEACTOR` | 9.6 KB | 0.00% |  |
-| `Tongas2/ODEGEOM` | 7.2 KB | 0.00% |  |
-| `Tongas2/ODERAGDOLL` | 6.7 KB | 0.00% |  |
-| `Tongas2/ODEWORLD` | 2.4 KB | 0.00% |  |
+| `Tongas2/ODEACTOR` | 9.2 KB | 0.96% |  |
+| `Tongas2/ODEGEOM` | 7.0 KB | 1.26% |  |
+| `Tongas2/ODERAGDOLL` | 6.5 KB | 0.90% |  |
+| `Tongas2/ODEWORLD` | 1.8 KB | 1.61% |  |
 | `Tongas2/PATH` | 12.4 KB | 56.37% |  |
 | `Tongas2/PATHREPOSITORY` | 4.5 KB | 71.36% |  |
 | `Tongas2/POLYTRAIL` | 3.2 KB | 96.08% |  |
@@ -112,35 +112,35 @@
 | `Tongas2/RENDERER` | 9.0 KB | 72.91% |  |
 | `Tongas2/RENDERSHADER` | 1.0 KB | 100.00% | yes |
 | `Tongas2/RENDERTEXTURE` | 1.7 KB | 100.00% | yes |
-| `Tongas2/RENDERTEXTUREDX8SD` | 4.0 KB | 0.00% |  |
+| `Tongas2/RENDERTEXTUREDX8SD` | 3.4 KB | 0.85% |  |
 | `Tongas2/RESOURCE` | 5.0 KB | 98.35% |  |
 | `Tongas2/RESOURCEMANAGER` | 2.4 KB | 65.12% |  |
 | `Tongas2/RESOURCES` | 14.0 KB | 95.67% |  |
 | `Tongas2/SCENE` | 9.1 KB | 77.24% |  |
-| `Tongas2/SCENEMODELDX8SD` | 7.8 KB | 0.00% |  |
+| `Tongas2/SCENEMODELDX8SD` | 6.6 KB | 0.89% |  |
 | `Tongas2/SCREENDECAL` | 1.9 KB | 93.56% |  |
 | `Tongas2/SCREENDECALDX8` | 7.1 KB | 72.14% |  |
 | `Tongas2/SCREENSHOT` | 1.2 KB | 43.22% |  |
 | `Tongas2/SCROOT` | 9.2 KB | 0.00% |  |
 | `Tongas2/SETTINGS` | 3.6 KB | 6.39% |  |
 | `Tongas2/SHADER` | 5.7 KB | 100.00% |  |
-| `Tongas2/SHADERDX8SD` | 13.2 KB | 0.00% |  |
+| `Tongas2/SHADERDX8SD` | 13.2 KB | 0.67% |  |
 | `Tongas2/SHELL` | 0.7 KB | 100.00% | yes |
 | `Tongas2/SIMPLEMODEL` | 2.9 KB | 59.22% |  |
 | `Tongas2/SIMPLEMODELDX8` | 3.6 KB | 46.46% |  |
 | `Tongas2/SKINNEDANIMATION` | 6.6 KB | 0.00% |  |
 | `Tongas2/SKINNEDGEOMETRY` | 11.2 KB | 0.30% |  |
-| `Tongas2/SKINNEDMESH` | 94.1 KB | 0.00% |  |
+| `Tongas2/SKINNEDMESH` | 94.1 KB | 0.03% |  |
 | `Tongas2/SOUND` | 3.4 KB | 97.85% |  |
-| `Tongas2/SOUNDFMOD` | 2.7 KB | 0.00% |  |
+| `Tongas2/SOUNDFMOD` | 2.7 KB | 1.09% |  |
 | `Tongas2/SPAWNER` | 4.2 KB | 59.00% |  |
 | `Tongas2/SRESULT` | 1.6 KB | 100.00% | yes |
 | `Tongas2/STRINGMANAGER` | 0.6 KB | 30.67% |  |
 | `Tongas2/SYSMONITOR` | 0.6 KB | 100.00% | yes |
-| `Tongas2/TAIL1` | 11.8 KB | 0.00% |  |
-| `Tongas2/TAIL2` | 7.9 KB | 0.00% |  |
-| `Tongas2/TAIL3` | 7.6 KB | 0.18% |  |
-| `Tongas2/TAIL4` | 14.9 KB | 0.00% |  |
+| `Tongas2/TAIL1` | 11.3 KB | 1.81% |  |
+| `Tongas2/TAIL2` | 7.3 KB | 2.00% |  |
+| `Tongas2/TAIL3` | 7.6 KB | 0.95% |  |
+| `Tongas2/TAIL4` | 14.3 KB | 2.05% |  |
 | `Tongas2/TESLA` | 2.9 KB | 76.84% |  |
 | `Tongas2/TEXT` | 10.4 KB | 37.90% |  |
 | `Tongas2/TEXTFILE` | 19.2 KB | 15.36% |  |
@@ -153,7 +153,7 @@
 | `Tongas2/TRIGGER` | 2.6 KB | 100.00% | yes |
 | `Tongas2/UNICODESTRING` | 1.5 KB | 63.01% |  |
 | `Tongas2/VALUEMANAGER` | 6.6 KB | 84.09% |  |
-| `Tongas2/VERTEXMODELDX8SD` | 1.7 KB | 0.00% |  |
+| `Tongas2/VERTEXMODELDX8SD` | 1.5 KB | 2.01% |  |
 | `Tongas2/WKZ` | 1.6 KB | 100.00% | yes |
 | `lib/freeimage/BitmapAccess` | 8.8 KB | 92.31% |  |
 | `lib/freeimage/Conversion` | 0.3 KB | 100.00% | yes |
@@ -290,4 +290,4 @@
 
 </details>
 
-Measured 2026-11-10 00:39 UTC at commit 1f94faa with `tools/report.py`; see [docs/maintainers.md](../docs/maintainers.md). Generated by `tools/progress.py`; don't edit by hand.
+Measured 2026-11-10 00:57 UTC at commit b8a03eb with `tools/report.py`; see [docs/maintainers.md](../docs/maintainers.md). Generated by `tools/progress.py`; don't edit by hand.

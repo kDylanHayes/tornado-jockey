@@ -13,3 +13,33 @@ void *CreateSHADERDX8SD()
 {
     return 0;
 }
+
+class GD53aa10
+{
+public:
+    virtual ~GD53aa10();
+};
+
+__declspec(noinline) GD53aa10::~GD53aa10()
+{
+}
+
+class GD53b2d0
+{
+public:
+    virtual ~GD53b2d0();
+};
+
+__declspec(noinline) GD53b2d0::~GD53b2d0()
+{
+}
+
+class GD53b5a0
+{
+public:
+    virtual ~GD53b5a0();
+};
+
+__declspec(noinline) GD53b5a0::~GD53b5a0()
+{
+}

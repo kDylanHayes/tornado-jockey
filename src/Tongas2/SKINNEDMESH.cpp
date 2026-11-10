@@ -41,3 +41,13 @@ int SKINNEDMESH::LoadExtraAnimations(const char *name)
     (void)name;
     return 0;
 }
+
+class GD515e70
+{
+public:
+    virtual ~GD515e70();
+};
+
+__declspec(noinline) GD515e70::~GD515e70()
+{
+}

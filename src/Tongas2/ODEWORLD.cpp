@@ -6,3 +6,13 @@
 void ODEWORLDMASTER::RegisterCommands()
 {
 }
+
+class GD548620
+{
+public:
+    virtual ~GD548620();
+};
+
+__declspec(noinline) GD548620::~GD548620()
+{
+}

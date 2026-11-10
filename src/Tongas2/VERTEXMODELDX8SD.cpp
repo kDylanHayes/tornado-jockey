@@ -11,3 +11,13 @@ RESOURCEMANAGER *CreateVERTEXMODELDX8SD()
 {
     return 0;
 }
+
+class GD535df0
+{
+public:
+    virtual ~GD535df0();
+};
+
+__declspec(noinline) GD535df0::~GD535df0()
+{
+}

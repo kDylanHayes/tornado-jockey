@@ -19,3 +19,23 @@ public:
 V554E60::~V554E60()
 {
 }
+
+class GD557e70
+{
+public:
+    virtual ~GD557e70();
+};
+
+__declspec(noinline) GD557e70::~GD557e70()
+{
+}
+
+class GD5545d0
+{
+public:
+    virtual ~GD5545d0();
+};
+
+__declspec(noinline) GD5545d0::~GD5545d0()
+{
+}

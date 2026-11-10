@@ -29,3 +29,13 @@ int D3DAPP::Initialize3DEnvironment()
 void D3DAPP::Cleanup3DEnvironment()
 {
 }
+
+class GD507220
+{
+public:
+    virtual ~GD507220();
+};
+
+__declspec(noinline) GD507220::~GD507220()
+{
+}

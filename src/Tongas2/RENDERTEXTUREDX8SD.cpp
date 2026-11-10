@@ -19,3 +19,13 @@ int GetRENDERTEXTUREFormat()
 {
     return 0;
 }
+
+class GD539e70
+{
+public:
+    virtual ~GD539e70();
+};
+
+__declspec(noinline) GD539e70::~GD539e70()
+{
+}

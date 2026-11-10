@@ -193,3 +193,273 @@ public:
 V44AC00::~V44AC00()
 {
 }
+
+class GD440960
+{
+public:
+    virtual ~GD440960();
+};
+
+__declspec(noinline) GD440960::~GD440960()
+{
+}
+
+class GD4413d0
+{
+public:
+    virtual ~GD4413d0();
+};
+
+__declspec(noinline) GD4413d0::~GD4413d0()
+{
+}
+
+class GD441630
+{
+public:
+    virtual ~GD441630();
+};
+
+__declspec(noinline) GD441630::~GD441630()
+{
+}
+
+class GD442440
+{
+public:
+    virtual ~GD442440();
+};
+
+__declspec(noinline) GD442440::~GD442440()
+{
+}
+
+class GD43f600
+{
+public:
+    virtual ~GD43f600();
+};
+
+__declspec(noinline) GD43f600::~GD43f600()
+{
+}
+
+class GD4433c0
+{
+public:
+    virtual ~GD4433c0();
+};
+
+__declspec(noinline) GD4433c0::~GD4433c0()
+{
+}
+
+class GD4434d0
+{
+public:
+    virtual ~GD4434d0();
+};
+
+__declspec(noinline) GD4434d0::~GD4434d0()
+{
+}
+
+class GD548040
+{
+public:
+    virtual ~GD548040();
+};
+
+__declspec(noinline) GD548040::~GD548040()
+{
+}
+
+class GD443f70
+{
+public:
+    virtual ~GD443f70();
+};
+
+__declspec(noinline) GD443f70::~GD443f70()
+{
+}
+
+class GD444450
+{
+public:
+    virtual ~GD444450();
+};
+
+__declspec(noinline) GD444450::~GD444450()
+{
+}
+
+class GD444730
+{
+public:
+    virtual ~GD444730();
+};
+
+__declspec(noinline) GD444730::~GD444730()
+{
+}
+
+class GD444e40
+{
+public:
+    virtual ~GD444e40();
+};
+
+__declspec(noinline) GD444e40::~GD444e40()
+{
+}
+
+class GD4451f0
+{
+public:
+    virtual ~GD4451f0();
+};
+
+__declspec(noinline) GD4451f0::~GD4451f0()
+{
+}
+
+class GD4477d0
+{
+public:
+    virtual ~GD4477d0();
+};
+
+__declspec(noinline) GD4477d0::~GD4477d0()
+{
+}
+
+class GD447e50
+{
+public:
+    virtual ~GD447e50();
+};
+
+__declspec(noinline) GD447e50::~GD447e50()
+{
+}
+
+class GD4482b0
+{
+public:
+    virtual ~GD4482b0();
+};
+
+__declspec(noinline) GD4482b0::~GD4482b0()
+{
+}
+
+class GD4484c0
+{
+public:
+    virtual ~GD4484c0();
+};
+
+__declspec(noinline) GD4484c0::~GD4484c0()
+{
+}
+
+class GD449130
+{
+public:
+    virtual ~GD449130();
+};
+
+__declspec(noinline) GD449130::~GD449130()
+{
+}
+
+class GD44a560
+{
+public:
+    virtual ~GD44a560();
+};
+
+__declspec(noinline) GD44a560::~GD44a560()
+{
+}
+
+class GD44c1b0
+{
+public:
+    virtual ~GD44c1b0();
+};
+
+__declspec(noinline) GD44c1b0::~GD44c1b0()
+{
+}
+
+class GD450e80
+{
+public:
+    virtual ~GD450e80();
+};
+
+__declspec(noinline) GD450e80::~GD450e80()
+{
+}
+
+class GD4512e0
+{
+public:
+    virtual ~GD4512e0();
+};
+
+__declspec(noinline) GD4512e0::~GD4512e0()
+{
+}
+
+class GD4516f0
+{
+public:
+    virtual ~GD4516f0();
+};
+
+__declspec(noinline) GD4516f0::~GD4516f0()
+{
+}
+
+class GD451880
+{
+public:
+    virtual ~GD451880();
+};
+
+__declspec(noinline) GD451880::~GD451880()
+{
+}
+
+class GD452a90
+{
+public:
+    virtual ~GD452a90();
+};
+
+__declspec(noinline) GD452a90::~GD452a90()
+{
+}
+
+class GD453360
+{
+public:
+    virtual ~GD453360();
+};
+
+__declspec(noinline) GD453360::~GD453360()
+{
+}
+
+class GD453c50
+{
+public:
+    virtual ~GD453c50();
+};
+
+__declspec(noinline) GD453c50::~GD453c50()
+{
+}
