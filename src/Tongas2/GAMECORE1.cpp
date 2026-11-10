@@ -31,6 +31,7 @@ extern "C" __declspec(dllimport) void __stdcall Sleep(unsigned long);
 #include "Tongas2/CPRIMITIVE3.h"
 #include "Tongas2/FIXEDWSTRING.h"
 #include "Tongas2/GAME.h"
+#include "Tongas2/RENDERER.h"
 #include "Tongas2/DRM.h"
 #include "Tongas2/SCENE.h"
 #include "Tongas2/LOG.h"
@@ -5027,4 +5028,26 @@ void G2CORE1M7::SetCCC(const float &value)
 {
     *(float *)((char *)this + 0xccc) = value;
     ((SOUNDX2 *)g_pSoundX)->Set(value);
+}
+
+struct G2CORE1M8
+{
+    void SetFogEnabled(const bool &enabled);
+    void SetColor(const V3I &color);
+};
+
+void G2CORE1M8::SetFogEnabled(const bool &enabled)
+{
+    *(bool *)((char *)this + 0xcdc) = enabled;
+    g_pRenderer->SetFog(enabled, *(V3I *)((char *)this + 0xce0),
+                        *(float *)((char *)this + 0xcec),
+                        *(float *)((char *)this + 0xcf0));
+}
+
+void G2CORE1M8::SetColor(const V3I &color)
+{
+    *(V3I *)((char *)this + 0xce0) = color;
+    g_pRenderer->SetFog(*(bool *)((char *)this + 0xcdc), color,
+                        *(float *)((char *)this + 0xcec),
+                        *(float *)((char *)this + 0xcf0));
 }
