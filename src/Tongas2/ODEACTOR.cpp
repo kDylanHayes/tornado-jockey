@@ -219,3 +219,18 @@ void G2CORE2M7::SetD18(const float &value)
     *(float *)((char *)this + 0xd18) = value;
     *(bool *)((char *)this + 0xd14) = false;
 }
+
+extern "C" void dBodySetGravityMode(void *body, int mode);
+
+struct ODEACTORM2
+{
+    void SetD1C(const bool &enabled);
+};
+
+void ODEACTORM2::SetD1C(const bool &enabled)
+{
+    *(bool *)((char *)this + 0xd1c) = enabled;
+    void *body = *(void **)((char *)this + 0xccc);
+    if (body)
+        dBodySetGravityMode(body, enabled);
+}
