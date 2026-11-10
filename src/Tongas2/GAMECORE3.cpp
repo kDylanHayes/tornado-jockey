@@ -1375,3 +1375,410 @@ void G3SET::Set1()
 {
     *(bool *)((char *)this + 0x2c) = true;
 }
+
+// The remaining setters this unit owns, in address order.
+struct G2CORE3M1
+{
+    void SetED0(const int &value);
+    void SetED4(const int &value);
+    void SetED8(const int &value);
+    void SetEDC(const int &value);
+    void SetEE0(const int &value);
+    void SetEEC(const int &value);
+    void SetEF0(const int &value);
+    void SetEF4(const int &value);
+    void SetEF8(const int &value);
+    void SetEFC(const int &value);
+    void SetF00(const int &value);
+    void SetF04(const int &value);
+    void Set1108(const int &value);
+    void Set110C(const int &value);
+    void Set1118(const int &value);
+    void Set111C(const int &value);
+    void Set1128(const int &value);
+    void Set112C(const int &value);
+    void Set1130(const bool &value);
+    void SetCE8(const int &value);
+    void Set10CC(const int &value);
+    void Set10D0(const int &value);
+    void Set10D4(const int &value);
+    void Set10E4(const int &value);
+    void Set10EC(const int &value);
+    void Set10F0(const int &value);
+    void Set10F4(const int &value);
+    void Set10F8(const int &value);
+    void Set10FC(const int &value);
+    void Set1100(const int &value);
+    void Set15A8(const int &value);
+    void Set15AC(const int &value);
+    void Set15B0(const int &value);
+    void Set15B4(const int &value);
+    void Set15B8(const int &value);
+    void Set15C4(const int &value);
+    void Set15C8(const int &value);
+    void Set15CC(const int &value);
+    void Set15D0(const int &value);
+    void Set15D4(const int &value);
+    void Set15D8(const int &value);
+    void Set15DC(const int &value);
+    void Set17E0(const int &value);
+    void Set17E4(const int &value);
+    void Set17F0(const int &value);
+    void Set1800(const int &value);
+    void Set1804(const int &value);
+    void SetCD0(const bool &value);
+    void SetC0(const bool &value);
+    void SetC1(const bool &value);
+    void SetD0(const int &value);
+    void SetD4(const bool &value);
+    void SetE4(const int &value);
+    void SetE8(const bool &value);
+    void SetE9(const bool &value);
+    void SetEA(const bool &value);
+    void SetEB(const bool &value);
+    void SetEC(const int &value);
+    void SetF0(const bool &value);
+    void SetF4(const int &value);
+    void SetA94(const bool &value);
+    void SetA95(const bool &value);
+    void SetA96(const bool &value);
+    void Set134(const bool &value);
+    void Set460(const int &value);
+    void Set464(const int &value);
+    void Set468(const int &value);
+};
+
+void G2CORE3M1::SetED0(const int &value)
+{
+    *(int *)((char *)this + 0xed0) = value;
+}
+
+void G2CORE3M1::SetED4(const int &value)
+{
+    *(int *)((char *)this + 0xed4) = value;
+}
+
+void G2CORE3M1::SetED8(const int &value)
+{
+    *(int *)((char *)this + 0xed8) = value;
+}
+
+void G2CORE3M1::SetEDC(const int &value)
+{
+    *(int *)((char *)this + 0xedc) = value;
+}
+
+void G2CORE3M1::SetEE0(const int &value)
+{
+    *(int *)((char *)this + 0xee0) = value;
+}
+
+void G2CORE3M1::SetEEC(const int &value)
+{
+    *(int *)((char *)this + 0xeec) = value;
+}
+
+void G2CORE3M1::SetEF0(const int &value)
+{
+    *(int *)((char *)this + 0xef0) = value;
+}
+
+void G2CORE3M1::SetEF4(const int &value)
+{
+    *(int *)((char *)this + 0xef4) = value;
+}
+
+void G2CORE3M1::SetEF8(const int &value)
+{
+    *(int *)((char *)this + 0xef8) = value;
+}
+
+void G2CORE3M1::SetEFC(const int &value)
+{
+    *(int *)((char *)this + 0xefc) = value;
+}
+
+void G2CORE3M1::SetF00(const int &value)
+{
+    *(int *)((char *)this + 0xf00) = value;
+}
+
+void G2CORE3M1::SetF04(const int &value)
+{
+    *(int *)((char *)this + 0xf04) = value;
+}
+
+void G2CORE3M1::Set1108(const int &value)
+{
+    *(int *)((char *)this + 0x1108) = value;
+}
+
+void G2CORE3M1::Set110C(const int &value)
+{
+    *(int *)((char *)this + 0x110c) = value;
+}
+
+void G2CORE3M1::Set1118(const int &value)
+{
+    *(int *)((char *)this + 0x1118) = value;
+}
+
+void G2CORE3M1::Set111C(const int &value)
+{
+    *(int *)((char *)this + 0x111c) = value;
+}
+
+void G2CORE3M1::Set1128(const int &value)
+{
+    *(int *)((char *)this + 0x1128) = value;
+}
+
+void G2CORE3M1::Set112C(const int &value)
+{
+    *(int *)((char *)this + 0x112c) = value;
+}
+
+void G2CORE3M1::Set1130(const bool &value)
+{
+    *(bool *)((char *)this + 0x1130) = value;
+}
+
+void G2CORE3M1::SetCE8(const int &value)
+{
+    *(int *)((char *)this + 0xce8) = value;
+}
+
+void G2CORE3M1::Set10CC(const int &value)
+{
+    *(int *)((char *)this + 0x10cc) = value;
+}
+
+void G2CORE3M1::Set10D0(const int &value)
+{
+    *(int *)((char *)this + 0x10d0) = value;
+}
+
+void G2CORE3M1::Set10D4(const int &value)
+{
+    *(int *)((char *)this + 0x10d4) = value;
+}
+
+void G2CORE3M1::Set10E4(const int &value)
+{
+    *(int *)((char *)this + 0x10e4) = value;
+}
+
+void G2CORE3M1::Set10EC(const int &value)
+{
+    *(int *)((char *)this + 0x10ec) = value;
+}
+
+void G2CORE3M1::Set10F0(const int &value)
+{
+    *(int *)((char *)this + 0x10f0) = value;
+}
+
+void G2CORE3M1::Set10F4(const int &value)
+{
+    *(int *)((char *)this + 0x10f4) = value;
+}
+
+void G2CORE3M1::Set10F8(const int &value)
+{
+    *(int *)((char *)this + 0x10f8) = value;
+}
+
+void G2CORE3M1::Set10FC(const int &value)
+{
+    *(int *)((char *)this + 0x10fc) = value;
+}
+
+void G2CORE3M1::Set1100(const int &value)
+{
+    *(int *)((char *)this + 0x1100) = value;
+}
+
+void G2CORE3M1::Set15A8(const int &value)
+{
+    *(int *)((char *)this + 0x15a8) = value;
+}
+
+void G2CORE3M1::Set15AC(const int &value)
+{
+    *(int *)((char *)this + 0x15ac) = value;
+}
+
+void G2CORE3M1::Set15B0(const int &value)
+{
+    *(int *)((char *)this + 0x15b0) = value;
+}
+
+void G2CORE3M1::Set15B4(const int &value)
+{
+    *(int *)((char *)this + 0x15b4) = value;
+}
+
+void G2CORE3M1::Set15B8(const int &value)
+{
+    *(int *)((char *)this + 0x15b8) = value;
+}
+
+void G2CORE3M1::Set15C4(const int &value)
+{
+    *(int *)((char *)this + 0x15c4) = value;
+}
+
+void G2CORE3M1::Set15C8(const int &value)
+{
+    *(int *)((char *)this + 0x15c8) = value;
+}
+
+void G2CORE3M1::Set15CC(const int &value)
+{
+    *(int *)((char *)this + 0x15cc) = value;
+}
+
+void G2CORE3M1::Set15D0(const int &value)
+{
+    *(int *)((char *)this + 0x15d0) = value;
+}
+
+void G2CORE3M1::Set15D4(const int &value)
+{
+    *(int *)((char *)this + 0x15d4) = value;
+}
+
+void G2CORE3M1::Set15D8(const int &value)
+{
+    *(int *)((char *)this + 0x15d8) = value;
+}
+
+void G2CORE3M1::Set15DC(const int &value)
+{
+    *(int *)((char *)this + 0x15dc) = value;
+}
+
+void G2CORE3M1::Set17E0(const int &value)
+{
+    *(int *)((char *)this + 0x17e0) = value;
+}
+
+void G2CORE3M1::Set17E4(const int &value)
+{
+    *(int *)((char *)this + 0x17e4) = value;
+}
+
+void G2CORE3M1::Set17F0(const int &value)
+{
+    *(int *)((char *)this + 0x17f0) = value;
+}
+
+void G2CORE3M1::Set1800(const int &value)
+{
+    *(int *)((char *)this + 0x1800) = value;
+}
+
+void G2CORE3M1::Set1804(const int &value)
+{
+    *(int *)((char *)this + 0x1804) = value;
+}
+
+void G2CORE3M1::SetCD0(const bool &value)
+{
+    *(bool *)((char *)this + 0xcd0) = value;
+}
+
+void G2CORE3M1::SetC0(const bool &value)
+{
+    *(bool *)((char *)this + 0xc0) = value;
+}
+
+void G2CORE3M1::SetC1(const bool &value)
+{
+    *(bool *)((char *)this + 0xc1) = value;
+}
+
+void G2CORE3M1::SetD0(const int &value)
+{
+    *(int *)((char *)this + 0xd0) = value;
+}
+
+void G2CORE3M1::SetD4(const bool &value)
+{
+    *(bool *)((char *)this + 0xd4) = value;
+}
+
+void G2CORE3M1::SetE4(const int &value)
+{
+    *(int *)((char *)this + 0xe4) = value;
+}
+
+void G2CORE3M1::SetE8(const bool &value)
+{
+    *(bool *)((char *)this + 0xe8) = value;
+}
+
+void G2CORE3M1::SetE9(const bool &value)
+{
+    *(bool *)((char *)this + 0xe9) = value;
+}
+
+void G2CORE3M1::SetEA(const bool &value)
+{
+    *(bool *)((char *)this + 0xea) = value;
+}
+
+void G2CORE3M1::SetEB(const bool &value)
+{
+    *(bool *)((char *)this + 0xeb) = value;
+}
+
+void G2CORE3M1::SetEC(const int &value)
+{
+    *(int *)((char *)this + 0xec) = value;
+}
+
+void G2CORE3M1::SetF0(const bool &value)
+{
+    *(bool *)((char *)this + 0xf0) = value;
+}
+
+void G2CORE3M1::SetF4(const int &value)
+{
+    *(int *)((char *)this + 0xf4) = value;
+}
+
+void G2CORE3M1::SetA94(const bool &value)
+{
+    *(bool *)((char *)this + 0xa94) = value;
+}
+
+void G2CORE3M1::SetA95(const bool &value)
+{
+    *(bool *)((char *)this + 0xa95) = value;
+}
+
+void G2CORE3M1::SetA96(const bool &value)
+{
+    *(bool *)((char *)this + 0xa96) = value;
+}
+
+void G2CORE3M1::Set134(const bool &value)
+{
+    *(bool *)((char *)this + 0x134) = value;
+}
+
+void G2CORE3M1::Set460(const int &value)
+{
+    *(int *)((char *)this + 0x460) = value;
+}
+
+void G2CORE3M1::Set464(const int &value)
+{
+    *(int *)((char *)this + 0x464) = value;
+}
+
+void G2CORE3M1::Set468(const int &value)
+{
+    *(int *)((char *)this + 0x468) = value;
+}
