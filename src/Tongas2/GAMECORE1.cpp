@@ -6114,3 +6114,23 @@ void GD413980::Set(void *src)
     memcpy(this, src, 0x200);
     m_200 = *(int *)((char *)src + 0x200);
 }
+
+// The retail unit emitted the compiler's array-constructor iterator; any
+// array new of a class with a constructor asks VC to emit the same helper.
+struct GDGAMECORE1EHARRAY
+{
+    GDGAMECORE1EHARRAY();
+
+    int m_0;
+};
+
+GDGAMECORE1EHARRAY::GDGAMECORE1EHARRAY()
+{
+    m_0 = 0;
+}
+
+void TriggerEHArrayCtor(int count)
+{
+    GDGAMECORE1EHARRAY *items = new GDGAMECORE1EHARRAY[count];
+    delete[] items;
+}
