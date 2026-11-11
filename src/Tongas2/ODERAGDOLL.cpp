@@ -31,7 +31,14 @@ __declspec(noinline) GD54dcf0::~GD54dcf0()
 class GD54d390
 {
 public:
-    virtual ~GD54d390();
+    __forceinline virtual ~GD54d390()
+    {
+        if (m_74)
+            delete[] (char *)m_74;
+        m_74 = 0;
+        m_7c = 0;
+        m_78 = 0;
+    }
 
     char pad_4[0x70];
     void *m_74;
@@ -39,19 +46,17 @@ public:
     void *m_7c;
 };
 
-__declspec(noinline) GD54d390::~GD54d390()
-{
-    if (m_74)
-        delete[] (char *)m_74;
-    m_74 = 0;
-    m_7c = 0;
-    m_78 = 0;
-}
-
 class GD54d3c0
 {
 public:
-    virtual ~GD54d3c0();
+    __forceinline virtual ~GD54d3c0()
+    {
+        if (m_8)
+            delete[] (char *)m_8;
+        m_8 = 0;
+        m_10 = 0;
+        m_c = 0;
+    }
 
     char pad_4[4];
     void *m_8;
@@ -59,26 +64,8 @@ public:
     void *m_10;
 };
 
-__declspec(noinline) GD54d3c0::~GD54d3c0()
-{
-    if (m_8)
-        delete[] (char *)m_8;
-    m_8 = 0;
-    m_10 = 0;
-    m_c = 0;
-}
-
-class GD54de10
-{
-public:
-    virtual ~GD54de10();
-};
-
-__declspec(noinline) GD54de10::~GD54de10()
-{
-}
-
-class G2RDBASE2
+// The ragdoll's primary base. It is 0x400 bytes; the second base starts there.
+class G2RDBASE2 : public OBJECT
 {
 public:
     void Cleanup();
@@ -103,7 +90,34 @@ public:
     virtual void V18();
     virtual void V19();
     virtual void V20();
+
 };
+
+// The second base at +0x400: vtable, one word, no destructor of its own.
+class RDBASEB
+{
+public:
+    virtual void V0();
+    virtual void V1();
+    virtual void V2();
+
+    int m_4;
+};
+
+class GD54de10 : public G2RDBASE2, public RDBASEB
+{
+public:
+    virtual ~GD54de10();
+
+    GD54d390 m_408;
+    char pad_488[8];
+    GD54d3c0 m_490;
+};
+
+__declspec(noinline) GD54de10::~GD54de10()
+{
+    Cleanup();
+}
 
 class G2RDX : public G2RDBASE2
 {
@@ -114,7 +128,7 @@ public:
 void G2RDX::Run()
 {
     Cleanup();
-    V20();
+    Virtual20();
 }
 
 extern "C" char DAT_0067cda8;
