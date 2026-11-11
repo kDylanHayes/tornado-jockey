@@ -311,3 +311,28 @@ void SHADERSETTERLIST::SetB(void *value, unsigned int index)
 {
     m_78[index]->SetB(value);
 }
+
+
+// Releases the object held at +0x10 through the helper at +0x8.
+class M40TARGET
+{
+public:
+    void m_40(void *item);
+};
+
+class GD53caa0
+{
+public:
+    void Release();
+
+    char pad_0[8];
+    M40TARGET *m_obj;
+    char pad_mid[4];
+    void *m_item;
+};
+
+void GD53caa0::Release()
+{
+    if (m_item)
+        m_obj->m_40(m_item);
+}

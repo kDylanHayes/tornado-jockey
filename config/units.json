@@ -3584,7 +3584,8 @@
       "source": "src/Tongas2/SHADERDX8SD.cpp",
       "category": "engine",
       "symbol_mappings": {
-        "??_7SHADER@@6B@": "??_7GD53aa10@@6B@"
+        "??_7SHADER@@6B@": "??_7GD53aa10@@6B@",
+        "_m_40": "?m_40@M40TARGET@@QAEXPAX@Z"
       }
     },
     {
@@ -3594,7 +3595,10 @@
       ],
       "target": "build/target/Tongas2/TEXTUREDX8CORE.obj",
       "source": "src/Tongas2/TEXTUREDX8CORE.cpp",
-      "category": "engine"
+      "category": "engine",
+      "symbol_mappings": {
+        "_m_40": "?m_40@M40TARGET@@QAEXPAX@Z"
+      }
     },
     {
       "name": "Tongas2/SOUNDFMOD",

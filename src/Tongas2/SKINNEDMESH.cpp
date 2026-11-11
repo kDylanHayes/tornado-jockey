@@ -275,3 +275,65 @@ void FillVectors(VI *first, VI *last, const VI &value)
     for (; first != last; ++first)
         *first = value;
 }
+
+
+// Wrappers the mesh exposes through its slot at +0xf8.
+class TEXWRAPA1
+{
+public:
+    void Call();
+};
+
+class TEXWRAPA2
+{
+public:
+    void Call(int value);
+};
+
+class GD520c50
+{
+public:
+    void Call();
+
+    char pad_f8[0xf8];
+    TEXWRAPA1 *m_f8;
+};
+
+void GD520c50::Call()
+{
+    m_f8->Call();
+}
+
+class GD520c60
+{
+public:
+    void Call(int value);
+
+    char pad_f8[0xf8];
+    TEXWRAPA2 *m_f8;
+};
+
+void GD520c60::Call(int value)
+{
+    m_f8->Call(value);
+}
+
+
+// The mesh's pointer array at +0x134, and its size.
+class GD517dd0
+{
+public:
+    int Size();
+
+    char pad_134[0x134];
+    void **m_134;
+    void **m_138;
+};
+
+int GD517dd0::Size()
+{
+    if (!m_134)
+        return 0;
+    return (int)(m_138 - m_134);
+}
+

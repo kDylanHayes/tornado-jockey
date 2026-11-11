@@ -215,3 +215,28 @@ template TEXTURETYPE20 *std::copy_backward(
     TEXTURETYPE20 *, TEXTURETYPE20 *, TEXTURETYPE20 *);
 template TEXTURETYPE20 *std::uninitialized_copy(
     TEXTURETYPE20 *, TEXTURETYPE20 *, TEXTURETYPE20 *);
+
+
+// Releases the object held at +0x24 through the helper at +0x8.
+class M40TARGET
+{
+public:
+    void m_40(void *item);
+};
+
+class GD543060
+{
+public:
+    void Release();
+
+    char pad_0[4];
+    M40TARGET *m_obj;
+    char pad_mid[28];
+    void *m_item;
+};
+
+void GD543060::Release()
+{
+    if (m_item)
+        m_obj->m_40(m_item);
+}
