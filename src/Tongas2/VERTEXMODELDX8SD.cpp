@@ -65,3 +65,38 @@ void VERTEXMODELDX8SDMASTER::RegisterCommands()
     HashCommands(s_commands);
     RegisterClassName(s_commands, "VERTEXMODELDX8SDMASTER", "BONEDMODELMASTER");
 }
+
+
+// The base the shadowed vertex-model resource is built on; its constructor
+// lives in the resource's own unit.
+class BONEDMODELDX8MASTER
+{
+public:
+    BONEDMODELDX8MASTER(RESOURCEMANAGER *manager, const char *name);
+    virtual ~BONEDMODELDX8MASTER();
+    virtual void V00();
+};
+
+// The resource the factory makes (0x8c bytes).
+class VERTEXMODELDX8SDRESOURCE : public BONEDMODELDX8MASTER
+{
+public:
+    VERTEXMODELDX8SDRESOURCE(RESOURCEMANAGER *manager, const char *name)
+        : BONEDMODELDX8MASTER(manager, name)
+    {
+    }
+
+    char pad_88[0x8c - sizeof(BONEDMODELDX8MASTER)];
+};
+
+// The manager the factory belongs to.
+class GD5362b0MANAGER
+{
+public:
+    VERTEXMODELDX8SDRESOURCE *CreateVERTEXMODELDX8SD(const char *name);
+};
+
+VERTEXMODELDX8SDRESOURCE *GD5362b0MANAGER::CreateVERTEXMODELDX8SD(const char *name)
+{
+    return new VERTEXMODELDX8SDRESOURCE((RESOURCEMANAGER *)this, name);
+}
