@@ -46,6 +46,27 @@ public:
     void *m_7c;
 };
 
+// The 0x70-byte master the ragdoll manager makes.
+class GD54d5d0 : public RESOURCEMASTER
+{
+public:
+    GD54d5d0(RESOURCEMANAGER *manager, const char *name);
+
+    int m_60;
+    float m_64;
+    float m_68;
+    CSTRING m_6c;
+};
+
+GD54d5d0::GD54d5d0(RESOURCEMANAGER *manager, const char *name)
+    : RESOURCEMASTER(manager, name)
+{
+    m_60 = 10;
+    m_64 = 0.1f;
+    m_68 = 0.5f;
+    m_6c = "";
+}
+
 class GD54d3c0
 {
 public:
@@ -58,11 +79,18 @@ public:
         m_c = 0;
     }
 
+    GD54d5d0 *CreateMaster(const char *name);
+
     char pad_4[4];
     void *m_8;
     void *m_c;
     void *m_10;
 };
+
+GD54d5d0 *GD54d3c0::CreateMaster(const char *name)
+{
+    return new GD54d5d0((RESOURCEMANAGER *)this, name);
+}
 
 // The ragdoll's primary base. It is 0x400 bytes; the second base starts there.
 class G2RDBASE2 : public OBJECT
