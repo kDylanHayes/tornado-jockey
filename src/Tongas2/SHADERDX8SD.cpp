@@ -276,3 +276,38 @@ bool SHADERLIST::Any()
     }
     return false;
 }
+
+
+class SHADERSETTERITEM
+{
+public:
+    char m_0;
+    void SetA(void *value);
+    void SetB(void *value);
+};
+
+class SHADERSETTERLIST
+{
+public:
+    void Set(unsigned int index, char value);
+    void SetA(void *value, unsigned int index);
+    void SetB(void *value, unsigned int index);
+
+    char pad_0[0x74];
+    std::vector<SHADERSETTERITEM *> m_78;
+};
+
+void SHADERSETTERLIST::Set(unsigned int index, char value)
+{
+    m_78[index]->m_0 = value;
+}
+
+void SHADERSETTERLIST::SetA(void *value, unsigned int index)
+{
+    m_78[index]->SetA(value);
+}
+
+void SHADERSETTERLIST::SetB(void *value, unsigned int index)
+{
+    m_78[index]->SetB(value);
+}
