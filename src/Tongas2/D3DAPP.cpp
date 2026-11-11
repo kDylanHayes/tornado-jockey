@@ -64,6 +64,7 @@ public:
     void SetResolution(int index);
     // Rebuilds the swap chain for the stored mode (0x507df0).
     void SetMode(int width, int height);
+    void SetSize(int width, int height);
 
     char pad_00[4];
     int m_4;
@@ -71,6 +72,12 @@ public:
     int m_1d0;
     int m_1d4;
 };
+
+void G2CORE4D3DAPP::SetSize(int width, int height)
+{
+    m_1d0 = width;
+    m_1d4 = height;
+}
 
 void G2CORE4D3DAPP::SetResolution(int index)
 {
