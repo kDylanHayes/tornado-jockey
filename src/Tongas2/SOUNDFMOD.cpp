@@ -59,3 +59,11 @@ __declspec(noinline) GD548040::~GD548040()
 {
     FSOUND_Close();
 }
+
+// The FMOD unit is the one that defines the no-op registration hook.
+void RegisterClassName(CMDENTRY *commands, const char *name, const char *parent)
+{
+    (void)commands;
+    (void)name;
+    (void)parent;
+}
