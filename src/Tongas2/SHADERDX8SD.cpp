@@ -6,6 +6,18 @@
 #include "Tongas2/SHADERDX8SD.h"
 
 #include "Tongas2/SAFEINDEX.h"
+#include <vector>
+
+// Same layout as PATHREPOSITORY's PATHREPOPOINT (two 12-byte vectors).
+struct PATHREPOPOINT
+{
+    float m_pos[3];
+    float m_step[3];
+};
+
+// The retail unit emitted this vector member out of line (0x53dad0).
+template unsigned int std::vector<PATHREPOPOINT>::size() const;
+
 
 // The manager base, defined in another unit; only its virtual order and the
 // fields the factory touches matter here.
