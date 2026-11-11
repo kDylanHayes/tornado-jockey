@@ -26,6 +26,48 @@ __declspec(noinline) GD54dcf0::~GD54dcf0()
 {
 }
 
+// The two dynamic-array members of the ragdoll: a vtable and three pointers,
+// freed with delete[] in the destructor.
+class GD54d390
+{
+public:
+    virtual ~GD54d390();
+
+    char pad_4[0x70];
+    void *m_74;
+    void *m_78;
+    void *m_7c;
+};
+
+__declspec(noinline) GD54d390::~GD54d390()
+{
+    if (m_74)
+        delete[] (char *)m_74;
+    m_74 = 0;
+    m_7c = 0;
+    m_78 = 0;
+}
+
+class GD54d3c0
+{
+public:
+    virtual ~GD54d3c0();
+
+    char pad_4[4];
+    void *m_8;
+    void *m_c;
+    void *m_10;
+};
+
+__declspec(noinline) GD54d3c0::~GD54d3c0()
+{
+    if (m_8)
+        delete[] (char *)m_8;
+    m_8 = 0;
+    m_10 = 0;
+    m_c = 0;
+}
+
 class GD54de10
 {
 public:
