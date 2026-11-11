@@ -169,6 +169,10 @@ public:
     float m_8;
 };
 
+// Defined with its own pointer-store order below.
+template <>
+void DYNAMICARRAY<G2CORE1R1>::Resize(const int &size);
+
 struct G2ODEADJTGT
 {
     void Call(void *arg);
@@ -906,6 +910,53 @@ void DeleteG2ODEACTOR(G2ODEACTOR *actor)
     delete actor;
 }
 
+
+// The retail G2CORE1R1 instantiation stores the new pointers in data/free
+// order, unlike the other element types' instantiations.
+template <>
+void DYNAMICARRAY<G2CORE1R1>::Resize(const int &size)
+{
+    if (size < m_capacity || size < m_count) {
+        if (g_pLog)
+            g_pLog->Error("Error - DYNAMICARRAY resize with new size smaller");
+        return;
+    }
+    G2CORE1R1 *data = new G2CORE1R1[size];
+    int *free = new int[size];
+    bool *used = new bool[size];
+    int i;
+    for (i = 0; i < size; i++) {
+        used[i] = false;
+        free[i] = -1;
+    }
+    m_next = 0;
+    m_freeTop = -1;
+    if (m_capacity && m_data) {
+        for (i = 0; i < m_capacity; i++) {
+            if (m_used[i]) {
+                data[m_next] = m_data[i];
+                used[m_next] = true;
+                m_next++;
+            }
+        }
+    }
+    if (m_data) {
+        delete[] m_data;
+        m_data = 0;
+    }
+    if (m_free) {
+        delete[] m_free;
+        m_free = 0;
+    }
+    if (m_used) {
+        delete[] m_used;
+        m_used = 0;
+    }
+    m_data = data;
+    m_free = free;
+    m_used = used;
+    m_capacity = size;
+}
 
 template G2CORE1R1 *DYNAMICARRAY<G2CORE1R1>::Set(const G2CORE1R1 &item, const int &slot);
 template G2CORE1R1 *DYNAMICARRAY<G2CORE1R1>::Insert(const G2CORE1R1 &item);
