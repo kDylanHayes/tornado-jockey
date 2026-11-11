@@ -9620,3 +9620,6 @@
 0x00453f70 ?GD453f70@@YAJPAT_LARGE_INTEGER@@@Z function 0xc
 0x006563bc __imp_?LoadIconA@@YGPAXPAXPBD@Z data 0x4
 0x00448190 ?Load@GD448190@@QAEXXZ function 0x17
+0x0044df70 ?GD44df70@@YAHXZ function 0x15
+0x0044b2d0 ?Leave@GD44b2d0@@QAEXXZ function 0x19
+0x0065607c __imp__LeaveCriticalSection@4 data 0x4

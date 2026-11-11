@@ -3006,3 +3006,31 @@ void GD448190::Load()
 {
     m_14 = LoadIconA(m_18, (const char *)0x80);
 }
+
+
+int GD44df70()
+{
+    int error = GetLastError();
+    if (error > 0)
+        error = (error & 0xffff) | 0x80070000;
+    return error;
+}
+
+extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection(void *section);
+
+class GD44b2d0
+{
+public:
+    void Leave();
+
+    void *m_0;
+    bool m_4;
+};
+
+void GD44b2d0::Leave()
+{
+    if (m_4) {
+        LeaveCriticalSection(m_0);
+        m_4 = false;
+    }
+}
