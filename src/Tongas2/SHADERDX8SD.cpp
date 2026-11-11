@@ -22,6 +22,45 @@ template unsigned int std::vector<PATHREPOPOINT>::size() const;
 template void std::fill<PATHREPOPOINT *, PATHREPOPOINT>(
     PATHREPOPOINT *, PATHREPOPOINT *, const PATHREPOPOINT &);
 
+// The larger vertex types this unit fills with rep movsd.
+struct SHADERTYPE20
+{
+    int m[8];
+};
+
+struct SHADERTYPE24
+{
+    int m[9];
+};
+
+struct SHADERTYPE2C
+{
+    int m[11];
+};
+
+template void std::fill<SHADERTYPE20 *, SHADERTYPE20>(
+    SHADERTYPE20 *, SHADERTYPE20 *, const SHADERTYPE20 &);
+template void std::fill<SHADERTYPE24 *, SHADERTYPE24>(
+    SHADERTYPE24 *, SHADERTYPE24 *, const SHADERTYPE24 &);
+template void std::fill<SHADERTYPE2C *, SHADERTYPE2C>(
+    SHADERTYPE2C *, SHADERTYPE2C *, const SHADERTYPE2C &);
+
+// Their copy/construct companions.
+template SHADERTYPE24 *std::copy_backward(
+    SHADERTYPE24 *, SHADERTYPE24 *, SHADERTYPE24 *);
+template SHADERTYPE2C *std::copy_backward(
+    SHADERTYPE2C *, SHADERTYPE2C *, SHADERTYPE2C *);
+template SHADERTYPE24 *std::uninitialized_copy(
+    SHADERTYPE24 *, SHADERTYPE24 *, SHADERTYPE24 *);
+template SHADERTYPE2C *std::uninitialized_copy(
+    SHADERTYPE2C *, SHADERTYPE2C *, SHADERTYPE2C *);
+template void std::uninitialized_fill_n(
+    SHADERTYPE20 *, unsigned int, const SHADERTYPE20 &);
+template void std::uninitialized_fill_n(
+    SHADERTYPE24 *, unsigned int, const SHADERTYPE24 &);
+template void std::uninitialized_fill_n(
+    SHADERTYPE2C *, unsigned int, const SHADERTYPE2C &);
+
 
 // The manager base, defined in another unit; only its virtual order and the
 // fields the factory touches matter here.
