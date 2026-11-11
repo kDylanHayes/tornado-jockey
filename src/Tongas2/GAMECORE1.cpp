@@ -6080,3 +6080,37 @@ extern "C" void __stdcall GD_TrimSpaces(unsigned short *text)
     end[1] = 0;
     _wcslwr(str);
 }
+
+class GD40b760
+{
+public:
+    void Set(void *src);
+
+    char pad_0[0x3570];
+    char m_3570[0x200];
+    char pad_3770[0x3b7c - 0x3770];
+    int m_3b7c;
+    int m_3b80;
+};
+
+void GD40b760::Set(void *src)
+{
+    m_3b7c = -1;
+    m_3b80 = -1;
+    memcpy(m_3570, src, 0x200);
+}
+
+class GD413980
+{
+public:
+    void Set(void *src);
+
+    char m_0[0x200];
+    int m_200;
+};
+
+void GD413980::Set(void *src)
+{
+    memcpy(this, src, 0x200);
+    m_200 = *(int *)((char *)src + 0x200);
+}

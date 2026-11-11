@@ -9596,3 +9596,5 @@
 0x00541e00 ??$_Copy_backward_opt@PAUTEXTURETYPE20@@PAU1@@std@@YAPAUTEXTURETYPE20@@PAU1@00U_Nonscalar_ptr_iterator_tag@0@@Z function 0x2c
 0x00541e30 ??$_Uninit_copy@PAUTEXTURETYPE20@@PAU1@@std@@YAPAUTEXTURETYPE20@@PAU1@00U_Nonscalar_ptr_iterator_tag@0@@Z function 0x30
 0x00509f40 ??$_Uninit_fill_n@PAUDX8APPTYPE40@@IU1@@std@@YAXPAUDX8APPTYPE40@@IABU1@U_Nonscalar_ptr_iterator_tag@0@@Z function 0x2e
+0x0040b760 ?Set@GD40b760@@QAEXPAX@Z function 0x27
+0x00413980 ?Set@GD413980@@QAEXPAX@Z function 0x24
