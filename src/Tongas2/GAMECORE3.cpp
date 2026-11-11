@@ -24,6 +24,8 @@
 #include "Tongas2/RESOURCES.h"
 #include "Tongas2/SCENE.h"
 #include "Tongas2/TRIGGER.h"
+#include "Tongas2/TIMER.h"
+#include "Tongas2/GAME.h"
 
 template class std::deque<unsigned short>;
 
@@ -693,6 +695,9 @@ public:
     virtual int GetFactoryFlags();
     // Releases the powerup it holds and stops.
     virtual void Deactivate();
+    // Starts the activation/deactivation countdown.
+    virtual void Activate();
+    virtual void Update();
     // Frees the powerup actor the held handle points at.
     void ResetPowerup();
 
@@ -701,11 +706,51 @@ public:
     static int s_classId;
 };
 
+// The level-rules actor's vtable extends ACTOR's by a few slots; retail
+// calls slot 0x248 on it when the powerup timer runs out.
+class G2CORE3RULESX : public ACTOR
+{
+public:
+    virtual void V140();
+    virtual void V141();
+    virtual void V142();
+    virtual void V143();
+    virtual void V144();
+    virtual void V145();
+    virtual void V146(ACTOR *actor);
+};
+
 void GD432870::Deactivate()
 {
     ResetPowerup();
     ACTOR::Stop();
     *((char *)this + 0xcbc) = 1;
+}
+
+void GD432870::Activate()
+{
+    *((char *)this + 0x998) = 1;
+    SetActivation(3);
+    SetDeactivation(1);
+}
+
+void GD432870::Update()
+{
+    float *time = (float *)((char *)this + 0xcf4);
+    if (*time > 0.0f) {
+        *time -= g_pTimer->m_dt;
+        if (*time <= 0.0f) {
+            G2CORE3RULESX *rules = (G2CORE3RULESX *)g_pGame->GetRules();
+            if (rules) {
+                rules->V146(this);
+                ACTOR::Update();
+                return;
+            }
+        }
+    } else {
+        SetActive(false);
+    }
+    ACTOR::Update();
 }
 
 __declspec(noinline) GD432870::~GD432870() throw()

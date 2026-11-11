@@ -9628,3 +9628,5 @@
 0x00506190 ?SetSize@G2CORE4D3DAPP@@QAEXHH@Z function 0x17
 0x00432ab0 ?Deactivate@GD432870@@UAEXXZ function 0x18
 0x00432960 ?ResetPowerup@GD432870@@QAEXXZ function 0x5e
+0x004329f0 ?Activate@GD432870@@UAEXXZ function 0x3c
+0x00432ad0 ?Update@GD432870@@UAEXXZ function 0x6d
