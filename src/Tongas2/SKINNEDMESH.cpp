@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <vector>
 
 // The object whose slot 0x1c unlinks it and whose deleting destructor runs at
 // slot 0; the wrapper at 0x5285f0 releases it.
@@ -248,4 +249,29 @@ V3 *SKX::GetBonePos(V3 *out, int index)
     V3 *src = (V3 *)((char *)d->m_24.m_data + bone * 0xc);
     *out = *src;
     return out;
+}
+
+typedef std::vector<int> VI;
+
+VI *CopyForward(VI *first, VI *last, VI *dest)
+{
+    for (; first != last; ++first, ++dest)
+        *dest = *first;
+    return dest;
+}
+
+VI *CopyBackward(VI *first, VI *last, VI *dest)
+{
+    while (first != last) {
+        --last;
+        --dest;
+        *dest = *last;
+    }
+    return dest;
+}
+
+void FillVectors(VI *first, VI *last, const VI &value)
+{
+    for (; first != last; ++first)
+        *first = value;
 }
