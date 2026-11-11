@@ -3048,3 +3048,33 @@ void GD437010::Step()
             m_c = 0;
     }
 }
+
+
+// The vector members at +0xd60 and +0xd70, returned by value.
+class GD42f2d0
+{
+public:
+    V3 Get();
+
+    char pad_d60[0xd60];
+    V3 m_d60;
+};
+
+V3 GD42f2d0::Get()
+{
+    return m_d60;
+}
+
+class GD42f300
+{
+public:
+    V3 Get();
+
+    char pad_d70[0xd70];
+    V3 m_d70;
+};
+
+V3 GD42f300::Get()
+{
+    return m_d70;
+}

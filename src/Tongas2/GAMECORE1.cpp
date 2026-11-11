@@ -6134,3 +6134,24 @@ void TriggerEHArrayCtor(int count)
     GDGAMECORE1EHARRAY *items = new GDGAMECORE1EHARRAY[count];
     delete[] items;
 }
+
+
+// Copies the vector member at +0x1364 out by value.
+class GD410290
+{
+public:
+    V3 Get();
+
+    char pad_1364[0x1364];
+    V3 m_1364;
+};
+
+V3 GD410290::Get()
+{
+    return m_1364;
+}
+
+bool operator!=(const RESHANDLE &a, const RESHANDLE &b)
+{
+    return a.serial != b.serial || a.index != b.index || a.kind != b.kind;
+}
