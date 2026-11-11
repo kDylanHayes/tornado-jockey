@@ -6,6 +6,8 @@
 #include "Tongas2/ODERAGDOLL.h"
 #include "Tongas2/RESOURCE.h"
 #include "Tongas2/SCENE.h"
+#include "Tongas2/LOG.h"
+#include "Tongas2/MATHS.h"
 
 
 // _BuildDoll is defined in full in the retail object; this unit only calls it.
@@ -261,6 +263,7 @@ class GD54de10 : public G2RDBASE2, public RDBASEB
 public:
     virtual ~GD54de10();
     void Activate();
+    void AddReset(int value, void *source, struct ODERAGDOLLPARAM *param, int extra);
 
     GD54d390 m_408;
     char pad_488[8];
@@ -270,6 +273,60 @@ public:
 __declspec(noinline) GD54de10::~GD54de10()
 {
     Cleanup();
+}
+
+struct ODERAGDOLLPARAM
+{
+    float m_0;
+    float m_4;
+    float m_8;
+    MATRIX m_matrix;
+    char m_4c;
+    char pad_4d[3];
+};
+
+struct ODERAGDOLLRESETPOD
+{
+    int m_0;
+    int m_4;
+    int m_8;
+    int m_c;
+    int m_10;
+    V3 m_14;
+    char m_20[0x50];
+};
+
+void GD54de10::AddReset(int value, void *source, ODERAGDOLLPARAM *param, int extra)
+{
+    if (g_pLog) {
+        if (param->m_4c & 2) {
+            param->m_matrix.ToEuler(&param->m_8, &param->m_4, &param->m_0);
+            param->m_4c &= ~2;
+        }
+        if (param->m_4c & 2) {
+            param->m_matrix.ToEuler(&param->m_8, &param->m_4, &param->m_0);
+            param->m_4c &= ~2;
+        }
+        if (param->m_4c & 2) {
+            param->m_matrix.ToEuler(&param->m_8, &param->m_4, &param->m_0);
+            param->m_4c &= ~2;
+        }
+    }
+
+    ODERAGDOLLRESETPOD entry;
+    entry.m_0 = -1;
+    entry.m_4 = -1;
+    entry.m_8 = 0;
+    entry.m_c = value;
+    entry.m_10 = extra;
+    entry.m_14 = *(V3 *)source;
+    memcpy(entry.m_20, param, 0x50);
+
+    GD54d390 *list = &m_408;
+    if (list->m_78 + 1 > list->m_7c)
+        list->EnsureIndex(list->m_7c * 2 + 1);
+    memcpy(&list->m_74[list->m_78], &entry, 0x70);
+    list->m_78++;
 }
 
 void GD54de10::Activate()

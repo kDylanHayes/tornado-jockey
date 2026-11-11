@@ -9600,3 +9600,4 @@
 0x00413980 ?Set@GD413980@@QAEXPAX@Z function 0x24
 0x0053daf0 ?size@?$vector@USHADERTYPE24@@V?$allocator@USHADERTYPE24@@@std@@@std@@QBEIXZ function 0x1f
 0x0053db10 ?size@?$vector@USHADERTYPE2C@@V?$allocator@USHADERTYPE2C@@@std@@@std@@QBEIXZ function 0x1f
+0x0054db30 ?AddReset@GD54de10@@QAEXHPAXPAUODERAGDOLLPARAM@@H@Z function 0x109
