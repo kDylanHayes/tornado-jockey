@@ -126,6 +126,8 @@ class G2RDBASE2 : public OBJECT
 {
 public:
     void Cleanup();
+    // Walks the ragdoll array and deactivates the actors it holds.
+    void DeactivateAll();
     virtual void V00();
     virtual void V01();
     virtual void V02();
@@ -354,6 +356,31 @@ void G2RDBASE2::Cleanup()
         *(int *)((char *)resource + 0x40c) = 0;
         ((GD54de10ACTORVT *)resource)->V87();
         self->m_490.m_20.Invalidate();
+    }
+}
+
+// Walks the ragdoll array and deactivates every actor it still holds.
+void G2RDBASE2::DeactivateAll()
+{
+    GD54de10CLEANUP *self = (GD54de10CLEANUP *)this;
+    int actors = self->m_480;
+    if (actors <= 0)
+        return;
+    GD54d390 *list = (GD54d390 *)((char *)this + 0x408);
+    unsigned int offset = 0;
+    int remaining = actors;
+    for (unsigned int i = 1; remaining > 0; i++, offset += 0x70, remaining--) {
+        if (i > list->m_78) {
+            list->EnsureIndex(i);
+            if (i <= list->m_7c)
+                list->m_78 = i;
+            else
+                list->m_78 = list->m_7c;
+        }
+        RESHANDLE handle = *(RESHANDLE *)((char *)list->m_74 + offset);
+        WTACTOR *actor = g_pScene->GetActor(handle);
+        if (actor && *(char *)((char *)actor + 0x9a0))
+            ((GD54de10ACTORVT *)actor)->V89(0);
     }
 }
 

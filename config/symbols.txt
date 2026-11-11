@@ -9679,3 +9679,4 @@
 0x0042f300 ?Get@GD42f300@@QAE?AUV3@@XZ function 0x21
 0x0043b7d0 ??0GD43b850@@QAE@XZ function 0x23
 0x00408d40 ??0G2CORE1J1@@QAE@XZ function 0x27
+0x0054dc40 ?DeactivateAll@G2RDBASE2@@QAEXXZ function 0x87
