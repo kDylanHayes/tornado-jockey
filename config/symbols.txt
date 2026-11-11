@@ -9563,3 +9563,4 @@
 0x0054d490 ?EnsureIndex@GD54d390@@QAEXI@Z function 0xa1
 0x0054ee10 ?Activate@GD54de10@@QAEXXZ function 0x8b
 0x0054dd90 ?GD54dd90@@YA?AVSRESULT@@PAUGD54dd90OBJ@@H@Z function 0x73
+0x00448b60 ??0GD448b60@@QAE@XZ function 0x18

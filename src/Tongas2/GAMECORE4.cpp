@@ -2872,3 +2872,21 @@ RESOURCEMANAGER *CreateRADAR()
 {
     return new RADARMANAGER();
 }
+
+class GD448b60
+{
+public:
+    GD448b60();
+
+    int m_0;
+    int m_4;
+    int m_8;
+    int m_c;
+    int m_10;
+    int m_14;
+};
+
+GD448b60::GD448b60()
+{
+    memset(this, 0, sizeof(*this));
+}
