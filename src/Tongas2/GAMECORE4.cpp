@@ -2890,3 +2890,87 @@ GD448b60::GD448b60()
 {
     memset(this, 0, sizeof(*this));
 }
+
+class GD4454b0
+{
+public:
+    void Set(void *src);
+
+    char pad_0[0x1c8b2];
+    char m_buf[0x400];
+};
+
+void GD4454b0::Set(void *src)
+{
+    memcpy(m_buf, src, 0x400);
+}
+
+class GD4454d0
+{
+public:
+    void Set(void *src);
+
+    char pad_0[0x1ccb8];
+    char m_buf[0x400];
+};
+
+void GD4454d0::Set(void *src)
+{
+    memcpy(m_buf, src, 0x400);
+}
+
+class GD4454f0
+{
+public:
+    void Set(void *src);
+
+    char pad_0[0x1d0b8];
+    char m_buf[0x400];
+};
+
+void GD4454f0::Set(void *src)
+{
+    memcpy(m_buf, src, 0x400);
+}
+
+class GD445510
+{
+public:
+    void Set(void *src);
+
+    char pad_0[0x1d4b8];
+    char m_buf[0x400];
+};
+
+void GD445510::Set(void *src)
+{
+    memcpy(m_buf, src, 0x400);
+}
+
+class GD445530
+{
+public:
+    void Set(void *src);
+
+    char pad_0[0x1d8b8];
+    char m_buf[0x400];
+};
+
+void GD445530::Set(void *src)
+{
+    memcpy(m_buf, src, 0x400);
+}
+
+class GD4455e0
+{
+public:
+    void Set(void *src);
+
+    char pad_0[0x230];
+    char m_buf[0x400];
+};
+
+void GD4455e0::Set(void *src)
+{
+    memcpy(m_buf, src, 0x400);
+}
