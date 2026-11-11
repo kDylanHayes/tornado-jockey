@@ -2980,3 +2980,29 @@ void __stdcall GD447ec0(char value)
 {
     *(char *)((char *)g_pApp->m_pOptions + 0x5275) = value;
 }
+
+
+__declspec(dllimport) BOOL __stdcall QueryPerformanceCounter(LARGE_INTEGER *counter);
+
+BOOL GD453f70(LARGE_INTEGER *counter)
+{
+    return QueryPerformanceCounter(counter);
+}
+
+
+__declspec(dllimport) void *__stdcall LoadIconA(void *hInstance, const char *name);
+
+class GD448190
+{
+public:
+    void Load();
+
+    char pad_0[0x14];
+    void *m_14;
+    void *m_18;
+};
+
+void GD448190::Load()
+{
+    m_14 = LoadIconA(m_18, (const char *)0x80);
+}
