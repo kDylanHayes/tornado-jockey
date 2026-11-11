@@ -5,11 +5,10 @@
 // extent includes its switch tables.
 #include "Tongas2/ODERAGDOLL.h"
 #include "Tongas2/RESOURCE.h"
+#include "Tongas2/SCENE.h"
 
 
-void ODERAGDOLLRESOURCE::_BuildDoll()
-{
-}
+// _BuildDoll is defined in full in the retail object; this unit only calls it.
 
 void *CreateODERAGDOLL()
 {
@@ -28,22 +27,33 @@ __declspec(noinline) GD54dcf0::~GD54dcf0()
 
 // The two dynamic-array members of the ragdoll: a vtable and three pointers,
 // freed with delete[] in the destructor.
+// Element type of the ragdoll's array (0x70 bytes, constructor elsewhere).
+class ODEWORLDRESET
+{
+public:
+    ODEWORLDRESET();
+
+    char pad[0x70];
+};
+
 class GD54d390
 {
 public:
     __forceinline virtual ~GD54d390()
     {
         if (m_74)
-            delete[] (char *)m_74;
+            delete[] m_74;
         m_74 = 0;
         m_7c = 0;
         m_78 = 0;
     }
 
+    void EnsureIndex(unsigned int index);
+
     char pad_4[0x70];
-    void *m_74;
-    void *m_78;
-    void *m_7c;
+    ODEWORLDRESET *m_74;
+    unsigned int m_78;
+    unsigned int m_7c;
 };
 
 class GD54d6d0;
@@ -149,10 +159,108 @@ public:
     int m_4;
 };
 
+
+// The actor hook the ragdoll calls after finding each actor.
+class GD54de10ACTORVT
+{
+public:
+    virtual void V00();
+    virtual void V01();
+    virtual void V02();
+    virtual void V03();
+    virtual void V04();
+    virtual void V05();
+    virtual void V06();
+    virtual void V07();
+    virtual void V08();
+    virtual void V09();
+    virtual void V10();
+    virtual void V11();
+    virtual void V12();
+    virtual void V13();
+    virtual void V14();
+    virtual void V15();
+    virtual void V16();
+    virtual void V17();
+    virtual void V18();
+    virtual void V19();
+    virtual void V20();
+    virtual void V21();
+    virtual void V22();
+    virtual void V23();
+    virtual void V24();
+    virtual void V25();
+    virtual void V26();
+    virtual void V27();
+    virtual void V28();
+    virtual void V29();
+    virtual void V30();
+    virtual void V31();
+    virtual void V32();
+    virtual void V33();
+    virtual void V34();
+    virtual void V35();
+    virtual void V36();
+    virtual void V37();
+    virtual void V38();
+    virtual void V39();
+    virtual void V40();
+    virtual void V41();
+    virtual void V42();
+    virtual void V43();
+    virtual void V44();
+    virtual void V45();
+    virtual void V46();
+    virtual void V47();
+    virtual void V48();
+    virtual void V49();
+    virtual void V50();
+    virtual void V51();
+    virtual void V52();
+    virtual void V53();
+    virtual void V54();
+    virtual void V55();
+    virtual void V56();
+    virtual void V57();
+    virtual void V58();
+    virtual void V59();
+    virtual void V60();
+    virtual void V61();
+    virtual void V62();
+    virtual void V63();
+    virtual void V64();
+    virtual void V65();
+    virtual void V66();
+    virtual void V67();
+    virtual void V68();
+    virtual void V69();
+    virtual void V70();
+    virtual void V71();
+    virtual void V72();
+    virtual void V73();
+    virtual void V74();
+    virtual void V75();
+    virtual void V76();
+    virtual void V77();
+    virtual void V78();
+    virtual void V79();
+    virtual void V80();
+    virtual void V81();
+    virtual void V82();
+    virtual void V83();
+    virtual void V84();
+    virtual void V85();
+    virtual void V86();
+    virtual void V87();
+    virtual void V88();
+    virtual void V89(int value);
+};
+
 class GD54de10 : public G2RDBASE2, public RDBASEB
 {
 public:
     virtual ~GD54de10();
+    void Activate();
 
     GD54d390 m_408;
     char pad_488[8];
@@ -164,11 +272,48 @@ __declspec(noinline) GD54de10::~GD54de10()
     Cleanup();
 }
 
+void GD54de10::Activate()
+{
+    ((ODERAGDOLLRESOURCE *)this)->_BuildDoll();
+    int count = (int)m_408.m_78;
+    if (count <= 0)
+        return;
+    GD54d390 *list = &m_408;
+    unsigned int offset = 0;
+    for (unsigned int i = 1; count > 0; i++, offset += 0x70, count--) {
+        if (i > list->m_78) {
+            list->EnsureIndex(i);
+            if (i <= list->m_7c)
+                list->m_78 = i;
+            else
+                list->m_78 = list->m_7c;
+        }
+        RESHANDLE handle = *(RESHANDLE *)((char *)list->m_74 + offset);
+        WTACTOR *actor = g_pScene->GetActor(handle);
+        if (actor && !*(bool *)((char *)actor + 0x9a0))
+            ((GD54de10ACTORVT *)actor)->V89(1);
+    }
+}
+
 class G2RDX : public G2RDBASE2
 {
 public:
     void Run();
 };
+
+void GD54d390::EnsureIndex(unsigned int index)
+{
+    if (index <= m_7c)
+        return;
+    ODEWORLDRESET *data = new ODEWORLDRESET[index];
+    if (m_74) {
+        if (m_78 > 0)
+            memcpy(data, m_74, m_78 * sizeof(ODEWORLDRESET));
+        delete[] m_74;
+    }
+    m_74 = data;
+    m_7c = index;
+}
 
 void G2RDX::Run()
 {

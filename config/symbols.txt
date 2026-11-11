@@ -9560,3 +9560,5 @@
 0x0067cdb0 ??_7GD54d5d0@@6B@ data 0x4
 0x0054dd20 ?CreateResource@GD54d3c0@@QAEPAVGD54d6d0@@PBD@Z function 0x69
 0x0054d6d0 ??0GD54d6d0@@QAE@PAVRESOURCEMANAGER@@PBD@Z function 0xfe
+0x0054d490 ?EnsureIndex@GD54d390@@QAEXI@Z function 0xa1
+0x0054ee10 ?Activate@GD54de10@@QAEXXZ function 0x8b
