@@ -9,6 +9,7 @@
 #define MATRIX_AXIS_METHODS
 #define ANG_UPDATE_OUTOFLINE
 
+#include <string.h>
 #include <deque>
 #include <map>
 
@@ -2845,4 +2846,130 @@ public:
 RESOURCEMANAGER *CreatePROGRESSBAR()
 {
     return new PROGRESSBARMANAGER();
+}
+
+class GD42f630
+{
+public:
+    void Set(void *src);
+
+    char pad_0[0xf08];
+    char m_buf[0x200];
+};
+
+void GD42f630::Set(void *src)
+{
+    memcpy(m_buf, src, 0x200);
+}
+
+class GD433170
+{
+public:
+    void Set(void *src);
+
+    char pad_0[0xecc];
+    char m_buf[0x200];
+};
+
+void GD433170::Set(void *src)
+{
+    memcpy(m_buf, src, 0x200);
+}
+
+class GD439280
+{
+public:
+    void Set(void *src);
+
+    char pad_0[0x15e0];
+    char m_buf[0x200];
+};
+
+void GD439280::Set(void *src)
+{
+    memcpy(m_buf, src, 0x200);
+}
+
+class GD43b620
+{
+public:
+    void Set(void *src);
+
+    char pad_0[0xcd1];
+    char m_buf[0x200];
+};
+
+void GD43b620::Set(void *src)
+{
+    memcpy(m_buf, src, 0x200);
+}
+
+class GD43bc30
+{
+public:
+    void Set(void *src);
+
+    char pad_0[0xcdc];
+    char m_buf[0x200];
+};
+
+void GD43bc30::Set(void *src)
+{
+    memcpy(m_buf, src, 0x200);
+}
+
+class GD43cb50
+{
+public:
+    void Set(void *src);
+
+    char pad_0[0xa8];
+    char m_buf[0x200];
+};
+
+void GD43cb50::Set(void *src)
+{
+    memcpy(m_buf, src, 0x200);
+}
+
+class GD43e7d0
+{
+public:
+    void Set(void *src);
+
+    char pad_0[0xa20];
+    char m_buf[0x50];
+};
+
+void GD43e7d0::Set(void *src)
+{
+    memcpy(m_buf, src, 0x50);
+}
+
+class GD43faf0
+{
+public:
+    void Set(void *src);
+
+    char pad_0[0x60];
+    char m_buf[0x200];
+};
+
+void GD43faf0::Set(void *src)
+{
+    memcpy(m_buf, src, 0x200);
+}
+
+class GD43fb10
+{
+public:
+    void Set(void *src);
+
+    char pad_0[0x260];
+    char m_buf[0x200];
+};
+
+void GD43fb10::Set(void *src)
+{
+    memcpy(m_buf, src, 0x200);
 }
