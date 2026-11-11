@@ -5,6 +5,8 @@
 // cannot cut the target short. CreateTexture's extent includes its switch
 // table.
 #include <deque>
+#include <memory>
+#include <algorithm>
 #include "Tongas2/TEXTUREDX8CORE.h"
 
 int CreateTexture()
@@ -202,3 +204,14 @@ void TEXSTAGES::SetValue(int index, char value)
     char *&cell = m_84[index];
     *cell = value;
 }
+
+// The 0x20-byte element these helpers were instantiated for.
+struct TEXTURETYPE20
+{
+    int m[8];
+};
+
+template TEXTURETYPE20 *std::copy_backward(
+    TEXTURETYPE20 *, TEXTURETYPE20 *, TEXTURETYPE20 *);
+template TEXTURETYPE20 *std::uninitialized_copy(
+    TEXTURETYPE20 *, TEXTURETYPE20 *, TEXTURETYPE20 *);

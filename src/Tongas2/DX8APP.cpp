@@ -4,6 +4,7 @@
 // function has its exact target size in config/symbols.txt so a later delink
 // cannot cut the target short. The destructor is virtual in the target
 // (0x00509900 is the scalar-deleting destructor's non-deleting half).
+#include <memory>
 #include "Tongas2/DX8APP.h"
 #include "Tongas2/RESOURCES.h"
 #include "Tongas2/RENDERER.h"
@@ -221,3 +222,12 @@ extern "C" void GD5383CopyN(int *dest, unsigned int count, const int &value,
         count--;
     }
 }
+
+// The 0x40-byte element this fill was instantiated for.
+struct DX8APPTYPE40
+{
+    int m[16];
+};
+
+template void std::uninitialized_fill_n(
+    DX8APPTYPE40 *, unsigned int, const DX8APPTYPE40 &);

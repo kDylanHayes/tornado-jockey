@@ -9593,3 +9593,6 @@
 0x00510570 ??$_Copy_opt@PAUSKINGEOMTYPE40@@PAU1@@std@@YAPAUSKINGEOMTYPE40@@PAU1@00U_Nonscalar_ptr_iterator_tag@0@@Z function 0x2c
 0x005105a0 ??$_Copy_backward_opt@PAUSKINGEOMTYPE40@@PAU1@@std@@YAPAUSKINGEOMTYPE40@@PAU1@00U_Nonscalar_ptr_iterator_tag@0@@Z function 0x2c
 0x00510600 ??$_Uninit_copy@PAUSKINGEOMTYPE40@@PAU1@@std@@YAPAUSKINGEOMTYPE40@@PAU1@00U_Nonscalar_ptr_iterator_tag@0@@Z function 0x30
+0x00541e00 ??$_Copy_backward_opt@PAUTEXTURETYPE20@@PAU1@@std@@YAPAUTEXTURETYPE20@@PAU1@00U_Nonscalar_ptr_iterator_tag@0@@Z function 0x2c
+0x00541e30 ??$_Uninit_copy@PAUTEXTURETYPE20@@PAU1@@std@@YAPAUTEXTURETYPE20@@PAU1@00U_Nonscalar_ptr_iterator_tag@0@@Z function 0x30
+0x00509f40 ??$_Uninit_fill_n@PAUDX8APPTYPE40@@IU1@@std@@YAXPAUDX8APPTYPE40@@IABU1@U_Nonscalar_ptr_iterator_tag@0@@Z function 0x2e
