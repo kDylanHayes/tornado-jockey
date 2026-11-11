@@ -8297,7 +8297,7 @@
 0x0054d0f0 ?Call@G2ODEADJ@@QAEXPAX@Z function 0x13
 0x0054cc30 ?Call@G2ODEADJTGT@@QAEXPAX@Z function 0x7c
 0x0054db20 ?Run@G2RDX@@QAEXXZ function 0x10
-0x0054d7d0 ?Cleanup@G2RDBASE2@@QAEXXZ function
+0x0054d7d0 ?Cleanup@G2RDBASE2@@QAEXXZ function 0x1dc
 0x0052fef0 ?Tidy@G2AGTDEQ@@QAEXXZ function 0x5
 0x00548b20 ??0G2ODEINIT@@QAE@XZ function 0x27
 0x00548af0 ?Swap@G2ODESWAP@@QAEXXZ function 0x2f

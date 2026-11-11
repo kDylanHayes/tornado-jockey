@@ -258,6 +258,103 @@ public:
     virtual void V89(int value);
 };
 
+// The joint array inside the 0x490 member and the resource handle after it.
+struct GD54de10JOINTARRAY
+{
+    char pad_0[8];
+    void **m_8;
+    unsigned int m_c;
+    unsigned int m_10;
+    char pad_14[0xc];
+    RESHANDLE m_20;
+};
+
+struct GD54de10CLEANUP
+{
+    char pad_0[0x404];
+    char m_404;
+    char pad_405[0x480 - 0x405];
+    int m_480;
+    char pad_484[0x488 - 0x484];
+    void *m_488;
+    char m_48c;
+    char pad_48d[0x490 - 0x48d];
+    GD54de10JOINTARRAY m_490;
+};
+
+extern "C" void _dJointDestroy(void *joint);
+extern "C" void _dJointGroupDestroy(void *group);
+
+void G2RDBASE2::Cleanup()
+{
+    GD54de10CLEANUP *self = (GD54de10CLEANUP *)this;
+    if (!self->m_404)
+        return;
+
+    int count = (int)self->m_490.m_c;
+    if (count > 0) {
+        unsigned int offset = 0;
+        int remaining = count;
+        for (unsigned int i = 1; remaining > 0; i++, offset += 4, remaining--) {
+            if (i > self->m_490.m_c) {
+                if (i > self->m_490.m_10) {
+                    void **data = (void **)operator new(offset + 4);
+                    if (self->m_490.m_8) {
+                        if (self->m_490.m_c > 0)
+                            memcpy(data, self->m_490.m_8, self->m_490.m_c * 4);
+                        operator delete[](self->m_490.m_8);
+                    }
+                    self->m_490.m_8 = data;
+                    self->m_490.m_10 = i;
+                }
+                if (i <= self->m_490.m_10)
+                    self->m_490.m_c = i;
+                else
+                    self->m_490.m_c = self->m_490.m_10;
+            }
+            _dJointDestroy(*(void **)((char *)self->m_490.m_8 + offset));
+        }
+    }
+
+    self->m_490.m_c = 0;
+
+    if (self->m_48c) {
+        _dJointGroupDestroy(self->m_488);
+        self->m_48c = 0;
+    }
+
+    int actors = self->m_480;
+    if (g_pScene && actors > 0) {
+        GD54d390 *list = (GD54d390 *)((char *)this + 0x408);
+        unsigned int offset = 0;
+        int remaining = actors;
+        for (unsigned int i = 1; remaining > 0; i++, offset += 0x70, remaining--) {
+            if (i > list->m_78) {
+                list->EnsureIndex(i);
+                if (i <= list->m_7c)
+                    list->m_78 = i;
+                else
+                    list->m_78 = list->m_7c;
+            }
+            RESHANDLE handle = *(RESHANDLE *)((char *)list->m_74 + offset);
+            WTACTOR *actor = g_pScene->GetActor(handle);
+            if (actor)
+                *(char *)((char *)actor + 0xcbc) = 1;
+        }
+    }
+
+    self->m_480 = 0;
+    self->m_404 = 0;
+
+    RESHANDLE handle = self->m_490.m_20;
+    RESOURCE *resource = g_pResources->GetResource(handle);
+    if (resource) {
+        *(int *)((char *)resource + 0x40c) = 0;
+        ((GD54de10ACTORVT *)resource)->V87();
+        self->m_490.m_20.Invalidate();
+    }
+}
+
 class GD54de10 : public G2RDBASE2, public RDBASEB
 {
 public:
