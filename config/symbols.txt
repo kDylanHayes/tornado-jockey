@@ -9626,3 +9626,5 @@
 0x0044f810 ?Call@GD44f810@@QAEJXZ function 0x26
 0x00656354 __imp__CallWindowProcA@20 data 0x4
 0x00506190 ?SetSize@G2CORE4D3DAPP@@QAEXHH@Z function 0x17
+0x00432ab0 ?Deactivate@GD432870@@UAEXXZ function 0x18
+0x00432960 ?ResetPowerup@GD432870@@QAEXXZ function 0x5e

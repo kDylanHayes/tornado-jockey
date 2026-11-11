@@ -691,11 +691,22 @@ public:
     virtual const char *GetClassName();
     virtual int GetFactoryId();
     virtual int GetFactoryFlags();
+    // Releases the powerup it holds and stops.
+    virtual void Deactivate();
+    // Frees the powerup actor the held handle points at.
+    void ResetPowerup();
 
     static int s_factoryId;
 
     static int s_classId;
 };
+
+void GD432870::Deactivate()
+{
+    ResetPowerup();
+    ACTOR::Stop();
+    *((char *)this + 0xcbc) = 1;
+}
 
 __declspec(noinline) GD432870::~GD432870() throw()
 {
