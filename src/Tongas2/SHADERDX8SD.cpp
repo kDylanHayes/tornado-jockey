@@ -18,6 +18,10 @@ struct PATHREPOPOINT
 // The retail unit emitted this vector member out of line (0x53dad0).
 template unsigned int std::vector<PATHREPOPOINT>::size() const;
 
+// And this STL fill (0x53db30): a 0x18-byte element copy loop.
+template void std::fill<PATHREPOPOINT *, PATHREPOPOINT>(
+    PATHREPOPOINT *, PATHREPOPOINT *, const PATHREPOPOINT &);
+
 
 // The manager base, defined in another unit; only its virtual order and the
 // fields the factory touches matter here.
