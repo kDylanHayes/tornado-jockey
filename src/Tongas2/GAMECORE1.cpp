@@ -726,6 +726,7 @@ void G2CORE1F::Clear()
 class G2CORE1J1 : public ACTOR
 {
 public:
+    G2CORE1J1();
     virtual ~G2CORE1J1();
 
     virtual int GetClassId();
@@ -737,6 +738,12 @@ public:
     static int s_classId;
     static int s_factoryId;
 };
+
+G2CORE1J1::G2CORE1J1()
+{
+    *((char *)this + 0xccc) = 0;
+    *((char *)this + 0xccd) = 0;
+}
 
 int G2CORE1J1::s_classId = -1;
 

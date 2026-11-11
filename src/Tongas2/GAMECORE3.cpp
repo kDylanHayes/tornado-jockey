@@ -801,6 +801,7 @@ __declspec(noinline) GD43b550::~GD43b550() throw()
 class G2D5 : public ACTOR
 {
 public:
+    G2D5();
     virtual ~G2D5();
 };
 
@@ -835,6 +836,7 @@ __declspec(noinline) GD438ff0::~GD438ff0()
 class GD43b850 : public G2D5
 {
 public:
+    GD43b850();
     virtual ~GD43b850() throw();
     virtual int GetClassId();
     virtual int GetParentClassId();
@@ -846,6 +848,11 @@ public:
 
     static int s_classId;
 };
+
+GD43b850::GD43b850()
+{
+    *((float *)this + 0x13a0 / 4) = 10.0f;
+}
 
 __declspec(noinline) GD43b850::~GD43b850() throw()
 {
