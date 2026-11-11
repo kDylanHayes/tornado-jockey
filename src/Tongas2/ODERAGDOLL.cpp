@@ -154,8 +154,8 @@ public:
 class RDBASEB
 {
 public:
-    virtual void V0();
-    virtual void V1();
+    virtual RESHANDLE *V0(RESHANDLE *out, int index);
+    virtual MATRIX *V1(MATRIX *out, int index);
     virtual void V2();
 
     int m_4;
@@ -256,6 +256,8 @@ public:
     virtual void V87();
     virtual void V88();
     virtual void V89(int value);
+    virtual void V90(RESHANDLE *out);
+    virtual void *V91(void *buffer);
 };
 
 // The joint array inside the 0x490 member and the resource handle after it.
@@ -392,6 +394,62 @@ struct ODERAGDOLLRESETPOD
     V3 m_14;
     char m_20[0x50];
 };
+
+RESHANDLE *RDBASEB::V0(RESHANDLE *out, int index)
+{
+    GD54d390 *list = (GD54d390 *)((char *)this + 8);
+    unsigned int i = (unsigned int)index + 1;
+    if (i > list->m_78) {
+        list->EnsureIndex(i);
+        if (i <= list->m_7c)
+            list->m_78 = i;
+        else
+            list->m_78 = list->m_7c;
+    }
+    RESHANDLE handle = *(RESHANDLE *)((char *)list->m_74 + index * 0x70);
+    WTACTOR *actor = g_pScene->GetActor(handle);
+    if (actor) {
+        ((GD54de10ACTORVT *)actor)->V90(out);
+    } else {
+        out->serial = 0;
+        out->index = 0;
+        out->kind = 0;
+    }
+    return out;
+}
+
+MATRIX *RDBASEB::V1(MATRIX *out, int index)
+{
+    GD54d390 *list = (GD54d390 *)((char *)this + 8);
+    unsigned int i = (unsigned int)index + 1;
+    if (i > list->m_78) {
+        list->EnsureIndex(i);
+        if (i <= list->m_7c)
+            list->m_78 = i;
+        else
+            list->m_78 = list->m_7c;
+    }
+    RESHANDLE handle = *(RESHANDLE *)((char *)list->m_74 + index * 0x70);
+    WTACTOR *actor = g_pScene->GetActor(handle);
+    if (actor) {
+        ODERAGDOLLPARAM buffer;
+        ODERAGDOLLPARAM *param = (ODERAGDOLLPARAM *)
+            ((GD54de10ACTORVT *)actor)->V91(&buffer);
+        if (param->m_4c & 1) {
+            param->m_matrix.FromEuler(param->m_8, param->m_4, param->m_0);
+            param->m_4c &= ~1;
+        }
+        *out = param->m_matrix;
+    }
+    return out;
+}
+
+void RDBASEB::V2()
+{
+    *(int *)((char *)this + 0xb0) = -1;
+    *(int *)((char *)this + 0xb4) = -1;
+    ((G2RDBASE2 *)((char *)this - 0x400))->Cleanup();
+}
 
 void GD54de10::AddReset(int value, void *source, ODERAGDOLLPARAM *param, int extra)
 {

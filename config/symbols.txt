@@ -9611,3 +9611,6 @@
 0x00521570 ?FillVectors@@YAXPAV?$vector@HV?$allocator@H@std@@@std@@0ABV12@@Z function 0x26
 0x00532210 ?CopyForward@@YAPAV?$vector@HV?$allocator@H@std@@@std@@PAV12@00@Z function 0x32
 0x00532250 ?CopyBackward@@YAPAV?$vector@HV?$allocator@H@std@@@std@@PAV12@00@Z function 0x32
+0x0054d9b0 ?V2@RDBASEB@@UAEXXZ function 0x1a
+0x0054d9d0 ?V0@RDBASEB@@UAEPAURESHANDLE@@PAU2@H@Z function 0x85
+0x0054da60 ?V1@RDBASEB@@UAEPAUMATRIX@@PAU2@H@Z function 0xb1
