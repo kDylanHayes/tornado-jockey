@@ -46,6 +46,8 @@ public:
     void *m_7c;
 };
 
+class GD54d6d0;
+
 // The 0x70-byte master the ragdoll manager makes.
 class GD54d5d0 : public RESOURCEMASTER
 {
@@ -80,6 +82,7 @@ public:
     }
 
     GD54d5d0 *CreateMaster(const char *name);
+    GD54d6d0 *CreateResource(const char *name);
 
     char pad_4[4];
     void *m_8;
@@ -90,6 +93,20 @@ public:
 GD54d5d0 *GD54d3c0::CreateMaster(const char *name)
 {
     return new GD54d5d0((RESOURCEMANAGER *)this, name);
+}
+
+// The 0x4bc-byte resource the same manager makes.
+class GD54d6d0
+{
+public:
+    GD54d6d0(RESOURCEMANAGER *manager, const char *name);
+
+    char pad[0x4bc];
+};
+
+GD54d6d0 *GD54d3c0::CreateResource(const char *name)
+{
+    return new GD54d6d0((RESOURCEMANAGER *)this, name);
 }
 
 // The ragdoll's primary base. It is 0x400 bytes; the second base starts there.
