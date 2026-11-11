@@ -1495,11 +1495,14 @@ public:
 
     static int s_classId;
     static int s_factoryId;
-};
 
-G2CORE1K8::~G2CORE1K8()
-{
-}
+    char pad_0cd4[0xdbc - 0xccc];
+    void *m_dbc;
+    char pad_dc0[0xdd8 - 0xdc0];
+    CSTRING m_dd8;
+    char pad_ddc[0xdec - 0xddc];
+    CSTRING m_dec[0x14];
+};
 
 int G2CORE1K8::GetClassId()
 {
@@ -1523,6 +1526,173 @@ class G2CORE1K9SCENARIO
 public:
     void Remove(void *object);
 };
+
+// The rules object unregisters actors through vtable slot 0x258.
+class G2CORE1K8RULESVT
+{
+public:
+    virtual void V000();
+    virtual void V001();
+    virtual void V002();
+    virtual void V003();
+    virtual void V004();
+    virtual void V005();
+    virtual void V006();
+    virtual void V007();
+    virtual void V008();
+    virtual void V009();
+    virtual void V010();
+    virtual void V011();
+    virtual void V012();
+    virtual void V013();
+    virtual void V014();
+    virtual void V015();
+    virtual void V016();
+    virtual void V017();
+    virtual void V018();
+    virtual void V019();
+    virtual void V020();
+    virtual void V021();
+    virtual void V022();
+    virtual void V023();
+    virtual void V024();
+    virtual void V025();
+    virtual void V026();
+    virtual void V027();
+    virtual void V028();
+    virtual void V029();
+    virtual void V030();
+    virtual void V031();
+    virtual void V032();
+    virtual void V033();
+    virtual void V034();
+    virtual void V035();
+    virtual void V036();
+    virtual void V037();
+    virtual void V038();
+    virtual void V039();
+    virtual void V040();
+    virtual void V041();
+    virtual void V042();
+    virtual void V043();
+    virtual void V044();
+    virtual void V045();
+    virtual void V046();
+    virtual void V047();
+    virtual void V048();
+    virtual void V049();
+    virtual void V050();
+    virtual void V051();
+    virtual void V052();
+    virtual void V053();
+    virtual void V054();
+    virtual void V055();
+    virtual void V056();
+    virtual void V057();
+    virtual void V058();
+    virtual void V059();
+    virtual void V060();
+    virtual void V061();
+    virtual void V062();
+    virtual void V063();
+    virtual void V064();
+    virtual void V065();
+    virtual void V066();
+    virtual void V067();
+    virtual void V068();
+    virtual void V069();
+    virtual void V070();
+    virtual void V071();
+    virtual void V072();
+    virtual void V073();
+    virtual void V074();
+    virtual void V075();
+    virtual void V076();
+    virtual void V077();
+    virtual void V078();
+    virtual void V079();
+    virtual void V080();
+    virtual void V081();
+    virtual void V082();
+    virtual void V083();
+    virtual void V084();
+    virtual void V085();
+    virtual void V086();
+    virtual void V087();
+    virtual void V088();
+    virtual void V089();
+    virtual void V090();
+    virtual void V091();
+    virtual void V092();
+    virtual void V093();
+    virtual void V094();
+    virtual void V095();
+    virtual void V096();
+    virtual void V097();
+    virtual void V098();
+    virtual void V099();
+    virtual void V100();
+    virtual void V101();
+    virtual void V102();
+    virtual void V103();
+    virtual void V104();
+    virtual void V105();
+    virtual void V106();
+    virtual void V107();
+    virtual void V108();
+    virtual void V109();
+    virtual void V110();
+    virtual void V111();
+    virtual void V112();
+    virtual void V113();
+    virtual void V114();
+    virtual void V115();
+    virtual void V116();
+    virtual void V117();
+    virtual void V118();
+    virtual void V119();
+    virtual void V120();
+    virtual void V121();
+    virtual void V122();
+    virtual void V123();
+    virtual void V124();
+    virtual void V125();
+    virtual void V126();
+    virtual void V127();
+    virtual void V128();
+    virtual void V129();
+    virtual void V130();
+    virtual void V131();
+    virtual void V132();
+    virtual void V133();
+    virtual void V134();
+    virtual void V135();
+    virtual void V136();
+    virtual void V137();
+    virtual void V138();
+    virtual void V139();
+    virtual void V140();
+    virtual void V141();
+    virtual void V142();
+    virtual void V143();
+    virtual void V144();
+    virtual void V145();
+    virtual void V146();
+    virtual void V147();
+    virtual void V148();
+    virtual void V149();
+    virtual void V150(void *actor);
+};
+
+G2CORE1K8::~G2CORE1K8()
+{
+    ACTOR *rules = g_pGame->GetRules();
+    if (rules)
+        ((G2CORE1K8RULESVT *)rules)->V150(this);
+    G2CORE1K9SCENARIO *scenario = (G2CORE1K9SCENARIO *)g_pGame->GetScenario();
+    if (scenario && m_dbc)
+        scenario->Remove(m_dbc);
+}
 
 // The container the scenario keeps at +0x3bc0 (0x40bac0).
 class G2CORE1K9CONTAINER
