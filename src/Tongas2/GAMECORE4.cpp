@@ -2974,3 +2974,9 @@ void GD4455e0::Set(void *src)
 {
     memcpy(m_buf, src, 0x400);
 }
+
+
+void __stdcall GD447ec0(char value)
+{
+    *(char *)((char *)g_pApp->m_pOptions + 0x5275) = value;
+}

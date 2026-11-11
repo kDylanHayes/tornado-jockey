@@ -2973,3 +2973,22 @@ void GD43fb10::Set(void *src)
 {
     memcpy(m_buf, src, 0x200);
 }
+
+
+class GD437010
+{
+public:
+    void Step();
+
+    char pad_0[0xc];
+    int m_c;
+    int m_10;
+};
+
+void GD437010::Step()
+{
+    if (m_10) {
+        if (--m_10 == 0)
+            m_c = 0;
+    }
+}
