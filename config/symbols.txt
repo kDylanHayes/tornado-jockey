@@ -9598,3 +9598,5 @@
 0x00509f40 ??$_Uninit_fill_n@PAUDX8APPTYPE40@@IU1@@std@@YAXPAUDX8APPTYPE40@@IABU1@U_Nonscalar_ptr_iterator_tag@0@@Z function 0x2e
 0x0040b760 ?Set@GD40b760@@QAEXPAX@Z function 0x27
 0x00413980 ?Set@GD413980@@QAEXPAX@Z function 0x24
+0x0053daf0 ?size@?$vector@USHADERTYPE24@@V?$allocator@USHADERTYPE24@@@std@@@std@@QBEIXZ function 0x1f
+0x0053db10 ?size@?$vector@USHADERTYPE2C@@V?$allocator@USHADERTYPE2C@@@std@@@std@@QBEIXZ function 0x1f

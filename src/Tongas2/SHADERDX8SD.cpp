@@ -45,6 +45,10 @@ template void std::fill<SHADERTYPE24 *, SHADERTYPE24>(
 template void std::fill<SHADERTYPE2C *, SHADERTYPE2C>(
     SHADERTYPE2C *, SHADERTYPE2C *, const SHADERTYPE2C &);
 
+// Two more vector element sizes the retail unit instantiated size() for.
+template unsigned int std::vector<SHADERTYPE24>::size() const;
+template unsigned int std::vector<SHADERTYPE2C>::size() const;
+
 // Their copy/construct companions.
 template SHADERTYPE24 *std::copy_backward(
     SHADERTYPE24 *, SHADERTYPE24 *, SHADERTYPE24 *);
