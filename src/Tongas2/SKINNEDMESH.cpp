@@ -337,3 +337,39 @@ int GD517dd0::Size()
     return (int)(m_138 - m_134);
 }
 
+
+// Releases the members at +0xc and +8 through the object at +0, then the
+// one at +0x5c with the plain delete.
+class M42TARGET
+{
+public:
+    void m_42(void *item);
+    void m_43(void *item);
+};
+
+class GD517500
+{
+public:
+    void Release();
+
+    M42TARGET *m_obj;
+    char pad_4[4];
+    void *m_8;
+    void *m_c;
+    char pad_10[0x5c - 0x10];
+    void *m_5c;
+};
+
+void GD517500::Release()
+{
+    if (m_c)
+        m_obj->m_42(m_c);
+    if (m_8) {
+        m_obj->m_43(m_8);
+        m_8 = 0;
+    }
+    if (m_5c) {
+        ::operator delete(m_5c);
+        m_5c = 0;
+    }
+}

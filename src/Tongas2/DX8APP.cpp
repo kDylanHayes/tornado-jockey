@@ -231,3 +231,31 @@ struct DX8APPTYPE40
 
 template void std::uninitialized_fill_n(
     DX8APPTYPE40 *, unsigned int, const DX8APPTYPE40 &);
+
+
+// Destroys and frees the object held at +0x278.
+class M39TARGET
+{
+public:
+    void m_39();
+};
+
+class GD5091a0
+{
+public:
+    int Release();
+
+    char pad_0[0x278];
+    M39TARGET *m_obj;
+};
+
+int GD5091a0::Release()
+{
+    M39TARGET *obj = m_obj;
+    if (obj) {
+        obj->m_39();
+        ::operator delete(obj);
+        m_obj = 0;
+    }
+    return 0;
+}

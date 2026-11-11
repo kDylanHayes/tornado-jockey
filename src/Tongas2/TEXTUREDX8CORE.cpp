@@ -240,3 +240,59 @@ void GD543060::Release()
     if (m_item)
         m_obj->m_40(m_item);
 }
+
+
+// Stores the helper's result: the object at +0x4 produces it,
+// the member at +0x24 keeps it.
+class M58TARGET
+{
+public:
+    void *m_58(void *item);
+};
+
+class GD543080
+{
+public:
+    void Set(void *item);
+
+    char pad_0[4];
+    M58TARGET *m_obj;
+    char pad_mid[28];
+    void *m_result;
+};
+
+void GD543080::Set(void *item)
+{
+    if (item)
+        m_result = m_obj->m_58(item);
+}
+
+
+// Releases the two textures at +0x98 and +0x9c through the helper, and
+// marks the object idle.
+class GD541030
+{
+public:
+    void Release();
+
+    char pad_0[4];
+    M40TARGET *m_obj;
+    char pad_8[0xc - 8];
+    int m_c;
+    char pad_10[0x98 - 0x10];
+    void *m_98;
+    void *m_9c;
+};
+
+void GD541030::Release()
+{
+    m_c = 0;
+    if (m_98) {
+        m_obj->m_40(m_98);
+        m_98 = 0;
+    }
+    if (m_9c) {
+        m_obj->m_40(m_9c);
+        m_9c = 0;
+    }
+}

@@ -3411,7 +3411,7 @@
       "category": "engine",
       "symbol_mappings": {
         "FUN_004e62d0": "??1DX8APPBASE1@@UAE@XZ",
-        "_m_39": "??1HARDWARE@@QAE@XZ",
+        "_m_39": "?m_39@M39TARGET@@QAEXXZ",
         "??1?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@XZ": "??1DX8APPSTRING@@QAE@XZ"
       }
     },
@@ -3442,7 +3442,9 @@
       "source": "src/Tongas2/SKINNEDMESH.cpp",
       "category": "engine",
       "symbol_mappings": {
-        "FUN_004e6e00": "??1GD515e70BASE@@UAE@XZ"
+        "FUN_004e6e00": "??1GD515e70BASE@@UAE@XZ",
+        "_m_42": "?m_42@M42TARGET@@QAEXPAX@Z",
+        "_m_43": "?m_43@M42TARGET@@QAEXPAX@Z"
       }
     },
     {
@@ -3585,7 +3587,8 @@
       "category": "engine",
       "symbol_mappings": {
         "??_7SHADER@@6B@": "??_7GD53aa10@@6B@",
-        "_m_40": "?m_40@M40TARGET@@QAEXPAX@Z"
+        "_m_40": "?m_40@M40TARGET@@QAEXPAX@Z",
+        "_m_58": "?m_58@M58TARGET@@QAEPAXPAX@Z"
       }
     },
     {
@@ -3597,7 +3600,8 @@
       "source": "src/Tongas2/TEXTUREDX8CORE.cpp",
       "category": "engine",
       "symbol_mappings": {
-        "_m_40": "?m_40@M40TARGET@@QAEXPAX@Z"
+        "_m_40": "?m_40@M40TARGET@@QAEXPAX@Z",
+        "_m_58": "?m_58@M58TARGET@@QAEPAXPAX@Z"
       }
     },
     {

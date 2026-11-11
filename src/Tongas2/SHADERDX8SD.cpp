@@ -336,3 +336,29 @@ void GD53caa0::Release()
     if (m_item)
         m_obj->m_40(m_item);
 }
+
+
+// Stores the helper's result: the object at +0x8 produces it,
+// the member at +0x10 keeps it.
+class M58TARGET
+{
+public:
+    void *m_58(void *item);
+};
+
+class GD53cac0
+{
+public:
+    void Set(void *item);
+
+    char pad_0[8];
+    M58TARGET *m_obj;
+    char pad_mid[4];
+    void *m_result;
+};
+
+void GD53cac0::Set(void *item)
+{
+    if (item)
+        m_result = m_obj->m_58(item);
+}
