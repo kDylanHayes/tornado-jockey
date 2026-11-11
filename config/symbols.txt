@@ -9589,3 +9589,7 @@
 0x0053dcd0 ??$_Uninit_fill_n@PAUSHADERTYPE20@@IU1@@std@@YAXPAUSHADERTYPE20@@IABU1@U_Nonscalar_ptr_iterator_tag@0@@Z function 0x2e
 0x0053dd00 ??$_Uninit_fill_n@PAUSHADERTYPE24@@IU1@@std@@YAXPAUSHADERTYPE24@@IABU1@U_Nonscalar_ptr_iterator_tag@0@@Z function 0x2e
 0x0053dd30 ??$_Uninit_fill_n@PAUSHADERTYPE2C@@IU1@@std@@YAXPAUSHADERTYPE2C@@IABU1@U_Nonscalar_ptr_iterator_tag@0@@Z function 0x2e
+0x00510470 ??$fill@PAUSKINGEOMTYPE40@@U1@@std@@YAXPAUSKINGEOMTYPE40@@0ABU1@@Z function 0x29
+0x00510570 ??$_Copy_opt@PAUSKINGEOMTYPE40@@PAU1@@std@@YAPAUSKINGEOMTYPE40@@PAU1@00U_Nonscalar_ptr_iterator_tag@0@@Z function 0x2c
+0x005105a0 ??$_Copy_backward_opt@PAUSKINGEOMTYPE40@@PAU1@@std@@YAPAUSKINGEOMTYPE40@@PAU1@00U_Nonscalar_ptr_iterator_tag@0@@Z function 0x2c
+0x00510600 ??$_Uninit_copy@PAUSKINGEOMTYPE40@@PAU1@@std@@YAPAUSKINGEOMTYPE40@@PAU1@00U_Nonscalar_ptr_iterator_tag@0@@Z function 0x30

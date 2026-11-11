@@ -237,3 +237,38 @@ void G2DX8T2::Call(int index)
     if (m_54)
         m_30->CreateTexture((G2DX8OBJECT *)index);
 }
+
+class SHADERITEMX
+{
+public:
+    char pad_0[0x10b];
+    char m_10b;
+};
+
+class SHADERITEM
+{
+public:
+    char pad_0[0x98];
+    SHADERITEMX *m_98;
+};
+
+class SHADERLIST
+{
+public:
+    bool Any();
+
+    char pad_0[0x78];
+    std::vector<SHADERITEM *> m_78;
+};
+
+bool SHADERLIST::Any()
+{
+    if (m_78.empty())
+        return false;
+    for (unsigned int i = 0; i < m_78.size(); i++) {
+        SHADERITEM *item = m_78[i];
+        if (item->m_98 && item->m_98->m_10b)
+            return true;
+    }
+    return false;
+}

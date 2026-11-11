@@ -5,6 +5,8 @@
 // cannot cut the target short. Load's extent includes its exception handler
 // and the data that follows it, up to the next function at 0x005103d0.
 #include "Tongas2/SKINNEDGEOMETRY.h"
+#include <algorithm>
+#include <memory>
 
 int SKINNEDGEOMETRY::Load(void *file, int flags, void *owner)
 {
@@ -62,3 +64,18 @@ void *G2SGTHUNK::Get(int index)
 {
     return ((G2DX8GET *)*(void **)((char *)this + 0xc))->Get54(index);
 }
+
+// The 0x40-byte vertex type these helpers were instantiated for.
+struct SKINGEOMTYPE40
+{
+    int m[16];
+};
+
+template void std::fill<SKINGEOMTYPE40 *, SKINGEOMTYPE40>(
+    SKINGEOMTYPE40 *, SKINGEOMTYPE40 *, const SKINGEOMTYPE40 &);
+template SKINGEOMTYPE40 *std::copy(
+    SKINGEOMTYPE40 *, SKINGEOMTYPE40 *, SKINGEOMTYPE40 *);
+template SKINGEOMTYPE40 *std::copy_backward(
+    SKINGEOMTYPE40 *, SKINGEOMTYPE40 *, SKINGEOMTYPE40 *);
+template SKINGEOMTYPE40 *std::uninitialized_copy(
+    SKINGEOMTYPE40 *, SKINGEOMTYPE40 *, SKINGEOMTYPE40 *);
