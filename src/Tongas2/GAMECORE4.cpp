@@ -3034,3 +3034,40 @@ void GD44b2d0::Leave()
         m_4 = false;
     }
 }
+
+struct GD44f810MSG
+{
+    void *m_0;
+    unsigned int m_4;
+    unsigned int m_8;
+    long m_c;
+};
+
+extern "C" __declspec(dllimport) long __stdcall CallWindowProcA(
+    void *prev, void *hwnd, unsigned int msg, unsigned int wparam, long lparam);
+
+class GD44f810
+{
+public:
+    long Call();
+
+    char pad_0[4];
+    void *m_4;
+    char pad_8[0x10];
+    GD44f810MSG *m_18;
+    char pad_1c[4];
+    void *m_20;
+};
+
+long GD44f810::Call()
+{
+    long result = 0;
+    GD44f810MSG *msg = m_18;
+    if (msg) {
+        long lparam = msg->m_c;
+        unsigned int wparam = msg->m_8;
+        unsigned int message = msg->m_4;
+        result = CallWindowProcA(m_20, m_4, message, wparam, lparam);
+    }
+    return result;
+}

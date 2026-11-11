@@ -9623,3 +9623,5 @@
 0x0044df70 ?GD44df70@@YAHXZ function 0x15
 0x0044b2d0 ?Leave@GD44b2d0@@QAEXXZ function 0x19
 0x0065607c __imp__LeaveCriticalSection@4 data 0x4
+0x0044f810 ?Call@GD44f810@@QAEJXZ function 0x26
+0x00656354 __imp__CallWindowProcA@20 data 0x4
