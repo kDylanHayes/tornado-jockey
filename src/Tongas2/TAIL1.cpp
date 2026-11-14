@@ -137,7 +137,7 @@ public:
     G2TL1C1();
 };
 
-G2TL1C1::G2TL1C1()
+__declspec(noinline) G2TL1C1::G2TL1C1()
 {
 }
 
@@ -285,4 +285,43 @@ public:
 RESOURCEMANAGER *CreateODEACTORTEMPLATE()
 {
     return new ODEACTORTEMPLATEMANAGER();
+}
+
+// Two-argument constructors (retail 0x00550dd0 and 0x00550e00): each calls
+// its base's default constructor, stores its two arguments at +8/+0xc and
+// installs its own vtable (data 0x0067d478 and 0x0067d500).
+class GD550dd0 : public V5547C0
+{
+public:
+    GD550dd0(int a, int b);
+    virtual ~GD550dd0();
+
+    int m_8;
+    int m_c;
+};
+
+GD550dd0::GD550dd0(int a, int b) : m_8(a), m_c(b)
+{
+}
+
+__declspec(noinline) GD550dd0::~GD550dd0()
+{
+}
+
+class GD550e00 : public G2TL1C1
+{
+public:
+    GD550e00(int a, int b);
+    virtual ~GD550e00();
+
+    int m_8;
+    int m_c;
+};
+
+GD550e00::GD550e00(int a, int b) : m_8(a), m_c(b)
+{
+}
+
+__declspec(noinline) GD550e00::~GD550e00()
+{
 }
