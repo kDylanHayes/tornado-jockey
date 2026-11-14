@@ -1230,7 +1230,7 @@ void EMITTER::Update()
             }
             particle = next;
         }
-        if (!m_429 || initialTime <= 0.0f)
+        if (!m_429 || !(initialTime > 0.0f))
             break;
         m_428 = true;
         initialTime -= 0.1f;

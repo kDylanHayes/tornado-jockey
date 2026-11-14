@@ -140,7 +140,34 @@ def apply_symbol_mappings(path: Path, mappings: dict, ours: Path | None = None) 
                 renamed += 1
     if renamed:
         path.write_bytes(coff.write())
-    return renamed
+    # A defined target function that keeps the delinker's FUN_ name (another
+    # unit's copy owns the real name, because the exporter refuses duplicates
+    # for the whole program) can still be paired through the unit's mapping.
+    by_index = {i: rec for i, rec, _ in coff.symbols}
+    taken = {coff.name(rec) for _, rec, _ in coff.symbols}
+    renamed2 = 0
+    taken_defined = set()
+    for _, rec, _ in coff.symbols:
+        if struct.unpack_from("<h", rec, 12)[0] > 0:
+            taken_defined.add(coff.name(rec))
+    for i, rec in by_index.items():
+        secno, typ = struct.unpack_from("<hH", rec, 12)
+        if secno <= 0 or typ != 0x20:
+            continue
+        name = coff.name(rec)
+        if name not in mappings:
+            continue
+        mapped = mappings[name]
+        # An undefined reference may already carry the mapped name; only
+        # another defined symbol would make the pair ambiguous.
+        if mapped in taken_defined:
+            continue
+        coff.set_name(rec, mapped)
+        taken_defined.add(mapped)
+        renamed2 += 1
+    if renamed2:
+        path.write_bytes(coff.write())
+    return renamed + renamed2
 
 
 def unit_args(unit: dict) -> list[str]:

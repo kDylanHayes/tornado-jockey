@@ -1159,6 +1159,93 @@ struct ODEWORLDCAST
     void *m_world;
 };
 
+// The ODE actor's position and angle overrides. 0x0054adb0 sets the position
+// and 0x0054b220 the angles; both skip the body while the actor is being
+// reset and otherwise keep the ODE body in step with the actor.
+class G2ODEACTORPOS
+{
+public:
+    void SetPosition(const V3 &position);
+
+    char pad_0000[0x9a0];
+    bool m_9a0;
+    char pad_9a1[0xccc - 0x9a1];
+    void *m_body;
+    char pad_cd0[0xd24 - 0xcd0];
+    bool m_d24;
+    bool m_d25;
+};
+
+extern "C" void _dBodySetPosition(void *body, float x, float y, float z);
+
+void G2ODEACTORPOS::SetPosition(const V3 &position)
+{
+    if (m_d24 && !m_d25 && ((ODEWORLDX *)g_pOdeWorldX)->m_69 && m_9a0)
+        return;
+    ((ACTOR *)this)->ACTOR::SetPosition(position);
+    if (m_body)
+        _dBodySetPosition(m_body, position.x, position.y, position.z);
+}
+// The ODE actor's script commands. 0x0054b670 adds a torque, 0x0054b730 a
+// relative force and 0x0054b7f0 a force; all three read one "x,y,z" token
+// and hand a true result back. 0x0054b8b0, 0x0054b9e0, 0x0054bb10 and
+// 0x0054bc40 are the same with a second "x,y,z" token for the position.
+class G2ODEACTORCMD
+{
+public:
+    SRESULT CmdAddTorque(TOKENS **args);
+    SRESULT CmdAddRelForce(TOKENS **args);
+    SRESULT CmdAddForce(TOKENS **args);
+    SRESULT CmdAddForceAtPos(TOKENS **args);
+    SRESULT CmdAddRelForceAtPos(TOKENS **args);
+    SRESULT CmdAddForceAtRelPos(TOKENS **args);
+    SRESULT CmdAddRelForceAtRelPos(TOKENS **args);
+
+    char pad_0000[0xccc];
+    void *m_body;
+};
+
+extern "C" void _dBodyAddTorque(void *body, float x, float y, float z);
+extern "C" void _dBodyAddRelForce(void *body, float x, float y, float z);
+extern "C" void _dBodyAddForce(void *body, float x, float y, float z);
+extern "C" void _dBodyAddForceAtPos(void *body, float x, float y, float z,
+                                    float px, float py, float pz);
+extern "C" void _dBodyAddRelForceAtPos(void *body, float x, float y, float z,
+                                       float px, float py, float pz);
+extern "C" void _dBodyAddForceAtRelPos(void *body, float x, float y, float z,
+                                        float px, float py, float pz);
+extern "C" void _dBodyAddRelForceAtRelPos(void *body, float x, float y, float z,
+                                           float px, float py, float pz);
+
+SRESULT G2ODEACTORCMD::CmdAddTorque(TOKENS **args)
+{
+    V3 v;
+    v.x = 0.0f;
+    v.y = 0.0f;
+    v.z = 0.0f;
+    sscanf((*args)->GetToken(1), "%f %f %f", &v.x, &v.y, &v.z);
+    if (m_body)
+        _dBodyAddTorque(m_body, v.x, v.y, v.z);
+    return SRESULT(true);
+}
+
+SRESULT G2ODEACTORCMD::CmdAddForceAtPos(TOKENS **args)
+{
+    V3 force;
+    force.x = 0.0f;
+    force.y = 0.0f;
+    force.z = 0.0f;
+    V3 pos;
+    pos.x = 0.0f;
+    pos.y = 0.0f;
+    pos.z = 0.0f;
+    sscanf((*args)->GetToken(1), "%f %f %f", &force.x, &force.y, &force.z);
+    sscanf((*args)->GetToken(2), "%f %f %f", &pos.x, &pos.y, &pos.z);
+    if (m_body)
+        _dBodyAddForceAtPos(m_body, force.x, force.y, force.z, pos.x, pos.y, pos.z);
+    return SRESULT(true);
+}
+
 void G2ODEACTORTGT::Call()
 {
     if (*(void **)((char *)this + 0xccc))

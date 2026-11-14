@@ -35,8 +35,8 @@ ACCELERATION::ACCELERATION(const float &from, const float &to, const float &time
     m_elapsed = 0.0;
     m_time = time;
     m_acceleration = m_distance / (time * time * 0.25);
-    m_running = true;
     m_value = from;
+    m_running = true;
     m_velocity = 0.0;
 }
 
@@ -656,10 +656,13 @@ void TRAVELWANIMBEHAVIOR::Walk()
     if (actor) {
         actor->SetAngVel(V3(0.0f, 0.0f, 0.0f));
         m_state = WALKING;
-        V3 direction;
-        direction = m_target - actor->GetPosition();
-        direction.Normalize();
-        V3 velocity = direction;
+        V3 velocity;
+        {
+            V3 direction;
+            direction = m_target - actor->GetPosition();
+            direction.Normalize();
+            velocity = direction;
+        }
         actor->SetVel(velocity * m_speed);
         actor->BlendResourceAnimation(m_resource, m_walk.c_str(), 0.1f, true, 1.0f);
     }

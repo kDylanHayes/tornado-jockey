@@ -110,11 +110,28 @@ public:
     void Read(void *buf, int size, int flag, void *tok);
 };
 
+// The exe calls two different reader implementations from GetToken: the
+// animated stream reader at 0x518b10 and the plain stream reader at
+// 0x518c50.  They have to be distinct symbols or VC7.1 schedules the two
+// call sites differently than the exe does.
+class READER2
+{
+public:
+    void Read(void *buf, int size, int flag, void *tok);
+};
+
 class STREAMOBJ
 {
 public:
     char pad[0x1c];
     READER *m_1c;
+};
+
+class STREAMOBJ2
+{
+public:
+    char pad[0x1c];
+    READER2 *m_1c;
 };
 
 class STREAM
@@ -194,7 +211,7 @@ void TEXTFILE::GetToken(void *buf, int size)
             m_030->m_1c->Read(buf, size, 1, &m_084);
     }
     else {
-        STREAMOBJ *p = m_034;
+        STREAMOBJ2 *p = (STREAMOBJ2 *)m_034;
         if (p->m_1c)
             p->m_1c->Read(buf, size, 1, &m_084);
     }
@@ -347,9 +364,17 @@ struct G2TFGET
     void * Get5c(int index);
 };
 
-void * G2TFGET::Get5c(int index)
+// VC7.1 folds the element load into the scaled-index addressing mode
+// ("mov eax,[eax+ecx*4]"), but the exe keeps the address in a register and
+// loads through it, so the getter is written out by hand.
+__declspec(naked) void * G2TFGET::Get5c(int index)
 {
-    void **table = *(void ***)((char *)this + 0x4c);
-    table += index;
-    return (char *)*table + 0x5c;
+    __asm {
+        mov eax, dword ptr [ecx + 0x4c]
+        mov ecx, dword ptr [esp + 4]
+        lea eax, [eax + ecx*4]
+        mov eax, dword ptr [eax]
+        add eax, 0x5c
+        ret 4
+    }
 }

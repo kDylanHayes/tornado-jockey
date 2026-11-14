@@ -384,15 +384,13 @@ void GD549b40::AddToSpace(void *space)
 
 bool GD549b40::IsAtOrigin()
 {
-    if (m_offset.x != 0.0f)
+    if (m_offset.x == 0.0f && m_offset.y == 0.0f && m_offset.z == 0.0f &&
+        m_relAngles.IsZero())
         return false;
-    if (m_offset.y != 0.0f)
+    WTACTOR *actor = ((ODEWORLDFIND *)this)->FindActor();
+    if (!actor)
         return false;
-    if (m_offset.z != 0.0f)
-        return false;
-    if (m_relAngles.IsZero())
-        return false;
-    return ((ODEWORLDFIND *)this)->FindActor() != 0;
+    return true;
 }
 
 class MATB

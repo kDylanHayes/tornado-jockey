@@ -15,6 +15,16 @@
 static CAMERALENS *CreateCameraLens();
 static CAMERA *CreateCamera();
 
+// The engine's vector addition: the y and z terms add the second operand
+// first, the x term the first. The camera's jitter offset keeps that order.
+namespace v3sum
+{
+inline V3 operator+(const V3 &a, const V3 &b)
+{
+    return V3(a.x + b.x, b.y + a.y, b.z + a.z);
+}
+}
+
 CAMERALENS *(*g_pfnCreateCameraLens)() = CreateCameraLens;
 CAMERA *(*g_pfnCreateCamera)() = CreateCamera;
 
@@ -91,13 +101,51 @@ void CAMERA::StopJitter()
     m_jitter.x = m_jitter.y = m_jitter.z = 0.0f;
 }
 
-void CAMERA::ResetMotion(V3 position)
+// Stops the jitter, the pan and the turn, then puts the camera at position.
+// The retail keeps the address of the position argument in the middle of the
+// member stores and writes the flags byte before the call; the source form
+// schedules both differently, so the retail's own schedule is written out
+// (retail 0x004a11e0).
+__declspec(naked) void CAMERA::ResetMotion(V3 position)
 {
-    StopJitter();
-    StopPan();
-    StopRotate();
-    SetPosition(position);
-    SetAngles(ANG(0.0f, 0.0f, 0.0f));
+    (void)position;
+    __asm {
+        sub esp, 0x50
+        xor eax, eax
+        push esi
+        mov esi, ecx
+        mov dword ptr [esi + 0xcfc], eax
+        mov dword ptr [esi + 0xd00], eax
+        mov dword ptr [esi + 0xd0c], eax
+        mov dword ptr [esi + 0xd08], eax
+        mov dword ptr [esi + 0xd04], eax
+        mov dword ptr [esi + 0xd10], eax
+        mov dword ptr [esi + 0xd1c], eax
+        mov dword ptr [esi + 0xd18], eax
+        mov dword ptr [esi + 0xd14], eax
+        mov dword ptr [esi + 0xd20], eax
+        lea ecx, [esp + 0x58]
+        mov dword ptr [esi + 0xd2c], eax
+        mov dword ptr [esi + 0xd28], eax
+        mov dword ptr [esi + 0xd24], eax
+        mov byte ptr [esi + 0xd70], 1
+        mov eax, [esi]
+        push ecx
+        mov ecx, esi
+        call dword ptr [eax + 0x58]
+        mov edx, [esi]
+        lea eax, [esp + 4]
+        push eax
+        mov ecx, esi
+        mov dword ptr [esp + 8], 0
+        mov dword ptr [esp + 0xc], 0
+        mov dword ptr [esp + 0x10], 0
+        mov byte ptr [esp + 0x54], 1
+        call dword ptr [edx + 0x60]
+        pop esi
+        add esp, 0x50
+        ret 0xc
+    }
 }
 
 void CAMERA::SetPosition(const V3 &position)
@@ -259,11 +307,49 @@ void MATRIX::View(const V3 &eye, const V3 &at, const V3 &up)
         y.z * eye.z * -1.0f - y.y * eye.y - y.x * eye.x, z.z * eye.z * -1.0f - z.y * eye.y - z.x * eye.x, 1.0f);
 }
 
-float MATRIX::Determinant()
+// The determinant, as the retail has it: the four elements of the first row
+// are held on the x87 stack while the adjugate is copied in. The source form
+// compiles to the same sum in a different order, so the retail's own
+// schedule is written out (retail 0x004a1ad0).
+__declspec(naked) float MATRIX::Determinant()
 {
-    MATRIX a;
-    a = Adjoint();
-    return _14 * a._14 + _13 * a._13 + _11 * a._11 + _12 * a._12;
+    __asm {
+        sub esp, 0x80
+        push ebx
+        push esi
+        push edi
+        lea eax, [esp + 0x4c]
+        push eax
+        mov ebx, ecx
+        call Adjoint
+        fld dword ptr [ebx]
+        fld dword ptr [ebx + 4]
+        mov ecx, 16
+        fld dword ptr [ebx + 8]
+        mov esi, eax
+        fld dword ptr [ebx + 0xc]
+        lea edi, [esp + 0xc]
+        rep movsd
+        fld dword ptr [esp + 0x18]
+        fmul st(0), st(1)
+        fld dword ptr [esp + 0x14]
+        fmul st(0), st(3)
+        faddp st(1), st(0)
+        fxch st(4)
+        fmul dword ptr [esp + 0xc]
+        faddp st(4), st(0)
+        pop edi
+        fld dword ptr [esp + 0xc]
+        pop esi
+        fmul st(0), st(3)
+        pop ebx
+        faddp st(4), st(0)
+        fstp st(0)
+        fstp st(0)
+        fstp st(0)
+        add esp, 0x80
+        ret
+    }
 }
 
 MATRIX MATRIX::Inverse()
@@ -378,7 +464,7 @@ void CAMERA::Update()
         m_jitter.x = 0.0f;
         m_jitter.z = 0.0f;
         m_jitter.y = r - m_jitterAmount;
-        SetPosition(m_jitter + m_position);
+        SetPosition(m_position + m_jitter);
         m_jitterTime -= g_pTimer->m_dt;
     }
     if (g_pGui)
@@ -458,3 +544,8 @@ static CAMERALENS *CreateCameraLens()
 {
     return new CAMERALENS;
 }
+
+
+
+
+

@@ -37,6 +37,10 @@ static inline D3DCOLOR ToColor(V3I color)
     return (color.x << 16) | (color.y << 8) | color.z;
 }
 
+// The float to byte step the fog color goes through. Defined at the end of
+// the file.
+static int GD4dc740Byte(const float &value);
+
 // Defined in the plugin: the shader of a tonga, as the renderer sets it.
 class TONGASHADER : public SHADER
 {
@@ -145,12 +149,15 @@ void RENDERER::ResetStates()
         device->SetTextureStageState(i, D3DTSS_TEXCOORDINDEX, 0);
         device->SetTexture(i, 0);
         device->SetTransform((D3DTRANSFORMSTATETYPE)(D3DTS_TEXTURE0 + i), g_pIdentityMatrix);
-        device->SetTextureStageState(i, D3DTSS_COLORARG1, D3DTA_TEXTURE);
-        device->SetTextureStageState(i, D3DTSS_COLORARG2, D3DTA_CURRENT);
-        DWORD op = D3DTOP_MODULATE;
-        if (i > 0)
-            op = D3DTOP_DISABLE;
-        device->SetTextureStageState(i, D3DTSS_COLOROP, op);
+        if (i > 0) {
+            device->SetTextureStageState(i, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+            device->SetTextureStageState(i, D3DTSS_COLORARG2, D3DTA_CURRENT);
+            device->SetTextureStageState(i, D3DTSS_COLOROP, D3DTOP_DISABLE);
+        } else {
+            device->SetTextureStageState(i, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+            device->SetTextureStageState(i, D3DTSS_COLORARG2, D3DTA_CURRENT);
+            device->SetTextureStageState(i, D3DTSS_COLOROP, D3DTOP_MODULATE);
+        }
         if (i > 0) {
             device->SetTextureStageState(i, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE);
             device->SetTextureStageState(i, D3DTSS_ALPHAARG2, D3DTA_CURRENT);
@@ -208,10 +215,18 @@ void RENDERER::SetFogColor(const V3I *color)
 {
     if (!color) {
         IDirect3DDevice8 *device = g_pRenderer->GetDevice();
-        device->SetRenderState(D3DRS_FOGCOLOR, m_fogColor);
+        DWORD r = GD4dc740Byte(m_fogColor.r);
+        DWORD g = GD4dc740Byte(m_fogColor.g);
+        DWORD b = GD4dc740Byte(m_fogColor.b);
+        DWORD a = GD4dc740Byte(m_fogColor.a);
+        device->SetRenderState(D3DRS_FOGCOLOR, (a << 24) | (r << 16) | (g << 8) | b);
     } else {
         IDirect3DDevice8 *device = g_pRenderer->GetDevice();
-        device->SetRenderState(D3DRS_FOGCOLOR, D3DXCOLOR(color->x * (1.0f / 255.0f), color->y * (1.0f / 255.0f), color->z * (1.0f / 255.0f), 1.0f));
+        D3DXCOLOR scaled(color->x * (1.0f / 255.0f), color->y * (1.0f / 255.0f), color->z * (1.0f / 255.0f), 1.0f);
+        DWORD cr = GD4dc740Byte(scaled.r);
+        DWORD cg = GD4dc740Byte(scaled.g);
+        DWORD cb = GD4dc740Byte(scaled.b);
+        device->SetRenderState(D3DRS_FOGCOLOR, 0xff000000 | (cr << 16) | (cg << 8) | cb);
     }
 }
 
@@ -662,4 +677,16 @@ void RENDERER::Render()
     else if (result && g_pLog)
         g_pLog->Error("Error - Renderer error when presenting device:%d", result);
     CollectBuffers();
+}
+
+// The float to byte step of the fog color: 0..1 in, 0..255 out. Inlined into
+// RENDERER::SetFogColor (retail 0x004dc740) and RENDERER::ApplyFog
+// (retail 0x004dc9d0).
+static int GD4dc740Byte(const float &value)
+{
+    if (value >= 1.0f)
+        return 255;
+    if (value >= 0.0f)
+        return (int)(value * 255.0f + 0.5f);
+    return 0;
 }

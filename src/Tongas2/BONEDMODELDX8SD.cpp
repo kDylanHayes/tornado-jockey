@@ -100,8 +100,8 @@ CMDENTRY BONEDMODELDX8SDRESOURCE::s_commands[] = {
 
 BONEDMODELTAG::BONEDMODELTAG()
 {
-    m_material = 0;
     m_position.Set(0.0f, 0.0f, 0.0f);
+    m_material = 0;
     m_name = 0;
 }
 
@@ -399,19 +399,21 @@ void BONEDMODELDX8SDRESOURCE::Update()
 
 void BONEDMODELDX8SDRESOURCE::Virtual91(int animation, float frame)
 {
-    if (m_model) {
+    BONEDMODELDX8MODEL *model = (BONEDMODELDX8MODEL *)m_model;
+    if (model) {
         FUN_00513330((void *)animation, 0, 0);
-        float frames = (float)((BONEDMODELDX8MODEL *)m_model)->GetFrameCount((void *)animation);
-        float rate = ((BONEDMODELDX8MODEL *)m_model)->GetFrameRate((void *)animation);
-        ((BONEDMODELDX8MODEL *)m_model)->SetTime(frame / (frames / rate));
+        float frames = (float)model->GetFrameCount((void *)animation);
+        float rate = model->GetFrameRate((void *)animation);
+        float t = frames / rate;
+        model->SetTime(frame / t);
     }
 }
 
 void BONEDMODELDX8SDRESOURCE::Virtual101(int a, int b)
 {
     if (m_model) {
-        ((BONEDMODELDX8MODEL *)m_model)->Render(
-            ((BONEDMODELDX8RENDERER7 *)g_pRenderer)->Virtual07(a, b, GetAlpha()));
+        void *mat = ((BONEDMODELDX8RENDERER7 *)g_pRenderer)->Virtual07(a, b, GetAlpha());
+        ((BONEDMODELDX8MODEL *)m_model)->Render(mat);
     }
 }
 
@@ -590,17 +592,18 @@ public:
     void Render(BONEDMODELDX8RENDERERAPI *device, void *box, int mode);
 };
 
+// The renderer's device interface. The object starts with a pointer to a
+// table of __stdcall functions; every entry takes the interface pointer as
+// its first word. The game uses the slots at 0x90, 0x94, 0xc0 and 0xc8.
 class BONEDMODELDX8RENDERERAPI
 {
 public:
-    char m_00[0x90];
-    void (__stdcall *m_90)(BONEDMODELDX8RENDERERAPI *self, int a, int b, int c);
-    void (__stdcall *m_94)(BONEDMODELDX8RENDERERAPI *self, int a, void *value);
-    char m_98[0xc0 - 0x98];
-    void (__stdcall *m_c0)(BONEDMODELDX8RENDERERAPI *self, int a, void *value);
-    char m_c4[4];
-    void (__stdcall *m_c8)(BONEDMODELDX8RENDERERAPI *self, int a, int b);
+    void (__stdcall **m_vtbl)(void);
 };
+
+typedef void (__stdcall *RENDERERFUNC2)(BONEDMODELDX8RENDERERAPI *self, int a, int b);
+typedef void (__stdcall *RENDERERFUNC3)(BONEDMODELDX8RENDERERAPI *self, int a, void *value);
+typedef void (__stdcall *RENDERERFUNC4)(BONEDMODELDX8RENDERERAPI *self, int a, int b, int c);
 
 class BONEDMODELDX8RENDERHELPER
 {
@@ -673,14 +676,20 @@ void BONEDMODELDX8PARTICLE::Virtual10(int unused)
     }
 }
 
+// The retail passes the renderer as the first argument and the matrix as the
+// second one, even though the declaration reads the other way round.
 void BONEDMODELDX8PARTICLE::Virtual11(MATRIX *matrix, BONEDMODELDX8RENDERERAPI *renderer)
 {
     if (m_18) {
-        MATRIX m = *matrix;
-        V3 zero(0.0f, 0.0f, 0.0f);
-        renderer->m_c8(renderer, 0xe, 0);
-        m_18->Emit(renderer, &m, &zero, 1.0f);
-        renderer->m_c8(renderer, 0xe, 1);
+        MATRIX m = *(MATRIX *)renderer;
+        m._41 = 0.0f;
+        m._42 = 0.0f;
+        m._43 = 0.0f;
+        BONEDMODELDX8RENDERERAPI *dev = (BONEDMODELDX8RENDERERAPI *)matrix;
+        ((RENDERERFUNC2)dev->m_vtbl[0x32])(dev, 0xe, 0);
+        V3 zero(0.0f, -1.0f, 0.0f);
+        m_18->Emit(dev, &m, &zero, 1.0f);
+        ((RENDERERFUNC2)dev->m_vtbl[0x32])(dev, 0xe, 1);
     }
 }
 
@@ -767,12 +776,12 @@ void BONEDMODELDX8PARTICLE::Destroy()
 void BONEDMODELDX8PARTICLE::Virtual12(BONEDMODELDX8RENDERERAPI *device)
 {
     if (m_20) {
-        device->m_c8(device, 0x89, 0);
+        ((RENDERERFUNC2)device->m_vtbl[0x32])(device, 0x89, 0);
         MATRIX matrix;
         FUN_0046365f(&matrix, 640.0f, 480.0f, 1.0f, 10.0f);
-        device->m_94(device, 3, &matrix);
-        device->m_94(device, 0x100, &matrix);
-        device->m_94(device, 2, &matrix);
+        ((RENDERERFUNC3)device->m_vtbl[0x25])(device, 3, &matrix);
+        ((RENDERERFUNC3)device->m_vtbl[0x25])(device, 0x100, &matrix);
+        ((RENDERERFUNC3)device->m_vtbl[0x25])(device, 2, &matrix);
         m_250->FUN_00516380(device);
     }
 }
@@ -1063,8 +1072,8 @@ void BONEDMODELDX8PARTICLE::Virtual13(BONEDMODELDX8RENDERERAPI *device)
     float fov = settings->GetFloat(2) * kDegToRad;
     MATRIX projection;
     FUN_004635cb(&projection, fov, aspect, 10.0f, 1500.0f);
-    device->m_94(device, 3, &projection);
-    device->m_c8(device, 0x16, 2);
+    ((RENDERERFUNC3)device->m_vtbl[0x25])(device, 3, &projection);
+    ((RENDERERFUNC2)device->m_vtbl[0x32])(device, 0x16, 2);
     for (int i = 0; i < count; i++) {
         void *item = system->GetItem(i);
         system->Prepare(item);
@@ -1079,23 +1088,23 @@ void BONEDMODELDX8PARTICLE::Virtual13(BONEDMODELDX8RENDERERAPI *device)
         position.y *= -1.0f;
         position.z *= -1.0f;
         position.z -= 1.0f;
-        device->m_c8(device, 0x98, 1);
-        device->m_c0(device, 0, &position);
+        ((RENDERERFUNC2)device->m_vtbl[0x32])(device, 0x98, 1);
+        ((RENDERERFUNC3)device->m_vtbl[0x30])(device, 0, &position);
         Virtual11(&copy, device);
         if (m_20) {
             system->Draw((char *)this + 0x120);
             system->Render(device, (char *)this + 0x120, 0);
         }
-        device->m_c8(device, 0x89, 1);
-        device->m_c8(device, 0x89, 0);
-        device->m_c8(device, 0x16, 3);
-        device->m_c8(device, 0x16, 2);
-        device->m_c8(device, 0x89, 0);
-        device->m_c8(device, 0x98, 0);
+        ((RENDERERFUNC2)device->m_vtbl[0x32])(device, 0x89, 1);
+        ((RENDERERFUNC2)device->m_vtbl[0x32])(device, 0x89, 0);
+        ((RENDERERFUNC2)device->m_vtbl[0x32])(device, 0x16, 3);
+        ((RENDERERFUNC2)device->m_vtbl[0x32])(device, 0x16, 2);
+        ((RENDERERFUNC2)device->m_vtbl[0x32])(device, 0x89, 0);
+        ((RENDERERFUNC2)device->m_vtbl[0x32])(device, 0x98, 0);
         item = system->GetItem(i);
         system->Finish(item);
     }
-    device->m_c8(device, 0x16, 3);
+    ((RENDERERFUNC2)device->m_vtbl[0x32])(device, 0x16, 3);
 }
 
 

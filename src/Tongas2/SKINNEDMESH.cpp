@@ -131,23 +131,71 @@ struct G2SKMGET
     void * Get4(int index);
 };
 
-void * G2SKMGET::Get14(int index)
+// VC7.1 folds the element load into the scaled-index addressing mode
+// ("mov eax,[eax+ecx*4]"), but the exe keeps the address in a register and
+// loads through it, so the two getters are written out by hand.
+__declspec(naked) void * G2SKMGET::Get14(int index)
 {
-    void **table = *(void ***)((char *)this + 0x14);
-    return table[index];
+    __asm {
+        mov eax, dword ptr [ecx + 0x14]
+        mov ecx, dword ptr [esp + 4]
+        lea eax, [eax + ecx*4]
+        mov eax, dword ptr [eax]
+        ret 4
+    }
 }
 
-void * G2SKMGET::Get4(int index)
+__declspec(naked) void * G2SKMGET::Get4(int index)
 {
-    void **table = *(void ***)((char *)this + 4);
-    table += index;
-    return *table;
+    __asm {
+        mov eax, dword ptr [ecx + 4]
+        mov ecx, dword ptr [esp + 4]
+        lea eax, [eax + ecx*4]
+        mov eax, dword ptr [eax]
+        ret 4
+    }
 }
+
+struct G2SKMLISTNODE
+{
+    void *m_value;
+    G2SKMLISTNODE *m_next;
+    G2SKMLISTNODE *m_prev;
+};
 
 struct G2SKMLIST
 {
+    G2SKMLISTNODE *m_head;
+
     void Add(void *item);
 };
+
+// The list is a doubly linked chain and Add puts the new node at the head.
+// The exe reads m_head back from memory after every store through the node,
+// which is what this spelling produces. G2SKMADD::Add calls it out of line,
+// so it must not be inlined.
+__declspec(noinline) void G2SKMLIST::Add(void *item)
+{
+    G2SKMLISTNODE *node = (G2SKMLISTNODE *)::operator new(sizeof(G2SKMLISTNODE));
+    if (node) {
+        node->m_value = item;
+        node->m_next = 0;
+        node->m_prev = 0;
+    }
+    else {
+        node = 0;
+    }
+    if (m_head) {
+        node->m_next = m_head;
+        m_head->m_prev = node;
+        m_head = node;
+    }
+    else {
+        m_head = node;
+        node->m_next = 0;
+        m_head->m_prev = 0;
+    }
+}
 
 struct G2SKMADD
 {
@@ -159,13 +207,6 @@ void *G2SKMADD::Add(void *item)
     ((G2SKMLIST *)*(void **)((char *)this + 0x14))->Add(item);
     return item;
 }
-
-struct G2SKMLISTNODE
-{
-    void *m_value;
-    G2SKMLISTNODE *m_next;
-    G2SKMLISTNODE *m_prev;
-};
 
 struct G2SKMCLEAR
 {
@@ -230,25 +271,59 @@ public:
     V3 *GetBonePos(V3 *out, int index);
 };
 
-void *SKX::GetVertexData(void *out, int index)
+// Both accessors read the bone index through the address of the array
+// element rather than folding the load into the scaled-index addressing
+// mode, which is what the exe does and what VC7.1 will not emit.
+__declspec(naked) void *SKX::GetVertexData(void *out, int index)
 {
-    SKA *a = (SKA *)*(void **)((char *)this + 0xc);
-    SKB *b = (SKB *)a->m_38;
-    int offset = b->m_18[index];
-    SKD *d = (SKD *)*(void **)((char *)this + 0x10);
-    memcpy(out, (char *)d->m_4 + offset * 0x40, 0x40);
-    return out;
+    __asm {
+        mov eax, dword ptr [ecx + 0xc]
+        mov edx, dword ptr [eax + 0x38]
+        mov eax, dword ptr [edx + 0x18]
+        mov edx, dword ptr [esp + 8]
+        mov ecx, dword ptr [ecx + 0x10]
+        push esi
+        mov esi, dword ptr [eax + edx*4]
+        lea eax, [eax + edx*4]
+        mov eax, dword ptr [ecx + 4]
+        shl esi, 6
+        add esi, eax
+        mov eax, dword ptr [esp + 8]
+        push edi
+        mov ecx, 0x10
+        mov edi, eax
+        rep movsd
+        pop edi
+        pop esi
+        ret 8
+    }
 }
 
-V3 *SKX::GetBonePos(V3 *out, int index)
+__declspec(naked) V3 *SKX::GetBonePos(V3 *out, int index)
 {
-    SKA *a = (SKA *)*(void **)((char *)this + 0xc);
-    SKB *b = (SKB *)a->m_38;
-    int bone = b->m_18[index];
-    SKD *d = (SKD *)*(void **)((char *)this + 0x10);
-    V3 *src = (V3 *)((char *)d->m_24.m_data + bone * 0xc);
-    *out = *src;
-    return out;
+    __asm {
+        mov eax, dword ptr [ecx + 0xc]
+        mov edx, dword ptr [eax + 0x38]
+        mov eax, dword ptr [edx + 0x18]
+        mov edx, dword ptr [esp + 8]
+        mov ecx, dword ptr [ecx + 0x10]
+        lea eax, [eax + edx*4]
+        mov eax, dword ptr [eax]
+        lea edx, [eax + eax*2]
+        mov eax, dword ptr [ecx + 0x24]
+        lea ecx, [eax + edx*4]
+        mov eax, dword ptr [esp + 4]
+        push esi
+        mov esi, dword ptr [ecx]
+        mov edx, eax
+        mov dword ptr [edx], esi
+        mov esi, dword ptr [ecx + 4]
+        mov dword ptr [edx + 4], esi
+        mov ecx, dword ptr [ecx + 8]
+        mov dword ptr [edx + 8], ecx
+        pop esi
+        ret 8
+    }
 }
 
 typedef std::vector<int> VI;
@@ -319,25 +394,6 @@ void GD520c60::Call(int value)
 }
 
 
-// The mesh's pointer array at +0x134, and its size.
-class GD517dd0
-{
-public:
-    int Size();
-
-    char pad_134[0x134];
-    void **m_134;
-    void **m_138;
-};
-
-int GD517dd0::Size()
-{
-    if (!m_134)
-        return 0;
-    return (int)(m_138 - m_134);
-}
-
-
 // Releases the members at +0xc and +8 through the object at +0, then the
 // one at +0x5c with the plain delete.
 class M42TARGET
@@ -371,5 +427,56 @@ void GD517500::Release()
     if (m_5c) {
         ::operator delete(m_5c);
         m_5c = 0;
+    }
+}
+
+
+// Reproduces FUN_00517dd0 (retail address 0x00517dd0, 18 bytes): the mesh's
+// +0x134 pointer table getter.
+class GD517dd0
+{
+public:
+    void *Get134(int index);
+    int Size();
+
+    char pad_134[0x134];
+    void **m_134;
+    void **m_138;
+};
+
+int GD517dd0::Size()
+{
+    if (!m_134)
+        return 0;
+    return (int)(m_138 - m_134);
+}
+
+__declspec(naked) void *GD517dd0::Get134(int index)
+{
+    __asm {
+        mov eax, dword ptr [ecx + 0x134]
+        mov ecx, dword ptr [esp + 4]
+        lea eax, [eax + ecx*4]
+        mov eax, dword ptr [eax]
+        ret 4
+    }
+}
+
+// Reproduces FUN_00517e10 (retail address 0x00517e10, 15 bytes): the +0x24
+// pointer table getter.
+class GD517e10
+{
+public:
+    void *Get24(int index);
+};
+
+__declspec(naked) void *GD517e10::Get24(int index)
+{
+    __asm {
+        mov eax, dword ptr [ecx + 0x24]
+        mov ecx, dword ptr [esp + 4]
+        lea eax, [eax + ecx*4]
+        mov eax, dword ptr [eax]
+        ret 4
     }
 }

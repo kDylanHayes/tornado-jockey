@@ -3485,7 +3485,14 @@
       ],
       "target": "build/target/Tongas2/ANIMATEDGEOMETRY.obj",
       "source": "src/Tongas2/ANIMATEDGEOMETRY.cpp",
-      "category": "engine"
+      "category": "engine",
+      "symbol_mappings": {
+        "FUN_00530360": "?_Insert_n@?$vector@HV?$allocator@H@std@@@std@@IAEXViterator@12@IABH@Z",
+        "FUN_00530190": "?_Xlen@?$vector@HV?$allocator@H@std@@@std@@IBEXXZ",
+        "FUN_00517d60": "?_Ufill@?$vector@HV?$allocator@H@std@@@std@@IAEPAHPAHIABH@Z",
+        "FUN_00537630": "??$fill@PAHH@std@@YAXPAH0ABH@Z",
+        "FUN_0052faa0": "??$copy_backward@PAHPAH@std@@YAPAHPAH00@Z"
+      }
     },
     {
       "name": "Tongas2/CANIMATEDMESH",
@@ -3494,7 +3501,10 @@
       ],
       "target": "build/target/Tongas2/CANIMATEDMESH.obj",
       "source": "src/Tongas2/CANIMATEDMESH.cpp",
-      "category": "engine"
+      "category": "engine",
+      "symbol_mappings": {
+        "FUN_00532320": "?FillVectors@@YAXPAV?$vector@HV?$allocator@H@std@@@std@@0ABV12@@Z"
+      }
     },
     {
       "name": "Tongas2/SKINNEDANIMATION",
@@ -3611,7 +3621,10 @@
       ],
       "target": "build/target/Tongas2/SOUNDFMOD.obj",
       "source": "src/Tongas2/SOUNDFMOD.cpp",
-      "category": "engine"
+      "category": "engine",
+      "symbol_mappings": {
+        "FUN_00547d20": "?LoadSound@GD5482f0@@QAEXXZ"
+      }
     },
     {
       "name": "Tongas2/ODEWORLD",

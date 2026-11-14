@@ -105,3 +105,47 @@ GD535df0::~GD535df0()
         display->m_47(value);
     }
 }
+
+// FUN_00535be0 (0x00535be0) and FUN_00535cb0 (0x00535cb0): the resizer's two
+// list appenders.  Both take the key plus one or two names by value, walk the
+// node list to its last entry, hang a fresh node behind it and hand the names
+// to the tail node.  The header cannot be extended from this file, so a
+// layout-compatible placeholder carries the bodies: the vtable pointer of
+// TEXTURERESIZER sits at +0 and its node list head at +4.
+class GD535be0
+{
+public:
+    void *m_vptr;
+    TEXTURERESIZERNODE *m_4;
+
+    void Add(int key, std::string name);
+    void Add2(int key, std::string name1, std::string name2);
+};
+
+void GD535be0::Add(int key, std::string name)
+{
+    if (name != "" && key) {
+        TEXTURERESIZERNODE *node = m_4;
+        for (; node->m_4; node = node->m_4)
+            ;
+        TEXTURERESIZERNODE *added = new TEXTURERESIZERNODE();
+        node->m_4 = added;
+        node->m_0 = key;
+        node->m_8.assign(name, 0, std::string::npos);
+        return;
+    }
+}
+
+void GD535be0::Add2(int key, std::string name1, std::string name2)
+{
+    if (name1 != "" && key) {
+        TEXTURERESIZERNODE *node = m_4;
+        while (node->m_4)
+            node = node->m_4;
+        TEXTURERESIZERNODE *added = new TEXTURERESIZERNODE();
+        node->m_4 = added;
+        node->m_0 = key;
+        node->m_8.assign(name1, 0, std::string::npos);
+        node->m_24.assign(name2, 0, std::string::npos);
+    }
+}

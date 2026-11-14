@@ -4,6 +4,8 @@
 // in GUIGENERIC.cpp.
 // This file was built seeing TOKENS' destructor inline.
 #define TOKENS_INLINE_DTOR
+// ...and the string pool's Free as not throwing.
+#define STRINGMANAGER_FREE_NOTHROW
 
 #include "Tongas2/GUIGENERIC.h"
 #include "Tongas2/BONEDMODEL.h"
@@ -81,15 +83,13 @@ void GUIGENERIC::SetSize(const V2 &size)
         if (m_handles[i].IsValid()) {
             OBJECT *copy = (OBJECT *)g_pResources->GetResource(m_handles[i]);
             if (copy) {
-                int attach = m_attach[i];
-                if (attach >= 0) {
-                    if (attach >= GUIGENERIC_MAX && g_pLog)
-                        g_pLog->Error("Error: %s tried to attach himself to resource number %i, id: %i", m_genericMaster->m_name.c_str(), i, attach);
-                    float scale = m_screenPosZ[attach] * ((CAMERA *)g_pCamera)->GetViewSize().x;
+                if (m_attach[i] >= 0) {
+                    if (m_attach[i] >= GUIGENERIC_MAX && g_pLog)
+                        g_pLog->Error("Error: %s tried to attach himself to resource number %i, id: %i", m_genericMaster->m_name.c_str(), i, m_attach[i]);
+                    float scale = m_screenPosZ[m_attach[i]] * ((CAMERA *)g_pCamera)->GetViewSize().x;
                     copy->SetScale(m_scale[i].x * size.x * scale, m_scale[i].y * size.x * scale, m_scale[i].z * size.x * scale);
                 } else {
-                    V2 view = ((CAMERA *)g_pCamera)->GetViewSize();
-                    float scale = m_screenPosZ[i] * view.x;
+                    float scale = m_screenPosZ[i] * ((CAMERA *)g_pCamera)->GetViewSize().x;
                     copy->SetScale(m_scale[i].x * size.x * scale, m_scale[i].y * size.x * scale, m_scale[i].z * size.x * scale);
                 }
             }
@@ -132,7 +132,7 @@ void GUIGENERIC::UpdateAngles()
                     copy->SetRelAngles(m_ang[i]);
                 } else {
                     ANG angles(((CAMERA *)g_pCamera)->m_up, ((CAMERA *)g_pCamera)->m_direction);
-                    angles.SetMatrix(m_ang[i].GetMatrix() * angles.GetMatrix());
+                    angles.SetMatrix(m_ang[i].GetMatrix() * angles.matrix);
                     copy->SetAngles(angles);
                 }
             }

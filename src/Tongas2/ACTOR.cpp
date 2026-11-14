@@ -420,10 +420,14 @@ void ACTOR::SetZSort(const int &zsort)
 void ACTOR::RotateToMove()
 {
     V3 delta = m_position - m_lastPosition;
-    if (m_moveWithScreenZ)
-        delta.z -= ((ACTOR *)g_pCamera)->m_position.z - ((ACTOR *)g_pCamera)->m_lastPosition.z;
-    if (m_moveWithScreenY)
-        delta.y -= ((ACTOR *)g_pCamera)->m_position.y - ((ACTOR *)g_pCamera)->m_lastPosition.y;
+    if (m_moveWithScreenZ) {
+        float dz = ((ACTOR *)g_pCamera)->m_position.z - ((ACTOR *)g_pCamera)->m_lastPosition.z;
+        delta.z -= dz;
+    }
+    if (m_moveWithScreenY) {
+        float dy = ((ACTOR *)g_pCamera)->m_position.y - ((ACTOR *)g_pCamera)->m_lastPosition.y;
+        delta.y -= dy;
+    }
     m_angles.PointAt(delta);
 }
 

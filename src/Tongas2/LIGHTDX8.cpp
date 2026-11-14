@@ -119,7 +119,7 @@ void LIGHTDX8RESOURCE::Update()
         m_drawPosition.z != m_lastPosition.z) {
         m_lastPosition = m_drawPosition;
         AddCounts();
-        V3 position = m_position;
+        V3 position(m_position.x, m_position.y, m_position.z);
         m_light.position = position;
         manager->Invalidate(master->m_lightMask);
     }
@@ -130,11 +130,14 @@ void LIGHTDX8RESOURCE::Update()
         m_134 = m_angles;
         AddCounts();
         m_direction = m_angles.GetDirection();
-        V3 direction = m_direction;
+        V3 direction(m_direction.x, m_direction.y, m_direction.z);
         m_light.direction = direction;
         manager->Invalidate(master->m_lightMask);
         if (master->m_type == 1)
-            g_pRenderer->GetDevice()->SetRenderState(D3DRS_TEXTUREFACTOR, PackColor(m_direction));
+        {
+            int color = PackColor(m_direction);
+            g_pRenderer->GetDevice()->SetRenderState(D3DRS_TEXTUREFACTOR, color);
+        }
     }
 
     if (m_color.r != m_baseColor.r || m_color.g != m_baseColor.g || m_color.b != m_baseColor.b) {
@@ -273,8 +276,8 @@ void LIGHTDX8MANAGER::LightVertex(const LIGHTRGB &ambient, const V3I &color, con
             break;
         LIGHTDX8RESOURCE *light = (LIGHTDX8RESOURCE *)g_pResources->GetResource(*it);
         if (light && (((LIGHTMASTER *)light->m_master)->m_lightMask & mask)) {
-            float dot = -(normal.x * light->m_direction.x + normal.y * light->m_direction.y +
-                          normal.z * light->m_direction.z);
+            const V3 &dir = light->m_direction;
+            float dot = -(normal.x * dir.x + normal.y * dir.y + normal.z * dir.z);
             if (dot > 0.0f) {
                 unsigned int r = (unsigned int)(light->GetColor().r * dot);
                 unsigned int g = (unsigned int)(light->GetColor().g * dot);

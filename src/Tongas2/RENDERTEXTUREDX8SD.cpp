@@ -7,6 +7,7 @@
 #include "Tongas2/APPWINDOW.h"
 #include "Tongas2/RESOURCES.h"
 #include "Tongas2/RENDERTEXTURE.h"
+#include "Tongas2/TEXTUREDX8SD.h"
 
 int SafeSprintf(char *buf, const char *format, ...);
 
@@ -38,7 +39,12 @@ public:
 
     virtual ~RENDERTEXTUREDX8SDMASTER();
 
-    int m_8c;
+    // Retail 0x5399e0: drops the scratch texture the master owns and
+    // reports that it did.
+    virtual bool ReleaseScratchTexture();
+
+    // The scratch texture, at +0x8c; the master is 0x90 bytes long.
+    TEXTUREDX8SDTEXTURE *m_8c;
 };
 
 class RENDERTEXTUREDX8SDMANAGER : public RENDERTEXTUREMANAGER
@@ -59,11 +65,6 @@ RESOURCEMASTER *RENDERTEXTUREDX8SDMANAGER::CreateMaster(const char *name)
 void *CreateRENDERTEXTUREDX8SD()
 {
     return new RENDERTEXTUREDX8SDMANAGER();
-}
-
-int GetRENDERTEXTUREFormat()
-{
-    return 0;
 }
 
 // The engine's renderer base; only its destructor matters here.
@@ -151,3 +152,29 @@ void *DisplayFieldEC()
 {
     return *(void **)((char *)g_pDisplay + 0xec);
 }
+
+// Retail 0x5399e0: RENDERTEXTUREDX8SDMASTER::ReleaseScratchTexture. The
+// master owns one scratch texture at +0x8c; it is destroyed and the word
+// cleared, and the call always succeeds.
+bool RENDERTEXTUREDX8SDMASTER::ReleaseScratchTexture()
+{
+    if (m_8c)
+    {
+        delete m_8c;
+        m_8c = 0;
+    }
+    return true;
+}
+
+// Retail 0x539a10: RENDERTEXTUREDX8SDMASTER::~RENDERTEXTUREDX8SDMASTER.
+// The retail symbol for it is the stale "?GetRENDERTEXTUREFormat@@YAHXZ";
+// the scalar deleting destructor that follows it is retail 0x539a80.
+RENDERTEXTUREDX8SDMASTER::~RENDERTEXTUREDX8SDMASTER()
+{
+    if (m_8c)
+    {
+        delete m_8c;
+        m_8c = 0;
+    }
+}
+

@@ -5,8 +5,10 @@
 // cannot cut the target short. Apply's extent includes its switch tables.
 #include "Tongas2/SHADERDX8SD.h"
 
+#include "Tongas2/MATHS.h"
 #include "Tongas2/SAFEINDEX.h"
 #include <vector>
+#include <memory>
 
 // Same layout as PATHREPOSITORY's PATHREPOPOINT (two 12-byte vectors).
 struct PATHREPOPOINT
@@ -58,6 +60,9 @@ template SHADERTYPE24 *std::uninitialized_copy(
     SHADERTYPE24 *, SHADERTYPE24 *, SHADERTYPE24 *);
 template SHADERTYPE2C *std::uninitialized_copy(
     SHADERTYPE2C *, SHADERTYPE2C *, SHADERTYPE2C *);
+// The retail fill helpers call the allocator flavour of _Uninit_fill_n
+// (five arguments: the allocator is passed by reference); the wrappers
+// below instantiate it.
 template void std::uninitialized_fill_n(
     SHADERTYPE20 *, unsigned int, const SHADERTYPE20 &);
 template void std::uninitialized_fill_n(
@@ -261,16 +266,16 @@ class SHADERLIST
 public:
     bool Any();
 
-    char pad_0[0x78];
-    std::vector<SHADERITEM *> m_78;
+    // The retail array lives at +0x78; the vector object itself sits at +0x74
+    // (its allocator takes the first four bytes).
+    char pad_0[0x74];
+    std::vector<SHADERITEM *> m_74;
 };
 
 bool SHADERLIST::Any()
 {
-    if (m_78.empty())
-        return false;
-    for (unsigned int i = 0; i < m_78.size(); i++) {
-        SHADERITEM *item = m_78[i];
+    for (unsigned int i = 0; i < m_74.size(); i++) {
+        SHADERITEM *item = m_74[i];
         if (item->m_98 && item->m_98->m_10b)
             return true;
     }
@@ -313,12 +318,53 @@ void SHADERSETTERLIST::SetB(void *value, unsigned int index)
 }
 
 
+// The setter list of a second shader type: its vector object starts at
+// +0x68, so the element array is at +0x6c (retail 0x53b6b0).
+class GD53b6b0
+{
+public:
+    void Set(unsigned int index, char value);
+
+    char pad_0[0x68];
+    std::vector<SHADERSETTERITEM *> m_68;
+};
+
+void GD53b6b0::Set(unsigned int index, char value)
+{
+    m_68[index]->m_0 = value;
+}
+
+
 // Releases the object held at +0x10 through the helper at +0x8.
 class M40TARGET
 {
 public:
     void m_40(void *item);
 };
+
+// The constructor at 0x53ca70: a flag byte, five cleared pointers and two
+// members the constructor leaves alone (floats at +0x18 and +0x1c).
+class GD53ca70
+{
+public:
+    GD53ca70(void *a, void *b);
+
+    bool m_0;
+    void *m_4;
+    void *m_8;
+    void *m_c;
+    void *m_10;
+    void *m_14;
+    float m_18;
+    float m_1c;
+    void *m_20;
+    void *m_24;
+};
+
+GD53ca70::GD53ca70(void *a, void *b)
+    : m_0(true), m_4(0), m_8(a), m_c(b), m_10(0), m_14(0), m_20(0), m_24(0)
+{
+}
 
 class GD53caa0
 {
@@ -361,4 +407,133 @@ void GD53cac0::Set(void *item)
 {
     if (item)
         m_result = m_obj->m_58(item);
+}
+
+
+// The three raw-array fill helpers at the end of the retail unit
+// (0x53de00, 0x53de30 and 0x53de60). Each one fills `count` elements of
+// its own element size and returns the end of the filled range; the
+// allocator sits at offset 0, so the helper is handed the object itself.
+class GD53de00
+{
+public:
+    SHADERTYPE20 *Fill(SHADERTYPE20 *first, int count, const SHADERTYPE20 &val);
+
+    std::allocator<SHADERTYPE20> m_alloc;
+};
+
+SHADERTYPE20 *GD53de00::Fill(SHADERTYPE20 *first, int count, const SHADERTYPE20 &val)
+{
+    std::_Uninitialized_fill_n(first, (unsigned int)count, val, m_alloc);
+    return first + count;
+}
+
+class GD53de30
+{
+public:
+    SHADERTYPE24 *Fill(SHADERTYPE24 *first, int count, const SHADERTYPE24 &val);
+
+    std::allocator<SHADERTYPE24> m_alloc;
+};
+
+SHADERTYPE24 *GD53de30::Fill(SHADERTYPE24 *first, int count, const SHADERTYPE24 &val)
+{
+    std::_Uninitialized_fill_n(first, (unsigned int)count, val, m_alloc);
+    return first + count;
+}
+
+class GD53de60
+{
+public:
+    SHADERTYPE2C *Fill(SHADERTYPE2C *first, int count, const SHADERTYPE2C &val);
+
+    std::allocator<SHADERTYPE2C> m_alloc;
+};
+
+SHADERTYPE2C *GD53de60::Fill(SHADERTYPE2C *first, int count, const SHADERTYPE2C &val)
+{
+    std::_Uninitialized_fill_n(first, (unsigned int)count, val, m_alloc);
+    return first + count;
+}
+
+
+// The two vector setters at 0x53d5d0 and 0x53d630: they append a value
+// when the index is -1, otherwise they overwrite the entry at that index.
+// The element type is the engine's 12-byte V3.
+class GD53d5d0
+{
+public:
+    GD53d5d0();
+    void SetA(const V3 *value, int index);
+    void SetB(const V3 *value, int index);
+    void SetC(unsigned int a, unsigned int b, unsigned int c, int d, int index);
+    void SetD(unsigned int a, unsigned int b, unsigned int c, int index);
+
+    void *m_0;
+    void *m_4;
+    void *m_8;
+    void *m_c;
+    void *m_10;
+    void *m_14;
+    std::vector<int> m_18;
+    std::vector<int> m_28;
+    std::vector<V3> m_38;
+    std::vector<V3> m_48;
+    std::vector<int> m_58;
+    std::vector<int> m_68;
+    std::vector<int> m_78;
+    std::vector<int> m_88;
+    std::vector<int> m_98;
+};
+
+// The constructor at 0x53d520: it clears the six plain pointers and lets
+// the ten vectors clear their own storage.
+GD53d5d0::GD53d5d0()
+    : m_0(0), m_4(0), m_8(0), m_c(0), m_10(0), m_14(0)
+{
+}
+
+void GD53d5d0::SetA(const V3 *value, int index)
+{
+    if (index == -1) {
+        m_38.push_back(*value);
+    } else if (index < (int)m_38.size()) {
+        m_38[index] = *value;
+    }
+}
+
+void GD53d5d0::SetB(const V3 *value, int index)
+{
+    if (index == -1) {
+        m_48.push_back(*value);
+    } else if (index < (int)m_48.size()) {
+        m_48[index] = *value;
+    }
+}
+
+// The four parallel integer lists at +0x68, +0x78, +0x88 and +0x98.
+// An index of -1 appends, any other index overwrites.
+void GD53d5d0::SetC(unsigned int a, unsigned int b, unsigned int c, int d, int index)
+{
+    if (index == -1) {
+        m_98.push_back(d);
+        m_68.push_back(a);
+        m_78.push_back(b);
+        m_88.push_back(c);
+    } else {
+        if (index < (int)m_68.size()) {
+            m_68[index] = a;
+            m_78[index] = b;
+            m_88[index] = c;
+        }
+        if (index < (int)m_98.size()) {
+            m_98[index] = d;
+        }
+    }
+}
+
+// The thin wrapper at 0x53dab0: it fills in the fourth value itself.
+void GD53d5d0::SetD(unsigned int a, unsigned int b, unsigned int c, int index)
+{
+    SetC(a, b, c, 1, index);
 }

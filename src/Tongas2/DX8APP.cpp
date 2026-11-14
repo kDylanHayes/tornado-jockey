@@ -259,3 +259,260 @@ int GD5091a0::Release()
     }
     return 0;
 }
+
+
+// ---------------------------------------------------------------------------
+// The 12-byte-element helpers of the plugin's vector code.  The retail unit
+// keeps them as separate functions, so they are written as loops here: VC7.1
+// does not inline functions that contain a loop.
+// ---------------------------------------------------------------------------
+
+// 0x509e80: copies one V3 into every element of [first, last).
+void GD509e80(V3 *first, V3 *last, const V3 &value)
+{
+    while (first != last) {
+        *first = value;
+        first++;
+    }
+}
+
+// 0x509ec0: the copy loop the linker folded with the five-argument caller
+// below, so the definition keeps the two unused trailing arguments.
+V3 *GD509ec0(V3 *first, V3 *last, V3 *dest, void *self, void *value2)
+{
+    (void)self;
+    (void)value2;
+    while (first != last) {
+        if (dest)
+            *dest = *first;
+        first++;
+        dest++;
+    }
+    return dest;
+}
+
+// 0x509f00: the V3 flavour of the fill helper at 0x509f70.
+void GD509f00(V3 *dest, unsigned int count, const V3 &value, void *self,
+              const V3 &value2)
+{
+    (void)self;
+    (void)value2;
+    while (count > 0) {
+        if (dest)
+            *dest = value;
+        dest++;
+        count--;
+    }
+}
+
+// 0x50a060: the three-argument wrapper around the copy loop.
+class GD50a060
+{
+public:
+    void CopyRange(V3 *first, V3 *last, V3 *dest);
+};
+
+void GD50a060::CopyRange(V3 *first, V3 *last, V3 *dest)
+{
+    GD509ec0(first, last, dest, this, dest);
+}
+
+// 0x50a860: the destructor of the plugin's buffer holder.
+class GD50a860
+{
+public:
+    ~GD50a860();
+
+    void *m_0;
+    void *m_4;
+    void *m_8;
+    void *m_c;
+    void *m_10;
+};
+
+GD50a860::~GD50a860()
+{
+    m_0 = 0;
+    if (m_8)
+        ::operator delete(m_8);
+    m_8 = 0;
+    m_c = 0;
+    m_10 = 0;
+}
+
+// 0x50b010: frees the buffer of every 16-byte record in [first, last).
+void GD50b010(char *first, char *last)
+{
+    while (first != last) {
+        void *p = *(void **)(first + 4);
+        if (p)
+            ::operator delete(p);
+        *(void **)(first + 4) = 0;
+        *(void **)(first + 8) = 0;
+        *(void **)(first + 0xc) = 0;
+        first += 16;
+    }
+}
+
+
+// ---------------------------------------------------------------------------
+// The plugin's own vector storage.  The three pointers sit where the STL
+// vector keeps them (the compressed allocator pair takes the first word),
+// and the three "Buy" members are the same helper for the three element
+// sizes the plugin uses.
+// ---------------------------------------------------------------------------
+
+class GDVEC
+{
+public:
+    void ThrowLen();
+    bool Buy12(unsigned int capacity);
+    bool Buy64(unsigned int capacity);
+    bool Buy4(unsigned int capacity);
+    void Assign4(unsigned int count, const int &value);
+
+    unsigned char pad_0[4];
+    void *m_first;
+    void *m_end;
+    void *m_last;
+};
+
+// 0x50a900: the "vector<T> too long" thrower.
+void GDVEC::ThrowLen()
+{
+    std::string msg;
+    msg = "vector<T> too long";
+    throw std::length_error(msg);
+}
+
+// 0x50a970: buys room for capacity twelve-byte elements.
+bool GDVEC::Buy12(unsigned int capacity)
+{
+    m_first = 0;
+    m_end = 0;
+    m_last = 0;
+    if (capacity == 0)
+        return false;
+    if (capacity > 0xffffffffu / 12)
+        ThrowLen();
+    V3 *p = (V3 *)::operator new(capacity * 12);
+    m_last = (char *)(p + capacity);
+    m_first = p;
+    m_end = p;
+    return true;
+}
+
+// 0x50a9c0: buys room for capacity sixty-four-byte elements.
+bool GDVEC::Buy64(unsigned int capacity)
+{
+    m_first = 0;
+    m_end = 0;
+    m_last = 0;
+    if (capacity == 0)
+        return false;
+    if (capacity > 0xffffffffu / 64)
+        ThrowLen();
+    DX8APPTYPE40 *p = (DX8APPTYPE40 *)::operator new(capacity * 64);
+    m_last = (char *)(p + capacity);
+    m_first = p;
+    m_end = p;
+    return true;
+}
+
+// 0x50ad50: buys room for capacity four-byte elements.
+bool GDVEC::Buy4(unsigned int capacity)
+{
+    m_first = 0;
+    m_end = 0;
+    m_last = 0;
+    if (capacity == 0)
+        return false;
+    if (capacity > 0xffffffffu / 4)
+        ThrowLen();
+    int *p = (int *)::operator new(capacity * 4);
+    m_last = (char *)(p + capacity);
+    m_first = p;
+    m_end = p;
+    return true;
+}
+
+// 0x50a3c0: the wrapper that fills a run of sixty-four-byte records.  The
+// retail call site pushes five arguments, so the helper keeps the two the
+// linker left over.  The retail keeps the helper out of line, so it is
+// marked noinline here as well.
+__declspec(noinline) void GD50a3c0Fill(DX8APPTYPE40 *first, unsigned int count,
+                                       const DX8APPTYPE40 *value, void *self,
+                                       const void *value2)
+{
+    (void)self;
+    (void)value2;
+    while (count > 0) {
+        if (first)
+            *first = *value;
+        first++;
+        count--;
+    }
+}
+
+class GD50a3c0
+{
+public:
+    char *Fill(DX8APPTYPE40 *first, unsigned int count,
+               const DX8APPTYPE40 *value);
+};
+
+char *GD50a3c0::Fill(DX8APPTYPE40 *first, unsigned int count,
+                     const DX8APPTYPE40 *value)
+{
+    GD50a3c0Fill(first, count, value, this, value);
+    return (char *)first + count * 64;
+}
+
+// 0x50b2c0: fills a run of four-byte records with one value.
+void GDVEC::Assign4(unsigned int count, const int &value)
+{
+    m_first = 0;
+    m_end = 0;
+    m_last = 0;
+    if (count == 0)
+        return;
+    if (count > 0xffffffffu / 4)
+        ThrowLen();
+    unsigned int bytes = count * 4;
+    int *p = (int *)::operator new(bytes);
+    m_last = (char *)(p + count);
+    m_first = p;
+    m_end = p;
+    int *q = p;
+    while (count != 0) {
+        *q = value;
+        q++;
+        count--;
+    }
+    m_end = (char *)p + bytes;
+}
+
+// 0x50a1f0: looks for the record whose id matches the one held here.
+class GD50a1f0
+{
+public:
+    unsigned int Find();
+
+    int m_value;
+    int m_pad;
+    char *m_begin;
+    char *m_end;
+};
+
+unsigned int GD50a1f0::Find()
+{
+    unsigned int i = 0;
+    char *first = m_begin;
+    while (first != 0 && i < (unsigned int)((m_end - first) >> 2)) {
+        char *elem = *(char **)(m_begin + i * 4);
+        if (*(int *)(elem + 0x120) == m_value)
+            return i;
+        i++;
+    }
+    return 0;
+}

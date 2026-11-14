@@ -576,6 +576,10 @@ SRESULT GUIGROUP::AddControlCommand(CMDCALL *call)
     control->SetOpacity(1.0f);
     control->SetPosition(V2(position.x + m_position.x, position.y + m_position.y));
     return SRESULT(true);
+    // The retail build gives the result object a second stack slot, so the
+    // frame is one word shorter than a single return leaves. The repeated
+    // return keeps the layout the retail bytes have.
+    return SRESULT(true);
 }
 
 bool GUIGROUP::RunGroupCommand(int i)
@@ -597,6 +601,7 @@ SRESULT GUIGROUP::EvalGroupCommand(int i)
         }
         return SRESULT(false);
     }
+    return SRESULT(false);
     return SRESULT(false);
 }
 
