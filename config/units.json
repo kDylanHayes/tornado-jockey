@@ -3737,7 +3737,30 @@
       "symbol_mappings": {
         "?SafeSwprintf@@YAHPAGPBGZZ": "?SafeSwprintf@@YAHPA_WPB_WZZ",
         "?GetUnicodeString@SRESULT@@QBEPBGPBG@Z": "?GetUnicodeString@SRESULT@@QBEPB_WPB_W@Z",
-        "?SetValue@SRESULT@@QAEXPBG@Z": "?SetValue@SRESULT@@QAEXPB_W@Z"
+        "?SetValue@SRESULT@@QAEXPBG@Z": "?SetValue@SRESULT@@QAEXPB_W@Z",
+        "FUN_00426b60": "??0GD00426b60@@QAE@XZ",
+        "FUN_0041c0b0": "??0GD0041c0b0@@QAE@XZ",
+        "FUN_00422e60": "??0GD00422e60@@QAE@XZ",
+        "FUN_0040ce80": "??0GD0040ce80@@QAE@XZ",
+        "FUN_0040a250": "??0GD0040a250@@QAE@XZ",
+        "FUN_00409840": "??0GD00409840@@QAE@XZ",
+        "FUN_0041fe50": "??0GD0041fe50@@QAE@XZ",
+        "FUN_0042b910": "??0GD0042b910@@QAE@XZ",
+        "FUN_0042e7b0": "??0GD0042e7b0@@QAE@XZ",
+        "FUN_00432750": "??0GD00432750@@QAE@XZ",
+        "FUN_00421550": "??0GD00421550@@QAE@XZ",
+        "FUN_00408d40": "??0GD00408d40@@QAE@XZ",
+        "FUN_00439430": "??0GD00439430@@QAE@XZ",
+        "FUN_0043b7d0": "??0GD0043b7d0@@QAE@XZ",
+        "FUN_0042dfe0": "??0GD0042dfe0@@QAE@XZ",
+        "FUN_00428e80": "??0GD00428e80@@QAE@XZ",
+        "FUN_0042a9c0": "??0GD0042a9c0@@QAE@XZ",
+        "FUN_00429360": "??0GD00429360@@QAE@XZ",
+        "FUN_00432f30": "??0GD00432f30@@QAE@XZ",
+        "FUN_0042ffe0": "??0GD0042ffe0@@QAE@XZ",
+        "FUN_0043b6a0": "??0GD0043b6a0@@QAE@XZ",
+        "FUN_0043c110": "??0GD0043c110@@QAE@XZ",
+        "FUN_00420e10": "??0GD00420e10@@QAE@XZ"
       }
     },
     {

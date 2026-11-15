@@ -6240,3 +6240,306 @@ void *GD4039f0::Find()
         return 0;
     return g_pGD4477d0Global->Find((char *)g_pScriptRoot + 0x1c);
 }
+
+// The 0x40de30 factory block is generated below by build/gen_factories.py.
+
+// --- generated 0x40de30 factories ---
+class GD00426b60
+{
+public:
+    GD00426b60();
+
+    char pad_fc4[0xfc4];
+};
+
+void *Create0040de30()
+{
+    return new GD00426b60;
+}
+
+class GD0041c0b0
+{
+public:
+    GD0041c0b0();
+
+    char pad_2c58[0x2c58];
+};
+
+void *Create0040de90()
+{
+    return new GD0041c0b0;
+}
+
+class GD00422e60
+{
+public:
+    GD00422e60();
+
+    char pad_13a0[0x13a0];
+};
+
+void *Create0040def0()
+{
+    return new GD00422e60;
+}
+
+class GD0040ce80
+{
+public:
+    GD0040ce80();
+
+    char pad_4294[0x4294];
+};
+
+void *Create0040df50()
+{
+    return new GD0040ce80;
+}
+
+class GD0040a250
+{
+public:
+    GD0040a250();
+
+    char pad_ddc[0xddc];
+};
+
+void *Create0040dfb0()
+{
+    return new GD0040a250;
+}
+
+class GD00409840
+{
+public:
+    GD00409840();
+
+    char pad_1308[0x1308];
+};
+
+void *Create0040e010()
+{
+    return new GD00409840;
+}
+
+class GD0041fe50
+{
+public:
+    GD0041fe50();
+
+    char pad_d0c[0xd0c];
+};
+
+void *Create0040e070()
+{
+    return new GD0041fe50;
+}
+
+class GD0042b910
+{
+public:
+    GD0042b910();
+
+    char pad_e618[0xe618];
+};
+
+void *Create0040e0d0()
+{
+    return new GD0042b910;
+}
+
+class GD0042e7b0
+{
+public:
+    GD0042e7b0();
+
+    char pad_d08[0xd08];
+};
+
+void *Create0040e130()
+{
+    return new GD0042e7b0;
+}
+
+class GD00432750
+{
+public:
+    GD00432750();
+
+    char pad_cf8[0xcf8];
+};
+
+void *Create0040e190()
+{
+    return new GD00432750;
+}
+
+class GD00421550
+{
+public:
+    GD00421550();
+
+    char pad_ee4[0xee4];
+};
+
+void *Create0040e1f0()
+{
+    return new GD00421550;
+}
+
+class GD00408d40
+{
+public:
+    GD00408d40();
+
+    char pad_cd0[0xcd0];
+};
+
+void *Create0040e250()
+{
+    return new GD00408d40;
+}
+
+class GD00439430
+{
+public:
+    GD00439430();
+
+    char pad_1900[0x1900];
+};
+
+void *Create0040e2b0()
+{
+    return new GD00439430;
+}
+
+class GD0043b7d0
+{
+public:
+    GD0043b7d0();
+
+    char pad_13a4[0x13a4];
+};
+
+void *Create0040e310()
+{
+    return new GD0043b7d0;
+}
+
+class GD0042dfe0
+{
+public:
+    GD0042dfe0();
+
+    char pad_ee8[0xee8];
+};
+
+void *Create0040e370()
+{
+    return new GD0042dfe0;
+}
+
+class GD00428e80
+{
+public:
+    GD00428e80();
+
+    char pad_f44[0xf44];
+};
+
+void *Create0040e3d0()
+{
+    return new GD00428e80;
+}
+
+class GD0042a9c0
+{
+public:
+    GD0042a9c0();
+
+    char pad_1c10[0x1c10];
+};
+
+void *Create0040e430()
+{
+    return new GD0042a9c0;
+}
+
+class GD00429360
+{
+public:
+    GD00429360();
+
+    char pad_1158[0x1158];
+};
+
+void *Create0040e490()
+{
+    return new GD00429360;
+}
+
+class GD00432f30
+{
+public:
+    GD00432f30();
+
+    char pad_1120[0x1120];
+};
+
+void *Create0040e4f0()
+{
+    return new GD00432f30;
+}
+
+class GD0042ffe0
+{
+public:
+    GD0042ffe0();
+
+    char pad_1194[0x1194];
+};
+
+void *Create0040e550()
+{
+    return new GD0042ffe0;
+}
+
+class GD0043b6a0
+{
+public:
+    GD0043b6a0();
+
+    char pad_ed8[0xed8];
+};
+
+void *Create0040e5b0()
+{
+    return new GD0043b6a0;
+}
+
+class GD0043c110
+{
+public:
+    GD0043c110();
+
+    char pad_f20[0xf20];
+};
+
+void *Create0040e610()
+{
+    return new GD0043c110;
+}
+
+class GD00420e10
+{
+public:
+    GD00420e10();
+
+    char pad_ce8[0xce8];
+};
+
+void *Create0040e670()
+{
+    return new GD00420e10;
+}
+
