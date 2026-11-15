@@ -334,7 +334,7 @@ void SHADERSETTERITEM::SetB(void *texture)
 class GD543030
 {
 public:
-    void Init(int a, int b);
+    GD543030(int a, int b);
 
     bool m_0;
     char pad_1[3];
@@ -349,7 +349,7 @@ public:
     int m_3c;
 };
 
-void GD543030::Init(int a, int b)
+GD543030::GD543030(int a, int b)
 {
     m_4 = a;
     m_0 = true;
@@ -367,7 +367,7 @@ void GD543030::Init(int a, int b)
 class GD540fe0
 {
 public:
-    void Init(int a, int b, int c);
+    GD540fe0(int a, int b, int c);
 
     bool m_0;
     char pad_1[3];
@@ -384,7 +384,7 @@ public:
     int m_b8;
 };
 
-void GD540fe0::Init(int a, int b, int c)
+GD540fe0::GD540fe0(int a, int b, int c)
 {
     m_4 = a;
     m_c = c;
