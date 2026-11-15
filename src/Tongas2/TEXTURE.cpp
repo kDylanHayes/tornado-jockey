@@ -22,6 +22,24 @@ TEXTUREDX8SDTEXTURE::~TEXTUREDX8SDTEXTURE()
     }
 }
 
+// 0x00534d70. The last member's TEXSTAGE constructor runs after every scalar
+// initializer, so m_34 is the only field left to the body.
+TEXTUREDX8SDTEXTURE::TEXTUREDX8SDTEXTURE(bool scratch)
+    : m_texture(0)
+    , m_04(0)
+    , m_08()
+    , m_24(false)
+    , m_25(false)
+    , m_26(false)
+    , m_surface(0)
+    , m_2c(scratch)
+    , m_30(-1)
+    , m_38(true)
+    , m_39(false)
+{
+    m_34 = -1;
+}
+
 void CTEXTURE::ConvertToFormat()
 {
 }

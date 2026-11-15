@@ -80,19 +80,19 @@ void GUIGENERIC::SetSize(const V2 &size)
 {
     m_size = size;
     for (int i = 0; i < GUIGENERIC_MAX; i++) {
-        if (m_handles[i].IsValid()) {
-            OBJECT *copy = (OBJECT *)g_pResources->GetResource(m_handles[i]);
-            if (copy) {
-                if (m_attach[i] >= 0) {
-                    if (m_attach[i] >= GUIGENERIC_MAX && g_pLog)
-                        g_pLog->Error("Error: %s tried to attach himself to resource number %i, id: %i", m_genericMaster->m_name.c_str(), i, m_attach[i]);
-                    float scale = m_screenPosZ[m_attach[i]] * ((CAMERA *)g_pCamera)->GetViewSize().x;
-                    copy->SetScale(m_scale[i].x * size.x * scale, m_scale[i].y * size.x * scale, m_scale[i].z * size.x * scale);
-                } else {
-                    float scale = m_screenPosZ[i] * ((CAMERA *)g_pCamera)->GetViewSize().x;
-                    copy->SetScale(m_scale[i].x * size.x * scale, m_scale[i].y * size.x * scale, m_scale[i].z * size.x * scale);
-                }
-            }
+        if (!m_handles[i].IsValid())
+            continue;
+        OBJECT *copy = (OBJECT *)g_pResources->GetResource(m_handles[i]);
+        if (!copy)
+            continue;
+        if (m_attach[i] >= 0) {
+            if (m_attach[i] >= GUIGENERIC_MAX && g_pLog)
+                g_pLog->Error("Error: %s tried to attach himself to resource number %i, id: %i", m_genericMaster->m_name.c_str(), i, m_attach[i]);
+            float scale = m_screenPosZ[m_attach[i]] * ((CAMERA *)g_pCamera)->GetViewSize().x;
+            copy->SetScale(m_scale[i].x * size.x * scale, m_scale[i].y * size.x * scale, m_scale[i].z * size.x * scale);
+        } else {
+            float scale = m_screenPosZ[i] * ((CAMERA *)g_pCamera)->GetViewSize().x;
+            copy->SetScale(m_scale[i].x * size.x * scale, m_scale[i].y * size.x * scale, m_scale[i].z * size.x * scale);
         }
     }
     m_cameraFov = ((CAMERA *)g_pCamera)->m_fov;
@@ -132,7 +132,7 @@ void GUIGENERIC::UpdateAngles()
                     copy->SetRelAngles(m_ang[i]);
                 } else {
                     ANG angles(((CAMERA *)g_pCamera)->m_up, ((CAMERA *)g_pCamera)->m_direction);
-                    angles.SetMatrix(m_ang[i].GetMatrix() * angles.matrix);
+                    angles.SetMatrix(m_ang[i].GetMatrix() * angles.GetMatrix());
                     copy->SetAngles(angles);
                 }
             }

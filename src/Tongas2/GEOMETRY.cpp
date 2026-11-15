@@ -110,12 +110,16 @@ float SEGMENT3::DistanceSq(const V3 &point, float *t)
     return Dot(d, d);
 }
 
-V3 SEGMENT3::PointAt(const float &t)
+// Retail calls this out of line from CollideSphereSegment, so it is kept
+// out of line here too.
+__declspec(noinline) V3 SEGMENT3::PointAt(const float &t)
 {
     return start + dir * t;
 }
 
-float SEGMENT3::Distance(const V3 &point, float *t)
+// Retail calls this out of line from CollideCapsuleSphere and
+// CollideBoxSegment.
+__declspec(noinline) float SEGMENT3::Distance(const V3 &point, float *t)
 {
     return (float)sqrt(DistanceSq(point, t));
 }
@@ -1090,7 +1094,8 @@ V3 *OOBOX3::GetCorners()
     return corners;
 }
 
-PLANE *OOBOX3::GetPlanes()
+// Retail calls this out of line from CollideSphereBox and CollideBoxSegment.
+__declspec(noinline) PLANE *OOBOX3::GetPlanes()
 {
     if (planesDirty)
         UpdatePlanes();

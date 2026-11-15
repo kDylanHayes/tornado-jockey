@@ -142,14 +142,9 @@ void GD5479c0::Stop()
     SOUND::Stop();
     GD5482f0 *master = (GD5482f0 *)m_master;
     if (master->m_singleInstance)
-    {
         --master->m_b4;
-        if (master->m_b4 > 0)
-        {
-            m_424 = -1;
-            return;
-        }
-    }
+    if (master->m_singleInstance && master->m_b4 > 0)
+        goto release;
     if (master->m_stream)
     {
         FSOUND_Stream_Stop(master->m_ac);
@@ -159,6 +154,9 @@ void GD5479c0::Stop()
     }
     FSOUND_StopSound(m_424);
     master->m_b0 = -1;
+    m_424 = -1;
+    return;
+release:
     m_424 = -1;
 }
 

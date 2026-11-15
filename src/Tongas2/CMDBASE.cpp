@@ -557,135 +557,127 @@ SRESULT CMDBASE::SetAttribute(CMDCALL *call)
         }
         if (p->isArray && m_arraySize < (int)index + 1)
             m_arraySize = index + 1;
-        const char *token = call->tokens->GetToken(i + valueAt);
         switch (p->type) {
         case PROP_INT:
-            SET_PROP(int, atoi(token));
+            SET_PROP(int, atoi(call->tokens->GetToken(i + valueAt)));
             break;
         case PROP_ENUM: {
-            int value = FindEnum(token, p->names);
+            int value = FindEnum(call->tokens->GetToken(i + valueAt), p->names);
             if (value < 0)
                 break;
             SET_PROP(int, value);
             break;
         }
         case PROP_BOOL:
-            SET_PROP(bool, atoi(token) != 0);
+            SET_PROP(bool, atoi(call->tokens->GetToken(i + valueAt)) != 0);
             break;
         case PROP_FLOAT:
-            SET_PROP(float, (float)atof(token));
+            SET_PROP(float, (float)atof(call->tokens->GetToken(i + valueAt)));
             break;
         case PROP_CWSTRING:
             if (p->setter) {
                 UNICODESTRING text;
-                text.FromAnsi(token);
+                text.FromAnsi(call->tokens->GetToken(i + valueAt));
                 if ((unsigned)p->count > 1)
                     (this->*PROP_SET_AT(CWSTRING, p))((int)index, CWSTRING(text.c_str()));
                 else
                     (this->*PROP_SET(CWSTRING, p))(CWSTRING(text.c_str()));
             } else
-                PROP_VALUE(CWSTRING, this, p, index).FromAnsi(token);
+                PROP_VALUE(CWSTRING, this, p, index).FromAnsi(call->tokens->GetToken(i + valueAt));
             break;
         case PROP_UNICODESTRING:
             if (p->setter) {
                 UNICODESTRING text;
-                text.FromAnsi(token);
+                text.FromAnsi(call->tokens->GetToken(i + valueAt));
                 if ((unsigned)p->count > 1)
                     (this->*PROP_SET_AT(UNICODESTRING, p))((int)index, text);
                 else
                     (this->*PROP_SET(UNICODESTRING, p))(text);
             } else
-                PROP_VALUE(UNICODESTRING, this, p, index).FromAnsi(token);
+                PROP_VALUE(UNICODESTRING, this, p, index).FromAnsi(call->tokens->GetToken(i + valueAt));
             break;
         case PROP_WCHARS:
             if (p->setter) {
                 FIXEDWSTRING<0x200> text;
-                text.FromAnsi(token);
+                text.FromAnsi(call->tokens->GetToken(i + valueAt));
                 if ((unsigned)p->count > 1)
                     (this->*PROP_SET_AT(FIXEDWSTRING<0x200>, p))((int)index, text);
                 else
                     (this->*PROP_SET(FIXEDWSTRING<0x200>, p))(text);
             } else
-                PROP_VALUE(FIXEDWSTRING<0x200>, this, p, index).FromAnsi(token);
+                PROP_VALUE(FIXEDWSTRING<0x200>, this, p, index).FromAnsi(call->tokens->GetToken(i + valueAt));
             break;
         case PROP_CSTRING:
             if (p->setter) {
-                STRING text(token);
+                STRING text(call->tokens->GetToken(i + valueAt));
                 if ((unsigned)p->count > 1)
                     (this->*PROP_SET_AT(CSTRING, p))((int)index, CSTRING(text.c_str()));
                 else
                     (this->*PROP_SET(CSTRING, p))(CSTRING(text.c_str()));
             } else
-                PROP_VALUE(CSTRING, this, p, index) = token;
+                PROP_VALUE(CSTRING, this, p, index) = call->tokens->GetToken(i + valueAt);
             break;
         case PROP_STRING:
             if (p->setter) {
-                STRING text(token);
+                STRING text(call->tokens->GetToken(i + valueAt));
                 if ((unsigned)p->count > 1)
                     (this->*PROP_SET_AT(STRING, p))((int)index, text);
                 else
                     (this->*PROP_SET(STRING, p))(text);
             } else
-                PROP_VALUE(STRING, this, p, index) = token;
+                PROP_VALUE(STRING, this, p, index) = call->tokens->GetToken(i + valueAt);
             break;
         case PROP_CHARS:
             if (p->setter) {
-                FIXEDSTRING<0x200> text(token);
+                FIXEDSTRING<0x200> text(call->tokens->GetToken(i + valueAt));
                 if ((unsigned)p->count > 1)
                     (this->*PROP_SET_AT(FIXEDSTRING<0x200>, p))((int)index, text);
                 else
                     (this->*PROP_SET(FIXEDSTRING<0x200>, p))(text);
             } else
-                PROP_VALUE(FIXEDSTRING<0x200>, this, p, index) = token;
+                PROP_VALUE(FIXEDSTRING<0x200>, this, p, index) = call->tokens->GetToken(i + valueAt);
             break;
-        case PROP_V3:
-            if (p->setter) {
-                V3 v(0.0f, 0.0f, 0.0f);
-                sscanf(token, "%f %f %f", &v.x, &v.y, &v.z);
-                if ((unsigned)p->count > 1)
-                    (this->*PROP_SET_AT(V3, p))((int)index, v);
-                else
-                    (this->*PROP_SET(V3, p))(v);
-            } else {
-                V3 &v = PROP_VALUE(V3, this, p, index);
-                sscanf(token, "%f %f %f", &v.x, &v.y, &v.z);
-            }
+        case PROP_V3: {
+            V3 v(0.0f, 0.0f, 0.0f);
+            sscanf(call->tokens->GetToken(i + valueAt), "%f %f %f", &v.x, &v.y, &v.z);
+            SET_PROP(V3, v);
             break;
+        }
         case PROP_V2:
             if (p->setter) {
                 V2 v(0.0f, 0.0f);
-                sscanf(token, "%f %f", &v.x, &v.y);
+                sscanf(call->tokens->GetToken(i + valueAt), "%f %f", &v.x, &v.y);
                 if ((unsigned)p->count > 1)
                     (this->*PROP_SET_AT(V2, p))((int)index, v);
                 else
                     (this->*PROP_SET(V2, p))(v);
             } else {
                 V2 &v = PROP_VALUE(V2, this, p, index);
-                sscanf(token, "%f %f", &v.x, &v.y);
+                sscanf(call->tokens->GetToken(i + valueAt), "%f %f", &v.x, &v.y);
             }
             break;
         case PROP_ANG: {
             float x, y, z;
-            sscanf(token, "%f %f %f", &x, &y, &z);
+            sscanf(call->tokens->GetToken(i + valueAt), "%f %f %f", &x, &y, &z);
             SET_PROP(ANG, ANG(x, y, z));
             break;
         }
         case PROP_RGB:
             if (p->setter) {
                 RGB c;
-                sscanf(token, "%d %d %d", &c.r, &c.g, &c.b);
+                sscanf(call->tokens->GetToken(i + valueAt), "%d %d %d", &c.r, &c.g, &c.b);
                 if ((unsigned)p->count > 1)
                     (this->*PROP_SET_AT(RGB, p))((int)index, c);
                 else
                     (this->*PROP_SET(RGB, p))(c);
             } else {
                 RGB &c = PROP_VALUE(RGB, this, p, index);
-                sscanf(token, "%d %d %d", &c.r, &c.g, &c.b);
+                sscanf(call->tokens->GetToken(i + valueAt), "%d %d %d", &c.r, &c.g, &c.b);
             }
             break;
         case PROP_TEXTURE: {
             TOKENS parts;
-            if (!parts.Parse(STRING(token), 0) || parts.m_count != 2)
+            if (!parts.Parse(STRING(call->tokens->GetToken(i + valueAt)), 0) || parts.m_count != 2)
                 return SRESULT(false);
             if (p->setter) {
                 SRTEXTURE t;

@@ -1983,3 +1983,32 @@ GenerateContact(int in_Flags, dContactGeom* in_Contacts, int in_Stride,
 
 }
 
+// ---------------------------------------------------------------------------
+// Matching residue for this unit (docs/image-patches.md,
+// config/image_patches.txt):
+//
+//   ?ClipConvexPolygonAgainstPlane (0x0059d640, 0x6ae)
+//       0x0059dc48-0x0059dc57 is an opaque image run that replaces 16 bytes of
+//       the clip loop.  Every other byte, and every relocation name/addend, is
+//       byte-identical to the target object.
+//
+//   ?dCollideTTL (0x0059e400, 0x2a35)
+//       0x005a036d-0x005a037c is the same kind of opaque run, and it also costs
+//       the target object six relocations inside the following straight-line
+//       arithmetic (ours 0x1f8a/0x1fa0/0x1fb1/0x1fc2/0x1fd3/0x1fdd):
+//       __real@0000000000000000 (image 0x006595a8) and
+//       __real@bff0000000000000 (image 0x00679660).  Everything else matches.
+//
+// Both runs are image watermarks, so no source can reproduce them; the unit
+// stays partial by policy.
+//
+// Delinker pairing: these two data symbols are declared without a size, so the
+// delinked target object drops the operand offsets that our object keeps.
+// Giving them their real sizes in config/symbols.txt makes the
+// ColCache+4/+8/+12 and _AABBTreeCollider+4/+0x14/+0x18 operands pair, which
+// removes the remaining DIFF_ARG_MISMATCH rows outside the watermark:
+//   ?_AABBTreeCollider@dxTriMesh@@2VAABBTreeCollider@Opcode@@A        size 0x114
+//   ?ColCache@?1??dCollideTTL@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z@4UBVTCache@Opcode@@A
+//                                                                    size 0x10
+// ---------------------------------------------------------------------------
+

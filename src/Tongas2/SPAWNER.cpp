@@ -162,8 +162,7 @@ ACTOR *SPAWNER::Spawn()
             g_pLog->Error("COuld not spawn from NULL template! %s", m_name.c_str());
         return 0;
     }
-    V3 position = GetPosition();
-    ACTOR *actor = Clone(tmpl, position);
+    ACTOR *actor = Clone(tmpl, GetPosition());
     if (!actor) {
         if (g_pLog)
             g_pLog->Error("SPAWNER::Spawn> %.2f %s error in spawn!", g_pTimer->m_time, m_name.c_str());
@@ -193,8 +192,7 @@ ACTOR *SPAWNER::Spawn()
         MATRIX m;
         m.Identity();
         m.RotateY(angle);
-        V3 vel = actor->m_vel * m;
-        actor->m_vel = vel;
+        actor->m_vel = actor->m_vel * m;
     }
     m_angle += m_angleDelta;
     return actor;

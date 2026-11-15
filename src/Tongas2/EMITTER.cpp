@@ -13,9 +13,9 @@
 // A random value from min to max, and a random int from a to b.
 #define RANDOM(min, max) \
     ((max) > (min) ? ((max) - (min)) * (float)rand() * (1.0f / RAND_MAX) + (min) : (min))
-#define RANDOMINT(a, b)                                                            \
-    ((b) > (a) ? (a) - (int)((double)rand() * ((b) - (a) + 1) * (-1.0f / 32768.0f)) \
-               : (b) - (int)((double)rand() * ((a) - (b) + 1) * (-1.0f / 32768.0f)))
+#define RANDOMINT(a, b)                                                                       \
+    ((b) > (a) ? (a) - (int)((float)((double)rand() * ((b) - (a) + 1)) * (-1.0f / 32768.0f)) \
+               : (b) - (int)((float)((double)rand() * ((a) - (b) + 1)) * (-1.0f / 32768.0f)))
 
 static const char s_directionNames[][30] = {
     "FW",

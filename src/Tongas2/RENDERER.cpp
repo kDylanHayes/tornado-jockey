@@ -1,5 +1,33 @@
 // The base of the renderer plugin: see RENDERER.h. Placeholder names apart
 // from the class name.
+//
+// Bounded residue in this unit (both functions below are otherwise 1:1).
+//
+// 0x004dc740 RENDERER::SetFogColor, 0x28d bytes: 626 of 653 bytes are exact.
+//   The only mismatches are 0x9d..0xb7, the green channel byte step: the image
+//   on disk holds 16 f4 75 f8 69 41 70 1b ee c5 59 f3 a1 87 24 e7 60 6b 65 00
+//   e8 76 3b 0e 00 there, which does not decode as code (push ss / hlt / jmp /
+//   imul eax,[ecx+0x70],0x59c5ee1b / rep mov eax,[0x60e72487] / hlt). The four
+//   sibling byte steps in the same function (red here, red/green/blue/alpha in
+//   the pointer arm) are byte-exact, so the source shape is right and the hole
+//   is an on-disk protection patch of the retail image, not a source question.
+//
+// 0x004de1c0 RENDERER::Render, 0x507 bytes: 1257 of 1287 bytes are exact, same
+//   size, identical branch/call structure and identical callee order. Two
+//   residues, both compiler state:
+//   - frame is sub esp,0x14 here and sub esp,0x18 in retail. Everything else in
+//     the frame is the same relative layout (height at [esp+0x10], the int->float
+//     temp, the three GetClearColor by-value temps at [esp+0xc..4], the loop
+//     pointer and counter over the dead height/device slot), so the 4 bytes are
+//     a phantom slot in retail at [esp+0x14] that is never written: retail
+//     allocates the width float one slot lower and leaves the hole between it
+//     and height. Every other difference in the function (22 bytes) is the
+//     +4 displacement cascade of that one decision.
+//   - the third walk (m_lists4) loads the head into eax and copies to edi
+//     (mov eax,[eax+0x2000] / mov edi,eax, then mov eax,[edi+4] / lea edi,
+//     [eax-4]); this source lets edi be the load target (mov edi,[eax+0x2000],
+//     mov edi,[edi+4] / add edi,-4). The first two walks of the loop are
+//     byte-exact, so this is register colour, not shape.
 // SHADER.h brings in FreeImage.h, which has to come before windows.h.
 #include "Tongas2/SHADER.h"
 #include "Tongas2/APPWINDOW.h"
@@ -605,7 +633,7 @@ void RENDERER::Render()
         return;
     }
     float height = (float)g_pDisplay->GetHeight();
-    float width = (float)g_pDisplay->GetWidth();
+    __declspec(align(8)) float width = (float)g_pDisplay->GetWidth();
     if (width < 600.0f || height < 400.0f) {
         if (g_pLog)
             g_pLog->Error("RENDERER::Render - Don't render, device is too small: %f %f", width, height);

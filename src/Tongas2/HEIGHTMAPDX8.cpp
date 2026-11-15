@@ -1068,8 +1068,7 @@ ANG HEIGHTMAPDX8::GetOrientation(const V3 &point, const V3 &direction)
     forward.Normalize();
     V3 normal(plane.a, plane.b, plane.c);
     normal.Normalize();
-    ANG result(normal, forward);
-    return result;
+    return ANG(normal, forward);
 }
 
 FIBITMAP *HEIGHTMAPDX8MASTER::LoadImage(const char *name)

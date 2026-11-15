@@ -111,7 +111,7 @@ void SETTINGSTABLE::SetQuality()
 
 void SETTINGSTABLE::Init()
 {
-    int i;
+    unsigned int i;
     unsigned int offset;
     for (i = 0, offset = 0; offset < 0x69c; i++, offset += 0x24)
         m_1030[i] = *(int *)(g_settingRecords + offset);
