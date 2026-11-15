@@ -9869,3 +9869,4 @@
 0x00507b30 ?ApplyMode@GD507220@@QAEHXZ function 0x6f
 0x00506fd0 ?Restore@GD507220@@QAEHXZ function 0x24a
 0x005072b0 ?ClearFlag@GD507220@@UAEHXZ function 0xa
+0x00504f10 ?HardwareE@HARDWARE@@QAEHH@Z function 0x36

@@ -3390,7 +3390,11 @@
       ],
       "target": "build/target/Tongas2/HARDWARE.obj",
       "source": "src/Tongas2/HARDWARE.cpp",
-      "category": "engine"
+      "category": "engine",
+      "symbol_mappings": {
+        "s_D3D_Capability_Value_requested_b_0067815c": "_s_capability_error",
+        "s_D3D_Capability_requested_before_D_00678198": "_s_capability_hold_error"
+      }
     },
     {
       "name": "Tongas2/D3DAPP",

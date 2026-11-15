@@ -720,6 +720,9 @@ public:
     // Frees the powerup actor the held handle points at.
     void ResetPowerup();
 
+    // sizeof(ACTOR) is 0xccc, so these land where retail has them.
+    RESHANDLE m_ccc;
+
     static int s_factoryId;
 
     static int s_classId;
@@ -738,7 +741,7 @@ public:
     virtual void V142();
     virtual void V143();
     virtual void V144();
-    virtual void V145();
+    virtual void V145(const bool &value);
     virtual void V146(ACTOR *actor);
 };
 
@@ -813,6 +816,14 @@ public:
     virtual const char *GetClassName();
     virtual int GetFactoryId();
     virtual int GetFactoryFlags();
+
+    GD43b550();
+
+    int m_ccc;
+    bool m_cd0;
+    FIXEDSTRING<0x200> m_name;
+    char pad_ed1[0xed4 - 0xed1];
+    float m_ed4;
 
     static int s_classId;
 
@@ -2801,11 +2812,14 @@ extern RESOURCEMANAGER *g_pDECAL;
 class PROGRESSBAR : public OBJECT
 {
 public:
+    void SetProgress(float value);
     void SetDecal(RESHANDLE &handle, const char *name, bool active);
 
     // The two decal render helpers SetDecal calls.
     void SetDecalTextures(const RESHANDLE &handle, bool active);
     void UpdateDecal(const RESHANDLE &handle);
+
+    float m_progress;
 };
 
 void PROGRESSBAR::SetDecal(RESHANDLE &handle, const char *name, bool active)
@@ -3156,8 +3170,7 @@ public:
 };
 
 // 0x42e770
-void GD42e6e0::Activate()
-{
+void GD42e6e0::Activate(){
     g_pGame->GetRules();
     m_cd0 = m_cf8;
     ACTOR::Start();
@@ -3324,4 +3337,38 @@ void GD43fa60::RegisterCommands()
     g_classCommands[s_classId] = s_commands;
     HashCommands(s_commands);
     RegisterClassName(s_commands, "PROGRESSBARMASTER", "RESOURCEMASTER");
+}
+
+// 0x432960
+void GD432870::ResetPowerup()
+{
+    GD42e6e0 *powerup = (GD42e6e0 *)g_pScene->GetActor(m_ccc);
+    if (powerup && powerup->GetFactoryId() == G2POWERUP::s_factoryId) {
+        bool active = false;
+        ((G2CORE3RULESX *)powerup)->V145(active);
+        powerup->m_cd0 = 0;
+    }
+}
+
+// 0x43f910
+void PROGRESSBAR::SetProgress(float value)
+{
+    if (value < 0.0f) {
+        m_progress = 0;
+        return;
+    }
+    if (value > 1.0f) {
+        m_progress = 1.0f;
+        return;
+    }
+    m_progress = value;
+}
+
+// 0x43b6a0
+GD43b550::GD43b550()
+{
+    m_ccc = 0;
+    m_cd0 = true;
+    m_name.Set("storm_chaser");
+    m_ed4 = 3.0f;
 }

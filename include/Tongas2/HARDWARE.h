@@ -1,10 +1,9 @@
 // Hardware detection and the Direct3D capability cache, 0x00504d40.
 //
-// Discovery scaffold. The class name and method names are descriptive: no
-// RegisterClassName string names this object. The helpers at 0x00504d70 and
-// 0x00504d40 are the HardwareA/HardwareC functions INTRO already maps, and
-// 0x00504dd0 reads the OS version; 0x00504ff0 is the large capability
-// detector that fills the name and capability tables.
+// The HARDWARE object (0x00504f90) holds six DWORD capability values at +0x20
+// and six byte-level defaults at +0x38; +0x50 is the "detection finished"
+// flag. The accessors below are members (this in ecx) and warn through
+// MessageBoxA when the detector has not run yet.
 #ifndef TONGAS2_HARDWARE_H
 #define TONGAS2_HARDWARE_H
 
@@ -19,8 +18,15 @@ public:
     ~HARDWARE();
     void Detect();
 
+    int HardwareE(int index);
+    bool IsSupported(int index);
+
 private:
-    char m_000[0x54];
+    char m_000[0x20];
+    int m_20[6];
+    bool m_38[0x18];
+    bool m_50;
+    char pad_51[3];
 };
 
 #endif
