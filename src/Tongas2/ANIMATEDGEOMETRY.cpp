@@ -67,6 +67,9 @@ struct G2TFGET
 {
     // retail 0x0052f8c0, 84 bytes: six arguments, returns this in eax.
     G2TFGET(int a, int b, int c, float d, float e, char f);
+    // Declared-but-empty: a trivial destructor makes MSVC drop the null test
+    // in delete p, and retail keeps it in both Clear and M4.
+    ~G2TFGET() {}
 
     void *Get5c(int index);
     // retail 0x0052cd50: five arguments, returns int.
@@ -301,15 +304,34 @@ void G2AGTDEQ::Tidy()
 // animated geometry: a vector of element pointers that starts at +0x10 of
 // the owning object.  Each element carries its name string at +0x20, a count
 // at +0x44 and a divisor at +0x48.
+//
+// The element itself (sizeof 0x4c, see the `new 0x4c` at retail 0x5312e5) is a
+// list of names, a list of scalars, the name, two frame indices, a count and a
+// divisor.  Its five-argument constructor is retail 0x00530a40 and its
+// destructor is retail 0x00530ad0.
 // ---------------------------------------------------------------------------
 struct GD52ff00Elem
 {
-    char m_000[0x20];
-    std::string m_name;
-    char m_03c[8];
-    int m_44;
-    float m_48;
+    std::vector<std::string> m_names;   // +0x00
+    std::vector<int> m_values;          // +0x10
+    std::string m_name;                 // +0x20
+    int m_3c;                           // +0x3c
+    int m_40;                           // +0x40
+    int m_44;                           // +0x44
+    float m_48;                         // +0x48
+
+    GD52ff00Elem(const std::string &name, int c44, int a3c, int b40, float f48);
+    ~GD52ff00Elem();
 };
+
+GD52ff00Elem::GD52ff00Elem(const std::string &name, int c44, int a3c, int b40, float f48)
+    : m_names(), m_values(), m_name(name), m_3c(a3c), m_40(b40), m_44(c44), m_48(f48)
+{
+}
+
+GD52ff00Elem::~GD52ff00Elem()
+{
+}
 
 class GD52ff00
 {
