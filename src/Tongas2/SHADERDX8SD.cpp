@@ -1,14 +1,17 @@
 // Tongas2/SHADERDX8SD -- the SD renderer's shaders.
 //
-// Discovery scaffold: bodies are empty until the unit is matched; each
-// function has its exact target size in config/symbols.txt so a later delink
-// cannot cut the target short. Apply's extent includes its switch tables.
+// Matched so far (retail addresses): the manager's CreateMaster 0x53b390, the
+// master's shader factory 0x53b330, the APP-record factory 0x53b520, the
+// 0x78-byte shader record's constructor 0x53bae0, the four-vector block's
+// destructor 0x53b6d0 and the parameter lists' destructor 0x53d220.
 #include "Tongas2/SHADERDX8SD.h"
 
 #include "Tongas2/MATHS.h"
 #include "Tongas2/SAFEINDEX.h"
 #include <vector>
 #include <memory>
+#include <string>
+#include <string.h>
 
 // Same layout as PATHREPOSITORY's PATHREPOPOINT (two 12-byte vectors).
 struct PATHREPOPOINT
@@ -73,7 +76,12 @@ template void std::uninitialized_fill_n(
 
 // The manager base, defined in another unit; only its virtual order and the
 // fields the factory touches matter here.
-class RESOURCEMASTER;
+class RESOURCEMASTER
+{
+public:
+    virtual ~RESOURCEMASTER();
+};
+
 class FILELOADER;
 class RESOURCEMANAGER
 {
@@ -122,6 +130,8 @@ public:
     SHADERDX8SDMANAGER()
     {
     }
+
+    virtual RESOURCEMASTER *CreateMaster(const char *name);
 };
 
 void SHADERDX8SDRESOURCE::Apply()
@@ -140,10 +150,17 @@ public:
     virtual ~RESOURCE();
 };
 
-class SHADERMASTER
+struct RESHANDLE;
+class SHADER;
+
+class SHADERMASTER : public RESOURCEMASTER
 {
 public:
+    SHADERMASTER(RESOURCEMANAGER *manager, const char *name);
     virtual ~SHADERMASTER();
+
+    // The retail SHADERMASTER (SHADER.h) ends at 0x150.
+    char m_pad[0x150 - 4];
 };
 
 class GD53aa10 : public RESOURCE
@@ -156,10 +173,37 @@ __declspec(noinline) GD53aa10::~GD53aa10() throw()
 {
 }
 
+// One 12-byte shader binding record: two -1 markers and a zero.
+struct GD53b2d0REC
+{
+    int m_a;
+    int m_b;
+    int m_c;
+
+    GD53b2d0REC()
+    {
+        m_c = 0;
+        m_a = -1;
+        m_b = -1;
+    }
+};
+
 class GD53b2d0 : public SHADERMASTER
 {
 public:
+    __forceinline GD53b2d0(RESOURCEMANAGER *manager, const char *name)
+        : SHADERMASTER(manager, name)
+    {
+        m_150 = false;
+    }
     virtual ~GD53b2d0() throw();
+
+    SHADER *Create(const RESHANDLE &handle);
+
+    bool m_150;
+    char m_151[3];
+    GD53b2d0REC m_154[2];
+    char m_16c[0x1b0 - 0x16c];
 };
 
 __declspec(noinline) GD53b2d0::~GD53b2d0() throw()
@@ -464,6 +508,7 @@ class GD53d5d0
 {
 public:
     GD53d5d0();
+    ~GD53d5d0();
     void SetA(const V3 *value, int index);
     void SetB(const V3 *value, int index);
     void SetC(unsigned int a, unsigned int b, unsigned int c, int d, int index);
@@ -490,6 +535,10 @@ public:
 // the ten vectors clear their own storage.
 GD53d5d0::GD53d5d0()
     : m_0(0), m_4(0), m_8(0), m_c(0), m_10(0), m_14(0)
+{
+}
+
+GD53d5d0::~GD53d5d0()
 {
 }
 
@@ -536,4 +585,177 @@ void GD53d5d0::SetC(unsigned int a, unsigned int b, unsigned int c, int d, int i
 void GD53d5d0::SetD(unsigned int a, unsigned int b, unsigned int c, int index)
 {
     SetC(a, b, c, 1, index);
+}
+
+
+// ---------------------------------------------------------------------------
+// 0x0053bae0: the constructor of the 0x78-byte shader record. A string at 0xc
+// (the compiler's default constructor writes 0xf, 0 and the empty inline
+// buffer), five plain members after it, a flag at 0x54 and two pointer vectors
+// at 0x58 and 0x68.
+class GD53bae0
+{
+public:
+    GD53bae0();
+
+    void *m_0;
+    void *m_4;
+    void *m_8;
+    std::string m_c;
+    void *m_28;
+    void *m_2c;
+    void *m_30;
+    void *m_34;
+    void *m_38;
+    char m_3c[0x18];
+    bool m_54;
+    char m_55[3];
+    std::vector<void *> m_58;
+    std::vector<void *> m_68;
+};
+
+GD53bae0::GD53bae0()
+    : m_0(0), m_4(0), m_8(0), m_28(0), m_2c(0), m_30(0), m_34(0), m_38(0),
+      m_54(false)
+{
+}
+
+
+// ---------------------------------------------------------------------------
+// 0x0053b330: the master's copy factory. It allocates the 0x34-byte shader
+// (SHADER is 0x30 bytes here and the copy adds the flag at 0x30) and hands the
+// master and the handle to SHADER's constructor at 0x004c5ba0.
+class SHADER
+{
+public:
+    SHADER(SHADERMASTER *master, const RESHANDLE &handle);
+    virtual void Virtual();
+
+    char m_4[0x30 - 4];
+};
+
+class GD53b330 : public SHADER
+{
+public:
+    GD53b330(SHADERMASTER *master, const RESHANDLE &handle)
+        : SHADER(master, handle)
+    {
+        m_30 = true;
+    }
+
+    bool m_30;
+};
+
+SHADER *GD53b2d0::Create(const RESHANDLE &handle)
+{
+    return new GD53b330(this, handle);
+}
+
+
+// 0x0053b390: the manager builds the 0x1b0-byte master. Its constructor is
+// inline, so the allocation, the base constructor and the two empty 12-byte
+// records at 0x154 and 0x160 all land in the factory.
+RESOURCEMASTER *SHADERDX8SDMANAGER::CreateMaster(const char *name)
+{
+    return new GD53b2d0(this, name);
+}
+
+
+// ---------------------------------------------------------------------------
+// 0x0053b520: the factory of the 0x238-byte APP-derived record. It only runs
+// APP's constructor at 0x0048ba40 and takes the new vtable.
+class APP
+{
+public:
+    APP();
+    virtual ~APP();
+
+    char m_pad[0x238 - 4];
+};
+
+class GD53b520 : public APP
+{
+public:
+    GD53b520()
+    {
+    }
+};
+
+class GD53b520FACTORY
+{
+public:
+    APP *Create();
+};
+
+APP *GD53b520FACTORY::Create()
+{
+    return new GD53b520;
+}
+
+
+// ---------------------------------------------------------------------------
+// 0x0053b5e0: a list's element-wise comparison. The two lists keep 0x40-byte
+// records between +4 and +8 (a leading word sits at +0), and the comparison
+// walks them with the compiler's inline memcmp. A null base counts as empty.
+struct SHADERTYPE40
+{
+    char m[0x40];
+};
+
+class GD53b5e0
+{
+public:
+    int size() const
+    {
+        return m_4 ? (int)(m_8 - m_4) >> 6 : 0;
+    }
+
+    bool operator==(const GD53b5e0 &other) const;
+
+    int m_0;
+    char *m_4;
+    char *m_8;
+};
+
+bool GD53b5e0::operator==(const GD53b5e0 &other) const
+{
+    if (other.size() != size())
+        return false;
+
+    for (int i = 0; i < size(); i++) {
+        int diff = memcmp(m_4 + i * 0x40, other.m_4 + i * 0x40, 0x40);
+        if (diff != 0)
+            return false;
+    }
+    return true;
+}
+
+
+// ---------------------------------------------------------------------------
+// 0x0053bb50: the copy constructor of the 0x40-byte shader parameter block
+// (four vectors) and 0x0053b6d0, its destructor.
+class GD53bb50
+{
+public:
+    GD53bb50(const GD53bb50 &other);
+    ~GD53bb50();
+
+    std::vector<int> m_0;
+    std::vector<V3> m_10;
+    std::vector<V3> m_20;
+    std::vector<float> m_30;
+};
+
+GD53bb50::GD53bb50(const GD53bb50 &other)
+{
+    for (unsigned int i = 0; i < other.m_0.size(); i++) {
+        m_0.push_back(other.m_0[i]);
+        m_10.push_back(other.m_10[i]);
+        m_20.push_back(other.m_20[i]);
+        m_30.push_back(other.m_30[i]);
+    }
+}
+
+GD53bb50::~GD53bb50()
+{
 }

@@ -23,15 +23,50 @@
 // Win32 entry points include/windows.h does not declare yet.
 extern "C" {
 typedef struct HMENU__ *HMENU;
+typedef struct tagGD507220MSG
+{
+    HWND hwnd;
+    unsigned int message;
+    unsigned int wParam;
+    long lParam;
+    unsigned int time;
+    long x;
+    long y;
+} MSG;
 WINUSERAPI BOOL WINAPI SetWindowTextA(HWND hWnd, LPCSTR lpString);
 WINUSERAPI LONG WINAPI SetWindowLongA(HWND hWnd, int nIndex, LONG dwNewLong);
+WINUSERAPI LONG WINAPI GetWindowLongA(HWND hWnd, int nIndex);
 WINUSERAPI HMENU WINAPI GetMenu(HWND hWnd);
 WINUSERAPI BOOL WINAPI SetMenu(HWND hWnd, HMENU hMenu);
 WINUSERAPI BOOL WINAPI GetWindowRect(HWND hWnd, LPRECT lpRect);
 WINUSERAPI BOOL WINAPI ClipCursor(const RECT *lpRect);
 WINUSERAPI int WINAPI MessageBoxA(HWND hWnd, LPCSTR lpText, LPCSTR lpCaption,
                                   UINT uType);
+WINUSERAPI BOOL WINAPI PeekMessageA(MSG *lpMsg, HWND hWnd, UINT wMsgFilterMin,
+                                    UINT wMsgFilterMax, UINT wRemoveMsg);
+WINUSERAPI BOOL WINAPI TranslateMessage(const MSG *lpMsg);
+WINUSERAPI LONG WINAPI DispatchMessageA(const MSG *lpMsg);
+WINUSERAPI LONG WINAPI SendMessageA(HWND hWnd, UINT msg, unsigned int wParam,
+                                    long lParam);
+WINUSERAPI BOOL WINAPI SetRect(LPRECT lprc, int xLeft, int yTop, int xRight,
+                               int yBottom);
+WINUSERAPI BOOL WINAPI AdjustWindowRect(LPRECT lpRect, unsigned int dwStyle,
+                                        BOOL bMenu);
+WINUSERAPI BOOL WINAPI SetWindowPos(HWND hWnd, HWND hWndInsertAfter, int X,
+                                    int Y, int cx, int cy, unsigned int uFlags);
+WINUSERAPI HWND WINAPI SetFocus(HWND hWnd);
 }
+
+// The message entry points the retail reaches through the engine's own
+// import table (0x006562bc and neighbours), so they are pointer variables
+// here rather than direct imports: the difference is visible in the message
+// pump, which keeps them as direct indirect calls.
+typedef BOOL (WINAPI *GD507220PEEKMSG)(MSG *, HWND, UINT, UINT, UINT);
+typedef BOOL (WINAPI *GD507220TRANSLATE)(const MSG *);
+typedef LONG (WINAPI *GD507220DISPATCH)(const MSG *);
+extern GD507220PEEKMSG g_pPeekMessageA;
+extern GD507220TRANSLATE g_pTranslateMessage;
+extern GD507220DISPATCH g_pDispatchMessageA;
 
 // The engine log.  The retail calls LOG::Error with the log pointer on the
 // stack (?Error@LOG@@QAAXPBDZZ), so the method is __cdecl here as well.
@@ -94,6 +129,15 @@ public:
     int Tail();
     // Picks the new mode up when the window changed size (retail 0x00506a70).
     int HandleSizeChange();
+    // One frame step; the message pump calls it while the device is live
+    // (retail 0x005065a0).
+    int Step();
+    // Repairs the 3D environment after a device loss (retail 0x00507ba0).
+    void Repair();
+    // Recreates the device (retail 0x005061b0).
+    int Recreate();
+    // Puts the device back after a full screen switch (retail 0x00506fd0).
+    int Restore();
 
     int m_4;                     // 0x04
     unsigned char m_8;           // 0x08
@@ -284,6 +328,49 @@ int GD507220::HandleSizeChange()
     return ret;
 }
 
+// The message pump and frame loop (retail 0x00508040).
+int GD507220::Run()
+{
+    MSG msg;
+    msg.message = 0;
+    g_pPeekMessageA(&msg, 0, 0, 0, 0);
+    bool got;
+    while (msg.message != 0x12) {
+        if (m_1fd)
+            got = g_pPeekMessageA(&msg, 0, 0, 0, 1) != 0;
+        if (got) {
+            if (msg.message == 0x12)
+                break;
+            g_pTranslateMessage(&msg);
+            g_pDispatchMessageA(&msg);
+        } else {
+            if (m_1fb)
+                continue;
+            if (m_1fe)
+                Sleep(100);
+            if (!m_1f8)
+                Sleep(100);
+            if (m_1fd) {
+                if (Step() < 0) {
+                    if (++m_210 > 2) {
+                        m_1fb = true;
+                        SendMessageA(m_1a8, 0x10, 0, 0);
+                    }
+                } else {
+                    m_210 = 0;
+                }
+                if (Hook12()) {
+                    m_1fb = true;
+                    if (!m_1fc)
+                        Repair();
+                    SendMessageA(m_1a8, 0x10, 0, 0);
+                }
+            }
+        }
+    }
+    return msg.wParam;
+}
+
 // Tears the 3D environment down (retail 0x00506ba0).
 void GD507220::Cleanup3DEnvironment()
 {
@@ -305,9 +392,11 @@ void GD507220::Cleanup3DEnvironment()
     }
 }
 
-// The display object game code reaches through g_pDisplay+0x44. Only the
-// resolution setter is in this block (retail 0x005070f0/0x00507130).
-class G2CORE4D3DAPP
+// The display sub-object game code reaches through g_pDisplay+0x44.  Retail
+// 0x00507df0 (SetMode), 0x00506190 (SetSize) and 0x00508a50 (SetResolution)
+// are members of this name; they share the application's own layout, so the
+// class only adds the setter names on top of it.
+class G2CORE4D3DAPP : public GD507220
 {
 public:
     void SetResolution(int index);
@@ -315,11 +404,8 @@ public:
     void SetMode(int width, int height);
     void SetSize(int width, int height);
 
-    char pad_00[4];
-    int m_4;
-    char pad_08[0x1d0 - 0x08];
-    int m_1d0;
-    int m_1d4;
+    // The current display size; retail reads it through this two-way pointer.
+    int *GetSize() { return m_8 ? (int *)m_14 : (int *)m_4c; }
 };
 
 void G2CORE4D3DAPP::SetSize(int width, int height)
@@ -332,6 +418,60 @@ void G2CORE4D3DAPP::SetResolution(int index)
 {
     m_4 = index;
     SetMode(m_1d0, m_1d4);
+}
+
+// Rebuilds the device for a new back buffer size (retail 0x00507df0).
+void G2CORE4D3DAPP::SetMode(int width, int height)
+{
+    int oldW = GetSize()[0];
+    int oldH = GetSize()[1];
+    m_1d0 = width;
+    m_1d4 = height;
+    if (m_1fc) {
+        RECT r;
+        SetRect(&r, 0, 0, width, height);
+        AdjustWindowRect(&r, m_1b0, 0);
+        m_1b0 = GetWindowLongA(m_1a8, -16);
+        GetWindowRect(m_1a8, &m_1d8);
+        GetClientRect(m_1a8, &m_1e8);
+        m_1e8.right = m_1e8.left + m_1d0;
+        m_1e8.bottom = m_1e8.top + m_1d4;
+        m_1d8.right = m_1d8.left + (r.right - r.left);
+        m_1d8.bottom = m_1d8.top - r.top + r.bottom;
+    }
+    ToggleFullScreen();
+    int hr;
+    if (GetSize()[0] == oldW && GetSize()[1] == oldH) {
+        hr = Step();
+        if (hr >= 0) {
+            Recreate();
+            hr = Tail();
+        }
+    } else {
+        Cleanup3DEnvironment();
+        hr = Restore();
+    }
+    if (hr < 0) {
+        if (hr != 0x8876017c)
+            hr = 0x8200000c;
+        if (!m_1fc) {
+            m_1fc = true;
+            m_8 = true;
+            ToggleFullScreen();
+            SetWindowPos(m_1a8, (HWND)-2, m_1d8.left, m_1d8.top,
+                         m_1d8.right - m_1d8.left, m_1d8.bottom - m_1d8.top,
+                         0x40);
+        }
+        if (g_pLog)
+            g_pLog->Error("Failed on change resolution");
+        ReportError(hr, 1);
+        return;
+    }
+    if (m_1fc)
+        SetWindowPos(m_1a8, (HWND)-2, m_1d8.left, m_1d8.top,
+                     m_1d8.right - m_1d8.left, m_1d8.bottom - m_1d8.top, 0x40);
+    SetFocus(m_1a8);
+    HandleSizeChange();
 }
 
 // ---------------------------------------------------------------------------
