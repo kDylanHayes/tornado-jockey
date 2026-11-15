@@ -183,3 +183,5 @@
 0x5b1570-0x5b157f   lib/ode/OPC_OBBCollider   ?_CollideNoPrimitiveTest@OBBCollider@Opcode@@IAEXPBVAABBQuantizedNode@2@@Z   code  observed
 0x5b63ba-0x5b63c9   lib/ode/OPC_RayCollider   ?_RayStab@RayCollider@Opcode@@IAEXPBVAABBNoLeafNode@2@@Z   code  observed
 0x5b8adf-0x5b8aee   lib/ode/lcp   ?swapRowsAndCols@@YAXPAPAMHHHHH@Z   code  observed
+0x0052ac7d-0x0052ac8f   Tongas2/TEXTFILE   FUN_0052ab80   code  observed
+0x0052d3a2-0x0052d3b3   Tongas2/TEXTFILE   FUN_0052d350   code  observed

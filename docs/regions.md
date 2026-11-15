@@ -31,3 +31,22 @@ Boundaries are approximate to within a few functions. Exact unit boundaries are 
 - zlib, libpng, ODE and FreeImage are open source. They should be matched by compiling the right upstream versions rather than decompiled by hand.
 - The CRT, STL, ATL and D3DX8 come from prebuilt Microsoft libraries. They don't need decompiling; they get linked from the original `.lib` files at the full-link stage.
 - The unaligned library blocks were built with different flags from the game. zlib matches with `/O1` (see [toolchain.md](toolchain.md)).
+
+## Measured split
+
+`py build/report_regions.py` takes the three library ranges above back out of
+`build/report.json`, so progress can be read against the code that is actually
+ours:
+
+| | bytes | functions |
+|---|---|---|
+| whole `.text` | 2,352,965 | 14,944 |
+| library blocks (D3DX8, libcmt/libcpmt/ATL) | 599,331 (25.5%) | 7,305 |
+| game and engine code | 1,753,634 | 7,639 |
+| matched at 34.52% overall | 812,250 | 6,092 |
+
+So the headline percentage is measured against a denominator that is a quarter
+prebuilt Microsoft library: **46.3% of our own code is matched**, and 1,547
+engine/game functions are left. Ghidra splits library code into many small
+functions (7,305 against the ~1,500 hand-sized objects in the table above), which
+is why its share of the function count is much larger than its share of bytes.

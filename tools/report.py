@@ -113,6 +113,9 @@ def main() -> int:
     parser.add_argument("--objdiff", default=os.environ.get("OBJDIFF_CLI", "objdiff-cli"),
                         help="objdiff-cli executable (or set OBJDIFF_CLI)")
     parser.add_argument("-o", "--output", type=Path, default=BUILD / "report.json", help="Report file")
+    parser.add_argument("--no-export", action="store_true",
+                        help="reuse build/functions.txt instead of exporting it from Ghidra "
+                             "(lets a report run while another Ghidra job holds the project)")
     args = parser.parse_args()
     if args.ghidra is None:
         sys.exit("error: pass --ghidra or set GHIDRA_INSTALL_DIR")
@@ -135,7 +138,11 @@ def main() -> int:
     file_offset = text_start - int(target["image_base"], 16)
 
     functions_txt = BUILD / "functions.txt"
-    export_functions(args.ghidra, args.project, functions_txt)
+    if args.no_export:
+        if not functions_txt.is_file():
+            sys.exit(f"error: {functions_txt.relative_to(ROOT)} is missing; run without --no-export once")
+    else:
+        export_functions(args.ghidra, args.project, functions_txt)
     functions = read_functions(functions_txt)
 
     covered = [parse_range(r) for u in units for r in u.get("ranges", [])]

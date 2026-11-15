@@ -80,10 +80,23 @@ private:
     std::vector<int> m_0a4;
 };
 
+// The animation track's cached transform: a 4x4 matrix whose translation row
+// is the cached point at +0x10, plus the key array the matrix routine blends.
+struct MATRIX16
+{
+    float m[16];
+};
+
+struct BONE16
+{
+    float f[4];
+};
+
 class ANIMTRACK
 {
 public:
     void GetPoint(V3 *out, unsigned i1, unsigned i2, float t);
+    MATRIX16 GetMatrix(unsigned i1, unsigned i2, float t);
 
 private:
     char m_000[0x10];
@@ -91,7 +104,10 @@ private:
     // This STL's vector stores the allocator first, so the point array's
     // data pointer (_Myfirst) sits at [this+0xa8] and the vector member
     // itself starts at 0xa4.
-    char m_01c[0x88];
+    MATRIX16 m_01c;
+    char m_05c[0x3c];
+    BONE16 *m_098;
+    char m_09c[8];
     std::vector<V3> m_0a4;
 };
 
@@ -154,7 +170,7 @@ public:
 class TEXTREADER
 {
 public:
-    int Load(const std::string &name);
+    bool Load(const std::string &name);
     std::string ReadString();
 
 private:
@@ -165,7 +181,15 @@ TOK::TOK() : m_000(0), m_004(0), m_008(0)
 {
 }
 
-int TEXTREADER::Load(const std::string &name)
+// retail 0x00528610 returns a one-byte result: five callers test AL and the
+// two returns are "xor al,al" / "mov al,1" (an int return would be "mov
+// eax,1").  The stream virtual at +0xc reports success as non-zero, so the
+// body returns 0 from the open arm and 1 from the "file does not exist" arm.
+// Residue: 305/344 bytes; the target keeps `found` in BL (pushing EBX inside
+// the open arm) while this build materialises a zero register in EBX and
+// spills `found`, which shifts every frame offset by 4 and stops the two
+// returns from getting separate epilogues.  First differing byte 0x1f.
+bool TEXTREADER::Load(const std::string &name)
 {
     char buffer[0x200];
     const char *text = name.c_str();
@@ -175,20 +199,21 @@ int TEXTREADER::Load(const std::string &name)
         buffer[0] = 0;
     buffer[0x1ff] = 0;
     m_stream->Open(buffer);
-    if (m_stream->IsOpen())
-        return 1;
-    bool found;
-    {
-        std::string local;
-        local = buffer;
-        char flag = 0;
-        found = FileExists(&local, &flag) != 0;
+    if (m_stream->IsOpen()) {
+        bool found;
+        {
+            char flag = 0;
+            std::string local;
+            local = buffer;
+            found = FileExists(&local, &flag);
+        }
+        if (found) {
+            if (g_pLog)
+                g_pLog->ContentError(s_TEXTFILE_file, buffer);
+        }
+        return false;
     }
-    if (found) {
-        if (g_pLog)
-            g_pLog->ContentError(s_TEXTFILE_file, buffer);
-    }
-    return 0;
+    return true;
 }
 
 std::string TEXTREADER::ReadString()
@@ -296,7 +321,39 @@ void ANIMTRACK::GetPoint(V3 *out, unsigned i1, unsigned i2, float t)
     m_010.x = (m_0a4[i2].x - m_0a4[i1].x) * t + m_0a4[i1].x;
     m_010.y = (m_0a4[i2].y - m_0a4[i1].y) * t + m_0a4[i1].y;
     m_010.z = (m_0a4[i2].z - m_0a4[i1].z) * t + m_0a4[i1].z;
-    *out = m_010;}
+    *out = m_010;
+}
+
+// retail 0x0052a140: the matrix sibling of GetPoint.  It returns the 4x4
+// transform by value (the hidden return pointer is the first stack slot and
+// comes back in EAX, which is why the empty arm stages the copy through EAX),
+// blends the two key quaternions at 0x00463dd5 and composes the result at
+// 0x00463397.  Both callees are __stdcall with fixed argument counts - the
+// call sites never adjust ESP.  Residue: 375/375 bytes but the argument
+// setup for the first call (mov/push of `t`) is scheduled into the FPU tail
+// instead of after the store; first differing byte 0x11c.
+void __stdcall GD463dd5(ANIMTRACK *track, BONE16 *a, BONE16 *b, float t);
+void __stdcall GD463397(MATRIX16 *dst, ANIMTRACK *src);
+
+MATRIX16 ANIMTRACK::GetMatrix(unsigned i1, unsigned i2, float t)
+{
+    if (m_0a4.size() == 0)
+        return m_01c;
+    if (i1 >= m_0a4.size())
+        i1 = m_0a4.size() - 1;
+    if (i2 >= m_0a4.size())
+        i2 = m_0a4.size() - 1;
+    m_010.x = (m_0a4[i2].x - m_0a4[i1].x) * t + m_0a4[i1].x;
+    m_010.y = (m_0a4[i2].y - m_0a4[i1].y) * t + m_0a4[i1].y;
+    m_010.z = (m_0a4[i2].z - m_0a4[i1].z) * t + m_0a4[i1].z;
+    GD463dd5(this, m_098 + i1, m_098 + i2, t);
+    GD463397(&m_01c, this);
+    m_01c.m[12] = m_010.x;
+    m_01c.m[13] = m_010.y;
+    m_01c.m[14] = m_010.z;
+    m_01c.m[15] = 1.0f;
+    return m_01c;
+}
 
 void __stdcall DestroyIntVector(VI *v)
 {

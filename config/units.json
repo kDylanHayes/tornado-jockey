@@ -3493,7 +3493,10 @@
         "FUN_005445c0": "?Destroy@REFOBJ@@QAEXXZ",
         "FUN_00527550": "?FileExists@@YA_NPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAD@Z",
         "s_TEXTFILE_-_file_does_not_exist:_%_006793a4": "_s_TEXTFILE_file",
-        "FUN_0052a2c0": "?Copy@TRACK@@QAEXPAHH@Z"
+        "FUN_0052a2c0": "?Copy@TRACK@@QAEXPAHH@Z",
+        "FUN_0052a140": "?GetMatrix@ANIMTRACK@@QAE?AUMATRIX16@@IIM@Z",
+        "FUN_00463dd5": "?GD463dd5@@YGXPAVANIMTRACK@@PAUBONE16@@1M@Z",
+        "FUN_00463397": "?GD463397@@YGXPAUMATRIX16@@PAVANIMTRACK@@@Z"
       }
     },
     {
