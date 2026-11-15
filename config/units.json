@@ -3403,7 +3403,15 @@
       ],
       "target": "build/target/Tongas2/D3DAPP.obj",
       "source": "src/Tongas2/D3DAPP.cpp",
-      "category": "engine"
+      "category": "engine",
+      "symbol_mappings": {
+        "FUN_00506760": "?ReportError@GD507220@@QAEHIH@Z",
+        "FUN_00507ba0": "?Repair@GD507220@@QAEXXZ",
+        "FUN_00507510": "?SetWindowedMode@GD507220@@QAE_NXZ",
+        "FUN_005072c0": "?SetFullScreenMode@GD507220@@QAE_NXZ",
+        "FUN_005065a0": "?Step@GD507220@@QAEHXZ",
+        "FUN_005061b0": "?Recreate@GD507220@@QAEXXZ"
+      }
     },
     {
       "name": "Tongas2/DX8APP",
