@@ -82,12 +82,56 @@ extern LOG *g_pLog;
 class GD507220;
 extern GD507220 *g_pApp;
 
+// The display description the mode pickers fill in; the pointers at m_10
+// and m_48 and those at m_14 and m_4c both reach it.
+class GD507220DISPLAYINFO
+{
+public:
+    char pad_00[0x04];
+    int m_4;                     // 0x04, D3DDEVTYPE of the picked device
+    char pad_08[0x20];
+    unsigned int m_28;           // 0x28, capability flags
+    unsigned char m_2c;          // 0x2c, capability flags
+};
+
+// The engine's Direct3D object.  Retail reaches EnumAdapterModes through
+// vtable+0x20 and CreateDevice through vtable+0x3c.
+class GD507220D3D8
+{
+public:
+    virtual int __stdcall V00();
+    virtual int __stdcall V01();
+    virtual int __stdcall V02();
+    virtual int __stdcall V03();
+    virtual int __stdcall V04();
+    virtual int __stdcall V05();
+    virtual int __stdcall V06();
+    virtual int __stdcall V07();
+    virtual int __stdcall EnumAdapterModes(unsigned int adapter, int format,
+                                           void *modes);
+    virtual int __stdcall V09();
+    virtual int __stdcall V10();
+    virtual int __stdcall V11();
+    virtual int __stdcall V12();
+    virtual int __stdcall V13();
+    virtual int __stdcall V14();
+    virtual int __stdcall CreateDevice(unsigned int adapter, int type,
+                                       HWND window, unsigned int behaviour,
+                                       void *params,
+                                       IDirect3DDevice8 **device);
+};
+
 // The object the application deletes from m_b0.  Its destructor lives in
 // another unit (0x00538520).
 class GD507220OBJECT
 {
 public:
     ~GD507220OBJECT();
+    // Drops the pending display update (retail 0x00538930).
+    void Reset();
+
+    char pad_00[0x28];           // 0x00
+    unsigned int m_28;           // 0x28, pending update count
 };
 
 // The Direct3D application object.
@@ -104,27 +148,34 @@ public:
     virtual int Run();
     virtual int Initialize3DEnvironment();
     virtual ~GD507220();
-    virtual int ToggleFullScreen();    virtual void Hook01() {}
-    virtual void Hook02() {}
-    virtual void Hook03() {}
+    virtual int ToggleFullScreen();
+    virtual int Hook01() { return 0; }
+    virtual int Hook02() { return 0; }
+    virtual int Hook03() { return 0; }
     virtual int Hook04() { return 0; }
-    virtual void Hook05() {}
-    virtual void Hook06() {}
-    virtual void Hook07() {}
-    virtual void Hook08() {}
-    virtual void Hook09() {}
+    virtual int Hook05() { return 0; }
+    virtual int Hook06() { return 0; }
+    virtual int Hook07() { return 0; }
+    virtual int Hook08() { return 0; }
+    virtual int Hook09() { return 0; }
     virtual void Hook10() {}
     virtual void Hook11() {}
     virtual bool Hook12() { return false; }
-    virtual void ClearFlag();
+    virtual int ClearFlag();
     virtual void SetFlag();
 
     // The window text is written into m_1b4 and pushed into the window.
     void SetText(const std::string &text);
+    // Picks the windowed presentation parameters (retail 0x00507510).
+    __declspec(noinline) bool SetWindowedMode();
+    // Picks the full screen presentation parameters (retail 0x005072c0).
+    __declspec(noinline) bool SetFullScreenMode();
+    // Re-applies the display mode until both pickers agree (retail 0x00507b30).
+    int ApplyMode();
     // Releases the device and tears the 3D environment down.
     void Cleanup3DEnvironment();
     // Reports a failure to the player (retail 0x00506760).
-    void ReportError(unsigned int code, int flag);
+    int ReportError(unsigned int code, int flag);
     // Rebuilds the 3D environment for the current mode (retail 0x00506360).
     int Tail();
     // Picks the new mode up when the window changed size (retail 0x00506a70).
@@ -134,13 +185,16 @@ public:
     int Step();
     // Repairs the 3D environment after a device loss (retail 0x00507ba0).
     void Repair();
-    // Recreates the device (retail 0x005061b0).
-    int Recreate();
+    // Builds the presentation parameters for the current mode
+    // (retail 0x005061b0).
+    void Recreate();
     // Puts the device back after a full screen switch (retail 0x00506fd0).
     int Restore();
+    // The current display mode; retail reads it through this two-way pointer.
+    int *GetSize() { return m_8 ? (int *)m_14 : (int *)m_4c; }
 
     int m_4;                     // 0x04
-    unsigned char m_8;           // 0x08
+    volatile unsigned char m_8;  // 0x08
     int m_c;                     // 0x0c
     void *m_10;                  // 0x10
     void *m_14;                  // 0x14
@@ -173,11 +227,11 @@ public:
     int m_98;                    // 0x98
     int m_9c;                    // 0x9c
     int m_a0;                    // 0xa0
-    int m_a4;                    // 0xa4
+    GD507220D3D8 *m_a4;          // 0xa4
     IDirect3DDevice8 *m_a8;      // 0xa8, the Direct3D device
     int m_ac;                    // 0xac
     GD507220OBJECT *m_b0;        // 0xb0
-    char pad_b4[0x188 - 0xb4];   // 0xb4
+    char m_b4[0x188 - 0xb4];     // 0xb4, the device caps the reset reads
     char m_188[0x20];            // 0x188, the surface description the reset keeps
     HWND m_1a8;                  // 0x1a8, the window
     HMENU m_1ac;                 // 0x1ac, the saved menu
@@ -191,7 +245,7 @@ public:
     bool m_1f9;                  // 0x1f9
     bool m_1fa;                  // 0x1fa
     bool m_1fb;                  // 0x1fb
-    bool m_1fc;                  // 0x1fc, full screen
+    unsigned char m_1fc;         // 0x1fc, full screen
     bool m_1fd;                  // 0x1fd
     bool m_1fe;                  // 0x1fe
     bool m_1ff;                  // 0x1ff
@@ -262,9 +316,10 @@ GD507220::~GD507220()
 
 // The flag hooks at the end of the virtual table (retail 0x005072b0 and
 // 0x004481d0).
-void GD507220::ClearFlag()
+int GD507220::ClearFlag()
 {
     m_1f8 = false;
+    return 0;
 }
 
 void GD507220::SetFlag()
@@ -401,11 +456,9 @@ class G2CORE4D3DAPP : public GD507220
 public:
     void SetResolution(int index);
     // Rebuilds the swap chain for the stored mode (0x507df0).
-    void SetMode(int width, int height);
+    int SetMode(int width, int height);
     void SetSize(int width, int height);
 
-    // The current display size; retail reads it through this two-way pointer.
-    int *GetSize() { return m_8 ? (int *)m_14 : (int *)m_4c; }
 };
 
 void G2CORE4D3DAPP::SetSize(int width, int height)
@@ -421,7 +474,7 @@ void G2CORE4D3DAPP::SetResolution(int index)
 }
 
 // Rebuilds the device for a new back buffer size (retail 0x00507df0).
-void G2CORE4D3DAPP::SetMode(int width, int height)
+int G2CORE4D3DAPP::SetMode(int width, int height)
 {
     int oldW = GetSize()[0];
     int oldH = GetSize()[1];
@@ -436,13 +489,13 @@ void G2CORE4D3DAPP::SetMode(int width, int height)
         GetClientRect(m_1a8, &m_1e8);
         m_1e8.right = m_1e8.left + m_1d0;
         m_1e8.bottom = m_1e8.top + m_1d4;
-        m_1d8.right = m_1d8.left + (r.right - r.left);
+        m_1d8.right = r.right - r.left + m_1d8.left;
         m_1d8.bottom = m_1d8.top - r.top + r.bottom;
     }
     ToggleFullScreen();
     int hr;
     if (GetSize()[0] == oldW && GetSize()[1] == oldH) {
-        hr = Step();
+        hr = ApplyMode();
         if (hr >= 0) {
             Recreate();
             hr = Tail();
@@ -464,14 +517,14 @@ void G2CORE4D3DAPP::SetMode(int width, int height)
         }
         if (g_pLog)
             g_pLog->Error("Failed on change resolution");
-        ReportError(hr, 1);
-        return;
+        return ReportError(hr, 1);
     }
     if (m_1fc)
         SetWindowPos(m_1a8, (HWND)-2, m_1d8.left, m_1d8.top,
                      m_1d8.right - m_1d8.left, m_1d8.bottom - m_1d8.top, 0x40);
     SetFocus(m_1a8);
     HandleSizeChange();
+    return 0;
 }
 
 // ---------------------------------------------------------------------------
@@ -552,3 +605,161 @@ int GD507220::Tail()
     m_203 = true;
     return 0;
 }
+
+// Re-applies the display settings: the windowed and the full screen pickers
+// both have to agree.  While they do not, the display object drops its
+// pending update and the pair is tried again (retail 0x00507b30).
+int GD507220::ApplyMode()
+{
+    for (;;) {
+        bool windowed = SetWindowedMode();
+        bool fullscreen = SetFullScreenMode();
+        if (m_206 && windowed)
+            m_8 = false;
+        if (!fullscreen) {
+            if (!windowed)
+                goto retry;
+            m_8 = fullscreen;
+        }
+        if (!windowed) {
+            if (!fullscreen)
+                goto retry;
+        }
+        if (m_206 || fullscreen)
+            return 0;
+    retry:
+        if (m_b0->m_28 <= 0)
+            return 0x82000003;
+        m_b0->m_28 = 0;
+        m_b0->Reset();
+    }
+}
+
+// Builds the presentation parameters at m_70 for the current mode
+// (retail 0x005061b0).
+void GD507220::Recreate()
+{
+    memset(&m_70, 0, 0x34);
+    m_88 = m_1a8;
+    m_8c = m_8;
+    m_7c = 1;
+    m_80 = m_8 ? m_2c : m_64;
+    m_84 = 1;
+    if (m_1f9)
+        m_1fa = true;
+    else
+        m_1fa = false;
+    m_90 = 1;
+    m_94 = m_8 ? m_28 : m_60;
+    m_98 = 0;
+    if (m_1fc) {
+        m_70 = m_1e8.right - m_1e8.left;
+        m_74 = m_1e8.bottom - m_1e8.top;
+        m_78 = (m_8 ? (int *)m_14 : (int *)m_4c)[3];
+        m_9c = 0;
+        m_a0 = m_8 ? m_38 : m_6c;
+    } else {
+        RECT rect = m_8 ? m_18 : m_50;
+        m_70 = rect.left;
+        m_74 = rect.top;
+        m_78 = (m_8 ? (int *)m_14 : (int *)m_4c)[3];
+        m_9c = m_50.right;
+        m_a0 = m_8 ? m_38 : m_6c;
+        if (m_1fa) {
+            if (((GD507220DISPLAYINFO *)(m_8 ? m_10 : m_48))->m_2c & 1)
+                m_a0 = 1;
+        }
+    }
+}
+
+// Puts the device back after a full screen switch (retail 0x00506fd0).
+int GD507220::Restore()
+{
+    GD507220DISPLAYINFO *info = (GD507220DISPLAYINFO *)(m_8 ? m_10 : m_48);
+    m_1fc = m_8;
+    ToggleFullScreen();
+    Recreate();
+    if (info->m_28 & 0x1000)
+        ReportError(0x8200000d, 0);
+    // The vertex processing the picked device wants becomes the behaviour
+    // flags of the CreateDevice call.
+    unsigned int behaviour = (m_8 ? m_34 : m_68) == 0 ? 0x20
+                           : (m_8 ? m_34 : m_68) == 1 ? 0x80
+                           : (m_8 ? m_34 : m_68) == 2 ? 0x40
+                           : (m_8 ? m_34 : m_68) == 3 ? 0x40 : 0;
+    int adapter = GetSize()[0];
+    int hr = m_a4->CreateDevice(adapter,
+                                info->m_4, m_1a8, behaviour, &m_70, &m_a8);
+    if (hr >= 0) {
+        if (m_1fc)
+            SetWindowPos(m_1a8, (HWND)-2, m_1d8.left, m_1d8.top,
+                         m_1d8.right - m_1d8.left, m_1d8.bottom - m_1d8.top,
+                         0x40);
+        m_a8->GetDeviceCaps((D3DCAPS8 *)m_b4);
+        IDirect3DSurface8 *surface = 0;
+        m_a8->GetBackBuffer(0, 0, &surface);
+        ((GD507220SURFACE *)surface)->GetDesc(m_188);
+        ((GD507220SURFACE *)surface)->Release();
+        if (m_204)
+            m_a8->ShowCursor(1);
+        if (m_205) {
+            if (!m_1fc) {
+                RECT rect;
+                GetWindowRect(m_1a8, &rect);
+                ClipCursor(&rect);
+            } else {
+                ClipCursor(0);
+            }
+        }
+        hr = Hook03();
+        if (hr < 0) {
+            Hook08();
+        } else {
+            m_202 = true;
+            hr = Hook04();
+            if (hr < 0) {
+                Hook07();
+            } else {
+                m_203 = true;
+                return 0;
+            }
+        }
+        Cleanup3DEnvironment();
+    }
+    if (hr == 0x8200000b || info->m_4 != 1)
+        return hr;
+    if (g_pLog)
+        g_pLog->Error("Failed on init 3d enviroment");
+    return ReportError(hr, 1);
+}
+
+// ---------------------------------------------------------------------------
+// Notes for the unit's config
+//
+// The class above is GD507220 in the retail's terms; config/symbols.txt calls
+// it GD507220 after its destructor's address, and this file keeps that name.
+//
+// Symbols that still need a name in config/symbols.txt (the delinker calls
+// them FUN_<address> today, so objdiff cannot pair them):
+//
+//   0x005061b0 void  GD507220::Recreate()          QAEXXZ  (present parameters)
+//   0x00506fd0 int   GD507220::Restore()           QAEHXZ  (device back)
+//   0x00507b30 int   GD507220::ApplyMode()         QAEHXZ  (was FUN_00507b30;
+//          already matched, needs the name to show up in objdiff)
+//   0x005072b0 int   GD507220::ClearFlag()         UAEHXZ  (the flag hooks
+//          return the HRESULT 0, not void)
+//   0x00507df0 int   G2CORE4D3DAPP::SetMode(int,int)   QAEHHH@Z
+//          (retail returns 0 from the success path: "xor eax,eax" and "ret 8")
+//   0x00507510 bool  GD507220::SetWindowedMode()   QAE_NXZ
+//   0x005072c0 bool  GD507220::SetFullScreenMode() QAE_NXZ
+//
+// The eleven empty hooks are int-returning in the retail: the vtable at
+// 0x00678978 points nine of them at 0x004ede40 ("xor eax,eax; ret") and the
+// two after that at 0x00547f50 (a plain "ret"), and the callers test the
+// result as an HRESULT.
+//
+// A sequence of write-then-read on m_8 (a plain "unsigned char" member) is
+// what makes the retail reload the flag for every use instead of caching it;
+// m_8 is therefore declared volatile here, which is what the m_8 reloads in
+// Recreate, Restore, SetMode and ApplyMode need.
+// ---------------------------------------------------------------------------

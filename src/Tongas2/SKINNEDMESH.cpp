@@ -3,6 +3,16 @@
 #include <string>
 #include <vector>
 
+// The retail object calls the out-of-line four-argument compare instead of
+// expanding it at each site, so the specialisation is declared here to keep
+// the call.
+namespace std
+{
+template<>
+int basic_string<char, char_traits<char>, allocator<char> >::compare(
+    size_type, size_type, const char *, size_type) const;
+}
+
 // The object whose slot 0x1c unlinks it and whose deleting destructor runs at
 // slot 0; the wrapper at 0x5285f0 releases it.
 class GD5285f0OBJ
@@ -601,7 +611,13 @@ void GD517900::Set(int a, int b, int c)
 // Reproduces ?GetAnimationIndex@SKINNEDMESH@@QAEHPBD@Z (retail address
 // 0x00510660, 135 bytes). The +0x18/+0x1c range holds pointers to the
 // animation entries; each entry's name is a std::string at +0x44 and the
-// incoming char pointer addresses a holder whose std::string sits at +4.
+// incoming char pointer addresses a std::string, so the name really is a
+// string and the comparison goes through basic_string::compare.
+//
+// Residue: retail keeps the +0x18 base in ecx, reloads the element from
+// &m_18[i] and so has eax free for the compared name, which leaves it at
+// 135 bytes against our 126. Everything from the comparison onwards is
+// instruction-for-instruction the same apart from that colouring.
 class LOG
 {
 public:
@@ -618,8 +634,7 @@ struct GD510660ANIM
 
 struct GD510660NAME
 {
-    int m_0;
-    std::string m_4;
+    std::string m_0;
 };
 
 class GD510660
@@ -630,6 +645,7 @@ public:
         return m_18 ? (int)(m_1c - m_18) : 0;
     }
 
+    char pad_0[0x18];
     GD510660ANIM **m_18;
     GD510660ANIM **m_1c;
 };
@@ -645,7 +661,7 @@ int SKINNEDMESH::GetAnimationIndex(const char *name)
             if (g_pLog)
                 g_pLog->Error("CSkinnedMesh::GetAnimationIndex - Invalid name for animation index:%d", i);
         }
-        else if (self->m_18[i]->m_44.compare(want->m_4) == 0) {
+        else if (self->m_18[i]->m_44 == want->m_0) {
             return (int)i;
         }
         i++;
