@@ -3212,7 +3212,7 @@ void G2CORE4OBJ1::Init()
 }
 
 // 0x448cb0: rebinds the actor at 0x4 to the timer and caches its 0x128 field.
-class G2GC4UPDACTOR
+class G2CORE4UPDACTOR
 {
 public:
     void FUN_0044a4e0(int value);
@@ -3224,7 +3224,7 @@ public:
     void Update();
 
     char pad_0[4];
-    G2GC4UPDACTOR *m_4;
+    G2CORE4UPDACTOR *m_4;
     int m_8;
 };
 

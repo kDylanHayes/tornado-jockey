@@ -65,10 +65,8 @@ public:
 __declspec(noinline) GD556050::~GD556050()
 {
     int count = m_58.m_begin ? (int)(m_58.m_end - m_58.m_begin) : 0;
-    for (int i = 0; i < count; i++) {
-        GD556050ITEM *item = m_58.m_begin + i;
-        ::operator delete(item->m_4);
-    }
+    for (int i = 0; i < count; i++)
+        ::operator delete(m_58.m_begin[i].m_4);
     if (m_04)
         m_04->Release(1);
     if (m_58.m_begin)
@@ -249,6 +247,153 @@ struct TAIL4MAPVALUE
 
 template class std::map<std::basic_string<char>, TAIL4MAPVALUE>;
 
+// The 8-byte pair the notification list stores.
+struct TAIL4PAIR8
+{
+    int m_0;
+    int m_4;
+};
+
+template class std::vector<TAIL4PAIR8>;
+
+// The list owner: a growable array of {int, handle} pairs at +0x54.
+class TL4LIST
+{
+public:
+    void Add(int value, int *source);
+
+    int m_00[0x54 / 4];             // 0x00
+    std::vector<TAIL4PAIR8> m_54;   // 0x54
+};
+
+// 00556db0 (60 bytes) -- append one pair, taking the handle out of source.
+// Residue: 60 bytes with identical instruction and call structure; the vector
+// end pointer lands in edx here and in esi in retail (register colour, 2
+// bytes at +0x30).
+void TL4LIST::Add(int value, int *source)
+{
+    TAIL4PAIR8 item;
+    item.m_0 = value;
+    item.m_4 = 0;
+    m_54.push_back(item);
+    int handle = *source;
+    *source = 0;
+    TAIL4PAIR8 *end = m_54.end()._Myptr;
+    end[-1].m_4 = handle;
+}
+
+// ---------------------------------------------------------------------------
+// The notification tree.  A node is 0x34 bytes: three links, a 0x24-byte
+// value (a std::string plus a reference-counted handle) and the red/black
+// colour and nil flags at 0x30/0x31.
+// ---------------------------------------------------------------------------
+
+class G2TL3CALL
+{
+public:
+    void Call();
+
+    int m_0;
+    int m_4;
+};
+
+class G2TL3TH1
+{
+public:
+    void Call();
+};
+
+class G2TL3TH2
+{
+public:
+    void Call();
+};
+
+// One stored notification: a name plus a reference-counted handle.  The copy
+// constructor touches 0x20 of the 0x24 bytes; the tail word is left alone.
+class G2TL3TGT1
+{
+public:
+    __declspec(noinline) G2TL3TGT1(const G2TL3TGT1 &other);
+    ~G2TL3TGT1();
+
+    std::string m_0;        // 0x00
+    G2TL3CALL *m_1c;        // 0x1c
+    void *m_20;             // 0x20
+};
+
+// 005593a0 (106 bytes) -- copy one stored value, taking a new reference.
+G2TL3TGT1::G2TL3TGT1(const G2TL3TGT1 &other) : m_0(other.m_0), m_1c(other.m_1c)
+{
+    if (m_1c)
+        m_1c->Call();
+}
+
+struct TL3NODE
+{
+    TL3NODE(TL3NODE *left, TL3NODE *parent, TL3NODE *right,
+            const G2TL3TGT1 &value, char color);
+
+    TL3NODE *m_left;        // 0x00
+    TL3NODE *m_parent;      // 0x04
+    TL3NODE *m_right;       // 0x08
+    G2TL3TGT1 m_value;      // 0x0c
+    char m_color;           // 0x30
+    char m_isnil;           // 0x31
+};
+
+TL3NODE::TL3NODE(TL3NODE *left, TL3NODE *parent, TL3NODE *right,
+                 const G2TL3TGT1 &value, char color)
+    : m_left(left), m_parent(parent), m_right(right), m_value(value),
+      m_color(color), m_isnil(0)
+{
+}
+
+class TL3TREE
+{
+public:
+    TL3NODE *Head();
+    TL3NODE *Buynode(TL3NODE *left, TL3NODE *parent, TL3NODE *right,
+                     const G2TL3TGT1 &value, char color);
+    void EraseValue(TL3NODE *node);
+    void EraseHandle(TL3NODE *node);
+
+    int m_compare;          // 0x00
+    TL3NODE *m_head;        // 0x04
+    unsigned int m_size;    // 0x08
+};
+
+// 00559540 (126 bytes) -- allocate and initialise one tree node.
+// Residue: retail keeps an ebp frame and saves ebx/edi for the caught-throw
+// delete handler, so this builds 135 bytes with no frame.
+TL3NODE *TL3TREE::Buynode(TL3NODE *left, TL3NODE *parent, TL3NODE *right,
+                          const G2TL3TGT1 &value, char color)
+{
+    return new TL3NODE(left, parent, right, value, color);
+}
+
+// 00556140 (62 bytes) -- free a subtree, releasing the value first.
+void TL3TREE::EraseValue(TL3NODE *rootnode)
+{
+    for (TL3NODE *pnode = rootnode; !pnode->m_isnil; rootnode = pnode) {
+        EraseValue(pnode->m_right);
+        pnode = pnode->m_left;
+        ((G2TL3TH1 *)rootnode)->Call();
+        ::operator delete(rootnode);
+    }
+}
+
+// 00556b80 (62 bytes) -- free a subtree, releasing the handle first.
+void TL3TREE::EraseHandle(TL3NODE *rootnode)
+{
+    for (TL3NODE *pnode = rootnode; !pnode->m_isnil; rootnode = pnode) {
+        EraseHandle(pnode->m_right);
+        pnode = pnode->m_left;
+        ((G2TL3TH2 *)rootnode)->Call();
+        ::operator delete(rootnode);
+    }
+}
+
 // 00559d40 (60 bytes) -- recursive unsigned digit emitter.
 static const char GD559DIGITS[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -256,15 +401,10 @@ static char *GD559D40(unsigned int value, char *buffer, unsigned int radix)
 {
     unsigned int quotient = value / radix;
     unsigned int remainder = value % radix;
-    if (0 < quotient) {
-        char *p = GD559D40(quotient, buffer, radix);
-        *p = GD559DIGITS[remainder];
-        return p + 1;
-    }
-    else {
-        *buffer = GD559DIGITS[remainder];
-        return buffer + 1;
-    }
+    if (0 < quotient)
+        buffer = GD559D40(quotient, buffer, radix);
+    *buffer = GD559DIGITS[remainder];
+    return buffer + 1;
 }
 
 // 00559d80 (124 bytes) -- signed integer to string in an arbitrary radix.
@@ -282,7 +422,7 @@ char *GD559D80(int value, char *buffer, int radix)
         if (0 < quotient)
             p = GD559D40(quotient, p, radix);
         *p = GD559DIGITS[remainder];
-        p[1] = '\0';
+        p[1] = 0;
         return buffer;
     }
     unsigned int positive = (unsigned int)value;
@@ -292,7 +432,7 @@ char *GD559D80(int value, char *buffer, int radix)
     if (0 < quotient)
         p = GD559D40(quotient, buffer, radix);
     *p = GD559DIGITS[remainder];
-    p[1] = '\0';
+    p[1] = 0;
     return buffer;
 }
 

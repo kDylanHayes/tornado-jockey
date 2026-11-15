@@ -219,16 +219,18 @@ V3 V3::Normalized() const
 
 V2 V2::Rotate(float angle) const
 {
-    float s, c;
+    V2 out;
     float length = (float)sqrt(x * x + y * y);
     float a = (float)atan2(x, y) + angle;
     while (a > 3.14159265f)
         a -= 6.28318531f;
     while (a < -3.14159265f)
         a += 6.28318531f;
-    s = (float)sin(a);
-    c = (float)cos(a);
-    return V2(s * length, c * length);
+    float s = (float)sin(a);
+    float c = (float)cos(a);
+    out.x = s * length;
+    out.y = c * length;
+    return out;
 }
 
 STRING::~STRING() throw()
@@ -726,7 +728,7 @@ void G2CORE1F::Clear()
 class G2CORE1J1 : public ACTOR
 {
 public:
-    G2CORE1J1();
+    __declspec(noinline) G2CORE1J1();
     virtual ~G2CORE1J1();
 
     virtual int GetClassId();
@@ -737,12 +739,17 @@ public:
 
     static int s_classId;
     static int s_factoryId;
+
+    // The two flags the constructor clears; they also give the class its
+    // 0xcd0 allocation size.
+    char m_ccc;
+    char m_ccd;
 };
 
 G2CORE1J1::G2CORE1J1()
 {
-    *((char *)this + 0xccc) = 0;
-    *((char *)this + 0xccd) = 0;
+    m_ccc = 0;
+    m_ccd = 0;
 }
 
 int G2CORE1J1::s_classId = -1;
@@ -5534,7 +5541,7 @@ struct APPOPTIONSX
     virtual void A07();
     virtual void A08();
     virtual void A09();
-    virtual bool Call(int flag, int value);
+    virtual bool Call(bool flag, int value);
 };
 
 struct G2CORE1SR6
@@ -5545,8 +5552,9 @@ struct G2CORE1SR6
 SRESULT G2CORE1SR6::Command(int value)
 {
     int unused = 0;
-    bool ok = ((APPOPTIONSX *)g_pApp->m_pOptions)->Call(
-        *(unsigned char *)((char *)this + 0x230) != 0, *(int *)((char *)this + 0x228));
+    APPOPTIONSX *options = (APPOPTIONSX *)g_pApp->m_pOptions;
+    char flag = *(char *)((char *)this + 0x230);
+    bool ok = options->Call(flag, *(int *)((char *)this + 0x228));
     return SRESULT(ok);
 }
 
@@ -6063,7 +6071,8 @@ public:
 V3 GD409450::Method()
 {
     ANG *angles = (ANG *)((char *)this + 0x34);
-    if (*(unsigned char *)((char *)this + 0x80) & 1)
+    char flag = *(char *)((char *)this + 0x80);
+    if (flag & 1)
         angles->UpdateMatrix();
     return ((GD409450OBJ *)((char *)angles + 0xc))->Get();
 }
@@ -6201,10 +6210,7 @@ public:
 void GD4112f0::Set(int index)
 {
     (void)index;
-    int *words = &m_173c;
-    words[0] = -1;
-    words[1] = -1;
-    words[2] = 0;
+    *(RESHANDLE *)((char *)this + 0x173c) = RESHANDLE();
 }
 
 // 0x0040b570: calls two helpers and clears the word at +0x3b88.
@@ -6396,17 +6402,11 @@ void *Create0040e1f0()
     return new GD00421550;
 }
 
-class GD00408d40
-{
-public:
-    GD00408d40();
-
-    char pad_cd0[0xcd0];
-};
-
+// 0x408d40 is G2CORE1J1's constructor, defined above; the target object
+// relocates this call to that symbol, not to a stand-in class.
 void *Create0040e250()
 {
-    return new GD00408d40;
+    return new G2CORE1J1;
 }
 
 class GD00439430
@@ -6776,4 +6776,33 @@ void GD40aad0::SetBias(const float &bias)
         return;
     g_pRenderer->SetMipmapBias(bias);
     m_3970 = bias;
+}
+
+// 0x004112c0: copies the vector at +8 of the argument into +0x173c, but only
+// while the argument has not been scaled up to its final size.
+class GD4112c0
+{
+public:
+    void Set(const void *arg);
+
+    char pad_173c[0x173c];
+};
+
+void GD4112c0::Set(const void *arg)
+{
+    if (*(const float *)((const char *)arg + 0x1800) != 1.0f)
+        *(V3 *)((char *)this + 0x173c) = *(const V3 *)((const char *)arg + 8);
+}
+
+// 0x004119d0: the text of a fixed buffer compared with another text.
+struct GD4119d0
+{
+    char m_text[1];
+
+    char NotEquals(const char *other) const;
+};
+
+char GD4119d0::NotEquals(const char *other) const
+{
+    return strcmp(m_text, other) != 0;
 }

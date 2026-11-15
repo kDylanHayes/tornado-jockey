@@ -582,12 +582,26 @@ void G2FORESTOBJ::SetClearForest(const bool &clear)
 class MINITORNADOMASTER : public RESOURCEMASTER
 {
 public:
+    MINITORNADOMASTER(RESOURCEMANAGER *manager, const char *name);
+
     CSTRING m_template;
     float m_64;
     float m_68;
     float m_6c;
     float m_70;
+    float m_74;
 };
+
+MINITORNADOMASTER::MINITORNADOMASTER(RESOURCEMANAGER *manager, const char *name)
+    : RESOURCEMASTER(manager, name)
+{
+    m_template = "";
+    m_64 = 10.0f;
+    m_68 = 20.0f;
+    m_6c = 20.0f;
+    m_70 = 10.0f;
+    m_74 = 0.005f;
+}
 
 extern RESOURCEMANAGER *g_pMinitornadoTemplates;
 extern int g_factoryFlags[];
@@ -945,10 +959,14 @@ __declspec(noinline) GD43bb40::~GD43bb40() throw()
 class GD43cc30 : public RESOURCEMASTER
 {
 public:
+    GD43cc30(RESOURCEMANAGER *manager, const char *name);
     virtual ~GD43cc30();
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
+
+    char pad_60[0x2ac - sizeof(RESOURCEMASTER)];
 
     static int s_classId;
 
@@ -958,6 +976,11 @@ public:
 
 __declspec(noinline) GD43cc30::~GD43cc30() throw()
 {
+}
+
+SRESULT GD43cc30::Execute(CMDENTRY *command, TOKENS **args)
+{
+    return (this->*(SRESULT (GD43cc30::*)(TOKENS **))command->func)(args);
 }
 
 // The exe's destructor at 0x43cc30 does not store a vptr: it frees the three
@@ -980,13 +1003,17 @@ __declspec(noinline) GD43cc30X::~GD43cc30X()
 {
 }
 
-class GD43ea30
+class GD43ea30 : public RESOURCEMASTER
 {
 public:
+    GD43ea30(RESOURCEMANAGER *manager, const char *name);
     virtual ~GD43ea30();
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
+
+    char pad_60[0xaa4 - sizeof(RESOURCEMASTER)];
 
     static int s_classId;
 
@@ -996,6 +1023,11 @@ public:
 
 __declspec(noinline) GD43ea30::~GD43ea30()
 {
+}
+
+SRESULT GD43ea30::Execute(CMDENTRY *command, TOKENS **args)
+{
+    return (this->*(SRESULT (GD43ea30::*)(TOKENS **))command->func)(args);
 }
 
 struct CSTRINLINE
@@ -1058,13 +1090,17 @@ GD43ea30X *GD43ea30X::Destroy(bool flag)
     return this;
 }
 
-class GD43f2f0
+class GD43f2f0 : public RESOURCEMASTER
 {
 public:
+    GD43f2f0(RESOURCEMANAGER *manager, const char *name);
     virtual ~GD43f2f0();
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
+
+    char pad_60[0x140 - sizeof(RESOURCEMASTER)];
 
     static int s_classId;
 
@@ -1074,6 +1110,11 @@ public:
 
 __declspec(noinline) GD43f2f0::~GD43f2f0()
 {
+}
+
+SRESULT GD43f2f0::Execute(CMDENTRY *command, TOKENS **args)
+{
+    return (this->*(SRESULT (GD43f2f0::*)(TOKENS **))command->func)(args);
 }
 
 // The non-polymorphic holder the 0x43f2f0 destructor belongs to: the
@@ -2335,18 +2376,24 @@ int GD43b550::GetFactoryFlags()
     return g_factoryFlags[g_stormSpawnerFactoryId];
 }
 
-class GD43f600
+class GD43f600 : public CMDBASE
 {
 public:
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
 
     static int s_classId;
 
     static CMDENTRY s_commands[];
     static void RegisterCommands();
 };
+
+SRESULT GD43f600::Execute(CMDENTRY *command, TOKENS **args)
+{
+    return (this->*(SRESULT (GD43f600::*)(TOKENS **))command->func)(args);
+}
 
 // The non-polymorphic holder the 0x43f600 destructor belongs to.
 class GD43f600X
@@ -2362,18 +2409,24 @@ __declspec(noinline) GD43f600X::~GD43f600X()
 {
 }
 
-class GD43f601
+class GD43f601 : public CMDBASE
 {
 public:
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
 
     static int s_classId;
 
     static CMDENTRY s_commands[];
     static void RegisterCommands();
 };
+
+SRESULT GD43f601::Execute(CMDENTRY *command, TOKENS **args)
+{
+    return (this->*(SRESULT (GD43f601::*)(TOKENS **))command->func)(args);
+}
 
 int GD42ddd0::GetParentClassId()
 {
@@ -2748,18 +2801,24 @@ int GD43bb40::GetFactoryId()
     return s_factoryId;
 }
 
-class G2CORE3CID1
+class G2CORE3CID1 : public CMDBASE
 {
 public:
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
 
     static int s_classId;
 
     static CMDENTRY s_commands[];
     static void RegisterCommands();
 };
+
+SRESULT G2CORE3CID1::Execute(CMDENTRY *command, TOKENS **args)
+{
+    return (this->*(SRESULT (G2CORE3CID1::*)(TOKENS **))command->func)(args);
+}
 
 int G2CORE3CID1::GetClassId()
 {
@@ -2776,18 +2835,27 @@ const char *G2CORE3CID1::GetClassName()
     return g_classNames[s_classId];
 }
 
-class G2CORE3CID2
+class G2CORE3CID2 : public RESOURCEMASTER
 {
 public:
+    G2CORE3CID2(RESOURCEMANAGER *manager, const char *name);
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
+
+    char pad_60[0x268 - sizeof(RESOURCEMASTER)];
 
     static int s_classId;
 
     static CMDENTRY s_commands[];
     static void RegisterCommands();
 };
+
+SRESULT G2CORE3CID2::Execute(CMDENTRY *command, TOKENS **args)
+{
+    return (this->*(SRESULT (G2CORE3CID2::*)(TOKENS **))command->func)(args);
+}
 
 int G2CORE3CID2::GetClassId()
 {
@@ -2850,6 +2918,9 @@ void PROGRESSBAR::UpdateDecal(const RESHANDLE &handle)
     }
 }
 
+// The masters these four managers make: the managers' CreateMaster only
+// builds one and hands it back, so only their sizes are needed here.
+
 // The ANTITORNADOAMMO manager (0x0043c8f0).
 class ANTITORNADOAMMOMANAGER : public RESOURCEMANAGER
 {
@@ -2860,11 +2931,18 @@ public:
         m_8 = false;
         m_18 = true;
     }
+
+    virtual RESOURCEMASTER *CreateMaster(const char *name);
 };
 
 RESOURCEMANAGER *CreateANTITORNADOAMMO()
 {
     return new ANTITORNADOAMMOMANAGER();
+}
+
+RESOURCEMASTER *ANTITORNADOAMMOMANAGER::CreateMaster(const char *name)
+{
+    return new GD43cc30(this, name);
 }
 
 // The CAMERAOPTION manager (0x0043ce00).
@@ -2894,11 +2972,18 @@ public:
         m_8 = false;
         m_18 = true;
     }
+
+    virtual RESOURCEMASTER *CreateMaster(const char *name);
 };
 
 RESOURCEMANAGER *CreateCURSOR()
 {
     return new CURSORMANAGER();
+}
+
+RESOURCEMASTER *CURSORMANAGER::CreateMaster(const char *name)
+{
+    return new G2CORE3CID2(this, name);
 }
 
 // The DESTRUCTIBLE manager (0x0043d380).
@@ -2911,11 +2996,18 @@ public:
         m_8 = false;
         m_18 = true;
     }
+
+    virtual RESOURCEMASTER *CreateMaster(const char *name);
 };
 
 RESOURCEMANAGER *CreateDESTRUCTIBLE()
 {
     return new DESTRUCTIBLEMANAGER();
+}
+
+RESOURCEMASTER *DESTRUCTIBLEMANAGER::CreateMaster(const char *name)
+{
+    return new GD43ea30(this, name);
 }
 
 // The FOREST manager (0x0043edd0).
@@ -2928,11 +3020,18 @@ public:
         m_8 = false;
         m_18 = true;
     }
+
+    virtual RESOURCEMASTER *CreateMaster(const char *name);
 };
 
 RESOURCEMANAGER *CreateFOREST()
 {
     return new FORESTMANAGER();
+}
+
+RESOURCEMASTER *FORESTMANAGER::CreateMaster(const char *name)
+{
+    return new GD43f2f0(this, name);
 }
 
 // The LOADINGTIPS manager (0x0043f460).
@@ -2962,11 +3061,18 @@ public:
         m_8 = false;
         m_18 = true;
     }
+
+    virtual RESOURCEMASTER *CreateMaster(const char *name);
 };
 
 RESOURCEMANAGER *CreateMINITORNADO()
 {
     return new MINITORNADOMANAGER();
+}
+
+RESOURCEMASTER *MINITORNADOMANAGER::CreateMaster(const char *name)
+{
+    return new MINITORNADOMASTER(this, name);
 }
 
 // The PROGRESSBAR manager (0x0043fb50).

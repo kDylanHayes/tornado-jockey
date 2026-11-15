@@ -3448,7 +3448,20 @@
       "symbol_mappings": {
         "FUN_004e6e00": "??1GD515e70BASE@@UAE@XZ",
         "_m_42": "?m_42@M42TARGET@@QAEXPAX@Z",
-        "_m_43": "?m_43@M42TARGET@@QAEXPAX@Z"
+        "_m_43": "?m_43@M42TARGET@@QAEXPAX@Z",
+        "FUN_005422c0": "??4?$vector@MV?$allocator@M@std@@@std@@QAEAAV01@ABV01@@Z",
+        "FUN_00452b60": "??4?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QAEAAV01@ABV01@@Z",
+        "FUN_0051ac50": "??4?$vector@V?$vector@HV?$allocator@H@std@@@std@@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@std@@QAEAAV01@ABV01@@Z",
+        "FUN_005212e0": "??4?$vector@NV?$allocator@N@std@@@std@@QAEAAV01@ABV01@@Z",
+        "?GD50b010@@YAXPAD0@Z": "??$_Destroy_range@V?$vector@HV?$allocator@H@std@@@std@@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@std@@YAXPAV?$vector@HV?$allocator@H@std@@@0@0AAV?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@0@U_Nonscalar_ptr_iterator_tag@0@@Z",
+        "FUN_00514180": "??$_Destroy_range@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@YAXPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0AAV?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@0@U_Nonscalar_ptr_iterator_tag@0@@Z",
+        "FUN_0051c400": "??$_Destroy_range@V?$vector@NV?$allocator@N@std@@@std@@V?$allocator@V?$vector@NV?$allocator@N@std@@@std@@@2@@std@@YAXPAV?$vector@NV?$allocator@N@std@@@0@0AAV?$allocator@V?$vector@NV?$allocator@N@std@@@std@@@0@U_Nonscalar_ptr_iterator_tag@0@@Z",
+        "FUN_00513030": "??$_Uninit_fill_n@PAV?$vector@V?$vector@HV?$allocator@H@std@@@std@@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@std@@IV12@V?$allocator@V?$vector@V?$vector@HV?$allocator@H@std@@@std@@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@std@@@2@@std@@YAXPAV?$vector@V?$vector@HV?$allocator@H@std@@@std@@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@0@IABV10@AAV?$allocator@V?$vector@V?$vector@HV?$allocator@H@std@@@std@@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@std@@@0@U_Nonscalar_ptr_iterator_tag@0@@Z",
+        "FUN_005141d0": "??$_Uninit_fill_n@PAV?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@IV12@V?$allocator@V?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@@2@@std@@YAXPAV?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@0@IABV10@AAV?$allocator@V?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@@0@U_Nonscalar_ptr_iterator_tag@0@@Z",
+        "FUN_00519b30": "??$_Uninit_fill_n@PAV?$vector@NV?$allocator@N@std@@@std@@IV12@V?$allocator@V?$vector@NV?$allocator@N@std@@@std@@@2@@std@@YAXPAV?$vector@NV?$allocator@N@std@@@0@IABV10@AAV?$allocator@V?$vector@NV?$allocator@N@std@@@std@@@0@U_Nonscalar_ptr_iterator_tag@0@@Z",
+        "FUN_0051c470": "??$_Uninit_fill_n@PAV?$vector@MV?$allocator@M@std@@@std@@IV12@V?$allocator@V?$vector@MV?$allocator@M@std@@@std@@@2@@std@@YAXPAV?$vector@MV?$allocator@M@std@@@0@IABV10@AAV?$allocator@V?$vector@MV?$allocator@M@std@@@std@@@0@U_Nonscalar_ptr_iterator_tag@0@@Z",
+        "FUN_00522ef0": "??$_Uninit_fill_n@PAV?$vector@HV?$allocator@H@std@@@std@@IV12@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@std@@YAXPAV?$vector@HV?$allocator@H@std@@@0@IABV10@AAV?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@0@U_Nonscalar_ptr_iterator_tag@0@@Z",
+        "FUN_00518dc0": "??$_Uninit_copy@PAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAV12@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@YAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PAV10@00AAV?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@0@U_Nonscalar_ptr_iterator_tag@0@@Z"
       }
     },
     {
@@ -3496,7 +3509,8 @@
         "FUN_00530190": "?_Xlen@?$vector@HV?$allocator@H@std@@@std@@IBEXXZ",
         "FUN_00537630": "??$fill@PAHH@std@@YAXPAH0ABH@Z",
         "FUN_0052faa0": "??$copy_backward@PAHPAH@std@@YAPAHPAH00@Z",
-        "FUN_00517d60": "?_Ufill@?$vector@HV?$allocator@H@std@@@std@@IAEPAHPAHIABH@Z"
+        "FUN_00517d60": "?_Ufill@?$vector@HV?$allocator@H@std@@@std@@IAEPAHPAHIABH@Z",
+        "?_Tidy@?$deque@PAUG2TFGET@@V?$allocator@PAUG2TFGET@@@std@@@std@@IAEXXZ": "?_Tidy@?$deque@GV?$allocator@G@std@@@std@@IAEXXZ"
       }
     },
     {
@@ -3780,7 +3794,10 @@
         "FUN_0042ffe0": "??0GD0042ffe0@@QAE@XZ",
         "FUN_0043b6a0": "??0GD0043b6a0@@QAE@XZ",
         "FUN_0043c110": "??0GD0043c110@@QAE@XZ",
-        "FUN_00420e10": "??0GD00420e10@@QAE@XZ"
+        "FUN_00420e10": "??0GD00420e10@@QAE@XZ",
+        "FUN_004112c0": "?Set@GD4112c0@@QAEXPBX@Z",
+        "FUN_004112f0": "?Set@GD4112f0@@QAEXH@Z",
+        "FUN_004119d0": "?NotEquals@GD4119d0@@QBEDPBD@Z"
       }
     },
     {
@@ -3803,7 +3820,13 @@
       ],
       "target": "build/target/Tongas2/GAMECORE3.obj",
       "source": "src/Tongas2/GAMECORE3.cpp",
-      "category": "game"
+      "category": "game",
+      "symbol_mappings": {
+        "FUN_0043c9b0": "??0GD43cc30@@QAE@PAVRESOURCEMANAGER@@PBD@Z",
+        "FUN_0043d010": "??0G2CORE3CID2@@QAE@PAVRESOURCEMANAGER@@PBD@Z",
+        "FUN_0043de20": "??0GD43ea30@@QAE@PAVRESOURCEMANAGER@@PBD@Z",
+        "FUN_0043eea0": "??0GD43f2f0@@QAE@PAVRESOURCEMANAGER@@PBD@Z"
+      }
     },
     {
       "name": "Tongas2/GAMECORE4",

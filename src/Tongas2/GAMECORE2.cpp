@@ -90,7 +90,7 @@ V3 operator*(const V3 &v, const MATRIX &m)
 template <int N>
 void FIXEDSTRING<N>::operator+=(const char *text)
 {
-    if (strlen(text) + strlen(m_buf) < N - 1)
+    if ((int)strlen(text) + (int)strlen(m_buf) < N - 1)
         strcpy(m_buf + strlen(m_buf), text);
 }
 
@@ -329,6 +329,7 @@ public:
 class G2D1 : public ACTOR
 {
 public:
+    G2D1();
     virtual ~G2D1();
     virtual int GetFactoryId();
     virtual int GetFactoryFlags();
@@ -343,10 +344,36 @@ public:
     BONEDMODELDX8PARTICLE *m_ce4;
 };
 
+// The engine's saved setting table. Only the call this unit makes is here.
+class SETTINGSTABLE
+{
+public:
+    void SetInt(int index, int value);
+
+    char m_000[0xff0];
+    void *m_ff0;
+};
+
+class APPWINDOW;
+extern APPWINDOW *g_pDisplay;
+
+G2D1::G2D1()
+{
+    m_ccc.x = 3.0f;
+    m_ccc.y = 2.0f;
+    m_ccc.z = 1.0f;
+    m_cd8.x = 0.5f;
+    m_cd8.y = 3.0f;
+    m_cd8.z = 0.5f;
+    *(int *)((char *)this + 0x128) = 1;
+    *(int *)((char *)this + 0x12c) = 1;
+    m_ce4 = 0;
+    ((SETTINGSTABLE *)*(void **)((char *)g_pDisplay + 0x2c0))->SetInt(0x1e, 0);
+}
+
 G2D1::~G2D1()
 {
 }
-
 SRESULT G2D1::Execute(CMDENTRY *command, TOKENS **args)
 {
     return (this->*(SRESULT (G2D1::*)(TOKENS **))command->func)(args);
@@ -2494,6 +2521,11 @@ struct G2CORE2M1
 
     void Respawn();
     void Start();
+    void WarnObjective();
+    SRESULT SetTornadoValue(TOKENS **args);
+    SRESULT SetTornadoPair(TOKENS **args);
+    SRESULT SetTornadoPoint(TOKENS **args);
+    void SetPair(int first, float second);
 };
 
 void G2CORE2M1::SetCF0(const int &value)
@@ -3879,10 +3911,60 @@ void G2CORE2M1::Start()
         reinterpret_cast<G2VSLOT40 *>(this)->Call1(&value);
         value = 1;
     }
-    int *address = &value;
-    reinterpret_cast<G2VSLOT41 *>(this)->Call1(address);
+    reinterpret_cast<G2VSLOT41 *>(this)->Call1(&value);
     V2 start(*(float *)((char *)this + 0x28),
              *(float *)((char *)this + 0x30));
     *(V2 *)((char *)this + 0xcf4) = start;
     *(bool *)((char *)this + 0x998) = true;
+}
+
+// The tornado's half of a command: hand it the point the actor found.
+struct G2TORNADOOBJ : public ACTOR
+{
+    void TakeObjective(V3 point);
+    void SetValue(int value);
+    void SetPoint(V3 point, float value);
+};
+
+// 0x426210: warn when the tornado is gone, otherwise give it the point
+// when the actor is in state 5.
+void G2CORE2M1::WarnObjective()
+{
+    ACTOR *tornado = g_pGame->GetTornado();
+    if (!tornado) {
+        if (g_pLog)
+            g_pLog->Error("NO TORNADO!");
+    } else if (*(int *)((char *)this + 0x138) == 5) {
+        reinterpret_cast<G2TORNADOOBJ *>(tornado)
+            ->TakeObjective(*(V3 *)((char *)this + 0xd2c));
+    }
+}
+
+// 0x424a80: pass the number to the tornado unless this actor is shutting
+// down. Always succeeds.
+SRESULT G2CORE2M1::SetTornadoValue(TOKENS **args)
+{
+    int value = atoi((*args)->GetToken(1));
+    ACTOR *tornado = g_pGame->GetTornado();
+    if (tornado && !*(bool *)((char *)this + 0xcd0))
+        reinterpret_cast<G2TORNADOOBJ *>(tornado)->SetValue(value);
+    return true;
+}
+
+// 0x424930: the two numbers, the count first.
+SRESULT G2CORE2M1::SetTornadoPair(TOKENS **args)
+{
+    SetPair(atoi((*args)->GetToken(1)), (float)atof((*args)->GetToken(2)));
+    return true;
+}
+
+// 0x4249d0: the number and the actor's point.
+SRESULT G2CORE2M1::SetTornadoPoint(TOKENS **args)
+{
+    float value = (float)atof((*args)->GetToken(1));
+    ACTOR *tornado = g_pGame->GetTornado();
+    if (tornado && *(bool *)((char *)this + 0xcd0))
+        reinterpret_cast<G2TORNADOOBJ *>(tornado)
+            ->SetPoint(*(V3 *)((char *)this + 0x28), value);
+    return true;
 }

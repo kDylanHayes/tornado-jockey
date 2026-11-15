@@ -1,5 +1,16 @@
 // Tongas2/SKINNEDGEOMETRY -- the skinned-geometry loader and accessors.
 //
+// THE UNIT HAS SEVENTEEN FUNCTIONS, NOT SIXTEEN.  Retail 0x005101e0 is a
+// separate 0x1ec-byte void function (the DX8 shadowed-model class
+// registration, defined at the end of this file) that config/symbols.txt does
+// not name.  ?Load's declared 0x2abc extent runs through it, so the delinker
+// folds it into Load and objdiff cannot see it.  Load really ends with
+// "ret 0x3c" at 0x005101d4 -- 0x28c7 bytes, 0x0050d910..0x005101d7 -- and nine
+// 0xcc bytes pad up to 0x005101e0.  Ghidra agrees: the delinked target carries
+// LAB_005101e0 with exactly 0x1ec bytes.  Splitting the symbol is the only
+// config change the function itself needs (plus the relocation names listed at
+// its definition); the other fifteen functions below are byte-exact.
+
 // Everything outside Load is matched byte for byte -- the fifteen remaining
 // functions of the unit: the two accessors, the three small forwarding
 // helpers, the record counter at 0x00510520 and the nine STL element loops
@@ -127,6 +138,14 @@
 #include "Tongas2/SKINNEDGEOMETRY.h"
 #include <algorithm>
 #include <memory>
+#include <string.h>
+
+#include "Tongas2/CMDBASE.h"
+#include "Tongas2/LOG.h"
+
+// Declared in the class headers whose GetClassName inlines it; CMDBASE.h does
+// not carry it.
+extern char g_classNames[][30];
 
 int SKINNEDGEOMETRY::Load(void *file, int flags, void *owner)
 {
@@ -285,6 +304,128 @@ struct GD510630
 {
     int m;
 };
+
+// ---------------------------------------------------------------------------
+// Retail 0x005101e0, 0x1ec bytes: the DX8 shadowed-model class registration.
+//
+// This is NOT part of Load.  Load's frame teardown ends with "ret 0x3c" at
+// 0x005101d4 and the linker pads nine 0xcc bytes up to 0x005101e0; the
+// function there is an independent void function whose pushes it cleans as it
+// goes (0x40 and 0x20 are its own argument-cleanup batches).  Because
+// config/symbols.txt has no symbol at 0x005101e0, ?Load's 0x2abc extent
+// swallows it: the delinker names the whole range ?Load and objdiff can never
+// see this function.  Load's own extent is 0x28c7 bytes, 0x0050d910 to
+// 0x005101d7.
+//
+// The body is the engine's usual registration sequence, six times over, then
+// the max-classes diagnostic:
+//
+//   strncpy(g_classNames[g_classCount], name, 30);
+//   CLASS::s_classId = g_classCount++;
+//   CLASS::RegisterCommands();
+//   g_classProps[CLASS::s_classId] = CLASS::s_properties;
+//   HashProperties(CLASS::s_properties);
+//   ...
+//   if (g_classCount >= 0x200 && g_pLog)
+//       g_pLog->Error("ERROR!! LoadRunnersInformation>FATAL ERROR, ...");
+//
+// which is CMDMGR.cpp's REGISTER_CLASS expansion verbatim.  The six classes
+// are the DX8 renderer's shadow-model classes; the strings live at the
+// addresses the retail relocations name, and their class ids are the five
+// named ?s_classId globals at 0x006c5d34..0x48 plus the unnamed one at
+// 0x006c5d3c.  The declaration order below is the retail call order.
+// The six classes' declarations live in their own units' headers, which this
+// scaffolding file does not include; a class's decorated names do not depend
+// on where its declaration is seen, so the registration still resolves to
+// ?RegisterCommands@CLASS@@SAXXZ / ?s_properties@CLASS@@2PAUPROPENTRY@@A.
+class SCENEMODELDX8SDMASTER
+{
+public:
+    static void RegisterCommands();
+    static PROPENTRY s_properties[];
+};
+
+class COLLISIONSCENEDX8SDMASTER
+{
+public:
+    static void RegisterCommands();
+    static PROPENTRY s_properties[];
+};
+
+class MODELDX8SDMASTER
+{
+public:
+    static void RegisterCommands();
+    static PROPENTRY s_properties[];
+};
+
+class VERTEXMODELDX8SDMASTER
+{
+public:
+    static void RegisterCommands();
+    static PROPENTRY s_properties[];
+};
+
+class BONEDMODELDX8SDMASTER
+{
+public:
+    static void RegisterCommands();
+    static PROPENTRY s_properties[];
+    static int s_classId;
+};
+
+class BONEDMODELDX8SDRESOURCE
+{
+public:
+    static void RegisterCommands();
+    static PROPENTRY s_properties[];
+    static int s_classId;
+};
+
+// The class-id holders, one per registered class.  Five are named in
+// config/symbols.txt; 0x006c5d3c is not, so this declaration names it.
+class SCENEMODELDX8CID
+{
+public:
+    static int s_classId;
+};
+
+class COLLISIONSCENEDX8CID
+{
+public:
+    static int s_classId;
+};
+
+class MODELDX8CID
+{
+public:
+    static int s_classId;
+};
+
+class VERTEXMODELDX8CID
+{
+public:
+    static int s_classId;
+};
+
+#define REGISTER_CLASS(id, CLASS, name) \
+    strncpy(g_classNames[g_classCount], name, 30); \
+    id = g_classCount++; \
+    CLASS::RegisterCommands(); \
+    g_classProps[id] = CLASS::s_properties; \
+    HashProperties(CLASS::s_properties);
+
+void RegisterModelDX8SDClasses()
+{
+    REGISTER_CLASS(SCENEMODELDX8CID::s_classId, SCENEMODELDX8SDMASTER, "SCENEMODELDX8SDMASTER")
+    REGISTER_CLASS(COLLISIONSCENEDX8CID::s_classId, COLLISIONSCENEDX8SDMASTER, "COLLISIONSCENEDX8SDMASTER")
+    REGISTER_CLASS(MODELDX8CID::s_classId, MODELDX8SDMASTER, "MODELDX8SDMASTER")
+    REGISTER_CLASS(VERTEXMODELDX8CID::s_classId, VERTEXMODELDX8SDMASTER, "VERTEXMODELDX8SDMASTER")
+    REGISTER_CLASS(BONEDMODELDX8SDMASTER::s_classId, BONEDMODELDX8SDMASTER, "BONEDMODELDX8SDMASTER")
+    REGISTER_CLASS(BONEDMODELDX8SDRESOURCE::s_classId, BONEDMODELDX8SDRESOURCE, "BONEDMODELDX8SDRESOURCE")
+    if (g_classCount >= 0x200 && g_pLog)
+        g_pLog->Error("ERROR!! LoadRunnersInformation>FATAL ERROR, max number of supported command runners exceeded");
+}
 
 template void std::fill<GD510430 *, GD510430>(
     GD510430 *, GD510430 *, const GD510430 &);

@@ -12,9 +12,13 @@
 //   0x0052ad70  ?_Xlen@?$vector@HV...           0x69 (+1 int3 the compiler emits)
 //   0x00530120  ?_Xlen@?$deque@PAUG2TFGET...    0x69 (+1 int3 the compiler emits)
 //   0x0052faa0  ??$copy_backward@PAHPAH@std@@   0x22
+//   0x0052fb90  ?M4@TRINNER@@QAEXXZ             0x182
+//   0x0052fff0  ?Clear@TRINNER@@QAEXXZ          0xb7
+//   0x00530a40  ??0GD52ff00Elem@@QAE@...        0x87
+//   0x00530ad0  ??1GD52ff00Elem@@QAE@XZ         0x6f
 // The symbol names/sizes config/symbols.txt carries for the first, second and
-// last of these still describe the pre-verification guesses; see the notes at
-// each definition.
+// last three of these still describe the pre-verification guesses; see the notes
+// at each definition and the block at the end of this file.
 #include "Tongas2/ANIMATEDGEOMETRY.h"
 
 int ANIMATEDGEOMETRY::Load(void *file, int flags, void *owner)
@@ -187,6 +191,10 @@ public:
     void M4();
     // retail 0x00530830: builds one queued element out of the track at index.
     void M3(int index, int a2, float speed, float d);
+    // retail 0x00530910: builds one queued element with a caller-set rate.
+    void M5(int index, int a2, float rate, float d);
+    // retail 0x005305c0: clears the queue, then builds one element.
+    void M6(int index, int a2, float d);
 
     char m_000[0xc];
     G2TFGET *m_p;
@@ -208,11 +216,12 @@ int TRINNER::M11(int a, int b, int c, int d)
     return m_p->Make5(a, b, &m_queue, c, d);
 }
 
-// Residue: retail is 183 bytes, this compiles to 179.  The four-byte
-// difference is the `if (p != 0)` guard MSVC keeps in front of the operator
-// delete call at retail +0x67..+0x6a (`85 c9 74 09 51`); here the compiler
-// folds it because it already knows m_queue[i] is non-null.  The register
-// pick at +0x3f (`pop ebx` here, `pop edi` at retail) follows from that.
+// retail 0x0052fff0, 183 bytes, byte-exact.
+//
+// The `if` around the delete is not what produces the guard in front of the
+// operator delete call at +0x67 (`85 c9 74 09 51`).  A trivial destructor lets
+// MSVC drop that null test entirely; the declared-but-empty G2TFGET destructor
+// above makes the compiler keep it, which is what retail does.
 void TRINNER::Clear()
 {
     for (int i = 0; i < m_queue.size(); i++) {
@@ -224,15 +233,9 @@ void TRINNER::Clear()
     m_queue.clear();
 }
 
-// retail 0x0052fb90, 386 bytes (the configured size 0x17f cuts the last
-// `add esp,0x14; ret`).
-//
-// Residue: 382 of 386 bytes.  The only difference is the 4-byte
-// `test ecx,ecx; je +9` guard MSVC keeps in front of the operator delete call
-// at retail +0xa4 (`85 c9 74 09 51`); here the compiler folds it because it
-// already knows m_queue[i] is non-null — the same residue Clear() below carries.
-// Everything else, including the shift loop, pop_back() and the epilogue,
-// matches; the three earlier jump displacements differ only by those 4 bytes.
+// retail 0x0052fb90, 386 bytes, byte-exact (its single reloc at +0xaa is the
+// same operator delete).  The configured size 0x17f cuts the closing
+// `add esp,0x14; ret`, so it needs 0x182.
 void TRINNER::M4()
 {
     for (int i = 0; i < (int)m_queue.size(); i++) {
@@ -274,6 +277,61 @@ void TRINNER::M3(int index, int a2, float speed, float d)
         o->m_030 = rate;
         o->m_034 = rate;
         o->m_038 = 1.0f;
+        m_queue.push_front(o);
+    }
+}
+
+// retail 0x00530910, 210 bytes: the same build as M3 but for a caller that
+// supplies its own playback rate; it advances the frame cursor instead of
+// resetting it.
+//
+// Residue: 199 of 210 with the same guard, Clear-free body and call sequence.
+// Same 9 bytes as M3: retail materialises the track slot address it never uses
+// (`mov ecx,[eax+esi*4]; lea eax,[eax+esi*4]; mov eax,ecx`), reads m_40 through
+// a second register (`mov edx,ecx`) and keeps the track base in ecx.  A local,
+// a reference and an explicit slot address all compile the same way here.
+void TRINNER::M5(int index, int a2, float rate, float d)
+{
+    if (m_pTrack != 0 && (unsigned)index < (unsigned)(m_pTrackEnd - m_pTrack) && index >= 0) {
+        float f = 1.0f / d;
+        G2TFTRACK *t = m_pTrack[index];
+        int v3c = t->m_3c;
+        int v40 = t->m_40;
+        float v48 = t->m_48;
+        float g = f / t->m_48;
+        G2TFGET *o = new G2TFGET(index, v3c, v40, v48 * d, g, (char)a2);
+        o->m_029 = 1;
+        o->m_02a = 0;
+        o->m_010 = o->m_00c + 1;
+        if (o->m_010 >= o->m_008)
+            o->m_010 = o->m_004;
+        o->m_030 = rate;
+        o->m_034 = rate;
+        o->m_038 = 1.0f;
+        m_queue.push_front(o);
+    }
+}
+
+// retail 0x005305c0, 199 bytes: like M5 but it drops the queue first and
+// leaves the rate for the player to set.
+//
+// Residue: 190 of 199, the same 9 bytes M3 and M5 carry (see M5).
+void TRINNER::M6(int index, int a2, float d)
+{
+    if (m_pTrack != 0 && (unsigned)index < (unsigned)(m_pTrackEnd - m_pTrack) && index >= 0) {
+        Clear();
+        float f = 1.0f / d;
+        G2TFTRACK *t = m_pTrack[index];
+        int v3c = t->m_3c;
+        int v40 = t->m_40;
+        float v48 = t->m_48;
+        float g = f / t->m_48;
+        G2TFGET *o = new G2TFGET(index, v3c, v40, v48 * d, g, (char)a2);
+        o->m_029 = 1;
+        o->m_02a = 0;
+        o->m_010 = o->m_00c + 1;
+        if (o->m_010 >= o->m_008)
+            o->m_010 = o->m_004;
         m_queue.push_front(o);
     }
 }
@@ -465,6 +523,12 @@ template void std::deque<G2TFGET *>::push_front(G2TFGET *const &);
 //        no return value; its bytes are already exact.
 //
 //   0x0052ad70  ?_Xlen@?$vector@HV?$allocator@H@std@@@std@@IBEXXZ  0x69 -> 0x6a
+//        Bytes and relocs already agree with retail 0x0052ad70; the one
+//        remaining difference is the __ehhandler reloc, which resolves to the
+//        auto label at 0x005f4728.  Add
+//            0x005f4728 __ehhandler$?_Xlen@?$vector@HV?$allocator@H@std@@@std@@IBEXXZ
+//        and the vector<int> instance compares 100% like the deque one below.
+//
 //   0x00530120  ?_Xlen@?$deque@PAUG2TFGET@@...@std@@IBEXXZ         0x69 -> 0x6a
 //        (the trailing int3 the compiler emits, see the note above)
 //
@@ -479,7 +543,34 @@ template void std::deque<G2TFGET *>::push_front(G2TFGET *const &);
 //        bytes short of retail (register colour / x87 scheduling).
 //
 //   0x0052fb90  ?M4@TRINNER@@QAEXXZ  0x17f -> 0x182
-//        The configured extent cuts the closing `add esp,0x14; ret`.
+//        The configured extent cuts the closing `add esp,0x14; ret`.  With
+//        the size fixed the function is byte-exact and objdiff reports 100%.
+//
+//   0x0052fff0  (unnamed) 0xb4 -> 0xb7  ?Clear@TRINNER@@QAEXXZ
+//        Byte-exact (183 bytes, same two relocs).  It needs both a name and the
+//        real extent.  The only reloc-name difference is the closing
+//        `jmp`, which retail resolves to ?_Tidy@?$deque@GV?... (ICF folded the
+//        deque<G> and deque<G2TFGET*> copies); our object names the
+//        deque<G2TFGET*> one, so units.json needs a symbol_mapping for it.
+//
+//   0x00530a40  (unnamed) 0x87  ??0GD52ff00Elem@@QAE@ABV?$basic_string@...@@HHHM@Z
+//        Byte-exact, same relocs.  Element constructor: `sizeof` is 0x4c (the
+//        caller at 0x005312e5 does `new 0x4c`), five arguments
+//        (const std::string&, count at +0x44, +0x3c, +0x40, divisor at +0x48).
+//
+//   0x00530ad0  (unnamed) 0x6f  ??1GD52ff00Elem@@QAE@XZ
+//        Byte-exact, same four relocs.
+//
+//   0x005305c0  (unnamed) 0xc7  ?M6@TRINNER@@QAEXHHM@Z
+//   0x00530910  (unnamed) 0xd2  ?M5@TRINNER@@QAEXHHMM@Z
+//        Partial (182/199 and 199/210).  Both keep retail's guard, Clear() call
+//        and constructor call; the residue is the same 9 bytes M3 carries: retail
+//        loads the track element as `mov ecx,[eax+esi*4]; lea eax,[eax+esi*4];
+//        mov eax,ecx` (a dead address computation) and reads m_40 through a
+//        second register, while this compiler folds both away and picks eax for
+//        the track base where retail picks ecx.  Register colour + two dead
+//        instructions; no expression form tried (local, reference, explicit
+//        slot address) changes it.
 //
 //   0x0052fad0  ?M2@GD52ff00@@QAEHH@Z  0xba
 //        Not reconstructible from this image.  copy_backward ends at

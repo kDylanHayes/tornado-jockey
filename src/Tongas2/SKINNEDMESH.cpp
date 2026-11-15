@@ -83,12 +83,6 @@ void GD5285f0::Release()
 #include "Tongas2/MATHS.h"
 #include "Tongas2/SKINNEDMESH.h"
 
-const char *SKINNEDMESH::GetAnimationName(unsigned int index)
-{
-    (void)index;
-    return 0;
-}
-
 int SKINNEDMESH::RemoveAnimations(const char *name)
 {
     (void)name;
@@ -657,16 +651,36 @@ int SKINNEDMESH::GetAnimationIndex(const char *name)
     unsigned int i = 0;
 
     while (i < (unsigned int)self->Count()) {
-        if (!self->m_18[i]) {
+        GD510660ANIM **slot = &self->m_18[i];
+
+        if (!*slot) {
             if (g_pLog)
                 g_pLog->Error("CSkinnedMesh::GetAnimationIndex - Invalid name for animation index:%d", i);
         }
-        else if (self->m_18[i]->m_44 == want->m_0) {
+        else if ((*slot)->m_44 == want->m_0) {
             return (int)i;
         }
         i++;
     }
     return -1;
+}
+
+// ?GetAnimationName@SKINNEDMESH@@QAEPBDI@Z (retail address 0x005117d0,
+// 219 bytes). The name of the animation entry, or the address of a static
+// empty string when the index is out of range. The out-of-range answer is the
+// address of the static string object itself, not its buffer.
+const char *SKINNEDMESH::GetAnimationName(unsigned int index)
+{
+    GD510660 *self = (GD510660 *)this;
+
+    if (self->m_18 && index < (unsigned int)self->Count())
+        return (const char *)&self->m_18[index]->m_44;
+
+    static std::string empty = "";
+
+    if (g_pLog)
+        g_pLog->Error("CSkinnedMesh::GetAnimationName - Invalid index (%u)", index);
+    return (const char *)&empty;
 }
 
 // Reproduces FUN_005106f0 (retail address 0x005106f0, 47 bytes): the bounds
@@ -1467,4 +1481,157 @@ bool __stdcall GD517e20(GD517e20OUTER *outer, int *index)
     if (!entry->m_4[0])
         return true;
     return entry->m_4[0]->Ready();
+}
+
+// ---------------------------------------------------------------------------
+// The rest of the unit's STL range helpers and the second copies of the
+// vector bookkeeping code.
+//
+// Retail carries one copy of each std::fill / copy / copy_backward per
+// element type, one out-of-line _Tidy / _Destroy / _Buy / _Ufill per
+// instantiated vector, and the same helper bodies again wherever a source
+// file's own copy was not folded away by the linker. The mesh's tables hold
+// 16-byte vectors, so the element types below are the four vector
+// specialisations plus the nested vector of int rows.
+// ---------------------------------------------------------------------------
+
+typedef std::vector<float> VF;
+typedef std::vector<double> VD;
+typedef std::vector<std::string> VS;
+typedef std::vector<VI> VVI;
+
+template<class T>
+void FillItems(T *first, T *last, const T &value)
+{
+    for (; first != last; ++first)
+        *first = value;
+}
+
+template<class T>
+T *CopyItemsForward(T *first, T *last, T *dest)
+{
+    for (; first != last; ++first, ++dest)
+        *dest = *first;
+    return dest;
+}
+
+template<class T>
+T *CopyItemsBackward(T *first, T *last, T *dest)
+{
+    while (first != last) {
+        --last;
+        --dest;
+        *dest = *last;
+    }
+    return dest;
+}
+
+// 0x00518d90, 0x00512930, 0x00513730 and 0x0051c100: 38 bytes each.
+template void FillItems<VI>(VI *, VI *, const VI &);
+template void FillItems<VF>(VF *, VF *, const VF &);
+template void FillItems<VS>(VS *, VS *, const VS &);
+template void FillItems<VVI>(VVI *, VVI *, const VVI &);
+
+// 0x00512390, 0x00512fb0 and 0x0051adb0: 50 bytes each.
+template VF *CopyItemsForward<VF>(VF *, VF *, VF *);
+template VS *CopyItemsForward<VS>(VS *, VS *, VS *);
+template VVI *CopyItemsForward<VVI>(VVI *, VVI *, VVI *);
+// 0x00521430 (50 bytes).
+template VD *CopyItemsForward<VD>(VD *, VD *, VD *);
+
+// 0x005123d0, 0x00512ff0 and 0x0051adf0: 50 bytes each.
+template VF *CopyItemsBackward<VF>(VF *, VF *, VF *);
+template VS *CopyItemsBackward<VS>(VS *, VS *, VS *);
+template VVI *CopyItemsBackward<VVI>(VVI *, VVI *, VVI *);
+// 0x00521470 (50 bytes).
+template VD *CopyItemsBackward<VD>(VD *, VD *, VD *);
+
+// 0x0051aab0 (63 bytes): the nested vector's out-of-line _Tidy.
+struct SKMVECV : std::vector<VI>
+{
+    void Tidy();
+    VI *FillInit(VI *first, unsigned int count, const VI &value);
+};
+
+void SKMVECV::Tidy()
+{
+    _Tidy();
+}
+
+// 0x0051c320 (65 bytes): the same _Tidy body with the vector reached through
+// a __stdcall pointer argument, which inlines _Tidy into a plain helper.
+void __stdcall SKMVECFREE(SKMVECV *value)
+{
+    value->Tidy();
+}
+
+// 0x0051c500 (27 bytes): the protected _Destroy of a nested vector, which is
+// just its _Destroy_range. (The string-flavoured twin at 0x00514510 is the
+// _Destroy / _Destroy_range pair the string tables already use.)
+struct SKMVECDESTROYD : std::vector<VD>
+{
+    void Drop(VD *first, VD *last);
+};
+
+void SKMVECDESTROYD::Drop(VD *first, VD *last)
+{
+    _Destroy(first, last);
+}
+
+// 0x005210b0 (77 bytes): the out-of-line _Buy of a float vector.
+struct SKMVECGROW : std::vector<float>
+{
+    bool Grow(unsigned int count);
+};
+
+bool SKMVECGROW::Grow(unsigned int count)
+{
+    return _Buy(count);
+}
+
+// 0x00513760, 0x00514530, 0x0051ac20, 0x0051c520 and 0x00523360: 43 bytes
+// each, one per element type the mesh fills rows with.
+VI *SKMVECV::FillInit(VI *first, unsigned int count, const VI &value)
+{
+    return _Ufill(first, count, value);
+}
+
+struct SKMVECUNFILL : std::vector<VVI>
+{
+    VVI *FillInit(VVI *first, unsigned int count, const VVI &value);
+};
+
+VVI *SKMVECUNFILL::FillInit(VVI *first, unsigned int count, const VVI &value)
+{
+    return _Ufill(first, count, value);
+}
+
+struct SKMVECUNFILLS : std::vector<VS>
+{
+    VS *FillInit(VS *first, unsigned int count, const VS &value);
+};
+
+VS *SKMVECUNFILLS::FillInit(VS *first, unsigned int count, const VS &value)
+{
+    return _Ufill(first, count, value);
+}
+
+struct SKMVECUNFILLD : std::vector<VD>
+{
+    VD *FillInit(VD *first, unsigned int count, const VD &value);
+};
+
+VD *SKMVECUNFILLD::FillInit(VD *first, unsigned int count, const VD &value)
+{
+    return _Ufill(first, count, value);
+}
+
+struct SKMVECUNFILLF : std::vector<VF>
+{
+    VF *FillInit(VF *first, unsigned int count, const VF &value);
+};
+
+VF *SKMVECUNFILLF::FillInit(VF *first, unsigned int count, const VF &value)
+{
+    return _Ufill(first, count, value);
 }

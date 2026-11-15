@@ -11,6 +11,7 @@
 #include "Tongas2/TEXTUREDX8CORE.h"
 #include "Tongas2/PATHREPOSITORY.h"
 #include "Tongas2/APPWINDOW.h"
+#include "lib/freeimage/FreeImage.h"
 
 // The frame triangle counter at 0x009fef40.
 extern int g_numTriangles;
@@ -238,7 +239,7 @@ public:
 class GD543060
 {
 public:
-    void Release();
+    __declspec(noinline) void Release();
 
     char pad_0[4];
     M40TARGET *m_obj;
@@ -427,6 +428,73 @@ class GD53cac0
 public:
     void Set(void *item);
 };
+
+// 0x0053caa0: the release of the record the second list's destructor frees.
+class GD53caa0
+{
+public:
+    void Release();
+};
+
+// ---------------------------------------------------------------------------
+// 0x00541e90: the destructor of the first shader list.  Its device sits at +8
+// (with the "in use" byte at +0x25), the two interfaces at +0/+4, and five
+// four-word containers start at +0x28; the last of them, at +0x68, holds the
+// shader setters the body frees.  The other containers are only torn down by
+// their own destructors, which is why their storage is zeroed after the
+// device release.  Retail's redundant second test around `delete item` means
+// the body kept the element in its own local; the local for the device is what
+// puts the epilogue pops where retail has them.
+// ---------------------------------------------------------------------------
+class GD541e90
+{
+public:
+    ~GD541e90();
+
+    G2DX8IFACE *m_0;
+    G2DX8IFACE *m_4;
+    G2DX8DEVICE *m_8;
+    char pad_c[0x24 - 0xc];
+    bool m_24;
+    bool m_25;
+    char pad_26[0x28 - 0x26];
+    std::vector<int> m_28;
+    std::vector<int> m_38;
+    std::vector<int> m_48;
+    std::vector<int> m_58;
+    std::vector<GD543060 *> m_68;
+};
+
+GD541e90::~GD541e90()
+{
+    if (m_25)
+        m_8->ReleaseTexture();
+    for (unsigned i = 0; i < m_68.size(); i++) {
+        if (m_68[i]) {
+            GD543060 *item = m_68[i];
+            if (item) {
+                item->Release();
+                delete item;
+            }
+            m_68[i] = 0;
+        }
+    }
+    m_68.clear();
+    G2DX8DEVICE *device = m_8;
+    if (device) {
+        device->ReleaseTexture();
+        delete device;
+        m_8 = 0;
+    }
+    if (m_0) {
+        m_0->Release();
+        m_0 = 0;
+    }
+    if (m_4) {
+        m_4->Release();
+        m_4 = 0;
+    }
+}
 
 class GD544560
 {
@@ -918,10 +986,14 @@ GD5424c0::GD5424c0()
 // ---------------------------------------------------------------------------
 // 0x00544730: the shader-list constructor: six words, a standard string at
 // +0x18, four more words, a flag at +0x5c and three containers from +0x60.
+// Its destructor (0x005445c0) frees the shader records it owns, releases the
+// device it built at +0x40 and the two interfaces at +0x38/+0x3c, then lets
+// the members' own destructors run.
 class GD544730
 {
 public:
     GD544730();
+    ~GD544730();
 
     int m_0;
     int m_4;
@@ -931,21 +1003,54 @@ public:
     int m_14;
     std::string m_18;
     int m_34;
-    int m_38;
-    int m_3c;
-    int m_40;
+    G2DX8IFACE *m_38;
+    G2DX8IFACE *m_3c;
+    G2DX8DEVICE *m_40;
     char pad_44[0x5c - 0x44];
     bool m_5c;
     char pad_5d[0x60 - 0x5d];
     std::vector<int> m_60;
     std::vector<int> m_70;
-    std::vector<int> m_80;
+    std::vector<GD53caa0 *> m_80;
 };
 
 GD544730::GD544730()
     : m_0(0), m_4(0), m_8(0), m_c(0), m_10(0), m_14(0),
       m_34(0), m_38(0), m_3c(0), m_40(0), m_5c(false)
 {
+}
+
+// 0x005445c0: the shader list's destructor.  As in the 0x00541e90 shape below,
+// the loop keeps the record in a local (retail frees it through a second,
+// redundant null test) and the device is released through a local, which is
+// what makes the compiler emit the release/delete/null triple retail shows.
+GD544730::~GD544730()
+{
+    for (unsigned i = 0; i < m_80.size(); i++) {
+        if (m_80[i]) {
+            GD53caa0 *item = m_80[i];
+            if (item) {
+                item->Release();
+                delete item;
+            }
+            m_80[i] = 0;
+        }
+    }
+    m_80.clear();
+    G2DX8DEVICE *device = m_40;
+    if (device) {
+        device->ReleaseTexture();
+        delete device;
+        m_40 = 0;
+    }
+    if (m_38) {
+        m_38->Release();
+        m_38 = 0;
+    }
+    if (m_3c) {
+        m_3c->Release();
+        m_3c = 0;
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -1006,3 +1111,71 @@ template void std::vector<SHADERTYPE24>::_Construct_n(size_t, const SHADERTYPE24
 template void std::vector<SHADERTYPE2C>::_Construct_n(size_t, const SHADERTYPE2C &);
 template void std::vector<SHADERTYPE20>::_Construct_n(size_t, const SHADERTYPE20 &);
 template void std::vector<TEXTURETYPE20>::_Construct_n(size_t, const TEXTURETYPE20 &);
+
+
+// ---------------------------------------------------------------------------
+// 0x00546bc0: the loader's bitmap queue.  The owning object carries a word at
+// +0 and a std::deque<FIBITMAP *> at +4 (its _Map at +8, _Mapsize at +0xc,
+// _Myoff at +0x10, _Mysize at +0x14); the loop below frees every queued image
+// and pops it, with front()/pop_front() inlined into the body.
+// ---------------------------------------------------------------------------
+class GD546bc0
+{
+public:
+    void FreeAll();
+
+    int m_0;
+    std::deque<FIBITMAP *> m_4;
+};
+
+void GD546bc0::FreeAll()
+{
+    while (!m_4.empty()) {
+        FreeImage_Unload(m_4.front());
+        m_4.pop_front();
+    }
+}
+
+// 0x00546e20  ?push_back@?$deque@PAUFIBITMAP@@...
+// 0x00546cc0  ?_Growmap@?$deque@PAUFIBITMAP@@...
+// 0x00546c50  ?_Xlen@?$deque@PAUFIBITMAP@@...
+// The three stand-alone deque<FIBITMAP *> members, emitted by the instantiation
+// the queue above needs; no bodies are written for them.
+template void std::deque<FIBITMAP *>::push_back(FIBITMAP *const &);
+
+
+// ---------------------------------------------------------------------------
+// config/symbols.txt changes this unit still needs (all measured against
+// orig/Tornado.exe, image base 0x400000, compared with build/cmp_func.py):
+//
+//   0x00546bc0  ?FreeAll@GD546bc0@@QAEXXZ                            0x6a
+//        The bitmap queue's "free every queued image" loop: word at +0,
+//        deque<FIBITMAP *> at +4.
+//   0x00546e20  ?push_back@?$deque@PAUFIBITMAP@@V?$allocator@PAUFIBITMAP@@@std@@@std@@QAEXABQAUFIBITMAP@@@Z   0x78
+//   0x00546cc0  ?_Growmap@?$deque@PAUFIBITMAP@@V?$allocator@PAUFIBITMAP@@@std@@@std@@IAEXI@Z                0x153
+//   0x00546c50  ?_Xlen@?$deque@PAUFIBITMAP@@V?$allocator@PAUFIBITMAP@@@std@@@std@@IBEXXZ                   0x6a
+//        (functions.txt has 0x69 for this one; our COMDAT is 0x6a because of
+//        the trailing int3, see Tongas2/ANIMATEDGEOMETRY's note.)
+//   0x005445c0  ??1GD544730@@QAE@XZ                                  0x16a
+//        The shader list's destructor (its constructor at 0x00544730 is
+//        already matched).  GD544560's Set at 0x00544560 is a member of the
+//        same retail class, so both placeholder names should become one.
+//   0x00541e90  ??1GD541e90@@QAE@XZ                                  0x169
+//        The other shader list's destructor; ?Set@GD541e60@@ is a member of
+//        the same retail class.
+//
+// The four _Construct_n / two _Xlen throws below are the vector instantiations
+// the file already carried: their bytes are exact, they only need the name.
+//
+//   0x0053dfe0  ?_Xlen@?$vector@UPATHREPOPOINT@@V?$allocator@UPATHREPOPOINT@@@std@@@std@@IBEXXZ          0x6a
+//   0x00542000  ?_Xlen@?$vector@USHADERTYPE20@@V?$allocator@USHADERTYPE20@@@std@@@std@@IBEXXZ           0x6a
+//   0x0053ec50  ?_Construct_n@?$vector@UPATHREPOPOINT@@V?$allocator@UPATHREPOPOINT@@@std@@@std@@QAEXIABUPATHREPOPOINT@@@Z  0xa6
+//   0x0053ed70  ?_Construct_n@?$vector@USHADERTYPE20@@V?$allocator@USHADERTYPE20@@@std@@@std@@QAEXIABUSHADERTYPE20@@@Z     0xa3
+//   0x0053ee20  ?_Construct_n@?$vector@USHADERTYPE24@@V?$allocator@USHADERTYPE24@@@std@@@std@@QAEXIABUSHADERTYPE24@@@Z     0xa6
+//   0x0053ef40  ?_Construct_n@?$vector@USHADERTYPE2C@@V?$allocator@USHADERTYPE2C@@@std@@@std@@QAEXIABUSHADERTYPE2C@@@Z     0xa3
+//   0x00542410  ?_Construct_n@?$vector@UTEXTURETYPE20@@V?$allocator@UTEXTURETYPE20@@@std@@@std@@QAEXIABUTEXTURETYPE20@@@Z   0xa3
+//
+// The two 0x00542xxx _Insert_n copies (0x0053e320 and 0x00542070, both 0x250)
+// call the no-allocator ??$_Uninit_copy overload, so they are not the vectors
+// this file instantiates; their element types are still open.
+// ---------------------------------------------------------------------------

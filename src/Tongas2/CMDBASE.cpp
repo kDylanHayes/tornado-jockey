@@ -83,11 +83,12 @@ static CMDBASE *GetObject(RESHANDLE handle)
     switch (handle.kind) {
     case 1:
         return g_pScene->GetActor(handle);
-    case 2:
-        return g_pResources->GetResource(handle);
     case 3:
-        return g_pResources->GetMaster(handle);
+        return g_pResources->GetResource(handle);
     case 4:
+        return g_pResources->GetMaster(handle);
+    // Last: handles mostly name actors and resources.
+    case 2:
         return g_pGui->GetObject(handle);
     }
     return 0;
@@ -400,9 +401,14 @@ void CMDBASE::GetPropStringValue(PROPENTRY *p, int index, STRING &out)
     case PROP_CWSTRING:
         out.Format("\"%s\" ", PROP_VALUE(CWSTRING, this, p, index).c_str());
         return;
-    case PROP_UNICODESTRING:
-        out.Format("\"%s\" ", PROP_VALUE(UNICODESTRING, this, p, index).c_str());
+    case PROP_UNICODESTRING: {
+        // Printed as 8-bit text, empty when the string has no buffer.
+        const char *text = (const char *)PROP_VALUE(UNICODESTRING, this, p, index).m_buf;
+        if (!text)
+            text = "";
+        out.Format("\"%s\" ", text);
         return;
+    }
     case PROP_WCHARS:
         out.Format("\"%s\" ", PROP_VALUE(FIXEDWSTRING<0x200>, this, p, index).m_buf);
         return;
