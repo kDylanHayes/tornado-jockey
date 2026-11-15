@@ -516,3 +516,9 @@ unsigned int GD50a1f0::Find()
     }
     return 0;
 }
+
+// The out-of-line std::vector helpers the unit owns (retail 0x50b2c0,
+// 0x50b230, 0x50aa10); explicit instantiations make the compiler emit them.
+template void std::vector<int>::_Construct_n(unsigned int, const int &);
+template void std::vector<unsigned int>::resize(unsigned int, unsigned int);
+template void std::vector<bool>::_Trim(unsigned int);
