@@ -7571,11 +7571,11 @@
 0x0067812c ??_C@_0CP@CCOAHBOL@Hardware?2Description?2System?2Cent@ data 0x2f
 
 # Tongas2/D3DAPP (0x00506190-0x00508a6f)
-0x00506ba0 ?Cleanup3DEnvironment@D3DAPP@@QAEXXZ function 0x7c
-0x00506c20 ?Initialize3DEnvironment@D3DAPP@@QAEHXZ function 0x3ac
-0x00508040 ?Run@D3DAPP@@QAEHXZ function 0x158
-0x005081a0 ??0D3DAPP@@QAE@XZ function 0x107
-0x005082b0 ?Create@D3DAPP@@QAEHPAUHINSTANCE__@@@Z function 0x74d
+0x00506ba0 ?Cleanup3DEnvironment@GD507220@@QAEXXZ function 0x7c
+0x00506c20 ?Initialize3DEnvironment@GD507220@@QAEHXZ function 0x3ac
+0x00508040 ?Run@GD507220@@QAEHXZ function 0x158
+0x005081a0 ??0GD507220@@QAE@XZ function 0x107
+0x005082b0 ?Create@GD507220@@QAEHPAUHINSTANCE__@@@Z function 0x74d
 
 # Tongas2/DX8APP (0x00508a70-0x0050b3df)
 0x00508a70 ??0DX8APP@@QAE@XZ function 0x80
