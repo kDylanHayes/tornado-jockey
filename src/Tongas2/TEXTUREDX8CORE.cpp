@@ -7,7 +7,11 @@
 #include <deque>
 #include <memory>
 #include <algorithm>
+#include <vector>
 #include "Tongas2/TEXTUREDX8CORE.h"
+
+// The frame triangle counter at 0x009fef40.
+extern int g_numTriangles;
 
 int CreateTexture()
 {
@@ -189,20 +193,25 @@ TEXSTAGE::TEXSTAGE()
     m_0 = 0;
 }
 
-// A table of byte cells reached through the pointer array at +0x84.
+// A table of byte cells reached through the vector of cell pointers at +0x84.
+class TEXSTAGECELL
+{
+public:
+    char m_0;
+};
+
 class TEXSTAGES
 {
 public:
     void SetValue(int index, char value);
 
-    char pad_00[0x84];
-    char **m_84;
+    char pad_00[0x80];
+    std::vector<TEXSTAGECELL *> m_80;
 };
 
 void TEXSTAGES::SetValue(int index, char value)
 {
-    char *&cell = m_84[index];
-    *cell = value;
+    m_80[index]->m_0 = value;
 }
 
 // The 0x20-byte element these helpers were instantiated for.
@@ -261,7 +270,7 @@ public:
     void *m_result;
 };
 
-void GD543080::Set(void *item)
+__declspec(noinline) void GD543080::Set(void *item)
 {
     if (item)
         m_result = m_obj->m_58(item);
@@ -385,15 +394,199 @@ public:
 };
 
 GD540fe0::GD540fe0(int a, int b, int c)
+    : m_0(true), m_4(a), m_8(b), m_c(c), m_98(0), m_9c(0), m_a0(0),
+      m_b0(0), m_b4(0), m_b8(0)
 {
-    m_4 = a;
-    m_c = c;
-    m_0 = true;
-    m_8 = b;
-    m_98 = 0;
-    m_9c = 0;
-    m_a0 = 0;
-    m_b0 = 0;
-    m_b4 = 0;
-    m_b8 = 0;
+}
+
+
+// 0x00541e60 / 0x00544560: the indexed Set the two shader lists share. The
+// vector object starts at +0x68 in the first list and at +0x80 in the second
+// (so its _Myfirst is at +0x6c / +0x84); only the element type differs.
+class GD541e60
+{
+public:
+    void Set(void *item, int index);
+
+    char pad_00[0x68];
+    std::vector<GD543080 *> m_68;
+};
+
+void GD541e60::Set(void *item, int index)
+{
+    if ((unsigned)index < m_68.size())
+        m_68[index]->Set(item);
+}
+
+// The release call the second list makes; declared only, it lives in the
+// texture-setter unit at 0x0053cac0.
+class GD53cac0
+{
+public:
+    void Set(void *item);
+};
+
+class GD544560
+{
+public:
+    void Set(void *item, int index);
+
+    char pad_00[0x80];
+    std::vector<GD53cac0 *> m_80;
+};
+
+void GD544560::Set(void *item, int index)
+{
+    if ((unsigned)index < m_80.size())
+        m_80[index]->Set(item);
+}
+
+
+// The DX8 device vtable as these helpers see it: `this` travels as the first
+// stack argument, so a call site loads the vtable into a scratch register and
+// pushes the object.
+struct DX8DEVICEOBJ;
+
+struct DX8DEVICEVT
+{
+    void *pad_000[42];                                  // 0x000 - 0x0a7
+    void (__stdcall *m_a8)(DX8DEVICEOBJ *, void *);     // 0x0a8
+    void *pad_0ac[28];                                  // 0x0ac - 0x11b
+    void (__stdcall *m_11c)(DX8DEVICEOBJ *, int, int, int, int, int);
+    void *pad_120[11];                                  // 0x120 - 0x14b
+    void (__stdcall *m_14c)(DX8DEVICEOBJ *, int, int, int);
+    void *pad_150[1];
+    void (__stdcall *m_154)(DX8DEVICEOBJ *, int, int);
+};
+
+struct DX8DEVICEOBJ
+{
+    DX8DEVICEVT *m_vt;
+};
+
+
+// 0x005410c0: hands the two words at +0x14/+0x18 of the shader block to the
+// device's effect setters.
+class GD5410c0SHADER
+{
+public:
+    int m_0;
+    char pad_4[0x14 - 4];
+    int m_14;
+    int m_18;
+};
+
+class GD5410c0
+{
+public:
+    void Apply(DX8DEVICEOBJ *device);
+
+    char pad_00[0xc];
+    GD5410c0SHADER *m_c;
+};
+
+void GD5410c0::Apply(DX8DEVICEOBJ *device)
+{
+    device->m_vt->m_14c(device, 0, m_c->m_14, m_c->m_0);
+    device->m_vt->m_154(device, m_c->m_18, 0);
+}
+
+
+// 0x00541840: one indexed strip, counted into the frame's triangle total.
+class GD541840
+{
+public:
+    void Submit(DX8DEVICEOBJ *device);
+
+    char pad_00[0xa0];
+    int m_a0;
+    int m_a4;
+    char pad_a8[0xb0 - 0xa8];
+    int m_b0;
+    int m_b4;
+};
+
+void GD541840::Submit(DX8DEVICEOBJ *device)
+{
+    device->m_vt->m_11c(device, 4, m_b0, m_b4 - m_b0 + 1, m_a4, m_a0);
+    g_numTriangles += m_a0;
+}
+
+
+// A texture-ish block whose +0x101 byte is its "ready" flag and whose payload
+// starts at +4.
+class GD543750TEX
+{
+public:
+    char pad_00[0x101];
+    bool m_101;
+};
+
+// 0x00543750: binds the optional texture, then submits the strip.
+class GD543750
+{
+public:
+    void Submit(DX8DEVICEOBJ *device);
+
+    char pad_00[0x24];
+    GD543750TEX *m_24;
+    int m_28;
+    int m_2c;
+    char pad_30[0x38 - 0x30];
+    int m_38;
+    int m_3c;
+};
+
+void GD543750::Submit(DX8DEVICEOBJ *device)
+{
+    if (m_24 && m_24->m_101)
+        device->m_vt->m_a8(device, (char *)m_24 + 4);
+    device->m_vt->m_11c(device, 4, m_38, m_3c - m_38 + 1, m_2c, m_28);
+    g_numTriangles += m_28;
+}
+
+
+// The display-side object the shader state queries: the caps helper hangs off
+// +0xff0.
+class GD504f10
+{
+public:
+    int Get(int id);
+};
+
+class GD541100CAPS
+{
+public:
+    char pad_000[0xff0];
+    GD504f10 *m_ff0;
+};
+
+class GD541100TEX
+{
+public:
+    char pad_000[0x101];
+    bool m_101;
+};
+
+// 0x00541100: ready when both textures are loaded and the device reports the
+// two shader versions.
+class GD541100
+{
+public:
+    bool Ready();
+
+    char pad_00[8];
+    GD541100CAPS *m_8;
+    char pad_c[0x98 - 0xc];
+    GD541100TEX *m_98;
+    GD541100TEX *m_9c;
+};
+
+bool GD541100::Ready()
+{
+    if (!(m_98 && m_98->m_101 && m_9c && m_9c->m_101))
+        return true;
+    if (m_8->m_ff0->Get(4) >= 3 && m_8->m_ff0->Get(3) >= 3)
+        return true;
+    return false;
 }

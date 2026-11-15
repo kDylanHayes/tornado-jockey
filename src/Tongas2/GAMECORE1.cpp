@@ -438,11 +438,10 @@ template FIXEDWSTRING<0x200>::FIXEDWSTRING();
 template <int N>
 FIXEDWSTRING<N> &FIXEDWSTRING<N>::operator=(const char *text)
 {
-    if (!text) {
+    if (text)
+        wcsncpy(m_buf, (const wchar_t *)text, N - 1);
+    else
         m_buf[0] = 0;
-        return *this;
-    }
-    wcsncpy(m_buf, (const wchar_t *)text, N - 1);
     m_buf[N - 1] = 0;
     return *this;
 }
@@ -6216,4 +6215,28 @@ void GD40b570::Update()
     ((ACTOR *)this)->ACTOR::Stop();
     ((G2CORE1M11 *)this)->Method1();
     m_3b88 = 0;
+}
+
+// 0x004039f0: returns null while the flag at +0x230 is set, otherwise asks
+// the command manager to find the object at script root + 0x1c.
+class GD4477d0GLOBAL : public CMDMGRX
+{
+};
+
+extern GD4477d0GLOBAL *g_pGD4477d0Global;
+
+class GD4039f0
+{
+public:
+    void *Find();
+
+    char pad_230[0x230];
+    bool m_230;
+};
+
+void *GD4039f0::Find()
+{
+    if (m_230)
+        return 0;
+    return g_pGD4477d0Global->Find((char *)g_pScriptRoot + 0x1c);
 }

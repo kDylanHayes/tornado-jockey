@@ -166,30 +166,14 @@ void BOXCORNERS::Set(const V3 &size)
     float x = size.x * 0.5f;
     float y = size.y * 0.5f;
     float z = size.z * 0.5f;
-    corners[0].x = -x;
-    corners[0].y = -y;
-    corners[0].z = z;
-    corners[1].x = x;
-    corners[1].y = -y;
-    corners[1].z = z;
-    corners[2].x = -x;
-    corners[2].y = -y;
-    corners[2].z = -z;
-    corners[3].x = x;
-    corners[3].y = -y;
-    corners[3].z = -z;
-    corners[4].x = -x;
-    corners[4].y = y;
-    corners[4].z = z;
-    corners[5].x = x;
-    corners[5].y = y;
-    corners[5].z = z;
-    corners[6].x = -x;
-    corners[6].y = y;
-    corners[6].z = -z;
-    corners[7].x = x;
-    corners[7].y = y;
-    corners[7].z = -z;
+    corners[0].Set(-x, -y, z);
+    corners[1].Set(x, -y, z);
+    corners[2].Set(-x, -y, -z);
+    corners[3].Set(x, -y, -z);
+    corners[4].Set(-x, y, z);
+    corners[5].Set(x, y, z);
+    corners[6].Set(-x, y, -z);
+    corners[7].Set(x, y, -z);
 }
 
 void BOXCORNERS::Set(const float &width, const float &height, const float &depth)
@@ -197,30 +181,14 @@ void BOXCORNERS::Set(const float &width, const float &height, const float &depth
     float x = width * 0.5f;
     float y = height * 0.5f;
     float z = depth * 0.5f;
-    corners[0].x = -x;
-    corners[0].y = -y;
-    corners[0].z = z;
-    corners[1].x = x;
-    corners[1].y = -y;
-    corners[1].z = z;
-    corners[2].x = -x;
-    corners[2].y = -y;
-    corners[2].z = -z;
-    corners[3].x = x;
-    corners[3].y = -y;
-    corners[3].z = -z;
-    corners[4].x = -x;
-    corners[4].y = y;
-    corners[4].z = z;
-    corners[5].x = x;
-    corners[5].y = y;
-    corners[5].z = z;
-    corners[6].x = -x;
-    corners[6].y = y;
-    corners[6].z = -z;
-    corners[7].x = x;
-    corners[7].y = y;
-    corners[7].z = -z;
+    corners[0].Set(-x, -y, z);
+    corners[1].Set(x, -y, z);
+    corners[2].Set(-x, -y, -z);
+    corners[3].Set(x, -y, -z);
+    corners[4].Set(-x, y, z);
+    corners[5].Set(x, y, z);
+    corners[6].Set(-x, y, -z);
+    corners[7].Set(x, y, -z);
 }
 
 void BOXCORNERS::Move(const V3 &offset)

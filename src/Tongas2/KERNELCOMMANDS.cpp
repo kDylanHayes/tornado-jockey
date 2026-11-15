@@ -232,16 +232,23 @@ const char *KERNELCOMMANDS::Virtual58()
     return g_basePath;
 }
 
+// The euler cache is rebuilt when EULER_DIRTY is set. ANG::GetEuler in the
+// header also clears the flag, but the exe's operator== builds the euler of
+// its two dead copies without the clear, so the rebuild is spelled out here.
 // Whether the euler angles are the same.
 bool operator==(const ANG &a, const ANG &b)
 {
-    ANG y = b;
-    const V3 &ey = y.GetEuler();
-    ANG x = a;
-    const V3 &ex = x.GetEuler();
+    ANG y, x;
+    x = a;
+    if (x.flags & ANG::EULER_DIRTY)
+        x.matrix.ToEuler(&x.euler.z, &x.euler.y, &x.euler.x);
+    const V3 &ex = x.euler;
+    y = b;
+    if (y.flags & ANG::EULER_DIRTY)
+        y.matrix.ToEuler(&y.euler.z, &y.euler.y, &y.euler.x);
+    const V3 &ey = y.euler;
     return ex.x == ey.x && ex.y == ey.y && ex.z == ey.z;
 }
-
 bool SRTEXTURE::operator==(const SRTEXTURE &other) const
 {
     bool equal = !strcmp(name.m_buf, other.name.m_buf) && index == other.index;
@@ -358,7 +365,6 @@ SRESULT KERNELCOMMANDS::DumpLayer(CMDCALL *call)
     g_pScene->DumpActors(layer);
     return SRESULT(true);
 }
-
 SRESULT KERNELCOMMANDS::LoadScene(CMDCALL *call)
 {
     g_pCmdMgr->LoadMap(call->tokens->GetToken(1));
@@ -494,7 +500,10 @@ SRESULT KERNELCOMMANDS::DelayFrames(CMDCALL *call)
 {
     TOKENS *tokens = new TOKENS;
     int frames = atoi(call->tokens->GetToken(1));
-    tokens->Parse(STRING(call->tokens->GetToken(2)), 0);
+    {
+        STRING script(call->tokens->GetToken(2));
+        tokens->Parse(script, 0);
+    }
     if (tokens->m_count > 0) {
         if (frames <= 0) {
             CMDCONTEXT context(tokens, call->caller);
@@ -507,7 +516,7 @@ SRESULT KERNELCOMMANDS::DelayFrames(CMDCALL *call)
         }
         return SRESULT(true);
     }
-    return SRESULT(false);
+    return false;
 }
 
 SRESULT KERNELCOMMANDS::RandomDelay(CMDCALL *call)
@@ -517,19 +526,23 @@ SRESULT KERNELCOMMANDS::RandomDelay(CMDCALL *call)
     float most = (float)atof(call->tokens->GetToken(2));
     if (most > time)
         time += (most - time) * (float)rand() * (1.0f / RAND_MAX);
-    tokens->Parse(STRING(call->tokens->GetToken(3)), 0);
-    if (tokens->m_count <= 0)
-        return SRESULT(false);
-    if (time <= 0.0f) {
-        CMDCONTEXT context(tokens, call->caller);
-        context.Run(this);
-        delete tokens;
-    } else {
-        CMDCONTEXT *context = new CMDCONTEXT(tokens, call->caller);
-        context->m_time = time + g_pTimer->m_time;
-        g_pCmdMgr->Queue(context);
+    {
+        STRING script(call->tokens->GetToken(3));
+        tokens->Parse(script, 0);
     }
-    return SRESULT(true);
+    if (tokens->m_count > 0) {
+        if (time <= 0.0f) {
+            CMDCONTEXT context(tokens, call->caller);
+            context.Run(this);
+            delete tokens;
+        } else {
+            CMDCONTEXT *context = new CMDCONTEXT(tokens, call->caller);
+            context->m_time = time + g_pTimer->m_time;
+            g_pCmdMgr->Queue(context);
+        }
+        return SRESULT(true);
+    }
+    return SRESULT(false);
 }
 
 SRESULT KERNELCOMMANDS::If(CMDCALL *call)
@@ -766,17 +779,21 @@ SRESULT KERNELCOMMANDS::Delay(CMDCALL *call)
 {
     TOKENS *tokens = new TOKENS;
     float time = (float)atof(call->tokens->GetToken(1));
-    tokens->Parse(STRING(call->tokens->GetToken(2)), 0);
-    if (tokens->m_count <= 0)
-        return SRESULT(false);
-    if (time <= 0.0f) {
-        CMDCONTEXT context(tokens, call->caller);
-        context.Run(this);
-        delete tokens;
-    } else {
-        CMDCONTEXT *context = new CMDCONTEXT(tokens, call->caller);
-        context->m_time = time + g_pTimer->m_time;
-        g_pCmdMgr->Queue(context);
+    {
+        STRING script(call->tokens->GetToken(2));
+        tokens->Parse(script, 0);
     }
-    return SRESULT(true);
+    if (tokens->m_count > 0) {
+        if (time <= 0.0f) {
+            CMDCONTEXT context(tokens, call->caller);
+            context.Run(this);
+            delete tokens;
+        } else {
+            CMDCONTEXT *context = new CMDCONTEXT(tokens, call->caller);
+            context->m_time = time + g_pTimer->m_time;
+            g_pCmdMgr->Queue(context);
+        }
+        return SRESULT(true);
+    }
+    return SRESULT(false);
 }

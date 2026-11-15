@@ -20,13 +20,26 @@ public:
     virtual void __stdcall Release();
 };
 
+// The stage block at the head of the member at +0x3c. Its constructor at
+// 0x00546c30 clears five of the six words.
+class TEXSTAGE
+{
+public:
+    TEXSTAGE();
+
+    int m_0;
+    int m_4;
+    int m_8;
+    int m_c;
+    int m_10;
+    int m_14;
+};
+
 // The member at +0x3c; its destructor is out of line.
-class TEXTUREDX8SDTEXTUREMEMBER
+class TEXTUREDX8SDTEXTUREMEMBER : public TEXSTAGE
 {
 public:
     ~TEXTUREDX8SDTEXTUREMEMBER();
-
-    char pad[0x18];
 };
 
 // The Direct3D texture object owned by a master (destructor at 0x00534df0).
@@ -40,13 +53,20 @@ public:
     void *GetSurface();
 
     void *m_texture;
-    char m_04[4];
+    int m_04;
     std::string m_08;
-    char m_24[4];
+    bool m_24;
+    bool m_25;
+    bool m_26;
+    char m_27;
     TEXTURESURFACE *m_surface;
-    char m_2c[0x38 - 0x2c];
+    bool m_2c;
+    char m_2d[3];
+    int m_30;
+    int m_34;
     bool m_38;
-    char m_39[0x3c - 0x39];
+    bool m_39;
+    char m_3a[2];
     TEXTUREDX8SDTEXTUREMEMBER m_3c;
 };
 

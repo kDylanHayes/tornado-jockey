@@ -399,20 +399,19 @@ void BONEDMODELDX8SDRESOURCE::Update()
 
 void BONEDMODELDX8SDRESOURCE::Virtual91(int animation, float frame)
 {
-    if (m_model) {
-        FUN_00513330((void *)animation, 0, 0);
-        float frames = (float)((BONEDMODELDX8MODEL *)m_model)->GetFrameCount((void *)animation);
-        float rate = ((BONEDMODELDX8MODEL *)m_model)->GetFrameRate((void *)animation);
-        float t = frames / rate;
-        ((BONEDMODELDX8MODEL *)m_model)->SetTime(frame / t);
-    }
+    if (!m_model)
+        return;
+    FUN_00513330((void *)animation, 0, 0);
+    float frames = (float)((BONEDMODELDX8MODEL *)m_model)->GetFrameCount((void *)animation);
+    float rate = ((BONEDMODELDX8MODEL *)m_model)->GetFrameRate((void *)animation);
+    float t = frames / rate;
+    ((BONEDMODELDX8MODEL *)m_model)->SetTime(frame / t);
 }
 
 void BONEDMODELDX8SDRESOURCE::Virtual101(int a, int b)
 {
     if (m_model) {
-        float alpha = GetAlpha();
-        void *mat = ((BONEDMODELDX8RENDERER7 *)g_pRenderer)->Virtual07(a, b, alpha);
+        void *mat = ((BONEDMODELDX8RENDERER7 *)g_pRenderer)->Virtual07(a, b, GetAlpha());
         ((BONEDMODELDX8MODEL *)m_model)->Render(mat);
     }
 }
@@ -431,8 +430,7 @@ void BONEDMODELDX8SDRESOURCE::Virtual71()
 
 void BONEDMODELDX8SDRESOURCE::RunCommand(const char *command)
 {
-    STRING text(command);
-    g_pCmdMgr->Run(text, *(RESHANDLE *)((char *)this + 0x30));
+    g_pCmdMgr->Run(STRING(command), *(RESHANDLE *)((char *)this + 0x30));
 }
 
 void BONEDMODELDX8SDRESOURCE::Virtual89()
@@ -544,7 +542,7 @@ void BONEDMODELDX8SDRESOURCE::LoadTags()
 }
 
 
-void FUN_0046365f(MATRIX *out, float width, float height, float zNear, float zFar);
+void __stdcall FUN_0046365f(MATRIX *out, float width, float height, float zNear, float zFar);
 
 std::string BONEDMODELDX8MODEL::GetMaterialName(int index)
 {
@@ -696,10 +694,10 @@ void BONEDMODELDX8PARTICLE::Virtual11(MATRIX *matrix, BONEDMODELDX8RENDERERAPI *
 
 void BONEDMODELDX8SDRESOURCE::Virtual21()
 {
-    void *device = ((BONEDMODELDX8RENDERERDEVICE *)g_pRenderer)->GetDevice();
     m_model = g_pDisplay->m_2bc->CreateModel(
-        device, std::string(""), std::string(""),
-        std::string(((BONEDMODELMASTER *)m_master)->m_artPath.c_str()));
+        ((BONEDMODELDX8RENDERERDEVICE *)g_pRenderer)->GetDevice(),
+        std::string(((BONEDMODELMASTER *)m_master)->m_artPath.c_str()),
+        std::string(""), std::string(""));
     if (m_model) {
         void *object = operator new(0x90);
         if (object) {
@@ -777,11 +775,17 @@ void BONEDMODELDX8PARTICLE::Virtual12(BONEDMODELDX8RENDERERAPI *device)
 {
     if (m_20) {
         ((RENDERERFUNC2)device->m_vtbl[0x32])(device, 0x89, 0);
+        MATRIX identity;
+        identity._12 = identity._13 = identity._14 =
+        identity._21 = identity._23 = identity._24 =
+        identity._31 = identity._32 = identity._34 =
+        identity._41 = identity._42 = identity._43 = 0.0f;
+        identity._11 = identity._22 = identity._33 = identity._44 = 1.0f;
         MATRIX matrix;
         FUN_0046365f(&matrix, 640.0f, 480.0f, 1.0f, 10.0f);
         ((RENDERERFUNC3)device->m_vtbl[0x25])(device, 3, &matrix);
-        ((RENDERERFUNC3)device->m_vtbl[0x25])(device, 0x100, &matrix);
-        ((RENDERERFUNC3)device->m_vtbl[0x25])(device, 2, &matrix);
+        ((RENDERERFUNC3)device->m_vtbl[0x25])(device, 0x100, &identity);
+        ((RENDERERFUNC3)device->m_vtbl[0x25])(device, 2, &identity);
         m_250->FUN_00516380(device);
     }
 }
@@ -793,7 +797,7 @@ public:
     BONEDMODELDX8PARTICLEDESC(const BONEDMODELDX8PARTICLEDESC &other);
     BONEDMODELDX8PARTICLEDESC(std::string name, int material, int layer,
                               const V3 *position, const V3 *direction, const V3 *color);
-    void Init();
+    void __declspec(nothrow) Init();
 
     std::string m_00;
     char m_1c[0x68];
@@ -809,24 +813,16 @@ public:
 BONEDMODELDX8PARTICLEDESC::BONEDMODELDX8PARTICLEDESC(std::string name, int material, int layer,
                                                      const V3 *position, const V3 *direction,
                                                      const V3 *color)
-    : m_84(material)
+    : m_84(material), m_88(name), m_a4(*position), m_b0(*direction), m_bc(*color)
 {
-    m_88 = name;
-    m_a4 = *position;
-    m_b0 = *direction;
-    m_bc = *color;
     m_cc = 1;
     Init();
 }
 
 BONEDMODELDX8PARTICLEDESC::BONEDMODELDX8PARTICLEDESC(const BONEDMODELDX8PARTICLEDESC &other)
-    : m_84(other.m_84)
+    : m_84(other.m_84), m_88(other.m_88), m_a4(other.m_a4), m_b0(other.m_b0),
+      m_bc(other.m_bc), m_c8(*(int *)((char *)&other + 0x68))
 {
-    m_88 = other.m_88;
-    m_a4 = other.m_a4;
-    m_b0 = other.m_b0;
-    m_bc = other.m_bc;
-    m_c8 = *(int *)((char *)&other + 0x68);
     m_cc = other.m_cc;
     Init();
 }
@@ -1060,7 +1056,7 @@ void FUN_004f75f0(BONEDMODELDX8BOX *box, const MATRIX *a, const MATRIX *b)
     FUN_004641c8(&box->m_planes[5], &box->m_corners[1], &box->m_corners[0], &box->m_corners[4]);
 }
 
-void FUN_004635cb(MATRIX *out, float fov, float aspect, float zNear, float zFar);
+void __stdcall FUN_004635cb(MATRIX *out, float fov, float aspect, float zNear, float zFar);
 void FUN_0046378f(MATRIX *out, const void *source);
 
 void BONEDMODELDX8PARTICLE::Virtual13(BONEDMODELDX8RENDERERAPI *device)
