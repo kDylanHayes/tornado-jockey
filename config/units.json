@@ -3709,7 +3709,10 @@
       "symbol_mappings": {
         "FUN_005c0905": "??1GD551d70BASE@@UAE@XZ",
         "DAT_00a0f1c0": "_s_cmdtable_54eec0",
-        "s_ODEACTORTEMPLATEMASTER_0067c5d8": "_s_ODEACTORTEMPLATEMASTER_0067c5d8"
+        "s_ODEACTORTEMPLATEMASTER_0067c5d8": "_s_ODEACTORTEMPLATEMASTER_0067c5d8",
+        "FUN_0054eff0": "??0GD54eff0@@QAE@PAVGD54f150@@H@Z",
+        "?WTINFO@@QAE@_N@Z": "??0GD550520@@QAE@_N@Z",
+        "?Call@G2TL3CALL@@QAEXXZ": "?Init@GD550520@@QAEXXZ"
       }
     },
     {

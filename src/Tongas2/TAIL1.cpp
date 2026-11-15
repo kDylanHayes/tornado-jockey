@@ -344,3 +344,52 @@ void Register54eec0()
     RegisterClassName(s_cmdtable_54eec0, s_ODEACTORTEMPLATEMASTER_0067c5d8,
                       "ACTORRESOURCESMASTER");
 }
+
+// 0x0054f150: allocates the 0x838-byte object whose constructor is at
+// 0x0054eff0, forwarding this and the single argument.
+class GD54f150;
+
+class GD54eff0
+{
+public:
+    GD54eff0(GD54f150 *owner, int arg);
+
+    char pad_838[0x838];
+};
+
+class GD54f150
+{
+public:
+    GD54eff0 *Create(int arg);
+};
+
+GD54eff0 *GD54f150::Create(int arg)
+{
+    return new GD54eff0(this, arg);
+}
+
+// 0x00551a60: allocates the 0x44-byte object whose constructor is at
+// 0x00550520, stores it at +0 and initialises it through 0x005547d0.
+class GD550520
+{
+public:
+    GD550520(bool arg);
+    void Init();
+
+    char pad_44[0x44];
+};
+
+class GD551a60
+{
+public:
+    GD551a60();
+
+    GD550520 *m_0;
+};
+
+GD551a60::GD551a60()
+{
+    m_0 = new GD550520(true);
+    if (m_0)
+        m_0->Init();
+}
