@@ -9,6 +9,8 @@
 #include <algorithm>
 #include <vector>
 #include "Tongas2/TEXTUREDX8CORE.h"
+#include "Tongas2/PATHREPOSITORY.h"
+#include "Tongas2/APPWINDOW.h"
 
 // The frame triangle counter at 0x009fef40.
 extern int g_numTriangles;
@@ -451,7 +453,13 @@ struct DX8DEVICEVT
 {
     void *pad_000[42];                                  // 0x000 - 0x0a7
     void (__stdcall *m_a8)(DX8DEVICEOBJ *, void *);     // 0x0a8
-    void *pad_0ac[28];                                  // 0x0ac - 0x11b
+    void *pad_0ac[7];                                   // 0x0ac - 0x0c7
+    void (__stdcall *m_c8)(DX8DEVICEOBJ *, int, int);   // 0x0c8
+    void *pad_0cc[10];                                  // 0x0cc - 0x0f3
+    void (__stdcall *m_f4)(DX8DEVICEOBJ *, int, int);   // 0x0f4
+    void *pad_0f8[1];                                   // 0x0f8 - 0x0fb
+    void (__stdcall *m_fc)(DX8DEVICEOBJ *, int, int, int);
+    void *pad_100[7];                                   // 0x100 - 0x11b
     void (__stdcall *m_11c)(DX8DEVICEOBJ *, int, int, int, int, int);
     void *pad_120[11];                                  // 0x120 - 0x14b
     void (__stdcall *m_14c)(DX8DEVICEOBJ *, int, int, int);
@@ -590,3 +598,411 @@ bool GD541100::Ready()
         return true;
     return false;
 }
+
+// ---------------------------------------------------------------------------
+// 0x00540e80: fills the eight corner vectors of the box at +0x38 from the two
+// vectors at +0x20 and +0x2c.
+struct V3F
+{
+    float x, y, z;
+};
+
+class GD540e80
+{
+public:
+    void FillCorners();
+
+    char pad_00[0x20];
+    V3F m_20;
+    V3F m_2c;
+    V3F m_box[8];
+};
+
+void GD540e80::FillCorners()
+{
+    for (int i = 0; i < 8; ++i) {
+        V3F v;
+        v.x = (i & 1) ? m_20.x : m_2c.x;
+        v.y = (i & 2) ? m_20.y : m_2c.y;
+        v.z = (i & 4) ? m_20.z : m_2c.z;
+        m_box[i] = v;
+    }
+}
+
+// ---------------------------------------------------------------------------
+// 0x005430a0: one shader-stage apply.  The flags at +0x100.. of the texture at
+// +0x24 select the render-state block.
+class GD5430a0TEX
+{
+public:
+    bool Check(int id);
+
+    char pad_000[0x100];
+    bool m_100;
+    bool m_101;
+    char pad_102[0x105 - 0x102];
+    bool m_105;
+    bool m_106;
+    char pad_107[0x108 - 0x107];
+    bool m_108;
+    char pad_109[0x10b - 0x109];
+    bool m_10b;
+    bool m_10c;
+};
+
+class SETTINGSTABLE
+{
+public:
+    int GetInt(int id);
+
+    char pad_000[0xff0];
+    GD504f10 *m_ff0;
+};
+
+class GD5430a0
+{
+public:
+    void Apply(DX8DEVICEOBJ *device);
+
+    char pad_00[8];
+    SETTINGSTABLE *m_8;
+    char pad_c[0x24 - 0xc];
+    GD5430a0TEX *m_24;
+};
+
+void GD5430a0::Apply(DX8DEVICEOBJ *device)
+{
+    int flag;
+
+    if (!m_24 || !m_24->m_101)
+        return;
+    if (m_24->Check(0)) {
+        flag = 0;
+        if (m_8->GetInt(0xe) > 0)
+            if (m_24->m_10b)
+                flag = 1;
+        device->m_vt->m_fc(device, flag, 0x18, 0);
+    }
+    if (m_24->m_106) {
+        device->m_vt->m_c8(device, 0xe, 1);
+        device->m_vt->m_c8(device, 0x1b, 0);
+        device->m_vt->m_c8(device, 0x14, 1);
+        return;
+    }
+    if (!m_24->m_105)
+        return;
+    if (!m_24->m_100)
+        device->m_vt->m_c8(device, 0xe, 1);
+    device->m_vt->m_c8(device, 0x1b, 0);
+    device->m_vt->m_c8(device, 0x13, 2);
+    device->m_vt->m_c8(device, 0x14, 1);
+}
+
+// ---------------------------------------------------------------------------
+// 0x00541730: the same stage apply with the texture at +0x98 reached through
+// the settings probe first.
+class GD541730
+{
+public:
+    void Apply(DX8DEVICEOBJ *device);
+
+    char pad_00[8];
+    SETTINGSTABLE *m_8;
+    char pad_c[0x98 - 0xc];
+    GD5430a0TEX *m_98;
+};
+
+void GD541730::Apply(DX8DEVICEOBJ *device)
+{
+    bool b = m_8->GetInt(0xe) > 0;
+
+    if (m_98 && (m_98->m_108 || m_98->m_10c)) {
+        if (m_98->m_106) {
+            device->m_vt->m_c8(device, 0xe, 1);
+            device->m_vt->m_c8(device, 0x1b, 0);
+            device->m_vt->m_c8(device, 0x14, 1);
+        } else if (m_98->m_105) {
+            if (!m_98->m_100)
+                device->m_vt->m_c8(device, 0xe, 1);
+            device->m_vt->m_c8(device, 0x1b, 0);
+            device->m_vt->m_c8(device, 0x13, 2);
+            device->m_vt->m_c8(device, 0x14, 1);
+        }
+    }
+    if (m_98 && m_98->m_101 && m_98->Check(0)) {
+        int flag = 0;
+        if (b && m_98->m_10b)
+            flag = 1;
+        device->m_vt->m_fc(device, flag, 0x18, 0);
+    }
+}
+
+// ---------------------------------------------------------------------------
+// 0x005412c0: the two-texture variant of the stage apply; the shader level it
+// picks is clamped to 1 unless both shader versions are supported.
+class HARDWARE
+{
+public:
+    bool IsSupported(int id);
+};
+
+class GD6d09b8APP
+{
+public:
+    char pad_000[0x2b8];
+    HARDWARE *m_2b8;
+};
+
+class GD5412c0TEX
+{
+public:
+    char pad_000[0x101];
+    bool m_101;
+    bool m_102;
+    char pad_103[0x108 - 0x103];
+    bool m_108;
+    char pad_109[0x10b - 0x109];
+    bool m_10b;
+    bool m_10c;
+};
+
+class GD5412c0
+{
+public:
+    void Apply(DX8DEVICEOBJ *device);
+
+    char pad_00[8];
+    SETTINGSTABLE *m_8;
+    char pad_c[0x98 - 0xc];
+    GD5412c0TEX *m_98;
+    GD5412c0TEX *m_9c;
+};
+
+void GD5412c0::Apply(DX8DEVICEOBJ *device)
+{
+    bool ok;
+    unsigned level;
+
+    if (!((GD6d09b8APP *)g_pDisplay)->m_2b8->IsSupported(0x17))
+        return;
+    if (!(m_98 && m_98->m_101 && m_9c && m_9c->m_101))
+        return;
+    bool hi = m_8->GetInt(0xe) > 0;
+    ok = true;
+    if (m_8->m_ff0->Get(4) < 3 || m_8->m_ff0->Get(3) < 3) {
+        ok = false;
+        hi = false;
+    }
+    level = 1;
+    if (hi && m_98->m_10b)
+        level = 2;
+    if (m_98->m_10c)
+        level = 2;
+    else if (m_98->m_108 && m_98->m_102)
+        level = 2;
+    if (level > 1 && !ok)
+        level = 1;
+    if (m_9c && m_9c->m_101) {
+        device->m_vt->m_fc(device, level, 0xb, 0);
+        device->m_vt->m_f4(device, level, 0);
+        device->m_vt->m_fc(device, level, 1, 1);
+    }
+}
+
+// ---------------------------------------------------------------------------
+// 0x00541160: the stage apply with the texture-address probe and the extra
+// clamp pair.
+class GD541160TEX
+{
+public:
+    int Get(int id);
+    int Level();
+
+    char pad_000[0x101];
+    bool m_101;
+    bool m_102;
+    char pad_103[0x108 - 0x103];
+    bool m_108;
+    char pad_109[0x10b - 0x109];
+    bool m_10b;
+    bool m_10c;
+};
+
+class GD541160
+{
+public:
+    void Apply(DX8DEVICEOBJ *device);
+
+    char pad_00[8];
+    SETTINGSTABLE *m_8;
+    char pad_c[0x98 - 0xc];
+    GD541160TEX *m_98;
+    GD541160TEX *m_9c;
+};
+
+void GD541160::Apply(DX8DEVICEOBJ *device)
+{
+    bool ok;
+    unsigned level;
+
+    if (!((GD6d09b8APP *)g_pDisplay)->m_2b8->IsSupported(0x17))
+        return;
+    if (!(m_98 && m_98->m_101 && m_9c && m_9c->m_101))
+        return;
+    bool hi = m_8->GetInt(0xe) > 0;
+    ok = true;
+    if (m_8->m_ff0->Get(4) < 3 || m_8->m_ff0->Get(3) < 3) {
+        ok = false;
+        hi = false;
+    }
+    level = 1;
+    if (hi && m_98->m_10b)
+        level = 2;
+    if (m_98->m_10c)
+        level = 2;
+    else if (m_98->m_108 && m_98->m_102)
+        level = 2;
+    if (level > 1 && !ok)
+        level = 1;
+    if (m_9c && m_9c->m_101) {
+        device->m_vt->m_fc(device, level, 0xb, 1);
+        device->m_vt->m_f4(device, level, m_9c->Level());
+        device->m_vt->m_fc(device, level, 2, 2);
+        device->m_vt->m_fc(device, level, 1, 5);
+    }
+}
+
+
+// ---------------------------------------------------------------------------
+// 0x005424c0: the stage-list constructor.  Four standard containers sit at
+// +0x28..+0x67 (their _Myfirst lands at +0x2c..) and two three-word blocks at
+// +0x6c and +0x78.
+struct TXV3I
+{
+    int x, y, z;
+};
+
+class GD5424c0
+{
+public:
+    GD5424c0();
+
+    int m_0;
+    int m_4;
+    int m_8;
+    char pad_0c[0x24 - 0x0c];
+    bool m_24;
+    bool m_25;
+    char pad_26[0x28 - 0x26];
+    std::vector<int> m_28;
+    std::vector<int> m_38;
+    std::vector<int> m_48;
+    std::vector<int> m_58;
+    char pad_68[0x6c - 0x68];
+    TXV3I m_6c;
+    TXV3I m_78;
+};
+
+GD5424c0::GD5424c0()
+    : m_0(0), m_4(0), m_8(0), m_24(false), m_25(false)
+{
+    m_6c.x = 0;
+    m_6c.y = 0;
+    m_6c.z = 0;
+    m_78.x = 0;
+    m_78.y = 0;
+    m_78.z = 0;
+}
+
+
+// ---------------------------------------------------------------------------
+// 0x00544730: the shader-list constructor: six words, a standard string at
+// +0x18, four more words, a flag at +0x5c and three containers from +0x60.
+class GD544730
+{
+public:
+    GD544730();
+
+    int m_0;
+    int m_4;
+    int m_8;
+    int m_c;
+    int m_10;
+    int m_14;
+    std::string m_18;
+    int m_34;
+    int m_38;
+    int m_3c;
+    int m_40;
+    char pad_44[0x5c - 0x44];
+    bool m_5c;
+    char pad_5d[0x60 - 0x5d];
+    std::vector<int> m_60;
+    std::vector<int> m_70;
+    std::vector<int> m_80;
+};
+
+GD544730::GD544730()
+    : m_0(0), m_4(0), m_8(0), m_c(0), m_10(0), m_14(0),
+      m_34(0), m_38(0), m_3c(0), m_40(0), m_5c(false)
+{
+}
+
+// ---------------------------------------------------------------------------
+// 0x0053f060: five empty containers from +0x34, a size word at +0 and the
+// tail word at +0x84.
+class GD53f060
+{
+public:
+    GD53f060();
+
+    int m_0;
+    char pad_04[0x08 - 0x04];
+    int m_8;
+    int m_c;
+    int m_10;
+    int m_14;
+    int m_18;
+    char pad_1c[0x34 - 0x1c];
+    std::vector<int> m_34;
+    std::vector<int> m_44;
+    std::vector<int> m_54;
+    std::vector<int> m_64;
+    std::vector<int> m_74;
+    int m_84;
+};
+
+GD53f060::GD53f060()
+    : m_0(0x18), m_8(0), m_c(0), m_10(0), m_14(0), m_18(0), m_84(0)
+{
+}
+
+// ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+// 0x0053f0e0 / 0x0053f170 / 0x0053f200: the standard push_back the three
+// shader-record vectors share, and the fill-construct beside it.  The 24-byte
+// record is PATHREPOPOINT; the shader records are 32, 36 and 44 bytes.
+struct SHADERTYPE20
+{
+    int m[8];
+};
+
+struct SHADERTYPE24
+{
+    int m[9];
+};
+
+struct SHADERTYPE2C
+{
+    int m[11];
+};
+
+template void std::vector<PATHREPOPOINT>::push_back(const PATHREPOPOINT &);
+template void std::vector<SHADERTYPE24>::push_back(const SHADERTYPE24 &);
+template void std::vector<SHADERTYPE2C>::push_back(const SHADERTYPE2C &);
+
+template void std::vector<PATHREPOPOINT>::_Construct_n(size_t, const PATHREPOPOINT &);
+template void std::vector<SHADERTYPE24>::_Construct_n(size_t, const SHADERTYPE24 &);
+template void std::vector<SHADERTYPE2C>::_Construct_n(size_t, const SHADERTYPE2C &);
+template void std::vector<SHADERTYPE20>::_Construct_n(size_t, const SHADERTYPE20 &);
+template void std::vector<TEXTURETYPE20>::_Construct_n(size_t, const TEXTURETYPE20 &);

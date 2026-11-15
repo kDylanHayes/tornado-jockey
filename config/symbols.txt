@@ -3214,7 +3214,7 @@
 0x00534df0 ??1TEXTUREDX8SDTEXTURE@@QAE@XZ function 0x74
 0x00537270 ?SetFileName@SCREENDECALMASTER@@UAEXABVCSTRING@@@Z function 0x34
 0x0053dad0 ?size@?$vector@UPATHREPOPOINT@@V?$allocator@UPATHREPOPOINT@@@std@@@std@@QBEIXZ function 0x1f
-0x0053db30 ??$fill@PAUPATHREPOPOINT@@U1@@std@@YAXPAUPATHREPOPOINT@@0ABU1@@Z function
+0x0053db30 ??$fill@PAUPATHREPOPOINT@@U1@@std@@YAXPAUPATHREPOPOINT@@0ABU1@@Z function 0x44
 0x00547f50 ?RegisterClassName@@YAXPAUCMDENTRY@@PBD1@Z function
 0x00548d70 ?GetScaleFactor@CPRIMITIVE3RESOURCE@@UAE?AUV3@@XZ function
 0x0054d310 ?Virtual82@BONEDMODELRESOURCE@@UAE?AUV3@@H@Z function 0x11
@@ -9922,3 +9922,19 @@
 0x00421bc0 ?UpdateTimer@G2D5@@QAEXM@Z function 0x64
 0x00421c30 ?RequestScan@G2D5@@QAEXXZ function 0x87
 0x00426830 ?Respawn@G2CORE2M1@@QAEXXZ function 0x7e
+0x00540e80 ?FillCorners@GD540e80@@QAEXXZ function 0x15d
+0x005430a0 ?Apply@GD5430a0@@QAEXPAUDX8DEVICEOBJ@@@Z function 0xe4
+0x00541730 ?Apply@GD541730@@QAEXPAUDX8DEVICEOBJ@@@Z function 0x103
+0x005412c0 ?Apply@GD5412c0@@QAEXPAUDX8DEVICEOBJ@@@Z function 0x145
+0x00541160 ?Apply@GD541160@@QAEXPAUDX8DEVICEOBJ@@@Z function 0x15f
+0x005424c0 ??0GD5424c0@@QAE@XZ function 0x70
+0x00544730 ??0GD544730@@QAE@XZ function 0x7a
+0x0053f060 ??0GD53f060@@QAE@XZ function 0x74
+0x0053f0e0 ?push_back@?$vector@UPATHREPOPOINT@@V?$allocator@UPATHREPOPOINT@@@std@@@std@@QAEXABUPATHREPOPOINT@@@Z function 0x81
+0x0053f170 ?push_back@?$vector@USHADERTYPE24@@V?$allocator@USHADERTYPE24@@@std@@@std@@QAEXABUSHADERTYPE24@@@Z function 0x81
+0x0053f200 ?push_back@?$vector@USHADERTYPE2C@@V?$allocator@USHADERTYPE2C@@@std@@@std@@QAEXABUSHADERTYPE2C@@@Z function 0x81
+0x0053ed00 ?insert@?$vector@UPATHREPOPOINT@@V?$allocator@UPATHREPOPOINT@@@std@@@std@@QAE?AViterator@12@V312@ABUPATHREPOPOINT@@@Z function 0x69
+0x0053eed0 ?insert@?$vector@USHADERTYPE24@@V?$allocator@USHADERTYPE24@@@std@@@std@@QAE?AViterator@12@V312@ABUSHADERTYPE24@@@Z function 0x69
+0x0053eff0 ?insert@?$vector@USHADERTYPE2C@@V?$allocator@USHADERTYPE2C@@@std@@@std@@QAE?AViterator@12@V312@ABUSHADERTYPE2C@@@Z function 0x69
+0x0053e050 ?_Insert_n@?$vector@UPATHREPOPOINT@@V?$allocator@UPATHREPOPOINT@@@std@@@std@@IAEXViterator@12@IABUPATHREPOPOINT@@@Z function 0x2ca
+0x0053e820 ?_Insert_n@?$vector@USHADERTYPE2C@@V?$allocator@USHADERTYPE2C@@@std@@@std@@IAEXViterator@12@IABUSHADERTYPE2C@@@Z function 0x2a8
