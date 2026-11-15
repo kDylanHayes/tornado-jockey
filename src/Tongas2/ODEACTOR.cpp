@@ -133,9 +133,9 @@ __declspec(noinline) GD54c9b0::~GD54c9b0() throw()
     }
 }
 
-extern "C" void _dSpaceDestroy(void *space);
-extern "C" void _dJointGroupDestroy(void *group);
-extern "C" void _dWorldDestroy(void *world);
+extern "C" void dSpaceDestroy(void *space);
+extern "C" void dJointGroupDestroy(void *group);
+extern "C" void dWorldDestroy(void *world);
 
 struct G2ODEACTORTGT
 {
@@ -178,6 +178,38 @@ struct G2ODEADJTGT
     void Call(void *arg);
     bool Contains(const G2CORE1R1 &value);
 };
+
+// The table compares the three words of an entry as words, not as floats.
+static __inline bool SameAdjFactor(const G2CORE1R1 &a, const G2CORE1R1 &b)
+{
+    return *(const int *)&a.m_0 == *(const int *)&b.m_0
+        && *(const int *)&a.m_4 == *(const int *)&b.m_4
+        && *(const int *)&a.m_8 == *(const int *)&b.m_8;
+}
+
+bool G2ODEADJTGT::Contains(const G2CORE1R1 &value)
+{
+    DYNAMICARRAY<G2CORE1R1> *table = (DYNAMICARRAY<G2CORE1R1> *)(void *)this;
+    for (int i = 0; i < table->m_next + 1; i++) {
+        if (table->IsValid(i) && table->m_used[i]
+            && SameAdjFactor(table->m_data[i], value))
+            return true;
+    }
+    return false;
+}
+
+void G2ODEADJTGT::Call(void *arg)
+{
+    DYNAMICARRAY<G2CORE1R1> *table = (DYNAMICARRAY<G2CORE1R1> *)(void *)this;
+    const G2CORE1R1 &value = *(const G2CORE1R1 *)arg;
+    for (int i = 0; i < table->m_next + 1; i++) {
+        if (table->IsValid(i) && table->m_used[i]
+            && SameAdjFactor(table->m_data[i], value)) {
+            table->Remove(i);
+            return;
+        }
+    }
+}
 
 __declspec(noinline) void G2ODEADJ::Call(void *arg)
 {
@@ -353,12 +385,11 @@ public:
     int m_84;
 };
 
-extern "C" void _dSetMessageHandler(void (*handler)(int, const char *, va_list));
-extern "C" void _dSetErrorHandler(void (*handler)(int, const char *, va_list));
-extern "C" void _dSetDebugHandler(void (*handler)(int, const char *, va_list));
-extern "C" void *_dWorldCreate();
-extern "C" void *_dJointGroupCreate(int max);
-extern "C" int __vsnprintf(char *buffer, unsigned int count, const char *format, va_list ap);
+extern "C" void dSetMessageHandler(void (*handler)(int, const char *, va_list));
+extern "C" void dSetErrorHandler(void (*handler)(int, const char *, va_list));
+extern "C" void dSetDebugHandler(void (*handler)(int, const char *, va_list));
+extern "C" void *dWorldCreate();
+extern "C" void *dJointGroupCreate(int max);extern "C" int __vsnprintf(char *buffer, unsigned int count, const char *format, va_list ap);
 
 static void OdeDebugHandler(int num, const char *message, va_list args)
 {
@@ -389,18 +420,18 @@ static void OdeMessageHandler(int num, const char *message, va_list args)
 
 __declspec(noinline) ODEWORLDX::~ODEWORLDX() throw()
 {
-    _dSpaceDestroy(m_60);
-    _dJointGroupDestroy(m_64);
-    _dWorldDestroy(m_5c);
+    dSpaceDestroy(m_60);
+    dJointGroupDestroy(m_64);
+    dWorldDestroy(m_5c);
 }
 
 ODEWORLDX::ODEWORLDX()
 {
-    _dSetMessageHandler(OdeMessageHandler);
-    _dSetErrorHandler(OdeErrorHandler);
-    _dSetDebugHandler(OdeDebugHandler);
-    m_5c = _dWorldCreate();
-    m_64 = _dJointGroupCreate(0);
+    dSetMessageHandler(OdeMessageHandler);
+    dSetErrorHandler(OdeErrorHandler);
+    dSetDebugHandler(OdeDebugHandler);
+    m_5c = dWorldCreate();
+    m_64 = dJointGroupCreate(0);
     m_60 = 0;
     m_68 = false;
     int size = 100;
@@ -412,10 +443,10 @@ ODEWORLDX::ODEWORLDX()
 }
 
 extern GD548620 *g_pOdeWorld;
-extern "C" void _dSpaceDestroy(void *space);
-extern "C" void *_dQuadTreeSpaceCreate(void *space, const float *center,
-                                       const float *extents, int depth);
-extern "C" void _dSpaceSetCleanup(void *space, int mode);
+extern "C" void dSpaceDestroy(void *space);
+extern "C" void *dQuadTreeSpaceCreate(void *space, const float *center,
+                                     const float *extents, int depth);
+extern "C" void dSpaceSetCleanup(void *space, int mode);
 
 class ODELISTX
 {
@@ -442,7 +473,7 @@ void ODEWORLDX::Reset()
 {
     if (m_60) {
         ((ODELISTX *)g_pActorResourceManager2)->VisitAll(0);
-        _dSpaceDestroy(m_60);
+        dSpaceDestroy(m_60);
         m_60 = 0;
     }
     float extents[4];
@@ -469,8 +500,8 @@ void ODEWORLDX::Reset()
         extents[3] = 0.0f;
         depth = 5;
     }
-    m_60 = _dQuadTreeSpaceCreate(0, center, extents, depth);
-    _dSpaceSetCleanup(m_60, 0);
+    m_60 = dQuadTreeSpaceCreate(0, center, extents, depth);
+    dSpaceSetCleanup(m_60, 0);
     ((ODELISTX *)g_pActorResourceManager2)->VisitAll((int)m_60);
     m_68 = true;
 }
@@ -580,10 +611,10 @@ bool ODEACTORM3::Predicate(int a, int b, int c, int d)
     return true;
 }
 
-extern "C" void _dBodySetLinearVel(void *body, float x, float y, float z);
-extern "C" void _dBodySetAngularVel(void *body, float x, float y, float z);
-extern "C" void _dBodyDisable(void *body);
-extern "C" void _dBodyEnable(void *body);
+extern "C" void dBodySetLinearVel(void *body, float x, float y, float z);
+extern "C" void dBodySetAngularVel(void *body, float x, float y, float z);
+extern "C" void dBodyDisable(void *body);
+extern "C" void dBodyEnable(void *body);
 
 extern RESOURCES *g_pResources;
 extern RESOURCEMANAGER *g_pActorResourceManager2;
@@ -629,7 +660,7 @@ void ODEACTORM4::Start()
     if (*(bool *)((char *)this + 0xd24))
         return;
     *(bool *)((char *)this + 0xd24) = true;
-    _dBodyEnable(*(void **)((char *)this + 0xccc));
+    dBodyEnable(*(void **)((char *)this + 0xccc));
     RESHANDLE *handles = (RESHANDLE *)((char *)this + 0xb58);
     for (int i = 16; i != 0; i--) {
         if (handles->IsValid()) {
@@ -648,9 +679,9 @@ void ODEACTORM4::Stop()
 {
     if (*(bool *)((char *)this + 0xd24)) {
         *(bool *)((char *)this + 0xd24) = false;
-        _dBodySetLinearVel(*(void **)((char *)this + 0xccc), 0.0f, 0.0f, 0.0f);
-        _dBodySetAngularVel(*(void **)((char *)this + 0xccc), 0.0f, 0.0f, 0.0f);
-        _dBodyDisable(*(void **)((char *)this + 0xccc));
+        dBodySetLinearVel(*(void **)((char *)this + 0xccc), 0.0f, 0.0f, 0.0f);
+        dBodySetAngularVel(*(void **)((char *)this + 0xccc), 0.0f, 0.0f, 0.0f);
+        dBodyDisable(*(void **)((char *)this + 0xccc));
         RESHANDLE *handles = (RESHANDLE *)((char *)this + 0xb58);
         for (int i = 16; i != 0; i--) {
             if (handles->IsValid()) {
@@ -1132,8 +1163,8 @@ struct G2CORE2M8
     void Setup();
 };
 
-extern "C" void *_dBodyCreate(void *world);
-extern "C" void _dBodySetData(void *body, void *data);
+extern "C" void *dBodyCreate(void *world);
+extern "C" void dBodySetData(void *body, void *data);
 
 extern "C" void __fastcall GD54b320(void *self);
 
@@ -1166,6 +1197,7 @@ class G2ODEACTORPOS
 {
 public:
     void SetPosition(const V3 &position);
+    void SetAngles(ANG &angles);
 
     char pad_0000[0x9a0];
     bool m_9a0;
@@ -1176,7 +1208,8 @@ public:
     bool m_d25;
 };
 
-extern "C" void _dBodySetPosition(void *body, float x, float y, float z);
+extern "C" void dBodySetPosition(void *body, float x, float y, float z);
+extern "C" void dBodySetRotation(void *body, const void *rotation);
 
 void G2ODEACTORPOS::SetPosition(const V3 &position)
 {
@@ -1184,7 +1217,32 @@ void G2ODEACTORPOS::SetPosition(const V3 &position)
         return;
     ((ACTOR *)this)->ACTOR::SetPosition(position);
     if (m_body)
-        _dBodySetPosition(m_body, position.x, position.y, position.z);
+        dBodySetPosition(m_body, position.x, position.y, position.z);
+}
+
+void G2ODEACTORPOS::SetAngles(ANG &angles)
+{
+    if (m_d24 && !m_d25 && ((ODEWORLDX *)g_pOdeWorldX)->m_69 && m_9a0)
+        return;
+    ((ACTOR *)this)->ACTOR::SetAngles(angles);
+    if (m_body) {
+        MATRIX m = angles.GetMatrix();
+        // ODE wants the rotation transposed, three columns of four.
+        float r[12];
+        r[0] = m._11;
+        r[4] = m._12;
+        r[8] = m._13;
+        r[1] = m._21;
+        r[5] = m._22;
+        r[9] = m._23;
+        r[2] = m._31;
+        r[6] = m._32;
+        r[10] = m._33;
+        r[3] = m._41;
+        r[7] = m._42;
+        r[11] = m._43;
+        dBodySetRotation(m_body, r);
+    }
 }
 // The ODE actor's script commands. 0x0054b670 adds a torque, 0x0054b730 a
 // relative force and 0x0054b7f0 a force; all three read one "x,y,z" token
@@ -1205,17 +1263,17 @@ public:
     void *m_body;
 };
 
-extern "C" void _dBodyAddTorque(void *body, float x, float y, float z);
-extern "C" void _dBodyAddRelForce(void *body, float x, float y, float z);
-extern "C" void _dBodyAddForce(void *body, float x, float y, float z);
-extern "C" void _dBodyAddForceAtPos(void *body, float x, float y, float z,
-                                    float px, float py, float pz);
-extern "C" void _dBodyAddRelForceAtPos(void *body, float x, float y, float z,
-                                       float px, float py, float pz);
-extern "C" void _dBodyAddForceAtRelPos(void *body, float x, float y, float z,
-                                        float px, float py, float pz);
-extern "C" void _dBodyAddRelForceAtRelPos(void *body, float x, float y, float z,
-                                           float px, float py, float pz);
+extern "C" void dBodyAddTorque(void *body, float x, float y, float z);
+extern "C" void dBodyAddRelForce(void *body, float x, float y, float z);
+extern "C" void dBodyAddForce(void *body, float x, float y, float z);
+extern "C" void dBodyAddForceAtPos(void *body, float x, float y, float z,
+                                   float px, float py, float pz);
+extern "C" void dBodyAddRelForceAtPos(void *body, float x, float y, float z,
+                                      float px, float py, float pz);
+extern "C" void dBodyAddForceAtRelPos(void *body, float x, float y, float z,
+                                      float px, float py, float pz);
+extern "C" void dBodyAddRelForceAtRelPos(void *body, float x, float y, float z,
+                                         float px, float py, float pz);
 
 SRESULT G2ODEACTORCMD::CmdAddTorque(TOKENS **args)
 {
@@ -1225,7 +1283,31 @@ SRESULT G2ODEACTORCMD::CmdAddTorque(TOKENS **args)
     v.z = 0.0f;
     sscanf((*args)->GetToken(1), "%f %f %f", &v.x, &v.y, &v.z);
     if (m_body)
-        _dBodyAddTorque(m_body, v.x, v.y, v.z);
+        dBodyAddTorque(m_body, v.x, v.y, v.z);
+    return SRESULT(true);
+}
+
+SRESULT G2ODEACTORCMD::CmdAddRelForce(TOKENS **args)
+{
+    V3 v;
+    v.x = 0.0f;
+    v.y = 0.0f;
+    v.z = 0.0f;
+    sscanf((*args)->GetToken(1), "%f %f %f", &v.x, &v.y, &v.z);
+    if (m_body)
+        dBodyAddRelForce(m_body, v.x, v.y, v.z);
+    return SRESULT(true);
+}
+
+SRESULT G2ODEACTORCMD::CmdAddForce(TOKENS **args)
+{
+    V3 v;
+    v.x = 0.0f;
+    v.y = 0.0f;
+    v.z = 0.0f;
+    sscanf((*args)->GetToken(1), "%f %f %f", &v.x, &v.y, &v.z);
+    if (m_body)
+        dBodyAddForce(m_body, v.x, v.y, v.z);
     return SRESULT(true);
 }
 
@@ -1242,7 +1324,58 @@ SRESULT G2ODEACTORCMD::CmdAddForceAtPos(TOKENS **args)
     sscanf((*args)->GetToken(1), "%f %f %f", &force.x, &force.y, &force.z);
     sscanf((*args)->GetToken(2), "%f %f %f", &pos.x, &pos.y, &pos.z);
     if (m_body)
-        _dBodyAddForceAtPos(m_body, force.x, force.y, force.z, pos.x, pos.y, pos.z);
+        dBodyAddForceAtPos(m_body, force.x, force.y, force.z, pos.x, pos.y, pos.z);
+    return SRESULT(true);
+}
+
+SRESULT G2ODEACTORCMD::CmdAddRelForceAtPos(TOKENS **args)
+{
+    V3 force;
+    force.x = 0.0f;
+    force.y = 0.0f;
+    force.z = 0.0f;
+    V3 pos;
+    pos.x = 0.0f;
+    pos.y = 0.0f;
+    pos.z = 0.0f;
+    sscanf((*args)->GetToken(1), "%f %f %f", &force.x, &force.y, &force.z);
+    sscanf((*args)->GetToken(2), "%f %f %f", &pos.x, &pos.y, &pos.z);
+    if (m_body)
+        dBodyAddRelForceAtPos(m_body, force.x, force.y, force.z, pos.x, pos.y, pos.z);
+    return SRESULT(true);
+}
+
+SRESULT G2ODEACTORCMD::CmdAddForceAtRelPos(TOKENS **args)
+{
+    V3 force;
+    force.x = 0.0f;
+    force.y = 0.0f;
+    force.z = 0.0f;
+    V3 pos;
+    pos.x = 0.0f;
+    pos.y = 0.0f;
+    pos.z = 0.0f;
+    sscanf((*args)->GetToken(1), "%f %f %f", &force.x, &force.y, &force.z);
+    sscanf((*args)->GetToken(2), "%f %f %f", &pos.x, &pos.y, &pos.z);
+    if (m_body)
+        dBodyAddForceAtRelPos(m_body, force.x, force.y, force.z, pos.x, pos.y, pos.z);
+    return SRESULT(true);
+}
+
+SRESULT G2ODEACTORCMD::CmdAddRelForceAtRelPos(TOKENS **args)
+{
+    V3 force;
+    force.x = 0.0f;
+    force.y = 0.0f;
+    force.z = 0.0f;
+    V3 pos;
+    pos.x = 0.0f;
+    pos.y = 0.0f;
+    pos.z = 0.0f;
+    sscanf((*args)->GetToken(1), "%f %f %f", &force.x, &force.y, &force.z);
+    sscanf((*args)->GetToken(2), "%f %f %f", &pos.x, &pos.y, &pos.z);
+    if (m_body)
+        dBodyAddRelForceAtRelPos(m_body, force.x, force.y, force.z, pos.x, pos.y, pos.z);
     return SRESULT(true);
 }
 
@@ -1252,9 +1385,9 @@ void G2ODEACTORTGT::Call()
         return;
     ((ODEWORLDX *)g_pOdeWorldX)->AddActor(this);
     ODEWORLDCAST *world = (ODEWORLDCAST *)g_pOdeWorldX;
-    void *body = _dBodyCreate(world->m_world);
+    void *body = dBodyCreate(world->m_world);
     *(void **)((char *)this + 0xccc) = body;
-    _dBodySetData(body, this);
+    dBodySetData(body, this);
     G2CORE2M8VT *vt = (G2CORE2M8VT *)this;
     if (*(char *)((char *)this + 0xd24))
         vt->V142();
@@ -1266,4 +1399,41 @@ void G2ODEACTORTGT::Call()
     vt->V047((char *)this + 0x148);
     vt->V148((char *)this + 0xd1c);
     GD54b320(this);
+}
+
+// The engine's hook lists at 0x006d089c, 0x006d09c4, 0x006d26ec and
+// 0x007e0cb0, and the commands registration. 0x0054a980 is ODEGEOM's
+// registrar.
+struct TIMERHOOKS;
+extern TIMERHOOKS g_startHooks;
+extern TIMERHOOKS g_shutdownHooks;
+extern TIMERHOOKS g_actorStartHooks;
+extern TIMERHOOKS g_actorShutdownHooks;
+extern CALLBACKLIST<void (*)()> g_classRegistrars;
+extern void RegisterODECommands();
+extern void LoadODEManagers();
+
+// Appends to a hook list; the lists share one layout.
+static __inline void AddHook(CALLBACKLIST<void (*)()> *list, void (*hook)())
+{
+    CALLBACKLIST<void (*)()>::NODE *node = list->NewNode(hook);
+    node->prev = list->m_tail;
+    if (list->m_tail)
+        list->m_tail->next = node;
+    list->m_tail = node;
+    if (!list->m_head)
+        list->m_head = node;
+}
+
+void RegisterODEHooks()
+{
+    AddHook(&g_classRegistrars, RegisterODECommands);
+    AddHook((CALLBACKLIST<void (*)()> *)(void *)&g_actorStartHooks,
+            RegisterODEActors);
+    AddHook((CALLBACKLIST<void (*)()> *)(void *)&g_actorShutdownHooks,
+            ShutdownOdeWorld);
+    AddHook(&RESOURCES::s_onInit, LoadODEManagers);
+    AddHook((CALLBACKLIST<void (*)()> *)(void *)&g_startHooks, CreateOdeWorld);
+    AddHook((CALLBACKLIST<void (*)()> *)(void *)&g_shutdownHooks,
+            DestroyOdeWorld);
 }
