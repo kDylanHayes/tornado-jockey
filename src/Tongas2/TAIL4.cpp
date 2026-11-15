@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <windows.h>
 
 // Tongas2/TAIL4 -- discovery scaffold for the remaining 0x54eec0-range code.
 
@@ -23,73 +24,58 @@ struct GD556050ITEM
     void *m_4;
 };
 
-// The growable array at +0x58: begin/end/capacity, cleared by freeing each
-// element's buffer and then the storage.
+// The growable array at +0x58.
 struct GD556050ARRAY
 {
     GD556050ITEM *m_begin;
     GD556050ITEM *m_end;
     GD556050ITEM *m_cap;
-
-    __forceinline void Clear()
-    {
-        int count = m_begin ? (int)(m_end - m_begin) : 0;
-        for (int i = 0; i < count; i++) {
-            GD556050ITEM *item = m_begin + i;
-            free(item->m_4);
-        }
-        if (m_begin)
-            free(m_begin);
-        m_begin = 0;
-        m_end = 0;
-        m_cap = 0;
-    }
 };
 
-// Owns a heap buffer and frees it in its destructor (the word at +0xc).
+// Owns a heap buffer and releases it in its destructor (the word at +0xc).
 class GD556050FREE
 {
 public:
     ~GD556050FREE()
     {
-        free(m_p);
+        ::operator delete(m_p);
     }
 
     void *m_p;
 };
 
-// The non-polymorphic part of the object, shifted to +4 by the derived vptr.
-class GD556050BASE
+class GD556050
 {
 public:
-    __forceinline ~GD556050BASE()
-    {
-        if (m_04)
-            m_04->Release(1);
-    }
+    virtual ~GD556050();
 
     GD556050OBJ *m_04;
     int m_08;
-    GD556050FREE m_c;
+    GD556050FREE m_0c;
     std::string m_10;
     std::string m_2c;
     int m_48;
     int m_4c;
     bool m_50;
-    char pad_51[0x58 - 0x51];
-};
-
-class GD556050 : public GD556050BASE
-{
-public:
-    virtual ~GD556050();
-
-    GD556050ARRAY m_54;
+    char pad_51[0x54 - 0x51];
+    int m_54;
+    GD556050ARRAY m_58;
 };
 
 __declspec(noinline) GD556050::~GD556050()
 {
-    m_54.Clear();
+    int count = m_58.m_begin ? (int)(m_58.m_end - m_58.m_begin) : 0;
+    for (int i = 0; i < count; i++) {
+        GD556050ITEM *item = m_58.m_begin + i;
+        ::operator delete(item->m_4);
+    }
+    if (m_04)
+        m_04->Release(1);
+    if (m_58.m_begin)
+        ::operator delete(m_58.m_begin);
+    m_58.m_begin = 0;
+    m_58.m_end = 0;
+    m_58.m_cap = 0;
 }
 
 class V5547C4
@@ -251,4 +237,83 @@ __declspec(noinline) GD558000::~GD558000()
 void GD558000Release(GD558000 *object)
 {
     object->~GD558000();
+}
+
+// The config tree at 0xa0f224 / 0xa0f22c: a string-keyed map whose nodes use a
+// 0x24-byte value (string key plus an 8-byte payload), node stride 0x34.
+struct TAIL4MAPVALUE
+{
+    int m_0;
+    int m_4;
+};
+
+template class std::map<std::basic_string<char>, TAIL4MAPVALUE>;
+
+// 00559d40 (60 bytes) -- recursive unsigned digit emitter.
+static const char GD559DIGITS[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+static char *GD559D40(unsigned int value, char *buffer, unsigned int radix)
+{
+    unsigned int quotient = value / radix;
+    unsigned int remainder = value % radix;
+    if (0 < quotient) {
+        char *p = GD559D40(quotient, buffer, radix);
+        *p = GD559DIGITS[remainder];
+        return p + 1;
+    }
+    else {
+        *buffer = GD559DIGITS[remainder];
+        return buffer + 1;
+    }
+}
+
+// 00559d80 (124 bytes) -- signed integer to string in an arbitrary radix.
+char *GD559D80(int value, char *buffer, int radix)
+{
+    char *p;
+    if (radix < 2 || radix > 36)
+        radix = 10;
+    if (value < 0) {
+        unsigned int magnitude = -value;
+        unsigned int quotient = magnitude / radix;
+        unsigned int remainder = magnitude % radix;
+        *buffer = '-';
+        p = buffer + 1;
+        if (0 < quotient)
+            p = GD559D40(quotient, p, radix);
+        *p = GD559DIGITS[remainder];
+        p[1] = '\0';
+        return buffer;
+    }
+    unsigned int positive = (unsigned int)value;
+    unsigned int quotient = positive / radix;
+    unsigned int remainder = positive % radix;
+    p = buffer;
+    if (0 < quotient)
+        p = GD559D40(quotient, buffer, radix);
+    *p = GD559DIGITS[remainder];
+    p[1] = '\0';
+    return buffer;
+}
+
+// 00558fe0 (121 bytes) -- reads ProgramFilesDir out of the registry.
+int __fastcall GD558FE0(char *buffer, unsigned int size)
+{
+    HKEY key = NULL;
+    int result = 0;
+    if (RegOpenKeyExA(HKEY_LOCAL_MACHINE,
+                      "SOFTWARE\\Microsoft\\Windows\\CurrentVersion",
+                      0, 1, &key) == 0) {
+        DWORD type;
+        DWORD length = size;
+        if (RegQueryValueExA(key, "ProgramFilesDir", NULL, &type,
+                             (LPBYTE)buffer, &length) == 0) {
+            if (size != 0)
+                buffer[size - 1] = '\0';
+            result = 1;
+        }
+    }
+    if (key != NULL)
+        RegCloseKey(key);
+    return result;
 }
