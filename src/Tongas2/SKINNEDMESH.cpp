@@ -73,8 +73,6 @@ void GD5285f0::Release()
 #include "Tongas2/MATHS.h"
 #include "Tongas2/SKINNEDMESH.h"
 
-// Tongas2/SKINNEDMESH -- the CSkinnedMesh object and its helpers.
-
 const char *SKINNEDMESH::GetAnimationName(unsigned int index)
 {
     (void)index;

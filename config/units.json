@@ -3489,9 +3489,9 @@
       "symbol_mappings": {
         "FUN_00530360": "?_Insert_n@?$vector@HV?$allocator@H@std@@@std@@IAEXViterator@12@IABH@Z",
         "FUN_00530190": "?_Xlen@?$vector@HV?$allocator@H@std@@@std@@IBEXXZ",
-        "FUN_00517d60": "?_Ufill@?$vector@HV?$allocator@H@std@@@std@@IAEPAHPAHIABH@Z",
         "FUN_00537630": "??$fill@PAHH@std@@YAXPAH0ABH@Z",
-        "FUN_0052faa0": "??$copy_backward@PAHPAH@std@@YAPAHPAH00@Z"
+        "FUN_0052faa0": "??$copy_backward@PAHPAH@std@@YAPAHPAH00@Z",
+        "FUN_00517d60": "?_Ufill@?$vector@HV?$allocator@H@std@@@std@@IAEPAHPAHIABH@Z"
       }
     },
     {
@@ -3554,7 +3554,10 @@
       "source": "src/Tongas2/COLLISIONSCENEDX8SD.cpp",
       "category": "engine",
       "symbol_mappings": {
-        "_m_45": "?m_45@GD536790DISPLAY@@QAEXPAX@Z"
+        "_m_45": "?m_45@GD536790DISPLAY@@QAEXPAX@Z",
+        "FUN_00536800": "??0GD5368a0@@QAE@PAVRESOURCEMANAGER@@PBD@Z",
+        "FUN_00536aa0": "??0GD536790@@QAE@PAVRESOURCEMASTER@@ABURESHANDLE@@@Z",
+        "_m_65": "?m_65@GD536790DISPLAY@@QAEPAVTEXTFILE@@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@HH@Z"
       }
     },
     {
