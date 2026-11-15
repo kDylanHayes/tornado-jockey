@@ -3687,7 +3687,9 @@
       "source": "src/Tongas2/TAIL1.cpp",
       "category": "engine",
       "symbol_mappings": {
-        "FUN_005c0905": "??1GD551d70BASE@@UAE@XZ"
+        "FUN_005c0905": "??1GD551d70BASE@@UAE@XZ",
+        "DAT_00a0f1c0": "_s_cmdtable_54eec0",
+        "s_ODEACTORTEMPLATEMASTER_0067c5d8": "_s_ODEACTORTEMPLATEMASTER_0067c5d8"
       }
     },
     {

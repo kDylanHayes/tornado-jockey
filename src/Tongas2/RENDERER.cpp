@@ -686,7 +686,7 @@ static int GD4dc740Byte(const float &value)
 {
     if (value >= 1.0f)
         return 255;
-    if (value >= 0.0f)
-        return (int)(value * 255.0f + 0.5f);
-    return 0;
+    if (value <= 0.0f)
+        return 0;
+    return (int)(value * 255.0f + 0.5f);
 }

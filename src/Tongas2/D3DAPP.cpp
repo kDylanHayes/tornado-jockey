@@ -28,6 +28,9 @@ WINUSERAPI LONG WINAPI SetWindowLongA(HWND hWnd, int nIndex, LONG dwNewLong);
 WINUSERAPI HMENU WINAPI GetMenu(HWND hWnd);
 WINUSERAPI BOOL WINAPI SetMenu(HWND hWnd, HMENU hMenu);
 WINUSERAPI BOOL WINAPI GetWindowRect(HWND hWnd, LPRECT lpRect);
+WINUSERAPI BOOL WINAPI ClipCursor(const RECT *lpRect);
+WINUSERAPI int WINAPI MessageBoxA(HWND hWnd, LPCSTR lpText, LPCSTR lpCaption,
+                                  UINT uType);
 }
 
 // The engine log.  The retail calls LOG::Error with the log pointer on the
@@ -69,7 +72,7 @@ public:
     virtual int ToggleFullScreen();    virtual void Hook01() {}
     virtual void Hook02() {}
     virtual void Hook03() {}
-    virtual void Hook04() {}
+    virtual int Hook04() { return 0; }
     virtual void Hook05() {}
     virtual void Hook06() {}
     virtual void Hook07() {}
@@ -130,7 +133,8 @@ public:
     IDirect3DDevice8 *m_a8;      // 0xa8, the Direct3D device
     int m_ac;                    // 0xac
     GD507220OBJECT *m_b0;        // 0xb0
-    char pad_b4[0x1a8 - 0xb4];   // 0xb4
+    char pad_b4[0x188 - 0xb4];   // 0xb4
+    char m_188[0x20];            // 0x188, the surface description the reset keeps
     HWND m_1a8;                  // 0x1a8, the window
     HMENU m_1ac;                 // 0x1ac, the saved menu
     LONG m_1b0;                  // 0x1b0, the saved window style
@@ -263,8 +267,8 @@ int GD507220::HandleSizeChange()
     if (old.right - old.left != m_1e8.right - m_1e8.left ||
         old.bottom - old.top != m_1e8.bottom - m_1e8.top) {
         m_70 = m_1e8.right - m_1e8.left;
-        m_74 = m_1e8.bottom - m_1e8.top;
         m_1fd = false;
+        m_74 = m_1e8.bottom - m_1e8.top;
         if (m_a8) {
             ret = Tail();
             if (ret < 0) {
@@ -273,9 +277,9 @@ int GD507220::HandleSizeChange()
                 if (g_pLog)
                     g_pLog->Error("Failed on HandlePossibleSizeChange");
                 ReportError(ret, 1);
-                m_1fd = true;
             }
         }
+        m_1fd = true;
     }
     return ret;
 }
@@ -328,4 +332,83 @@ void G2CORE4D3DAPP::SetResolution(int index)
 {
     m_4 = index;
     SetMode(m_1d0, m_1d4);
+}
+
+// ---------------------------------------------------------------------------
+// The surface object the reset path gets back from the device.  Retail
+// (0x00506360) calls vtable+0x20 to read the description and vtable+0x8 to
+// release it, which is an eight-entry interface in front of GetDesc.
+// ---------------------------------------------------------------------------
+class GD507220SURFACE
+{
+public:
+    virtual int __stdcall QueryInterface(void *riid, void **ppv) = 0;
+    virtual int __stdcall AddRef() = 0;
+    virtual int __stdcall Release() = 0;
+    virtual int __stdcall V03() = 0;
+    virtual int __stdcall V04() = 0;
+    virtual int __stdcall V05() = 0;
+    virtual int __stdcall V06() = 0;
+    virtual int __stdcall V07() = 0;
+    virtual int __stdcall GetDesc(void *desc) = 0;
+};
+
+// Resets the device for the presentation parameters at +0x70 and restores the
+// rest of the 3D environment (retail 0x00506360).  Retail reaches the function
+// through the ?Tail@DX8SUB@@QAEXXZ label.
+int GD507220::Tail()
+{
+    if (m_203) {
+        m_203 = false;
+        Hook07();
+    }
+    int hr = m_a8->Reset(&m_70);
+    if (hr < 0) {
+        if (g_pLog)
+            g_pLog->Error("Screwdiver Error - device could not reset");
+        if (g_pLog)
+            g_pLog->Error(" Error code:%u", hr);
+        switch (hr) {
+        case 0x8007000e:
+            if (g_pLog)
+                g_pLog->Error(" Out of memory");
+            break;
+        case 0x8876017c:
+            if (g_pLog)
+                g_pLog->Error(" Out of video memory");
+            break;
+        case 0x8876086c:
+            if (g_pLog)
+                g_pLog->Error(" Invalid call");
+            break;
+        default:
+            if (g_pLog)
+                g_pLog->Error(" Unknown Error");
+            break;
+        }
+        return hr;
+    }
+    IDirect3DSurface8 *surface;
+    m_a8->GetBackBuffer(0, 0, &surface);
+    ((GD507220SURFACE *)surface)->GetDesc(m_188);
+    ((GD507220SURFACE *)surface)->Release();
+    if (m_204)
+        m_a8->ShowCursor(1);
+    if (m_205) {
+        if (!m_1fc) {
+            RECT rect;
+            GetWindowRect(m_1a8, &rect);
+            ClipCursor(&rect);
+        } else {
+            ClipCursor(0);
+        }
+    }
+    hr = Hook04();
+    if (hr < 0) {
+        MessageBoxA(0, "FAILED RESTORE", "Load Error", 0x10);
+        Hook07();
+        return hr;
+    }
+    m_203 = true;
+    return 0;
 }

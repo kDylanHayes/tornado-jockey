@@ -399,14 +399,11 @@ bool CollideQuadSegment(QUAD3 *a, SEGMENT3 *b, V3 *pa, V3 *pb, float *depth, V3 
     if (normal)
         *normal = hit;
     V3 *c = a->GetCorners();
-    if ((hit.x - c[0].x) * (c[1].x - c[0].x) + (hit.y - c[0].y) * (c[1].y - c[0].y) +
-                (hit.z - c[0].z) * (c[1].z - c[0].z) >= 0.0f &&
-        (hit.x - c[0].x) * (c[2].x - c[0].x) + (hit.y - c[0].y) * (c[2].y - c[0].y) +
-                (hit.z - c[0].z) * (c[2].z - c[0].z) >= 0.0f &&
-        (hit.x - c[3].x) * (c[1].x - c[3].x) + (hit.y - c[3].y) * (c[1].y - c[3].y) +
-                (hit.z - c[3].z) * (c[1].z - c[3].z) >= 0.0f &&
-        (hit.x - c[3].x) * (c[2].x - c[3].x) + (hit.y - c[3].y) * (c[2].y - c[3].y) +
-                (hit.z - c[3].z) * (c[2].z - c[3].z) >= 0.0f)
+    float e0 = Dot(hit - c[0], c[1] - c[0]);
+    float e1 = Dot(hit - c[0], c[2] - c[0]);
+    float e2 = Dot(hit - c[3], c[1] - c[3]);
+    float e3 = Dot(hit - c[3], c[2] - c[3]);
+    if (e0 >= 0.0f && e1 >= 0.0f && e2 >= 0.0f && e3 >= 0.0f)
         return true;
     return false;
 }

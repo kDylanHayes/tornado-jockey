@@ -296,3 +296,104 @@ void GD541030::Release()
         m_9c = 0;
     }
 }
+
+
+// 0x00541080 ?SetA@SHADERSETTERITEM@@QAEXPAX@Z
+// 0x005410a0 ?SetB@SHADERSETTERITEM@@QAEXPAX@Z
+// The shader setter's two texture slots, filled through the same out-of-line
+// helper (0x004ff160) the GD543080::Set shape already uses; the results live
+// at +0x98 and +0x9c.
+class SHADERSETTERITEM
+{
+public:
+    void SetA(void *texture);
+    void SetB(void *texture);
+
+    char pad_00[4];
+    M58TARGET *m_4;
+    char pad_08[0x98 - 8];
+    void *m_98;
+    void *m_9c;
+};
+
+void SHADERSETTERITEM::SetA(void *texture)
+{
+    if (texture)
+        m_98 = m_4->m_58(texture);
+}
+
+void SHADERSETTERITEM::SetB(void *texture)
+{
+    if (texture)
+        m_9c = m_4->m_58(texture);
+}
+
+
+// 0x00543030: two arguments into +0x4/+0x8 with the flag at +0 and the
+// tail words (+0x24, +0x28, +0x2c, +0x38, +0x3c) cleared.
+class GD543030
+{
+public:
+    void Init(int a, int b);
+
+    bool m_0;
+    char pad_1[3];
+    int m_4;
+    int m_8;
+    char pad_c[0x24 - 0xc];
+    int m_24;
+    int m_28;
+    int m_2c;
+    char pad_30[0x38 - 0x30];
+    int m_38;
+    int m_3c;
+};
+
+void GD543030::Init(int a, int b)
+{
+    m_4 = a;
+    m_0 = true;
+    m_8 = b;
+    m_24 = 0;
+    m_28 = 0;
+    m_2c = 0;
+    m_38 = 0;
+    m_3c = 0;
+}
+
+
+// 0x00540fe0: the same shape with three arguments and the two trailing
+// triples (+0x98 and +0xb0) cleared.
+class GD540fe0
+{
+public:
+    void Init(int a, int b, int c);
+
+    bool m_0;
+    char pad_1[3];
+    int m_4;
+    int m_8;
+    int m_c;
+    char pad_10[0x98 - 0x10];
+    int m_98;
+    int m_9c;
+    int m_a0;
+    char pad_a4[0xb0 - 0xa4];
+    int m_b0;
+    int m_b4;
+    int m_b8;
+};
+
+void GD540fe0::Init(int a, int b, int c)
+{
+    m_4 = a;
+    m_c = c;
+    m_0 = true;
+    m_8 = b;
+    m_98 = 0;
+    m_9c = 0;
+    m_a0 = 0;
+    m_b0 = 0;
+    m_b4 = 0;
+    m_b8 = 0;
+}

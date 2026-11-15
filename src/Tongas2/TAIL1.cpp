@@ -5,6 +5,8 @@
 #include "Tongas2/MATHS.h"
 #include "Tongas2/FILELOADER.h"
 #include "Tongas2/RESOURCES.h"
+#include "Tongas2/CMDBASE.h"
+#include "Tongas2/ACTORRESOURCES.h"
 
 // Tongas2/TAIL1 -- discovery scaffold for the remaining 0x54eec0-range code.
 
@@ -324,4 +326,21 @@ GD550e00::GD550e00(int a, int b) : m_8(a), m_c(b)
 
 __declspec(noinline) GD550e00::~GD550e00()
 {
+}
+
+// The ODE actor-template manager's command registration (retail 0x0054eec0):
+// the class id lives in the pointer at 0x006c65e4, the command table at
+// 0x00a0f1c0 and the parent name string at 0x0067c5d8.
+extern "C" CMDENTRY s_cmdtable_54eec0[];
+extern "C" char s_ODEACTORTEMPLATEMASTER_0067c5d8[];
+
+void Register54eec0()
+{
+    int id = *(int *)&g_6c65e4;
+
+    g_classParents[id] = ACTORRESOURCESMASTER::s_classId;
+    g_classCommands[id] = s_cmdtable_54eec0;
+    HashCommands(s_cmdtable_54eec0);
+    RegisterClassName(s_cmdtable_54eec0, s_ODEACTORTEMPLATEMASTER_0067c5d8,
+                      "ACTORRESOURCESMASTER");
 }

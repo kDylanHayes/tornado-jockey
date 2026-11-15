@@ -153,10 +153,10 @@ bool GUICONTROL::IsVisible()
 
 GUICONTROL::GUICONTROL(const RESHANDLE &master, GUIGROUP *parent)
 {
-    V2 v(0.0f, 0.0f);
+    m_timeSpace = 1;
+    GUICONTROLV2 v;
     m_position = v;
     v = V2(1.0f, 1.0f);
-    m_timeSpace = 1;
     m_size = v;
     m_zsort = 0;
     m_visible = true;

@@ -1,5 +1,6 @@
 // Tongas2/TAIL2
 #include <string.h>
+#include <string>
 
 #include "Tongas2/LOG.h"
 // Tongas2/TAIL2 -- discovery scaffold for the remaining 0x54eec0-range code.
@@ -144,4 +145,90 @@ char *DRMPALX::GetClearLeaderBoardsKey(char *out)
     buffer[0x1ff] = 0;
     memcpy(out, buffer, sizeof(buffer));
     return out;
+}
+
+// The 0x55xxxx block of this unit is the WildTangent property/exception
+// layer. Its wide-string temporaries are std::basic_string<wchar_t>, and
+// retail kept two of those members out of line here (0x5521c0 and 0x552220),
+// so the whole wchar_t instantiation is requested.
+template class std::basic_string<wchar_t>;
+
+// 0x00554c40 converts an 8-bit std::string to a wide one. Retail passes the
+// result buffer in ecx and the source in edx, i.e. a __fastcall helper
+// returning the wide string by value.
+std::wstring __fastcall ToWideText(const std::string &text, int mode);
+
+// 0x00552980: reads one property through slot 0x6c of the wrapped object.
+struct GD552980IFACE
+{
+    virtual void v00();
+    virtual void v01();
+    virtual void v02();
+    virtual void v03();
+    virtual void v04();
+    virtual void v05();
+    virtual void v06();
+    virtual void v07();
+    virtual void v08();
+    virtual void v09();
+    virtual void v10();
+    virtual void v11();
+    virtual void v12();
+    virtual void v13();
+    virtual void v14();
+    virtual void v15();
+    virtual void v16();
+    virtual void v17();
+    virtual void v18();
+    virtual void v19();
+    virtual void v20();
+    virtual void v21();
+    virtual void v22();
+    virtual void v23();
+    virtual void v24();
+    virtual void v25();
+    virtual void v26();
+    virtual bool Read(const std::wstring &text);
+};
+
+struct GD552980
+{
+    char pad_0[8];
+    GD552980IFACE *m_8;
+
+    void Get(const std::string &name, char *out);
+};
+
+void GD552980::Get(const std::string &name, char *out)
+{
+    *out = m_8->Read(ToWideText(name, 0));
+}
+
+// 0x00552850: writes one property through slot 0x28 of the wrapped object.
+struct GD552850IFACE
+{
+    virtual void v00();
+    virtual void v01();
+    virtual void v02();
+    virtual void v03();
+    virtual void v04();
+    virtual void v05();
+    virtual void v06();
+    virtual void v07();
+    virtual void v08();
+    virtual void v09();
+    virtual void Set(int value, const std::wstring &text);
+};
+
+struct GD552850
+{
+    char pad_0[8];
+    GD552850IFACE *m_8;
+
+    void Set(const std::string &name, unsigned char *value);
+};
+
+void GD552850::Set(const std::string &name, unsigned char *value)
+{
+    m_8->Set(*value, ToWideText(name, 0));
 }

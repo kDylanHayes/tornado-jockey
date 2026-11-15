@@ -1,4 +1,6 @@
+#include <stdio.h>
 #include <stdlib.h>
+#include <string>
 #include <vector>
 
 // The object whose slot 0x1c unlinks it and whose deleting destructor runs at
@@ -71,11 +73,7 @@ void GD5285f0::Release()
 #include "Tongas2/MATHS.h"
 #include "Tongas2/SKINNEDMESH.h"
 
-int SKINNEDMESH::GetAnimationIndex(const char *name)
-{
-    (void)name;
-    return 0;
-}
+// Tongas2/SKINNEDMESH -- the CSkinnedMesh object and its helpers.
 
 const char *SKINNEDMESH::GetAnimationName(unsigned int index)
 {
@@ -185,15 +183,15 @@ __declspec(noinline) void G2SKMLIST::Add(void *item)
     else {
         node = 0;
     }
-    if (m_head) {
-        node->m_next = m_head;
-        m_head->m_prev = node;
-        m_head = node;
-    }
-    else {
+    if (!m_head) {
         m_head = node;
         node->m_next = 0;
         m_head->m_prev = 0;
+    }
+    else {
+        node->m_next = m_head;
+        m_head->m_prev = node;
+        m_head = node;
     }
 }
 
@@ -479,4 +477,695 @@ __declspec(naked) void *GD517e10::Get24(int index)
         mov eax, dword ptr [eax]
         ret 4
     }
+}
+
+// ---------------------------------------------------------------------------
+// Stream readers for the animation file (0x00527080 .. 0x0052714b). Each one
+// pulls one scalar out of an open FILE and answers the value, or zero when the
+// read came up short.
+// ---------------------------------------------------------------------------
+
+// Reproduces FUN_00527080 (retail address 0x00527080, 37 bytes).
+int GD527080(FILE *stream)
+{
+    int value;
+    return fread(&value, 2, 1, stream) == 1 ? value : 0;
+}
+
+// Reproduces FUN_005270b0 (retail address 0x005270b0, 37 bytes).
+int GD5270b0(FILE *stream)
+{
+    int value;
+    return fread(&value, 4, 1, stream) == 1 ? value : 0;
+}
+
+// Reproduces FUN_005270e0 (retail address 0x005270e0, 41 bytes).
+float GD5270e0(FILE *stream)
+{
+    float value;
+    return fread(&value, 4, 1, stream) != 1 ? 0.0f : value;
+}
+
+// Reproduces FUN_00527110 (retail address 0x00527110, 29 bytes).
+int GD527110(FILE *stream)
+{
+    unsigned char value;
+    fread(&value, 1, 1, stream);
+    return value;
+}
+
+// Reproduces FUN_00527130 (retail address 0x00527130, 28 bytes).
+char GD527130(FILE *stream)
+{
+    char value;
+    fread(&value, 1, 1, stream);
+    return value;
+}
+
+// ---------------------------------------------------------------------------
+// Owned-interface release helpers.
+// ---------------------------------------------------------------------------
+
+// The interface the mesh releases through the third __stdcall virtual slot.
+class GD5164a0OBJ
+{
+public:
+    virtual void __stdcall V0();
+    virtual void __stdcall V1();
+    virtual void __stdcall Release();
+};
+
+// Reproduces FUN_005164a0 (retail address 0x005164a0, 23 bytes): drop the
+// owned interface through slot 2, then clear the slot.
+class GD5164a0
+{
+public:
+    void Release();
+
+    GD5164a0OBJ *m_0;
+};
+
+void GD5164a0::Release()
+{
+    if (m_0) {
+        m_0->Release();
+        m_0 = 0;
+    }
+}
+
+// Reproduces FUN_005160c0 (retail address 0x005160c0, 32 bytes): clear the
+// +0x28 word and drop the +0x2c interface through slot 2.
+class GD5160c0
+{
+public:
+    void Release();
+
+    char pad_0[0x28];
+    void *m_28;
+    GD5164a0OBJ *m_2c;
+};
+
+void GD5160c0::Release()
+{
+    m_28 = 0;
+    if (m_2c) {
+        m_2c->Release();
+        m_2c = 0;
+    }
+}
+
+// Reproduces FUN_00517900 (retail address 0x00517900, 33 bytes): store the
+// three arguments into the +0x20/+0x24/+0x28 words of the object at +0xc.
+struct GD517900INNER
+{
+    char pad_0[0x20];
+    int m_20;
+    int m_24;
+    int m_28;
+};
+
+class GD517900
+{
+public:
+    void Set(int a, int b, int c);
+
+    char pad_0[0xc];
+    GD517900INNER *m_c;
+};
+
+void GD517900::Set(int a, int b, int c)
+{
+    m_c->m_20 = a;
+    m_c->m_24 = b;
+    m_c->m_28 = c;
+}
+
+// Reproduces ?GetAnimationIndex@SKINNEDMESH@@QAEHPBD@Z (retail address
+// 0x00510660, 135 bytes). The +0x18/+0x1c range holds pointers to the
+// animation entries; each entry's name is a std::string at +0x44 and the
+// incoming char pointer addresses a holder whose std::string sits at +4.
+class LOG
+{
+public:
+    void Error(const char *format, ...);
+};
+
+extern LOG *g_pLog;
+
+struct GD510660ANIM
+{
+    char pad_0[0x44];
+    std::string m_44;
+};
+
+struct GD510660NAME
+{
+    int m_0;
+    std::string m_4;
+};
+
+class GD510660
+{
+public:
+    int Count()
+    {
+        return m_18 ? (int)(m_1c - m_18) : 0;
+    }
+
+    GD510660ANIM **m_18;
+    GD510660ANIM **m_1c;
+};
+
+int SKINNEDMESH::GetAnimationIndex(const char *name)
+{
+    GD510660 *self = (GD510660 *)this;
+    const GD510660NAME *want = (const GD510660NAME *)name;
+    unsigned int i = 0;
+
+    while (i < (unsigned int)self->Count()) {
+        if (!self->m_18[i]) {
+            if (g_pLog)
+                g_pLog->Error("CSkinnedMesh::GetAnimationIndex - Invalid name for animation index:%d", i);
+        }
+        else if (self->m_18[i]->m_44.compare(want->m_4) == 0) {
+            return (int)i;
+        }
+        i++;
+    }
+    return -1;
+}
+
+// Reproduces FUN_005106f0 (retail address 0x005106f0, 47 bytes): the bounds
+// checked +0x60 member of the element table at +0x18/+0x1c.
+class GD5106f0
+{
+public:
+    void *At(int index);
+
+    char pad_0[0x18];
+    void **m_18;
+    void **m_1c;
+};
+
+__declspec(naked) void *GD5106f0::At(int index)
+{
+    __asm {
+        mov edx, dword ptr [ecx + 0x18]
+        test edx, edx
+        je skm_at_null
+        mov eax, dword ptr [ecx + 0x1c]
+        sub eax, edx
+        mov edx, dword ptr [esp + 4]
+        sar eax, 2
+        cmp edx, eax
+        jae skm_at_null
+        test edx, edx
+        jl skm_at_null
+        mov eax, dword ptr [ecx + 0x18]
+        mov ecx, dword ptr [eax + edx*4]
+        lea eax, [eax + edx*4]
+        mov eax, dword ptr [ecx + 0x60]
+        ret 4
+    skm_at_null:
+        xor eax, eax
+        ret 4
+    }
+}
+
+// Reproduces FUN_00511510 (retail address 0x00511510, 26 bytes): the +0x104
+// offset word of the table reached through +0xc and +0x38.
+class GD511510
+{
+public:
+    int Get(int index);
+};
+
+__declspec(naked) int GD511510::Get(int index)
+{
+    __asm {
+        mov eax, dword ptr [ecx + 0xc]
+        mov ecx, dword ptr [eax + 0x38]
+        mov edx, dword ptr [ecx + 8]
+        mov eax, dword ptr [esp + 4]
+        lea eax, [edx + eax*4]
+        mov eax, dword ptr [eax]
+        add eax, 0x104
+        ret 4
+    }
+}
+
+// Reproduces FUN_005174a0 (retail address 0x005174a0, 91 bytes): the two
+// pointer constructor of the object whose four 0x14-byte groups start at
+// +0x10 with a unit scale.
+class GD5174a0
+{
+public:
+    GD5174a0(void *first, void *second);
+
+    void *m_00;
+    void *m_04;
+    void *m_08;
+    void *m_0c;
+    float m_10;
+    void *m_14;
+    void *m_18;
+    void *m_1c;
+    void *m_20;
+    float m_24;
+    void *m_28;
+    void *m_2c;
+    void *m_30;
+    void *m_34;
+    float m_38;
+    void *m_3c;
+    void *m_40;
+    void *m_44;
+    void *m_48;
+    float m_4c;
+    void *m_50;
+    void *m_54;
+    void *m_58;
+    void *m_5c;
+};
+
+GD5174a0::GD5174a0(void *first, void *second)
+{
+    m_00 = first;
+    m_08 = 0;
+    m_0c = 0;
+    m_04 = second;
+    m_50 = 0;
+    m_54 = 0;
+    m_58 = 0;
+    m_5c = 0;
+    m_48 = 0;
+    m_44 = 0;
+    m_40 = 0;
+    m_3c = 0;
+    m_34 = 0;
+    m_30 = 0;
+    m_2c = 0;
+    m_28 = 0;
+    m_20 = 0;
+    m_1c = 0;
+    m_18 = 0;
+    m_14 = 0;
+    m_4c = 1.0f;
+    m_38 = 1.0f;
+    m_24 = 1.0f;
+    m_10 = 1.0f;
+}
+
+// Reproduces FUN_00517d60 (retail address 0x00517d60, 42 bytes): fill count
+// words from one source word, answering the end of the run.
+int * __stdcall GD517d60(int *dest, unsigned int count, const int *value)
+{
+    int *p = dest;
+    unsigned int n = count;
+
+    while (n > 0) {
+        *p++ = *value;
+        n--;
+    }
+    return dest + count;
+}
+
+// Reproduces FUN_005178a0 (retail address 0x005178a0, 91 bytes): copy the
+// three unit floats into the +0xc block and keep the 0..255 scaled copies.
+struct GD5178a0INNER
+{
+    char pad_0[0x10];
+    float m_10;
+    float m_14;
+    float m_18;
+};
+
+class GD5178a0
+{
+public:
+    void Set(float a, float b, float c);
+
+    int m_0;
+    int m_4;
+    int m_8;
+    GD5178a0INNER *m_c;
+};
+
+void GD5178a0::Set(float a, float b, float c)
+{
+    m_c->m_10 = a;
+    m_c->m_14 = b;
+    m_c->m_18 = c;
+    m_0 = (int)(a * 255.0f);
+    m_4 = (int)(b * 255.0f);
+    m_8 = (int)(c * 255.0f);
+}
+
+// Reproduces FUN_00515c50 (retail address 0x00515c50, 96 bytes): the
+// component test of two float triples against the other two.
+__declspec(naked) bool GD515c50(void *a, void *b, void *c, void *d)
+{
+    __asm {
+        mov ecx, dword ptr [esp + 0x10]
+        fld dword ptr [ecx]
+        mov edx, dword ptr [esp + 8]
+        fcomp dword ptr [edx]
+        fnstsw ax
+        test ah, 0x41
+        jp skm_c50_fail
+        fld dword ptr [ecx + 4]
+        fcomp dword ptr [edx + 4]
+        fnstsw ax
+        test ah, 0x41
+        jp skm_c50_fail
+        fld dword ptr [ecx + 8]
+        fcomp dword ptr [edx + 8]
+        fnstsw ax
+        test ah, 0x41
+        jp skm_c50_fail
+        mov ecx, dword ptr [esp + 0xc]
+        fld dword ptr [ecx]
+        mov edx, dword ptr [esp + 4]
+        fcomp dword ptr [edx]
+        fnstsw ax
+        test ah, 1
+        jne skm_c50_fail
+        fld dword ptr [ecx + 4]
+        fcomp dword ptr [edx + 4]
+        fnstsw ax
+        test ah, 1
+        jne skm_c50_fail
+        fld dword ptr [ecx + 8]
+        fcomp dword ptr [edx + 8]
+        fnstsw ax
+        test ah, 1
+        jne skm_c50_fail
+        mov al, 1
+        ret
+    skm_c50_fail:
+        xor al, al
+        ret
+    }
+}
+
+// Reproduces FUN_00515cb0 (retail address 0x00515cb0, 96 bytes).
+__declspec(naked) bool GD515cb0(void *a, void *b, void *c, void *d)
+{
+    __asm {
+        mov ecx, dword ptr [esp + 0x10]
+        fld dword ptr [ecx]
+        mov edx, dword ptr [esp + 4]
+        fcomp dword ptr [edx]
+        fnstsw ax
+        test ah, 1
+        jne skm_cb0_fail
+        fld dword ptr [ecx + 4]
+        fcomp dword ptr [edx + 4]
+        fnstsw ax
+        test ah, 1
+        jne skm_cb0_fail
+        fld dword ptr [ecx + 8]
+        fcomp dword ptr [edx + 8]
+        fnstsw ax
+        test ah, 1
+        jne skm_cb0_fail
+        mov ecx, dword ptr [esp + 0xc]
+        fld dword ptr [ecx]
+        mov edx, dword ptr [esp + 8]
+        fcomp dword ptr [edx]
+        fnstsw ax
+        test ah, 0x41
+        jp skm_cb0_fail
+        fld dword ptr [ecx + 4]
+        fcomp dword ptr [edx + 4]
+        fnstsw ax
+        test ah, 0x41
+        jp skm_cb0_fail
+        fld dword ptr [ecx + 8]
+        fcomp dword ptr [edx + 8]
+        fnstsw ax
+        test ah, 0x41
+        jp skm_cb0_fail
+        mov al, 1
+        ret
+    skm_cb0_fail:
+        xor al, al
+        ret
+    }
+}
+
+// Reproduces FUN_00515d10 (retail address 0x00515d10, 70 bytes): the two
+// component test on x and z only.
+__declspec(naked) bool GD515d10(void *a, void *b, void *c, void *d)
+{
+    __asm {
+        mov ecx, dword ptr [esp + 0x10]
+        fld dword ptr [ecx]
+        mov edx, dword ptr [esp + 8]
+        fcomp dword ptr [edx]
+        fnstsw ax
+        test ah, 0x41
+        jp skm_d10_fail
+        fld dword ptr [ecx + 8]
+        fcomp dword ptr [edx + 8]
+        fnstsw ax
+        test ah, 0x41
+        jp skm_d10_fail
+        mov ecx, dword ptr [esp + 0xc]
+        fld dword ptr [ecx]
+        mov edx, dword ptr [esp + 4]
+        fcomp dword ptr [edx]
+        fnstsw ax
+        test ah, 1
+        jne skm_d10_fail
+        fld dword ptr [ecx + 8]
+        fcomp dword ptr [edx + 8]
+        fnstsw ax
+        test ah, 1
+        jne skm_d10_fail
+        mov al, 1
+        ret
+    skm_d10_fail:
+        xor al, al
+        ret
+    }
+}
+
+// Reproduces FUN_00515d60 (retail address 0x00515d60, 70 bytes).
+__declspec(naked) bool GD515d60(void *a, void *b, void *c, void *d)
+{
+    __asm {
+        mov ecx, dword ptr [esp + 0x10]
+        fld dword ptr [ecx]
+        mov edx, dword ptr [esp + 4]
+        fcomp dword ptr [edx]
+        fnstsw ax
+        test ah, 1
+        jne skm_d60_fail
+        fld dword ptr [ecx + 8]
+        fcomp dword ptr [edx + 8]
+        fnstsw ax
+        test ah, 1
+        jne skm_d60_fail
+        mov ecx, dword ptr [esp + 0xc]
+        fld dword ptr [ecx]
+        mov edx, dword ptr [esp + 8]
+        fcomp dword ptr [edx]
+        fnstsw ax
+        test ah, 0x41
+        jp skm_d60_fail
+        fld dword ptr [ecx + 8]
+        fcomp dword ptr [edx + 8]
+        fnstsw ax
+        test ah, 0x41
+        jp skm_d60_fail
+        mov al, 1
+        ret
+    skm_d60_fail:
+        xor al, al
+        ret
+    }
+}
+
+// Reproduces FUN_005264d0 (retail address 0x005264d0, 60 bytes): when the
+// +0xd0 flag is set, drop both owned interfaces and clear the flag.
+class GD5264d0
+{
+public:
+    void Release();
+
+    GD5164a0OBJ *m_0;
+    GD5164a0OBJ *m_4;
+    char pad_8[0xd0 - 8];
+    bool m_d0;
+};
+
+void GD5264d0::Release()
+{
+    if (m_d0) {
+        if (m_0) {
+            m_0->Release();
+            m_0 = 0;
+        }
+        if (m_4) {
+            m_4->Release();
+            m_4 = 0;
+        }
+        m_d0 = 0;
+    }
+}
+
+// Reproduces FUN_00517d90 (retail address 0x00517d90, 56 bytes): true when
+// either table of the object at +0x114 holds an entry.
+struct GD517d90ELEM
+{
+    char m_0[0x10];
+};
+
+struct GD517d90INNER
+{
+    unsigned int Count44()
+    {
+        return m_44 ? (unsigned int)(m_48 - m_44) : 0;
+    }
+    unsigned int CountA4()
+    {
+        return m_a4 ? (unsigned int)(m_a8 - m_a4) : 0;
+    }
+
+    char pad_0[0x44];
+    GD517d90ELEM *m_44;
+    GD517d90ELEM *m_48;
+    char pad_4c[0xa4 - 0x4c];
+    GD517d90ELEM *m_a4;
+    GD517d90ELEM *m_a8;
+};
+
+class GD517d90
+{
+public:
+    bool Has();
+
+    char pad_0[0x114];
+    GD517d90INNER *m_114;
+};
+
+bool GD517d90::Has()
+{
+    if (m_114->Count44() > 0)
+        return true;
+    if (m_114->CountA4() > 0)
+        return true;
+    return false;
+}
+
+// Reproduces FUN_00520d40 (retail address 0x00520d40, 56 bytes): the same
+// test on the object at +0x108, whose tables hold 4-byte entries.
+struct GD520d40INNER
+{
+    unsigned int Count44()
+    {
+        return m_44 ? (unsigned int)(m_48 - m_44) : 0;
+    }
+    unsigned int CountA4()
+    {
+        return m_a4 ? (unsigned int)(m_a8 - m_a4) : 0;
+    }
+
+    char pad_0[0x44];
+    int *m_44;
+    int *m_48;
+    char pad_4c[0xa4 - 0x4c];
+    int *m_a4;
+    int *m_a8;
+};
+
+class GD520d40
+{
+public:
+    bool Has();
+
+    char pad_0[0x108];
+    GD520d40INNER *m_108;
+};
+
+bool GD520d40::Has()
+{
+    if (m_108->Count44() > 0)
+        return true;
+    if (m_108->CountA4() > 0)
+        return true;
+    return false;
+}
+
+// Reproduces FUN_00520c70 (retail address 0x00520c70, 72 bytes): the +0x24
+// word of the entry whose +0x30 id matches, out of the table at +0x6c.
+struct GD520c70ELEM
+{
+    char pad_0[0x24];
+    void *m_24;
+    char pad_28[0x30 - 0x28];
+    int m_30;
+};
+
+struct GD520c70INNER
+{
+    unsigned int Count()
+    {
+        return m_6c ? (unsigned int)(m_70 - m_6c) : 0;
+    }
+
+    char pad_0[0x6c];
+    GD520c70ELEM **m_6c;
+    GD520c70ELEM **m_70;
+};
+
+class GD520c70
+{
+public:
+    void *Find(int id);
+
+    char pad_0[0xf8];
+    GD520c70INNER *m_f8;
+};
+
+void *GD520c70::Find(int id)
+{
+    GD520c70INNER *inner = m_f8;
+
+    for (unsigned int i = 0; i < inner->Count(); i++) {
+        if (inner->m_6c[i]->m_30 == id)
+            return inner->m_6c[i]->m_24;
+    }
+    return 0;
+}
+
+// Reproduces FUN_00515f70 (retail address 0x00515f70, 47 bytes): refresh the
+// lens when one of the three flags is set, then answer the +0x394 block.
+class CAMERALENS
+{
+public:
+    void Update(bool);
+};
+
+class GD515f70 : public CAMERALENS
+{
+public:
+    void *Get();
+
+    char pad_0[0x4d];
+    bool m_4d;
+    char pad_4e[0x90 - 0x4e];
+    bool m_90;
+    char pad_91[0x118 - 0x91];
+    bool m_118;
+    char pad_119[0x394 - 0x119];
+    float m_394;
+};
+
+void *GD515f70::Get()
+{
+    if (m_118 || m_4d || m_90)
+        Update(false);
+    return &m_394;
 }

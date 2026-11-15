@@ -175,6 +175,13 @@ void RESOURCEMASTER::RequestCopy()
     }
 }
 
+// Target 0x4b2490 is 0x55 bytes; this source compiles to 0x51. The target
+// keeps m_numCopies - m_numUsed in eax across the m_numUsed test (the sub is
+// scheduled into the branch shadow), which also leaves the free-list slot in
+// eax until the loop, so the trailing null test on `list` survives and the
+// copy into ebx lands after the *list load. Every equivalent branch/loop
+// shape recompiles to the same 0x51-byte form, so the residue is compiler
+// state rather than source shape.
 void RESOURCEMASTER::TrimCopies()
 {
     int unused = m_numCopies - m_numUsed;

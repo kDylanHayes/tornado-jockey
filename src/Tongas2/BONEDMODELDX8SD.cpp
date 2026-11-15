@@ -399,20 +399,20 @@ void BONEDMODELDX8SDRESOURCE::Update()
 
 void BONEDMODELDX8SDRESOURCE::Virtual91(int animation, float frame)
 {
-    BONEDMODELDX8MODEL *model = (BONEDMODELDX8MODEL *)m_model;
-    if (model) {
+    if (m_model) {
         FUN_00513330((void *)animation, 0, 0);
-        float frames = (float)model->GetFrameCount((void *)animation);
-        float rate = model->GetFrameRate((void *)animation);
+        float frames = (float)((BONEDMODELDX8MODEL *)m_model)->GetFrameCount((void *)animation);
+        float rate = ((BONEDMODELDX8MODEL *)m_model)->GetFrameRate((void *)animation);
         float t = frames / rate;
-        model->SetTime(frame / t);
+        ((BONEDMODELDX8MODEL *)m_model)->SetTime(frame / t);
     }
 }
 
 void BONEDMODELDX8SDRESOURCE::Virtual101(int a, int b)
 {
     if (m_model) {
-        void *mat = ((BONEDMODELDX8RENDERER7 *)g_pRenderer)->Virtual07(a, b, GetAlpha());
+        float alpha = GetAlpha();
+        void *mat = ((BONEDMODELDX8RENDERER7 *)g_pRenderer)->Virtual07(a, b, alpha);
         ((BONEDMODELDX8MODEL *)m_model)->Render(mat);
     }
 }
@@ -447,7 +447,7 @@ void BONEDMODELDX8SDRESOURCE::Virtual89()
 
 void BONEDMODELDX8SDRESOURCE::SetBone(int index, const V3 &position, void *placement)
 {
-    unsigned char *data = (unsigned char *)placement;
+    unsigned char *data = (unsigned char *)&position;
     MATRIX *matrix = (MATRIX *)(data + 0xc);
     if (data[0x4c] & 1) {
         matrix->FromEuler(*(float *)(data + 8), *(float *)(data + 4), *(float *)(data + 0));

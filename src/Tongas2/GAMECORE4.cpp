@@ -283,7 +283,10 @@ __declspec(noinline) GD441630::~GD441630() throw()
 {
 }
 
-class GD442440
+// 0x442440: a RESOURCES-derived class that adds no virtuals of its own, so
+// the compiler emits no vtable here and the destructor is a tail jump to the
+// master's destructor.
+class GD442440 : public RESOURCES
 {
 public:
     virtual ~GD442440();
@@ -359,7 +362,8 @@ __declspec(noinline) GD548040::~GD548040()
 {
 }
 
-class GD443f70
+// 0x443f70: same shape as 0x442440 against GD548040.
+class GD443f70 : public GD548040
 {
 public:
     virtual ~GD443f70();
@@ -693,7 +697,17 @@ __declspec(noinline) GD447e50::~GD447e50() throw()
 {
 }
 
-class GD4482b0
+// 0x4482b0: same shape against DX8APP. Only the destructor's identity is
+// needed here, so the plugin app is declared minimally (the full header would
+// collide with this unit's placeholder HARDWARE).
+class DX8APP
+{
+public:
+    virtual ~DX8APP();
+};
+
+// 0x4482b0: same shape against DX8APP.
+class GD4482b0 : public DX8APP
 {
 public:
     virtual ~GD4482b0();
