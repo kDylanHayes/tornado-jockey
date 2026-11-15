@@ -892,9 +892,8 @@ SRESULT CMDBASE::SetIndirect(CMDCALL *call)
         index = 0;
         valueAt = 2;
     }
-    STRING text(call->tokens->GetToken(1));
-    SRESULT name = g_pCmdMgr->Evaluate(text, call->caller);
-    return SRESULT(SetAttributeEval(name.GetString(""), index, call->tokens->GetToken(valueAt), call->caller));
+    return SRESULT(SetAttributeEval(g_pCmdMgr->Evaluate(STRING(call->tokens->GetToken(1)), call->caller).GetString(""),
+                                    index, call->tokens->GetToken(valueAt), call->caller));
 }
 
 int FindCommonClass(int classA, int classB)
