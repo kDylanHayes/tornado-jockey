@@ -7653,8 +7653,8 @@
 
 # Tongas2/ANIMATEDGEOMETRY (0x0052d400-0x00530d0f)
 0x0052d400 ?Load@ANIMATEDGEOMETRY@@QAEHPAXH0@Z function 0x24b2
-0x0052f8c0 ?GetBoneCount@ANIMATEDGEOMETRY@@QAEHXZ function 0x54
-0x0052f920 ?GetFrameCount@ANIMATEDGEOMETRY@@QAEHXZ function 0xd2
+0x0052f8c0 ??0G2TFGET@@QAE@HHHMMD@Z function 0x54
+0x0052f920 ?Update@G2TFGET@@QAEXM@Z function 0xd2
 0x0052fa00 ?M11@TRINNER@@QAEHHHHH@Z function 0x23
 
 # Tongas2/CANIMATEDMESH (0x00530d10-0x00532baf)
@@ -9205,8 +9205,8 @@
 0x00535f20 ?F6@TRX@@QAE?AUV3@@XZ function 0x28
 0x00535f60 ?F7@TRX@@QAE_NXZ function 0xe
 0x00535fb0 ?F10@TRX@@QAEHHABH@Z function 0x1e
-0x00530830 ?M3@TRINNER@@QAEHHHHM@Z function 0xd7
-0x0052fb90 ?M4@TRINNER@@QAEXXZ function 0x17f
+0x00530830 ?M3@TRINNER@@QAEXHHMM@Z function 0xd7
+0x0052fb90 ?M4@TRINNER@@QAEXXZ function 0x182
 0x0052fa30 ?M10@TRINNER@@QAEHHH@Z function 0x1d
 0x0054f070 ?GetParentClassId@TAIL1CID@@UAEHXZ function 0xd
 0x0054f080 ?GetClassName@TAIL1CID@@UAEPBDXZ function 0xe
@@ -9818,7 +9818,7 @@
 0x005300b0 ?Lookup@GD52ff00@@QAEHABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z function 0x19
 0x0052fad0 ?M2@GD52ff00@@QAEHH@Z function 0xba
 0x00530cb0 ?Add@GD530cb0@@QAEXHH@Z function 0x5a
-0x00530120 ?_Xlen@?$deque@PAUG2TFGET@@V?$allocator@PAUG2TFGET@@@std@@@std@@IBEXXZ function 0x69
+0x00530120 ?_Xlen@?$deque@PAUG2TFGET@@V?$allocator@PAUG2TFGET@@@std@@@std@@IBEXXZ function 0x6a
 0x00530200 ?_Growmap@?$deque@PAUG2TFGET@@V?$allocator@PAUG2TFGET@@@std@@@std@@IAEXI@Z function 0x153
 0x00530540 ?push_front@?$deque@PAUG2TFGET@@V?$allocator@PAUG2TFGET@@@std@@@std@@QAEXABQAUG2TFGET@@@Z function 0x7a
 0x00423330 ?Start@G2MID2@@UAEXXZ function 0x45
@@ -9892,3 +9892,28 @@
 0x006adc58 ?s_commands@G2CORE1K3@@2PAUCMDENTRY@@A data
 0x0065662c ??_C@_06EKLBKHKL@GAMETJ?$AA@ data
 0x0065663c ??_C@_0BB@MMJFABAD@KERNELCOMMANDSTJ?$AA@ data
+0x00453e80 ?GD453e80@@YG_JN@Z function 0x17
+0x0044af10 ?GD44af10Throw@@YGXH@Z function 0x17
+0x0044af70 ?Alloc@G2GC4BSTR@@QAEPAV1@I@Z function 0x2d
+0x0044b2a0 ?Alloc@G2GC4POOL@@QAEPAXH@Z function 0x28
+0x0044afa0 ?Destroy@G2GC4LIST@@QAEXXZ function 0x1f
+0x00451e00 ?Set@G2GC4SET16@@QAEXHPBG@Z function 0x1a
+0x004416e0 ?Init@G2CORE4OBJ1@@QAEXXZ function 0x22
+0x00448cb0 ?Update@G2GC4UPD@@QAEXXZ function 0x26
+0x00449010 ?FreeBuffer@G2GC4FREEBUF@@QAEXXZ function 0x2e
+0x00441670 ?FUN_00441670@G2CORE4OBJ1@@QAEXPAD@Z function
+0x0044a4e0 ?FUN_0044a4e0@G2CORE4UPDACTOR@@QAEXH@Z function
+0x00448ce0 ?FUN_00448ce0@@YGXPAX0@Z function
+0x00515db0 ?FUN_00515db0@@YAXPAUV3@@0U1@@Z function 0x83
+0x00517ab0 ??1GD517ab0@@QAE@XZ function 0x56
+0x00517b10 ??1GD517b10@@QAE@XZ function 0x51
+0x00517b70 ?Release@GD517b70@@QAEXXZ function 0x3c
+0x00513790 ?GD513790@@YGXPAUSKMVECSTR@@@Z function 0x41
+0x00510520 ?Count@GD510520@@QAEHXZ function 0x29
+0x0050b2c0 ?_Construct_n@?$vector@HV?$allocator@H@std@@@std@@QAEXIABH@Z function 0x66
+0x0050b230 ?resize@?$vector@HV?$allocator@H@std@@@std@@QAEXIH@Z function 0x83
+0x0050aa10 ?_Trim@?$vector@_NV?$allocator@_N@std@@@std@@IAEXI@Z function 0x7c
+0x0052faa0 ??$copy_backward@PAHPAH@std@@YAPAHPAH00@Z function 0x22
+0x00691ca4 ?DAT_00691ca4@@3HA data 0x4
+0x00656290 __imp__SysAllocStringLen@8 data 0x4
+0x00a1129c ?DAT_00a1129c@@3PAXA data 0x4

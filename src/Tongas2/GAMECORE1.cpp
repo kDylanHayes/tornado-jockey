@@ -453,7 +453,9 @@ void CMDBASE::SetName(const CSTRING &name)
     m_name = name;
 }
 
-static V3 Cross(const V3 &a, const V3 &b)
+// 0x004020b0: external linkage, so it takes its arguments on the stack like
+// the retail copy; the static one took them in registers.
+V3 Cross(const V3 &a, const V3 &b)
 {
     return V3(a.y * b.z - a.z * b.y,
               a.z * b.x - a.x * b.z,
@@ -1087,6 +1089,7 @@ public:
 
     virtual SRESULT SomeCommand(int value);
     void UpdateState();
+    void Clear();
 
     // Resets the level for a fresh load. Slot 0x74.
     virtual void Virtual29();
@@ -1096,6 +1099,9 @@ public:
     void SetupMapPart(int index, void *a, void *b, void *c);
 
     static int s_classId;
+    static CMDENTRY s_commands[];
+
+    static void RegisterCommands();
 };
 
 // The GUI vtable as PrepareMap sees it: the name setter at offset 0x50.
@@ -1312,6 +1318,9 @@ public:
     bool CheckReady();
 
     static int s_classId;
+    static CMDENTRY s_commands[];
+
+    static void RegisterCommands();
 };
 
 int G2CORE1K3::s_classId = -1;
@@ -6543,3 +6552,228 @@ void *Create0040e670()
     return new GD00420e10;
 }
 
+
+// ---------------------------------------------------------------------------
+// Small members reconstructed from the retail image.
+
+// 0x00410260: reads the byte flag at +0xda4, then compares the float at
+// +0xda0 against __real@3f000000.
+class GD410260
+{
+public:
+    bool Ready() const;
+
+    char pad_da0[0xda0];
+    float m_da0;
+    bool m_da4;
+};
+
+bool GD410260::Ready() const
+{
+    return !m_da4 && m_da0 <= 0.5f;
+}
+
+// 0x0040b730: lazily asks the camera option manager for the master named by
+// the string at +0x3370 and caches it at +0x3b78.
+class GD40b730
+{
+public:
+    RESOURCEMASTER *GetMaster();
+
+    char pad_3370[0x3370];
+    char m_3370[0x3b78 - 0x3370];
+    RESOURCEMASTER *m_3b78;
+};
+
+RESOURCEMASTER *GD40b730::GetMaster()
+{
+    if (!m_3b78)
+        m_3b78 = g_pCameraOptionTemplates->GetMaster(m_3370);
+    return m_3b78;
+}
+
+// 0x004031f0 is an unnamed helper in this unit: it takes the sub-object at
+// +0x650 and the new value.
+extern "C" void FUN_004031f0(void *owner, int value);
+
+// 0x00403a20: stores a pair and forwards the first value.
+class GD403a20
+{
+public:
+    void Set(int a, int b);
+
+    char pad_228[0x228];
+    int m_228;
+    int m_22c;
+    char pad_650[0x650 - 0x230];
+    char m_650[1];
+};
+
+void GD403a20::Set(int a, int b)
+{
+    m_228 = a;
+    m_22c = b;
+    FUN_004031f0(m_650, a);
+}
+
+// 0x004032d0: accumulates into +0x24c and forwards the sum.
+class GD4032d0
+{
+public:
+    void Add(int delta);
+
+    char pad_24c[0x24c];
+    int m_24c;
+    char pad_650[0x650 - 0x250];
+    char m_650[1];
+};
+
+void GD4032d0::Add(int delta)
+{
+    m_24c += delta;
+    FUN_004031f0(m_650, m_24c);
+}
+
+// 0x00402ed0: false while either of the two virtual predicates is set.
+class GD402ed0
+{
+public:
+    virtual void v00(); virtual void v01(); virtual void v02(); virtual void v03();
+    virtual void v04(); virtual void v05(); virtual void v06(); virtual void v07();
+    virtual void v08(); virtual void v09(); virtual void v10(); virtual void v11();
+    virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
+    virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+    virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
+    virtual void v24(); virtual void v25();
+    virtual bool At68();
+    virtual void v27(); virtual void v28(); virtual void v29(); virtual void v30();
+    virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
+    virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38();
+    virtual void v39(); virtual void v40(); virtual void v41(); virtual void v42();
+    virtual void v43(); virtual void v44(); virtual void v45(); virtual void v46();
+    virtual void v47(); virtual void v48(); virtual void v49(); virtual void v50();
+    virtual void v51(); virtual void v52(); virtual void v53(); virtual void v54();
+    virtual void v55(); virtual void v56(); virtual void v57(); virtual void v58();
+    virtual void v59(); virtual void v60(); virtual void v61(); virtual void v62();
+    virtual bool Atfc();
+
+    bool Idle();
+};
+
+bool GD402ed0::Idle()
+{
+    return !(Atfc() || At68());
+}
+
+// 0x004020f0: registers the class's commands under its shipped name.
+void G2CORE1K2::RegisterCommands()
+{
+    g_classParents[s_classId] = GAME::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "GAMETJ", "GAME");
+}
+
+// 0x00406420: the same for the kernel command subclass.
+void G2CORE1K3::RegisterCommands()
+{
+    g_classParents[s_classId] = KERNELCOMMANDS::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "KERNELCOMMANDSTJ", "KERNELCOMMANDS");
+}
+
+// 0x00402130: zeroes four state words, then resets the DRM and the class's
+// own virtual at 0x54.
+class GD402130DRM
+{
+public:
+    virtual void v00(); virtual void v01(); virtual void v02(); virtual void v03();
+    virtual void v04(); virtual void v05(); virtual void v06(); virtual void v07();
+    virtual void v08(); virtual void v09(); virtual void v10(); virtual void v11();
+    virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
+    virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+    virtual void v20(); virtual void v21();
+    virtual void Reset();                   // slot 0x58
+};
+
+class GD402130K2
+{
+public:
+    virtual void v00(); virtual void v01(); virtual void v02(); virtual void v03();
+    virtual void v04(); virtual void v05(); virtual void v06(); virtual void v07();
+    virtual void v08(); virtual void v09(); virtual void v10(); virtual void v11();
+    virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
+    virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+    virtual void v20();
+    virtual void Reset(int value);          // slot 0x54
+};
+
+void G2CORE1K2::Clear()
+{
+    *(int *)((char *)this + 0x1e88) = 0;
+    *(int *)((char *)this + 0x248) = 0;
+    *(int *)((char *)this + 0x24c) = 0;
+    *(int *)((char *)this + 0x244) = 0;
+    ((GD402130DRM *)g_pDrm)->Reset();
+    ((GD402130K2 *)this)->Reset(0);
+}
+
+// 0x00401fd0: normalizes a two-component vector in place, leaving a zero
+// vector alone (unlike V3::Normalize).
+class GD401fd0
+{
+public:
+    void Normalize();
+
+    float x;
+    float y;
+};
+
+void GD401fd0::Normalize()
+{
+    float length = (float)sqrt(x * x + y * y);
+    if (length != 0.0f) {
+        x /= length;
+        y /= length;
+    }
+}
+
+// 0x00402460: the wide assignment of the fixed buffer string.
+template FIXEDWSTRING<0x200> &FIXEDWSTRING<0x200>::operator=(const wchar_t *text);
+
+// 0x00410fd0: keeps the larger of the stored and the given value.
+class GD410fd0
+{
+public:
+    void SetMax(float value);
+
+    char pad_d90[0xd90];
+    float m_d90;
+};
+
+void GD410fd0::SetMax(float value)
+{
+    if (m_d90 < value)
+        m_d90 = value;
+}
+
+// 0x0040aad0: pushes a changed mipmap bias to the renderer and caches it.
+class GD40aad0
+{
+public:
+    void SetBias(const float &bias);
+
+    char pad_3970[0x3970];
+    float m_3970;
+};
+
+void GD40aad0::SetBias(const float &bias)
+{
+    if (m_3970 == bias)
+        return;
+    if (!g_pRenderer)
+        return;
+    g_pRenderer->SetMipmapBias(bias);
+    m_3970 = bias;
+}

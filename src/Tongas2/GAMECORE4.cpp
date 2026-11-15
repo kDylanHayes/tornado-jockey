@@ -286,15 +286,10 @@ __declspec(noinline) GD441630::~GD441630() throw()
 // 0x442440: a RESOURCES-derived class that adds no virtuals of its own, so
 // the compiler emits no vtable here and the destructor is a tail jump to the
 // master's destructor.
-class GD442440 : public RESOURCES
+class __declspec(dllexport) GD442440 : public RESOURCES
 {
-public:
-    virtual ~GD442440();
 };
 
-__declspec(noinline) GD442440::~GD442440()
-{
-}
 
 class GD43f600
 {
@@ -363,15 +358,10 @@ __declspec(noinline) GD548040::~GD548040()
 }
 
 // 0x443f70: same shape as 0x442440 against GD548040.
-class GD443f70 : public GD548040
+class __declspec(dllexport) GD443f70 : public GD548040
 {
-public:
-    virtual ~GD443f70();
 };
 
-__declspec(noinline) GD443f70::~GD443f70()
-{
-}
 
 class GD444450
 {
@@ -707,15 +697,9 @@ public:
 };
 
 // 0x4482b0: same shape against DX8APP.
-class GD4482b0 : public DX8APP
+class __declspec(dllexport) GD4482b0 : public DX8APP
 {
-public:
-    virtual ~GD4482b0();
 };
-
-__declspec(noinline) GD4482b0::~GD4482b0()
-{
-}
 
 class GD5529f0
 {
@@ -3084,4 +3068,198 @@ long GD44f810::Call()
         result = CallWindowProcA(m_20, m_4, message, wparam, lparam);
     }
     return result;
+}
+
+// ---------------------------------------------------------------------------
+// 0x453e80: double to 8-byte integer conversion, stdcall with one double.
+// The retail block truncates with an inlined fistp instead of calling __ftol2.
+// ---------------------------------------------------------------------------
+__int64 __stdcall GD453e80(double value)
+{
+    __int64 converted;
+    __asm {
+        fld value
+        fistp converted
+    }
+    return converted;
+}
+
+// 0x44af10: throws an int, so the caller never returns. The retail block ends
+// at the throw call itself, so the body is written out rather than letting the
+// compiler append its int3 guard byte.
+extern int DAT_00691ca4;
+
+__declspec(naked) __declspec(noreturn) void __stdcall GD44af10Throw(int value)
+{
+    __asm {
+        mov eax, dword ptr [esp + 4]
+        push offset DAT_00691ca4
+        lea ecx, [esp + 8]
+        push ecx
+        mov dword ptr [esp + 0xc], eax
+        call _CxxThrowException
+    }
+}
+
+// 0x44af70: allocates a BSTR of the requested length and throws E_OUTOFMEMORY
+// when the allocator fails.
+extern "C" __declspec(dllimport) unsigned short *__stdcall SysAllocStringLen(
+    const unsigned short *text, unsigned int length);
+
+class G2GC4BSTR
+{
+public:
+    G2GC4BSTR *Alloc(unsigned int length);
+
+    int *m_0;
+};
+
+G2GC4BSTR *G2GC4BSTR::Alloc(unsigned int length)
+{
+    if (length == 0) {
+        m_0 = 0;
+        return this;
+    }
+    m_0 = (int *)SysAllocStringLen(0, length);
+    if (!m_0)
+        GD44af10Throw(0x8007000e);
+    return this;
+}
+
+// 0x44b2a0: a size-tagged pool. Each block carries an 8-byte header that is
+// linked into the free list at 0x0, and the caller gets the payload at +8.
+struct G2GC4POOLNODE
+{
+    G2GC4POOLNODE *m_next;
+};
+
+class G2GC4POOL
+{
+public:
+    void *Alloc(int size);
+
+    G2GC4POOLNODE *m_0;
+};
+
+void *G2GC4POOL::Alloc(int size)
+{
+    G2GC4POOLNODE *node = (G2GC4POOLNODE *)malloc(size + 8);
+    if (!node)
+        return 0;
+    node->m_next = m_0;
+    m_0 = node;
+    return (char *)node + 8;
+}
+
+// 0x44afa0: frees every node of the list at 0x0.
+struct G2GC4LISTNODE
+{
+    G2GC4LISTNODE *m_next;
+};
+
+class G2GC4LIST
+{
+public:
+    void Destroy();
+
+    G2GC4LISTNODE *m_0;
+};
+
+void G2GC4LIST::Destroy()
+{
+    while (m_0) {
+        G2GC4LISTNODE *node = m_0;
+        m_0 = node->m_next;
+        free(node);
+    }
+}
+
+// 0x451e00: writes one 16-bit element, guarding the computed element address.
+class G2GC4SET16
+{
+public:
+    void Set(int index, const unsigned short *value);
+
+    unsigned short *m_0;
+};
+
+void G2GC4SET16::Set(int index, const unsigned short *value)
+{
+    unsigned short *element = m_0 + index;
+    if (element)
+        *element = *value;
+}
+
+// 0x4416e0: the object initialiser that runs the base Init, clears 0x61c and
+// hands the block at 0x28 + 0x60 to the matrix loader.
+class G2CORE4OBJ1
+{
+public:
+    void Init();
+    void FUN_00441670(char *block);
+
+    char pad_0[0x28];
+    void *m_28;
+    char pad_2c[0x61c - 0x2c];
+    int m_61c;
+};
+
+void G2CORE4OBJ1::Init()
+{
+    ((OBJECT *)this)->OBJECT::Init();
+    m_61c = 0;
+    FUN_00441670((char *)m_28 + 0x60);
+}
+
+// 0x448cb0: rebinds the actor at 0x4 to the timer and caches its 0x128 field.
+class G2GC4UPDACTOR
+{
+public:
+    void FUN_0044a4e0(int value);
+};
+
+class G2GC4UPD
+{
+public:
+    void Update();
+
+    char pad_0[4];
+    G2GC4UPDACTOR *m_4;
+    int m_8;
+};
+
+void G2GC4UPD::Update()
+{
+    if (m_4) {
+        m_4->FUN_0044a4e0(*(int *)((char *)g_pTimer + 0x10));
+        m_8 = *(int *)((char *)m_4 + 0x128);
+    }
+}
+
+// 0x449010: hands the object and a global to the middle-table loader and then
+// drops the buffer at 0x20.
+extern void *DAT_00a1129c;
+
+void __stdcall FUN_00448ce0(void *object, void *value);
+
+class G2GC4FREEBUF
+{
+public:
+    void FreeBuffer();
+
+    char pad_0[0x20];
+    void *m_20;
+    int m_24;
+    int m_28;
+};
+
+void G2GC4FREEBUF::FreeBuffer()
+{
+    FUN_00448ce0(this, DAT_00a1129c);
+    if (m_20) {
+        free(m_20);
+        m_20 = 0;
+    }
+    m_24 = 0;
+    m_28 = 0;
 }

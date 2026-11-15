@@ -1183,3 +1183,288 @@ void *GD515f70::Get()
         Update(false);
     return &m_394;
 }
+
+// ---------------------------------------------------------------------------
+// The unit's tail region (0x00515d90 onwards).
+// ---------------------------------------------------------------------------
+
+// Reproduces FUN_00515db0 (retail address 0x00515db0, 131 bytes): grow the
+// two corners of a box so that they hold value. The two comparisons per
+// component are the "less than the minimum" and "greater than the maximum"
+// tests, so the value came in by value and the corners by address.
+void FUN_00515db0(V3 *min, V3 *max, V3 value)
+{
+    if (value.x < min->x)
+        min->x = value.x;
+    if (value.x > max->x)
+        max->x = value.x;
+    if (value.y < min->y)
+        min->y = value.y;
+    if (value.y > max->y)
+        max->y = value.y;
+    if (value.z < min->z)
+        min->z = value.z;
+    if (value.z > max->z)
+        max->z = value.z;
+}
+
+// The animation entry the two float getters read: its +0x64 frame count and
+// the +0x68 frame rate that divides it.
+struct GD510720ANIM
+{
+    char pad_0[0x64];
+    int m_64;
+    float m_68;
+};
+
+// The bounds-checked element table at +0x18/+0x1c of the mesh.
+struct GD510720TBL
+{
+    unsigned int Count()
+    {
+        return m_18 ? (unsigned int)(m_1c - m_18) : 0;
+    }
+
+    char pad_0[0x18];
+    void **m_18;
+    void **m_1c;
+};
+
+class GD510720 : public SKINNEDMESH
+{
+public:
+    float Frames(int index);
+    float Frames(const char *name);
+};
+
+// FUN_00510720 (retail address 0x00510720, 66 bytes) is the frames per second
+// of one entry, or zero when the index is out of range; the count is divided
+// as unsigned, which is why the exe converts through the 2^32 constant.
+// Not byte-exact yet: this source gives 61 bytes. The bounds check matches;
+// retail keeps the table base in edx, needs edx for the index and so reloads
+// [ecx+0x18] before the lea, which is 5 bytes longer. First difference at
+// +0x1 (register colour), then the missing "mov eax,[ecx+0x18]; lea
+// eax,[eax+edx*4]" pair at +0x1b (shape).
+float GD510720::Frames(int index)
+{
+    GD510720TBL *tbl = (GD510720TBL *)this;
+
+    if (!tbl->m_18 || (unsigned int)index >= tbl->Count() || index < 0)
+        return 0.0f;
+    GD510720ANIM *anim = (GD510720ANIM *)tbl->m_18[index];
+    return (float)(unsigned int)anim->m_64 / anim->m_68;
+}
+
+// FUN_00510c50 (retail address 0x00510c50, 76 bytes) is the same number for
+// the entry the name resolves to.
+// Not byte-exact yet: this source gives 72 bytes with the same element-load
+// difference as above. Everything before +0x1b matches; the residue is the
+// element load (shape), not colour.
+float GD510720::Frames(const char *name)
+{
+    GD510720TBL *tbl = (GD510720TBL *)this;
+    int index = SKINNEDMESH::GetAnimationIndex(name);
+
+    if (!tbl->m_18 || (unsigned int)index >= tbl->Count() || index < 0)
+        return 0.0f;
+    GD510720ANIM *anim = (GD510720ANIM *)tbl->m_18[index];
+    return (float)(unsigned int)anim->m_64 / anim->m_68;
+}
+
+// FUN_00527dd0 (retail address 0x00527dd0, 108 bytes) is the point of the
+// +0x30 table at an index, offset by the +0x20 origin, or the origin itself
+// when the table is empty or the index is out of range.
+class GD527dd0
+{
+public:
+    void Get(V3 *out, unsigned int index);
+    unsigned int Count()
+    {
+        return m_30 ? (unsigned int)(m_34 - m_30) : 0;
+    }
+
+    char pad_0[0x20];
+    V3 m_20;
+    char pad_2c[4];
+    V3 *m_30;
+    V3 *m_34;
+};
+
+// Not byte-exact yet: the +0x30/+0x34 offsets and the count are right, but
+// retail adds z, y, x (storing x, y, z through the FP stack) and keeps the
+// element pointer in a register we instead reuse for the table base, so it
+// needs no callee-saved register. First difference at +0x0 (register colour
+// and FP evaluation order).
+void GD527dd0::Get(V3 *out, unsigned int index)
+{
+    if (index < Count()) {
+        V3 *value = &m_30[index];
+
+        out->x = m_20.x + value->x;
+        out->y = m_20.y + value->y;
+        out->z = m_20.z + value->z;
+    }
+    else {
+        *out = m_20;
+    }
+}
+
+// Reproduces FUN_00517ab0 (retail address 0x00517ab0, 86 bytes): the two
+// strings of the object go back to their empty state, the +0x88 one first.
+// The retail size in the symbol file is 0x50, which cuts off the last three
+// instructions; the function ends at 0x00517b06.
+class GD517ab0
+{
+public:
+    ~GD517ab0();
+
+    std::string m_0;
+    char pad_1c[0x88 - 0x1c];
+    std::string m_88;
+};
+
+GD517ab0::~GD517ab0()
+{
+}
+
+// The node of the chain the object at +0x14 owns: the object to destroy, the
+// next node, and a third word the release clears.
+struct GD517b10NODE
+{
+    GD517ab0 *m_0;
+    GD517b10NODE *m_4;
+    GD517b10NODE *m_8;
+};
+
+class GD517b10
+{
+public:
+    ~GD517b10();
+
+    GD517b10NODE *m_0;
+};
+
+// Reproduces FUN_00517b10 (retail address 0x00517b10, 81 bytes): walk the
+// chain, destroy and free each node's +0 object, then free the node. The
+// symbol file gives 0x39, which stops in the middle of the loop.
+GD517b10::~GD517b10()
+{
+    GD517b10NODE *node = m_0;
+
+    while (node) {
+        GD517b10NODE *next = node->m_4;
+        GD517ab0 *value = node->m_0;
+
+        node->m_4 = 0;
+        node->m_8 = 0;
+        if (value)
+            delete value;
+        ::operator delete(node);
+        node = next;
+    }
+    m_0 = 0;
+}
+
+// Reproduces FUN_00517b70 (retail address 0x00517b70, 60 bytes): drop the
+// plain buffer at +0xc, then the chain object at +0x14 with its destructor.
+// The symbol file gives 0x28, which stops before the second branch.
+class GD517b70
+{
+public:
+    void Release();
+
+    char pad_0[0xc];
+    void *m_c;
+    char pad_10[4];
+    GD517b10 *m_14;
+};
+
+void GD517b70::Release()
+{
+    if (m_c) {
+        ::operator delete(m_c);
+        m_c = 0;
+    }
+    if (m_14) {
+        delete m_14;
+        m_14 = 0;
+    }
+}
+
+// Reproduces FUN_00513790 (retail address 0x00513790, 65 bytes): release a
+// vector of strings: destroy the elements, free the block, clear the three
+// words. The vector's allocator sits at +0 and the three pointers follow it.
+// The symbol file gives 0x3e, which stops before the final `pop esi`.
+struct SKMVECSTR : std::vector<std::string>
+{
+    void Tidy() { _Tidy(); }
+};
+
+void __stdcall GD513790(SKMVECSTR *value)
+{
+    value->Tidy();
+}
+
+// The object the ready test walks: a vector of rows, each row a vector of
+// entries, each entry a pointer table. The three nested vectors hold 16-byte
+// (vector of entries), 16-byte and 4-byte elements.
+class GD541100
+{
+public:
+    bool Ready();
+};
+
+struct GD517e20ENTRY
+{
+    unsigned int Size()
+    {
+        return (unsigned int)(m_8 - m_4);
+    }
+
+    char pad_0[4];
+    GD541100 **m_4;
+    GD541100 **m_8;
+    GD541100 **m_c;
+};
+
+struct GD517e20ROW
+{
+    unsigned int Size()
+    {
+        return (unsigned int)(m_8 - m_4);
+    }
+
+    char pad_0[4];
+    GD517e20ENTRY *m_4;
+    GD517e20ENTRY *m_8;
+    GD517e20ENTRY *m_c;
+};
+
+struct GD517e20OUTER
+{
+    char pad_0[4];
+    GD517e20ROW *m_4;
+};
+
+// Not byte-exact yet: FUN_00517e20 is 91 bytes; the levels are modelled but
+// the row address and the "count is zero" branch still differ. First
+// difference at +0x5 (row addressing: retail folds the index into the
+// displacement of the load, this source adds the base into a register).
+bool __stdcall GD517e20(GD517e20OUTER *outer, int *index)
+{
+    GD517e20ROW *row = &outer->m_4[*index];
+    GD517e20ENTRY *entry;
+
+    if (!row->m_4)
+        return true;
+    if (row->Size() <= 0)
+        return true;
+    entry = row->m_4;
+    if (!entry->m_4)
+        return true;
+    if (entry->Size() <= 0)
+        return true;
+    if (!entry->m_4[0])
+        return true;
+    return entry->m_4[0]->Ready();
+}

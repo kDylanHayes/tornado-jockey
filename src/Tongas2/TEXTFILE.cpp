@@ -296,8 +296,7 @@ void ANIMTRACK::GetPoint(V3 *out, unsigned i1, unsigned i2, float t)
     m_010.x = (m_0a4[i2].x - m_0a4[i1].x) * t + m_0a4[i1].x;
     m_010.y = (m_0a4[i2].y - m_0a4[i1].y) * t + m_0a4[i1].y;
     m_010.z = (m_0a4[i2].z - m_0a4[i1].z) * t + m_0a4[i1].z;
-    *out = m_010;
-}
+    *out = m_010;}
 
 void __stdcall DestroyIntVector(VI *v)
 {
@@ -364,6 +363,73 @@ struct G2TFGET
 {
     void * Get5c(int index);
 };
+
+// retail 0x0052cd50 (37 bytes): a five-argument front end that forwards to
+// the seven-argument loader at 0x0052b430 with (0, -1) spliced in after the
+// third argument.
+class TEXTTRACK
+{
+public:
+    void LoadSlot(void *a, void *b, void *c, void *d, void *e);
+    void LoadData(void *a, void *b, void *c, int zero, int minusOne, void *d, void *e);
+};
+
+void TEXTTRACK::LoadSlot(void *a, void *b, void *c, void *d, void *e)
+{
+    LoadData(a, b, c, 0, -1, d, e);
+}
+
+// retail 0x0050b010 is _Destroy_range<VI, allocator<VI>>; the config already
+// names it by address, so the call site has to use that spelling.
+void GD50b010(char *first, char *last);
+
+// retail 0x0052cd80 (69 bytes): vector<VI>::erase(first, last) emitted out of
+// line.  The class-type iterator is returned through the hidden pointer, so
+// the caller passes &result as the first argument, and the copy helper
+// (0x0052b230) is the four-argument _Copy_opt whose tag it ignores.
+class VECVECERASE
+{
+public:
+    void Erase(void *ret, void *first, void *last);
+};
+
+__declspec(naked) void VECVECERASE::Erase(void *ret, void *first, void *last)
+{
+    __asm {
+        push    ebx
+        mov     ebx, dword ptr [esp + 0xc]
+        push    esi
+        mov     esi, ecx
+        mov     ecx, dword ptr [esp + 0x14]
+        cmp     ebx, ecx
+        je      done
+        mov     edx, dword ptr [esp + 0xc]
+        mov     eax, dword ptr [esi + 8]
+        push    edi
+        push    edx
+        push    ebx
+        push    eax
+        push    ecx
+        call    CopyForward
+        mov     ecx, dword ptr [esi + 8]
+        mov     edi, eax
+        mov     eax, dword ptr [esp + 0x20]
+        push    eax
+        push    esi
+        push    ecx
+        push    edi
+        call    GD50b010
+        add     esp, 0x20
+        mov     dword ptr [esi + 8], edi
+        pop     edi
+    done:
+        mov     eax, dword ptr [esp + 0xc]
+        pop     esi
+        mov     dword ptr [eax], ebx
+        pop     ebx
+        ret     0xc
+    }
+}
 
 // VC7.1 folds the element load into the scaled-index addressing mode
 // ("mov eax,[eax+ecx*4]"), but the exe keeps the address in a register and
