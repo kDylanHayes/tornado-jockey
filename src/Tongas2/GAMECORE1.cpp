@@ -226,8 +226,8 @@ V2 V2::Rotate(float angle) const
         a -= 6.28318531f;
     while (a < -3.14159265f)
         a += 6.28318531f;
-    c = (float)cos(a);
     s = (float)sin(a);
+    c = (float)cos(a);
     return V2(s * length, c * length);
 }
 
@@ -438,12 +438,11 @@ template FIXEDWSTRING<0x200>::FIXEDWSTRING();
 template <int N>
 FIXEDWSTRING<N> &FIXEDWSTRING<N>::operator=(const char *text)
 {
-    if (text) {
-        wcsncpy(m_buf, (const wchar_t *)text, N - 1);
-        m_buf[N - 1] = 0;
+    if (!text) {
+        m_buf[0] = 0;
         return *this;
     }
-    m_buf[0] = 0;
+    wcsncpy(m_buf, (const wchar_t *)text, N - 1);
     m_buf[N - 1] = 0;
     return *this;
 }
@@ -6198,4 +6197,23 @@ void GD4112f0::Set(int index)
     words[0] = -1;
     words[1] = -1;
     words[2] = 0;
+}
+
+// 0x0040b570: calls two helpers and clears the word at +0x3b88.
+class GD40b570
+{
+public:
+    void Update();
+    void First();
+    void Second();
+
+    char pad_3b88[0x3b88];
+    int m_3b88;
+};
+
+void GD40b570::Update()
+{
+    ((ACTOR *)this)->ACTOR::Stop();
+    ((G2CORE1M11 *)this)->Method1();
+    m_3b88 = 0;
 }
