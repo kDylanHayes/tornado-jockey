@@ -7494,7 +7494,7 @@
 0x00a0faf0 ?_SphereCollider@dxTriMesh@@2VSphereCollider@Opcode@@A data
 0x00a0fb38 ?_LSSCollider@dxTriMesh@@2VLSSCollider@Opcode@@A data
 0x00a0fb88 ?Faces@dxTriMesh@@2VCollisionFaces@Opcode@@A data
-0x00a0fb98 ?_AABBTreeCollider@dxTriMesh@@2VAABBTreeCollider@Opcode@@A data
+0x00a0fb98 ?_AABBTreeCollider@dxTriMesh@@2VAABBTreeCollider@Opcode@@A data 0x114
 0x00a0fcb0 ?defaultBoxCache@dxTriMesh@@2UOBBCache@Opcode@@A data
 0x00a0fd08 ?_OBBCollider@dxTriMesh@@2VOBBCollider@Opcode@@A data
 0x00a0fe70 ?defaultSphereCache@dxTriMesh@@2USphereCache@Opcode@@A data
@@ -7531,7 +7531,7 @@
 0x00a104e0 _iBestAxis data
 0x00a104e4 _ctContacts data
 0x00a104e8 _vN data
-0x00a104f8 ?ColCache@?1??dCollideTTL@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z@4UBVTCache@Opcode@@A data
+0x00a104f8 ?ColCache@?1??dCollideTTL@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z@4UBVTCache@Opcode@@A data 0x10
 0x00a10508 ?$S1@?1??dCollideTTL@@YAHPAUdxGeom@@0HPAUdContactGeom@@H@Z@4IA data
 0x00a1050c _ContactGeoms data
 0x00a10510 _vHullBoxPos data 0x10
