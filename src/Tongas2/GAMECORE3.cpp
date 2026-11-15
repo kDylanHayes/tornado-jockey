@@ -625,6 +625,9 @@ public:
     float m_ed8;
 
     static int s_classId;
+
+    static CMDENTRY s_commands[];
+    static void RegisterCommands();
 };
 
 __declspec(noinline) GD42ddd0::~GD42ddd0()
@@ -659,6 +662,9 @@ public:
     virtual const char *GetClassName();
 
     static int s_classId;
+
+    static CMDENTRY s_commands[];
+    static void RegisterCommands();
 };
 
 __declspec(noinline) GD42e6e0::~GD42e6e0() throw()
@@ -678,6 +684,9 @@ public:
     static int s_factoryId;
 
     static int s_classId;
+
+    static CMDENTRY s_commands[];
+    static void RegisterCommands();
 };
 
 __declspec(noinline) GD42f370::~GD42f370()
@@ -704,6 +713,9 @@ public:
     static int s_factoryId;
 
     static int s_classId;
+
+    static CMDENTRY s_commands[];
+    static void RegisterCommands();
 };
 
 // The level-rules actor's vtable extends ACTOR's by a few slots; retail
@@ -771,6 +783,9 @@ public:
 
     static int s_classId;
 
+    static CMDENTRY s_commands[];
+    static void RegisterCommands();
+
     char pad_10d8[0x10d8 - sizeof(ACTOR)];
     CSTRING m_10d8;
 };
@@ -790,6 +805,9 @@ public:
     virtual int GetFactoryFlags();
 
     static int s_classId;
+
+    static CMDENTRY s_commands[];
+    static void RegisterCommands();
 };
 
 __declspec(noinline) GD43b550::~GD43b550() throw()
@@ -824,6 +842,9 @@ public:
 
     static int s_classId;
 
+    static CMDENTRY s_commands[];
+    static void RegisterCommands();
+
     char pad_13a4[0x18dc - 0x13a4];
     std::map<int, V2> m_18dc;
     std::deque<unsigned short> m_18e8;
@@ -847,6 +868,9 @@ public:
     static int s_factoryId;
 
     static int s_classId;
+
+    static CMDENTRY s_commands[];
+    static void RegisterCommands();
 };
 
 GD43b850::GD43b850()
@@ -871,6 +895,9 @@ public:
     static int s_factoryId;
 
     static int s_classId;
+
+    static CMDENTRY s_commands[];
+    static void RegisterCommands();
 
     char pad_ee4[0xee4 - sizeof(ACTOR)];
     char *m_ee4;
@@ -903,6 +930,9 @@ public:
     virtual const char *GetClassName();
 
     static int s_classId;
+
+    static CMDENTRY s_commands[];
+    static void RegisterCommands();
 };
 
 __declspec(noinline) GD43cc30::~GD43cc30() throw()
@@ -938,6 +968,9 @@ public:
     virtual const char *GetClassName();
 
     static int s_classId;
+
+    static CMDENTRY s_commands[];
+    static void RegisterCommands();
 };
 
 __declspec(noinline) GD43ea30::~GD43ea30()
@@ -1013,6 +1046,9 @@ public:
     virtual const char *GetClassName();
 
     static int s_classId;
+
+    static CMDENTRY s_commands[];
+    static void RegisterCommands();
 };
 
 __declspec(noinline) GD43f2f0::~GD43f2f0()
@@ -1085,6 +1121,9 @@ public:
     virtual const char *GetClassName();
 
     static int s_classId;
+
+    static CMDENTRY s_commands[];
+    static void RegisterCommands();
 };
 
 __declspec(noinline) GD43fa60::~GD43fa60() throw()
@@ -2283,6 +2322,9 @@ public:
     virtual const char *GetClassName();
 
     static int s_classId;
+
+    static CMDENTRY s_commands[];
+    static void RegisterCommands();
 };
 
 // The non-polymorphic holder the 0x43f600 destructor belongs to.
@@ -2307,6 +2349,9 @@ public:
     virtual const char *GetClassName();
 
     static int s_classId;
+
+    static CMDENTRY s_commands[];
+    static void RegisterCommands();
 };
 
 int GD42ddd0::GetParentClassId()
@@ -2690,6 +2735,9 @@ public:
     virtual const char *GetClassName();
 
     static int s_classId;
+
+    static CMDENTRY s_commands[];
+    static void RegisterCommands();
 };
 
 int G2CORE3CID1::GetClassId()
@@ -2715,6 +2763,9 @@ public:
     virtual const char *GetClassName();
 
     static int s_classId;
+
+    static CMDENTRY s_commands[];
+    static void RegisterCommands();
 };
 
 int G2CORE3CID2::GetClassId()
@@ -3084,4 +3135,165 @@ public:
 V3 GD42f300::Get()
 {
     return m_d70;
+}
+
+// The command registration bodies. The class ids, command tables and name
+// strings live in .data/.rdata; the shape is ACTOR.cpp's.
+class G2DESTRUCTIBLE
+{
+public:
+    static int s_classId;
+};
+
+// 0x42dd90
+void GD42ddd0::RegisterCommands()
+{
+    g_classParents[s_classId] = ACTOR::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "MINITORNADO", "ACTOR");
+}
+
+// 0x42e6a0
+void GD42e6e0::RegisterCommands()
+{
+    g_classParents[s_classId] = ACTOR::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "POWERUP", "ACTOR");
+}
+
+// 0x42f330
+void GD42f370::RegisterCommands()
+{
+    g_classParents[s_classId] = ACTOR::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "SIDEKICK", "ACTOR");
+}
+
+// 0x432710
+void GD432870::RegisterCommands()
+{
+    g_classParents[s_classId] = ACTOR::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "SUPERCELL", "ACTOR");
+}
+
+// 0x432c00
+void GD4331a0::RegisterCommands()
+{
+    g_classParents[s_classId] = ACTOR::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "ANTITORNADOAMMO", "ACTOR");
+}
+
+// 0x434040
+void GD438ff0::RegisterCommands()
+{
+    g_classParents[s_classId] = G2DESTRUCTIBLE::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "STORMCHASER", "DESTRUCTIBLE");
+}
+
+// 0x43b510
+void GD43b550::RegisterCommands()
+{
+    g_classParents[s_classId] = ACTOR::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "STORMCHASERSPAWNER", "ACTOR");
+}
+
+// 0x43b790
+void GD43b850::RegisterCommands()
+{
+    g_classParents[s_classId] = G2DESTRUCTIBLE::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "TURTLE", "DESTRUCTIBLE");
+}
+
+// 0x43bb00
+void GD43bb40::RegisterCommands()
+{
+    g_classParents[s_classId] = ACTOR::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "CROPCIRCLE", "ACTOR");
+}
+
+// 0x43c970
+void GD43cc30::RegisterCommands()
+{
+    g_classParents[s_classId] = RESOURCEMASTER::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "ANTITORNADOAMMOMASTER", "RESOURCEMASTER");
+}
+
+// 0x43ce80
+void G2CORE3CID1::RegisterCommands()
+{
+    g_classParents[s_classId] = RESOURCEMASTER::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "CAMERAOPTIONMASTER", "RESOURCEMASTER");
+}
+
+// 0x43cfd0
+void G2CORE3CID2::RegisterCommands()
+{
+    g_classParents[s_classId] = RESOURCEMASTER::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "CURSORMASTER", "RESOURCEMASTER");
+}
+
+// 0x43d400
+void GD43ea30::RegisterCommands()
+{
+    g_classParents[s_classId] = RESOURCEMASTER::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "DESTRUCTIBLEMASTER", "RESOURCEMASTER");
+}
+
+// 0x43ee50
+void GD43f2f0::RegisterCommands()
+{
+    g_classParents[s_classId] = RESOURCEMASTER::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "FORESTMASTER", "RESOURCEMASTER");
+}
+
+// 0x43f4e0
+void GD43f600::RegisterCommands()
+{
+    g_classParents[s_classId] = RESOURCEMASTER::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "LOADINGTIPSMASTER", "RESOURCEMASTER");
+}
+
+// 0x43f740
+void GD43f601::RegisterCommands()
+{
+    g_classParents[s_classId] = RESOURCEMASTER::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "MINITORNADOMASTER", "RESOURCEMASTER");
+}
+
+// 0x43ff60
+void GD43fa60::RegisterCommands()
+{
+    g_classParents[s_classId] = RESOURCEMASTER::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "PROGRESSBARMASTER", "RESOURCEMASTER");
 }
