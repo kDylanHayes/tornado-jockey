@@ -661,6 +661,16 @@ public:
     virtual int GetParentClassId();
     virtual const char *GetClassName();
 
+    void Activate();
+    void Deactivate();
+
+    char pad_cd0[0xcd0 - sizeof(ACTOR)];
+    int m_cd0;
+    char pad_cd4[0xcdc - 0xcd4];
+    RESHANDLE m_cdc;
+    char pad_ce8[0xcf8 - 0xce8];
+    int m_cf8;
+
     static int s_classId;
 
     static CMDENTRY s_commands[];
@@ -3144,6 +3154,24 @@ class G2DESTRUCTIBLE
 public:
     static int s_classId;
 };
+
+// 0x42e770
+void GD42e6e0::Activate()
+{
+    g_pGame->GetRules();
+    m_cd0 = m_cf8;
+    ACTOR::Start();
+}
+
+// 0x42e8c0
+void GD42e6e0::Deactivate()
+{
+    WTACTOR *actor = g_pScene->GetActor(m_cdc);
+    if (actor) {
+        *((char *)actor + 0xcbc) = 1;
+    }
+    ACTOR::Stop();
+}
 
 // 0x42dd90
 void GD42ddd0::RegisterCommands()
