@@ -165,6 +165,7 @@ public:
     static int s_factoryId;
     virtual void Virtual140();
     virtual void Update();
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
 
     V3 m_ccc;
     G2V2F m_cd8;
@@ -201,6 +202,11 @@ void G2ACTOR::Update()
 {
     Virtual140();
     ACTOR::Update();
+}
+
+SRESULT G2ACTOR::Execute(CMDENTRY *command, TOKENS **args)
+{
+    return (this->*(SRESULT (G2ACTOR::*)(TOKENS **))command->func)(args);
 }
 struct G2V2
 {
@@ -322,6 +328,7 @@ public:
     virtual ~G2D1();
     virtual int GetFactoryId();
     virtual int GetFactoryFlags();
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
 
     static int s_factoryId;
 
@@ -334,6 +341,11 @@ public:
 
 G2D1::~G2D1()
 {
+}
+
+SRESULT G2D1::Execute(CMDENTRY *command, TOKENS **args)
+{
+    return (this->*(SRESULT (G2D1::*)(TOKENS **))command->func)(args);
 }
 
 void G2D1::ClearParticle()
@@ -377,6 +389,7 @@ public:
     virtual ~G2EFFECT();
     virtual int GetFactoryId();
     virtual int GetFactoryFlags();
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
 
     virtual void SetD3C(V3 position);
     virtual void SetD48(V3 position, V3 other, bool flag);
@@ -413,6 +426,11 @@ G2EFFECT::~G2EFFECT()
     if (resource)
         resource->Virtual20();
     m_d8c.Invalidate();
+}
+
+SRESULT G2EFFECT::Execute(CMDENTRY *command, TOKENS **args)
+{
+    return (this->*(SRESULT (G2EFFECT::*)(TOKENS **))command->func)(args);
 }
 
 struct ZEROV2 : V2
@@ -484,6 +502,7 @@ public:
 
     virtual void Start();
     virtual void Stop();
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
 
     int m_ccc;
     bool m_cd0;
@@ -592,6 +611,11 @@ G2D5::G2D5()
 
 G2D5::~G2D5()
 {
+}
+
+SRESULT G2D5::Execute(CMDENTRY *command, TOKENS **args)
+{
+    return (this->*(SRESULT (G2D5::*)(TOKENS **))command->func)(args);
 }
 
 void G2D5::SetTargetPoint(V3 value)
@@ -729,10 +753,19 @@ public:
 
 extern G2MIDLIST *g_pMIDList;
 
+// The helper object an actor's copies carry; only the method this unit calls
+// is declared here.
+class GD549b40
+{
+public:
+    void ShowHelpers(int value);
+};
+
 class G2MID2 : public ACTOR
 {
 public:
     virtual void Stop();
+    virtual void Start();
     void Helper();
     void FindResource();
     void SetResourcesActive(bool active);
@@ -756,6 +789,19 @@ __declspec(noinline) void G2MID2::Stop()
     ACTOR::Stop();
 }
 
+void G2MID2::Start()
+{
+    ACTOR::Start();
+    *(int *)((char *)this + 0xce4) = 0;
+    *(bool *)((char *)this + 0x1370) = true;
+    int managerId = g_pActorResourceManager2->m_id;
+    RESOURCE *resource = FindResourceCopy(managerId);
+    if (resource)
+        ((GD549b40 *)resource)->ShowHelpers(1);
+    m_1371 = true;
+    FindResource();
+}
+
 struct G2INT3
 {
     int x, y, z;
@@ -772,6 +818,7 @@ public:
     virtual ~G2RULESOBJBASE();
     virtual int GetFactoryId();
     virtual int GetFactoryFlags();
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
 
     static int s_factoryId;
 
@@ -809,6 +856,11 @@ __declspec(noinline) G2RULESOBJBASE::~G2RULESOBJBASE()
 {
     if (g_pGame)
         g_pGame->ResetRules();
+}
+
+SRESULT G2RULESOBJBASE::Execute(CMDENTRY *command, TOKENS **args)
+{
+    return (this->*(SRESULT (G2RULESOBJBASE::*)(TOKENS **))command->func)(args);
 }
 
 class G2GAMEVT
@@ -897,6 +949,7 @@ public:
     virtual ~G2CHAIN();
     virtual int GetFactoryId();
     virtual int GetFactoryFlags();
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
 
     static int s_factoryId;
 
@@ -1025,6 +1078,11 @@ G2CHAIN::G2CHAIN()
 
 G2CHAIN::~G2CHAIN()
 {
+}
+
+SRESULT G2CHAIN::Execute(CMDENTRY *command, TOKENS **args)
+{
+    return (this->*(SRESULT (G2CHAIN::*)(TOKENS **))command->func)(args);
 }
 
 __declspec(noinline) void G2CHAIN::A()
@@ -1285,6 +1343,7 @@ public:
     virtual ~G2RULESOBJ();
     virtual int GetFactoryId();
     virtual int GetFactoryFlags();
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
     virtual void Update();
     virtual void Start();
     virtual void HandleTornado(CMDCALL *call);
@@ -1309,6 +1368,11 @@ G2RULESOBJ::G2RULESOBJ()
 
 G2RULESOBJ::~G2RULESOBJ()
 {
+}
+
+SRESULT G2RULESOBJ::Execute(CMDENTRY *command, TOKENS **args)
+{
+    return (this->*(SRESULT (G2RULESOBJ::*)(TOKENS **))command->func)(args);
 }
 
 void G2RULESOBJ::HandleTornado(CMDCALL *call)

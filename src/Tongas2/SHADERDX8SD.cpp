@@ -3,9 +3,13 @@
 // Matched so far (retail addresses): the manager's CreateMaster 0x53b390, the
 // master's shader factory 0x53b330, the APP-record factory 0x53b520, the
 // 0x78-byte shader record's constructor 0x53bae0, the four-vector block's
-// destructor 0x53b6d0 and the parameter lists' destructor 0x53d220.
+// destructor 0x53b6d0 and copy constructor 0x53bb50, the parameter lists'
+// destructor 0x53d220, the copy release 0x53aa20, the master's binding pass
+// 0x53b2e0, the indexed-primitive draw 0x53d190 and the render-state setup
+// 0x53cae0.
 #include "Tongas2/SHADERDX8SD.h"
 
+#include "d3d8.h"
 #include "Tongas2/MATHS.h"
 #include "Tongas2/SAFEINDEX.h"
 #include <vector>
@@ -76,10 +80,14 @@ template void std::uninitialized_fill_n(
 
 // The manager base, defined in another unit; only its virtual order and the
 // fields the factory touches matter here.
+class RESOURCE;
 class RESOURCEMASTER
 {
 public:
     virtual ~RESOURCEMASTER();
+
+    // Defined in the resource core: gives a copy of this master back.
+    void ReleaseCopy(RESOURCE *copy);
 };
 
 class FILELOADER;
@@ -159,8 +167,17 @@ public:
     SHADERMASTER(RESOURCEMANAGER *manager, const char *name);
     virtual ~SHADERMASTER();
 
-    // The retail SHADERMASTER (SHADER.h) ends at 0x150.
-    char m_pad[0x150 - 4];
+    // The binding passes live in the texture unit (0x0053a560, 0x0053a690 and
+    // 0x0053a6d0); the SD shader master shares their fields.
+    void ResetConstants();
+    void ReleaseBindings();
+    void BuildBindings();
+
+    // The retail SHADERMASTER (SHADER.h) ends at 0x150; the SD master keeps
+    // the number of texture bindings at 0x74.
+    char m_pad[0x74 - 4];
+    int m_count;
+    char m_more[0x150 - 0x78];
 };
 
 class GD53aa10 : public RESOURCE
@@ -199,12 +216,38 @@ public:
     virtual ~GD53b2d0() throw();
 
     SHADER *Create(const RESHANDLE &handle);
+    void Prepare();
 
     bool m_150;
     char m_151[3];
     GD53b2d0REC m_154[2];
     char m_16c[0x1b0 - 0x16c];
 };
+
+// The texture manager the binding pass asks for its textures (its slot is
+// named g_pMusicX in the symbol file).
+class TEXTUREDX8SDMASTER;
+class GD53b2e0MANAGER
+{
+public:
+    TEXTUREDX8SDMASTER *GetTextureResource(const RESHANDLE *handle);
+};
+
+extern void *g_pMusicX;
+
+// 0x0053b2e0: the first copy builds the master's texture bindings: the
+// binding pass, one texture reference per 12-byte handle at 0x154, then the
+// constant block; the flag keeps it to once.
+void GD53b2d0::Prepare()
+{
+    if (m_150)
+        return;
+    BuildBindings();
+    for (int i = 0; i < m_count; i++)
+        ((GD53b2e0MANAGER *)g_pMusicX)->GetTextureResource((const RESHANDLE *)&m_154[i]);
+    ResetConstants();
+    m_150 = true;
+}
 
 __declspec(noinline) GD53b2d0::~GD53b2d0() throw()
 {
@@ -722,7 +765,7 @@ bool GD53b5e0::operator==(const GD53b5e0 &other) const
     if (other.size() != size())
         return false;
 
-    for (int i = 0; i < size(); i++) {
+    for (unsigned int i = 0; i < (unsigned int)size(); i++) {
         int diff = memcmp(m_4 + i * 0x40, other.m_4 + i * 0x40, 0x40);
         if (diff != 0)
             return false;
@@ -749,13 +792,175 @@ public:
 GD53bb50::GD53bb50(const GD53bb50 &other)
 {
     for (unsigned int i = 0; i < other.m_0.size(); i++) {
-        m_0.push_back(other.m_0[i]);
+        int value = other.m_0[i];
+        m_0.push_back(value);
         m_10.push_back(other.m_10[i]);
         m_20.push_back(other.m_20[i]);
-        m_30.push_back(other.m_30[i]);
+        float scalar = other.m_30[i];
+        m_30.push_back(scalar);
     }
 }
 
 GD53bb50::~GD53bb50()
 {
 }
+
+
+// ---------------------------------------------------------------------------
+// 0x0053aa20: the copy's release, the RESOURCE half of the engine's
+// Virtual20: stop the copy while it is in use, give it back to its master and
+// mark it uninitialized. The vtable slots are the engine's; only Stop (0x5c)
+// is called here.
+class GD53aa20BASE
+{
+public:
+    virtual void V00();
+    virtual void V01();
+    virtual void V02();
+    virtual void V03();
+    virtual void V04();
+    virtual void V05();
+    virtual void V06();
+    virtual void V07();
+    virtual void V08();
+    virtual void V09();
+    virtual void V10();
+    virtual void V11();
+    virtual void V12();
+    virtual void V13();
+    virtual void V14();
+    virtual void V15();
+    virtual void V16();
+    virtual void V17();
+    virtual void V18();
+    virtual void V19();
+    virtual void V20();
+    virtual void V21();
+    virtual void V22();
+    virtual void Stop();
+
+    void Release();
+
+    // The RESOURCE fields the release touches.
+    char m_pad[0x18];
+    bool m_active;
+    void *m_next;
+    void *m_prev;
+    RESOURCEMASTER *m_master;
+    bool m_initialized;
+};
+
+void GD53aa20BASE::Release()
+{
+    if (m_initialized) {
+        if (m_active) {
+            Stop();
+            m_active = false;
+        }
+        m_master->ReleaseCopy((RESOURCE *)this);
+        m_initialized = false;
+    }
+}
+
+
+// ---------------------------------------------------------------------------
+// 0x0053d190: draws the shader's batch: the material of the object at +0x10
+// when it is switched on, then the indexed primitive, counting its triangles.
+extern int g_numTriangles;
+
+class GD53d190MATERIAL
+{
+public:
+    char m_0[0x101];
+    bool m_101;
+};
+
+class GD53d190
+{
+public:
+    void Draw(IDirect3DDevice8 *device);
+
+    int m_0;
+    int m_4;
+    int m_8;
+    int m_c;
+    GD53d190MATERIAL *m_10;
+    int m_14;
+    int m_18;
+    int m_1c;
+    int m_20;
+    int m_24;
+};
+
+void GD53d190::Draw(IDirect3DDevice8 *device)
+{
+    if (m_10 && m_10->m_101)
+        device->SetMaterial((const D3DMATERIAL8 *)(m_10->m_0 + 4));
+    device->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, m_20, m_24 - m_20 + 1, m_4, m_14);
+    g_numTriangles += m_14;
+}
+
+
+// ---------------------------------------------------------------------------
+// 0x0053cae0: the render states a shader's copy sets before drawing: the
+// texture transform flag of its texture stage, then the Z and blend states
+// for the material it uses.
+class SETTINGSTABLE
+{
+public:
+    int GetInt(int index);
+};
+
+class GD53cae0MATERIAL
+{
+public:
+    bool m_85(int flag);
+
+    char m_0[0x100];
+    bool m_100;
+    bool m_101;
+    char m_102[3];
+    bool m_105;
+    bool m_106;
+    char m_107[4];
+    bool m_10b;
+};
+
+class GD53cae0
+{
+public:
+    void Apply(IDirect3DDevice8 *device);
+
+    int m_0;
+    int m_4;
+    int m_8;
+    SETTINGSTABLE *m_c;
+    GD53cae0MATERIAL *m_10;
+};
+
+void GD53cae0::Apply(IDirect3DDevice8 *device)
+{
+    if (!m_10 || !m_10->m_101)
+        return;
+
+    if (m_10->m_85(0)) {
+        int count = m_c->GetInt(0xe);
+        int stage = 0;
+        if (count > 0 && m_10->m_10b)
+            stage = 1;
+        device->SetTextureStageState(stage, D3DTSS_TEXTURETRANSFORMFLAGS, 0);
+    }
+
+    if (m_10->m_106) {
+        device->SetRenderState(D3DRS_ZWRITEENABLE, 1);
+        device->SetRenderState(D3DRS_ALPHABLENDENABLE, 0);
+        device->SetRenderState(D3DRS_DESTBLEND, 1);
+    } else if (m_10->m_105) {
+        if (!m_10->m_100)
+            device->SetRenderState(D3DRS_ZWRITEENABLE, 1);
+        device->SetRenderState(D3DRS_ALPHABLENDENABLE, 0);
+        device->SetRenderState(D3DRS_SRCBLEND, 2);
+        device->SetRenderState(D3DRS_DESTBLEND, 1);
+    }
+}
+

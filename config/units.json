@@ -3475,7 +3475,8 @@
         "LAB_005f4837": "__ehhandler$?Destroy@PARTICLE@@QAEXXZ",
         "FUN_005445c0": "?Destroy@REFOBJ@@QAEXXZ",
         "FUN_00527550": "?FileExists@@YA_NPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAD@Z",
-        "s_TEXTFILE_-_file_does_not_exist:_%_006793a4": "_s_TEXTFILE_file"
+        "s_TEXTFILE_-_file_does_not_exist:_%_006793a4": "_s_TEXTFILE_file",
+        "FUN_0052a2c0": "?Copy@TRACK@@QAEXPAHH@Z"
       }
     },
     {
@@ -3601,7 +3602,18 @@
       "symbol_mappings": {
         "??_7SHADER@@6B@": "??_7GD53aa10@@6B@",
         "_m_40": "?m_40@M40TARGET@@QAEXPAX@Z",
-        "_m_58": "?m_58@M58TARGET@@QAEPAXPAX@Z"
+        "_m_58": "?m_58@M58TARGET@@QAEPAXPAX@Z",
+        "FUN_0053aa20": "?Release@GD53aa20BASE@@QAEXXZ",
+        "FUN_0053d190": "?Draw@GD53d190@@QAEXPAUIDirect3DDevice8@@@Z",
+        "FUN_0053bb50": "??0GD53bb50@@QAE@ABV0@@Z",
+        "FUN_0053b2e0": "?Prepare@GD53b2d0@@QAEXXZ",
+        "FUN_0053cae0": "?Apply@GD53cae0@@QAEXPAUIDirect3DDevice8@@@Z",
+        "FUN_0053b5e0": "??8GD53b5e0@@QBE_NABV0@@Z",
+        "_m_85": "?m_85@GD53cae0MATERIAL@@QAE_NH@Z",
+        "FUN_0053a6d0": "?BuildBindings@SHADERMASTER@@QAEXXZ",
+        "FUN_0053a560": "?ResetConstants@SHADERMASTER@@QAEXXZ",
+        "?GetTextureResource@@YGPAVTEXTUREDX8SDMASTER@@PBURESHANDLE@@@Z": "?GetTextureResource@GD53b2e0MANAGER@@QAEPAVTEXTUREDX8SDMASTER@@PBURESHANDLE@@@Z",
+        "LAB_005f75c9": "__ehhandler$??0GD53bb50@@QAE@ABV0@@Z"
       }
     },
     {
@@ -3614,7 +3626,8 @@
       "category": "engine",
       "symbol_mappings": {
         "_m_40": "?m_40@M40TARGET@@QAEXPAX@Z",
-        "_m_58": "?m_58@M58TARGET@@QAEPAXPAX@Z"
+        "_m_58": "?m_58@M58TARGET@@QAEPAXPAX@Z",
+        "FUN_00504f10": "?Get@GD504f10@@QAEHH@Z"
       }
     },
     {
