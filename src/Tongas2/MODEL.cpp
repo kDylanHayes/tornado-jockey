@@ -153,7 +153,7 @@ extern "C" void m_96();
 extern "C" void m_97();
 extern "C" void m_98();
 extern "C" void m_99();
-extern "C" void memmove();
+extern "C" void *memmove(void *dest, const void *src, unsigned int count);
 extern "C" int s_Error_material_could_not_merge_a_00677898;
 extern "C" void xr_1();
 extern "C" void xr_10();
@@ -282,56 +282,6 @@ extern "C" void m_97();
 extern "C" void m_98();
 extern "C" void m_99();
 
-extern "C" __declspec(naked) void m_0() {
-    __asm {
-        __emit 0x8b
-        __emit 0x54
-        __emit 0x24
-        __emit 0x08
-        __emit 0x8b
-        __emit 0xc2
-        __emit 0x56
-        __emit 0x8d
-        __emit 0x70
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x9b
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8a
-        __emit 0x08
-        __emit 0x40
-        __emit 0x84
-        __emit 0xc9
-        __emit 0x75
-        __emit 0xf9
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x2b
-        __emit 0xc6
-        __emit 0x50
-        __emit 0x8b
-        __emit 0x41
-        __emit 0x14
-        __emit 0x52
-        __emit 0x50
-        __emit 0x6a
-        __emit 0x00
-        call xr_1
-        __emit 0xf7
-        __emit 0xd8
-        __emit 0x1b
-        __emit 0xc0
-        __emit 0xf7
-        __emit 0xd8
-        __emit 0x5e
-        __emit 0xc3
-    }
-}
 extern "C" __declspec(naked) void m_1() {
     __asm {
         __emit 0x8b
@@ -1729,48 +1679,6 @@ extern "C" __declspec(naked) void m_11() {
         __emit 0xc3
     }
 }
-extern "C" __declspec(naked) void m_12() {
-    __asm {
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x8b
-        __emit 0x46
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x09
-        __emit 0x50
-        call xr_2
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x08
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x0c
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0xc3
-    }
-}
 extern "C" __declspec(naked) void m_13() {
     __asm {
         __emit 0x8b
@@ -1852,77 +1760,6 @@ extern "C" __declspec(naked) void m_13() {
         __emit 0x00
         __emit 0x00
         __emit 0xc3
-    }
-}
-extern "C" __declspec(naked) void m_14() {
-    __asm {
-        __emit 0x56
-        __emit 0x8b
-        __emit 0x71
-        __emit 0x54
-        __emit 0x57
-        __emit 0x8b
-        __emit 0x7c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x33
-        __emit 0xd2
-        __emit 0xeb
-        __emit 0x03
-        __emit 0x8d
-        __emit 0x49
-        __emit 0x00
-        __emit 0x85
-        __emit 0xf6
-        __emit 0x74
-        __emit 0x28
-        __emit 0x8b
-        __emit 0x41
-        __emit 0x58
-        __emit 0x2b
-        __emit 0xc6
-        __emit 0xc1
-        __emit 0xf8
-        __emit 0x02
-        __emit 0x3b
-        __emit 0xd0
-        __emit 0x73
-        __emit 0x1c
-        __emit 0x8b
-        __emit 0x41
-        __emit 0x54
-        __emit 0x8d
-        __emit 0x04
-        __emit 0x90
-        __emit 0x8b
-        __emit 0x00
-        __emit 0x39
-        __emit 0x38
-        __emit 0x74
-        __emit 0x03
-        __emit 0x42
-        __emit 0xeb
-        __emit 0xe1
-        __emit 0x8b
-        __emit 0x49
-        __emit 0x54
-        __emit 0x5f
-        __emit 0x8d
-        __emit 0x04
-        __emit 0x91
-        __emit 0x8b
-        __emit 0x00
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x33
-        __emit 0xc0
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
     }
 }
 extern "C" __declspec(naked) void m_15() {
@@ -9746,30 +9583,6 @@ extern "C" __declspec(naked) void m_39() {
         __emit 0xc4
         __emit 0x10
         __emit 0xc3
-    }
-}
-extern "C" __declspec(naked) void m_40() {
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x0d
-        __emit 0x50
-        call m_14
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x03
-        __emit 0xff
-        __emit 0x48
-        __emit 0x04
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
     }
 }
 extern "C" __declspec(naked) void m_41() {
@@ -21006,39 +20819,6 @@ extern "C" __declspec(naked) void m_79() {
         jmp FUN_00534650
     }
 }
-extern "C" __declspec(naked) void m_80() {
-    __asm {
-        __emit 0x8b
-        __emit 0x81
-        __emit 0xc0
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc3
-    }
-}
-extern "C" __declspec(naked) void m_81() {
-    __asm {
-        __emit 0x8a
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x0f
-        __emit 0x95
-        __emit 0xc0
-        __emit 0x88
-        __emit 0x81
-        __emit 0x08
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
 extern "C" __declspec(naked) void m_82() {
     __asm {
         __emit 0x8a
@@ -21195,46 +20975,6 @@ extern "C" __declspec(naked) void m_84() {
         __emit 0x01
         __emit 0xc2
         __emit 0x10
-        __emit 0x00
-    }
-}
-extern "C" __declspec(naked) void m_85() {
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x8a
-        __emit 0x94
-        __emit 0x08
-        __emit 0x10
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x84
-        __emit 0xd2
-        __emit 0x75
-        __emit 0x10
-        __emit 0x8a
-        __emit 0x94
-        __emit 0x08
-        __emit 0x13
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x84
-        __emit 0xd2
-        __emit 0x75
-        __emit 0x05
-        __emit 0x32
-        __emit 0xc0
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-        __emit 0xb0
-        __emit 0x01
-        __emit 0xc2
-        __emit 0x04
         __emit 0x00
     }
 }
@@ -21514,27 +21254,6 @@ extern "C" __declspec(naked) void m_90() {
         __emit 0xc2
         __emit 0x08
         __emit 0x00
-    }
-}
-extern "C" __declspec(naked) void m_91() {
-    __asm {
-        __emit 0x8b
-        __emit 0x81
-        __emit 0xa0
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x04
-        __emit 0x8a
-        __emit 0x40
-        __emit 0x39
-        __emit 0xc3
-        __emit 0xb0
-        __emit 0x01
-        __emit 0xc3
     }
 }
 extern "C" __declspec(naked) void m_92() {
@@ -26832,4 +26551,199 @@ extern "C" __declspec(naked) void m_103() {
         __emit 0xc0
         __emit 0xc3
     }
+}
+
+extern "C" __declspec(naked) void m_14() {
+    __asm {
+        __emit 0x56
+        __emit 0x8b
+        __emit 0x71
+        __emit 0x54
+        __emit 0x57
+        __emit 0x8b
+        __emit 0x7c
+        __emit 0x24
+        __emit 0x0c
+        __emit 0x33
+        __emit 0xd2
+        __emit 0xeb
+        __emit 0x03
+        __emit 0x8d
+        __emit 0x49
+        __emit 0x00
+        __emit 0x85
+        __emit 0xf6
+        __emit 0x74
+        __emit 0x28
+        __emit 0x8b
+        __emit 0x41
+        __emit 0x58
+        __emit 0x2b
+        __emit 0xc6
+        __emit 0xc1
+        __emit 0xf8
+        __emit 0x02
+        __emit 0x3b
+        __emit 0xd0
+        __emit 0x73
+        __emit 0x1c
+        __emit 0x8b
+        __emit 0x41
+        __emit 0x54
+        __emit 0x8d
+        __emit 0x04
+        __emit 0x90
+        __emit 0x8b
+        __emit 0x00
+        __emit 0x39
+        __emit 0x38
+        __emit 0x74
+        __emit 0x03
+        __emit 0x42
+        __emit 0xeb
+        __emit 0xe1
+        __emit 0x8b
+        __emit 0x49
+        __emit 0x54
+        __emit 0x5f
+        __emit 0x8d
+        __emit 0x04
+        __emit 0x91
+        __emit 0x8b
+        __emit 0x00
+        __emit 0x5e
+        __emit 0xc2
+        __emit 0x04
+        __emit 0x00
+        __emit 0x5f
+        __emit 0x5e
+        __emit 0x33
+        __emit 0xc0
+        __emit 0xc2
+        __emit 0x04
+        __emit 0x00
+    }
+}
+
+extern "C" __declspec(naked) void m_40() {
+    __asm {
+        __emit 0x8b
+        __emit 0x44
+        __emit 0x24
+        __emit 0x04
+        __emit 0x85
+        __emit 0xc0
+        __emit 0x74
+        __emit 0x0d
+        __emit 0x50
+        call m_14
+        __emit 0x85
+        __emit 0xc0
+        __emit 0x74
+        __emit 0x03
+        __emit 0xff
+        __emit 0x48
+        __emit 0x04
+        __emit 0xc2
+        __emit 0x04
+        __emit 0x00
+    }
+}
+
+// ===== real implementations =====
+#include <new>
+#include <string>
+
+// ===========================================================================
+// Model name lookup
+// ===========================================================================
+
+// A named model entry: the name the tables are keyed on and the id.
+class MODELNAME
+{
+public:
+    std::string m_name;         // +0x00
+    int m_id;                   // +0x18
+};
+
+// Whether a model's name differs from a plain C string.
+bool MODELNAMEDiffers(MODELNAME *entry, const char *name)
+{
+    return entry->m_name.compare(0, entry->m_name.size(), name, strlen(name)) != 0;
+}
+
+// ===========================================================================
+// A growable byte buffer
+// ===========================================================================
+
+class MODELBUFFER
+{
+public:
+    void Release();
+
+private:
+    int m_type;                 // +0x00
+    char *m_data;               // +0x04
+    int m_size;                 // +0x08
+    int m_capacity;             // +0x0c
+};
+
+// Frees the buffer and puts it back to empty.
+void MODELBUFFER::Release()
+{
+    if (m_data)
+        operator delete(m_data);
+    m_data = 0;
+    m_size = 0;
+    m_capacity = 0;
+}
+
+// ===========================================================================
+// A texture stage block
+//
+// Three stages, each with a pair of enable flags.  Only the members the
+// matched functions touch are named; the rest of the block is still to be
+// identified.
+// ===========================================================================
+
+class MODELSTAGE
+{
+public:
+    void *GetTexture();
+    void SetEnabled(bool on);
+    char IsStageUsed(int stage);
+    bool IsCulled();
+
+private:
+    char m_unknown0[0x108];         // +0x000
+    bool m_enabled;                 // +0x108
+    char m_unknown1[0x110 - 0x109]; // +0x109
+    bool m_stageOn[3];              // +0x110
+    bool m_stageUsed[3];            // +0x113
+    char m_unknown2[0x1a0 - 0x116]; // +0x116
+    void *m_source;                 // +0x1a0
+    char m_unknown3[0x1c0 - 0x1a4]; // +0x1a4
+    void *m_texture;                // +0x1c0
+};
+
+void *MODELSTAGE::GetTexture()
+{
+    return m_texture;
+}
+
+void MODELSTAGE::SetEnabled(bool on)
+{
+    m_enabled = on != 0;
+}
+
+char MODELSTAGE::IsStageUsed(int stage)
+{
+    return m_stageOn[stage] || m_stageUsed[stage];
+}
+
+bool MODELSTAGE::IsCulled()
+{
+    if (m_source)
+        return ((bool *)m_source)[0x39];
+    return true;
 }

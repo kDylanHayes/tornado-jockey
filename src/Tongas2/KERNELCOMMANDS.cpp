@@ -357,12 +357,10 @@ SRESULT KERNELCOMMANDS::SpawnPos(CMDCALL *call)
 
 SRESULT KERNELCOMMANDS::DumpLayer(CMDCALL *call)
 {
-    int layer;
     if (call->tokens->m_count == 2)
-        layer = atoi(call->tokens->GetToken(1));
+        g_pScene->DumpActors(atoi(call->tokens->GetToken(1)));
     else
-        layer = -1;
-    g_pScene->DumpActors(layer);
+        g_pScene->DumpActors(-1);
     return SRESULT(true);
 }
 SRESULT KERNELCOMMANDS::LoadScene(CMDCALL *call)
@@ -524,8 +522,7 @@ SRESULT KERNELCOMMANDS::RandomDelay(CMDCALL *call)
     TOKENS *tokens = new TOKENS;
     float time = (float)atof(call->tokens->GetToken(1));
     float most = (float)atof(call->tokens->GetToken(2));
-    if (most > time)
-        time += (most - time) * (float)rand() * (1.0f / RAND_MAX);
+    time = most > time ? time + (most - time) * (float)rand() * (1.0f / RAND_MAX) : time;
     {
         STRING script(call->tokens->GetToken(3));
         tokens->Parse(script, 0);

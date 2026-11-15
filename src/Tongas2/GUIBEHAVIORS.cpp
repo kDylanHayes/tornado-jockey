@@ -92,7 +92,7 @@ bool ACCELERATION::Update(float dt)
             m_velocity = m_velocity - step * m_acceleration;
             m_value = m_velocity * step + m_value;
         }
-        if (m_from <= m_to) {
+        if (m_to > m_from) {
             if (m_value < m_from)
                 m_value = m_from;
             if (m_value > m_to)
@@ -127,8 +127,7 @@ void GROWBEHAVIOR::Update()
     t = EaseInOut(t);
     ACTOR *actor = GetActor();
     if (actor) {
-        float scale = (m_scale - 1.0f) * t + 1.0f;
-        actor->SetResourcesScale(m_resource, m_original * scale);
+        actor->SetResourcesScale(m_resource, m_original * ((m_scale - 1.0f) * t + 1.0f));
     }
 }
 
@@ -350,9 +349,9 @@ FLOWRADIUSTOBEHAVIOR::FLOWRADIUSTOBEHAVIOR(const RESHANDLE &owner, CMDCALL *call
     V3 from(0.0f, 0.0f, 0.0f);
     ACTOR *actor = GetActor();
     if (actor)
-        from = V3(actor->m_flowRadius, 0.0f, 0.0f);
+        from.Set(actor->m_flowRadius, 0.0f, 0.0f);
     V3 to(0.0f, 0.0f, 0.0f);
-    sscanf(call->tokens->GetToken(3), "%f, %f, %f", &to.x, &to.y, &to.z);
+    sscanf(call->tokens->GetToken(3), "%f %f %f", &to.x, &to.y, &to.z);
     m_radius = V3ACCELERATION(from, to, m_time);
     actor = GetActor();
     if (actor)
@@ -398,8 +397,9 @@ void ORBITBEHAVIOR::SetPlane(const V3 &center, const V3 &axis)
         m_u.y = axis.z;
         m_u.z = -axis.y;
     }
-    m_v = V3(m_u.z * axis.y - axis.z * m_u.y, axis.z * m_u.x - m_u.z * axis.x, axis.x * m_u.y - axis.y * m_u.x);
-    m_u.Normalize();
+    V3 &u = m_u;
+    m_v = V3(u.z * axis.y - axis.z * u.y, axis.z * u.x - u.z * axis.x, axis.x * u.y - axis.y * u.x);
+    u.Normalize();
     m_v.Normalize();
 }
 FADERESOURCEBEHAVIOR::FADERESOURCEBEHAVIOR(const RESHANDLE &owner, CMDCALL *call) : TIMEDBEHAVIOR(owner, call)

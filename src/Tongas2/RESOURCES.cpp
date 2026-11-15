@@ -524,3 +524,50 @@ void RESOURCES::RegisterMaster(RESOURCEMASTER *master)
     if ((handle.serial < 0 || handle.index < 0) && g_pLog)
         g_pLog->Error("RESOURCES::RegisterMaster - Could not insert master:%s", master->m_name.c_str());
 }
+
+// ---------------------------------------------------------------------------
+// Matching residue for this unit (docs/image-patches.md,
+// config/image_patches.txt). Both remaining functions are otherwise exact:
+// every byte outside the opaque run below is identical to the target object,
+// with our relocations resolving to the addresses the image has baked in.
+//
+//   ?GetManager@RESOURCES@@QAEPAVRESOURCEMANAGER@@AAPBD@Z
+//       (0x004a4330, 0xec, fuzzy 84.1%)
+//       0x004a438a-0x004a439a (0x5a-0x6a) replaces the type-code loop's
+//       increment: inc edi / cmp edi,eax / jl, the eb 07 jump out, the
+//       mov esi,[edi*4 + s_managers] and the add ebx,5.  The run also takes
+//       the function's relocation records with it, so the target object has
+//       none while ours keeps 12 (strlen, both manager loops, the g_pLog
+//       error call).  Re-verified: masked non-relocation diffs are exactly
+//       0x5a-0x6a, plus 0x71-0x73 where the image stores s_numManagers
+//       (0x007e0aac) as a literal and our object carries the relocation to
+//       that same address.
+//
+//   ?Insert@?$SAFEINDEX@VRESOURCE@@$0IAAA@$0CDJ@$02@@QAE?AURESHANDLE@@PAPAVRESOURCE@@H@Z
+//       (0x004a69e0, 0x181, fuzzy 90.4%)
+//       0x004a6aaf-0x004a6abf (0xcf-0xdf) starts in the middle of the
+//       "already registered" return (add esp,0xc / ret 0xc) and covers the
+//       ?New@?$SAFEINDEX@VRESOURCE... call that allocates the slot plus the
+//       jne of its -1 test.  It drops that call's relocation as well: 0xe1-0xe3
+//       is the image's literal g_pLog (0x006cbc80) against our relocation to
+//       the same address.  The 0x4a6af5 overlap noted in the docs is an
+//       analysis-only instruction pairing, not an image patch: the bytes there
+//       are identical.
+//
+// Both runs are image watermarks that no source can reproduce, so these two
+// functions and this unit stay partial by policy.  Do not fabricate them.
+//
+// Dynamic-initializer labels: the eight compiler-generated initializer stubs
+// are byte-identical to the target (relocations and image operands masked),
+// but VC7.1 numbered them differently, so objdiff pairs none of them and they
+// count as 0%:
+//
+//   image  _$E1 _$E3 _$E5  _$E8  _$E11 _$E6  _$E9  _$E12   (177/261/12/12/12/36/36/36)
+//   ours   _$E1 _$E3 _$E9  _$E12 _$E15 _$E10 _$E13 _$E16   (same sizes, same order)
+//
+// The counter runs four higher in our translation unit, which no source form
+// can move without inventing initializers; pair the remaining six with
+// "symbol_mappings" in config/units.json (target name -> our name):
+//   "_$E5": "_$E9", "_$E8": "_$E12", "_$E11": "_$E15",
+//   "_$E6": "_$E10", "_$E9": "_$E13", "_$E12": "_$E16"
+// ---------------------------------------------------------------------------
