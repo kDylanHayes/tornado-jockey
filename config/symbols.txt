@@ -9773,3 +9773,4 @@
 0x0067abe0 ??_7GD53b330@@6B@ data
 0x0067ae18 ??_7GD53b520@@6B@ data
 0x00506a70 ?HandleSizeChange@GD507220@@QAEHXZ function 0x12d
+0x004102c0 ?Above@GD4102c0@@QBE_NXZ function 0x1c

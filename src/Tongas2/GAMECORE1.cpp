@@ -6162,3 +6162,40 @@ bool operator!=(const RESHANDLE &a, const RESHANDLE &b)
 {
     return a.serial != b.serial || a.index != b.index || a.kind != b.kind;
 }
+
+// 0x004102c0: the 28-byte predicate that tests the float at +0x18fc
+// against zero. Retail loads __real@00000000 rather than fldz.
+class GD4102c0
+{
+public:
+    bool Above() const;
+
+    char pad_18fc[0x18fc];
+    float m_18fc;
+};
+
+bool GD4102c0::Above() const
+{
+    return m_18fc > 0.0f;
+}
+
+// 0x004113f0: clears the three words at +0x173c, +0x1740, +0x1744.
+class GD4112f0
+{
+public:
+    void Set(int index);
+
+    char pad_173c[0x173c];
+    int m_173c;
+    int m_1740;
+    int m_1744;
+};
+
+void GD4112f0::Set(int index)
+{
+    (void)index;
+    int *words = &m_173c;
+    words[0] = -1;
+    words[1] = -1;
+    words[2] = 0;
+}
