@@ -7,6 +7,30 @@
 // destructor 0x53d220, the copy release 0x53aa20, the master's binding pass
 // 0x53b2e0, the indexed-primitive draw 0x53d190 and the render-state setup
 // 0x53cae0.
+//
+// Open residues (first differing offset, classified):
+//   0x53b5a0 (5 B, thunk "jmp ??1APP@@UAE@XZ"): needs the record class to be
+//     "class __declspec(novtable) GD53b5a0 : public APP" with an empty
+//     destructor, which is byte-exact for the thunk but also suppresses the
+//     class vftable and therefore ??_GGD53b5a0@@UAEPAXI@Z (0x53b580, 30 B,
+//     exact today). Retail has both, so the vftable in the original came from
+//     a delete in another function of the unit; flip to novtable only after
+//     ??_G is re-derived. The target symbol size is also 5, not 7 (0x53b5a5
+//     ..0x53b5af is int3 padding).
+//   0x53b490 GD53b2d0::Update (129/130 B): register colour, offset 0x08. Our
+//     build rematerialises m_numPoints with a second "mov eax,[esi+0x60]" on
+//     the join and puts m_150 in al; retail keeps the count in eax across the
+//     branch and puts the flag in cl (so it also needs "mov ecx,esi" before
+//     each call). Call set and branch structure are identical.
+//   0x53c1f0 GD53c1f0::Add (186/246 B): shape, offset 0x00. Retail keeps an
+//     unwind state around the "new GD53ca70" (state 0 until the constructor
+//     returns); our copy of the constructor is provably nothrow, so MSVC drops
+//     the frame. Everything from the vector append on is instruction-identical
+//     modulo the +0x22 frame offset.
+//   0x53b680 (41 B, swallowed by the 204-byte ??8GD53b5e0 symbol): forwards a
+//     value to the record at an index; our 37-byte form loses the STL
+//     bounds-check on the element read. The target symbol for 0x53b5e0 must
+//     shrink to 0x98 and a new symbol must start at 0x53b680.
 #include "Tongas2/SHADERDX8SD.h"
 
 #include "d3d8.h"
@@ -175,9 +199,13 @@ public:
 
     // The retail SHADERMASTER (SHADER.h) ends at 0x150; the SD master keeps
     // the number of texture bindings at 0x74.
-    char m_pad[0x74 - 4];
+    char m_pad[0x60 - 4];
+    int m_numPoints;
+    char m_pad64[0x74 - 0x64];
     int m_count;
-    char m_more[0x150 - 0x78];
+    char m_more[0x144 - 0x78];
+    int m_flags;
+    char m_pad148[0x150 - 0x148];
 };
 
 class GD53aa10 : public RESOURCE
@@ -217,6 +245,7 @@ public:
 
     SHADER *Create(const RESHANDLE &handle);
     void Prepare();
+    void Update();
 
     bool m_150;
     char m_151[3];
@@ -249,14 +278,59 @@ void GD53b2d0::Prepare()
     m_150 = true;
 }
 
+// 0x0053b490: the master's per-frame update. It prepares the binding set
+// while the shader has vertices and drops it again when it goes empty, then
+// applies the pending change flags: two re-does the constants, one rebuilds
+// the bindings.
+void GD53b2d0::Update()
+{
+    if (m_numPoints > 0) {
+        if (!m_150)
+            Prepare();
+    } else {
+        if (m_150) {
+            ReleaseBindings();
+            m_150 = false;
+        }
+        if (m_numPoints > 0 && !m_150)
+            Prepare();
+    }
+
+    if (m_flags) {
+        if (m_flags & 2)
+            ResetConstants();
+        if (m_flags & 1) {
+            if (m_150) {
+                ReleaseBindings();
+                m_150 = false;
+            }
+            Prepare();
+        }
+        m_flags = 0;
+    }
+}
+
 __declspec(noinline) GD53b2d0::~GD53b2d0() throw()
 {
 }
 
-class GD53b5a0
+// 0x0053b520's 0x238-byte record base, defined in the APP unit (its
+// destructor is 0x0048bb50). Only the layout and the base call matter here.
+class APP
 {
 public:
-    virtual ~GD53b5a0();
+    APP();
+    virtual ~APP();
+
+    char m_pad[0x238 - 4];
+};
+
+// 0x0053b5a0: the implicit destructor of the record APP's factory (0x53b520)
+// builds. It adds no members, so MSVC emits the base call as a jump thunk.
+class GD53b5a0 : public APP
+{
+public:
+    ~GD53b5a0();
 };
 
 __declspec(noinline) GD53b5a0::~GD53b5a0()
@@ -434,19 +508,52 @@ public:
 class GD53ca70
 {
 public:
-    GD53ca70(void *a, void *b);
+    __declspec(noinline) GD53ca70(void *a, void *b);
+
+    // Defined in the texture core (0x00545850): hands the new record its
+    // vertex buffer, its transform and the four corner values.
+    void Setup(void *a, void *b, void *c, void *d, void *e, void *f);
 
     bool m_0;
     void *m_4;
     void *m_8;
     void *m_c;
     void *m_10;
-    void *m_14;
+    int m_14;
     float m_18;
     float m_1c;
     void *m_20;
     void *m_24;
 };
+
+// 0x0053c1f0: appends one quad record. The new record is built from the two
+// leading arguments, handed to the vector at 0x68, filled in by the texture
+// core's setup, and its vertex count is added to the running total; the
+// returned value is the record's index. The record's constructor is used
+// before it is defined, so the allocation keeps its unwind frame.
+class GD53c1f0
+{
+public:
+    int Add(void *a, void *b, int unused, void *d, void *e, void *f, void *g);
+    void Set(void *value, unsigned int index);
+
+    int m_0;
+    int m_4;
+    V3 m_8;
+    char m_pad14[0x2c - 0x14];
+    void *m_2c;
+    char m_pad30[0x68 - 0x30];
+    std::vector<int> m_68;
+};
+
+int GD53c1f0::Add(void *a, void *b, int unused, void *d, void *e, void *f, void *g)
+{
+    GD53ca70 *record = new GD53ca70(a, b);
+    m_68.push_back((int)record);
+    record->Setup(m_2c, &m_8, d, e, f, g);
+    m_0 += record->m_14;
+    return (int)m_68.size() - 1;
+}
 
 GD53ca70::GD53ca70(void *a, void *b)
     : m_0(true), m_4(0), m_8(a), m_c(b), m_10(0), m_14(0), m_20(0), m_24(0)
@@ -494,6 +601,12 @@ void GD53cac0::Set(void *item)
 {
     if (item)
         m_result = m_obj->m_58(item);
+}
+
+// 0x0053b680: forwards a value to the record at the given index.
+void GD53c1f0::Set(void *value, unsigned int index)
+{
+    ((GD53cac0 *)(void *)m_68[index])->Set(value);
 }
 
 
@@ -707,15 +820,6 @@ RESOURCEMASTER *SHADERDX8SDMANAGER::CreateMaster(const char *name)
 // ---------------------------------------------------------------------------
 // 0x0053b520: the factory of the 0x238-byte APP-derived record. It only runs
 // APP's constructor at 0x0048ba40 and takes the new vtable.
-class APP
-{
-public:
-    APP();
-    virtual ~APP();
-
-    char m_pad[0x238 - 4];
-};
-
 class GD53b520 : public APP
 {
 public:

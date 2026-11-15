@@ -10053,3 +10053,4 @@
 0x0054b220 ?SetAngles@G2ODEACTORPOS@@QAEXAAUANG@@@Z function 0xf8
 0x0054d180 ?RegisterODEHooks@@YAXXZ function 0x151
 0x0054a980 ?RegisterODECommands@@YAXXZ function
+0x006593e0 __real@3fd0000000000000 data 0x8

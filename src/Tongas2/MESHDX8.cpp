@@ -1312,6 +1312,7 @@ extern "C" __declspec(naked) void f_004e62d0() {
         __emit 0xc3
     }
 }
+extern "C" void f_004e62d0();
 extern "C" __declspec(naked) void f_004e6370() {
     __asm {
         __emit 0x56
@@ -2672,6 +2673,7 @@ extern "C" __declspec(naked) void f_004e6b90() {
         __emit 0xc3
     }
 }
+extern "C" void f_004e6b30();
 extern "C" __declspec(naked) void f_004e6bf0() {
     __asm {
         __emit 0x56
@@ -2698,6 +2700,7 @@ extern "C" __declspec(naked) void f_004e6bf0() {
         __emit 0x00
     }
 }
+extern "C" void f_004e6b90();
 extern "C" __declspec(naked) void f_004e6c10() {
     __asm {
         __emit 0x56
@@ -2976,6 +2979,7 @@ extern "C" __declspec(naked) void f_004e6d50() {
         __emit 0xc3
     }
 }
+extern "C" void f_004e6cb0();
 extern "C" __declspec(naked) void f_004e6dc0() {
     __asm {
         __emit 0x56
@@ -3002,6 +3006,7 @@ extern "C" __declspec(naked) void f_004e6dc0() {
         __emit 0x00
     }
 }
+extern "C" void f_004e6d50();
 extern "C" __declspec(naked) void f_004e6de0() {
     __asm {
         __emit 0x56
@@ -3785,6 +3790,7 @@ extern "C" __declspec(naked) void f_004e7160() {
         __emit 0xc3
     }
 }
+extern "C" void f_004e6e00();
 extern "C" __declspec(naked) void f_004e71c0() {
     __asm {
         __emit 0x56
@@ -12528,6 +12534,7 @@ extern "C" __declspec(naked) void f_004e98b0() {
         __emit 0xc3
     }
 }
+extern "C" void f_004e96a0();
 extern "C" __declspec(naked) void f_004e99d0() {
     __asm {
         __emit 0x56

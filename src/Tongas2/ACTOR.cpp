@@ -1224,7 +1224,8 @@ RESHANDLE ACTOR::MakeFX(const char *name, RESHANDLE parent, V3 position, ANG ang
             fx->SetParent(parent);
             if ((int)strlen(bone) > 0) {
                 TOKENS tokens;
-                tokens.Split(STRING(bone), ",");
+                STRING boneString(bone);
+                tokens.Split(boneString, ",");
                 int resource = atoi(tokens.GetToken(0));
                 if (resource < 0)
                     resource = 0;
@@ -1294,7 +1295,7 @@ ACTOR::~ACTOR()
 
 SRESULT ACTOR::AttachFX(CMDCALL *call)
 {
-    V3 position;
+    V3 position(0.0f, 0.0f, 0.0f);
     V3 angles;
     sscanf(call->tokens->GetToken(2), "%f %f %f", &position.x, &position.y, &position.z);
     sscanf(call->tokens->GetToken(3), "%f %f %f", &angles.x, &angles.y, &angles.z);
