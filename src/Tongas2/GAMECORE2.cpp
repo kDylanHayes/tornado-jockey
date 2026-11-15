@@ -188,8 +188,12 @@ G2ACTOR::G2ACTOR()
     m_cd8 = G2V2F(1.0f, 3.0f);
     m_ce0 = G2V2F(1.0f, 1.0f);
     m_ce8 = G2V2F(2.0f, 1.0f);
-    m_ccc = V3(0.0f, 0.0f, 0.0f);
-    m_cf0 = V3(0.0f, 0.0f, 0.0f);
+    m_ccc.x = 0.0f;
+    m_ccc.y = 0.0f;
+    m_ccc.z = 0.0f;
+    m_cf0.x = 0.0f;
+    m_cf0.y = 0.0f;
+    m_cf0.z = 0.0f;
     m_cfc = false;
     m_cfd = false;
 }
@@ -362,12 +366,34 @@ void G2D1::ClearParticle()
 class G2D2 : public ACTOR
 {
 public:
+    G2D2();
     virtual ~G2D2();
     virtual int GetFactoryId();
     virtual int GetFactoryFlags();
 
     static int s_factoryId;
+
+    // The offsets are the ones its constructor touches.
+    FIXEDSTRING<0x200> m_ccc;
+    int m_ecc;
+    bool m_ed0;
+    bool m_ed1;
+    float m_ed4;
+    V2 m_ed8;
+    int m_ee0;
 };
+
+G2D2::G2D2()
+    : m_ed8(0.0f, 0.0f)
+{
+    m_ed1 = false;
+    m_ed4 = 2.0f;
+    m_ed8 = V2(0.0f, 0.0f);
+    m_ee0 = 0;
+    m_ccc.Set("");
+    m_ecc = 0;
+    m_ed0 = false;
+}
 
 G2D2::~G2D2()
 {
@@ -503,6 +529,9 @@ public:
     virtual void Start();
     virtual void Stop();
     virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
+
+    void UpdateTimer(float dt);
+    void RequestScan();
 
     int m_ccc;
     bool m_cd0;
@@ -2462,6 +2491,9 @@ struct G2CORE2M1
     void SetE5F4(const int &value);
     void SetE5F8(const bool &value);
     void SetE5FC(const int &value);
+
+    void Respawn();
+    void Start();
 };
 
 void G2CORE2M1::SetCF0(const int &value)
@@ -3679,4 +3711,178 @@ void G2D5::Stop()
         handles++;
     }
     *(bool *)((char *)this + 0x1370) = false;
+}
+
+// A cursor over one of the tables the engine iterates by slot. The retail
+// exe keeps its First() out of line at 0x421e60. The table layout is a
+// DYNAMICARRAY, whose virtual destructor puts the members four bytes along.
+struct G2ARRAY
+{
+    void *m_vtable;
+    int *m_data;
+    int *m_free;
+    bool *m_used;
+    int m_capacity;
+    int m_count;
+    int m_freeTop;
+    int m_next;
+};
+
+struct G2ARRAYITER
+{
+    int m_slot;
+    G2ARRAY *m_array;
+
+    void First();
+};
+
+void G2ARRAYITER::First()
+{
+    for (int i = 0; i < m_array->m_next + 1; i++) {
+        if (i >= 0 && i < m_array->m_capacity && m_array->m_data &&
+            m_array->m_used[i]) {
+            m_slot = i;
+            return;
+        }
+    }
+    m_slot = -1;
+}
+
+// A chain of bases, one virtual each, so a member can name the virtual the
+// object keeps at a slot the class model does not spell out.
+template <int N>
+struct G2VSLOTPAD : G2VSLOTPAD<N - 1>
+{
+    virtual void Pad(G2VSLOTPAD<N> *slot);
+};
+
+template <>
+struct G2VSLOTPAD<0>
+{
+};
+
+// Slot 0x258 of the actor vtable: the expiry call, which takes a V3 by value.
+struct G2VSLOT150 : G2VSLOTPAD<150>
+{
+    virtual void Call3(int x, int y, int z);
+};
+
+// Slot 0x298: the call that takes the chosen slot by reference.
+struct G2VSLOT166 : G2VSLOTPAD<166>
+{
+    virtual void Call1(int *slot);
+};
+
+// Slots 0x21c and 0x23c: one argument, and none.
+struct G2VSLOT135 : G2VSLOTPAD<135>
+{
+    virtual void Call1(void *value);
+};
+
+struct G2VSLOT143 : G2VSLOTPAD<143>
+{
+    virtual void Call0();
+};
+
+// 0x421bc0: the G2D5 countdown. m_1118 is a float in the retail build.
+void G2D5::UpdateTimer(float dt)
+{
+    if (*(float *)((char *)this + 0x1118) <= 0.0f)
+        return;
+    if (!*(bool *)((char *)this + 0x112b))
+        *(float *)((char *)this + 0x1118) -=
+            dt * *(float *)((char *)this + 0x1130);
+    if (*(float *)((char *)this + 0x1118) <= 0.0f)
+        reinterpret_cast<G2VSLOT150 *>(this)->Call3(0, 0, 0);
+    *(bool *)((char *)this + 0xcf2) = true;
+}
+
+// The scanner GAMECORE3 keeps the distance table of; only what this unit
+// calls is declared here.
+struct G2CORE3SCAN
+{
+    void Scan();
+    int Get();
+};
+
+// 0x421c30: pick the slot of the resource's distance table that the current
+// radius reaches and hand it to the virtual at slot 0x298.
+void G2D5::RequestScan()
+{
+    RESOURCEMASTER *master = g_pResources->GetMaster(m_1364);
+    if (!master)
+        return;
+    G2CORE3SCAN *scan = (G2CORE3SCAN *)master;
+    int slot = -1;
+    for (int i = scan->Get() - 1; i >= 0; i--) {
+        if (*(float *)((char *)this + 0x1118) <
+            *(float *)((char *)scan + 0x68 + i * 4)) {
+            slot = i;
+            break;
+        }
+    }
+    reinterpret_cast<G2VSLOT166 *>(this)->Call1(&slot);
+    *(bool *)((char *)this + 0xcf2) = false;
+}
+
+extern RESOURCEMANAGER *g_pACTORRESOURCES;
+
+// 0x426830: submit the resource named by the handle to the actor resource
+// manager, then run the two no-argument virtuals.
+void G2CORE2M1::Respawn()
+{
+    *(bool *)((char *)this + 0xd71) = true;
+    *(float *)((char *)this + 0xda0) += *(float *)((char *)this + 0xda0);
+    *(bool *)((char *)this + 0xda4) = true;
+    RESOURCEMASTER *master =
+        g_pResources->GetMaster(*(RESHANDLE *)((char *)this + 0xd78));
+    if (master) {
+        const char *name = *(const char **)((char *)master + 0x104);
+        if (!name)
+            name = "";
+        RESOURCEMASTER *resource = g_pACTORRESOURCES->GetMaster(name);
+        if (resource)
+            reinterpret_cast<G2VSLOT135 *>(this)->Call1(resource);
+    }
+    reinterpret_cast<G2VSLOT143 *>(this)->Call0();
+}
+
+// Slots 0x4c, 0xa0 and 0xa4: the factory id and the activation pair.
+struct G2VSLOT19 : G2VSLOTPAD<19>
+{
+    virtual int Call0();
+};
+
+struct G2VSLOT40 : G2VSLOTPAD<40>
+{
+    virtual void Call1(int *value);
+};
+
+struct G2VSLOT41 : G2VSLOTPAD<41>
+{
+    virtual void Call1(int *value);
+};
+
+// 0x421ed0: the destructible pieces start inactive inside their bounding
+// box, everything else always active, and remember where they started.
+void G2CORE2M1::Start()
+{
+    int value;
+    if (reinterpret_cast<G2VSLOT19 *>(this)->Call0() ==
+            g_destructibleFactoryId &&
+        *(int *)((char *)this + 0x138) != 5) {
+        value = 2;
+        reinterpret_cast<G2VSLOT40 *>(this)->Call1(&value);
+        value = 0;
+    } else {
+        value = 1;
+        reinterpret_cast<G2VSLOT40 *>(this)->Call1(&value);
+        value = 1;
+    }
+    int *address = &value;
+    reinterpret_cast<G2VSLOT41 *>(this)->Call1(address);
+    V2 start(*(float *)((char *)this + 0x28),
+             *(float *)((char *)this + 0x30));
+    *(V2 *)((char *)this + 0xcf4) = start;
+    *(bool *)((char *)this + 0x998) = true;
 }
