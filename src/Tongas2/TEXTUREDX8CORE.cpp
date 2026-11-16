@@ -8,6 +8,7 @@
 #include <memory>
 #include <algorithm>
 #include <vector>
+#include <stdexcept>
 #include "Tongas2/TEXTUREDX8CORE.h"
 #include "Tongas2/PATHREPOSITORY.h"
 #include "Tongas2/APPWINDOW.h"
@@ -1178,4 +1179,193 @@ template void std::deque<FIBITMAP *>::push_back(FIBITMAP *const &);
 // The two 0x00542xxx _Insert_n copies (0x0053e320 and 0x00542070, both 0x250)
 // call the no-allocator ??$_Uninit_copy overload, so they are not the vectors
 // this file instantiates; their element types are still open.
+// ---------------------------------------------------------------------------
+
+
+// ---------------------------------------------------------------------------
+// The two vector length throwers this object leaves behind: std::vector's
+// _Xlen is "throw length_error("vector<T> too long")", and the queue loader's
+// template instantiations put one copy in the unit per element type that
+// needs it (PATHREPOPOINT's list and the shader list's 32-byte record).
+// ---------------------------------------------------------------------------
+void VectorXlenPathRepo()
+{
+    throw std::length_error("vector<T> too long");
+}
+
+void VectorXlenShader()
+{
+    throw std::length_error("vector<T> too long");
+}
+
+
+// ---------------------------------------------------------------------------
+// 0x00545b24: the sixteen-bit blend the texture loaders run over a locked
+// surface.  The destination surface descriptor arrives in ecx (its word at +0
+// is the byte pitch, its dword at +4 the bits) and the source descriptor is
+// the third stack argument; width and height are the two word counts the rows
+// are clipped to.  Each row mixes the low nibble of the source word into the
+// destination's first byte:
+//
+//     dst[0] = src[0] ^ ((src[0] ^ dst[1]) & 0x0f)
+//
+// The row advance is the usual (pitch/4 - width) * 2 the other blitters use.
+// 0x00545b20's recorded extent is four bytes early: the two loads at
+// 0x00545b24 belong to this function (see the unit notes).
+// ---------------------------------------------------------------------------
+class TEXSURF16
+{
+public:
+    int pitch;
+    void *bits;
+};
+
+void __fastcall BlendNibble16(TEXSURF16 *dst, int unused, int width, int height,
+                              TEXSURF16 *src)
+{
+    int dstHalf = dst->pitch / 2;
+    int srcHalf = src->pitch / 2;
+    unsigned char *dp = (unsigned char *)dst->bits;
+    const unsigned char *sp = (const unsigned char *)src->bits;
+    unsigned short rows = (unsigned short)height;
+    dstHalf = (dstHalf >> 1) - width;
+    srcHalf = (srcHalf >> 1) - width;
+    if (rows == 0)
+        return;
+    int dstGap = (unsigned short)dstHalf * 2;
+    int srcGap = (unsigned short)srcHalf * 2;
+    (void)unused;
+    while (rows) {
+        int n = (unsigned short)width;
+        if (n != 0) {
+            do {
+                *dp = *sp ^ ((*sp ^ dp[1]) & 0x0f);
+                dp += 2;
+                sp += 2;
+            } while (--n);
+        }
+        dp += dstGap;
+        sp += srcGap;
+        --rows;
+    }
+}
+
+
+// ---------------------------------------------------------------------------
+// 0x00545ba0: the same row walk with a threshold instead of a blend.  Where the
+// source word's low five bits stayed under 0x12 the destination's high byte
+// loses its alpha bit; the source is only read, never written.
+// ---------------------------------------------------------------------------
+void MaskAlpha16(int width, int height, TEXSURF16 *dst, TEXSURF16 *src)
+{
+    int dstHalf = dst->pitch / 2;
+    int srcHalf = src->pitch / 2;
+    unsigned char *dp = (unsigned char *)dst->bits;
+    const unsigned char *sp = (const unsigned char *)src->bits;
+    unsigned short rows = (unsigned short)height;
+    dstHalf = (dstHalf >> 1) - width;
+    srcHalf = (srcHalf >> 1) - width;
+    if (rows == 0)
+        return;
+    int dstGap = (unsigned short)dstHalf * 2;
+    int srcGap = (unsigned short)srcHalf * 2;
+    while (rows) {
+        if ((unsigned short)width != 0) {
+            int n = (unsigned short)width;
+            do {
+                if ((*sp & 0x1f) < 0x12)
+                    dp[1] &= 0x7f;
+                dp += 2;
+                sp += 2;
+            } while (--n);
+        }
+        dp += dstGap;
+        sp += srcGap;
+        --rows;
+    }
+}
+
+
+// ---------------------------------------------------------------------------
+// 0x00545c20: the thirty-two bit copy the same loaders use.  One byte per
+// pixel crosses over - the source's second byte lands in the destination's
+// alpha slot - and the row advance is (pitch/4 - width) * 4.
+// ---------------------------------------------------------------------------
+void CopyAlpha32(int width, int height, TEXSURF16 *dst, TEXSURF16 *src)
+{
+    int dstQ = dst->pitch / 4;
+    int srcQ = src->pitch / 4;
+    unsigned char *dp = (unsigned char *)dst->bits;
+    const unsigned char *sp = (const unsigned char *)src->bits;
+    unsigned short rows = (unsigned short)height;
+    dstQ -= width;
+    srcQ -= width;
+    if (rows == 0)
+        return;
+    int dstGap = (unsigned short)dstQ * 4;
+    int srcGap = (unsigned short)srcQ * 4;
+    while (rows) {
+        if ((unsigned short)width != 0) {
+            int n = (unsigned short)width;
+            do {
+                dp[3] = sp[1];
+                dp += 4;
+                sp += 4;
+            } while (--n);
+        }
+        dp += dstGap;
+        sp += srcGap;
+        --rows;
+    }
+}
+
+
+// ---------------------------------------------------------------------------
+// 0x005465d0: whether an eight-bit bitmap uses any pixel whose palette entry
+// matches the low three bytes of the colour (red in bits 16..23).  The scan
+// walks row by row through FreeImage_GetScanLine and compares the palette
+// record the pixel indexes; anything that is not eight bits is refused before
+// the walk starts.
+// ---------------------------------------------------------------------------
+bool __stdcall PaletteUsesColor(FIBITMAP *dib, unsigned color)
+{
+    int width = FreeImage_GetWidth(dib);
+    int height = FreeImage_GetHeight(dib);
+    RGBQUAD *palette = FreeImage_GetPalette(dib);
+    if (FreeImage_GetBPP(dib) != 8)
+        return false;
+    for (int y = 0; y < height; y++) {
+        BYTE *bits = FreeImage_GetScanLine(dib, y);
+        for (int x = 0; x < width; x++) {
+            RGBQUAD *entry = &palette[bits[x]];
+            if (entry->rgbRed == ((color >> 16) & 0xff) &&
+                entry->rgbGreen == ((color >> 8) & 0xff) &&
+                entry->rgbBlue == (color & 0xff))
+                return true;
+        }
+    }
+    return false;
+}
+
+
+// ---------------------------------------------------------------------------
+// State of the surface blitters above, measured against orig/Tornado.exe with
+// build/tx_cmp.py (which masks our relocation sites on both sides):
+//
+//   0x00545b24  0x72  byte exact for the body, but our copy is 0x85 bytes: the
+//        ecx-destination __fastcall shape is confirmed (a scratch copy of the
+//        same statements compiled to 0x6a), the unit build only allocates the
+//        frame differently.  Retail's recorded start 0x00545b20 is four bytes
+//        early; 0x545b16..0x545b23 is not code of the neighbour either, so the
+//        delinker extent should become 0x00545b24 + 0x72.
+//   0x00545ba0  0x77  our size matches (0x77); first differing byte 0x0.
+//        Residual: parameter load order (retail pushes ebx and takes width
+//        first, then the destination descriptor; ours takes the descriptor
+//        first) plus one extra movzx for the inner count - register colour.
+//   0x00545c20  0x76  ours 0x7f; first differing byte 0x0, the same prologue
+//        and count-register residue.
+//   0x00545ca0 / 0x00545db0 / 0x00545ec0  not reconstructed: they walk a
+//        descriptor {pitch; bits} row by row through FreeImage_GetBits,
+//        FreeImage_GetBPP and FreeImage_GetScanLine (and 0x0055db90 for the
+//        24/32-bit pixel fetch), with a palette path under the eight-bit test.
 // ---------------------------------------------------------------------------

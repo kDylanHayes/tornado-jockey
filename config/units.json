@@ -3656,7 +3656,8 @@
       "symbol_mappings": {
         "_m_40": "?m_40@M40TARGET@@QAEXPAX@Z",
         "_m_58": "?m_58@M58TARGET@@QAEPAXPAX@Z",
-        "FUN_00504f10": "?Get@GD504f10@@QAEHH@Z"
+        "FUN_00504f10": "?Get@GD504f10@@QAEHH@Z",
+        "FUN_005465d0": "?PaletteUsesColor@@YG_NPAUFIBITMAP@@I@Z"
       }
     },
     {
