@@ -3326,3 +3326,96 @@ void G2GC4FREEBUF::FreeBuffer()
     m_24 = 0;
     m_28 = 0;
 }
+
+// ---------------------------------------------------------------------------
+// Small reference-counted slot and range helpers from the same block.
+// ---------------------------------------------------------------------------
+
+// 0x44e700: assigns an interface pointer into the slot that is the object
+// itself, adding the new reference before dropping the old one.
+class G2GC4SLOT
+{
+public:
+    GD4512e0RELEASE *Assign(GD4512e0RELEASE *p);
+
+    GD4512e0RELEASE *m_p;
+};
+
+GD4512e0RELEASE *G2GC4SLOT::Assign(GD4512e0RELEASE *p)
+{
+    if (!this)
+        return 0;
+    if (p)
+        p->V1();
+    if (m_p)
+        m_p->Release();
+    m_p = p;
+    return p;
+}
+
+// 0x44e010: the same assignment for the slot 8 bytes into a record. The caller
+// gets no pointer back.
+int __stdcall G2GC4SetSlot8(void *record, GD4512e0RELEASE *p)
+{
+    GD4512e0RELEASE **slot = (GD4512e0RELEASE **)((char *)record + 8);
+    if (slot) {
+        if (p)
+            p->V1();
+        if (*slot)
+            (*slot)->Release();
+        *slot = p;
+    }
+    return 0;
+}
+
+// 0x4501a0: assignment through a caller-supplied slot, returning the pointer
+// that was stored.
+GD4512e0RELEASE *__stdcall G2GC4SetSlot(GD4512e0RELEASE **slot, GD4512e0RELEASE *p)
+{
+    if (!slot)
+        return 0;
+    if (p)
+        p->V1();
+    if (*slot)
+        (*slot)->Release();
+    *slot = p;
+    return p;
+}
+
+// 0x4493d0: length in bytes of the next comma-separated field. Commas, CR, LF
+// and the terminator end a field unless an odd number of quotes was seen.
+int __stdcall G2GC4FieldLength(const char *text)
+{
+    int quoted = 0;
+    const char *scan = text;
+    for (;;) {
+        char c = *scan;
+        if (c == ',' || c == 0 || c == '\r' || c == '\n') {
+            if (!(quoted & 1))
+                break;
+        }
+        if (c == '"')
+            quoted++;
+        scan++;
+    }
+    return (int)(scan - text);
+}
+
+// 0x450ad0: advances the window at 0xc/0x10 by at most the requested count.
+// The result is non-zero when the request had to be clamped.
+struct G2GC4RANGE
+{
+    char pad_0[0xc];
+    int *m_c;
+    int *m_10;
+};
+
+int __stdcall G2GC4RangeTake(G2GC4RANGE *range, unsigned count)
+{
+    if (!count)
+        return 0x80070057;
+    int have = (int)((char *)range->m_c - (char *)range->m_10) >> 2;
+    int take = count <= (unsigned)have ? (int)count : have;
+    range->m_10 = range->m_10 + take;
+    return count != (unsigned)take;
+}
