@@ -863,7 +863,17 @@ const char *G2CORE1J3::GetClassName()
     return g_classNames[s_classId];
 }
 
-class G2CORE1K1 : public ACTOR
+// The core actor is an empty console: its destructor only runs the console's.
+// Only the parts this file needs are declared here.
+class CONSOLE : public INPUTLISTENER
+{
+public:
+    virtual ~CONSOLE();
+
+    char m_body[0x22d8];
+};
+
+class G2CORE1K1 : public CONSOLE
 {
 public:
     virtual ~G2CORE1K1();
@@ -1376,6 +1386,7 @@ G2CORE1K4::~G2CORE1K4()
 class G2CORE1K5
 {
 public:
+    G2CORE1K5();
     virtual ~G2CORE1K5();
 
     // Frees the FITAG values and empties the tree.
@@ -1383,6 +1394,10 @@ public:
 
     std::map<std::string, FITAG *> m_4;
 };
+
+G2CORE1K5::G2CORE1K5()
+{
+}
 
 void G2CORE1K5::Clear()
 {
@@ -6803,4 +6818,30 @@ struct GD4119d0
 char GD4119d0::NotEquals(const char *other) const
 {
     return strcmp(m_text, other) != 0;
+}
+
+// 0x00411a20: base raised to an integer power by binary exponentiation, with
+// the reciprocal taken for a negative exponent.
+struct GD411a20
+{
+    static float Pow(float base, int exponent);
+};
+
+float GD411a20::Pow(float base, int exponent)
+{
+    unsigned int e = exponent;
+    if (exponent < 0)
+        e = -e;
+    float result = 1.0f;
+    for (;;) {
+        if (e & 1)
+            result *= base;
+        e >>= 1;
+        if (!e)
+            break;
+        base *= base;
+    }
+    if (exponent < 0)
+        result = 1.0f / result;
+    return result;
 }

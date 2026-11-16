@@ -180,6 +180,17 @@ struct G2SKMLIST
 // source still gets 69 bytes against retail's 74: the first difference is the
 // missing push edi at +1, then the zero register is edx instead of edi and the
 // node is eax instead of ecx, so the whole body is one register colour off.
+//
+// Residue (2026-11): 69 bytes against retail's 74. Retail binds the
+// new-expression result to ecx (the inlined constructor's `this`: `mov ecx,
+// eax` right after the allocation call) and hoists the item argument load
+// into eax before `add esp,4`, so zero lands in edi and the pointer test is
+// `cmp ecx,edi`. This source expands the member-initialiser list directly on
+// the new pointer in eax (`cmp eax,edx`), which costs exactly the five
+// missing bytes: push edi, two pop edi, mov ecx,eax. Moving the constructor
+// out of line and writing its body as assignments both leave the expansion
+// unchanged, so the wall is the constructor-inlining form, not the source
+// expression.
 __declspec(noinline) void G2SKMLIST::Add(void *item)
 {
     G2SKMLISTNODE *node = new G2SKMLISTNODE(item);
@@ -806,6 +817,10 @@ GD5174a0::GD5174a0(void *first, void *second)
 // 0x00511760 (25 bytes): play the animation whose name resolves to an index.
 // GetAnimationIndex runs on the same object, then the index goes to the
 // unnamed play-by-index method at 0x00510b90.
+//
+// The body here is already byte-exact (maskcmp diffs 0); it scores 99.5 only
+// because the target reloc at +0x11 is still FUN_00510b90. Renaming that row
+// to ?PlayIndex@GD511760@@QAEXH@Z (size 0xbb) makes it exact.
 class GD511760 : public SKINNEDMESH
 {
 public:
@@ -851,6 +866,11 @@ void GD515fa0::Run()
 
 // 0x005177a0 (38 bytes): two step calls on this, then the +0xe8 and +0x128
 // blocks go to the setter at 0x004f72c0 with this as the object.
+//
+// The body here is already byte-exact (maskcmp diffs 0); it scores 99.23 only
+// because the target relocs are still FUN_005176b0 and FUN_00517720. Renaming
+// them to ?StepOne@GD5177a0@@QAEXXZ (size 0x61) and
+// ?StepTwo@GD5177a0@@QAEXXZ (size 0x79) makes it exact.
 class GD4f72c0
 {
 public:
@@ -1277,6 +1297,83 @@ void *GD515f70::Get()
     if (m_118 || m_4d || m_90)
         Update(false);
     return &m_394;
+}
+
+// 0x00515fd0 (41 bytes): refresh the owned camera lens through the inherited
+// update, then publish the +0x2c angle in degrees (radians scaled by
+// 57.29578f) as setting 2.
+class SETTINGSTABLE
+{
+public:
+    void SetFloat(int id, float value);
+};
+
+class APPWINDOW
+{
+public:
+    char pad_0[0x2c0];
+    SETTINGSTABLE *m_2c0;
+};
+
+extern APPWINDOW *g_pDisplay;
+
+// The class the +0x2c field belongs to inherits its update from here; the
+// engine method itself is unnamed at 0x004e6ff0.
+class GD4e6ff0BASE
+{
+public:
+    void Update();
+};
+
+class GD515fd0 : public GD4e6ff0BASE
+{
+public:
+    void Run();
+
+    char pad_0[0x2c];
+    float m_2c;
+};
+
+void GD515fd0::Run()
+{
+    Update();
+    g_pDisplay->m_2c0->SetFloat(2, m_2c * 57.29578f);
+}
+
+// 0x00512410 (97 bytes, the symbol file gives 0x43 and stops inside the third
+// block): release the three owned +0x1c/+0x20/+0x24 objects through their
+// destructor and the plain delete, clearing each slot.
+class GD511a30
+{
+public:
+    ~GD511a30();
+};
+
+class GD512410
+{
+public:
+    ~GD512410();
+
+    char pad_0[0x1c];
+    GD511a30 *m_1c;
+    GD511a30 *m_20;
+    GD511a30 *m_24;
+};
+
+GD512410::~GD512410()
+{
+    if (m_1c) {
+        delete m_1c;
+        m_1c = 0;
+    }
+    if (m_20) {
+        delete m_20;
+        m_20 = 0;
+    }
+    if (m_24) {
+        delete m_24;
+        m_24 = 0;
+    }
 }
 
 // ---------------------------------------------------------------------------
