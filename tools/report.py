@@ -63,6 +63,30 @@ def read_functions(path: Path) -> dict[int, str]:
     return functions
 
 
+def overlay_symbols(functions: dict[int, str]) -> int:
+    """Apply config/symbols.txt names over a cached function list.
+
+    Ghidra's export is what normally applies symbols.txt, so a run with
+    --no-export would otherwise keep the names from whenever the export last
+    ran and silently miss every match that only exists because a function was
+    renamed. Overlaying is exact for names: the export does the same thing for
+    the addresses symbols.txt lists.
+    """
+    renamed = 0
+    for line in (ROOT / "config" / "symbols.txt").read_text().splitlines():
+        fields = line.split()
+        if len(fields) < 3 or line.startswith("#") or fields[2] != "function":
+            continue
+        try:
+            address = int(fields[0], 16)
+        except ValueError:
+            continue
+        if functions.get(address) != fields[1]:
+            functions[address] = fields[1]
+            renamed += 1
+    return renamed
+
+
 def write_gap_object(path: Path, code: bytes, symbols: list[tuple[int, str]]) -> None:
     """Write a COFF object with one .text section and a symbol per function."""
     strtab = bytearray(4)
@@ -144,6 +168,10 @@ def main() -> int:
     else:
         export_functions(args.ghidra, args.project, functions_txt)
     functions = read_functions(functions_txt)
+    if args.no_export:
+        print("warning: --no-export keeps the function names from the last Ghidra export "
+              f"({functions_txt.name}); re-run without it before trusting a gain that comes "
+              "from naming a function")
 
     covered = [parse_range(r) for u in units for r in u.get("ranges", [])]
     if GAP_DIR.exists():
