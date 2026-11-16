@@ -13,6 +13,27 @@ int basic_string<char, char_traits<char>, allocator<char> >::compare(
     size_type, size_type, const char *, size_type) const;
 }
 
+// Retail's SKINNEDMESH translation unit emitted this member as its own COMDAT at
+// 0x005144e0 (0x23 bytes). The body is identical to the one our SCROOT object
+// compiles, so instantiate the class here to give this object the same section.
+template class std::vector<std::vector<int> >;
+
+// The same is true of the vertex-array helpers: retail has
+// erase (0x00511780, 0x4a) and resize (0x005128c0, 0x6b) on the 0x40-byte vertex
+// records in this object. Those bodies are the generic <vector> output for a
+// trivially copyable 0x40-byte element, and CANIMATEDMESH compiles the same two,
+// so repeating the element definition and instantiating gives the same sections.
+struct SKINGEOMTYPE40
+{
+    int m[16];
+};
+
+// push_back (0x005191e0, 0x4d) only handles the pointer, so a declaration is enough.
+class BEHAVIOR;
+
+template class std::vector<SKINGEOMTYPE40>;
+template class std::vector<BEHAVIOR *>;
+
 // The object whose slot 0x1c unlinks it and whose deleting destructor runs at
 // slot 0; the wrapper at 0x5285f0 releases it.
 class GD5285f0OBJ

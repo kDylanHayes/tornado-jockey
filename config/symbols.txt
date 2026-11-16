@@ -10145,3 +10145,7 @@
 0x00557290 ??0GD559a10@@QAE@XZ function 0x80
 0x00537cb0 ?_Insert_n@?$vector@HV?$allocator@H@std@@@std@@IAEXViterator@12@IABH@Z function 0x1e0
 0x006561cc __imp__GetVersionExA@4 data 0x4
+0x005144e0 ?resize@?$vector@V?$vector@HV?$allocator@H@std@@@std@@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@std@@QAEXI@Z function 0x23
+0x00511780 ?erase@?$vector@USKINGEOMTYPE40@@V?$allocator@USKINGEOMTYPE40@@@std@@@std@@QAE?AViterator@12@V312@0@Z function 0x4a
+0x005128c0 ?resize@?$vector@USKINGEOMTYPE40@@V?$allocator@USKINGEOMTYPE40@@@std@@@std@@QAEXIUSKINGEOMTYPE40@@@Z function 0x6b
+0x005191e0 ?push_back@?$vector@PAVBEHAVIOR@@V?$allocator@PAVBEHAVIOR@@@std@@@std@@QAEXABQAVBEHAVIOR@@@Z function 0x4d
