@@ -898,6 +898,14 @@ void GD5177a0::Run()
 
 // 0x00522e80 (32 bytes): the four-argument front end of the six-argument
 // helper at 0x005215a0, which supplies the window key pair itself.
+//
+// Residue (2026-11): same 32 bytes and the same six pushes in the same order as
+// retail (d, c, -1, 0, b, a), but the scheduler differs: retail pushes the two
+// constants before it reloads b and a, this source loads b into edx before the
+// first push and then has to use ecx for c, so the first difference is at +5
+// and the whole body is one register colour plus two scheduling slots. Every
+// expression form tried (0/-1 as literals, unsigned, void callee) immutably
+// reproduces this schedule.
 int __stdcall GD5215a0(int a, int b, int c, int d, int e, int f);
 
 int __stdcall GD522e80(int a, int b, int c, int d)
@@ -1812,4 +1820,183 @@ struct SKMVECUNFILLF : std::vector<VF>
 VF *SKMVECUNFILLF::FillInit(VF *first, unsigned int count, const VF &value)
 {
     return _Ufill(first, count, value);
+}
+
+// ---------------------------------------------------------------------------
+// The three 16-byte-element appenders at 0x00510b10, 0x00510b30 and
+// 0x00510b50. Each picks one element out of the table hanging off the object
+// at +0 and hands it, with a payload word, to the container append at
+// 0x005109b0 (or, in the mismatched case, to the three-word setter at
+// 0x00510790 on the container at +0x24).
+// ---------------------------------------------------------------------------
+struct GD510b10ELEM
+{
+    char m_0[0x10];
+};
+
+struct GD510b10TABLE
+{
+    char pad_0[0x14];
+    GD510b10ELEM *m_14;
+};
+
+class GD510b10CONTAINER
+{
+public:
+    void Add(void *payload, GD510b10ELEM *element);
+
+    char pad_0[4];
+    void *m_4;
+    void *m_8;
+};
+
+class GD510b10SETTER
+{
+public:
+    void Set(int a, int b, int c);
+};
+
+class GD510b10
+{
+public:
+    void AddFirst();
+    void AddSecond();
+    void Dispatch();
+
+    GD510b10TABLE *m_0;
+    GD510b10CONTAINER *m_4;
+    char pad_8[0x14 - 8];
+    int m_14;
+    int m_18;
+    int m_1c;
+    int m_20;
+    GD510b10SETTER *m_24;
+    char pad_28[0x2c - 0x28];
+    void *m_2c;
+};
+
+// 0x00510b10 (29 bytes, ?AddFirst@GD510b10@@QAEXXZ): append the +0x18 element
+// with the +0x20 payload.
+void GD510b10::AddFirst()
+{
+    m_4->Add((void *)m_20, &m_0->m_14[m_18]);
+}
+
+// 0x00510b30 (29 bytes, ?AddSecond@GD510b10@@QAEXXZ): the same append for the
+// +0x14 element and the +0x1c payload.
+void GD510b10::AddSecond()
+{
+    m_4->Add((void *)m_1c, &m_0->m_14[m_14]);
+}
+
+// 0x00510b50 (55 bytes, ?Dispatch@GD510b10@@QAEXXZ): while the two indices
+// still differ the element goes to the container, otherwise the three words go
+// to the container at +0x24. All three are byte-exact (maskcmp diffs 0).
+void GD510b10::Dispatch()
+{
+    if (m_18 == m_14) {
+        m_4->Add((void *)m_24, &m_0->m_14[m_18]);
+    }
+    else {
+        m_24->Set(m_1c, m_20, (int)m_2c);
+    }
+}
+
+// ---------------------------------------------------------------------------
+// The two 4-byte-element appenders at 0x005191e0 and 0x00519230. Both test the
+// table the same way (a null begin means empty) and take the same grow path
+// through the element-type insert helper; only the helper differs.
+// ---------------------------------------------------------------------------
+
+// 0x005191e0 (77 bytes). The first element goes straight into the spare slot;
+// otherwise the whole range is handed to the element-type insert helper at
+// 0x005184b0, which is a member of the same container (it keeps the incoming
+// ecx and cleans its three arguments).
+//
+// Residue (2026-11): 77 bytes, byte-identical to retail except the two
+// registers of the cold path, 0x3a and 0x3e (retail binds the value pointer to
+// edx and the end pointer to eax; we get the reverse pair). Everything else,
+// including the unsigned jae on the free-slot test and the load/add/store of
+// the end pointer, matches. The two inline size helpers are also emitted as
+// 19-byte COMDATs of their own even though both call sites inlined them; they
+// have no retail counterpart, so a link-time pass has to drop them.
+struct GD5191e0
+{
+    void Add(const int &value);
+    void Insert(int *where, unsigned int count, const int &value);
+
+    unsigned int Count()
+    {
+        if (!m_4)
+            return 0;
+        return (unsigned int)(m_8 - m_4);
+    }
+    unsigned int Capacity()
+    {
+        if (!m_4)
+            return 0;
+        return (unsigned int)(m_c - m_4);
+    }
+
+    int m_0;
+    int *m_4;
+    int *m_8;
+    int *m_c;
+};
+
+void GD5191e0::Add(const int &value)
+{
+    unsigned int count = Count();
+
+    if (m_4 && count < Capacity()) {
+        int *end = m_8;
+
+        *end = value;
+        m_8 = end + 1;
+    }
+    else {
+        Insert(m_8, 1, value);
+    }
+}
+
+// 0x00519230 (77 bytes): the twin of the +0x4 container above for the table
+// whose insert helper is at 0x005182d0. Same residue: 0x3a and 0x3e differ in
+// the two registers of the cold path only.
+struct GD519230
+{
+    void Add(const int &value);
+    void Insert(int *where, unsigned int count, const int &value);
+
+    unsigned int Count()
+    {
+        if (!m_4)
+            return 0;
+        return (unsigned int)(m_8 - m_4);
+    }
+    unsigned int Capacity()
+    {
+        if (!m_4)
+            return 0;
+        return (unsigned int)(m_c - m_4);
+    }
+
+    int m_0;
+    int *m_4;
+    int *m_8;
+    int *m_c;
+};
+
+void GD519230::Add(const int &value)
+{
+    unsigned int count = Count();
+
+    if (m_4 && count < Capacity()) {
+        int *end = m_8;
+
+        *end = value;
+        m_8 = end + 1;
+    }
+    else {
+        Insert(m_8, 1, value);
+    }
 }

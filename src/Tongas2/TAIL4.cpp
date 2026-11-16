@@ -76,12 +76,22 @@ __declspec(noinline) GD556050::~GD556050()
     m_58.m_cap = 0;
 }
 
-class V5547C4
+// The two-level base chain: V5547C4 derives from V5547C0 (its destructor at
+// 0x5545a0 sets its own vtable and jumps to V5547C0's).  The constructors are
+// out of line in other units, so only the base call is visible here.
+class V5547C0
+{
+public:
+    V5547C0();
+    virtual ~V5547C0();
+
+    int m_4;
+};
+
+class V5547C4 : public V5547C0
 {
 public:
     virtual ~V5547C4();
-
-    int m_4;
 };
 
 class V554E60
@@ -90,12 +100,21 @@ public:
     virtual ~V554E60() {}
 };
 
+// The tree's stored value: 8 bytes, so a node is 0x34 bytes with the nil flag
+// at 0x31 (the head node the constructor installs).
+struct TAIL4GDVALUE
+{
+    int m_0;
+    int m_4;
+};
+
 class GD559a10 : public V5547C4, public V554E60
 {
 public:
+    GD559a10();
     virtual ~GD559a10();
 
-    std::map<int, int> m_c;
+    std::map<std::basic_string<char>, TAIL4GDVALUE> m_c;
 };
 
 __declspec(noinline) GD559a10::~GD559a10()
@@ -247,10 +266,17 @@ struct TAIL4MAPVALUE
 
 template class std::map<std::basic_string<char>, TAIL4MAPVALUE>;
 
+// The same tree instantiated for an int key; erase/_Tidy compile to different
+// mangled names but the same bytes as the string-keyed copies above.
+template class std::map<int, int>;
+
 // Two of the map's members already build byte-identical to unnamed targets:
-//   0x5571a0 (183) == ?erase@...string,TAIL4MAPVALUE...  (iterator,iterator)
+//   0x5571a0 (183) == ?erase@...HH... / ...string,TAIL4MAPVALUE... (iterator,iterator)
 //   0x559620 (429) == ?_Insert@...string,TAIL4MAPVALUE...
-// They only need the symbols.txt rows below; the bodies need no change.
+// 0x5571a0's own relocations point at ?EraseHandle@TL3TREE and FUN_005567f0,
+// so it is really TL3TREE::Erase(first,last): the bytes are identical to the
+// STL body, but naming it with the STL instantiation leaves the callee names
+// different, which objdiff still scores as a difference.
 
 // The 8-byte pair the notification list stores.
 struct TAIL4PAIR8
@@ -337,7 +363,11 @@ G2TL3TGT1::G2TL3TGT1(const G2TL3TGT1 &other) : m_0(other.m_0), m_1c(other.m_1c)
 struct TL3NODE
 {
     TL3NODE(TL3NODE *left, TL3NODE *parent, TL3NODE *right,
-            const G2TL3TGT1 &value, char color);
+            const G2TL3TGT1 &value, char color)
+        : m_left(left), m_parent(parent), m_right(right), m_value(value),
+          m_color(color), m_isnil(0)
+    {
+    }
 
     TL3NODE *m_left;        // 0x00
     TL3NODE *m_parent;      // 0x04
@@ -346,13 +376,6 @@ struct TL3NODE
     char m_color;           // 0x30
     char m_isnil;           // 0x31
 };
-
-TL3NODE::TL3NODE(TL3NODE *left, TL3NODE *parent, TL3NODE *right,
-                 const G2TL3TGT1 &value, char color)
-    : m_left(left), m_parent(parent), m_right(right), m_value(value),
-      m_color(color), m_isnil(0)
-{
-}
 
 class TL3TREE
 {
@@ -422,6 +445,7 @@ static char *GD559D40(unsigned int value, char *buffer, unsigned int radix)
 // 00559d80 (124 bytes) -- signed integer to string in an arbitrary radix.
 char *GD559D80(int value, char *buffer, int radix)
 {
+    char *start = buffer;
     char *p;
     if (radix < 2 || radix > 36)
         radix = 10;
@@ -429,23 +453,23 @@ char *GD559D80(int value, char *buffer, int radix)
         unsigned int magnitude = -value;
         unsigned int quotient = magnitude / radix;
         unsigned int remainder = magnitude % radix;
-        *buffer = '-';
-        p = buffer + 1;
+        *start = '-';
+        p = start + 1;
         if (0 < quotient)
             p = GD559D40(quotient, p, radix);
         *p = GD559DIGITS[remainder];
         p[1] = 0;
-        return buffer;
+        return start;
     }
     unsigned int positive = (unsigned int)value;
     unsigned int quotient = positive / radix;
     unsigned int remainder = positive % radix;
-    p = buffer;
+    p = start;
     if (0 < quotient)
-        p = GD559D40(quotient, buffer, radix);
+        p = GD559D40(quotient, start, radix);
     *p = GD559DIGITS[remainder];
     p[1] = 0;
-    return buffer;
+    return start;
 }
 
 // 00558fe0 (121 bytes) -- reads ProgramFilesDir out of the registry.
@@ -471,30 +495,26 @@ int __fastcall GD558FE0(char *buffer, unsigned int size)
 }
 
 // 00557a40 (109 bytes) -- constructor that owns one reference-counted object.
-class GD557a40ITEM
-{
-public:
-    GD557a40ITEM();
-    void Call();
-
-    int m_00[6];        // 0x00, 0x18 bytes in all
-};
-
 class GD557a40
 {
 public:
     GD557a40();
 
-    GD557a40ITEM *m_0;
+    GD559a10 *m_0;
 };
 
 GD557a40::GD557a40()
 {
-    GD557a40ITEM *p = 0;
-    p = new GD557a40ITEM();
+    GD559a10 *p = 0;
+    p = new GD559a10();
     m_0 = p;
     if (p)
-        p->Call();
+        ((G2TL3CALL *)p)->Call();
+}
+
+// 00557290 (128 bytes) -- the map bases at +0xc and installs its head node.
+GD559a10::GD559a10()
+{
 }
 // 005563b0 (114 bytes + 0x15 handler) -- the notification tree's node allocator
 // for the derived list.  The node ctor stays out of line (00555d20), so this is

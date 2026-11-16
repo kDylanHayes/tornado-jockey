@@ -2659,6 +2659,7 @@ class G2CORE4FID1
 {
 public:
     virtual int GetFactoryId();
+    static void RegisterCommands();
 
     static int s_factoryId;
 };
@@ -2672,6 +2673,7 @@ class G2CORE4FID2
 {
 public:
     virtual int GetFactoryId();
+    static void RegisterCommands();
 
     static int s_factoryId;
 };
@@ -2685,6 +2687,7 @@ class G2CORE4FID3
 {
 public:
     virtual int GetFactoryId();
+    static void RegisterCommands();
 
     static int s_factoryId;
 };
@@ -2698,6 +2701,7 @@ class G2CORE4FID4
 {
 public:
     virtual int GetFactoryId();
+    static void RegisterCommands();
 
     static int s_factoryId;
 };
@@ -2711,6 +2715,7 @@ class G2CORE4FID5
 {
 public:
     virtual int GetFactoryId();
+    static void RegisterCommands();
 
     static int s_factoryId;
 };
@@ -2724,6 +2729,7 @@ class G2CORE4FID6
 {
 public:
     virtual int GetFactoryId();
+    static void RegisterCommands();
 
     static int s_factoryId;
 };
@@ -2737,6 +2743,7 @@ class G2CORE4FID7
 {
 public:
     virtual int GetFactoryId();
+    static void RegisterCommands();
 
     static int s_factoryId;
 };
@@ -2750,6 +2757,7 @@ class G2CORE4FID8
 {
 public:
     virtual int GetFactoryId();
+    static void RegisterCommands();
 
     static int s_factoryId;
 };
@@ -2757,6 +2765,110 @@ public:
 int G2CORE4FID8::GetFactoryId()
 {
     return s_factoryId;
+}
+
+// Every resource master in this block registers itself the same way: its
+// parent's class id, then its command table, which HashCommands fills in.
+// The class name and parent name are the RegisterClassName strings; the
+// tables are the data targets named after their addresses.
+extern "C" CMDENTRY DAT_006cb1d8[];
+extern "C" CMDENTRY DAT_006cb1f8[];
+extern "C" CMDENTRY DAT_006cb258[];
+extern "C" CMDENTRY DAT_006cb278[];
+extern "C" CMDENTRY DAT_006cb298[];
+extern "C" CMDENTRY DAT_006cb2b8[];
+extern "C" CMDENTRY DAT_006cb2d8[];
+extern "C" CMDENTRY DAT_006cb2f8[];
+extern "C" CMDENTRY DAT_006b5118[];
+
+// PROPSHADOWMASTER (0x004415a0).
+void G2CORE4FID1::RegisterCommands()
+{
+    g_classParents[s_factoryId] = RESOURCEMASTER::s_classId;
+    g_classCommands[s_factoryId] = DAT_006cb1d8;
+    HashCommands(DAT_006cb1d8);
+    RegisterClassName(DAT_006cb1d8, "PROPSHADOWMASTER", "RESOURCEMASTER");
+}
+
+// RADARMASTER (0x00441de0).
+extern void *g_6ad674;
+
+class RADARMASTER : public RESOURCEMASTER
+{
+public:
+    static void RegisterCommands();
+};
+
+void RADARMASTER::RegisterCommands()
+{
+    int id = (int)g_6ad674;
+    g_classParents[id] = RESOURCEMASTER::s_classId;
+    g_classCommands[id] = DAT_006cb1f8;
+    HashCommands(DAT_006cb1f8);
+    RegisterClassName(DAT_006cb1f8, "RADARMASTER", "RESOURCEMASTER");
+}
+
+// SCRIPTSMASTER (0x00442e70).
+void G2CORE4FID2::RegisterCommands()
+{
+    g_classParents[s_factoryId] = RESOURCEMASTER::s_classId;
+    g_classCommands[s_factoryId] = DAT_006cb258;
+    HashCommands(DAT_006cb258);
+    RegisterClassName(DAT_006cb258, "SCRIPTSMASTER", "RESOURCEMASTER");
+}
+
+// SIDEKICKMASTER (0x004430b0).
+void G2CORE4FID3::RegisterCommands()
+{
+    g_classParents[s_factoryId] = RESOURCEMASTER::s_classId;
+    g_classCommands[s_factoryId] = DAT_006cb278;
+    HashCommands(DAT_006cb278);
+    RegisterClassName(DAT_006cb278, "SIDEKICKMASTER", "RESOURCEMASTER");
+}
+
+// SOUNDTJMASTER (0x00443550).
+void G2CORE4FID4::RegisterCommands()
+{
+    g_classParents[s_factoryId] = SOUNDMASTER::s_classId;
+    g_classCommands[s_factoryId] = DAT_006cb298;
+    HashCommands(DAT_006cb298);
+    RegisterClassName(DAT_006cb298, "SOUNDTJMASTER", "SOUNDMASTER");
+}
+
+// STORMCHASERMASTER (0x004440d0).
+void G2CORE4FID5::RegisterCommands()
+{
+    g_classParents[s_factoryId] = RESOURCEMASTER::s_classId;
+    g_classCommands[s_factoryId] = DAT_006cb2b8;
+    HashCommands(DAT_006cb2b8);
+    RegisterClassName(DAT_006cb2b8, "STORMCHASERMASTER", "RESOURCEMASTER");
+}
+
+// TOOLTIPSMASTER (0x004445c0).
+void G2CORE4FID6::RegisterCommands()
+{
+    g_classParents[s_factoryId] = RESOURCEMASTER::s_classId;
+    g_classCommands[s_factoryId] = DAT_006cb2d8;
+    HashCommands(DAT_006cb2d8);
+    RegisterClassName(DAT_006cb2d8, "TOOLTIPSMASTER", "RESOURCEMASTER");
+}
+
+// TORNADOMASTER (0x00444890).
+void G2CORE4FID7::RegisterCommands()
+{
+    g_classParents[s_factoryId] = RESOURCEMASTER::s_classId;
+    g_classCommands[s_factoryId] = DAT_006cb2f8;
+    HashCommands(DAT_006cb2f8);
+    RegisterClassName(DAT_006cb2f8, "TORNADOMASTER", "RESOURCEMASTER");
+}
+
+// GUITJ (0x00444ff0).
+void G2CORE4FID8::RegisterCommands()
+{
+    g_classParents[s_factoryId] = GUI::s_classId;
+    g_classCommands[s_factoryId] = DAT_006b5118;
+    HashCommands(DAT_006b5118);
+    RegisterClassName(DAT_006b5118, "GUITJ", "GUI");
 }
 
 // The SCRIPTS manager (0x00442df0).
