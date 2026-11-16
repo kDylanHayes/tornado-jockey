@@ -174,3 +174,8 @@ Do not call a wall "register allocation" while an earlier class still differs.
 | `G2RULESOBJ::Update` | 95.92 | schedule: `fmul` against one `lea` |
 | `SKINNEDMESH` `Get14`/`Get4` | 68 | code shape: retail uses `lea` + `mov`, the compiler folds to `mov [eax+ecx*4]` |
 | `G2CHAIN` constructor | 87.74 | schedule: interleaving around the wide-string pushes |
+| `SPAWNER::Spawn` 0x004b5b00 | 99.992 | one hidden-return slot: `GetPosition()`'s `V3` buffer is `[esp+0x88]` in retail, `[esp+0x2c]` here; naming the temporary (`V3 p = GetPosition();`) adds a byte and is worse |
+| `VALUEMANAGER::Add` 0x004cdb40 | 99.978 | one temp slot: the `SRESULT(true)` temp is `[esp+0x3c]` in retail, `[esp+0x40]` here; the `SRESULT(false)` temp matches |
+| `TRAVELWANIMBEHAVIOR::Walk` 0x004d1d80 | 99.965 | frame 0x18 in retail, 0x24 here (one 12-byte local too many) |
+| `KERNELCOMMANDS::DelayFrames` 0x00495460 | 99.987 | one 2-byte disp32: the `SRT_BOOL` constant's outgoing slot |
+| `GEOMETRY::CollideSphereBox/Quad` | 99.74 / 99.66 | dead frame slot: retail reserves 0x10 more and every local sits 0x10 higher; hoisting the `MATRIX` local out of its `if` makes it worse (719 bytes) |
