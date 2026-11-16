@@ -10180,3 +10180,5 @@
 0x005189d0 ?resize@?$vector@PAVBEHAVIOR@@V?$allocator@PAVBEHAVIOR@@@std@@@std@@QAEXIPAVBEHAVIOR@@@Z function 0x83
 0x00512810 ?Set@GD512810@@QAEXHUV3@@@Z function 0xa4
 0x00656058 __imp__GetDeviceCaps@8 data 0x4
+0x00511ad0 ?_Growmap@?$deque@HV?$allocator@H@std@@@std@@IAEXI@Z function 0x153
+0x00512710 ?push_front@?$deque@HV?$allocator@H@std@@@std@@QAEXABH@Z function 0x7a
