@@ -3533,7 +3533,8 @@
         "FUN_00537630": "??$fill@PAHH@std@@YAXPAH0ABH@Z",
         "FUN_0052faa0": "??$copy_backward@PAHPAH@std@@YAPAHPAH00@Z",
         "FUN_00517d60": "?_Ufill@?$vector@HV?$allocator@H@std@@@std@@IAEPAHPAHIABH@Z",
-        "?_Tidy@?$deque@PAUG2TFGET@@V?$allocator@PAUG2TFGET@@@std@@@std@@IAEXXZ": "?_Tidy@?$deque@GV?$allocator@G@std@@@std@@IAEXXZ"
+        "?_Tidy@?$deque@PAUG2TFGET@@V?$allocator@PAUG2TFGET@@@std@@@std@@IAEXXZ": "?_Tidy@?$deque@GV?$allocator@G@std@@@std@@IAEXXZ",
+        "?GD517d60@@YGPAHPAHIPBH@Z": "?_Ufill@?$vector@HV?$allocator@H@std@@@std@@IAEPAHPAHIABH@Z"
       }
     },
     {
