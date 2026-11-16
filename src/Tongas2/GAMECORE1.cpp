@@ -32,6 +32,7 @@ extern "C" __declspec(dllimport) void __stdcall Sleep(unsigned long);
 #include "Tongas2/INPUT.h"
 #include "Tongas2/TIMER.h"
 #include "Tongas2/ACTOR.h"
+#include "Tongas2/CAMERA.h"
 #include "Tongas2/CSTRING.h"
 #include "Tongas2/CMDBASE.h"
 #include "Tongas2/CPRIMITIVE3.h"
@@ -739,6 +740,9 @@ public:
 
     static int s_classId;
     static int s_factoryId;
+    static CMDENTRY s_commands[];
+
+    static void RegisterCommands();
 
     // The two flags the constructor clears; they also give the class its
     // 0xcd0 allocation size.
@@ -796,6 +800,9 @@ public:
 
     static int s_classId;
     static int s_factoryId;
+    static CMDENTRY s_commands[];
+
+    static void RegisterCommands();
 };
 
 G2CORE1J2::~G2CORE1J2()
@@ -830,6 +837,9 @@ public:
 
     static int s_classId;
     static int s_factoryId;
+    static CMDENTRY s_commands[];
+
+    static void RegisterCommands();
 };
 
 int G2CORE1J3::s_classId = -1;
@@ -1460,6 +1470,9 @@ public:
 
     static int s_classId;
     static int s_factoryId;
+    static CMDENTRY s_commands[];
+
+    static void RegisterCommands();
 
     char pad_0ccc[0xf10 - 0xccc];
     STRING m_f10;
@@ -6694,6 +6707,42 @@ void G2CORE1K3::RegisterCommands()
     g_classCommands[s_classId] = s_commands;
     HashCommands(s_commands);
     RegisterClassName(s_commands, "KERNELCOMMANDSTJ", "KERNELCOMMANDS");
+}
+
+// 0x00408d00: the camera that follows an actor.
+void G2CORE1J1::RegisterCommands()
+{
+    g_classParents[s_classId] = ACTOR::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "CAMERAFOLLOW", "ACTOR");
+}
+
+// 0x004097e0: the camera holder.
+void G2CORE1J2::RegisterCommands()
+{
+    g_classParents[s_classId] = ACTOR::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "CAMERAHOLDER", "ACTOR");
+}
+
+// 0x004099e0: the game's camera class.
+void G2CORE1J3::RegisterCommands()
+{
+    g_classParents[s_classId] = CAMERA::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "CAMERATJ", "CAMERA");
+}
+
+// 0x0040a7b0: the scenario class.
+void G2CORE1K7::RegisterCommands()
+{
+    g_classParents[s_classId] = ACTOR::s_classId;
+    g_classCommands[s_classId] = s_commands;
+    HashCommands(s_commands);
+    RegisterClassName(s_commands, "SCENARIO", "ACTOR");
 }
 
 // 0x00402130: zeroes four state words, then resets the DRM and the class's
