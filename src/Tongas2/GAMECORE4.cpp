@@ -267,10 +267,17 @@ class GD4413d0 : public RESOURCEMASTER
 {
 public:
     virtual ~GD4413d0() throw();
+    SRESULT Execute(CMDENTRY *command, TOKENS **args);
 };
 
 __declspec(noinline) GD4413d0::~GD4413d0() throw()
 {
+}
+
+// 0x441c60: the command-table forwarder every master in this block repeats.
+SRESULT GD4413d0::Execute(CMDENTRY *command, TOKENS **args)
+{
+    return (this->*(SRESULT (GD4413d0::*)(TOKENS **))command->func)(args);
 }
 
 class GD441630 : public OBJECT

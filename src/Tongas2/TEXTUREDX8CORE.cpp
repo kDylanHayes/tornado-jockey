@@ -17,6 +17,20 @@
 // The frame triangle counter at 0x009fef40.
 extern int g_numTriangles;
 
+// 0x00546ea0, 0x9d4 bytes: the loader the shader list's UpdateTextures calls
+// at 0x00535543 (ecx = &owner->m_3c, 0x38 bytes of stack arguments).  It is
+// NOT ?CreateTexture@@YAHXZ: the retail body is a __thiscall member that takes
+// its this in ecx (stored at [esp+0x18] at 0x546ebf and handed to
+// GD546bc0::FreeAll) plus fourteen argument dwords, including a by-value
+// std::string at [esp+0x17c] (its _Mysize at [esp+0x18c] feeds
+// substr(size-3, 3), its _Myres at [esp+0x190] the small-string test), a char*
+// out-flag at [esp+0x198] and the mip count at [esp+0x1a8].  A definition that
+// mangles to ?CreateTexture@@YAHXZ is `int __cdecl CreateTexture(void)`: it has
+// no caller frame it could read those dwords from, so no source can both carry
+// that name and produce these bytes.  The name is a placeholder in
+// config/symbols.txt; matching needs the real member name there and a re-delink
+// (and the __ehhandler reference, which the linker folded onto
+// __ehhandler$?_Insert_n@?$vector@USHADERTYPE2C..., then pairs by itself).
 int CreateTexture()
 {
     return 0;
@@ -1106,6 +1120,17 @@ struct SHADERTYPE2C
 template void std::vector<PATHREPOPOINT>::push_back(const PATHREPOPOINT &);
 template void std::vector<SHADERTYPE24>::push_back(const SHADERTYPE24 &);
 template void std::vector<SHADERTYPE2C>::push_back(const SHADERTYPE2C &);
+
+// 0x0053eff0 ?insert@?$vector@USHADERTYPE2C...: the code is already exact, all
+// 0x66 bytes of it (the tail is `imul esi, esi, 0x2c / add esi, [edi+4]`,
+// which is why it is three bytes shorter than the 36-byte record's insert that
+// loads _First and uses two leas).  The target section is 0x69 because
+// config/symbols.txt pins that size, so it keeps three of the ten int3 bytes
+// the linker left between 0x0053f056 and the next function at 0x0053f060; our
+// COMDAT is exactly as long as the code and objdiff counts the difference as
+// 93.33%.  Padding a copy of our object by those three 0xcc bytes makes objdiff
+// report the function 100% again, so the size in symbols.txt (0x69 -> 0x66,
+// then re-delink) is the whole residue: no source change is involved.
 
 template void std::vector<PATHREPOPOINT>::_Construct_n(size_t, const PATHREPOPOINT &);
 template void std::vector<SHADERTYPE24>::_Construct_n(size_t, const SHADERTYPE24 &);

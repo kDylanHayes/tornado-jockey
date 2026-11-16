@@ -34,7 +34,6 @@ extern "C" __declspec(dllimport) void __stdcall Sleep(unsigned long);
 #include "Tongas2/ACTOR.h"
 #include "Tongas2/CSTRING.h"
 #include "Tongas2/CMDBASE.h"
-#include "Tongas2/CONSOLE.h"
 #include "Tongas2/CPRIMITIVE3.h"
 #include "Tongas2/FIXEDWSTRING.h"
 #include "Tongas2/GAME.h"
@@ -864,9 +863,15 @@ const char *G2CORE1J3::GetClassName()
     return g_classNames[s_classId];
 }
 
-class G2CORE1K1 : public CONSOLE
+class G2CORE1K1 : public ACTOR
 {
+public:
+    virtual ~G2CORE1K1();
 };
+
+G2CORE1K1::~G2CORE1K1()
+{
+}
 
 extern RESOURCEMANAGER *g_pEMITTER;
 extern RESOURCEMANAGER *g_pFX;
@@ -1734,14 +1739,13 @@ __declspec(noinline) void G2CORE1K9SCENARIO::Remove(void *object)
     if (!object)
         return;
     RESHANDLE *handle = (RESHANDLE *)((char *)object + 0x24);
-    if (!handle->IsValid()) {
-        if (g_pLog)
-            g_pLog->Error("Unregistering radarObject, iconId not valid");
-    } else {
+    if (handle->IsValid()) {
         RESOURCE *resource = g_pResources->GetResource(*handle);
         if (resource)
             ((G2CORE1K9RESOURCEVIEW *)resource)->Unregister();
         handle->Invalidate();
+    } else if (g_pLog) {
+        g_pLog->Error("Unregistering radarObject, iconId not valid");
     }
     ((G2CORE1K9CONTAINER *)((char *)this + 0x3bc0))->Remove(&object);
     delete object;
@@ -5536,7 +5540,7 @@ struct APPOPTIONSX
     virtual void A07();
     virtual void A08();
     virtual void A09();
-    virtual bool Call(bool flag, int value);
+    virtual char Call(bool flag, int value);
 };
 
 struct G2CORE1SR6
@@ -5548,8 +5552,8 @@ SRESULT G2CORE1SR6::Command(int value)
 {
     int unused = 0;
     APPOPTIONSX *options = (APPOPTIONSX *)g_pApp->m_pOptions;
-    char flag = *(char *)((char *)this + 0x230);
-    bool ok = options->Call(flag, *(int *)((char *)this + 0x228));
+    bool ok = options->Call(*(char *)((char *)this + 0x230),
+                            *(int *)((char *)this + 0x228));
     return SRESULT(ok);
 }
 
@@ -6066,8 +6070,7 @@ public:
 V3 GD409450::Method()
 {
     ANG *angles = (ANG *)((char *)this + 0x34);
-    char flag = *(char *)((char *)this + 0x80);
-    if (flag & 1)
+    if (*(char *)((char *)this + 0x80) & 1)
         angles->UpdateMatrix();
     return ((GD409450OBJ *)((char *)angles + 0xc))->Get();
 }

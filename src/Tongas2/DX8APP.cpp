@@ -5,10 +5,71 @@
 // cannot cut the target short. The destructor is virtual in the target
 // (0x00509900 is the scalar-deleting destructor's non-deleting half).
 #include <memory>
-#include "Tongas2/DX8APP.h"
+// The scaffold headers leave both of the application's bases without their
+// out-of-line constructors, and HARDWARE::Detect without the three arguments
+// the retail 0x00504ff0 pops.  The class graph and the detector are declared
+// here with the retail shapes instead; see the unit notes.
+#define TONGAS2_HARDWARE_H
+#define TONGAS2_DX8APP_H
+class HARDWARE;
+#include <string>
+#include "Tongas2/SETTINGS.h"
 #include "Tongas2/RESOURCES.h"
 #include "Tongas2/RENDERER.h"
 
+class HARDWARE
+{
+public:
+    HARDWARE();
+    ~HARDWARE();
+    void Detect(int width, int height, void *out);
+    bool IsSupported(int index);
+    int HardwareE(int index);
+
+    char m_000[0x54];
+};
+
+// The window object at +0x00 (0x44 bytes) and the Direct3D object at +0x44
+// (0x274 bytes).  Both constructors are out of line in the retail plugin.
+class DX8APPBASE1
+{
+public:
+    DX8APPBASE1();
+    virtual ~DX8APPBASE1();
+
+    char pad_04[0x40];
+};
+
+class GD507220
+{
+public:
+    GD507220();
+    virtual ~GD507220();
+
+    char pad_04[0x270];
+};
+
+class DX8APPSTRING
+{
+public:
+    ~DX8APPSTRING();
+};
+
+class DX8APP : public DX8APPBASE1, public GD507220
+{
+public:
+    DX8APP();
+    virtual ~DX8APP();
+    void Init();
+
+private:
+    DX8APPSTRING *m_2b8;
+    HARDWARE *m_2bc;
+    SETTINGS *m_2c0;
+};
+
+DX8APP *CreateDX8APP();
+void RegisterDX8Plugin();
 
 DX8APP::~DX8APP()
 {
@@ -24,6 +85,29 @@ DX8APP::~DX8APP()
         delete m_2b8;
         m_2b8 = 0;
     }
+}
+
+// The window base's SetSize as the constructor calls it: qualified, so the
+// call goes straight to the base implementation instead of the vtable.
+class APPWINDOW
+{
+public:
+    virtual void SetSize(int width, int height);
+};
+
+// The two sizes the constructor hands to SetSize.
+struct DX8APPCTOR
+{
+    char pad_0[0x214];
+    int m_214;
+    int m_218;
+};
+
+DX8APP::DX8APP()
+    : m_2b8(0), m_2bc(0), m_2c0(0)
+{
+    DX8APPCTOR *self = (DX8APPCTOR *)this;
+    ((APPWINDOW *)this)->APPWINDOW::SetSize(self->m_214, self->m_218);
 }
 
 void DX8APP::Init()

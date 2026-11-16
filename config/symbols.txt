@@ -141,7 +141,7 @@
 0x0040eec0 ?GetNext@?$SAFEINDEX@VACTOR@@$0BDII@$0PL@$00@@QAEPAVACTOR@@PAH@Z function
 0x0040f230 ??D@YA?AUV3@@ABMABU0@@Z function
 0x0040f260 ?Distance@V3@@QBEMABU1@@Z function
-0x00410340 ?Normalized@V2@@QBE?AU1@XZ function
+0x00410340 ?Normalized@V2@@QBE?AU1@XZ function 0x4c
 0x00410390 ??K@YA?AUV3@@ABU0@ABM@Z function
 0x004103f0 ?Length@V3@@QBEMXZ function
 0x00410420 ??8@YA_NABURGB@@0@Z function
@@ -9376,7 +9376,7 @@
 0x0065dbf0 ??_7GD438ff0@@6BCMDBASE@@@ data 0x230
 0x0065dbb0 ??_7GD438ff0@@6BACTORLINK@@@ data 0x3c
 0x0065dba0 ??_7GD438ff0@@6B@ data 0x10
-0x0040c5e0 ?Remove@G2CORE1K9SCENARIO@@QAEXPAX@Z function 0x8d
+0x0040c5e0 ?Remove@G2CORE1K9SCENARIO@@QAEXPAX@Z function 0x90
 0x00658ef8 ??_7G2CORE1K9@@6BCMDBASE@@@ data 0x230
 0x00658ebc ??_7G2CORE1K9@@6BACTORLINK@@@ data 0x3c
 0x00658e70 ??_7G2CORE1K9@@6BMOUSELISTENER@@@ data 0x4c
@@ -9935,7 +9935,7 @@
 0x0053f200 ?push_back@?$vector@USHADERTYPE2C@@V?$allocator@USHADERTYPE2C@@@std@@@std@@QAEXABUSHADERTYPE2C@@@Z function 0x81
 0x0053ed00 ?insert@?$vector@UPATHREPOPOINT@@V?$allocator@UPATHREPOPOINT@@@std@@@std@@QAE?AViterator@12@V312@ABUPATHREPOPOINT@@@Z function 0x69
 0x0053eed0 ?insert@?$vector@USHADERTYPE24@@V?$allocator@USHADERTYPE24@@@std@@@std@@QAE?AViterator@12@V312@ABUSHADERTYPE24@@@Z function 0x69
-0x0053eff0 ?insert@?$vector@USHADERTYPE2C@@V?$allocator@USHADERTYPE2C@@@std@@@std@@QAE?AViterator@12@V312@ABUSHADERTYPE2C@@@Z function 0x69
+0x0053eff0 ?insert@?$vector@USHADERTYPE2C@@V?$allocator@USHADERTYPE2C@@@std@@@std@@QAE?AViterator@12@V312@ABUSHADERTYPE2C@@@Z function 0x66
 0x0053e050 ?_Insert_n@?$vector@UPATHREPOPOINT@@V?$allocator@UPATHREPOPOINT@@@std@@@std@@IAEXViterator@12@IABUPATHREPOPOINT@@@Z function 0x2ca
 0x0053e820 ?_Insert_n@?$vector@USHADERTYPE2C@@V?$allocator@USHADERTYPE2C@@@std@@@std@@IAEXViterator@12@IABUSHADERTYPE2C@@@Z function 0x2a8
 0x00558fe0 ?GD558FE0@@YIHPADI@Z function 0x79
@@ -10057,3 +10057,4 @@
 0x00436fc0 ?AllocNode@G3TREEALLOC@@QAEPAUG3TREENODE@@HHHABUV3@@D@Z function 0x49
 0x00433ff0 ?Add@G3SMOOTHER@@QAEXM@Z function 0x4d
 0x00436f50 FUN_00436f50 function 0x37
+0x006cb458 DAT_006cb458 data 0x1
