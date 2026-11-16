@@ -160,6 +160,14 @@ Do not call a wall "register allocation" while an earlier class still differs.
   (`build/scan_cross_unit.py` finds those 25 candidates; all scored zero). The body
   has to be emitted in the owning unit, or the unit has to claim the other one's
   range.
+- **A prefix match is necessary but not sufficient.** `scan_prefix.py` can prove our
+  body *is* the retail function up to `int3` padding, and still be wrong: objdiff
+  also compares relocation **names**. SKINNEDMESH's `erase<vector<vector<int>>>` at
+  0x005136e0 is byte-identical yet scores 99.83871 because retail's two calls
+  resolve to `?$CopyItemsForward@V?$vector@MV…` and `?GD50b010` (ICF twins), while
+  ours name `_Copy_opt`/`_Destroy_range`. Verify a staged row with
+  `build/pair_check.py <unit> <FUN_sym> <mangled>` before spending a delink on it:
+  that scored the same `erase` at 99.84 and `resize<vector<BEHAVIOR*>>` at 100.0.
 - **Do not delink in bulk while other agents are delinking.** Concurrent
   `ApplySymbols`/`DelinkUnit` runs on the shared Ghidra project can abort a unit
   ("Start address must be less than or equal to end address", transient symbol
