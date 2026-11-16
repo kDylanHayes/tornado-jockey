@@ -10182,3 +10182,6 @@
 0x00656058 __imp__GetDeviceCaps@8 data 0x4
 0x00511ad0 ?_Growmap@?$deque@HV?$allocator@H@std@@@std@@IAEXI@Z function 0x153
 0x00512710 ?push_front@?$deque@HV?$allocator@H@std@@@std@@QAEXABH@Z function 0x7a
+0x00416fe0 ?Detach@G2CORE2M1@@QAEXPAUG2REFOBJECT@@@Z function 0x99
+0x004216b0 ?Jump@G2CORE2M1@@QAEXMH@Z function 0x94
+0x00417ee0 ?Run@GD417ee0@@QAE_NHHHHH@Z function 0xac

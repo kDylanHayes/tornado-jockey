@@ -1239,10 +1239,12 @@ void G2WIND::RegisterCommands()
     HashCommands(s_commands);
     RegisterClassName(s_commands, "WIND", "ACTOR");
 }
-class G2ODEACTOR
+class G2ODEACTOR : public ACTOR
 {
 public:
     static int s_classId;
+    // 0x54afc0: the physics body's force, in the unit's own class.
+    void AddForce(float x, float y, float z);
 };
 
 class G2WTINTRO
@@ -2504,6 +2506,8 @@ const char *G2FOREST::GetClassName()
     return g_classNames[s_classId];
 }
 
+struct G2REFOBJECT;
+
 struct G2CORE2M1
 {
     void SetCF0(const int &value);
@@ -2544,11 +2548,15 @@ struct G2CORE2M1
 
     void Respawn();
     void Start();
+    void Jump(float duration, int mode);
+    void Detach(struct G2REFOBJECT *object);
     void WarnObjective();
     SRESULT SetTornadoValue(TOKENS **args);
     SRESULT SetTornadoPair(TOKENS **args);
     SRESULT SetTornadoPoint(TOKENS **args);
     void SetPair(int first, float second);
+    // 0x4215f0: the collapse update, still a hole of its own.
+    void Refresh();
 };
 
 void G2CORE2M1::SetCF0(const int &value)
@@ -3822,6 +3830,26 @@ struct G2VSLOT150 : G2VSLOTPAD<150>
     virtual void Call3(int x, int y, int z);
 };
 
+// Slot 0x168: the object's position. The caller supplies the buffer and the
+// call returns its address in eax, so it is a V3 by value.
+struct G2VSLOT90 : G2VSLOTPAD<90>
+{
+    virtual V3 Call0();
+};
+
+// Slot 0x110: the data of a resource whose last reference went away, given a
+// mode and a place for the buffer to release.
+struct G2VSLOT68 : G2VSLOTPAD<68>
+{
+    virtual void Call2(int *mode, char **data);
+};
+
+// Slot 0x64: whether the game is running. Only the answer matters here.
+struct G2VSLOT25 : G2VSLOTPAD<25>
+{
+    virtual bool Call0();
+};
+
 // Slot 0x298: the call that takes the chosen slot by reference.
 struct G2VSLOT166 : G2VSLOTPAD<166>
 {
@@ -3918,6 +3946,42 @@ struct G2VSLOT41 : G2VSLOTPAD<41>
     virtual void Call1(int *value);
 };
 
+// 0x416fe0: give up one reference to a resource. When the count reaches zero
+// the object hands over the data it still holds, which is then released.
+void G2CORE2M1::Detach(G2REFOBJECT *object)
+{
+    if (*(float *)((char *)object + 0x1800) != 1.0f) {
+        *(int *)((char *)this + 0x1738) -= 1;
+        *(float *)((char *)this + 0xd24) /=
+            1.0f - *(float *)((char *)object + 0x1800);
+        if (*(int *)((char *)this + 0x1738) == 0) {
+            CSTRING data;
+            int mode = 8;
+            reinterpret_cast<G2VSLOT68 *>(this)->Call2(&mode, &data.m_str);
+        }
+    }
+}
+
+// 0x4216b0: aim at the target height over the given time and hand over to
+// the update. A zero duration only sets the mode.
+void G2CORE2M1::Jump(float duration, int mode)
+{
+    *(int *)((char *)this + 0xed4) = mode;
+    *(bool *)((char *)this + 0xed1) = true;
+    if (duration != 0.0f) {
+        V3 direction;
+        direction.x = 0.0f;
+        direction.y =
+            (-*(float *)((char *)this + 0xecc) -
+             reinterpret_cast<G2VSLOT90 *>(this)->Call0().y) /
+            duration;
+        direction.z = 0.0f;
+        *(V3 *)((char *)this + 0x13c) = direction;
+    }
+    *(int *)((char *)this + 0x138) = 0;
+    Refresh();
+}
+
 // 0x421ed0: the destructible pieces start inactive inside their bounding
 // box, everything else always active, and remember where they started.
 void G2CORE2M1::Start()
@@ -3947,6 +4011,8 @@ struct G2TORNADOOBJ : public ACTOR
     void TakeObjective(V3 point);
     void SetValue(int value);
     void SetPoint(V3 point, float value);
+    // 0x417800: the wind field at a point, for a given mode.
+    V3 WindField(V3 position, int mode);
 };
 
 // 0x426210: warn when the tornado is gone, otherwise give it the point
@@ -3981,6 +4047,49 @@ SRESULT G2CORE2M1::SetTornadoPair(TOKENS **args)
     return true;
 }
 
+// The shake helper at 0x411ec0, a member of the object this one belongs to:
+// it takes the two angles and writes the shake it picks into the vector.
+struct G2SHAKEPICK
+{
+    void Pick(V3 *shake, V2 angles);
+};
+
+// The object whose sub-object at 0xccc the shake runs in; only what this
+// call touches is named.
+struct GD417ee0
+{
+    char m_0000[0xda];
+    bool m_da;
+    char m_db[0x21c - 0xdb];
+    int m_21c;
+    int m_220;
+    char m_224[0x254 - 0x224];
+    V2 m_254;
+    char m_25c[0x314 - 0x25c];
+    void *m_314;
+    char m_318[0x31c - 0x318];
+    float m_31c;
+
+    bool Run(int a, int b, int c, int d, int e);
+};
+
+// 0x417ee0: while the game runs and the shake has not played, pick the shake
+// for the current angles and store it.
+bool GD417ee0::Run(int, int, int, int, int)
+{
+    if (!reinterpret_cast<G2VSLOT25 *>(g_pGame)->Call0() ||
+        g_pTimer->m_paused)
+        return false;
+    if (m_314 && !m_da && m_31c <= 0.0f) {
+        m_da = true;
+        V3 shake;
+        reinterpret_cast<G2SHAKEPICK *>((char *)this - 0xccc)
+            ->Pick(&shake, m_254);
+        *(V2 *)((char *)this + 0x21c) = V2(shake.x, shake.z);
+    }
+    return true;
+}
+
 // 0x4249d0: the number and the actor's point.
 SRESULT G2CORE2M1::SetTornadoPoint(TOKENS **args)
 {
@@ -3990,4 +4099,26 @@ SRESULT G2CORE2M1::SetTornadoPoint(TOKENS **args)
         reinterpret_cast<G2TORNADOOBJ *>(tornado)
             ->SetPoint(*(V3 *)((char *)this + 0x28), value);
     return true;
+}
+
+// The tornado's pull on an ODE body: read the wind field at the body's point
+// and add it, scaled by the body's wind factor, as force.
+struct G2ODEWIND : public G2ODEACTOR
+{
+    void ApplyWind();
+};
+
+// 0x426620
+void G2ODEWIND::ApplyWind()
+{
+    ACTOR *tornado = g_pGame->GetTornado();
+    if (!tornado) {
+        if (g_pLog)
+            g_pLog->Error("NO TORNADO!");
+        return;
+    }
+    V3 force = reinterpret_cast<G2TORNADOOBJ *>(tornado)->WindField(
+        GetPosition(), 0);
+    V3 scaled = force * *(float *)((char *)this + 0xd18);
+    AddForce(scaled.x, scaled.y, scaled.z);
 }
