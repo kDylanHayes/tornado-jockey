@@ -208,6 +208,15 @@ void G2ACTOR::Update()
     ACTOR::Update();
 }
 
+// Sixteen copies of this one-line body exist in the image. Eight are 122 bytes and
+// match here. The three 138-byte copies (0x0041f5c0, 0x00420c60, 0x00421900) are NOT
+// just this body compiled with a throwing SRESULT::FreeValue: their disassembly has an
+// `add ecx,eax` before the member-pointer call and builds an explicit SRESULT temporary
+// (vtable 0x0065691c) that is copied into the return buffer and destroyed, i.e. they are
+// multiple-inheritance adjustor-forwarding overrides. They need the owning class
+// hierarchy (0x0041f5c0's vtable is 0x00658f0c), not a unit split - measured by putting
+// them in a scratch unit with SRESULT_FREEVALUE_MAY_THROW, which produced 0x83 bytes
+// against retail's 0x8a and was reverted.
 SRESULT G2ACTOR::Execute(CMDENTRY *command, TOKENS **args)
 {
     return (this->*(SRESULT (G2ACTOR::*)(TOKENS **))command->func)(args);
