@@ -10058,3 +10058,4 @@
 0x00433ff0 ?Add@G3SMOOTHER@@QAEXM@Z function 0x4d
 0x00436f50 FUN_00436f50 function 0x37
 0x006cb458 DAT_006cb458 data 0x1
+0x00508dd0 ?SetOption@DX8APP@@QAEX_N@Z function 0x30

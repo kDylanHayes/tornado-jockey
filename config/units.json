@@ -3424,7 +3424,19 @@
       "symbol_mappings": {
         "FUN_004e62d0": "??1DX8APPBASE1@@UAE@XZ",
         "_m_39": "?m_39@M39TARGET@@QAEXXZ",
-        "??1?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@XZ": "??1DX8APPSTRING@@QAE@XZ"
+        "??1?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@XZ": "??1DX8APPSTRING@@QAE@XZ",
+        "FUN_00508d60": "?CheckSize@DX8APP@@QAEXXZ",
+        "FUN_00509170": "?BuildHardware@DX8APP@@QAEHXZ",
+        "FUN_00509770": "?SetDetail@DX8APP@@QAEXH@Z",
+        "FUN_0050a080": "?SetWorld@GD50a080@@QAEXPAUMATRIX@@@Z",
+        "FUN_0050a0f0": "?Matches@GD50a080@@QAE_NPBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@@@Z",
+        "FUN_0050a170": "?Find@GD50a080@@QAEPAV1@PBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@@@Z",
+        "FUN_0050a230": "?SetIdentity@GD50a230@@QAEXXZ",
+        "FUN_0050a3f0": "??1GD50a080@@QAE@XZ",
+        "FUN_0050a500": "??1GD50a500@@QAE@XZ",
+        "FUN_0050a860": "??1GD50a860@@QAE@XZ",
+        "FUN_0050aa90": "?_Insert_n@?$vector@URESHANDLE@@V?$allocator@URESHANDLE@@@std@@@std@@IAEXViterator@12@IABURESHANDLE@@@Z",
+        "FUN_0050b110": "?insert@?$vector@URESHANDLE@@V?$allocator@URESHANDLE@@@std@@@std@@QAE?AViterator@12@V312@ABURESHANDLE@@@Z"
       }
     },
     {

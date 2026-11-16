@@ -1,13 +1,13 @@
 // Tongas2/DX8APP -- the plugin's concrete Direct3D application object.
 //
 // Matched this pass (retail bytes, verified with build/maskcmp.py):
-//   0x00508a70 DX8APP::DX8APP          0x508d60 CheckSize
-//   0x00509170 BuildHardware            0x00509770 SetDetail
-//   0x00509d30 RegisterDX8Plugin        0x0050a080 node SetWorld
-//   0x0050a0f0 node Matches             0x0050a170 node Find
-//   0x0050a3f0 node destructor          0x0050a230 SetIdentity
-//   0x0050a500 holder destructor        0x0050a860 buffer destructor
-//   0x0050aa90 vector<RESHANDLE>::_Insert_n
+//   0x00508a70 DX8APP::DX8APP          0x00508d60 CheckSize
+//   0x00508dd0 SetOption                0x00509170 BuildHardware
+//   0x00509770 SetDetail                0x00509d30 RegisterDX8Plugin
+//   0x0050a080 node SetWorld            0x0050a0f0 node Matches
+//   0x0050a170 node Find                0x0050a230 SetIdentity
+//   0x0050a3f0 node destructor          0x0050a500 holder destructor
+//   0x0050a860 buffer destructor        0x0050aa90 vector<RESHANDLE>::_Insert_n
 //   0x0050b110 vector<RESHANDLE>::insert
 // Still open: 0x00508b10, 0x00508e00, 0x00508f50, 0x00509240, 0x005099f0
 // (Init), 0x00509c20 (SetName, register colour: an extra push ebx and the
@@ -81,6 +81,7 @@ public:
     int BuildHardware();
     void SetDetail(int level);
     void SetName(const char *name);
+    void SetOption(bool on);
 
 private:
     DX8APPSTRING *m_2b8;
@@ -141,7 +142,7 @@ public:
     virtual void V12(); virtual void V13(); virtual void V14(); virtual void V15();
     virtual void V16(); virtual void V17(); virtual void V18(); virtual void V19();
     virtual void V20(); virtual void V21(); virtual void V22(); virtual void V23();
-    virtual void V24(); virtual void V25(); virtual void V26(); virtual void V27();
+    virtual void V24(int value); virtual void V25(); virtual void V26(); virtual void V27();
     virtual void V28(); virtual void V29();
     virtual void V30(int width, int height); virtual void V31();
     virtual void V32(); virtual void V33(); virtual void V34(); virtual void V35();
@@ -244,8 +245,10 @@ DX8APP *CreateDX8APP()
 
 class APP;
 class CAMERALENS;
+class SETTINGSTABLE;
 
 extern CALLBACKLIST<void (*)()> g_classRegistrars;
+extern APP *g_pApp;
 extern APP *(*g_pfnCreateApp)();
 extern APPWINDOW *(*g_pfnCreateAppWindow)();
 extern RESOURCEMANAGER *(*g_pfnCreateBONEDMODEL)();
@@ -952,6 +955,13 @@ void DX8APP::SetDetail(int level)
         if (g_pMusicX)
             ((MUSICX *)g_pMusicX)->Update();
     }
+}
+
+// 0x508dd0: stores the option in the settings table and hands it to the app.
+void DX8APP::SetOption(bool on)
+{
+    ((SETTINGSTABLE *)m_2c0)->SetInt(3, on);
+    ((DX8APPVT *)this)->V24(*(int *)(*(char **)((char *)g_pApp + 0x10) + 0x10c));
 }
 
 // 0x509c20: hands a text to the display object at +0x44.
