@@ -553,3 +553,32 @@ GD5563NODE *GD5563TREE::Buynode(GD5563NODE *left, GD5563NODE *parent,
     }
     return node;
 }
+
+// ---------------------------------------------------------------------------
+// Two unimplemented families in this unit, both found by grouping unmatched
+// bodies by size (build/scan_clusters.py):
+//
+//   six 300-byte bodies at 0x00558270, 0x00558560, 0x00558850, 0x00558b40,
+//   0x00558e30, 0x00559b80. They are NOT twins - two of them differ in 289 of
+//   300 bytes - so each is its own registration routine, but all six open with
+//   the same guard shape: `mov eax,fs:[0] ... mov eax,[0xa0f25c]; test
+//   eax,eax; jne end`, a `static bool done` one-shot registration, then a call
+//   to 0x005c40d9 and a strlen loop. Write one, then diff the next: the
+//   literals are the only difference.
+//
+//   five 409-byte bodies at 0x005580c0, 0x005583b0, 0x005586a0, 0x00558990,
+//   0x00558c80. These ARE twins: any two differ in only 22 bytes across 13
+//   short runs, i.e. the same code with different string literals. Shape: `new
+//   0x6c bytes`, then three std::string temporaries built from literals (the
+//   first instance uses the 7-byte "unknown" twice and the 0x13-byte
+//   "Unauthorized Access"), then
+//
+//       push &string1; push &string2; push -1; push &string3;
+//       mov ecx, <new object>; call 0x00557f30
+//
+//   so the callee at 0x00557f30 (194 bytes, vtable 0x67d1a4) is a constructor
+//   taking (const std::string &, const std::string &, int, const std::string &).
+//   Declaring that class and naming 0x00557f30 with its decorated name is what
+//   makes the call operand compare equal; each of the five copies then needs
+//   only its own three literals and its own row.
+// ---------------------------------------------------------------------------
