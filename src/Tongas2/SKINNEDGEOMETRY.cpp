@@ -1,140 +1,176 @@
 // Tongas2/SKINNEDGEOMETRY -- the skinned-geometry loader and accessors.
 //
-// THE UNIT HAS SEVENTEEN FUNCTIONS, NOT SIXTEEN.  Retail 0x005101e0 is a
-// separate 0x1ec-byte void function (the DX8 shadowed-model class
-// registration, defined at the end of this file) that config/symbols.txt does
-// not name.  ?Load's declared 0x2abc extent runs through it, so the delinker
-// folds it into Load and objdiff cannot see it.  Load really ends with
-// "ret 0x3c" at 0x005101d4 -- 0x28c7 bytes, 0x0050d910..0x005101d7 -- and nine
-// 0xcc bytes pad up to 0x005101e0.  Ghidra agrees: the delinked target carries
-// LAB_005101e0 with exactly 0x1ec bytes.  Splitting the symbol is the only
-// config change the function itself needs (plus the relocation names listed at
-// its definition); the other fifteen functions below are byte-exact.
-
-// Everything outside Load is matched byte for byte -- the fifteen remaining
-// functions of the unit: the two accessors, the three small forwarding
-// helpers, the record counter at 0x00510520 and the nine STL element loops
-// the retail unit instantiated for its vertex types. Each has
-// its exact target extent in config/symbols.txt so a later delink cannot cut
-// the target short; Load's extent also covers its exception handler and the
-// padding up to the next function at 0x005103d0.
+// Sixteen of the unit's seventeen bodies are byte-exact: the two accessors, the
+// three small forwarding helpers, the record counter at 0x00510520, the DX8
+// class registration at 0x005101e0 (0x1ec bytes, paired as
+// ?RegisterModelDX8SDClasses@@YAXXZ), and the nine STL element loops the retail
+// unit instantiated for its vertex types.
 //
-// The record counter below is byte-exact at 0x00510520 (41 bytes, 0 diffs
-// against the retail bytes), but objdiff still scores the unit 14/16 because
-// config/symbols.txt has no entry for that address: the delinker falls back
-// to Ghidra's FUN_00510520 while this file emits ?Count@GD510520@@QAEHXZ.
-// Adding "0x00510520 ?Count@GD510520@@QAEHXZ function 0x29" to
-// config/symbols.txt is all that entry needs.
+// Still open: 0x0050d910 ?Load, 0x28c7 bytes (0x0050d910..0x005101d7, ending
+// "ret 0x3c" and nine 0xcc pad bytes before the registration function at
+// 0x005101e0). 2306 instructions, 228 calls to 53 distinct targets, 280
+// relocations to 70 distinct symbols, 144 conditional branches, a 0x400-byte
+// frame.
 //
-// Still open: 0x0050d910 SKINNEDGEOMETRY::Load, 0x2abc bytes, 2306
-// instructions, 228 calls to 53 distinct targets, 144 conditional branches,
-// a 0x400-byte frame and two unwind states. It is the serialized reader of
-// the skinned-geometry file.
+// ---------------------------------------------------------------------------
+// SIGNATURE: int Load(void *, std::string, std::string).  Verified three ways.
 //
-// SIGNATURE (verified from the frame arithmetic, not guessed). The prologue
-// pushes the /GX triple and four registers, then sub esp,0x400, so the frame
-// base is esp0 = entry-0x41c, the try level is the dword at esp0+0x418
-// (entry-4) and the arguments start at esp0+0x420 (entry+4). Reading the
-// small-string access at 0x50d935..0x50d958 against those offsets:
+//   * The frame. The prologue pushes the /GX triple and four registers, then
+//     "sub esp,0x400", so esp0 = entry-0x41c; the try level is the dword at
+//     esp0+0x418 (entry-4), and the epilogue's "add esp,0x40c" + "ret 0x3c"
+//     pops 0x3c bytes of parameters.
 //
-//   esp0+0x43c = entry+0x20 compares with 0x10   -> a std::string capacity
-//   esp0+0x428 = entry+0x0c loads the buffer
-//   lea eax,[esp0+0x428]                         -> that string's own SSO
-//                                                   buffer address
+//   * The caller. The single call site in the image, 0x00500cfc, is
+//     "sub esp,0x1c" (string A), "sub esp,0x1c" (string B), "push <dword>",
+//     "call 0x0050d910".  0x1c + 0x1c + 4 = 0x3c.  So the parameters are one
+//     four-byte value followed by two by-value strings -- three parameters,
+//     not four.
 //
-// entry+0x0c is the third argument, so the true signature is
+//   * The body.  The string it fopen()s has its buffer at entry+0x0c and its
+//     capacity at entry+0x20; the second string has them at entry+0x28 and
+//     entry+0x3c.  With this build's std::string (see below, 0x1c = 28 bytes,
+//     buffer at +4, size at +0x14, capacity at +0x18) those are the objects at
+//     entry+0x08 and entry+0x24, i.e. parameters 2 and 3.  entry+0x04 and
+//     entry+0x08-as-a-word are never read: the first parameter is unused by the
+//     body and its element type cannot be observed, only its width (one word).
 //
-//     int Load(void *, int, std::string, std::string)
+// The decorated name the compiler emits for that declaration -- checked with a
+// probe compile of this toolchain, not guessed -- is
 //
-// i.e. two 4-byte parameters first, then the by-value path string at entry
-// +0x0c (capacity +0x14 -> entry+0x20, buffer at entry+0x0c) and the second
-// by-value string at entry+0x28 (buffer at esp0+0x444, capacity at
-// esp0+0x458) which is destroyed on the fopen-failure path. Nothing in the
-// listing reads entry+0x04 or entry+0x08 (the accesses that look like they
-// might are locals: at those points esp sits 0x98 and more below esp0), so
-// the leading pair's element types do not affect codegen -- only its width,
-// two dwords, does. The argument area is 0x44 bytes.
+//   ?Load@SKINNEDGEOMETRY@@QAEHPAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@1@Z
 //
-// That signature is why this file still carries a placeholder. The
-// declaration in include/Tongas2/SKINNEDGEOMETRY.h is
-// Load(void *, int, void *) and this unit may not edit include/, so a
-// definition that reproduces the frame cannot be written here at all.
-// Unblocking Load needs, in this order:
+// ---------------------------------------------------------------------------
+// WHAT HAS TO CHANGE OUTSIDE THIS FILE.  Until then no source can produce this
+// frame and the body below stays a placeholder.
 //
-//   1. include/Tongas2/SKINNEDGEOMETRY.h:
-//          int Load(void *a, int b, std::string c, std::string d);
-//   2. config/symbols.txt, replacing ?Load@SKINNEDGEOMETRY@@QAEHPAXH0@Z:
-//          ?Load@SKINNEDGEOMETRY@@QAEHPAXHV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@1@Z
-//      (that decorated name is what the compiler emits for the declaration
-//      above -- verified with a probe compile, including the `1` back
-//      reference to the second std::string).
-//   3. names for the helpers whose target relocations are still Ghidra names,
-//      because a base relocation spelled FUN_0050b2c0 cannot match the
-//      decorated name implicit source produces. These three are byte-verified
-//      (probe instantiation compared with the retail bytes: same size, zero
-//      differences outside the relocation fields):
+// 1. include/Tongas2/SKINNEDGEOMETRY.h -- replace
 //
-//          0x0050b2c0  0x66  ?_Construct_n@?$vector@HV?$allocator@H@std@@@std@@QAEXIABH@Z
-//          0x0050b230  0x83  ?resize@?$vector@HV?$allocator@H@std@@@std@@QAEXIH@Z
-//          0x0050aa10  0x7c  ?_Trim@?$vector@_NV?$allocator@_N@std@@@std@@IAEXI@Z
+//        int Load(void *file, int flags, void *owner);
 //
-//      (the resize is byte-identical to the vector<unsigned int> spelling, so
-//      the ICF choice has to be made once for the exe; _Construct_n zeroes
-//      _Myfirst/_Mylast/_Myend before it fills, which is why it is the
-//      constructor helper and not assign). All three live in Tongas2/DX8APP,
-//      so that unit owns them. Still unnamed, with the unit that owns each:
+//    with
 //
-//          0x0050b330 0x96 DX8APP      a second vector<T> count+value
-//                                      constructor, 4-byte class element
-//                                      (its fill goes through 0x509f70)
-//          0x0050b180 0x91 DX8APP
-//          0x0050a0f0 0x7d DX8APP
-//          0x0050a1f0 0x33 DX8APP
-//          0x0050a230 0x92 DX8APP
-//          0x0050d170 0x2a SCROOT
-//          0x0050d020 0x92 SCROOT
-//          0x0050d1a0 0x6d SCROOT
-//          0x0050d350 0x67 SCROOT
-//          0x00527500 0x43 SKINNEDMESH
-//          0x00527550 0x63 SKINNEDMESH
-//          0x005276d0 0xf5 SKINNEDMESH
+//        int Load(void *file, std::string path, std::string other);
 //
-//      Until those are named in config/symbols.txt, Load cannot reach 100%
-//      however exact its body is: objdiff scores a differing relocation name
-//      as a difference (measured: one renamed call drops a 688-byte function
-//      from 100% to 98.1%).
+//    (the image's single call site, 0x00500cfc, already passes two strings, so
+//    it is this declaration that is wrong, not the caller).
 //
-// What its bytes say, for whoever takes it on:
-//   - On fopen failure the unit's own file test 0x00527550 (fopen "rb", then
-//     fclose) says whether the file is there; when it is missing and g_pLog
-//     is set the loader reports LOG::ContentError with
-//     "SKINNEDGEOMETRY - file does not exist: %s" (0x6790e8) and returns 0
-//     after unwinding the two strings.
-//   - The body reads the stream through the TEXTFILE helpers 0x005270b0
-//     (int), 0x005270e0 (float), 0x00527080 (short) and 0x00527110, compares
-//     the header string with "V1.0" (0x6790e0) and "V2.0" (0x6790d8) and
-//     raises the object's version ordinal, stores the header float in the
-//     object's first field (1.0f when the file says 0), clamps +0x80 to at
-//     least 1 and uses it as the slot count of the per-slot tables, then
-//     builds the material, vertex and index tables with the vector<int>
-//     (0x0050b2c0), vector<bool> (0x0050aa10) and vector<std::string>
-//     (0x004b6f80) resizes.
-//   - Per-material blocks read a name, optional colour keys, optional texture
-//     and alpha records and warn through LOG::ContentError with
-//     "Diffuse CK color is black(%f %f %f), material:%s" (0x67909c) and
-//     "Diffuse DO color is black (%f %f %f), material:%s/%s" (0x679064).
-//     Texture names get ".DDS" (0x6790d0) appended unless they are "NONE"
-//     (0x6667dc). The colour keys are shorts scaled by 1/255, the constant
-//     0x3b808081 in .rdata at 0x65fae0.
-//   - The vertex tables are filled with std::fill, copied with std::copy and
-//     std::copy_backward and built with std::uninitialized_copy over the
-//     0x40-byte and 0x10-byte vertex types whose out-of-line copies this unit
-//     emits at the end of the file.
+// 2. config/symbols.txt -- replace line 7614
 //
-// Load stays a placeholder until the header declaration and the symbol name
-// above are changed: with the recorded (void *, int, void *) signature no
-// source can produce this frame, and a partly written body would move the
-// fuzzy number without matching anything and would misdescribe the function.
+//        0x0050d910 ?Load@SKINNEDGEOMETRY@@QAEHPAXH0@Z function 0x28c7
+//
+//    with
+//
+//        0x0050d910 ?Load@SKINNEDGEOMETRY@@QAEHPAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@1@Z function 0x28c7
+//
+//    (keep the 0x28c7 extent: it is the retail body's, and the delinker uses
+//    it to split 0x005101e0 off as RegisterModelDX8SDClasses).
+//
+// 3. config/symbols.txt -- the relocations that still point at Ghidra or
+//    synthetic names.  Every one of them has to be named or the body scores
+//    99.x however exact it is, because objdiff compares relocation names.
+//    No row is needed for the STL, CRT or already-decorated targets: the
+//    compiler emits std::string/std::vector members, operator+, operator
+//    new/delete, fopen/fread/fseek/ftell/fclose, the textfile readers
+//    ?GD5270b0/?GD5270e0/?GD527080/?GD527110, ?FUN_004f82a0, the SCROOT
+//    members (?Init@SCROOT, ??0SCROOT@, ?CreateSCROOT), ??0GD53bae0 and
+//    ?Add@GD50d0c0 under exactly the names the target already carries; those
+//    only need declarations with the same signatures.
+//
+//      address    size  target symbol in the delinked object   owner
+//      0x004fe350 0x8c0 _m_55                                    (C name, keep)
+//      0x004fec10 0x3e3 _m_56                                    (C name, keep)
+//      0x00501350 0x12  _m_81                                    (C name, keep)
+//      0x00501370 0x26  _m_82                                    (C name, keep)
+//      0x005013a0 0x25  _m_83                                    (C name, keep)
+//      0x005013d0 0x52  _m_84                                    (C name, keep)
+//      0x005027c0 0x1ad _m_98                                    (C name, keep)
+//      0x0050a0f0 0x7d  FUN_0050a0f0                            DX8APP
+//      0x0050a1f0 0x33  FUN_0050a1f0                            DX8APP
+//      0x0050a230 0x92  FUN_0050a230                            DX8APP
+//      0x0050b180 0x91  FUN_0050b180                            DX8APP
+//      0x0050b330 0x96  FUN_0050b330  (vector<T>(n, value), 4-byte element)
+//                                                              DX8APP
+//      0x0050d020 0x92  FUN_0050d020                            SCROOT
+//      0x0050d1a0 0x6d  FUN_0050d1a0                            SCROOT
+//      0x0050d350 0x67  FUN_0050d350                            SCROOT
+//      0x00527500 0x43  FUN_00527500                            SKINNEDMESH
+//      0x00527550 0x63  FUN_00527550  (the fopen/fclose file test)
+//                                                              SKINNEDMESH
+//      0x005276d0 0xf5  FUN_005276d0  (reads one string record)
+//                                                              SKINNEDMESH
+//
+//    The _m_NN ones are already C symbols in the binary (build/functions.txt
+//    carries them with those spellings), so a plain "extern \"C\"" declaration
+//    reproduces the target's relocation name exactly -- they need no config
+//    row, only a declaration in the unit that defines them.
+//
+//    Call shapes seen at the Load call sites, so the owning unit can be given
+//    the signature that produces the target's relocation name:
+//      0x00527550  bool f(std::string *path, bool *exists)
+//                  (push &bool / push &path; return in al)
+//      0x005276d0  std::string *f(std::string *out, FILE *file)
+//                  (push file / push out; returns out in eax)
+//      0x0050d350  ?f@CLASS@@QAEXH@Z -- thiscall, ecx = the 0x... table
+//                  object, one int stack argument (the slot count)
+//      0x0050b2c0  vector<int>::_Construct_n, 0x0050b230 vector<int>::resize,
+//                  0x0050aa10 vector<bool>::_Trim, 0x0050d860
+//                  vector<vector<int> >::resize -- already named.
+//
+// 4. config/symbols.txt -- five .rdata constants whose target symbols are
+//    still Ghidra labels.  Our compiler names a literal from its bytes
+//    ("rb" pairs as ??_C@_02JDPG@rb?$AA@ today, so the convention already
+//    works), so each needs a row giving the literal's own symbol at the
+//    address:
+//
+//        0x006790d0  ".DDS"
+//        0x006790d8  "V2.0"
+//        0x006790e0  "V1.0"
+//        0x0067909c  "Diffuse CK color is black(%f %f %f), material:%s"
+//        0x00679064  "Diffuse DO color is black (%f %f %f), material:%s/%s"
+//
+//    (0x006790e8, "SKINNEDGEOMETRY - file does not exist: %s", is already
+//    named, as are 0x00661eac "rb", 0x006667dc "NONE" and the empty string.)
+//
+// ---------------------------------------------------------------------------
+// ABI NOTE, useful for every unit that passes std::string by value: this
+// build's basic_string is 0x1c bytes with _Bx (the 16-byte small-string
+// buffer) at +4, _Mysize at +0x14 and _Myres at +0x18.  Verified by probe
+// compiling the same cl 13.10.3077 and diffing the argument copy against the
+// retail call site at 0x00500cc6: both emit
+//     sub esp,0x1c / mov ecx,esp / mov [ecx+0x18],0xf / mov [ecx+0x14],0 /
+//     mov byte ptr [ecx+4],0
+// so a by-value string costs 0x1c bytes of argument area, and the sum of the
+// parameter sizes is what the callee pops with "ret N".
+//
+// WHAT THE BODY DOES, for whoever writes it (all addresses are retail):
+//   - m_00 is set to 1.0f, the path string (parameter 2) is fopen()ed "rb";
+//     on failure 0x00527550 tests for the file and, when it is missing and
+//     g_pLog is set, the loader reports LOG::ContentError with
+//     0x006790e8 and returns 0.
+//   - A std::string holds "V1.0"; 0x005276d0 reads the header record into a
+//     second string; the header is compared with "V2.0" (0x006790d8) and the
+//     version ordinal (a local, 1 or 2) selects the rest of the parse.
+//   - 0x0050d350 constructs the per-slot table object from the slot count read
+//     from the file (this+0x80, clamped to at least 1), then the vector<int>,
+//     vector<bool> and vector<std::string> members are sized with
+//     _Construct_n / _Trim / resize.
+//   - The material loop reads a name, colour key records (shorts scaled by the
+//     constant at 0x0065fae0, 0x3b808081 = 1.0f/255.0f), the diffuse and
+//     ambient colours, and warns through LOG::ContentError with 0x0067909c and
+//     0x00679064; texture names get ".DDS" (0x006790d0) appended unless they
+//     are "NONE".  Each material record comes from _m_55/_m_56; the record
+//     pointer goes into a per-material pointer array on the stack, and a
+//     parallel stack vector<int> holds the record's kind (0, 2, 4..0xc) while
+//     stack vector<bool>s hold the per-material seen-flags.
+//   - The geometry pass seeks by the offsets read earlier, reads a 0x10-byte
+//     vertex record per vertex (three coordinates plus a slot index, pushed
+//     into vector<GD50ce90> after clamping the index to the slot count),
+//     8-byte index records (pushed into vector<V3>), then per-slot SCROOT
+//     objects (0x134 bytes, ctor ??0SCROOT@@QAE@HPBX@Z) filled through
+//     GD50d0c0::Add.
+//   - The tail closes the file, calls 0x0050a1f0/0x0050a230, and stores
+//     this+0x38 (the CreateSCROOT result) into the mesh object at this+0x4c,
+//     offset +0x34.
 #include "Tongas2/SKINNEDGEOMETRY.h"
 #include <algorithm>
 #include <memory>

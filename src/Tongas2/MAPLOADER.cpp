@@ -93,8 +93,10 @@ public:
     char m_000[0xd0];
 };
 
-extern void MatrixView(MATRIX *out, const V3 *eye, const V3 *at, const V3 *up);
-extern void MatrixInverse(MATRIX *out, const MATRIX *in);
+// Both clean their own arguments off the stack (ret 0x10 / ret 8).
+extern void __stdcall MatrixView(MATRIX *out, const V3 *eye, const V3 *at,
+                                const V3 *up);
+extern void __stdcall MatrixInverse(MATRIX *out, const MATRIX *in);
 // Uppercases a string; the map compares names case-insensitively.
 extern "C" std::string UpperString(std::string text);
 // Whether a resource of the name and suffix is known.
@@ -111,9 +113,8 @@ void MAPLOADER::LoadMap(const char *name)
 {
     m_234 = V3(0.0f, 0.0f, 0.0f);
     m_240 = 0;
-    m_244 = 0;
 
-    for (int i = 0; ((MAPDATA *)m_20)->m_pathsBegin != 0 && i < ((MAPDATA *)m_20)->m_pathsEnd - ((MAPDATA *)m_20)->m_pathsBegin; i++) {
+    for (unsigned i = 0; ((MAPDATA *)m_20)->m_pathsBegin != 0 && i < (unsigned)(((MAPDATA *)m_20)->m_pathsEnd - ((MAPDATA *)m_20)->m_pathsBegin); i++) {
         PATHOBJ *path = (PATHOBJ *)((MAPDATA *)m_20)->GetPath(i);
         std::string pathName = UpperString(path->m_name);
         if (pathName.length() >= 10 && pathName.substr(0, 10) == "CAMERAPATH")
@@ -122,7 +123,7 @@ void MAPLOADER::LoadMap(const char *name)
             m_244 = path;
     }
 
-    for (int i = 0; ((MAPDATA *)m_20)->m_modelsBegin != 0 && i < ((MAPDATA *)m_20)->m_modelsEnd - ((MAPDATA *)m_20)->m_modelsBegin; i++) {
+    for (unsigned i = 0; ((MAPDATA *)m_20)->m_modelsBegin != 0 && i < (unsigned)(((MAPDATA *)m_20)->m_modelsEnd - ((MAPDATA *)m_20)->m_modelsBegin); i++) {
         void *model = ((MAPDATA *)m_20)->GetModel(i);
         BONEDMODELDX8PARTICLEDESC *resource =
             new BONEDMODELDX8PARTICLEDESC(*(BONEDMODELDX8PARTICLEDESC *)model);
@@ -131,7 +132,7 @@ void MAPLOADER::LoadMap(const char *name)
 
     void **objBegin = ((MAPDATA *)m_20)->m_objectsBegin;
     void **objEnd = ((MAPDATA *)m_20)->m_objectsEnd;
-    for (int i = 0; objBegin != 0 && i < objEnd - objBegin; i++) {
+    for (unsigned i = 0; objBegin != 0 && i < (unsigned)(objEnd - objBegin); i++) {
         MAPOBJECT *object = (MAPOBJECT *)((MAPDATA *)m_20)->GetObject(i);
         std::string objectType = UpperString(object->m_type);
         std::string objectName = UpperString(object->m_name);
@@ -173,7 +174,6 @@ void MAPLOADER::LoadMap(const char *name)
 void MAPLOADER::Update(float dt)
 {
     int zero = 0;
-    V3 point;
     if (m_20 == (void *)zero)
         return;
 
@@ -184,12 +184,12 @@ void MAPLOADER::Update(float dt)
             m_0c = 1.0f;
             m_24c = true;
 
-            CAMERAOBJ *camera = (CAMERAOBJ *)m_24;
-            V3 start((float)zero, (float)zero, -15.0f);
-            camera->m_1a8 = start;
-            camera->m_1b4 = point;
+            V3 point;
+            V3 pos((float)zero, (float)zero, -15.0f);
+            ((CAMERAOBJ *)m_24)->m_1a8 = pos;
+            ((CAMERAOBJ *)m_24)->m_1b4 = point;
 
-            V3 direction = camera->m_188;
+            V3 direction = ((CAMERAOBJ *)m_24)->m_188;
             ((CAMERAOBJ *)m_38)->ClearTargets();
 
             BONEDMODELDX8PARTICLEDESC *resource =
@@ -213,8 +213,9 @@ void MAPLOADER::Update(float dt)
     }
 
     if (m_240 != 0) {
+        V3 point;
         PATHOBJ *path = (PATHOBJ *)m_240;
-        m_228 = m_230 * path->m_1c;
+        m_228 = path->m_1c * m_230;
         if (path->m_1c < m_228)
             m_228 = path->m_1c;
 
@@ -223,20 +224,22 @@ void MAPLOADER::Update(float dt)
     }
 
     if (m_244 != 0 && m_204 != 0) {
-        m_22c = m_230 * ((PATHOBJ *)m_244)->m_1c;
+        V3 point;
+        m_22c = ((PATHOBJ *)m_244)->m_1c * m_230;
         if (m_22c > ((PATHOBJ *)m_244)->m_1c - 2.0f)
             m_22c = ((PATHOBJ *)m_244)->m_1c - 2.0f;
 
         ((PATHOBJ *)m_244)->GetPoint(&point, m_22c);
         *(V3 *)((char *)m_204 + 0x50) = *((PATHOBJ *)m_244)->GetPoint(&point, m_22c);
+
         ((PATHOBJ *)m_244)->GetPoint(&point, m_22c + 2.0f);
 
         MATRIX view;
-        MatrixView(&view, &point, (V3 *)((char *)m_204 + 0x50),
+        MatrixView(&view, (V3 *)((char *)m_204 + 0x50), &point,
                    &V3((float)zero, 1.0f, (float)zero));
         MatrixInverse(&view, &view);
-        view._14 = 0.0f; view._24 = 0.0f; view._34 = 0.0f;
         view._41 = 0.0f; view._42 = 0.0f; view._43 = 0.0f;
+        view._14 = 0.0f; view._24 = 0.0f; view._34 = 0.0f;
         memcpy((char *)m_204 + 0x10, &view, sizeof(MATRIX));
     }
 
