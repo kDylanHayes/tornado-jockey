@@ -363,7 +363,7 @@
 0x00488800 ?FindCommonClass@@YAHHH@Z function
 0x00488a30 ??0CMDCONTEXT@@QAE@PAVTOKENS@@ABURESHANDLE@@@Z function
 0x00488a80 ?RegisterClasses@CMDMGR@@QAEXXZ function
-0x00488aa0 ?RegisterEngineClasses@@YAXXZ function
+0x00488aa0 ?RegisterEngineClasses@@YAXXZ function 0xe57
 0x00489900 ?Queue@CMDMGR@@QAEXPAVCMDCONTEXT@@@Z function
 0x004899a0 ?ReplaceChar@@YAXPADDD@Z function
 0x004899d0 ?HashName@@YAHPBD@Z function

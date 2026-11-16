@@ -186,3 +186,4 @@
 0x0052ac7d-0x0052ac8f   Tongas2/TEXTFILE   FUN_0052ab80   code  observed
 0x0052d3a2-0x0052d3b3   Tongas2/TEXTFILE   FUN_0052d350   code  observed
 0x54a95e-0x54a972   Tongas2/ODEGEOM   ?CreateCopy@ODEGEOMRESOURCEMASTERX@@UAEPAVRESOURCE@@ABURESHANDLE@@@Z   code  observed
+0x4894f0-0x489502   Tongas2/CMDMGR   ?RegisterEngineClasses@@YAXXZ   code  observed
