@@ -70,40 +70,46 @@ extern "C" __declspec(dllimport) BOOL __stdcall
 GetVersionExA(OSVERSIONINFOA *lpVersionInformation);
 
 // 0x00504dd0 -- OS version class used by the capability detector.
+//
+// The guard/case shape here is not stylistic: the original tests
+// GetVersionExA's result in the condition, so the fail path shares the
+// "return 8" block with the switches' default arms and that block is laid out
+// last; the inner case labels are listed 0, 10, 90, 51 because VC7.1 emits the
+// reachable case bodies in source order while the case *indices* follow the
+// case values, which is why the emitted jump table reads 0, 1, 4, 2, 8.
 int HardwareD()
 {
     OSVERSIONINFOA os;
 
     memset(&os, 0, sizeof(os));
     os.dwOSVersionInfoSize = sizeof(os);
-    if (!GetVersionExA(&os))
-        return 8;
-
-    switch (os.dwMajorVersion) {
-    case 3:
-        return 3;
-    case 4:
-        switch (os.dwMinorVersion) {
-        case 0:
-            return 0;
-        case 10:
-            return 1;
-        case 51:
-            return 4;
-        case 90:
-            return 2;
+    if (GetVersionExA(&os)) {
+        switch (os.dwMajorVersion) {
+        case 3:
+            return 3;
+        case 4:
+            switch (os.dwMinorVersion) {
+            case 0:
+                return 0;
+            case 10:
+                return 1;
+            case 90:
+                return 2;
+            case 51:
+                return 4;
+            }
+            break;
+        case 5:
+            switch (os.dwMinorVersion) {
+            case 0:
+                return 5;
+            case 1:
+                return 6;
+            case 2:
+                return 7;
+            }
+            break;
         }
-        break;
-    case 5:
-        switch (os.dwMinorVersion) {
-        case 0:
-            return 5;
-        case 1:
-            return 6;
-        case 2:
-            return 7;
-        }
-        break;
     }
     return 8;
 }
@@ -155,7 +161,17 @@ HARDWARE::HARDWARE()
 {
     HWCORE *core = (HWCORE *)this;
 
-    // name("UNKNOWN"): _Tidy() leaves the string empty, then it assigns.
+    // name("UNKNOWN"): the inlined default constructor leaves the string empty
+    // (_Myres 0xf, _Mysize 0, empty buffer), then the body assigns.
+    //
+    // Residue: the target zeroes the six m_values with a fresh `xor ecx,ecx`
+    // (6x `mov [esi+0x20+4i], ecx`); we reuse the ebx zero the byte stores
+    // above already hold, and VC7.1 schedules our `push 7` one slot before
+    // `xor ebx,ebx` (it is the reverse in the target). Every other instruction
+    // is identical; this is register colour plus one scheduler slot, the same
+    // residue class as LIGHTMASTER's constructor. Two-byte body (0x59 vs
+    // 0x5b). Memset forms move the address into a register (lea) and do not
+    // match, and both loop orders were measured.
     *(unsigned long *)((char *)this + 0x18) = 0xf;
     *(unsigned long *)((char *)this + 0x14) = 0;
     ((char *)this)[0x04] = 0;
@@ -170,6 +186,17 @@ HARDWARE::HARDWARE()
         core->m_values[i] = 0;
 }
 
+// 0x00504ff0 -- fills the capability cache and the adapter name tables.
+//
+// Not written yet, and it cannot be written against this declaration: the
+// retail body ends in `ret 0xc` and both call sites (0x00508e40 in DX8APP and
+// 0x0050918b) push three dwords, so the real member takes three arguments
+// (`this` in ecx). HARDWARE.h declares `void Detect()`, so a body here could
+// never pair with the 0x118f-byte target row. The body also opens an
+// exception frame (handler 0x005efb2d), and it is built from
+// std::string::substr/compare/find/assign, strstr, MessageBoxA error boxes,
+// g_UnicodeStringManager and two tables inside its own range
+// (0x00506168, 0x00506174), so it needs the real signature before work starts.
 void HARDWARE::Detect()
 {
 }
