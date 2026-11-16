@@ -183,11 +183,11 @@
 // not carry it.
 extern char g_classNames[][30];
 
-int SKINNEDGEOMETRY::Load(void *file, int flags, void *owner)
+int SKINNEDGEOMETRY::Load(void *file, std::string path, std::string other)
 {
     (void)file;
-    (void)flags;
-    (void)owner;
+    (void)path;
+    (void)other;
     return 0;
 }
 

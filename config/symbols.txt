@@ -7611,7 +7611,7 @@
 0x004f2320 ?UpdateCopies@MESHDX8SDMASTER@@UAEXXZ function 0x4f
 
 # Tongas2/SKINNEDGEOMETRY (0x0050d910-0x0051065f)
-0x0050d910 ?Load@SKINNEDGEOMETRY@@QAEHPAXH0@Z function 0x28c7
+0x0050d910 ?Load@SKINNEDGEOMETRY@@QAEHPAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@1@Z function 0x28c7
 0x00510410 ?GetVertexData@SKINNEDGEOMETRY@@QAEHXZ function 0x7
 0x00510550 ?GetVertexCount@SKINNEDGEOMETRY@@QAEHXZ function 0x1c
 

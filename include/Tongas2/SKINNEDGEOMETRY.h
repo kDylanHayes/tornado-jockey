@@ -8,10 +8,14 @@
 #ifndef TONGAS2_SKINNEDGEOMETRY_H
 #define TONGAS2_SKINNEDGEOMETRY_H
 
+#include <string>
+
 class SKINNEDGEOMETRY
 {
 public:
-    int Load(void *file, int flags, void *owner);
+    // ret 0x3c and the only call site (0x00500cfc) push 0x1c + 0x1c + 4, so both
+    // strings are passed by value: 4 + sizeof(std::string) + sizeof(std::string).
+    int Load(void *file, std::string path, std::string other);
     int GetVertexData();
     int GetVertexCount();
 
