@@ -1199,6 +1199,13 @@ template void std::deque<FIBITMAP *>::push_back(FIBITMAP *const &);
 //
 // The four _Construct_n / two _Xlen throws below are the vector instantiations
 // the file already carried: their bytes are exact, they only need the name.
+// (Re-verified with build/maskcmp.py on 2026-11-16: diffs=0 for all seven
+// rows below, so no source change is needed for any of them.  The rows in
+// config/symbols.txt as written are one `@std@@` short - each mangled name
+// there reads `...@@@std@@IBEXXZ` / `...@@@std@@QAEX...` instead of the
+// `...@@@std@@@std@@IBEXXZ` / `...@@@std@@@std@@QAEX...` the compiler emits,
+// which is why objdiff cannot pair these seven even though the bytes and the
+// sizes match.  Fixing the seven rows is the whole residue for them.)
 //
 //   0x0053dfe0  ?_Xlen@?$vector@UPATHREPOPOINT@@V?$allocator@UPATHREPOPOINT@@@std@@@std@@IBEXXZ          0x6a
 //   0x00542000  ?_Xlen@?$vector@USHADERTYPE20@@V?$allocator@USHADERTYPE20@@@std@@@std@@IBEXXZ           0x6a
@@ -1295,24 +1302,17 @@ void MaskAlpha16(int width, int height, TEXSURF16 *dst, TEXSURF16 *src)
     unsigned char *dp = (unsigned char *)dst->bits;
     const unsigned char *sp = (const unsigned char *)src->bits;
     unsigned short rows = (unsigned short)height;
-    dstHalf = (dstHalf >> 1) - width;
-    srcHalf = (srcHalf >> 1) - width;
-    if (rows == 0)
-        return;
-    int dstGap = (unsigned short)dstHalf * 2;
-    int srcGap = (unsigned short)srcHalf * 2;
+    dstHalf = dstHalf - width;
+    srcHalf = srcHalf - width;
     while (rows) {
-        if ((unsigned short)width != 0) {
-            int n = (unsigned short)width;
-            do {
-                if ((*sp & 0x1f) < 0x12)
-                    dp[1] &= 0x7f;
-                dp += 2;
-                sp += 2;
-            } while (--n);
+        for (int n = (unsigned short)width; n; --n) {
+            if ((*sp & 0x1f) < 0x12)
+                dp[1] &= 0x7f;
+            dp += 2;
+            sp += 2;
         }
-        dp += dstGap;
-        sp += srcGap;
+        dp += (unsigned short)dstHalf * 2;
+        sp += (unsigned short)srcHalf * 2;
         --rows;
     }
 }
@@ -1332,21 +1332,14 @@ void CopyAlpha32(int width, int height, TEXSURF16 *dst, TEXSURF16 *src)
     unsigned short rows = (unsigned short)height;
     dstQ -= width;
     srcQ -= width;
-    if (rows == 0)
-        return;
-    int dstGap = (unsigned short)dstQ * 4;
-    int srcGap = (unsigned short)srcQ * 4;
     while (rows) {
-        if ((unsigned short)width != 0) {
-            int n = (unsigned short)width;
-            do {
-                dp[3] = sp[1];
-                dp += 4;
-                sp += 4;
-            } while (--n);
+        for (int n = (unsigned short)width; n; --n) {
+            dp[3] = sp[1];
+            dp += 4;
+            sp += 4;
         }
-        dp += dstGap;
-        sp += srcGap;
+        dp += (unsigned short)dstQ * 4;
+        sp += (unsigned short)srcQ * 4;
         --rows;
     }
 }
@@ -1390,12 +1383,27 @@ bool __stdcall PaletteUsesColor(FIBITMAP *dib, unsigned color)
 //        frame differently.  Retail's recorded start 0x00545b20 is four bytes
 //        early; 0x545b16..0x545b23 is not code of the neighbour either, so the
 //        delinker extent should become 0x00545b24 + 0x72.
-//   0x00545ba0  0x77  our size matches (0x77); first differing byte 0x0.
-//        Residual: parameter load order (retail pushes ebx and takes width
-//        first, then the destination descriptor; ours takes the descriptor
-//        first) plus one extra movzx for the inner count - register colour.
-//   0x00545c20  0x76  ours 0x7f; first differing byte 0x0, the same prologue
-//        and count-register residue.
+//   0x00545ba0  0x77  our size is now 0x77 too (a __cdecl body identical in
+//        shape to retail: pitch/2 - width, then (unsigned short)gap * 2, the
+//        width test inside the row, ebx as the width and bl as the temp).  The
+//        old copy divided the pitch twice, which retail does not - see the
+//        single `sar` at 0x545bc6.  First differing byte 0x0 and every later
+//        byte is shifted: what is left is a pure register permutation.  Retail
+//        holds dst bits in edx, src bits in esi, dstGap in ebp, srcGap in ecx
+//        and rows in edi; ours uses esi/edi for the bits, ebp for srcGap and
+//        edx for the rows (and spills width to [esp+0x1c] instead of reloading
+//        it from the argument slot).  Same instructions, different colouring.
+//   0x00545c20  0x76  ours 0x75 (one byte shorter: retail's pre-test `jmp` to
+//        the row head).  Identical arithmetic and loop shape; same class of
+//        register-permutation residue as 0x00545ba0.  First differing byte 0x0.
+//
+// Neither function can score in objdiff until config/names catch up: the
+// delinked target still calls the three blitters FUN_00545b20/FUN_00545ba0/
+// FUN_00545c20, so their source names need the units.json mappings
+//     FUN_00545ba0 -> ?MaskAlpha16@@YAXHHPAVTEXSURF16@@0@Z
+//     FUN_00545c20 -> ?CopyAlpha32@@YAXHHPAVTEXSURF16@@0@Z
+//     FUN_00545b20 -> ?BlendNibble16@@YIXPAVTEXSURF16@@HHH0@Z
+// (the third keeps its documented start/size problem above).
 //   0x00545ca0 / 0x00545db0 / 0x00545ec0  not reconstructed: they walk a
 //        descriptor {pitch; bits} row by row through FreeImage_GetBits,
 //        FreeImage_GetBPP and FreeImage_GetScanLine (and 0x0055db90 for the
