@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string>
 #include <vector>
+#include <deque>
+#include <windows.h>
 
 // The retail object calls the out-of-line four-argument compare instead of
 // expanding it at each site, so the specialisation is declared here to keep
@@ -517,6 +519,25 @@ __declspec(naked) void *GD517e10::Get24(int index)
 // pulls one scalar out of an open FILE and answers the value, or zero when the
 // read came up short.
 // ---------------------------------------------------------------------------
+
+// 0x00527040 (50 bytes): the colour depth of the display the window is on, or
+// 16 when the device context cannot be opened. The callers in this unit compare
+// the answer against 0x10 and 0x18 before they pick their texture format.
+// windows.h in this tree stops at GetDC/ReleaseDC, so the gdi32 import the exe
+// calls through is declared here.
+extern "C" __declspec(dllimport) int __stdcall GetDeviceCaps(HDC dc, int index);
+
+int GD527040(HWND hwnd)
+{
+    int bits = 0x10;
+    HDC dc = GetDC(hwnd);
+
+    if (dc) {
+        bits = GetDeviceCaps(dc, 0xc);
+        ReleaseDC(hwnd, dc);
+    }
+    return bits;
+}
 
 // Reproduces FUN_00527080 (retail address 0x00527080, 37 bytes).
 int GD527080(FILE *stream)
@@ -1707,6 +1728,24 @@ typedef std::vector<double> VD;
 typedef std::vector<std::string> VS;
 typedef std::vector<VI> VVI;
 
+// The three range-copy helpers retail emitted for the 16-byte element types
+// (0x005137e0, 0x0051c370 and 0x00522df0, 0x8e bytes each) are the iterator
+// flavours of _Uninit_copy over VS, VVI and VI: the first copies a
+// vector<string> element (its out-of-line copy constructor is 0x00512ee0), the
+// second a vector<vector<int>> element (0x0051ab60) and the third a
+// vector<int> element (0x005214b0). The VI level already comes with the
+// std::vector<std::vector<int> > instantiation at the top of this file, so the
+// two deeper nesting levels are spelled out here to give the object their
+// COMDATs as well.
+template class std::vector<VS>;
+template class std::vector<VVI>;
+
+// 0x005118b0 (0x6a bytes; retail's size is the 0x69 before the compiler's
+// trailing int3): the deque length check. Only the throw body is wanted, so
+// the element type is arbitrary; int keeps the rest of the instantiation
+// trivial. Its twin for vector is already emitted by the vectors above.
+template class std::deque<int>;
+
 template<class T>
 void FillItems(T *first, T *last, const T &value)
 {
@@ -2020,4 +2059,84 @@ void GD519230::Add(const int &value)
     else {
         Insert(m_8, 1, value);
     }
+}
+
+// ---------------------------------------------------------------------------
+// 0x00519050 (105 bytes): the two-pointer constructor of the 0x9c-byte record
+// the vertex loops in this unit build. The second argument lands at +0 and the
+// first at +0xc, then the byte flag at +0x78 and the +0x90 triple are cleared,
+// the body call at 0x00517bb0 runs, and the +0x7c quad is cleared last.
+//
+// Residue (2026-11): same 0x69 bytes and the same instructions in the same
+// frame, but the scheduler issues the zero register one slot early -- ours has
+// `xor ebx,ebx` and `mov ecx,esi` before the store of the first V3's third
+// word, retail after it -- so the ten bytes from +0x2c on differ in position.
+// Every source form tried (member-initialiser list and body assignments, chained
+// zeroing in both directions, a shared local zero, inlined Clear helpers, bool
+// and char flags, pointer and reference arguments) leaves that slot alone; it is
+// compiler state, not expression shape.
+// ---------------------------------------------------------------------------
+class GD519050
+{
+public:
+    GD519050(const V3 *first, const V3 *second);
+    void Init();
+
+    V3 m_0;
+    V3 m_c;
+    char pad_18[0x60];
+    char m_78;
+    char pad_79[3];
+    int m_7c;
+    int m_80;
+    int m_84;
+    int m_88;
+    int pad_8c;
+    int m_90;
+    int m_94;
+    int m_98;
+};
+
+GD519050::GD519050(const V3 *first, const V3 *second) : m_0(*second), m_c(*first)
+{
+    m_78 = 0;
+    m_90 = 0;
+    m_94 = 0;
+    m_98 = 0;
+    Init();
+    m_7c = 0;
+    m_80 = 0;
+    m_84 = 0;
+    m_88 = 0;
+}
+
+// ---------------------------------------------------------------------------
+// 0x00512810 (164 bytes): the resize front end of the pointer triple at +4
+// (twelve-byte elements): capacity, the grow call at 0x0050aa90 and the trim
+// call at 0x005104e0. Declared only -- nothing in this translation unit calls
+// it directly.
+//
+// 0x00512eb0 (44 bytes) is the one-argument front end the geometry code calls
+// on each of its three runs: it forwards a *default-constructed* V3. The
+// default constructor leaves x/y/z alone, so the compiler copies the twelve
+// uninitialised bytes of the temporary it allocated into the outgoing argument
+// area and reads them back out of its own frame -- the `[esp-0xc]` load the exe
+// carries. Written as a plain forwarding member, that shape comes out by
+// itself; nothing here is hand-written asm.
+// ---------------------------------------------------------------------------
+class GD512810
+{
+public:
+    void Set(int count, V3 value);
+    void Init(int count);
+
+    char pad_0[4];
+    V3 *m_4;
+    V3 *m_8;
+    V3 *m_c;
+};
+
+void GD512810::Init(int count)
+{
+    Set(count, V3());
 }
