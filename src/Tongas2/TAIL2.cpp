@@ -20,7 +20,12 @@ public:
 class GD5529f0 : public KERNELCOMMANDS
 {
 public:
+    GD5529f0();
     virtual ~GD5529f0() throw();
+
+    // Retail allocates 0x62c bytes for this class through the factory below;
+    // the rest of the layout belongs to the 0x00553070 helper.
+    char m_pad[0x62c - sizeof(KERNELCOMMANDS)];
 };
 
 __declspec(noinline) GD5529f0::~GD5529f0() throw()
@@ -334,4 +339,88 @@ struct GD552340
 void GD552340::Get(const std::string &name, std::string *out)
 {
     out->assign(m_8->Get(name));
+}
+
+// 0x00553240: the factory the game installs in g_pfnCreateDrm.  Retail
+// allocates the 0x62c-byte object and calls its constructor (0x005531c0)
+// under the compiler's new-expression handler; it then returns whatever the
+// constructor left in eax.
+class DRM;
+
+DRM *CreateDrmObject()
+{
+    return (DRM *)new GD5529f0;
+}
+
+// 0x005532a0: registers the DRM factory and the module's callback, called
+// from the start-up chain at 0x00454120 (which passes an argument it ignores).
+typedef void (*TAIL2CALLBACK)();
+
+template <class T>
+class CALLBACKLIST
+{
+public:
+    struct NODE
+    {
+        NODE *prev;
+        NODE *next;
+        T data;
+    };
+
+    NODE *NewNode(T data);
+
+    NODE *m_head;
+};
+
+class CBDRMLIST : public CALLBACKLIST<TAIL2CALLBACK>
+{
+};
+
+extern CBDRMLIST g_drmCallbacks;
+extern CALLBACKLIST<TAIL2CALLBACK>::NODE *g_drmCallbacksTail;
+void DrmModuleCleanup();
+extern DRM *(*g_pfnCreateDrm)();
+
+void RegisterDrm()
+{
+    CALLBACKLIST<TAIL2CALLBACK>::NODE *node = g_drmCallbacks.NewNode(DrmModuleCleanup);
+    node->prev = g_drmCallbacksTail;
+    if (g_drmCallbacksTail)
+        g_drmCallbacksTail->next = node;
+    g_drmCallbacksTail = node;
+    if (!g_drmCallbacks.m_head)
+        g_drmCallbacks.m_head = node;
+    g_pfnCreateDrm = &CreateDrmObject;
+}
+
+// 0x00553330: destroys four std::string members (sizeof(std::string) is
+// 0x1c here, so they sit 0x1c apart) and then releases the handle at +4
+// through the imported callback.  The handle release is the base subobject's
+// inline destructor, so it runs after the members.
+class GD553330BASE
+{
+public:
+    char m_0[4];
+    void *m_handle;
+    char m_8[4];
+
+    ~GD553330BASE()
+    {
+        g_fn656140(m_handle);
+    }
+};
+
+class GD553330 : public GD553330BASE
+{
+public:
+    std::string m_a;
+    std::string m_b;
+    std::string m_c;
+    std::string m_d;
+
+    ~GD553330();
+};
+
+GD553330::~GD553330()
+{
 }
