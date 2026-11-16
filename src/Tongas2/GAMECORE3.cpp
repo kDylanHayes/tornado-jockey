@@ -10,6 +10,7 @@
 #define ANG_UPDATE_OUTOFLINE
 
 #include <string.h>
+#include <math.h>
 #include <deque>
 #include <map>
 
@@ -28,6 +29,18 @@
 #include "Tongas2/GAME.h"
 
 template class std::deque<unsigned short>;
+
+// The points the storm chaser keeps its trail in. Retail has no name left for
+// the type; the layout is what its push at 0x439330 builds: the break flag at
+// +0 and the point at +4, sixteen bytes, which is the block the deque helpers
+// at 0x438b40 and 0x438c10 copy.
+struct G3TRAILPOINT
+{
+    bool m_break;
+    V3 m_point;
+};
+
+template class std::deque<G3TRAILPOINT>;
 
 int RESOURCE::GetClassId()
 {
@@ -519,11 +532,18 @@ public:
     virtual void SetPreviewForest(const bool &preview);
     virtual void SetClearForest(const bool &clear);
     virtual SRESULT SomeCommand(int value);
+    // The per-frame body at 0x42dce0 and the passes it runs.
+    virtual void Update();
 
     void CreateMaxPowerup();
     void CreateTree(int index);
     void RemoveTree(int index);
     void Clear();
+    void UpdateActors();
+    void CheckTrees();
+    void PlaceTrees();
+    void UpdateTrees();
+    void ResetLimits();
 
     RESHANDLE m_handle;
     bool m_cd8;
@@ -898,7 +918,9 @@ public:
 
     char pad_13a4[0x18dc - 0x13a4];
     std::map<int, V2> m_18dc;
-    std::deque<unsigned short> m_18e8;
+    // The dtor at 0x438ff0 tidies it and the push at 0x439330 builds a
+    // sixteen-byte element for it, so it holds G3TRAILPOINTs, not shorts.
+    std::deque<G3TRAILPOINT> m_18e8;
 };
 
 __declspec(noinline) GD438ff0::~GD438ff0()
@@ -943,6 +965,12 @@ public:
     virtual int GetFactoryId();
     virtual int GetFactoryFlags();
 
+    // The per-frame body at 0x43c830 and the three steps it runs.
+    virtual void Update();
+    void UpdatePattern();
+    void SetDecalColor(float phase);
+    void Animate();
+
     static int s_factoryId;
 
     static int s_classId;
@@ -954,6 +982,9 @@ public:
     char *m_ee4;
     char *m_ee8;
     char *m_eec;
+    char pad_ef0[0xefc - 0xef0];
+    float m_efc;
+    bool m_f00;
 };
 
 __declspec(noinline) GD43bb40::~GD43bb40() throw()
@@ -3564,4 +3595,62 @@ void G3SMOOTHER::Add(float amount)
         m_value = 0.0f;
     if (m_value > 1.0f)
         m_value = 1.0f;
+}
+
+// 0x434170: the difference of two angles in degrees, folded into (-180, 180].
+class GD434170
+{
+public:
+    static float __stdcall Delta(float a, float b);
+};
+
+float __stdcall GD434170::Delta(float a, float b)
+{
+    float d;
+    if (a > b) {
+        b = a - b;
+        d = 360.0f - b;
+    } else if (a < b) {
+        d = b - a;
+        b = 360.0f - d;
+    } else {
+        return 0.0f;
+    }
+    if (d > b)
+        return -b;
+    return d;
+}
+
+// 0x43c830: the crop circle's frame: keeps the decal's phase running off the
+// clock once it is over, then steps the pattern and the ring animation.
+void GD43bb40::Update()
+{
+    ACTOR::Update();
+    if (!m_f00)
+        UpdatePattern();
+    if (m_efc >= 1.0f)
+        SetDecalColor((float)fmod((double)g_pTimer->m_time, 1.0));
+    else
+        SetDecalColor(m_efc);
+    Animate();
+}
+
+// 0x42dce0: the forest's frame: brings the trees up after a short delay, then
+// places and scores them and checks the ones already standing.
+void G2FORESTOBJ::Update()
+{
+    if (m_cdc <= 1) {
+        if (m_cdc == 1)
+            UpdateActors();
+        m_cdc++;
+    }
+    if (m_ce8 > 100 && g_pLog)
+        g_pLog->Error("NumTrees: %i!", m_ce8);
+    PlaceTrees();
+    UpdateTrees();
+    if (m_cd8) {
+        ResetLimits();
+        CheckTrees();
+    }
+    ACTOR::Update();
 }
