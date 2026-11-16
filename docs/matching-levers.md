@@ -139,6 +139,26 @@ Do not call a wall "register allocation" while an earlier class still differs.
 - Record bounded residue in the unit notes or the commit message; do not keep
   probes or dummy locals.
 
+## 11. Measurement traps
+
+- **Never compute matched bytes yourself from an objdiff diff JSON.** Summing
+  `left.symbols` sizes counts data objects and section symbols, and filtering to
+  `kind == "SYMBOL_FUNCTION"` misses most code. Two units can read as a 2,950-byte
+  regression and a 4,234-byte gain in the same pass while both are exactly at
+  their recorded value. Use `tools/unit_status.py <unit>` (code + data, the gate
+  metric) or `tools/report.py` + `build/cmp_units.py`.
+- **A `symbols.txt` row with no size is not a pairing defect.** The delinker
+  takes a function's extent from Ghidra, so adding sizes to 523 size-less rows
+  changed no unit's score at all. Only a size on a row that *disagrees* with our
+  compiled body causes the objdiff `range start index ... out of range` panic.
+- **Refresh a unit before believing a delta.** `build/target` is only as current
+  as the last delink of that unit; a report over stale objects can show a unit
+  above or below its real score. Re-delink, then measure.
+- **Do not delink in bulk while other agents are delinking.** Concurrent
+  `ApplySymbols`/`DelinkUnit` runs on the shared Ghidra project can abort a unit
+  ("Start address must be less than or equal to end address", transient symbol
+  rows) and leave the target object missing. Delink one unit per call, or wait.
+
 ## Current known walls
 
 | function | score | classification |
