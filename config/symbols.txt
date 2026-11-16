@@ -10121,3 +10121,5 @@
 0x00553240 ?CreateDrmObject@@YAPAVDRM@@XZ function 0x59
 0x005532a0 ?RegisterDrm@@YAXXZ function 0x43
 0x00553330 ??1GD553330@@QAE@XZ function 0x8b
+0x00552250 FUN_00552250 function 0xe7
+0x00552220 ??1?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@std@@QAE@XZ function 0x27
