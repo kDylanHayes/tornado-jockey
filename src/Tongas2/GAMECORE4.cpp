@@ -1265,7 +1265,7 @@ struct G2GC4GET
     char Get30();
 };
 
-char G2GC4GET::Get31()
+__declspec(noinline) char G2GC4GET::Get31()
 {
     char *p = *(char **)((char *)this + 0xa4);
     if (p)
@@ -1273,7 +1273,7 @@ char G2GC4GET::Get31()
     return 0;
 }
 
-char G2GC4GET::Get30()
+__declspec(noinline) char G2GC4GET::Get30()
 {
     char *p = *(char **)((char *)this + 0xa4);
     if (p)
@@ -3211,12 +3211,68 @@ void G2CORE4OBJ1::Init()
     FUN_00441670((char *)m_28 + 0x60);
 }
 
+// 0x441670: copies the 0x204-byte description block into the object, asks the
+// decal manager for the master named by the block and caches its 12-byte tag.
+// The failure path only writes the first two slots.
+struct G2CORE4OBJ1BLOCK
+{
+    char m_name[0x200];
+    int m_tag;
+};
+
+struct G2CORE4OBJ1TAG
+{
+    int m_0;
+    int m_4;
+    int m_8;
+};
+
+void G2CORE4OBJ1::FUN_00441670(char *block)
+{
+    G2CORE4OBJ1BLOCK *dst = (G2CORE4OBJ1BLOCK *)((char *)this + 0x400);
+    memcpy(dst, block, 0x200);
+    dst->m_tag = *(int *)(block + 0x200);
+    RESOURCEMASTER *master = g_pDECAL->GetMaster(block);
+    if (!master) {
+        *(int *)((char *)this + 0x610) = -1;
+        *(int *)((char *)this + 0x614) = -1;
+        return;
+    }
+    *(G2CORE4OBJ1TAG *)((char *)this + 0x610) = *(G2CORE4OBJ1TAG *)((char *)master + 8);
+}
+
 // 0x448cb0: rebinds the actor at 0x4 to the timer and caches its 0x128 field.
 class G2CORE4UPDACTOR
 {
 public:
     void FUN_0044a4e0(int value);
+
+    char pad_0[0x28];
+    G2GC4GET m_28;
+    char pad_2c[0x130 - 0x29];
+    char m_130;
+    char m_131;
 };
+
+extern bool DAT_006cb458;
+
+// 0x44a4e0: once the actor is live, its 0x30/0x31 flags drive a one-shot latch
+// and the sticky 0x130 flag. The integer argument is unused.
+__declspec(noinline) void G2CORE4UPDACTOR::FUN_0044a4e0(int value)
+{
+    (void)value;
+    if (!m_131)
+        return;
+    if (m_28.Get30()) {
+        if (DAT_006cb458)
+            return;
+        DAT_006cb458 = true;
+        return;
+    }
+    if (m_130)
+        return;
+    m_130 = m_28.Get31();
+}
 
 class G2GC4UPD
 {

@@ -147,15 +147,12 @@ public:
     ODEGEOMRESOURCEMASTERX(RESOURCEMANAGER *manager, const char *name);
     virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
 
-    // The colour the helpers are drawn in unless the actor colours them.
-    V3I &GetColor() { return *(V3I *)((char *)this + 0x6c); }
+    V3I &GetColor() { return m_color; }
 
     int m_60;
     int m_64;
     int m_68;
-    int m_6c;
-    int m_70;
-    int m_74;
+    V3I m_color;
     float m_78;
     float m_7c;
     float m_80;
@@ -166,11 +163,10 @@ public:
 ODEGEOMRESOURCEMASTERX::ODEGEOMRESOURCEMASTERX(RESOURCEMANAGER *manager, const char *name)
     : RESOURCEMASTER(manager, name)
 {
-    m_74 = m_70 = m_6c = 0;
-    m_60 = m_64 = m_68 = 0;
-    m_6c = 0xff;
-    m_70 = 100;
-    m_74 = 200;
+    m_60 = 0;
+    m_64 = 0;
+    m_68 = 0;
+    m_color = V3I(0xff, 100, 200);
     m_78 = 8000.0f;
     m_7c = 0.3f;
     m_80 = 0.05f;
@@ -198,6 +194,9 @@ extern "C" void dGeomDestroy(void *geom);
 extern "C" void dGeomTriMeshDataDestroy(void *data);
 extern "C" void dGeomTriMeshClearTCCache(void *geom);
 extern "C" void dGeomTriMeshSetData(void *geom, void *data);
+extern "C" void dGeomDisable(void *geom);
+extern "C" void *dGeomGetSpace(void *geom);
+extern "C" void dSpaceRemove(void *space, void *geom);
 
 class GD549b40 : public ODEHELPNODE
 {
@@ -342,6 +341,8 @@ class ODEHELPNODE2
 public:
     char pad[0x38];
     ODEHELPNODE2 *m_38;
+    char pad_3c[4];
+    ODEHELPNODE *m_40;
 
     void Visit(int arg);
 };
@@ -365,13 +366,33 @@ void ODELISTX::VisitAll(int arg)
     }
 }
 
+void ODEHELPNODE2::Visit(int arg)
+{
+    ODEHELPNODE *node = m_40;
+    while (node) {
+        ODEHELPNODE *next = (ODEHELPNODE *)node->m_next;
+        if (node->m_active) {
+            if (arg == 0) {
+                void *geom = node->m_42c ? node->m_42c : node->m_428;
+                dGeomSetBody(geom, 0);
+                dGeomDisable(geom);
+                dSpaceRemove(dGeomGetSpace(geom), geom);
+                --*(int *)((char *)g_pActorResourceManager2 + 0x228);
+            } else {
+                ((GD549b40 *)node)->AddToSpace((void *)arg);
+            }
+        }
+        node = next;
+    }
+}
+
 class ODEWORLDFIND
 {
 public:
     WTACTOR *FindActor();
 };
 
-void GD549b40::AddToSpace(void *space)
+__declspec(noinline) void GD549b40::AddToSpace(void *space)
 {
     void *geom = m_42c ? m_42c : m_428;
     dSpaceAdd(space, geom);
@@ -384,13 +405,13 @@ void GD549b40::AddToSpace(void *space)
 
 bool GD549b40::IsAtOrigin()
 {
-    if (m_offset.x == 0.0f && m_offset.y == 0.0f && m_offset.z == 0.0f &&
-        m_relAngles.IsZero())
-        return false;
-    WTACTOR *actor = ((ODEWORLDFIND *)this)->FindActor();
-    if (!actor)
-        return false;
-    return true;
+    if (m_offset.x != 0.0f || m_offset.y != 0.0f || m_offset.z != 0.0f ||
+        !m_relAngles.IsZero()) {
+        WTACTOR *actor = ((ODEWORLDFIND *)this)->FindActor();
+        if (actor)
+            return true;
+    }
+    return false;
 }
 
 class MATB
