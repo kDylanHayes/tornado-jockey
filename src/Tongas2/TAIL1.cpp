@@ -90,6 +90,12 @@ public:
 class GD551d70 : public GD551d70BASE
 {
 public:
+    // The copy constructor at 0x00551dd0 is not implemented: with the natural
+    // shape (base copy ctor declared out of line, then
+    // m_10.assign(other.m_10, 0, npos)) it compiles to 0x6a bytes against retail's
+    // 0x65, and the whole residue is one trylevel store (`mov byte [esp+0x20], 1`)
+    // that retail does not emit - its EH state slot holds 0 instead. Same class as
+    // TEXTMASTER::BuildCharacters: EH bookkeeping, not source shape.
     virtual ~GD551d70();
 
     std::string m_10;
