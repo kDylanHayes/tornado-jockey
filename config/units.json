@@ -3709,7 +3709,8 @@
     {
       "name": "Tongas2/ODEACTOR",
       "ranges": [
-        "0x0054ab90-0x0054d34f"
+        "0x0054ab90-0x0054d0ef",
+        "0x0054d110-0x0054d34f"
       ],
       "target": "build/target/Tongas2/ODEACTOR.obj",
       "source": "src/Tongas2/ODEACTOR.cpp",
@@ -3855,6 +3856,15 @@
         "FUN_00441c60": "?Execute@GD4413d0@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z",
         "DAT_006cb458": "?DAT_006cb458@@3_NA"
       }
+    },
+    {
+      "name": "Tongas2/ODEADJ",
+      "ranges": [
+        "0x0054d0f0-0x0054d10f"
+      ],
+      "target": "build/target/Tongas2/ODEADJ.obj",
+      "source": "src/Tongas2/ODEADJ.cpp",
+      "category": "engine"
     }
   ]
 }

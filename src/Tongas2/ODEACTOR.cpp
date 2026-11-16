@@ -211,10 +211,9 @@ void G2ODEADJTGT::Call(void *arg)
     }
 }
 
-__declspec(noinline) void G2ODEADJ::Call(void *arg)
-{
-    ((G2ODEADJTGT *)((char *)this + 4))->Call((char *)arg + 8);
-}
+// G2ODEADJ::Call (0x0054d0f0) is defined in ODEADJ.cpp: the destructor below
+// only gets retail's SEH frame when the callee's body is not visible here.
+
 
 // A dMass, as the ODE library lays it out: mass, centre of gravity, inertia.
 struct G2ODEMASS
