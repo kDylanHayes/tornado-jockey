@@ -44,6 +44,8 @@ __declspec(dllimport) DWORD __stdcall WaitForSingleObject(HANDLE hHandle,
 #undef TONGAS2_CORE_OUTOFLINE
 
 #include <math.h>
+#include <excpt.h>
+#include <malloc.h>
 #include <map>
 #include <string>
 #include <vector>
@@ -963,14 +965,41 @@ __declspec(noinline) void GD4512e0MEMBER::Stop()
     }
 }
 
-class GD4512e0
+// The interface implementation the 0x4511a0 constructor builds at +8. Only its
+// construction is part of this block; the rest of that object is the 0x44cf10
+// block's own class.
+class GD44cf10 : public GD4512e0MEMBER
 {
 public:
-    virtual ~GD4512e0();
+    GD44cf10(void *parent);
+};
+
+// The reference count the object shares with the interface it builds; the base
+// clears it before the derived stores its vtable pointer.
+class GD4512e0REFCOUNT
+{
+public:
+    GD4512e0REFCOUNT() : m_4(0) {}
 
     int m_4;
-    GD4512e0MEMBER m_8;
 };
+
+class GD4512e0 : public GD4512e0REFCOUNT
+{
+public:
+    GD4512e0(void *parent);
+    virtual ~GD4512e0();
+
+    GD44cf10 m_8;
+};
+
+// 0x4511a0: takes a reference on the engine the object belongs to and hands the
+// owner pointer, or the object itself when there is none, to the interface it
+// builds at +8.
+GD4512e0::GD4512e0(void *parent) : m_8(parent ? parent : (void *)this)
+{
+    g_pGD4512e0Global->V1();
+}
 
 GD4512e0::~GD4512e0()
 {
@@ -3191,9 +3220,10 @@ long GD44f810::Call()
 
 // ---------------------------------------------------------------------------
 // 0x453e80: double to 8-byte integer conversion, stdcall with one double.
-// The retail block truncates with an inlined fistp instead of calling __ftol2.
+// The retail block truncates with an inlined fistp instead of calling __ftol2,
+// and keeps the helper out of line so its callers emit the call.
 // ---------------------------------------------------------------------------
-__int64 __stdcall GD453e80(double value)
+__declspec(noinline) __int64 __stdcall GD453e80(double value)
 {
     __int64 converted;
     __asm {
@@ -3530,4 +3560,243 @@ int __stdcall G2GC4RangeTake(G2GC4RANGE *range, unsigned count)
     int take = count <= (unsigned)have ? (int)count : have;
     range->m_10 = range->m_10 + take;
     return count != (unsigned)take;
+}
+
+// ---------------------------------------------------------------------------
+// 0x451b20: links a fresh 12-byte record into the list at 0x1c of the object
+// that guards it with the critical section at its 4th byte. Both null
+// arguments are rejected the way the CRT rejects an invalid parameter.
+// ---------------------------------------------------------------------------
+extern "C" __declspec(dllimport) __declspec(noreturn) void __stdcall RaiseException(
+    DWORD code, DWORD flags, DWORD count, const void *args);
+extern "C" __declspec(dllimport) DWORD __stdcall GetCurrentThreadId(void);
+extern "C" __declspec(dllimport) void __stdcall EnterCriticalSection(void *section);
+
+// The SDK's critical section, which the project's stand-in windows.h lacks.
+struct G2GC4CRITSEC
+{
+    void *m_debugInfo;
+    long m_lockCount;
+    long m_recursionCount;
+    void *m_owningThread;
+    void *m_lockSemaphore;
+    unsigned long *m_spinCount;
+};
+
+struct G2GC4LOCKNODE
+{
+    int m_0;
+    DWORD m_4;
+    G2GC4LOCKNODE *m_8;
+};
+
+struct G2GC4LOCKLIST
+{
+    int m_0;
+    G2GC4CRITSEC m_4;
+    G2GC4LOCKNODE *m_1c;
+};
+
+void __stdcall GD451b20(G2GC4LOCKLIST *list, G2GC4LOCKNODE *node, int value)
+{
+    if (!list)
+        RaiseException(0xc0000005, 1, 0, 0);
+    if (!node || !value)
+        RaiseException(0xc0000005, 1, 0, 0);
+    node->m_0 = value;
+    node->m_4 = GetCurrentThreadId();
+    EnterCriticalSection(&list->m_4);
+    node->m_8 = list->m_1c;
+    list->m_1c = node;
+    LeaveCriticalSection(&list->m_4);
+}
+
+// ---------------------------------------------------------------------------
+// 0x44ae40: reserves a scratch area of the requested size plus 0x2000 bytes on
+// the stack and reports whether the reservation survived. The handler for the
+// stack overflow resets the guard page and reports the failure.
+// ---------------------------------------------------------------------------
+bool __cdecl GD44ae40(int size)
+{
+    bool ok = true;
+    __try {
+        char *buffer = (char *)_alloca(size + 0x2000);
+        (void)buffer;
+    } __except (GetExceptionCode() == 0xc00000fd) {
+        ok = false;
+        _resetstkoflw();
+    }
+    return ok;
+}
+
+// ---------------------------------------------------------------------------
+// The three record types the 0x4410b0 block's factories allocate. Only the
+// sizes and the constructor signatures matter to the factories themselves; the
+// constructors are the next targets in the same block.
+// ---------------------------------------------------------------------------
+class GD440e20
+{
+public:
+    GD440e20(void *parent, int value);
+    char m_data[0x46c];
+};
+
+class GD441120
+{
+public:
+    GD441120(void *parent, void *value);
+    char m_data[0x430];
+};
+
+class GD444600
+{
+public:
+    GD444600(void *parent, int value);
+    char m_data[0x68];
+};
+
+// 0x4410b0: creates the 0x46c-byte record the block's first vtable describes.
+class GD4410b0
+{
+public:
+    void *Create(int value);
+};
+
+void *GD4410b0::Create(int value)
+{
+    return new GD440e20(this, value);
+}
+
+// 0x441250: creates the 0x430-byte progress-bar record.
+class GD441250
+{
+public:
+    void *Create(void *value);
+};
+
+void *GD441250::Create(void *value)
+{
+    return new GD441120(this, value);
+}
+
+// 0x4446a0: creates the 0x68-byte record the block's third vtable describes.
+class GD4446a0
+{
+public:
+    void *Create(int value);
+};
+
+void *GD4446a0::Create(int value)
+{
+    return new GD444600(this, value);
+}
+
+// ---------------------------------------------------------------------------
+// 0x44aba0 and 0x44b2f0: the two-interface media format the samples carry. The
+// base constructor clears both 16-byte interface ids and marks the length
+// invalid; the derived one fills in the ids the block's two 0x687a40 and
+// 0x687a50 constants name and marks a one-byte sample size.
+// ---------------------------------------------------------------------------
+struct G2GC4GUID
+{
+    int m_0;
+    int m_4;
+    int m_8;
+    int m_c;
+};
+
+extern "C" const G2GC4GUID DAT_00687a40;
+extern "C" const G2GC4GUID DAT_00687a60;
+
+class GD44aba0
+{
+public:
+    GD44aba0();
+
+    char pad_0[4];
+    G2GC4GUID m_4;
+    G2GC4GUID m_14;
+    short m_24;
+    short m_26;
+    int m_28;
+};
+
+GD44aba0::GD44aba0()
+{
+    m_4 = DAT_00687a40;
+    m_14 = DAT_00687a40;
+    m_24 = 0;
+    m_26 = 0;
+    m_28 = 0xfefefefe;
+}
+
+class GD44b2f0 : public GD44aba0
+{
+public:
+    GD44b2f0();
+};
+
+GD44b2f0::GD44b2f0()
+{
+    m_4 = DAT_00687a60;
+    m_14 = *(const G2GC4GUID *)g_GD452a90Format;
+    m_24 = 1;
+    m_26 = 0;
+}
+
+// ---------------------------------------------------------------------------
+// 0x453fa0 and 0x453f20: the stopwatch the media object keeps at its 0xa8
+// member. 0x10 is the run state, 0x18/0x20/0x28/0x38 the millisecond readings,
+// 0x40 the scale that turns them into seconds, and 0xc the counter reader the
+// stopwatch calls.
+// ---------------------------------------------------------------------------
+typedef void (__cdecl *G2GC4COUNTERFN)(__int64 *counter);
+
+class GD453fa0
+{
+public:
+    __int64 Delta(__int64 since);
+    float Elapsed();
+
+    char pad_0[0xc];
+    G2GC4COUNTERFN m_c;
+    int m_10;
+    char pad_14[4];
+    __int64 m_18;
+    __int64 m_20;
+    __int64 m_28;
+    char pad_30[8];
+    __int64 m_38;
+    double m_40;
+};
+
+// 0x453f20: the counter reading less the one handed in, scaled.
+__int64 GD453fa0::Delta(__int64 since)
+{
+    __int64 now;
+    m_c(&now);
+    return GD453e80((double)(now - since) * m_40);
+}
+
+// 0x453fa0: the time since the last reading, in seconds. Only the running
+// state has a reading to report.
+float GD453fa0::Elapsed()
+{
+    __int64 value;
+    switch (m_10) {
+    case 1: {
+        __int64 delta = Delta(m_20);
+        m_c(&m_20);
+        value = delta;
+        break;
+    }
+    case 0:
+    case 2:
+        value = 0;
+        break;
+    default:
+        value = 0;
+        break;
+    }
+    return (float)value * 0.001f;
 }
