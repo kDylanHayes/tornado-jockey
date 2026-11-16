@@ -10149,3 +10149,4 @@
 0x00511780 ?erase@?$vector@USKINGEOMTYPE40@@V?$allocator@USKINGEOMTYPE40@@@std@@@std@@QAE?AViterator@12@V312@0@Z function 0x4a
 0x005128c0 ?resize@?$vector@USKINGEOMTYPE40@@V?$allocator@USKINGEOMTYPE40@@@std@@@std@@QAEXIUSKINGEOMTYPE40@@@Z function 0x6b
 0x005191e0 ?push_back@?$vector@PAVBEHAVIOR@@V?$allocator@PAVBEHAVIOR@@@std@@@std@@QAEXABQAVBEHAVIOR@@@Z function 0x4d
+0x00407a20 ??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@ABV01@@Z function 0x25
