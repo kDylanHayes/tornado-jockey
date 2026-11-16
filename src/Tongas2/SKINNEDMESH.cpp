@@ -161,6 +161,8 @@ struct G2SKMLISTNODE
     void *m_value;
     G2SKMLISTNODE *m_next;
     G2SKMLISTNODE *m_prev;
+
+    G2SKMLISTNODE(void *value) : m_value(value), m_next(0), m_prev(0) {}
 };
 
 struct G2SKMLIST
@@ -173,18 +175,15 @@ struct G2SKMLIST
 // The list is a doubly linked chain and Add puts the new node at the head.
 // The exe reads m_head back from memory after every store through the node,
 // which is what this spelling produces. G2SKMADD::Add calls it out of line,
-// so it must not be inlined.
+// so it must not be inlined. Retail allocates through a value constructor as
+// well (it moves the new pointer into ecx before the three stores), but this
+// source still gets 69 bytes against retail's 74: the first difference is the
+// missing push edi at +1, then the zero register is edx instead of edi and the
+// node is eax instead of ecx, so the whole body is one register colour off.
 __declspec(noinline) void G2SKMLIST::Add(void *item)
 {
-    G2SKMLISTNODE *node = (G2SKMLISTNODE *)::operator new(sizeof(G2SKMLISTNODE));
-    if (node) {
-        node->m_value = item;
-        node->m_next = 0;
-        node->m_prev = 0;
-    }
-    else {
-        node = 0;
-    }
+    G2SKMLISTNODE *node = new G2SKMLISTNODE(item);
+
     if (!m_head) {
         m_head = node;
         node->m_next = 0;
@@ -802,6 +801,88 @@ GD5174a0::GD5174a0(void *first, void *second)
     m_38 = 1.0f;
     m_24 = 1.0f;
     m_10 = 1.0f;
+}
+
+// 0x00511760 (25 bytes): play the animation whose name resolves to an index.
+// GetAnimationIndex runs on the same object, then the index goes to the
+// unnamed play-by-index method at 0x00510b90.
+class GD511760 : public SKINNEDMESH
+{
+public:
+    void PlayIndex(int index);
+    void PlayByName(const char *name);
+};
+
+void GD511760::PlayByName(const char *name)
+{
+    PlayIndex(GetAnimationIndex(name));
+}
+
+// 0x00515fa0 (35 bytes): refresh the frustum, then hand the +0x22c and +0x26c
+// blocks of the embedded object at +0x394 to the setter at 0x004f72c0.
+class GD515fa0CAM
+{
+public:
+    virtual void UpdateFrustum();
+};
+
+struct GD515fa0SUB
+{
+    void Set(void *first, void *second);
+};
+
+class GD515fa0 : public GD515fa0CAM
+{
+public:
+    void Run();
+
+    char pad_0[0x228];
+    char m_22c[0x40];
+    char m_26c[0x40];
+    char pad_2ac[0x394 - 0x2ac];
+    GD515fa0SUB m_394;
+};
+
+void GD515fa0::Run()
+{
+    GD515fa0CAM::UpdateFrustum();
+    m_394.Set(m_22c, m_26c);
+}
+
+// 0x005177a0 (38 bytes): two step calls on this, then the +0xe8 and +0x128
+// blocks go to the setter at 0x004f72c0 with this as the object.
+class GD4f72c0
+{
+public:
+    void Set(void *first, void *second);
+};
+
+class GD5177a0 : public GD4f72c0
+{
+public:
+    void StepOne();
+    void StepTwo();
+    void Run();
+
+    char pad_0[0xe8];
+    char m_e8[0x40];
+    char m_128[0x40];
+};
+
+void GD5177a0::Run()
+{
+    StepOne();
+    StepTwo();
+    Set(m_e8, m_128);
+}
+
+// 0x00522e80 (32 bytes): the four-argument front end of the six-argument
+// helper at 0x005215a0, which supplies the window key pair itself.
+int __stdcall GD5215a0(int a, int b, int c, int d, int e, int f);
+
+int __stdcall GD522e80(int a, int b, int c, int d)
+{
+    return GD5215a0(a, b, 0, -1, c, d);
 }
 
 // Reproduces FUN_00517d60 (retail address 0x00517d60, 42 bytes): fill count

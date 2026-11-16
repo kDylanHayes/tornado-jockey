@@ -7704,7 +7704,7 @@
 0x0053aa50 ?Apply@SHADERDX8SDRESOURCE@@QAEXXZ function 0x880
 
 # Tongas2/TEXTUREDX8CORE (0x0053dfe0-0x005478df)
-0x00546ea0 ?CreateTexture@@YAHXZ function 0x9d4
+0x00546ea0 ?CreateTexture@TEXTUREDX8SDTEXTUREMEMBER@@QAEHHV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAX1IHH@Z function 0x9d4
 0x00547880 ?CreateTexture@G2DX8DEVICE@@QAEXPAVG2DX8OBJECT@@@Z function 0x36
 0x005478c0 ?ReleaseTexture@G2DX8DEVICE@@QAEXXZ function 0x1b
 
@@ -10061,3 +10061,15 @@
 0x0054a2f0 ?TestGeomCollision@GD548f90@@QAE_NPAVGD549b40@@0ABUV3@@1H@Z function 0x13d
 0x0054a680 ??0GD549b40@@QAE@PAVRESOURCEMASTER@@ABURESHANDLE@@@Z function 0x284
 0x0054a910 ?CreateCopy@ODEGEOMRESOURCEMASTERX@@UAEPAVRESOURCE@@ABURESHANDLE@@@Z function 0x69
+0x00511760 ?PlayByName@GD511760@@QAEXPBD@Z function 0x19
+0x00515fa0 ?Run@GD515fa0@@QAEXXZ function 0x23
+0x005177a0 ?Run@GD5177a0@@QAEXXZ function 0x26
+0x005511a0 ?ProductDisplayName@WTINFO@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ function 0x82
+0x00551230 ?ProductGUID@WTINFO@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ function 0x82
+0x005512c0 ?ExeName@WTINFO@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ function 0x82
+0x00551350 ?LaunchExeName@WTINFO@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ function 0x82
+0x005513e0 ?RuntimeExeName@WTINFO@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ function 0x82
+0x00551470 ?UseTracking@WTINFO@@QAE_NXZ function 0x77
+0x0050d3c0 ??0GD50d3c0@@QAE@HH@Z function 0x78
+0x0050d2c0 ??$_Uninit_fill_n@PAV?$vector@HV?$allocator@H@std@@@std@@IV12@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@std@@YAXPAV?$vector@HV?$allocator@H@std@@@0@IABV10@AAV?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@0@U_Nonscalar_ptr_iterator_tag@0@@Z function 0x67
+0x0050cf20 ??$_Uninit_copy@PAV?$vector@HV?$allocator@H@std@@@std@@PAV12@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@std@@YAPAV?$vector@HV?$allocator@H@std@@@0@PAV10@00AAV?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@0@U_Nonscalar_ptr_iterator_tag@0@@Z function 0x69

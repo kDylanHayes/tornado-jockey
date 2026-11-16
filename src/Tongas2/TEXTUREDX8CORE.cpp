@@ -31,10 +31,7 @@ extern int g_numTriangles;
 // config/symbols.txt; matching needs the real member name there and a re-delink
 // (and the __ehhandler reference, which the linker folded onto
 // __ehhandler$?_Insert_n@?$vector@USHADERTYPE2C..., then pairs by itself).
-int CreateTexture()
-{
-    return 0;
-}
+
 
 int TextureFormatA()
 {
@@ -106,9 +103,19 @@ class TEXTUREDX8SDTEXTUREMEMBER
 public:
     ~TEXTUREDX8SDTEXTUREMEMBER();
 
+    int CreateTexture(int mipCount, std::string name, void *surface, void *palette,
+                      unsigned int colourKey, int width, int height);
+
     char *m_0;
     std::deque<unsigned short> m_4;
 };
+
+int TEXTUREDX8SDTEXTUREMEMBER::CreateTexture(int mipCount, std::string name, void *surface,
+                                             void *palette, unsigned int colourKey,
+                                             int width, int height)
+{
+    return 0;
+}
 
 TEXTUREDX8SDTEXTUREMEMBER::~TEXTUREDX8SDTEXTUREMEMBER()
 {

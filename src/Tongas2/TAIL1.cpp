@@ -264,12 +264,54 @@ class WTINFO : public V5547C4
 public:
     ~WTINFO();
 
+    bool GetBool(const std::string &key);
+    std::string GetString(const std::string &key);
+
+    bool UseTracking();
+    std::string ProductDisplayName();
+    std::string ProductGUID();
+    std::string ExeName();
+    std::string LaunchExeName();
+    std::string RuntimeExeName();
+
     std::string m_08;
     std::string m_24;
 };
 
 WTINFO::~WTINFO()
 {
+}
+
+// Retail 0x00551470: build the key name and ask for the value.
+bool WTINFO::UseTracking()
+{
+    return GetBool(std::string("UseTracking"));
+}
+
+// Retail 0x005511a0..0x005513e0: the five named-string getters.
+std::string WTINFO::ProductDisplayName()
+{
+    return GetString(std::string("ProductDisplayName"));
+}
+
+std::string WTINFO::ProductGUID()
+{
+    return GetString(std::string("ProductGUID"));
+}
+
+std::string WTINFO::ExeName()
+{
+    return GetString(std::string("ExeName"));
+}
+
+std::string WTINFO::LaunchExeName()
+{
+    return GetString(std::string("LaunchExeName"));
+}
+
+std::string WTINFO::RuntimeExeName()
+{
+    return GetString(std::string("RuntimeExeName"));
 }
 
 // The ODE actor-template manager factory (0x54ef70).

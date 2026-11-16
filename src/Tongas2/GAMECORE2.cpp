@@ -1825,6 +1825,29 @@ void G2RULESOBJ::Start()
 }
 
 extern RESOURCEMANAGER *g_pTreeModels;
+extern RESOURCEMANAGER *g_pMinitornadoTemplates;
+
+void ACTOR::OnTornadoCreated(CMDCALL *call)
+{
+    RESOURCEMASTER *master = g_pMinitornadoTemplates->GetMaster((char *)call + 0xccc);
+    if (!master) {
+        if (g_pLog)
+            g_pLog->Error("Can't get minitornado to pickup");
+        return;
+    }
+    *(float *)((char *)this + 0x1778) += *(float *)((char *)master + 0x74) * 0.7f;
+    if (*(float *)((char *)this + 0x1778) < 0.0f)
+        *(float *)((char *)this + 0x1778) = 0.0f;
+    if (*(float *)((char *)this + 0x1778) > 5.995f)
+        *(float *)((char *)this + 0x1778) = 5.995f;
+    *(int *)((char *)g_pGame + 0xe58) = (int)floor(*(float *)((char *)this + 0x1778));
+    *(float *)((char *)g_pGame + 0xe5c) = (float)(*(float *)((char *)this + 0x1778) - floor(*(float *)((char *)this + 0x1778)));
+    *(float *)((char *)this + 0x2c50) += 0.25;
+    if (*(float *)((char *)this + 0x2c50) < -1.0f)
+        *(float *)((char *)this + 0x2c50) = -1.0f;
+    if (*(float *)((char *)this + 0x2c50) > 100.0f)
+        *(float *)((char *)this + 0x2c50) = 100.0f;
+}
 
 void G2FORESTOBJ::LoadModels(const char *name)
 {
@@ -2019,8 +2042,8 @@ void MATRIX::RotateY(float degrees)
 {
     float negated = -degrees;
     float radians = negated * 0.017453292f;
-    float c = (float)cos(radians);
-    float s = (float)sin(radians);
+    float c = cos(radians);
+    float s = sin(radians);
     _11 = 1.0f;
     _12 = 0.0f;
     _13 = 0.0f;

@@ -123,6 +123,7 @@ private:
     int m_034;
     int m_038;
     std::vector<int> m_03c;
+    char m_04c[4];
     std::vector<int> m_050;
     std::vector<int> m_060;
     std::vector<int> m_070;
@@ -133,6 +134,31 @@ GD50d3c0::GD50d3c0(int a, int b)
     : m_000(1.0f), m_004(0), m_020(), m_030(a), m_034(b), m_038(0),
       m_03c(), m_050(), m_060(), m_070(), m_080(0)
 {
+}
+
+// The two record constructors the retail unit's helper pack instantiates.
+// Referencing them through these factories gives the compiler a reason to
+// emit the COMDAT bodies in this translation unit:
+//
+//   0x0050b5b0  0x4d  ??0GD50d0c0@@QAE@XZ    (symbols.txt still calls this
+//                                             address ?Init@SCROOT@@QAEXXZ)
+//   0x0050d3c0  0x78  ??0GD50d3c0@@QAE@HH@Z
+//
+// Both are byte-exact against the retail bodies, verified with
+// `py build/maskcmp.py build/src/Tongas2/SCROOT.obj <sym> <addr> <size>`.
+// The record layouts they pin down: a std::vector in this VC7.1 is sixteen
+// bytes with _Myfirst/_Mylast/_Myend at +4/+8/+0xc, so the four-list record
+// is four vectors at 0x00/0x10/0x20/0x30 and the settings record is
+// {float, char, pad, vector, int, int, int, vector, pad4, vector, vector,
+// vector, int} up to 0x84.
+GD50d0c0 *CreateGD50d0c0()
+{
+    return new GD50d0c0;
+}
+
+GD50d3c0 *CreateGD50d3c0(int a, int b)
+{
+    return new GD50d3c0(a, b);
 }
 
 SCROOT::SCROOT(int type, const void *data)

@@ -9912,5 +9912,55 @@
    "matched_code": 3417,
    "total_code": 596467
   }
+ },
+ {
+  "time": "2026-11-16T16:29:47+00:00",
+  "commit": "a21f079c1b60ce2e8bf58c1cc60485006da3ada3",
+  "percent": 34.7141,
+  "code": {
+   "matched_code": 816711,
+   "total_code": 2352680
+  },
+  "game": {
+   "matched_code": 463012,
+   "total_code": 1194094
+  },
+  "lib": {
+   "matched_code": 350282,
+   "total_code": 403049
+  },
+  "crt": {
+   "matched_code": 0,
+   "total_code": 159070
+  },
+  "sdk": {
+   "matched_code": 3417,
+   "total_code": 596467
+  }
+ },
+ {
+  "time": "2026-11-16T16:36:26+00:00",
+  "commit": "1dd86c86f21abebc98ff223fdad86c566e377d82",
+  "percent": 34.7628,
+  "code": {
+   "matched_code": 817853,
+   "total_code": 2352666
+  },
+  "game": {
+   "matched_code": 464154,
+   "total_code": 1194080
+  },
+  "lib": {
+   "matched_code": 350282,
+   "total_code": 403049
+  },
+  "crt": {
+   "matched_code": 0,
+   "total_code": 159070
+  },
+  "sdk": {
+   "matched_code": 3417,
+   "total_code": 596467
+  }
  }
 ]

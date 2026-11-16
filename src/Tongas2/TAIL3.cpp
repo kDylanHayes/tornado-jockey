@@ -255,7 +255,8 @@ std::string __fastcall GetUserFolder(int folder)
         std::string message("CSaveFile::GetRootPath called with invalid Type");
         throw TAIL1ERR(message);
     }
-    std::string result(*(std::string *)((char *)GetTail3Root() + 0x28));
+    void *root = GetTail3Root();
+    std::string result(*(std::string *)((char *)root + 0x28));
     if (folder == 0)
         result.append("\\Cache", 6);
     else
