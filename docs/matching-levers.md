@@ -154,6 +154,12 @@ Do not call a wall "register allocation" while an earlier class still differs.
 - **Refresh a unit before believing a delta.** `build/target` is only as current
   as the last delink of that unit; a report over stale objects can show a unit
   above or below its real score. Re-delink, then measure.
+- **A byte-identical body in a *sibling* translation unit cannot pair.** objdiff
+  compares one unit's target object against that unit's object only, so naming a
+  `FUN_` target after a body that our tree emits in another unit changes nothing
+  (`build/scan_cross_unit.py` finds those 25 candidates; all scored zero). The body
+  has to be emitted in the owning unit, or the unit has to claim the other one's
+  range.
 - **Do not delink in bulk while other agents are delinking.** Concurrent
   `ApplySymbols`/`DelinkUnit` runs on the shared Ghidra project can abort a unit
   ("Start address must be less than or equal to end address", transient symbol
