@@ -10196,3 +10196,4 @@
 0x004389f0 ?_Growmap@?$deque@UG3TRAILPOINT@@V?$allocator@UG3TRAILPOINT@@@std@@@std@@IAEXI@Z function 0x14a
 0x00438c90 ??$_Insert@Vconst_iterator@?$deque@UG3TRAILPOINT@@V?$allocator@UG3TRAILPOINT@@@std@@@std@@@?$deque@UG3TRAILPOINT@@V?$allocator@UG3TRAILPOINT@@@std@@@std@@QAEXViterator@01@Vconst_iterator@01@1Ubidirectional_iterator_tag@1@@Z function 0x328
 0x00439370 ??4?$deque@GV?$allocator@G@std@@@std@@QAEAAV01@ABV01@@Z function 0xbd
+0x005571a0 ?erase@?$_Tree@V?$_Tmap_traits@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@UTAIL4GDVALUE@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@UTAIL4GDVALUE@@@std@@@2@$0A@@std@@@std@@QAE?AViterator@12@V312@0@Z function 0xb7
