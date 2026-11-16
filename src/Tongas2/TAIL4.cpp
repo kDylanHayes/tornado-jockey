@@ -247,6 +247,11 @@ struct TAIL4MAPVALUE
 
 template class std::map<std::basic_string<char>, TAIL4MAPVALUE>;
 
+// Two of the map's members already build byte-identical to unnamed targets:
+//   0x5571a0 (183) == ?erase@...string,TAIL4MAPVALUE...  (iterator,iterator)
+//   0x559620 (429) == ?_Insert@...string,TAIL4MAPVALUE...
+// They only need the symbols.txt rows below; the bodies need no change.
+
 // The 8-byte pair the notification list stores.
 struct TAIL4PAIR8
 {
@@ -363,13 +368,20 @@ public:
     unsigned int m_size;    // 0x08
 };
 
-// 00559540 (126 bytes) -- allocate and initialise one tree node.
-// Residue: retail keeps an ebp frame and saves ebx/edi for the caught-throw
-// delete handler, so this builds 135 bytes with no frame.
+// 00559540 (126 bytes) -- allocate and initialise one tree node.  The retail
+// shape is the STL _Buynode pattern: a caught-throw handler deletes the new
+// node, which is what pulls in the ebp frame and the ebx/edi saves.
 TL3NODE *TL3TREE::Buynode(TL3NODE *left, TL3NODE *parent, TL3NODE *right,
                           const G2TL3TGT1 &value, char color)
 {
-    return new TL3NODE(left, parent, right, value, color);
+    TL3NODE *node = (TL3NODE *)::operator new(sizeof(TL3NODE));
+    try {
+        ::new ((void *)node) TL3NODE(left, parent, right, value, color);
+    } catch (...) {
+        ::operator delete(node);
+        throw;
+    }
+    return node;
 }
 
 // 00556140 (62 bytes) -- free a subtree, releasing the value first.
@@ -456,4 +468,68 @@ int __fastcall GD558FE0(char *buffer, unsigned int size)
     if (key != NULL)
         RegCloseKey(key);
     return result;
+}
+
+// 00557a40 (109 bytes) -- constructor that owns one reference-counted object.
+class GD557a40ITEM
+{
+public:
+    GD557a40ITEM();
+    void Call();
+
+    int m_00[6];        // 0x00, 0x18 bytes in all
+};
+
+class GD557a40
+{
+public:
+    GD557a40();
+
+    GD557a40ITEM *m_0;
+};
+
+GD557a40::GD557a40()
+{
+    GD557a40ITEM *p = 0;
+    p = new GD557a40ITEM();
+    m_0 = p;
+    if (p)
+        p->Call();
+}
+// 005563b0 (114 bytes + 0x15 handler) -- the notification tree's node allocator
+// for the derived list.  The node ctor stays out of line (00555d20), so this is
+// the same caught-throw allocate/construct body as Buynode above.
+class GD5563NODE
+{
+public:
+    GD5563NODE(GD5563NODE *left, GD5563NODE *parent, GD5563NODE *right,
+               const G2TL3TGT1 &value, char color);
+
+    GD5563NODE *m_left;     // 0x00
+    GD5563NODE *m_parent;   // 0x04
+    GD5563NODE *m_right;    // 0x08
+    G2TL3TGT1 m_value;      // 0x0c
+    char m_color;           // 0x30
+    char m_isnil;           // 0x31
+};
+
+class GD5563TREE
+{
+public:
+    GD5563NODE *Buynode(GD5563NODE *left, GD5563NODE *parent,
+                        GD5563NODE *right, const G2TL3TGT1 &value, char color);
+};
+
+GD5563NODE *GD5563TREE::Buynode(GD5563NODE *left, GD5563NODE *parent,
+                               GD5563NODE *right, const G2TL3TGT1 &value,
+                               char color)
+{
+    GD5563NODE *node = (GD5563NODE *)::operator new(sizeof(GD5563NODE));
+    try {
+        ::new ((void *)node) GD5563NODE(left, parent, right, value, color);
+    } catch (...) {
+        ::operator delete(node);
+        throw;
+    }
+    return node;
 }

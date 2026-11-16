@@ -632,6 +632,12 @@ public:
     virtual void SetEd4(const float &value);
     virtual void SetEd8(const float &value);
 
+    // The per-frame body at 0x0042e680 and the three un-named steps it runs.
+    void Run();
+    void StepA();
+    void StepB();
+    void StepC();
+
     FIXEDSTRING<0x200> m_name;
     float m_ecc;
     float m_ed0;
@@ -646,6 +652,16 @@ public:
 
 __declspec(noinline) GD42ddd0::~GD42ddd0()
 {
+}
+
+// 0x0042e680: ACTOR::Update followed by the three steps of the frame body.
+// The three steps are still FUN_ in the retail map.
+void GD42ddd0::Run()
+{
+    ACTOR::Update();
+    StepA();
+    StepB();
+    StepC();
 }
 
 // Takes the named minitornado template: its actor resources template and the
