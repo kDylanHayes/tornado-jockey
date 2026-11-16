@@ -34,6 +34,7 @@ extern "C" __declspec(dllimport) void __stdcall Sleep(unsigned long);
 #include "Tongas2/ACTOR.h"
 #include "Tongas2/CSTRING.h"
 #include "Tongas2/CMDBASE.h"
+#include "Tongas2/CONSOLE.h"
 #include "Tongas2/CPRIMITIVE3.h"
 #include "Tongas2/FIXEDWSTRING.h"
 #include "Tongas2/GAME.h"
@@ -863,15 +864,9 @@ const char *G2CORE1J3::GetClassName()
     return g_classNames[s_classId];
 }
 
-class G2CORE1K1 : public ACTOR
+class G2CORE1K1 : public CONSOLE
 {
-public:
-    virtual ~G2CORE1K1();
 };
-
-G2CORE1K1::~G2CORE1K1()
-{
-}
 
 extern RESOURCEMANAGER *g_pEMITTER;
 extern RESOURCEMANAGER *g_pFX;

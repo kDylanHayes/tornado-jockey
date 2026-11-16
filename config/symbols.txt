@@ -9861,7 +9861,7 @@
 0x0043b6a0 ??0GD43b550@@QAE@XZ function 0x60
 0x0042e770 ?Activate@GD42e6e0@@QAEXXZ function 0x22
 0x0042e8c0 ?Deactivate@GD42e6e0@@QAEXXZ function 0x3c
-0x00436f90 FUN_00436f90 function 0x2c
+0x00436f90 ?Advance@G3CIRCULAR@@QAEXXZ function 0x2c
 0x0043f910 ?SetProgress@PROGRESSBAR@@QAEXM@Z function 0x49
 0x00440040 FUN_00440040 function 0x1e
 0x00438110 ?clear@?$_Tree@V?$_Tmap_traits@HUV2@@U?$less@H@std@@V?$allocator@U?$pair@$$CBHUV2@@@std@@@3@$0A@@std@@@std@@QAEXXZ function 0x2b
@@ -10054,3 +10054,6 @@
 0x0054d180 ?RegisterODEHooks@@YAXXZ function 0x151
 0x0054a980 ?RegisterODECommands@@YAXXZ function
 0x006593e0 __real@3fd0000000000000 data 0x8
+0x00436fc0 ?AllocNode@G3TREEALLOC@@QAEPAUG3TREENODE@@HHHABUV3@@D@Z function 0x49
+0x00433ff0 ?Add@G3SMOOTHER@@QAEXM@Z function 0x4d
+0x00436f50 FUN_00436f50 function 0x37

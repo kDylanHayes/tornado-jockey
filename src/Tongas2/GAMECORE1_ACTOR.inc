@@ -394,12 +394,15 @@ int ACTOR::GetFactoryId()
 
 V2 V2::Normalized() const
 {
-    float length = (float)sqrt(x * x + y * y);
+    float nx = x;
+    float ny = y;
+    float length = (float)sqrt(nx * nx + ny * ny);
     if (length != 0.0f) {
         float r = 1.0f / length;
-        return V2(x * r, y * r);
+        nx *= r;
+        ny *= r;
     }
-    return *this;
+    return V2(nx, ny);
 }
 
 V3 operator/(const V3 &v, const float &s)
@@ -436,7 +439,7 @@ PLANE::PLANE(const V3 &normal, const V3 &point)
     b = 0.0f;
     c = 0.0f;
     memcpy(&a, &normal, sizeof(V3));
-    d = (a * point.x + b * point.y + c * point.z) * -1.0f;
+    d = (normal.x * point.x + normal.y * point.y + normal.z * point.z) * -1.0f;
 }
 
 template void DYNAMICARRAY<int>::Clear();
