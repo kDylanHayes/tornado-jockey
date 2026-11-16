@@ -9585,206 +9585,6 @@ extern "C" __declspec(naked) void m_39() {
         __emit 0xc3
     }
 }
-extern "C" __declspec(naked) void m_41() {
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x50
-        call m_18
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x03
-        __emit 0xff
-        __emit 0x48
-        __emit 0x04
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-extern "C" __declspec(naked) void m_42() {
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x50
-        call m_20
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x03
-        __emit 0xff
-        __emit 0x48
-        __emit 0x04
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-extern "C" __declspec(naked) void m_43() {
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x50
-        call m_22
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x03
-        __emit 0xff
-        __emit 0x48
-        __emit 0x04
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-extern "C" __declspec(naked) void m_44() {
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x50
-        call m_24
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x03
-        __emit 0xff
-        __emit 0x48
-        __emit 0x04
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-extern "C" __declspec(naked) void m_45() {
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x50
-        call m_26
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x03
-        __emit 0xff
-        __emit 0x48
-        __emit 0x04
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-extern "C" __declspec(naked) void m_46() {
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x50
-        call m_28
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x03
-        __emit 0xff
-        __emit 0x48
-        __emit 0x08
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-extern "C" __declspec(naked) void m_47() {
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x50
-        call m_29
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x03
-        __emit 0xff
-        __emit 0x48
-        __emit 0x08
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-extern "C" __declspec(naked) void m_48() {
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x50
-        call m_31
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x03
-        __emit 0xff
-        __emit 0x48
-        __emit 0x08
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-extern "C" __declspec(naked) void m_49() {
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x50
-        call m_33
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x03
-        __emit 0xff
-        __emit 0x48
-        __emit 0x08
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-extern "C" __declspec(naked) void m_50() {
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x50
-        call m_34
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x03
-        __emit 0xff
-        __emit 0x48
-        __emit 0x08
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
 extern "C" __declspec(naked) void m_51() {
     __asm {
         __emit 0x6a
@@ -26625,31 +26425,6 @@ extern "C" __declspec(naked) void m_14() {
     }
 }
 
-extern "C" __declspec(naked) void m_40() {
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x0d
-        __emit 0x50
-        call m_14
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x03
-        __emit 0xff
-        __emit 0x48
-        __emit 0x04
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
 // ===== real implementations =====
 #include <new>
 #include <string>
@@ -26746,4 +26521,170 @@ bool MODELSTAGE::IsCulled()
     if (m_source)
         return ((bool *)m_source)[0x39];
     return true;
+}
+
+// ===========================================================================
+// The resource lists
+//
+// The manager keeps a dozen growable lists of entries, each keyed on the
+// handle in the entry's first word.  Nothing in the binary names the kind of
+// resource each list holds yet, so they are named by their offset in the
+// manager.
+// ===========================================================================
+
+// The key every list is scanned for.
+typedef int MODELHANDLE;
+
+// A list entry: the handle the scans compare and, right behind it, the
+// reference count the release wrappers drop.
+class MODELENTRY
+{
+public:
+    MODELHANDLE m_handle;       // +0x00
+    int m_refs;                 // +0x04
+};
+
+// An entry of a list whose count sits one word further out.
+class MODELENTRY2
+{
+public:
+    MODELHANDLE m_handle;       // +0x00
+    int m_unknown;              // +0x04
+    int m_refs;                 // +0x08
+};
+
+// A growable list of pointers: the items, the end of the used part, the end of
+// the room, and how many to add when the room runs out.
+template <class T>
+class MODELARRAY
+{
+public:
+    // How many entries the list holds; one that was never filled is empty.
+    int Count() const { return m_items ? (int)(m_end - m_items) : 0; }
+    // The nth entry.
+    T *operator[](unsigned int i) const { return m_items[i]; }
+
+    T **m_items;                // +0x00
+    T **m_end;                  // +0x04
+    T **m_limit;                // +0x08
+    int m_growBy;               // +0x0c
+};
+
+class MODELMANAGER
+{
+public:
+    // Drops one reference to the entry a handle names, one per list.
+    void Release24(MODELHANDLE key);
+    void Release34(MODELHANDLE key);
+    void Release44(MODELHANDLE key);
+    void Release54(MODELHANDLE key);
+    void Release64(MODELHANDLE key);
+    void Release74(MODELHANDLE key);
+    void Release84(MODELHANDLE key);
+    void Release94(MODELHANDLE key);
+    void ReleaseA4(MODELHANDLE key);
+    void ReleaseB4(MODELHANDLE key);
+    void ReleaseD4(MODELHANDLE key);
+
+    char m_unknown0[0x24];              // +0x000
+    MODELARRAY<MODELENTRY> m_list24;    // +0x024
+    MODELARRAY<MODELENTRY> m_list34;    // +0x034
+    MODELARRAY<MODELENTRY> m_list44;    // +0x044
+    MODELARRAY<MODELENTRY> m_list54;    // +0x054
+    MODELARRAY<MODELENTRY2> m_list64;   // +0x064
+    MODELARRAY<MODELENTRY2> m_list74;   // +0x074
+    MODELARRAY<MODELENTRY2> m_list84;   // +0x084
+    MODELARRAY<MODELENTRY2> m_list94;   // +0x094
+    MODELARRAY<MODELENTRY2> m_lista4;   // +0x0a4
+    MODELARRAY<MODELENTRY> m_listb4;    // +0x0b4
+    MODELARRAY<MODELENTRY> m_listc4;    // +0x0c4, not used
+    MODELARRAY<MODELENTRY> m_listd4;    // +0x0d4
+};
+
+// The handle scans are still replayed retail bytes (the _m_NN naked bodies
+// above).  They take the key on the stack and drop it themselves, so the
+// wrappers below call them through that shape.
+typedef void *(__stdcall *MODELFIND)(MODELHANDLE);
+
+// Each wrapper drops one reference to the entry its key names.  The method
+// name is the offset of the list it scans; the 0x64..0xa4 lists count
+// references in their third word, the rest in their second.
+void MODELMANAGER::Release24(MODELHANDLE key)
+{
+    MODELENTRY *entry = (MODELENTRY *)((MODELFIND)(void *)m_22)(key);
+    if (entry)
+        entry->m_refs--;
+}
+
+void MODELMANAGER::Release34(MODELHANDLE key)
+{
+    MODELENTRY *entry = (MODELENTRY *)((MODELFIND)(void *)m_24)(key);
+    if (entry)
+        entry->m_refs--;
+}
+
+void MODELMANAGER::Release44(MODELHANDLE key)
+{
+    MODELENTRY *entry = (MODELENTRY *)((MODELFIND)(void *)m_26)(key);
+    if (entry)
+        entry->m_refs--;
+}
+
+// The 0x54 release also accepts a null handle.
+void MODELMANAGER::Release54(MODELHANDLE key)
+{
+    if (key) {
+        MODELENTRY *entry = (MODELENTRY *)((MODELFIND)(void *)m_14)(key);
+        if (entry)
+            entry->m_refs--;
+    }
+}
+
+void MODELMANAGER::Release64(MODELHANDLE key)
+{
+    MODELENTRY2 *entry = (MODELENTRY2 *)((MODELFIND)(void *)m_29)(key);
+    if (entry)
+        entry->m_refs--;
+}
+
+void MODELMANAGER::Release74(MODELHANDLE key)
+{
+    MODELENTRY2 *entry = (MODELENTRY2 *)((MODELFIND)(void *)m_28)(key);
+    if (entry)
+        entry->m_refs--;
+}
+
+void MODELMANAGER::Release84(MODELHANDLE key)
+{
+    MODELENTRY2 *entry = (MODELENTRY2 *)((MODELFIND)(void *)m_34)(key);
+    if (entry)
+        entry->m_refs--;
+}
+
+void MODELMANAGER::Release94(MODELHANDLE key)
+{
+    MODELENTRY2 *entry = (MODELENTRY2 *)((MODELFIND)(void *)m_33)(key);
+    if (entry)
+        entry->m_refs--;
+}
+
+void MODELMANAGER::ReleaseA4(MODELHANDLE key)
+{
+    MODELENTRY2 *entry = (MODELENTRY2 *)((MODELFIND)(void *)m_31)(key);
+    if (entry)
+        entry->m_refs--;
+}
+
+void MODELMANAGER::ReleaseB4(MODELHANDLE key)
+{
+    MODELENTRY *entry = (MODELENTRY *)((MODELFIND)(void *)m_18)(key);
+    if (entry)
+        entry->m_refs--;
+}
+
+void MODELMANAGER::ReleaseD4(MODELHANDLE key)
+{
+    MODELENTRY *entry = (MODELENTRY *)((MODELFIND)(void *)m_20)(key);
+    if (entry)
+        entry->m_refs--;
 }
