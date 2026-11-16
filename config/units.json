@@ -3601,7 +3601,8 @@
         "FUN_00536800": "??0GD5368a0@@QAE@PAVRESOURCEMANAGER@@PBD@Z",
         "FUN_00536aa0": "??0GD536790@@QAE@PAVRESOURCEMASTER@@ABURESHANDLE@@@Z",
         "_m_65": "?m_65@GD536790DISPLAY@@QAEPAVTEXTFILE@@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@HH@Z"
-      }
+      },
+      "complete": true
     },
     {
       "name": "Tongas2/SCENEMODELDX8SD",
@@ -3887,7 +3888,8 @@
       ],
       "target": "build/target/Tongas2/ODEADJ.obj",
       "source": "src/Tongas2/ODEADJ.cpp",
-      "category": "engine"
+      "category": "engine",
+      "complete": true
     }
   ]
 }
