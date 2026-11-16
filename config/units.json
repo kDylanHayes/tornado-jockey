@@ -3242,7 +3242,7 @@
         "FUN_00515db0": "?FUN_00515db0@@YAXPAUV3@@0U1@@Z",
         "FUN_00510550": "?GetMaterialCount@BONEDMODELDX8MODEL@@QAEIXZ",
         "FUN_00511510": "?GetMaterialNamePtr@BONEDMODELDX8MODEL@@QAEPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z",
-        "FUN_0046365f": "?FUN_0046365f@@YAXPAUMATRIX@@MMMM@Z",
+        "FUN_0046365f": "?FUN_0046365f@@YGXPAUMATRIX@@MMMM@Z",
         "FUN_00516380": "?FUN_00516380@BONEDMODELDX8RENDERHELPER@@QAEXPAVBONEDMODELDX8RENDERERAPI@@@Z",
         "FUN_00500de0": "?CreateModel@BONEDMODELDX8DISPLAYCTX@@QAEPAXPAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@11@Z",
         "FUN_00510420": "?CreateAnimator@BONEDMODELDX8MODEL@@QAEPAXXZ",

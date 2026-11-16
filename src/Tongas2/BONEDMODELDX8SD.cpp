@@ -399,13 +399,13 @@ void BONEDMODELDX8SDRESOURCE::Update()
 
 void BONEDMODELDX8SDRESOURCE::Virtual91(int animation, float frame)
 {
-    if (!m_model)
-        return;
-    FUN_00513330((void *)animation, 0, 0);
-    float frames = (float)((BONEDMODELDX8MODEL *)m_model)->GetFrameCount((void *)animation);
-    float rate = ((BONEDMODELDX8MODEL *)m_model)->GetFrameRate((void *)animation);
-    float t = frames / rate;
-    ((BONEDMODELDX8MODEL *)m_model)->SetTime(frame / t);
+    if (m_model) {
+        FUN_00513330((void *)animation, 0, 0);
+        float frames = (float)((BONEDMODELDX8MODEL *)m_model)->GetFrameCount((void *)animation);
+        float rate = ((BONEDMODELDX8MODEL *)m_model)->GetFrameRate((void *)animation);
+        float t = frames / rate;
+        ((BONEDMODELDX8MODEL *)m_model)->SetTime(frame / t);
+    }
 }
 
 void BONEDMODELDX8SDRESOURCE::Virtual101(int a, int b)
@@ -430,7 +430,8 @@ void BONEDMODELDX8SDRESOURCE::Virtual71()
 
 void BONEDMODELDX8SDRESOURCE::RunCommand(const char *command)
 {
-    g_pCmdMgr->Run(STRING(command), *(RESHANDLE *)((char *)this + 0x30));
+    STRING text(command);
+    g_pCmdMgr->Run(text, *(RESHANDLE *)((char *)this + 0x30));
 }
 
 void BONEDMODELDX8SDRESOURCE::Virtual89()
@@ -445,18 +446,19 @@ void BONEDMODELDX8SDRESOURCE::Virtual89()
 
 void BONEDMODELDX8SDRESOURCE::SetBone(int index, const V3 &position, void *placement)
 {
-    unsigned char *data = (unsigned char *)&position;
-    MATRIX *matrix = (MATRIX *)(data + 0xc);
+    unsigned char *data = (unsigned char *)placement;
     if (data[0x4c] & 1) {
-        matrix->FromEuler(*(float *)(data + 8), *(float *)(data + 4), *(float *)(data + 0));
+        ((MATRIX *)(data + 0xc))->FromEuler(*(float *)(data + 8), *(float *)(data + 4), *(float *)(data + 0));
         data[0x4c] &= 0xfe;
     }
-    MATRIX boneMatrix = *matrix;
+    MATRIX boneMatrix = *(MATRIX *)(data + 0xc);
     boneMatrix._41 = position.x;
     boneMatrix._42 = position.y;
     boneMatrix._43 = position.z;
     BONEDMODELDX8MODEL *model = (BONEDMODELDX8MODEL *)m_model;
-    void *bone = ((void **)(*(int *)(*(int *)((char *)model + 0xc) + 0x38) + 8))[index];
+    int skeleton = *(int *)(*(int *)((char *)model + 0xc) + 0x38);
+    void **bones = (void **)*(int *)(skeleton + 8);
+    void *bone = bones[index];
     *(MATRIX *)((char *)bone + 0xc4) = boneMatrix;
     *(char *)((char *)bone + 0xc0) = 1;
 }
@@ -938,7 +940,7 @@ void BONEDMODELDX8MATH::Basis(const V3 *a, const V3 *b)
 
 
 void FUN_004626de(MATRIX *out, const MATRIX *a, const MATRIX *b);
-void FUN_00462bea(MATRIX *out, int unused, const MATRIX *in);
+void FUN_00462bea(MATRIX *out, int unused, MATRIX *in);
 void FUN_00462927(MATRIX *out, const MATRIX *in);
 void FUN_004620d9(V3 *out, const V3 *in, const MATRIX *matrix);
 void FUN_004641c8(D3DXPLANE *plane, const V3 *a, const V3 *b, const V3 *c);
@@ -1003,24 +1005,37 @@ void BONEDMODELDX8CORNERBOX::Transform(const MATRIX *matrix)
     FUN_004620d9(&corner, &m_a, matrix);
     m_min = corner;
     m_max = corner;
+    FUN_00515db0(&m_min, &m_max, corner);
     FUN_004620d9(&corner, &m_b, matrix);
     FUN_00515db0(&m_min, &m_max, corner);
-    corner = V3(m_a.x, m_a.y, m_b.z);
+    corner.x = m_a.x;
+    corner.y = m_a.y;
+    corner.z = m_b.z;
     FUN_004620d9(&corner, &corner, matrix);
     FUN_00515db0(&m_min, &m_max, corner);
-    corner = V3(m_a.x, m_b.y, m_b.z);
+    corner.x = m_a.x;
+    corner.y = m_b.y;
+    corner.z = m_b.z;
     FUN_004620d9(&corner, &corner, matrix);
     FUN_00515db0(&m_min, &m_max, corner);
-    corner = V3(m_a.x, m_b.y, m_a.z);
+    corner.x = m_a.x;
+    corner.y = m_b.y;
+    corner.z = m_a.z;
     FUN_004620d9(&corner, &corner, matrix);
     FUN_00515db0(&m_min, &m_max, corner);
-    corner = V3(m_b.x, m_b.y, m_a.z);
+    corner.x = m_b.x;
+    corner.y = m_a.y;
+    corner.z = m_a.z;
     FUN_004620d9(&corner, &corner, matrix);
     FUN_00515db0(&m_min, &m_max, corner);
-    corner = V3(m_b.x, m_a.y, m_a.z);
+    corner.x = m_b.x;
+    corner.y = m_b.y;
+    corner.z = m_a.z;
     FUN_004620d9(&corner, &corner, matrix);
     FUN_00515db0(&m_min, &m_max, corner);
-    corner = V3(m_b.x, m_a.y, m_b.z);
+    corner.x = m_b.x;
+    corner.y = m_a.y;
+    corner.z = m_b.z;
     FUN_004620d9(&corner, &corner, matrix);
     FUN_00515db0(&m_min, &m_max, corner);
     BuildPlanes();
