@@ -246,7 +246,12 @@ public:
     TAIL1ERR(const TAIL1ERR &other);
 };
 
+struct TAIL3ROOT;
 void *GetTail3Root();
+
+// This translation unit emitted the wide-string member functions of the
+// shared std::basic_string<wchar_t> instantiation (0x554960-0x554d80).
+template class std::basic_string<wchar_t>;
 
 // The per-user folder under the game's root path (0x554320).
 std::string __fastcall GetUserFolder(int folder)
@@ -265,6 +270,66 @@ std::string __fastcall GetUserFolder(int folder)
 }
 
 // ---------------------------------------------------------------------------
+// The save-file root singleton (0x554260 GetTail3Root, 0x554020 its
+// constructor).  The object is 0x80 bytes: four path strings and the
+// "Windows 5 or later" probe at +0x7c.
+
+struct TAIL3ROOT
+{
+    int m_00;           // 0x00
+    int m_04;           // 0x04
+    int m_08;           // 0x08
+    std::string m_0c;   // 0x0c
+    std::string m_28;   // 0x28: the game root path
+    std::string m_44;   // 0x44
+    std::string m_60;   // 0x60
+    bool m_7c;          // 0x7c: running on Windows 2000/XP or later
+    char m_pad[3];
+
+    TAIL3ROOT();
+    ~TAIL3ROOT();
+};
+
+// The owning handle the singleton lives in: assignment replaces and deletes.
+struct TAIL3OWNER
+{
+    TAIL3ROOT *m_p;
+
+    TAIL3OWNER(TAIL3ROOT *p) : m_p(p) {}
+
+    TAIL3ROOT *operator=(TAIL3ROOT *p)
+    {
+        if (p != m_p) {
+            delete m_p;
+            m_p = p;
+        }
+        return p;
+    }
+
+    ~TAIL3OWNER()
+    {
+        delete m_p;
+    }
+};
+
+// The lazy-init guard the compiler put next to the handle, and the registered
+// teardown thunk.
+extern unsigned int DAT_00a0f210;
+extern TAIL3OWNER DAT_00a0f20c;
+extern "C" void __cdecl FUN_00655280();
+
+// The root singleton (0x554260).  It is a function-local static handle, so
+// the compiler emits the guarded initialisation and the atexit teardown.
+void *GetTail3Root()
+{
+    static TAIL3OWNER s_root = 0;
+
+    if (s_root.m_p)
+        return s_root.m_p;
+    return s_root = new TAIL3ROOT();
+}
+
+// ---------------------------------------------------------------------------
 // The std::map machinery this translation unit emitted out of line
 // (0x554ef0-0x555d20).
 //
@@ -276,16 +341,80 @@ std::string __fastcall GetUserFolder(int folder)
 // tools/vc71/include/xtree. None of the helpers looks inside the value, so it
 // is modelled as raw storage of the right size.
 
+// The shared count a handle points at (0x5553c0 copy, 0x555410 release).
+struct TL3REF
+{
+    char *m_str;        // 0x00
+
+    TL3REF();
+};
+
+// The node value: an object plus its shared count.
+struct TL3HANDLE
+{
+    V5547C0 *m_ptr;     // 0x00
+    TL3REF m_ref;       // 0x04
+
+    TL3HANDLE();
+    TL3HANDLE(const TL3HANDLE &o);
+    ~TL3HANDLE();
+};
+
+TL3HANDLE::TL3HANDLE(const TL3HANDLE &o)
+{
+    m_ptr = o.m_ptr;
+    m_ref.m_str = o.m_ref.m_str;
+    if (m_ref.m_str == 0) {
+        if (m_ptr != 0) {
+            m_ref.m_str = (char *)_aligned_malloc(4, 4);
+            *(int *)m_ref.m_str = 1;
+        }
+    } else {
+        g_fn6561b4(m_ref.m_str);
+    }
+}
+
+TL3HANDLE::~TL3HANDLE()
+{
+    V5547C0 *ptr = m_ptr;
+
+    if (m_ref.m_str && g_fn6561ac((long *)m_ref.m_str) == 0) {
+        delete ptr;
+        _aligned_free(m_ref.m_str);
+        m_ref.m_str = 0;
+    }
+}
+
+// The map's value_type: the key followed by the handle.
+struct TL3VALUE
+{
+    std::string m_key;  // 0x00
+    TL3HANDLE m_handle; // 0x1c
+};
+
 struct TL3NODE
 {
     TL3NODE *m_left;    // 0x00
     TL3NODE *m_parent;  // 0x04
     TL3NODE *m_right;   // 0x08
     std::string m_key;  // 0x0c: the pair's first member
-    int m_handle[2];    // 0x28: the pair's second member
+    TL3HANDLE m_handle; // 0x28: the pair's second member
     char m_color;       // 0x30
     char m_isnil;       // 0x31
+
+    TL3NODE(TL3NODE *l, TL3NODE *p, TL3NODE *r, const TL3VALUE &v,
+            char color);
 };
+
+// A fresh node holding a copy of the value (0x555d20).
+TL3NODE::TL3NODE(TL3NODE *l, TL3NODE *p, TL3NODE *r, const TL3VALUE &v,
+                 char color)
+    : m_left(l), m_parent(p), m_right(r), m_key(v.m_key),
+      m_handle(v.m_handle), m_color(color), m_isnil(0)
+{
+}
+
+class TL3ITER;
 
 struct TL3TREE
 {
@@ -296,6 +425,7 @@ struct TL3TREE
     static TL3NODE * __fastcall Max(TL3NODE *p);
     static TL3NODE * __fastcall Min(TL3NODE *p);
     TL3NODE *Lbound(const std::string &keyval) const;
+    TL3ITER Find(const std::string &keyval) const;
     void Lrotate(TL3NODE *where);
     void Rrotate(TL3NODE *where);
     TL3NODE *Buynode();
@@ -394,6 +524,9 @@ __declspec(noinline) TL3NODE *TL3TREE::Buynode()
 class TL3ITER
 {
 public:
+    TL3ITER(TL3NODE *p) : m_ptr(p) {}
+    TL3ITER(const TL3ITER &other) : m_ptr(other.m_ptr) {}
+
     void Inc();
     void Dec();
 
@@ -431,6 +564,91 @@ __declspec(noinline) void TL3ITER::Dec()
         if (!p->m_isnil)
             m_ptr = p;  // ==> parent if not head
     }
+}
+
+// Lower-bound lookup that reports failure as end() (0x555690).
+TL3ITER TL3TREE::Find(const std::string &keyval) const
+{
+    TL3ITER it(Lbound(keyval));
+
+    if (it.m_ptr == m_head || keyval < it.m_ptr->m_key)
+        return TL3ITER(m_head);
+    return TL3ITER(it);
+}
+
+// ---------------------------------------------------------------------------
+// The named object whose full name is split at the last "::" (0x555700).
+
+struct TL3NAMEOBJ
+{
+    char m_00[0x10];    // 0x00
+    std::string m_10;   // 0x10: the short name
+    std::string m_2c;   // 0x2c: the full name
+
+    void SetName(const std::string &name);
+};
+
+void TL3NAMEOBJ::SetName(const std::string &name)
+{
+    m_2c = name;
+
+    unsigned int pos = m_2c.find_last_of("::", std::string::npos, 2);
+    if (pos == std::string::npos)
+        m_10 = m_2c;
+    else
+        m_10 = m_2c.substr(pos + 1, std::string::npos);
+}
+
+// ---------------------------------------------------------------------------
+// The name getter that chains two virtual calls (0x554660).
+
+class TL3NAMEHOLDER
+{
+public:
+    virtual void v0();
+    virtual void v1();
+    virtual const std::string &v2();
+};
+
+class TL3NAMESOURCE
+{
+public:
+    virtual void v0();
+    virtual TL3NAMEHOLDER *v1();
+
+    std::string GetName();
+};
+
+std::string TL3NAMESOURCE::GetName()
+{
+    return v1()->v2();
+}
+
+// std::_Vector_base<...>::_Xlen (0x555cb0): the vector length overflow throw.
+void TL3VECXLEN()
+{
+    throw std::length_error("vector<T> too long");
+}
+
+// The narrow-character transform the string helpers share (0x5549e0):
+// it applies fn to [first, last) and reports the advanced output cursor.
+void __fastcall TL3TRANSFORM(char **result, int (__cdecl *fn)(int),
+                             const char *first, const char *last, char *dest)
+{
+    for (; first != last; ++first)
+        *dest++ = fn(*first);
+    *result = dest;
+}
+
+// The lowercase copy of a narrow string (0x554d80).
+std::string __fastcall TL3LOWER(const std::string &src)
+{
+    std::string out;
+
+    out.resize(src.size(), 0);
+    char *end;
+    TL3TRANSFORM(&end, _tolower, src.c_str(), src.c_str() + src.size(), &out[0]);
+    return out;
 }
 
 // The two element sizes the unit's fills and copies work on: a 4-byte scalar
@@ -528,3 +746,11 @@ __declspec(noinline) void __fastcall TL3STL::UninitFill8(TL3A8 *first,
     for (; 0 < count; --count, ++first)
         al.construct(first, value);
 }
+// std::uninitialized_fill_n that reports the advanced output (0x555650).
+TL3A8 *__fastcall TL3UFILL(TL3ALLOC<TL3A8> &al, TL3A8 *first, unsigned int count,
+                           const TL3A8 &value)
+{
+    TL3STL::UninitFill8(first, count, value, al, (int)&value);
+    return first + count;
+}
+

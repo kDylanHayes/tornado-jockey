@@ -3771,7 +3771,17 @@
       ],
       "target": "build/target/Tongas2/TAIL3.obj",
       "source": "src/Tongas2/TAIL3.cpp",
-      "category": "engine"
+      "category": "engine",
+      "symbol_mappings": {
+        "FUN_00554960": "?erase@?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@std@@QAEAAV12@II@Z",
+        "FUN_00554a30": "?assign@?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@std@@QAEAAV12@ABV12@II@Z",
+        "FUN_00554b40": "?assign@?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@std@@QAEAAV12@PBGI@Z",
+        "FUN_00554820": "?_Copy@?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@std@@IAEXII@Z",
+        "FUN_00554660": "?GetName@TL3NAMESOURCE@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ",
+        "FUN_00555700": "?SetName@TL3NAMEOBJ@@QAEXABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z",
+        "FUN_00555cb0": "?TL3VECXLEN@@YAXXZ",
+        "FUN_00555410": "??1TL3HANDLE@@QAE@XZ"
+      }
     },
     {
       "name": "Tongas2/TAIL4",
