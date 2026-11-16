@@ -3478,3 +3478,74 @@ GD43b550::GD43b550()
     m_name.Set("storm_chaser");
     m_ed4 = 3.0f;
 }
+
+// 0x436f90: steps a bounded ring buffer on by one slot and drops the index
+// back to the first entry once the last one has been used.
+struct G3CIRCULAR
+{
+    char m_pad[8];
+    unsigned int m_size;
+    unsigned int m_index;
+    unsigned int m_remaining;
+
+    void Advance();
+};
+
+void G3CIRCULAR::Advance()
+{
+    if (m_remaining == 0)
+        return;
+    m_index++;
+    if (m_size <= m_index)
+        m_index = 0;
+    if (--m_remaining == 0)
+        m_index = 0;
+}
+
+// 0x436fc0: makes one node of the map the forest editor keeps its trees in.
+struct G3TREENODE
+{
+    int m_key0;
+    int m_key1;
+    int m_key2;
+    V3 m_point;
+    char m_18;
+    char m_19;
+};
+
+struct G3TREEALLOC
+{
+    G3TREENODE *AllocNode(int key0, int key1, int key2, const V3 &point, char flag);
+};
+
+G3TREENODE *G3TREEALLOC::AllocNode(int key0, int key1, int key2, const V3 &point, char flag)
+{
+    G3TREENODE *node = (G3TREENODE *)operator new(sizeof(G3TREENODE));
+    if (node) {
+        node->m_key0 = key0;
+        node->m_key1 = key1;
+        node->m_key2 = key2;
+        node->m_point = point;
+        node->m_18 = flag;
+        node->m_19 = 0;
+    }
+    return node;
+}
+
+// 0x433ff0: accumulates a rate into a 0..1 scale and keeps it in range.
+struct G3SMOOTHER
+{
+    char m_pad[0xcfc];
+    float m_value;
+
+    void Add(float amount);
+};
+
+void G3SMOOTHER::Add(float amount)
+{
+    m_value = m_value + amount * 0.4f;
+    if (m_value < 0.0f)
+        m_value = 0.0f;
+    if (m_value > 1.0f)
+        m_value = 1.0f;
+}
