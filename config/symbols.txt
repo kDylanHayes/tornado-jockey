@@ -7845,7 +7845,7 @@
 0x00416540 ?OnTornadoCreated@ACTOR@@QAEXPAUCMDCALL@@@Z function 0x113
 0x004291c0 ?Update@G2RULESOBJ@@UAEXXZ function 0x198
 0x00426470 ?SetEuler@ANG@@QAEXABM00@Z function 0x52
-0x004048c0 ?CreateStormChaser@GAME@@QAEPAVACTOR@@PBDABUV3@@ABUANG@@M@Z function 0x147
+0x004048c0 ?CreateStormChaser@GAME@@QAEPAVACTOR@@PBDABUV3@@ABUANG@@M@Z function 0x14a
 0x0065977c __real@3bc80190 data
 0x00428ef0 ?Start@G2RULESOBJ@@UAEXXZ function 0xbc
 0x004038b0 ?SetRules@GAME@@QAEXPAVACTOR@@@Z function 0x92
@@ -9381,7 +9381,7 @@
 0x00658ebc ??_7G2CORE1K9@@6BACTORLINK@@@ data 0x3c
 0x00658e70 ??_7G2CORE1K9@@6BMOUSELISTENER@@@ data 0x4c
 0x00658e60 ??_7G2CORE1K9@@6BINPUTLISTENER@@@ data 0x10
-0x0040bbf0 ?Clear@G2CORE1K7@@QAEXXZ function 0xdf
+0x0040bbf0 ?Clear@G2CORE1K7@@QAEXXZ function 0x12e
 0x00658300 ??_7G2CORE1K7@@6BCMDBASE@@@ data 0x23c
 0x006582c0 ??_7G2CORE1K7@@6BACTORLINK@@@ data 0x3c
 0x00408470 ?Clear@G2CORE1K5@@QAEXXZ function 0x68
@@ -9885,7 +9885,7 @@
 0x0052cd50 ?LoadSlot@TEXTTRACK@@QAEXPAX0000@Z function 0x25
 0x0052cd80 ?Erase@VECVECERASE@@QAEXPAX00@Z function 0x45
 0x0052b430 ?LoadData@TEXTTRACK@@QAEXPAX00HH00@Z function 0x17c4
-0x004031f0 _FUN_004031f0 function
+0x004031f0 ?FormatThousands@@YAXPA_WH@Z function 0xd5
 0x006ad6f0 ?s_commands@G2CORE1K2@@2PAUCMDENTRY@@A data
 0x006adc58 ?s_commands@G2CORE1K3@@2PAUCMDENTRY@@A data
 0x0065662c ??_C@_06EKLBKHKL@GAMETJ?$AA@ data
@@ -10209,9 +10209,24 @@
 0x00406d40 ?compare@?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@QBEHIIPB_WI@Z function 0x8d
 0x00407230 ?_Lbound@?$_Tree@V?$_Tmap_traits@V?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@PAXU?$less@V?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@PAX@std@@@2@$0A@@std@@@std@@IBEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@PAXU?$less@V?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@PAX@std@@@2@$0A@@std@@@2@ABV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@2@@Z function 0x5c
 0x00407b50 ?assign@?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@QAEAAV12@PB_WI@Z function 0xfa
+0x00407090 ?_Copy@?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@IAEXII@Z function 0x13c
+0x004080a0 ?_Buynode@?$_Tree@V?$_Tmap_traits@V?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@PAXU?$less@V?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@PAX@std@@@2@$0A@@std@@@std@@IAEPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@PAXU?$less@V?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@PAX@std@@@2@$0A@@std@@@2@PAU342@00ABU?$pair@$$CBV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@PAX@2@D@Z function 0x88
 0x00407910 ?assign@?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@QAEAAV12@ABV12@II@Z function 0x105
 0x00407ae0 ?find@?$_Tree@V?$_Tmap_traits@V?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@PAXU?$less@V?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@PAX@std@@@2@$0A@@std@@@std@@QAE?AViterator@12@ABV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@2@@Z function 0x67
 0x004082a0 ?_Insert@?$_Tree@V?$_Tmap_traits@V?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@PAXU?$less@V?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@PAX@std@@@2@$0A@@std@@@std@@IAE?AViterator@12@_NPAU_Node@?$_Tree_nod@V?$_Tmap_traits@V?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@PAXU?$less@V?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@PAX@std@@@2@$0A@@std@@@2@ABU?$pair@$$CBV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@PAX@2@@Z function 0x1ad
 0x004084e0 ?insert@?$_Tree@V?$_Tmap_traits@V?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@PAXU?$less@V?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@PAX@std@@@2@$0A@@std@@@std@@QAE?AU?$pair@Viterator@?$_Tree@V?$_Tmap_traits@V?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@PAXU?$less@V?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@PAX@std@@@2@$0A@@std@@@std@@_N@2@ABU?$pair@$$CBV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@PAX@2@@Z function 0xfd
 0x00408690 ?insert@?$_Tree@V?$_Tmap_traits@V?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@PAXU?$less@V?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@PAX@std@@@2@$0A@@std@@@std@@QAE?AViterator@12@V312@ABU?$pair@$$CBV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@PAX@2@@Z function 0x1a7
 0x004088a0 ??A?$map@V?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@PAXU?$less@V?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@PAX@std@@@2@@std@@QAEAAPAXABV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@1@@Z function 0xbc
+0x0040d5b0 ?InitResources@G2CORE1K7@@QAEXXZ function 0x7c
+0x0040d640 ?GetHeightmap@G2CORE1K7@@QAEPAVHEIGHTMAPDX8@@XZ function 0x74
+0x0040d7d0 ?GetTerrainOrientation@G2CORE1K7@@QAE?AUANG@@UV3@@0@Z function 0x3b
+0x006585a0 ??_C@_0GJ@ODGDKGGG@trying?5to?5init?5resources?5before?5@ data 0x69
+0x0065860c ??_C@_0DA@FAJPCMHI@Resource?50?5of?5scenario?5MUST?5be?5t@ data 0x30
+0x00656b98 ??_C@_19ELKOLIDM@?$AA?$CF?$AA0?$AA1?$AAd?$AA?$AA@ data 0xa
+0x00656b88 ??_C@_1BA@CEGGEPK@?$AA?$CF?$AA0?$AA1?$AAd?$AA?0?$AA?$CF?$AAs?$AA?$AA@ data 0x10
+0x00656b78 ??_C@_1O@IONBHKDJ@?$AA?$CF?$AA0?$AA1?$AAd?$AA?$CF?$AAs?$AA?$AA@ data 0xe
+0x00656f84 ??_C@_0O@NBPACIHK@EndLevelAlley?$AA@ data 0xe
+0x00656f78 ??_C@_08NHCDJHGM@EndLevel?$AA@ data 0x9
+0x00656f20 ??_C@_05JKFBCJL@mt_?$CFu?$AA@ data 0x6
+0x00656f28 ??_C@_0BO@FDOHBLPB@could?5not?5create?5minitornado?$CB?$AA@ data 0x1e
+0x006caed8 ?g_miniTornadoCount@@3IA data 0x4

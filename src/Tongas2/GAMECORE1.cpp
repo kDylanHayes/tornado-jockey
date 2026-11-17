@@ -11,6 +11,7 @@
 #define MATRIX_DIM_CTOR
 #define ANG_UPDATE_OUTOFLINE
 #define SCENE_OUTOFLINE
+#define SCENE_FINDACTORS
 #define V2_ROTATE_OUTOFLINE
 #define V3_DISTANCEXZ_OUTOFLINE
 
@@ -196,6 +197,37 @@ int SafeSwprintf(wchar_t *buf, const wchar_t *format, ...) throw()
     va_list args;
     va_start(args, format);
     return vswprintf(buf, 0x1fe, format, args);
+}
+
+// A copy of a 0x200-character wide buffer, empty for none.
+struct G2WCOPY
+{
+    G2WCOPY(const wchar_t *text)
+    {
+        if (text)
+            memcpy(m_buf, text, sizeof(m_buf));
+        else
+            m_buf[0] = 0;
+    }
+
+    wchar_t m_buf[0x200];
+};
+
+// Writes value with a comma between each three digits (0x4031f0).
+void FormatThousands(wchar_t *text, int value)
+{
+    SafeSwprintf(text, L"%01d", value % 10);
+    value = (value - value % 10) / 10;
+    int digits = 1;
+    while (value > 0) {
+        G2WCOPY rest(text);
+        if (digits % 3 == 0)
+            SafeSwprintf(text, L"%01d,%s", value % 10, rest.m_buf);
+        else
+            SafeSwprintf(text, L"%01d%s", value % 10, rest.m_buf);
+        value = (value - value % 10) / 10;
+        digits++;
+    }
 }
 
 void V3::Normalize()
@@ -695,6 +727,24 @@ __declspec(noinline) ACTOR *GAME::GetRules()
     return (ACTOR *)g_pScene->GetActor(*(RESHANDLE *)((char *)this + 0x1e64));
 }
 
+// A view of an object's vtable that names the virtual at slot N.
+template <int N>
+struct G1VSLOTPAD : G1VSLOTPAD<N - 1>
+{
+    virtual void Pad(G1VSLOTPAD<N> *slot);
+};
+
+template <>
+struct G1VSLOTPAD<0>
+{
+};
+
+// Slot 0x26c of the rules actor: the end of the stage.
+struct G1VSLOT155 : G1VSLOTPAD<155>
+{
+    virtual void Call0();
+};
+
 __declspec(noinline) void GAME::SetRules(ACTOR *rules)
 {
     if (!rules) {
@@ -1084,6 +1134,70 @@ __declspec(noinline) void G2CAMERAV::SetActive(bool active)
         resource->SetActive(active);
 }
 
+// Shows the stage results screen with the score (0x405230).
+void GAME::ShowStageResult()
+{
+    int score = *(int *)((char *)this + 0x248);
+    *(float *)((char *)this + 0x1ea8) = (float)score;
+    *(int *)((char *)this + 0x1c) = 5;
+    FormatThousands((wchar_t *)((char *)this + 0x250), score);
+    if (*(bool *)((char *)this + 0x230))
+        g_pGui->SetScreen("EndLevelAlley");
+    else
+        g_pGui->SetScreen("EndLevel");
+    ((G2CAMERAV *)g_pCamera)->SetActive(true);
+    ACTOR *rules;
+    if (!g_pScene) {
+        if (g_pLog)
+            g_pLog->Error("Error - GetRules, null scene");
+        rules = 0;
+    } else {
+        rules = (ACTOR *)g_pScene->GetActor(*(RESHANDLE *)((char *)this + 0x1e64));
+    }
+    if (rules)
+        ((G1VSLOT155 *)rules)->Call0();
+}
+
+// The mini tornado actor; only its factory id here.
+class GD42ddd0
+{
+public:
+    static int s_factoryId;
+};
+
+// Slot 0x230 of the mini tornado: takes its template again.
+struct G1VSLOT140 : G1VSLOTPAD<140>
+{
+    virtual void Call1(void *arg);
+};
+
+// How many mini tornadoes were made; names them.
+unsigned int g_miniTornadoCount;
+
+// Makes a mini tornado at a place, turned and sorted like the actor it comes
+// from; the zsort arrives in the float's bits (0x4048c0).
+ACTOR *GAME::CreateStormChaser(const char *name, const V3 &position, const ANG &angles, float value)
+{
+    ACTOR *actor = g_pScene->CreateActor(GD42ddd0::s_factoryId);
+    if (!actor) {
+        if (g_pLog)
+            g_pLog->Error("could not create minitornado!");
+        return 0;
+    }
+    char actorName[0x200];
+    actorName[0] = '\0';
+    actorName[0x1ff] = '\0';
+    SafeSprintf(actorName, "mt_%u", g_miniTornadoCount++);
+    actor->SetName(CSTRING(actorName));
+    ((G1VSLOT140 *)actor)->Call1((char *)actor + 0xccc);
+    actor->SetAngles(angles);
+    actor->SetPosition(position);
+    actor->SetOpacity(1.0f);
+    actor->SetZSort(*(int *)&value);
+    actor->SetActive(true);
+    return actor;
+}
+
 class G2CORE1K2 : public GAME
 {
 public:
@@ -1455,6 +1569,16 @@ G2CORE1K6::~G2CORE1K6()
     }
 }
 
+// The renderer plugin's terrain; only what the scenario asks of it.
+class HEIGHTMAPDX8
+{
+public:
+    float GetHeight(const V3 &point, V3 *normal);
+    ANG GetOrientation(const V3 &point, const V3 &direction);
+};
+
+extern RESOURCEMANAGER *g_pHEIGHTMAPDX8;
+
 class G2CORE1K7 : public ACTOR
 {
 public:
@@ -1471,6 +1595,12 @@ public:
     virtual void SetCameraOptions(const FIXEDSTRING<0x200> &name);
 
     void Clear();
+    // Starts the scenario's resources once it is active (0x40d5b0).
+    void InitResources();
+    // Resource 0, which must be the heightmap (0x40d640).
+    HEIGHTMAPDX8 *GetHeightmap();
+    // The ground's orientation at a point, facing a direction (0x40d7d0).
+    ANG GetTerrainOrientation(V3 position, V3 direction);
 
     static int s_classId;
     static int s_factoryId;
@@ -5868,6 +5998,134 @@ struct G2CORE1M11
     void Method2();
 };
 
+// The scenario's table of radar objects: a DYNAMICARRAY of pointers, whose
+// virtual destructor puts the members four bytes along.
+struct G2ARRAY
+{
+    void *m_vtable;
+    int *m_data;
+    int *m_free;
+    bool *m_used;
+    int m_capacity;
+    int m_count;
+    int m_freeTop;
+    int m_next;
+    int m_empty;
+
+    bool IsValid(int i) { return i >= 0 && i < m_capacity && m_data; }
+    int Next(int i)
+    {
+        for (int j = i + 1; j < m_next + 1; j++) {
+            if (IsValid(j) && m_used[j])
+                return j;
+        }
+        return -1;
+    }
+    void Clear()
+    {
+        if (m_used) {
+            for (int i = 0; i < m_capacity; i++) {
+                m_used[i] = false;
+                m_free[i] = -1;
+            }
+        }
+        m_count = 0;
+        m_freeTop = -1;
+        m_next = 0;
+    }
+};
+
+// A cursor over the table; First is out of line in GAMECORE2 (0x421e60).
+struct G2ARRAYITER
+{
+    int m_slot;
+    G2ARRAY *m_array;
+
+    void First();
+    int Get()
+    {
+        if (m_array->IsValid(m_slot) && m_array->m_used[m_slot])
+            return m_array->m_data[m_slot];
+        return m_array->m_empty;
+    }
+    void Next() { m_slot = m_array->Next(m_slot); }
+};
+
+inline G2ARRAYITER Begin(G2ARRAY *array)
+{
+    G2ARRAYITER it;
+    it.m_array = array;
+    it.m_slot = -1;
+    it.First();
+    return it;
+}
+
+// Lets go of each radar object's icon, deletes them and empties the table
+// (0x40bbf0).
+void G2CORE1K7::Clear()
+{
+    G2ARRAY *objects = (G2ARRAY *)&m_3bc0;
+    for (G2ARRAYITER it = Begin(objects); it.m_slot != -1; it.Next()) {
+        void *object = (void *)it.Get();
+        RESHANDLE *handle = (RESHANDLE *)((char *)object + 0x24);
+        RESOURCE *resource = g_pResources->GetResource(*handle);
+        if (resource)
+            resource->Virtual20();
+        handle->Invalidate();
+        delete object;
+    }
+    objects->Clear();
+}
+
+void G2CORE1K7::InitResources()
+{
+    if (!m_active) {
+        if (g_pLog)
+            g_pLog->Error("trying to init resources before being active!! maybe someone is trying to use the heightmap in oncreate?");
+        return;
+    }
+    for (int i = 0; i < ACTOR_MAX_RESOURCES; i++) {
+        RESOURCE *resource = g_pResources->GetResource(m_copies[i]);
+        if (resource)
+            resource->Update();
+    }
+    *(int *)((char *)this + 0x3b88) = 1;
+    ((G2CORE1M11 *)this)->Method2();
+}
+
+HEIGHTMAPDX8 *G2CORE1K7::GetHeightmap()
+{
+    if (!*(int *)((char *)this + 0x3b88))
+        InitResources();
+    RESOURCE *resource = g_pResources->GetResource(m_copies[0]);
+    if (resource) {
+        int managerId = g_pHEIGHTMAPDX8->m_id;
+        if (resource->GetManagerId() == managerId)
+            return (HEIGHTMAPDX8 *)resource;
+    }
+    if (g_pLog)
+        g_pLog->Error("Resource 0 of scenario MUST be the heightmap!!!");
+    return 0;
+}
+
+V3 WTACTOR::GetTerrainPosition(V3 position)
+{
+    HEIGHTMAPDX8 *heightmap = ((G2CORE1K7 *)this)->GetHeightmap();
+    if (!heightmap)
+        return position;
+    V3 result = position;
+    result.y = heightmap->GetHeight(position, 0);
+    return result;
+}
+
+ANG G2CORE1K7::GetTerrainOrientation(V3 position, V3 direction)
+{
+    HEIGHTMAPDX8 *heightmap = GetHeightmap();
+    if (!heightmap)
+        return ANG(0.0f, 0.0f, 0.0f);
+    return heightmap->GetOrientation(position, direction);
+}
+
 void G2CORE1M11::SetCD0(const V3 &value)
 {
     *(V3 *)((char *)g_pDisplay + 0x38) = value;
@@ -6658,9 +6916,6 @@ RESOURCEMASTER *GD40b730::GetMaster()
     return m_3b78;
 }
 
-// 0x004031f0 is an unnamed helper in this unit: it takes the sub-object at
-// +0x650 and the new value.
-extern "C" void FUN_004031f0(void *owner, int value);
 
 // 0x00403a20: stores a pair and forwards the first value.
 class GD403a20
@@ -6679,7 +6934,7 @@ void GD403a20::Set(int a, int b)
 {
     m_228 = a;
     m_22c = b;
-    FUN_004031f0(m_650, a);
+    FormatThousands((wchar_t *)m_650, a);
 }
 
 // 0x004032d0: accumulates into +0x24c and forwards the sum.
@@ -6697,7 +6952,7 @@ public:
 void GD4032d0::Add(int delta)
 {
     m_24c += delta;
-    FUN_004031f0(m_650, m_24c);
+    FormatThousands((wchar_t *)m_650, m_24c);
 }
 
 // 0x00402ed0: false while either of the two virtual predicates is set.
@@ -6934,3 +7189,4 @@ float GD411a20::Pow(float base, int exponent)
         result = 1.0f / result;
     return result;
 }
+
