@@ -26,6 +26,10 @@ public:
     ACTOR *GetTornado();
     // Shows the stage results screen.
     void ShowStageResult();
+    // 0x4040d0: scores a destroyed thing at a point, building the combo.
+    void AddScore(int points, V3 position);
+    // 0x404a10: throws count debris pieces of the named kind off the actor.
+    void SpawnPieces(ACTOR *actor, const char *name, int kind, int count);
     // The level rules actor the scene knows by the saved handle.
     ACTOR *GetRules();
     // The scenario actor the scene knows by the saved handle.

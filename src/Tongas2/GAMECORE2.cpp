@@ -588,6 +588,9 @@ public:
 
     void UpdateTimer(float dt);
     void RequestScan();
+    void UpdateHealthBar();
+    void PlayDestructionFX(bool create);
+    void ConvertToPieces(bool silent, V3 *velocity, int mode);
 
     int m_ccc;
     bool m_cd0;
@@ -2583,6 +2586,7 @@ struct G2CORE2M1
     void Collapse();
     void Jump(float duration, int mode);
     void Detach(struct G2REFOBJECT *object);
+    void Attach(struct G2REFOBJECT *object);
     void WarnObjective();
     SRESULT SetTornadoValue(TOKENS **args);
     SRESULT SetTornadoPair(TOKENS **args);
@@ -3077,13 +3081,12 @@ SRESULT G2CORE2SR::Command(int value)
 struct G2CORE2SR2
 {
     virtual SRESULT Command(int value);
-    void Call3(int a, int b, int c);
 };
 
 SRESULT G2CORE2SR2::Command(int value)
 {
     int unused = 0;
-    Call3(1, 0, 0);
+    ((G2D5 *)this)->ConvertToPieces(true, 0, 0);
     return SRESULT(true);
 }
 
@@ -3097,7 +3100,7 @@ __declspec(noinline) void G2CORE2M3::Check10()
             *(int *)((char *)this + 0xcec) = *(int *)((char *)this + 0xc28);
             return;
         }
-        ((G2CORE2SR2 *)this)->Call3(0, 0, 0);
+        ((G2D5 *)this)->ConvertToPieces(false, 0, 0);
     } else {
         if (g_pLog)
             g_pLog->Error("Can't get tornado");
@@ -3941,6 +3944,84 @@ void G2D5::RequestScan()
     *(bool *)((char *)this + 0xcf2) = false;
 }
 
+// The DESTRUCTIBLEMASTER (GAMECORE3's GD43ea30): only the piece spawner
+// this unit calls.
+class GD43ea30 : public RESOURCEMASTER
+{
+public:
+    void CreatePieces(const char *name, ACTOR *owner, bool silent, bool broken,
+                      V3 *velocity, int mode);
+};
+
+// 0x424b10: swap the actor for its pieces, score it and throw the debris.
+void G2D5::ConvertToPieces(bool silent, V3 *velocity, int mode)
+{
+    GD43ea30 *master = (GD43ea30 *)g_pResources->GetMaster(m_1364);
+    if (!master) {
+        if (g_pLog)
+            g_pLog->Error("ConvertToPieces: No DESTRUCTIBLEMASTER found!");
+        return;
+    }
+    g_pGame->AddScore(*(int *)((char *)master + 0xc4), GetPosition());
+    if (!m_d04) {
+        PlayDestructionFX(true);
+        if (!silent && m_1128) {
+            bool broken = false;
+            if (m_cfc || (-*(float *)((char *)master + 0x60)) * 0.5f >=
+                             *(float *)((char *)this + 0x1118))
+                broken = true;
+            master->CreatePieces(m_name.c_str(), this, false, broken, velocity, mode);
+        } else {
+            master->CreatePieces(m_name.c_str(), this, silent, false, velocity, mode);
+        }
+    }
+    WTACTOR *scenario = g_pGame->GetScenario();
+    if (scenario) {
+        int count = *(int *)((char *)master + 0xc4) /
+                    *(int *)((char *)scenario + 0x336c);
+        if (!silent)
+            count *= 2;
+        g_pGame->SpawnPieces(this, (*(CSTRING *)((char *)master + 0xcc)).c_str(),
+                             *(int *)((char *)master + 0xd0), count);
+    }
+    *(bool *)((char *)this + 0xcbc) = true;
+}
+
+// The health bar GAMECORE3 defines; only what this unit calls.
+class PROGRESSBAR : public OBJECT
+{
+public:
+    void SetProgress(float value);
+};
+
+// 0x4223b0: show the health left on the bar, fading it out over its last
+// half second and letting it go when the time is up. m_1374 is a float.
+void G2D5::UpdateHealthBar()
+{
+    if (!g_pGame->Virtual25())
+        *(float *)&m_1374 = 0.0f;
+    PROGRESSBAR *bar = (PROGRESSBAR *)g_pResources->GetResource(m_1378);
+    if (!bar)
+        return;
+    RESOURCEMASTER *master = g_pResources->GetMaster(m_1364);
+    bar->SetProgress(*(float *)((char *)this + 0x1118) /
+                     *(float *)((char *)master + 0x60));
+    float time = *(float *)&m_1374 - g_pTimer->m_dt;
+    *(float *)&m_1374 = time;
+    if (time <= 0.0f) {
+        RESOURCE *resource = g_pResources->GetResource(m_1378);
+        if (resource)
+            resource->Virtual20();
+        m_1378.Invalidate();
+        m_1378.Invalidate();
+        return;
+    }
+    if (time < 0.5f)
+        bar->SetAlphaFactor(time * 2.0f);
+    else
+        bar->SetAlphaFactor(1.0f);
+}
+
 extern RESOURCEMANAGER *g_pACTORRESOURCES;
 
 // 0x426830: submit the resource named by the handle to the actor resource
@@ -3992,6 +4073,27 @@ void G2CORE2M1::Detach(G2REFOBJECT *object)
             int mode = 8;
             reinterpret_cast<G2VSLOT68 *>(this)->Call2(&mode, &data.m_str);
         }
+    }
+}
+
+// 0x41baa0: the other half of Detach. A piece that is not whole takes its
+// share of the strength, fires the next lightning emitter and is kept as
+// the last piece attached.
+void G2CORE2M1::Attach(G2REFOBJECT *object)
+{
+    if (*(float *)((char *)object + 0x1800) != 1.0f) {
+        *(int *)((char *)this + 0x1738) += 1;
+        *(float *)((char *)this + 0xd24) =
+            (1.0f - *(float *)((char *)object + 0x1800)) * *(float *)((char *)this + 0xd24);
+        {
+            FIXEDSTRING<0x200> name;
+            SafeSprintf(name, "EMIT:tornado_lightningFX2_%i_raygun",
+                        *(int *)((char *)this + 0xed8) + 1);
+            CSTRING data(name);
+            int mode = 8;
+            reinterpret_cast<G2VSLOT68 *>(this)->Call2(&mode, &data.m_str);
+        }
+        *(RESHANDLE *)((char *)this + 0x173c) = *(RESHANDLE *)((char *)object + 8);
     }
 }
 
@@ -4051,7 +4153,7 @@ void G2D5::Place()
 // The tornado's half of a command: hand it the point the actor found.
 struct G2TORNADOOBJ : public ACTOR
 {
-    void TakeObjective(V3 point);
+    void TakeObjective(RESHANDLE handle);
     // 0x411230 and 0x41ab40: the pull the tornado gets, and dropping an
     // objective from its list.
     void AddPull(float amount);
@@ -4104,7 +4206,27 @@ void G2CORE2M1::WarnObjective()
             g_pLog->Error("NO TORNADO!");
     } else if (*(int *)((char *)this + 0x138) == 5) {
         reinterpret_cast<G2TORNADOOBJ *>(tornado)
-            ->TakeObjective(*(V3 *)((char *)this + 0xd2c));
+            ->TakeObjective(*(RESHANDLE *)((char *)this + 0xd2c));
+    }
+}
+
+// 0x41b950: grey out the HUD icon of every objective slot that holds the
+// handle.
+void G2TORNADOOBJ::TakeObjective(RESHANDLE handle)
+{
+    for (int i = 0; i < *(int *)((char *)this + 0xfe0); i++) {
+        if (((RESHANDLE *)((char *)this + 0xf60))[i] == handle) {
+            FIXEDSTRING<0x200> name;
+            SafeSprintf(name, "Icon_%02d", i);
+            GUICONTROL *control = g_pGui->m_screen->FindControl(name);
+            if (!control) {
+                if (g_pLog)
+                    g_pLog->Error("Can't find GUIVISUAL %s", (char *)name);
+                return;
+            }
+            control->SetBehaviorParams(CSTRING("0.2 0.2 0.2 0.2"));
+            control->SetBehavior(4);
+        }
     }
 }
 
@@ -4124,6 +4246,41 @@ SRESULT G2CORE2M1::SetTornadoPair(TOKENS **args)
 {
     SetPair(atoi((*args)->GetToken(1)), (float)atof((*args)->GetToken(2)));
     return true;
+}
+
+// 0x421cc0: drop a powerup at the master's spawn point, the count picking
+// how many commands it runs.
+void G2CORE2M1::SetPair(int count, float angle)
+{
+    RESOURCEMASTER *master =
+        g_pResources->GetMaster(*(RESHANDLE *)((char *)this + 0x1364));
+    if (!master) {
+        if (g_pLog)
+            g_pLog->Error("No master found");
+        return;
+    }
+    G2POWERUP *actor = (G2POWERUP *)g_pScene->CreateActor(G2POWERUP::s_factoryId);
+    if (!actor)
+        return;
+    actor->SetPosition(reinterpret_cast<ACTOR *>(this)->LocalToWorld(
+        *(V3 *)((char *)master + 0xa08)));
+    actor->SetSpawnAngleDelta(angle);
+    switch (count) {
+    case 1:
+        actor->SetMaxCommands(0);
+        break;
+    case 2:
+        actor->SetMaxCommands(1);
+        break;
+    case 3:
+        actor->SetMaxCommands(2);
+        break;
+    case 4:
+        actor->SetMaxCommands(3);
+        break;
+    }
+    actor->SetOccludingBox(*(V3 *)((char *)this + 0x978));
+    actor->SetActive(true);
 }
 
 // The shake helper at 0x411ec0, a member of the object this one belongs to:
