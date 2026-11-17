@@ -8885,7 +8885,7 @@
 0x00406ad0 ?Other@G2CORE1SR2@@UAE?AVSRESULT@@H@Z function 0x3e
 0x004248b0 ?Command@G2CORE2SR@@UAE?AVSRESULT@@H@Z function 0x3b
 0x00425dc0 ?Command@G2CORE2SR2@@UAE?AVSRESULT@@H@Z function 0x3e
-0x00424b10 ?Call3@G2CORE2SR2@@QAEXHHH@Z function
+0x00424b10 ?ConvertToPieces@G2D5@@QAEX_NPAUV3@@H@Z function 0x17b
 0x0042f210 ?CommandCF8@G2CORE3SR@@UAE?AVSRESULT@@H@Z function 0x3d
 0x00432b40 ?CommandCF4@G2CORE3SR@@UAE?AVSRESULT@@H@Z function 0x3d
 0x00408960 ?Call@CMDMGRX@@QAEHPAX@Z function
@@ -10012,10 +10012,10 @@
 0x004249d0 ?SetTornadoPoint@G2CORE2M1@@QAE?AVSRESULT@@PAPAVTOKENS@@@Z function 0xa3
 0x00424a80 ?SetTornadoValue@G2CORE2M1@@QAE?AVSRESULT@@PAPAVTOKENS@@@Z function 0x87
 0x00426210 ?WarnObjective@G2CORE2M1@@QAEXXZ function 0x58
-0x0041b950 ?TakeObjective@G2TORNADOOBJ@@QAEXUV3@@@Z function
+0x0041b950 ?TakeObjective@G2TORNADOOBJ@@QAEXURESHANDLE@@@Z function 0x150
 0x004116d0 ?SetValue@G2TORNADOOBJ@@QAEXH@Z function
 0x00411590 ?SetPoint@G2TORNADOOBJ@@QAEXUV3@@M@Z function
-0x00421cc0 ?SetPair@G2CORE2M1@@QAEXHM@Z function
+0x00421cc0 ?SetPair@G2CORE2M1@@QAEXHM@Z function 0x140
 0x0051ab40 ??$_Ucopy@Vconst_iterator@?$vector@HV?$allocator@H@std@@@std@@@?$vector@HV?$allocator@H@std@@@std@@IAEPAHVconst_iterator@01@0PAH@Z function 0x20
 0x005210b0 ?_Buy@?$vector@MV?$allocator@M@std@@@std@@IAE_NI@Z function 0x4d
 0x005212e0 ??4?$vector@MV?$allocator@M@std@@@std@@QAEAAV01@ABV01@@Z function 0x146
@@ -10277,3 +10277,16 @@
 0x00656f20 ??_C@_05JKFBCJL@mt_?$CFu?$AA@ data 0x6
 0x00656f28 ??_C@_0BO@FDOHBLPB@could?5not?5create?5minitornado?$CB?$AA@ data 0x1e
 0x006caed8 ?g_miniTornadoCount@@3IA data 0x4
+0x0065a6f8 ??_C@_0BA@EJOKLOGM@No?5master?5found?$AA@ data 0x10
+0x0041baa0 ?Attach@G2CORE2M1@@QAEXPAUG2REFOBJECT@@@Z function 0x107
+0x00424200 ?PlayDestructionFX@G2D5@@QAEX_N@Z function 0x250
+0x004040d0 ?AddScore@GAME@@QAEXHUV3@@@Z function 0x3c5
+0x00404a10 ?SpawnPieces@GAME@@QAEXPAVACTOR@@PBDHH@Z function 0x1e8
+0x0043d5f0 ?CreatePieces@GD43ea30@@QAEXPBDPAVACTOR@@_N2PAUV3@@H@Z function 0x495
+0x0065960c ??_C@_09OLNKPOIH@Icon_?$CF02d?$AA@ data 0xa
+0x006596c4 ??_C@_0BA@ONKMABBJ@0?42?50?42?50?42?50?42?$AA@ data 0x10
+0x00659548 ??_C@_0BI@OPLLDEFP@Can?8t?5find?5GUIVISUAL?5?$CFs?$AA@ data 0x18
+0x006596d4 ??_C@_0CE@NJPDFKEE@EMIT?3tornado_lightningFX2_?$CFi_ray@ data 0x24
+0x0065ab3c ??_C@_0CO@MMEDDCMJ@ConvertToPieces?3?5No?5DESTRUCTIBLE@ data 0x2e
+0x004224f0 ?SpawnPieceFX@G2D5@@QAEX_NABVCSTRING@@HMH@Z function 0x482
+0x0065a718 ??_C@_0CE@GPGEAMPM@could?5not?5create?5destruction?5fxs@ data 0x24
