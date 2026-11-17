@@ -10266,3 +10266,6 @@
 0x0065eac8 ??_7G2CORE3CID1@@6B@ data
 0x0065f570 ??_7GD43f600@@6B@ data
 0x00432750 ??0GD432870@@QAE@XZ function 0x8e
+0x0043c570 ?UpdatePattern@GD43bb40@@QAEXXZ function 0x2b9
+0x0043bc70 ?SetDecalColor@GD43bb40@@QAEXM@Z function 0xb6
+0x0043bd30 ?Animate@GD43bb40@@QAEXXZ function 0x3d1

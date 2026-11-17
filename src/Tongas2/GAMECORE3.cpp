@@ -28,6 +28,7 @@
 #include "Tongas2/TRIGGER.h"
 #include "Tongas2/TIMER.h"
 #include "Tongas2/GAME.h"
+#include "Tongas2/HEIGHTMAPDECALDX8.h"
 
 template class std::deque<unsigned short>;
 
@@ -1198,7 +1199,10 @@ public:
     static CMDENTRY s_commands[];
     static void RegisterCommands();
 
-    char pad_ee4[0xee4 - sizeof(ACTOR)];
+    char pad_ccc[0xcd0 - sizeof(ACTOR)];
+    // The decal's full color; the pattern fades it by a phase.
+    V3I m_color;
+    char pad_cdc[0xee4 - 0xcdc];
     char *m_ee4;
     char *m_ee8;
     char *m_eec;
@@ -1221,6 +1225,28 @@ __declspec(noinline) GD43bb40::~GD43bb40() throw()
         delete[] m_eec;
         m_eec = 0;
     }
+}
+
+// The heightmap decal manager. MESHDX8's inline assembly names it by
+// address, so it keeps that name here.
+extern "C" RESOURCEMANAGER *DAT_009fef34;
+
+// 0x0043bc70: colors the crop circle's heightmap decal, faded by phase.
+void GD43bb40::SetDecalColor(float phase)
+{
+    int managerId = DAT_009fef34->m_id;
+    HEIGHTMAPDECALDX8RESOURCE *decal =
+        (HEIGHTMAPDECALDX8RESOURCE *)FindResourceCopy(managerId);
+    if (!decal) {
+        if (g_pLog)
+            g_pLog->Error("could not update color of heightmapdecal in crop circle %s!", m_name.c_str());
+        return;
+    }
+    V3I color = m_color;
+    // HEIGHTMAPDECALDX8 calls this field m_heightmap; it holds the color.
+    *(V3I *)&decal->m_heightmap = phase * color;
+    decal->m_4e0 = false;
+    decal->m_4e1 = false;
 }
 
 class GD43cc30 : public RESOURCEMASTER
