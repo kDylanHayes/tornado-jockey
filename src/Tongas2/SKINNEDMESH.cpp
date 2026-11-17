@@ -1740,6 +1740,18 @@ typedef std::vector<VI> VVI;
 template class std::vector<VS>;
 template class std::vector<VVI>;
 
+// The 4-byte element vectors. Retail carries one _Insert_n, copy constructor
+// and nested erase/_Insert_n/resize set per 4-byte element type, in three
+// separate clusters of the range (0x5120f0.., 0x5182d0.. and 0x521040..), so
+// the original sources instantiated three 4-byte types. Their bodies are
+// byte-identical; int, unsigned and float name the three families here.
+typedef std::vector<unsigned int> VU;
+template class std::vector<int>;
+template class std::vector<unsigned int>;
+template class std::vector<float>;
+template class std::vector<VU>;
+template class std::vector<VF>;
+
 // 0x005118b0 (0x6a bytes; retail's size is the 0x69 before the compiler's
 // trailing int3): the deque length check. Only the throw body is wanted, so
 // the element type is arbitrary; int keeps the rest of the instantiation
