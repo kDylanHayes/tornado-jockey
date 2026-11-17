@@ -1450,6 +1450,13 @@ void FUN_00515db0(V3 *min, V3 *max, V3 value)
         max->z = value.z;
 }
 
+// 0x00515e40 (34 bytes, hidden in the padding after 0x00515db0): the angle
+// between two unit vectors, taken by value.
+float GD515e40(V3 a, V3 b)
+{
+    return acosf(a.x * b.x + a.y * b.y + a.z * b.z);
+}
+
 // The animation entry the two float getters read: its +0x64 frame count and
 // the +0x68 frame rate that divides it.
 struct GD510720ANIM
