@@ -878,19 +878,23 @@ const char *G2CORE1J3::GetClassName()
 class CONSOLE : public INPUTLISTENER
 {
 public:
+    CONSOLE();
     virtual ~CONSOLE();
 
     char m_body[0x22d8];
 };
 
+// The game's console adds nothing; its destructor is the implicit one, which
+// leaves the vtable alone and runs the console's.
 class G2CORE1K1 : public CONSOLE
 {
 public:
-    virtual ~G2CORE1K1();
+    G2CORE1K1() {}
 };
 
-G2CORE1K1::~G2CORE1K1()
+CONSOLE *CreateG2Console()
 {
+    return new G2CORE1K1;
 }
 
 extern RESOURCEMANAGER *g_pEMITTER;
@@ -5501,13 +5505,49 @@ SRESULT G2CORE1SR2::Other(int value)
 
 extern void *g_pCmdMgrX;
 
+// A profile-like record the command manager keeps per wide name.
+struct CMDMGRXENTRY
+{
+    CMDMGRXENTRY() : m_0(1), m_4(1), m_8(0), m_c(0), m_10(false), m_14(0) {}
+
+    int m_0;
+    int m_4;
+    int m_8;
+    int m_c;
+    bool m_10;
+    int m_14;
+};
+
 class CMDMGRX
 {
 public:
     int Call(void *arg);
     void *Find(void *arg);
     bool Has(void *arg);
+
+    void *m_0;
+    std::map<std::wstring, void *> m_map;
 };
+
+// Adds a record under the name unless one is there already (0x408960).
+int CMDMGRX::Call(void *arg)
+{
+    if (m_map.find(std::wstring((const wchar_t *)arg)) != m_map.end())
+        return 0;
+    CMDMGRXENTRY *entry = new CMDMGRXENTRY;
+    m_map[std::wstring((const wchar_t *)arg)] = entry;
+    return (int)entry;
+}
+
+// The record kept under the name, or null (0x408130).
+void *CMDMGRX::Find(void *arg)
+{
+    std::map<std::wstring, void *>::iterator it =
+        m_map.find(std::wstring((const wchar_t *)arg));
+    if (it == m_map.end())
+        return 0;
+    return it->second;
+}
 
 // Strips the leading spaces from a command name (0x406dd0).
 extern "C" void __stdcall GD_TrimSpaces(unsigned short *text);

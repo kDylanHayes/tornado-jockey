@@ -13,6 +13,7 @@
 #include <math.h>
 #include <deque>
 #include <map>
+#include <set>
 
 #include "Tongas2/BONEDMODEL.h"
 #include "Tongas2/INPUT.h"
@@ -637,6 +638,7 @@ extern int g_stormSpawnerFactoryId;
 class GD42ddd0 : public ACTOR
 {
 public:
+    GD42ddd0();
     virtual ~GD42ddd0();
     virtual int GetClassId();
     virtual int GetParentClassId();
@@ -663,6 +665,9 @@ public:
     float m_ed0;
     float m_ed4;
     float m_ed8;
+    bool m_edc;
+    int m_ee0;
+    int m_ee4;
 
     static int s_classId;
 
@@ -670,9 +675,21 @@ public:
     static void RegisterCommands();
 };
 
+GD42ddd0::GD42ddd0()
+    : m_ee0(0), m_ee4(0)
+{
+    m_name.Set("level1");
+    m_ecc = 10.0f;
+    m_ed0 = 20.0f;
+    m_ed4 = 20.0f;
+    m_ed8 = 10.0f;
+    m_edc = false;
+}
+
 __declspec(noinline) GD42ddd0::~GD42ddd0()
 {
 }
+
 
 // 0x0042e680: ACTOR::Update followed by the three steps of the frame body.
 // The three steps are still FUN_ in the retail map.
@@ -706,6 +723,7 @@ class GD42e6e0 : public ACTOR
 {
 public:
     virtual ~GD42e6e0() throw();
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
     virtual int GetFactoryId();
     virtual int GetClassId();
     virtual int GetParentClassId();
@@ -731,10 +749,16 @@ __declspec(noinline) GD42e6e0::~GD42e6e0() throw()
 {
 }
 
+SRESULT GD42e6e0::Execute(CMDENTRY *command, TOKENS **args)
+{
+    return (this->*(SRESULT (GD42e6e0::*)(TOKENS **))command->func)(args);
+}
+
 class GD42f370 : public ACTOR, public INPUTLISTENER
 {
 public:
     virtual ~GD42f370();
+    virtual void Stop();
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
@@ -747,16 +771,32 @@ public:
 
     static CMDENTRY s_commands[];
     static void RegisterCommands();
+
+    char pad_cd0[0x1154 - sizeof(ACTOR) - sizeof(INPUTLISTENER)];
+    RESHANDLE m_sound;
 };
 
 __declspec(noinline) GD42f370::~GD42f370()
 {
 }
 
+// Stops the actor and the sound it was playing, then asks for its removal.
+void GD42f370::Stop()
+{
+    ACTOR::Stop();
+    ACTOR *rules = g_pGame->GetRules();
+    RESOURCE *sound = g_pResources->GetResource(m_sound);
+    if (sound)
+        sound->Virtual20();
+    m_sound.Invalidate();
+    m_removeRequested = true;
+}
+
 class GD432870 : public ACTOR
 {
 public:
     virtual ~GD432870() throw();
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
@@ -790,9 +830,21 @@ public:
     virtual void V141();
     virtual void V142();
     virtual void V143();
-    virtual void V144();
+    virtual void V144(ACTOR *actor);
     virtual void V145(const bool &value);
     virtual void V146(ACTOR *actor);
+    virtual void V147();
+    virtual void V148();
+    virtual void V149();
+    virtual void V150();
+    virtual void V151();
+    virtual void V152(ACTOR *actor);
+    virtual void V153(int value);
+    virtual void V154(int value);
+    virtual void V155();
+    virtual void V156();
+    virtual void V157();
+    virtual int V158();
 };
 
 void GD432870::Deactivate()
@@ -830,6 +882,11 @@ void GD432870::Update()
 
 __declspec(noinline) GD432870::~GD432870() throw()
 {
+}
+
+SRESULT GD432870::Execute(CMDENTRY *command, TOKENS **args)
+{
+    return (this->*(SRESULT (GD432870::*)(TOKENS **))command->func)(args);
 }
 
 class GD4331a0 : public ACTOR
@@ -892,6 +949,18 @@ class G2D5 : public ACTOR
 public:
     G2D5();
     virtual ~G2D5();
+    // Retail names this copy G2MID2::Stop; the unit maps the name.
+    virtual void Stop();
+};
+
+// The tornado's list of objects that follow it (defined in GAMECORE2's
+// translation unit, the second method in GAMECORE1's).
+struct G2REFOBJECT;
+class G2CORE2M1
+{
+public:
+    void Detach(G2REFOBJECT *object);
+    void Release(G2REFOBJECT *object);
 };
 
 // The first base fills out to 0x13a0 bytes before the INPUTLISTENER base.
@@ -916,15 +985,142 @@ public:
     static CMDENTRY s_commands[];
     static void RegisterCommands();
 
-    char pad_13a4[0x18dc - 0x13a4];
-    std::map<int, V2> m_18dc;
+    // Stops the chaser's sounds and effects and drops it from the rules.
+    virtual void Stop();
+    void ReleaseEffects();
+    void StopCharge();
+    void EndRulesSlot();
+
+    char pad_13a4[0x15b0 - 0x13a4];
+    int m_15b0;
+    char pad_15b4[0x15dc - 0x15b4];
+    int m_15dc;
+    char pad_15e0[0x181c - 0x15e0];
+    RESHANDLE m_sound;
+    char pad_1828[0x1834 - 0x1828];
+    int m_1834;
+    char pad_1838[0x184c - 0x1838];
+    bool m_effectsOn;
+    char pad_184d[0x1858 - 0x184d];
+    bool m_charging;
+    bool m_rulesSlot;
+    char pad_185a[0x185c - 0x185a];
+    RESHANDLE m_effectSound;
+    char pad_1868[0x1874 - 0x1868];
+    RESHANDLE m_chargeSound;
+    RESHANDLE m_effect1;
+    RESHANDLE m_effect2;
+    char pad_1898[0x18dc - 0x1898];
+    // The actors it has already handled, by handle.
+    std::set<RESHANDLE> m_18dc;
     // The dtor at 0x438ff0 tidies it and the push at 0x439330 builds a
     // sixteen-byte element for it, so it holds G3TRAILPOINTs, not shorts.
     std::deque<G3TRAILPOINT> m_18e8;
+
+    bool AddPoint(const RESHANDLE &handle);
+    void AddTrailPoint(const V3 &point, bool brk);
 };
 
 __declspec(noinline) GD438ff0::~GD438ff0()
 {
+}
+
+// Handles order by their slot.
+inline bool operator<(const RESHANDLE &a, const RESHANDLE &b)
+{
+    return a.index < b.index;
+}
+
+// Records a handle unless it is already in the set.
+bool GD438ff0::AddPoint(const RESHANDLE &handle)
+{
+    if (m_18dc.find(handle) != m_18dc.end())
+        return false;
+    m_18dc.insert(handle);
+    return true;
+}
+
+void GD438ff0::Stop()
+{
+    G2D5::Stop();
+    G2CORE3RULESX *rules = (G2CORE3RULESX *)g_pGame->GetRules();
+    if (rules) {
+        if (m_15dc != 2)
+            rules->V144(this);
+        if (m_15b0 == 1)
+            rules->V152(this);
+    }
+    RESOURCE *sound = g_pResources->GetResource(m_sound);
+    if (sound)
+        sound->Virtual20();
+    m_sound.Invalidate();
+    g_pScene->Remove(m_effect1);
+    g_pScene->Remove(m_effect2);
+    ReleaseEffects();
+    StopCharge();
+    EndRulesSlot();
+}
+
+// Stops the effect sounds, removes the two effects and lets go of the
+// tornado.
+void GD438ff0::ReleaseEffects()
+{
+    if (m_effectsOn) {
+        RESOURCE *sound = g_pResources->GetResource(m_effectSound);
+        if (sound)
+            sound->Virtual20();
+        m_effectSound.Invalidate();
+        sound = g_pResources->GetResource(m_chargeSound);
+        if (sound)
+            sound->Virtual20();
+        m_chargeSound.Invalidate();
+        m_effectsOn = false;
+        g_pScene->Remove(m_effect1);
+        g_pScene->Remove(m_effect2);
+        G2CORE2M1 *tornado = (G2CORE2M1 *)g_pGame->GetTornado();
+        if (tornado) {
+            tornado->Detach((G2REFOBJECT *)this);
+            tornado->Release((G2REFOBJECT *)this);
+        }
+        m_1834 = 0;
+    }
+}
+
+// Ends the charge: stops its sound and clears the actor's resources.
+void GD438ff0::StopCharge()
+{
+    if (m_charging) {
+        m_charging = false;
+        m_1834 = 0;
+        RESOURCE *sound = g_pResources->GetResource(m_chargeSound);
+        if (sound)
+            sound->Virtual20();
+        m_chargeSound.Invalidate();
+        CSTRING none;
+        SetResources(5, none);
+    }
+}
+
+// Hands back the rules slot the chaser took.
+void GD438ff0::EndRulesSlot()
+{
+    if (m_rulesSlot) {
+        G2CORE3RULESX *rules = (G2CORE3RULESX *)g_pGame->GetRules();
+        if (rules) {
+            rules->V153(rules->V158() - 2);
+            rules->V154(0);
+        }
+        m_rulesSlot = false;
+    }
+}
+
+// Appends a point to the trail; brk starts a new segment there.
+void GD438ff0::AddTrailPoint(const V3 &point, bool brk)
+{
+    G3TRAILPOINT p;
+    p.m_point = point;
+    p.m_break = brk;
+    m_18e8.push_back(p);
 }
 
 class GD43b850 : public G2D5

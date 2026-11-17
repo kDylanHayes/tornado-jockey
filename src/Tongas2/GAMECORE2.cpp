@@ -10,6 +10,7 @@
 #define ANG_SETEULERX_OUTOFLINE
 #define MATRIX_TRANSPOSE_OUTOFLINE
 #define V3_SUB_MEMBER
+#define OBJECT_GETPARENTACTOR
 
 
 #include <new>
@@ -166,6 +167,8 @@ public:
     virtual void Virtual140();
     virtual void Update();
     virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
+    // Slot 0x258: stands the emitters up along the box.
+    void AlignEmitters(int unused);
 
     V3 m_ccc;
     G2V2F m_cd8;
@@ -206,6 +209,22 @@ void G2ACTOR::Update()
 {
     Virtual140();
     ACTOR::Update();
+}
+
+// 0x420530: every emitter resource sits half the box height up, turned to
+// point along it.
+void G2ACTOR::AlignEmitters(int)
+{
+    for (long i = 0; i < ACTOR_MAX_RESOURCES; i++) {
+        RESOURCE *resource = g_pResources->GetResource(m_copies[i]);
+        if (resource) {
+            int managerId = g_pEMITTER->m_id;
+            if (resource->GetManagerId() == managerId) {
+                SetResourcesPos(i, V3(0.0f, 0.0f, m_occludingBox.z * 0.5f));
+                SetResourcesAng(i, ANG(0.0f, -90.0f, 0.0f));
+            }
+        }
+    }
 }
 
 // Sixteen copies of this one-line body exist in the image. Eight are 122 bytes and
@@ -562,6 +581,7 @@ public:
     void SetColor(const V3I &value);
     void SetOpacity(const float &value);
 
+    virtual void Place();
     virtual void Start();
     virtual void Stop();
     virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
@@ -1253,7 +1273,11 @@ class G2ODEACTOR : public ACTOR
 public:
     static int s_classId;
     // 0x54afc0: the physics body's force, in the unit's own class.
-    void AddForce(float x, float y, float z);
+    void AddForce(V3 force);
+    // 0x54bf20: the body's own step.
+    void StepBody();
+
+    void *m_body;
 };
 
 class G2WTINTRO
@@ -2556,7 +2580,7 @@ struct G2CORE2M1
     void SetE5FC(const int &value);
 
     void Respawn();
-    void Start();
+    void Collapse();
     void Jump(float duration, int mode);
     void Detach(struct G2REFOBJECT *object);
     void WarnObjective();
@@ -3971,6 +3995,23 @@ void G2CORE2M1::Detach(G2REFOBJECT *object)
     }
 }
 
+// 0x4215f0: once the building's second piece exists, play the collapse
+// effect where the actor stands.
+void G2CORE2M1::Refresh()
+{
+    if (!g_pGame->GetTornado() || !*(bool *)((char *)this + 0xed0))
+        return;
+    FIXEDSTRING<0x200> name;
+    SafeSprintf(name, "%s%s", (char *)this + 0xccc, "_piece_b");
+    if (!g_pScene->FindActor(name))
+        return;
+    OBJECT *fx = (OBJECT *)g_pResources->GetResource("FXFX:FX_building_collapse");
+    if (!fx)
+        return;
+    fx->SetPosition(reinterpret_cast<ACTOR *>(this)->GetPosition());
+    fx->SetActive(true);
+}
+
 // 0x4216b0: aim at the target height over the given time and hand over to
 // the update. A zero duration only sets the mode.
 void G2CORE2M1::Jump(float duration, int mode)
@@ -3993,36 +4034,65 @@ void G2CORE2M1::Jump(float duration, int mode)
 
 // 0x421ed0: the destructible pieces start inactive inside their bounding
 // box, everything else always active, and remember where they started.
-void G2CORE2M1::Start()
+void G2D5::Place()
 {
-    int value;
-    if (reinterpret_cast<G2VSLOT19 *>(this)->Call0() ==
-            g_destructibleFactoryId &&
-        *(int *)((char *)this + 0x138) != 5) {
-        value = 2;
-        reinterpret_cast<G2VSLOT40 *>(this)->Call1(&value);
-        value = 0;
+    if (GetFactoryId() == g_destructibleFactoryId &&
+        m_behavior != ACTORBEHAVIOR_PATH) {
+        SetActivation(ACTORACTIVATION_USEOCCLUDINGBOX);
+        SetDeactivation(ACTORDEACTIVATION_USEOCCLUDINGBOX);
     } else {
-        value = 1;
-        reinterpret_cast<G2VSLOT40 *>(this)->Call1(&value);
-        value = 1;
+        SetActivation(ACTORACTIVATION_ALWAYSACTIVE);
+        SetDeactivation(ACTORDEACTIVATION_MANUALLY);
     }
-    reinterpret_cast<G2VSLOT41 *>(this)->Call1(&value);
-    V2 start(*(float *)((char *)this + 0x28),
-             *(float *)((char *)this + 0x30));
-    *(V2 *)((char *)this + 0xcf4) = start;
-    *(bool *)((char *)this + 0x998) = true;
+    m_cf4 = V2(m_position.x, m_position.z);
+    m_placed = true;
 }
 
 // The tornado's half of a command: hand it the point the actor found.
 struct G2TORNADOOBJ : public ACTOR
 {
     void TakeObjective(V3 point);
+    // 0x411230 and 0x41ab40: the pull the tornado gets, and dropping an
+    // objective from its list.
+    void AddPull(float amount);
+    void ReleaseObjective(RESHANDLE handle);
     void SetValue(int value);
     void SetPoint(V3 point, float value);
     // 0x417800: the wind field at a point, for a given mode.
     V3 WindField(V3 position, int mode);
 };
+
+// 0x426520: the piece breaks once. When it was the objective, the tornado
+// grows and lets go of it; then the broken look is applied.
+void G2CORE2M1::Collapse()
+{
+    if (*(bool *)((char *)this + 0xd98))
+        return;
+    if (*(int *)((char *)this + 0x138) == 5) {
+        ACTOR *tornado = g_pGame->GetTornado();
+        if (!tornado) {
+            if (g_pLog)
+                g_pLog->Error("NO TORNADO!");
+            return;
+        }
+        G2TORNADOOBJ *objective = reinterpret_cast<G2TORNADOOBJ *>(tornado);
+        objective->AddPull(*(float *)((char *)this + 0xda0) * 5.0f);
+        objective->ReleaseObjective(*(RESHANDLE *)((char *)this + 0xd2c));
+        *(int *)((char *)this + 0x138) = 1;
+    }
+    RESOURCEMASTER *master =
+        g_pResources->GetMaster(*(RESHANDLE *)((char *)this + 0xd78));
+    if (master) {
+        const char *name = *(const char **)((char *)master + 0x108);
+        if (!name)
+            name = "";
+        RESOURCEMASTER *resource = g_pACTORRESOURCES->GetMaster(name);
+        if (resource)
+            reinterpret_cast<G2VSLOT135 *>(this)->Call1(resource);
+    }
+    *(float *)((char *)this + 0xfbc) = 0.99f;
+    *(bool *)((char *)this + 0xd98) = true;
+}
 
 // 0x426210: warn when the tornado is gone, otherwise give it the point
 // when the actor is in state 5.
@@ -4058,29 +4128,143 @@ SRESULT G2CORE2M1::SetTornadoPair(TOKENS **args)
 
 // The shake helper at 0x411ec0, a member of the object this one belongs to:
 // it takes the two angles and writes the shake it picks into the vector.
+// 0x410e00 rebuilds what depends on the size.
 struct G2SHAKEPICK
 {
     void Pick(V3 *shake, V2 angles);
+    void UpdateSize();
 };
 
-// The object whose sub-object at 0xccc the shake runs in; only what this
-// call touches is named.
+// The scenario actor's bounds: 0x40d810 tells whether a point is inside
+// them and 0x40d880 brings a point back in.
+struct G2SCENARIO
+{
+    bool IsInside(V3 point, int margin);
+    V3 Clamp(V3 point, int margin);
+};
+
+// The object whose sub-object at 0xccc the shake runs in; only what these
+// calls touch is named. The sub-object is the owner's mouse listener, and
+// these are its button handlers.
 struct GD417ee0
 {
-    char m_0000[0xda];
+    char m_0000[0x1c];
+    bool m_1c;
+    char m_1d[0x78 - 0x1d];
+    bool m_78;
+    char m_79[0xcc - 0x79];
+    int m_cc;
+    int m_d0;
+    char m_d4[0xd8 - 0xd4];
+    bool m_d8;
+    bool m_d9;
     bool m_da;
-    char m_db[0x21c - 0xdb];
+    char m_db[0xf0 - 0xdb];
+    V3 m_f0;
+    char m_fc[0x110 - 0xfc];
+    float m_110;
+    char m_114[0x11d - 0x114];
+    bool m_11d;
+    char m_11e[0x21c - 0x11e];
     int m_21c;
     int m_220;
-    char m_224[0x254 - 0x224];
+    V3 m_224;
+    char m_230[0x254 - 0x230];
     V2 m_254;
     char m_25c[0x314 - 0x25c];
     void *m_314;
     char m_318[0x31c - 0x318];
     float m_31c;
+    char m_320[0xac4 - 0x320];
+    float m_ac4;
+    char m_ac8[0x1d64 - 0xac8];
+    float m_1d64;
+    float m_1d68;
 
+    void PlaceTarget(V3 shake);
+    bool Grab(int a, int b, int c, int d, int e);
+    bool Aim(int a, int b, int c, int d, int e);
+    bool Release(int a, int b, int c, int d, int e);
     bool Run(int a, int b, int c, int d, int e);
 };
+
+// 0x417b10: on a press in the aiming state, pick a target from the current
+// angles and keep it inside the scenario.
+bool GD417ee0::Grab(int, int, int, int, int)
+{
+    if (!reinterpret_cast<G2VSLOT25 *>(g_pGame)->Call0() ||
+        g_pTimer->m_paused)
+        return false;
+    if (m_cc == 1) {
+        m_d8 = false;
+        m_d9 = true;
+        V3 shake;
+        reinterpret_cast<G2SHAKEPICK *>((char *)this - 0xccc)
+            ->Pick(&shake, m_254);
+        G2SCENARIO *scenario = (G2SCENARIO *)g_pGame->GetScenario();
+        if (scenario && !m_1c) {
+            if (scenario->IsInside(shake, *(int *)((char *)scenario + 0xf04)))
+                m_f0 = shake;
+            else
+                m_f0 = scenario->Clamp(shake, *(int *)((char *)scenario + 0xf04));
+        }
+    }
+    return true;
+}
+
+// 0x417c50: the same while the button is held.
+bool GD417ee0::Aim(int, int, int, int, int)
+{
+    if (!reinterpret_cast<G2VSLOT25 *>(g_pGame)->Call0() ||
+        g_pTimer->m_paused)
+        return false;
+    if (m_cc == 1) {
+        V3 shake;
+        reinterpret_cast<G2SHAKEPICK *>((char *)this - 0xccc)
+            ->Pick(&shake, m_254);
+        G2SCENARIO *scenario = (G2SCENARIO *)g_pGame->GetScenario();
+        if (scenario && !m_1c) {
+            if (scenario->IsInside(shake, *(int *)((char *)scenario + 0xf04)))
+                m_f0 = shake;
+            else
+                m_f0 = scenario->Clamp(shake, *(int *)((char *)scenario + 0xf04));
+        }
+    }
+    return true;
+}
+
+// 0x417d80: on release, resize from the charge and fire.
+bool GD417ee0::Release(int, int, int, int, int)
+{
+    if (m_78) {
+        m_da = true;
+        return true;
+    }
+    if (!reinterpret_cast<G2VSLOT25 *>(g_pGame)->Call0() ||
+        g_pTimer->m_paused)
+        return false;
+    if (m_11d == true) {
+        m_1d64 = sqrtf(m_110 * 625.0f);
+        m_1d68 = sqrtf(m_110 * 10000.0f);
+        reinterpret_cast<G2SHAKEPICK *>((char *)this - 0xccc)->UpdateSize();
+    }
+    if (m_314) {
+        if (m_d0 == 4) {
+            if (!m_da)
+                m_224 = V3(m_ac4, 0.0f, 0.0f) + *(V3 *)((char *)this - 0xca4);
+            m_da = true;
+            return true;
+        }
+        if (m_31c <= 0.0f) {
+            m_da = true;
+            V3 shake;
+            reinterpret_cast<G2SHAKEPICK *>((char *)this - 0xccc)
+                ->Pick(&shake, m_254);
+            *(V2 *)((char *)this + 0x21c) = V2(shake.x, shake.z);
+        }
+    }
+    return true;
+}
 
 // 0x417ee0: while the game runs and the shake has not played, pick the shake
 // for the current angles and store it.
@@ -4115,6 +4299,9 @@ SRESULT G2CORE2M1::SetTornadoPoint(TOKENS **args)
 struct G2ODEWIND : public G2ODEACTOR
 {
     void ApplyWind();
+    bool Touch(OBJECT *object, int a, int b, int c);
+    void ClampVelocity();
+    void Tick();
 };
 
 // 0x426620
@@ -4128,6 +4315,74 @@ void G2ODEWIND::ApplyWind()
     }
     V3 force = reinterpret_cast<G2TORNADOOBJ *>(tornado)->WindField(
         GetPosition(), 0);
-    V3 scaled = force * *(float *)((char *)this + 0xd18);
-    AddForce(scaled.x, scaled.y, scaled.z);
+    AddForce(force * *(float *)((char *)this + 0xd18));
+}
+
+// What the release build keeps of a log line about an actor: the argument.
+struct G2LOGACTOR
+{
+    void Touched(WTACTOR *actor) {}
+};
+
+// 0x4266e0: a touch counts only from an object some actor carries. Once
+// the body is being pushed it is marked as hit.
+bool G2ODEWIND::Touch(OBJECT *object, int, int, int)
+{
+    if (!object->GetParentActor())
+        return false;
+    if (*(bool *)((char *)this + 0xfb8) || *(bool *)((char *)this + 0xfac)) {
+        *(bool *)((char *)this + 0xd28) = true;
+        if (g_pLog)
+            reinterpret_cast<G2LOGACTOR *>(g_pLog)->Touched(object->GetParentActor());
+    }
+    return true;
+}
+
+extern "C" void dBodySetLinearVel(void *body, float x, float y, float z);
+extern "C" void dBodySetAngularVel(void *body, float x, float y, float z);
+
+// 0x427010: keep the body under 500 units a second and its spin under
+// 100 degrees a second on each axis.
+void G2ODEWIND::ClampVelocity()
+{
+    bool changed = false;
+    V3 vel = m_vel;
+    V3 angVel = m_angVel;
+    if ((float)sqrt(vel.z * vel.z + vel.y * vel.y + vel.x * vel.x) > 500.0f) {
+        vel.Normalize();
+        vel.x *= 500.0f;
+        vel.y *= 500.0f;
+        vel.z *= 500.0f;
+        changed = true;
+    }
+    if (angVel.x > 100.0f) {
+        angVel.x = 100.0f;
+        changed = true;
+    }
+    if (angVel.y > 100.0f) {
+        angVel.y = 100.0f;
+        changed = true;
+    }
+    if (angVel.z > 100.0f) {
+        angVel.z = 100.0f;
+        changed = true;
+    }
+    if (changed) {
+        dBodySetLinearVel(m_body, vel.x, vel.y, vel.z);
+        dBodySetAngularVel(m_body, angVel.y * 0.017453292f, angVel.x * 0.017453292f,
+                           angVel.z * 0.017453292f);
+    }
+}
+
+// 0x428750: while the piece is loose the body steps under the wind;
+// otherwise the actor's own update runs.
+void G2ODEWIND::Tick()
+{
+    if (!*(bool *)((char *)this + 0xd24)) {
+        reinterpret_cast<G2VSLOT143 *>(this)->Call0();
+        return;
+    }
+    StepBody();
+    ApplyWind();
+    ClampVelocity();
 }
