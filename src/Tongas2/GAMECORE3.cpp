@@ -720,6 +720,26 @@ void GD42ddd0::SetTemplate(const FIXEDSTRING<0x200> &name)
     }
 }
 
+// A pair of floats that starts out zero.
+struct G3RANGE
+{
+    G3RANGE() : lo(0), hi(0) {}
+    G3RANGE(float lo_, float hi_) : lo(lo_), hi(hi_) {}
+
+    float lo;
+    float hi;
+};
+
+// Three ints that start out zero.
+struct G3INT3
+{
+    G3INT3() : a(0), b(0), c(0) {}
+
+    int a;
+    int b;
+    int c;
+};
+
 class GD42e6e0 : public ACTOR
 {
 public:
@@ -730,15 +750,23 @@ public:
     virtual int GetParentClassId();
     virtual const char *GetClassName();
 
+    GD42e6e0();
     void Activate();
     void Deactivate();
 
-    char pad_cd0[0xcd0 - sizeof(ACTOR)];
-    int m_cd0;
-    char pad_cd4[0xcdc - 0xcd4];
+    // sizeof(ACTOR) is 0xccc.
+    int m_ccc;
+    // The time left, restarted from m_cf8 on activation.
+    float m_cd0;
+    int m_cd4;
+    bool m_cd8;
+    bool m_cd9;
     RESHANDLE m_cdc;
-    char pad_ce8[0xcf8 - 0xce8];
-    int m_cf8;
+    G3INT3 m_ce8;
+    int m_cf4;
+    float m_cf8;
+    bool m_cfc;
+    G3RANGE m_d00;
 
     static int s_classId;
 
@@ -748,6 +776,20 @@ public:
 
 __declspec(noinline) GD42e6e0::~GD42e6e0() throw()
 {
+}
+
+// 0x0042e7b0
+GD42e6e0::GD42e6e0()
+{
+    m_cf4 = 0;
+    m_cf8 = 10.0f;
+    m_d00 = G3RANGE(10.0f, 11.0f);
+    m_cfc = false;
+    m_ccc = 0;
+    m_cd9 = false;
+    m_cd8 = false;
+    m_cd0 = 0;
+    m_cd4 = 0;
 }
 
 SRESULT GD42e6e0::Execute(CMDENTRY *command, TOKENS **args)
@@ -773,12 +815,47 @@ public:
     static CMDENTRY s_commands[];
     static void RegisterCommands();
 
-    char pad_cd0[0x1154 - sizeof(ACTOR) - sizeof(INPUTLISTENER)];
+    // Takes up its activation distances and its start position.
+    virtual void Start();
+
+    char pad_cd0[0xed8 - sizeof(ACTOR) - sizeof(INPUTLISTENER)];
+    int m_ed8;
+    char pad_edc[0xee8 - 0xedc];
+    int m_ee8;
+    int m_eec;
+    char pad_ef0[0x1154 - 0xef0];
     RESHANDLE m_sound;
+    char pad_1160[0x1174 - 0x1160];
+    bool m_1174;
+    char pad_1175[0x1190 - 0x1175];
+    float m_1190;
 };
 
 __declspec(noinline) GD42f370::~GD42f370()
 {
+}
+
+// 0x0042f670
+void GD42f370::Start()
+{
+    ACTOR::Start();
+    SetActivation(3);
+    SetDeactivation(1);
+    m_eec = m_ee8;
+    g_pGame->GetRules();
+    if (m_ed8 == 3) {
+        ACTOR *wait = (ACTOR *)g_pScene->FindActor("lizard_wait_001");
+        if (wait) {
+            m_1174 = true;
+            m_position = wait->GetPosition();
+        }
+    }
+    WTACTOR *scenario = g_pGame->GetScenario();
+    if (scenario) {
+        ACTOR *start = (ACTOR *)g_pScene->FindActor((char *)scenario + 0x3770);
+        if (start)
+            m_1190 = start->GetPosition().y;
+    }
 }
 
 // Stops the actor and the sound it was playing, then asks for its removal.
@@ -792,16 +869,6 @@ void GD42f370::Stop()
     m_sound.Invalidate();
     m_removeRequested = true;
 }
-
-// A pair of floats that starts out zero.
-struct G3RANGE
-{
-    G3RANGE() : lo(0), hi(0) {}
-    G3RANGE(float lo_, float hi_) : lo(lo_), hi(hi_) {}
-
-    float lo;
-    float hi;
-};
 
 class GD432870 : public ACTOR
 {
