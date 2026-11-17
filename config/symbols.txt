@@ -9269,7 +9269,6 @@
 0x0067bf44 ??_C@_0L@HOPGDAEF@ODERAGDOLL?$AA@ data 0xb
 0x005f8e51 __ehhandler$?Execute@GD548620@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z function 0xa
 0x00a0f140 ?g_pOdeWorld@@3PAVGD548620@@A data 0x4
-0x00548690 ?Start@G2MID@@UAEXXZ function 0x5
 0x00a0f148 ?s_commands@ODEWORLDMASTER@@2PAUCMDENTRY@@A data 0x14
 0x0067c0fc ??_C@_0O@PMBGLFOD@ODEGEOMMASTER?$AA@ data 0xe
 0x0067c028 _s_typeNames data 0xd2
@@ -10386,22 +10385,16 @@
 0x00463dd5 _D3DXQuaternionSlerp@16 function 0x6
 0x00511530 ?Start@GD510b10@@QAEXXZ function 0x8b
 0x00511c30 ?_Insert_n@?$vector@USKMQUAT@@V?$allocator@USKMQUAT@@@std@@@std@@IAEXViterator@12@IABUSKMQUAT@@@Z function 0x261
-0x00511ea0 ?_Insert_n@?$vector@USKINGEOMTYPE40@@V?$allocator@USKINGEOMTYPE40@@@std@@@std@@IAEXViterator@12@IABUSKINGEOMTYPE40@@@Z function 0x250
 0x005120f0 ?_Insert_n@?$vector@PAUGD510b10TABLE@@V?$allocator@PAUGD510b10TABLE@@@std@@@std@@IAEXViterator@12@IABQAUGD510b10TABLE@@@Z function 0x1e0
 
-0x005122d0 ??0?$vector@IV?$allocator@I@std@@@std@@QAE@ABV01@@Z function 0xb8
 
 0x00512650 ?StopAnimations@SKINNEDMESH@@QAEXXZ function 0xbe
 0x00512790 ?resize@?$vector@USKMQUAT@@V?$allocator@USKMQUAT@@@std@@@std@@QAEXIUSKMQUAT@@@Z function 0x7a
 0x005130c0 ??0GD511a30@@QAE@H@Z function 0xce
 0x00513190 ??0GD510b10@@QAE@HPAVGD510b10CONTAINER@@PAUGD510b10TABLE@@HHMM_N@Z function 0x197
-0x00513ee0 ?_Insert_n@?$vector@V?$vector@IV?$allocator@I@std@@@std@@V?$allocator@V?$vector@IV?$allocator@I@std@@@std@@@2@@std@@IAEXViterator@12@IABV?$vector@IV?$allocator@I@std@@@2@@Z function 0x298
-0x00514180 ??$_Destroy_range@V?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@V?$allocator@V?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@@2@@std@@YAXPAV?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@0@0AAV?$allocator@V?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@@0@U_Nonscalar_ptr_iterator_tag@0@@Z function 0x4a
 
-0x00514430 ?resize@?$vector@V?$vector@IV?$allocator@I@std@@@std@@V?$allocator@V?$vector@IV?$allocator@I@std@@@std@@@2@@std@@QAEXIV?$vector@IV?$allocator@I@std@@@2@@Z function 0xa4
 0x005145b0 ?_Insert_n@?$vector@V?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@V?$allocator@V?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@@2@@std@@IAEXViterator@12@IABV?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@2@@Z function 0x2aa
 
-0x005148a0 ?resize@?$vector@V?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@V?$allocator@V?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@@2@@std@@QAEXIV?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@2@@Z function 0xb9
 
 0x005182d0 ?_Insert_n@?$vector@IV?$allocator@I@std@@@std@@IAEXViterator@12@IABI@Z function 0x1e0
 
@@ -10409,23 +10402,14 @@
 
 0x00518690 ??0?$vector@PAVBEHAVIOR@@V?$allocator@PAVBEHAVIOR@@@std@@@std@@QAE@ABV01@@Z function 0xb8
 
-0x00518a60 ?_Construct_n@?$vector@V?$vector@HV?$allocator@H@std@@@std@@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@std@@QAEXIABV?$vector@HV?$allocator@H@std@@@2@@Z function 0xa3
 
-0x00519230 ?push_back@?$vector@IV?$allocator@I@std@@@std@@QAEXABI@Z function 0x4d
 0x0051be60 ?_Insert_n@?$vector@V?$vector@MV?$allocator@M@std@@@std@@V?$allocator@V?$vector@MV?$allocator@M@std@@@std@@@2@@std@@IAEXViterator@12@IABV?$vector@MV?$allocator@M@std@@@2@@Z function 0x298
 0x0051c270 ?resize@?$vector@V?$vector@MV?$allocator@M@std@@@std@@V?$allocator@V?$vector@MV?$allocator@M@std@@@std@@@2@@std@@QAEXIV?$vector@MV?$allocator@M@std@@@2@@Z function 0xa4
 
-0x0051c400 ??$_Destroy_range@V?$vector@V?$vector@HV?$allocator@H@std@@@std@@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@std@@V?$allocator@V?$vector@V?$vector@HV?$allocator@H@std@@@std@@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@std@@@2@@std@@YAXPAV?$vector@V?$vector@HV?$allocator@H@std@@@std@@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@0@0AAV?$allocator@V?$vector@V?$vector@HV?$allocator@H@std@@@std@@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@std@@@0@U_Nonscalar_ptr_iterator_tag@0@@Z function 0x65
-0x0051c5a0 ?_Insert_n@?$vector@V?$vector@V?$vector@HV?$allocator@H@std@@@std@@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@std@@V?$allocator@V?$vector@V?$vector@HV?$allocator@H@std@@@std@@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@std@@@2@@std@@IAEXViterator@12@IABV?$vector@V?$vector@HV?$allocator@H@std@@@std@@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@2@@Z function 0x2aa
-0x0051c890 ?resize@?$vector@V?$vector@V?$vector@HV?$allocator@H@std@@@std@@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@std@@V?$allocator@V?$vector@V?$vector@HV?$allocator@H@std@@@std@@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@std@@@2@@std@@QAEXIV?$vector@V?$vector@HV?$allocator@H@std@@@std@@V?$allocator@V?$vector@HV?$allocator@H@std@@@std@@@2@@2@@Z function 0xb9
 
-0x00521040 ?_Xlen@?$vector@MV?$allocator@M@std@@@std@@IBEXXZ function 0x6a
 
-0x00521100 ?_Insert_n@?$vector@MV?$allocator@M@std@@@std@@IAEXViterator@12@IABM@Z function 0x1e0
 
-0x005214b0 ??0?$vector@MV?$allocator@M@std@@@std@@QAE@ABV01@@Z function 0xb8
 
-0x00522da0 ?push_back@?$vector@MV?$allocator@M@std@@@std@@QAEXABM@Z function 0x4d
 0x00523390 ?_Insert_n@?$vector@V?$vector@NV?$allocator@N@std@@@std@@V?$allocator@V?$vector@NV?$allocator@N@std@@@std@@@2@@std@@IAEXViterator@12@IABV?$vector@NV?$allocator@N@std@@@2@@Z function 0x298
 0x00523630 ?resize@?$vector@V?$vector@NV?$allocator@N@std@@@std@@V?$allocator@V?$vector@NV?$allocator@N@std@@@std@@@2@@std@@QAEXIV?$vector@NV?$allocator@N@std@@@2@@Z function 0xa4
 
