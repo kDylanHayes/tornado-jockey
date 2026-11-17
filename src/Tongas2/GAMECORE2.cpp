@@ -590,6 +590,7 @@ public:
     void RequestScan();
     void UpdateHealthBar();
     void PlayDestructionFX(bool create);
+    void SpawnPieceFX(bool flag, const CSTRING &name, int index, float scale, int mode);
     void ConvertToPieces(bool silent, V3 *velocity, int mode);
 
     int m_ccc;
@@ -3952,6 +3953,57 @@ public:
     void CreatePieces(const char *name, ACTOR *owner, bool silent, bool broken,
                       V3 *velocity, int mode);
 };
+
+// 0x424200: the destruction effect at the master's point, scaled by the
+// tornado, then the four piece effects of the destroyed or the damaged set.
+void G2D5::PlayDestructionFX(bool create)
+{
+    ACTOR *tornado = g_pGame->GetTornado();
+    RESOURCEMASTER *master = g_pResources->GetMaster(m_1364);
+    if (!master)
+        return;
+    if (create) {
+        // The master's effect name is the CSTRING at 0xa04.
+        OBJECT *fx = (OBJECT *)g_pResources->GetResource(
+            ((CSTRING *)((char *)master + 0xa04))->c_str());
+        if (fx) {
+            fx->SetPosition(LocalToWorld(*(V3 *)((char *)master + 0xa08)));
+            fx->SetAngles(*(ANG *)((char *)master + 0xa20));
+            fx->SetAlpha(1.0f);
+            if (tornado)
+                fx->SetScaleV(*(V3 *)((char *)master + 0xa14) *
+                              *(float *)((char *)tornado + 0x2610));
+            fx->SetActive(true);
+        } else if (((CSTRING *)((char *)master + 0xa04))->c_str() != "" && g_pLog) {
+            g_pLog->Error("could not create destruction fxs %s",
+                          ((CSTRING *)((char *)master + 0xa04))->c_str());
+        }
+    }
+    if (m_d04)
+        return;
+    CSTRING *names;
+    int *counts;
+    bool *flags;
+    if (!create) {
+        names = (CSTRING *)((char *)master + 0x9e0);
+        counts = (int *)((char *)master + 0x9f0);
+        flags = (bool *)((char *)master + 0xa00);
+    } else {
+        names = (CSTRING *)((char *)master + 0xa70);
+        counts = (int *)((char *)master + 0xa80);
+        flags = (bool *)((char *)master + 0xa90);
+    }
+    float scale = 1.0f;
+    if (tornado)
+        scale = *(float *)((char *)tornado + 0x2610);
+    for (int i = 0; i < 4; i++, names++, counts++, flags++) {
+        // Retail tests the count pointer, not the count.
+        if (counts > 0 && names->Length() > 0) {
+            for (int j = 0; j < *counts; j++)
+                SpawnPieceFX(*flags, *names, j, scale, 0);
+        }
+    }
+}
 
 // 0x424b10: swap the actor for its pieces, score it and throw the debris.
 void G2D5::ConvertToPieces(bool silent, V3 *velocity, int mode)

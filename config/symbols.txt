@@ -10270,3 +10270,5 @@
 0x00659548 ??_C@_0BI@OPLLDEFP@Can?8t?5find?5GUIVISUAL?5?$CFs?$AA@ data 0x18
 0x006596d4 ??_C@_0CE@NJPDFKEE@EMIT?3tornado_lightningFX2_?$CFi_ray@ data 0x24
 0x0065ab3c ??_C@_0CO@MMEDDCMJ@ConvertToPieces?3?5No?5DESTRUCTIBLE@ data 0x2e
+0x004224f0 ?SpawnPieceFX@G2D5@@QAEX_NABVCSTRING@@HMH@Z function 0x482
+0x0065a718 ??_C@_0CE@GPGEAMPM@could?5not?5create?5destruction?5fxs@ data 0x24
