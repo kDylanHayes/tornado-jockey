@@ -3877,7 +3877,6 @@
       "source": "src/Tongas2/GAMECORE4.cpp",
       "category": "game",
       "symbol_mappings": {
-        "FUN_00441c60": "?Execute@GD4413d0@@UAE?AVSRESULT@@PAUCMDENTRY@@PAPAVTOKENS@@@Z",
         "DAT_006cb458": "?DAT_006cb458@@3_NA",
         "FUN_00440e20": "??0GD440e20@@QAE@PAXH@Z",
         "FUN_00441120": "??0GD441120@@QAE@PAX0@Z",
