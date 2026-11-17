@@ -13,6 +13,7 @@
 #include <math.h>
 #include <deque>
 #include <map>
+#include <set>
 
 #include "Tongas2/BONEDMODEL.h"
 #include "Tongas2/INPUT.h"
@@ -945,14 +946,32 @@ public:
     static void RegisterCommands();
 
     char pad_13a4[0x18dc - 0x13a4];
-    std::map<int, V2> m_18dc;
+    // The actors it has already handled, by handle.
+    std::set<RESHANDLE> m_18dc;
     // The dtor at 0x438ff0 tidies it and the push at 0x439330 builds a
     // sixteen-byte element for it, so it holds G3TRAILPOINTs, not shorts.
     std::deque<G3TRAILPOINT> m_18e8;
+
+    bool AddPoint(const RESHANDLE &handle);
 };
 
 __declspec(noinline) GD438ff0::~GD438ff0()
 {
+}
+
+// Handles order by their slot.
+inline bool operator<(const RESHANDLE &a, const RESHANDLE &b)
+{
+    return a.index < b.index;
+}
+
+// Records a handle unless it is already in the set.
+bool GD438ff0::AddPoint(const RESHANDLE &handle)
+{
+    if (m_18dc.find(handle) != m_18dc.end())
+        return false;
+    m_18dc.insert(handle);
+    return true;
 }
 
 class GD43b850 : public G2D5
