@@ -36,6 +36,9 @@ public:
     // Defined in STRINGMANAGER.cpp.
     bool CheckIndex(int page);
     char *GetPointer(const int &page);
+    // Takes count free pages in a row for owner and gives the first, or
+    // 0x1000 if there aren't enough even after a Defrag (GAMECORE1.cpp).
+    int FindAndAllocatePages(const int &count, STRING *owner);
 
     // A stack of pages that were freed, to hand out again first.
     struct CACHE
@@ -48,6 +51,24 @@ public:
         };
 
         CACHE() : m_index(-1), m_state(EMPTY) {}
+
+        bool IsEmpty() const { return m_state == EMPTY; }
+        int Pop()
+        {
+            int index = m_index;
+            if (index == 0)
+                m_state = EMPTY;
+            int page = m_pages[index];
+            m_index = index - 1;
+            return page;
+        }
+        void Push(int page)
+        {
+            m_state = SOME;
+            if (m_index == 0x1000 - 2)
+                m_state = FULL;
+            m_pages[++m_index] = page;
+        }
 
         int m_pages[0x1000];
         int m_index;

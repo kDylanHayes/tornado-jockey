@@ -1,3 +1,4 @@
+#define STRINGMANAGER_LAYOUT
 #define KERNELCOMMANDS_DTOR_OUTOFLINE
 // Tongas2/GAMECORE1 -- the core engine block at 0x401d20: small string,
 // handle, primitive and result support code. The class definitions live in
@@ -290,6 +291,119 @@ STRING &STRING::operator=(const STRING &other)
 {
     Reserve(const_cast<STRING &>(other).Length());
     return *this = other.c_str();
+}
+
+// STRINGMANAGER's page allocator; the rest of the class is in
+// STRINGMANAGER.cpp.
+inline bool STRINGMANAGER::CheckIndex(int page)
+{
+    if (page < 0 || page >= 0x1000) {
+        if (g_pLog)
+            g_pLog->Error("STRING_MANAGER::CheckIndex>Error: number page %d is out of range", page);
+        return false;
+    }
+    return true;
+}
+
+char *STRINGMANAGER::GetPointer(const int &page)
+{
+    if (CheckIndex(page))
+        return m_pages[page];
+    if (g_pLog)
+        g_pLog->Error("STRING_MANAGER::GetPointer>Error: Unable to return pointer to the page %d", page);
+    return 0;
+}
+
+int STRINGMANAGER::FindAndAllocatePages(const int &count, STRING *owner)
+{
+    while (count <= 0x1000 - m_usedPagesCount) {
+        if (count == 1) {
+            while (!m_cache[0].IsEmpty()) {
+                int page = m_cache[0].Pop();
+                if (!m_used[page]) {
+                    m_used[page] = true;
+                    m_owners[page] = owner;
+                    m_usedPagesCount++;
+                    return page;
+                }
+            }
+            // Each pair gives one page and leaves the other cached.
+            while (!m_cache[1].IsEmpty()) {
+                int page = m_cache[1].Pop();
+                m_cache[0].Push(page + 1);
+                if (!m_used[page]) {
+                    m_used[page] = true;
+                    m_owners[page] = owner;
+                    m_usedPagesCount++;
+                    return page;
+                }
+            }
+        }
+        if (count == 2) {
+            while (!m_cache[1].IsEmpty()) {
+                int page = m_cache[1].Pop();
+                if (!m_used[page] && !m_used[page + 1]) {
+                    m_used[page] = true;
+                    m_used[page + 1] = true;
+                    m_owners[page] = owner;
+                    m_owners[page + 1] = owner;
+                    m_usedPagesCount += 2;
+                    return page;
+                }
+            }
+        }
+        // Pages never used yet.
+        if (m_next + count < 0x1000) {
+            int page = m_next;
+            for (int i = 0; i < count; i++) {
+                m_used[page + i] = true;
+                m_owners[page + i] = owner;
+            }
+            m_next += count;
+            m_usedPagesCount += count;
+            return page;
+        }
+        int run = 0;
+        for (int i = 0; i < 0x1000; i++) {
+            if (!m_used[i]) {
+                run++;
+                if (run == count) {
+                    int page = i - run + 1;
+                    for (int j = 0; j < count; j++) {
+                        m_used[page + j] = true;
+                        m_owners[page + j] = owner;
+                    }
+                    m_usedPagesCount += count;
+                    return page;
+                }
+            } else
+                run = 0;
+        }
+        if (g_pLog)
+            g_pLog->Error("STRING_MANAGER::FindAndAllocatePages>Error: There is no space to allocate %d pages, num pages: %d, m_usedPagesCount: %d", count, 0x1000, m_usedPagesCount);
+        Defrag();
+    }
+    return 0x1000;
+}
+
+void STRING::Reserve(const int &length)
+{
+    int pages = length / 256 + 1;
+    if (pages > m_pages) {
+        STRING old;
+        if (m_pages > 0) {
+            if (Length() > 0)
+                old = m_buf;
+            g_StringManager.Free(m_block, m_pages);
+        }
+        m_pages = pages;
+        m_block = g_StringManager.FindAndAllocatePages(m_pages, this);
+        m_buf = g_StringManager.GetPointer(m_block);
+        if (old.Length() > 0)
+            strcpy(m_buf, old.c_str());
+        else
+            m_buf[0] = 0;
+    }
 }
 
 void SRESULT::SetType(const SRESULTTYPE &type)
