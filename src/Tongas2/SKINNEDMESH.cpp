@@ -1450,6 +1450,13 @@ void FUN_00515db0(V3 *min, V3 *max, V3 value)
         max->z = value.z;
 }
 
+// 0x00515e40 (34 bytes, hidden in the padding after 0x00515db0): the angle
+// between two unit vectors, taken by value.
+float GD515e40(V3 a, V3 b)
+{
+    return acosf(a.x * b.x + a.y * b.y + a.z * b.z);
+}
+
 // The animation entry the two float getters read: its +0x64 frame count and
 // the +0x68 frame rate that divides it.
 struct GD510720ANIM
@@ -1739,6 +1746,18 @@ typedef std::vector<VI> VVI;
 // COMDATs as well.
 template class std::vector<VS>;
 template class std::vector<VVI>;
+
+// The 4-byte element vectors. Retail carries one _Insert_n, copy constructor
+// and nested erase/_Insert_n/resize set per 4-byte element type, in three
+// separate clusters of the range (0x5120f0.., 0x5182d0.. and 0x521040..), so
+// the original sources instantiated three 4-byte types. Their bodies are
+// byte-identical; int, unsigned and float name the three families here.
+typedef std::vector<unsigned int> VU;
+template class std::vector<int>;
+template class std::vector<unsigned int>;
+template class std::vector<float>;
+template class std::vector<VU>;
+template class std::vector<VF>;
 
 // 0x005118b0 (0x6a bytes; retail's size is the 0x69 before the compiler's
 // trailing int3): the deque length check. Only the throw body is wanted, so
@@ -2139,4 +2158,81 @@ public:
 void GD512810::Init(int count)
 {
     Set(count, V3());
+}
+
+// ---------------------------------------------------------------------------
+// 0x00510950 (83 bytes): resolve each bone's name (+0x104 of the bone record)
+// against a skeleton and keep the index it answers in the parallel id table;
+// names the skeleton does not know (-1) leave their entry alone.
+// ---------------------------------------------------------------------------
+struct GD510950BONE
+{
+    char pad_0[0x104];
+    char m_name[0x40];
+};
+
+class GD531e80
+{
+public:
+    int Find(const char *name);
+};
+
+class GD510950
+{
+public:
+    void Resolve(GD531e80 *skeleton);
+
+    int m_0;
+    std::vector<GD510950BONE *> m_bones;
+    std::vector<int> m_ids;
+};
+
+void GD510950::Resolve(GD531e80 *skeleton)
+{
+    for (unsigned int i = 0; i < m_bones.size(); i++) {
+        int id = skeleton->Find(m_bones[i]->m_name);
+        if (id != -1)
+            m_ids[i] = id;
+    }
+}
+
+// ---------------------------------------------------------------------------
+// 0x00527d70 (96 bytes): empty a queue of strings from the front.
+// ---------------------------------------------------------------------------
+void GD527d70(std::deque<std::string> *queue)
+{
+    while (!queue->empty())
+        queue->pop_front();
+}
+
+// ---------------------------------------------------------------------------
+// 0x00527500 (67 bytes): one component of the unit vector whose two angles
+// are stored as bytes (0..255 for a full turn): 0 is x, 1 is y, 2 is z.
+// ---------------------------------------------------------------------------
+float GD527500(int lat, int lon, int axis)
+{
+    double a = lat * (6.28318 / 255.0);
+    double b = lon * (6.28318 / 255.0);
+    switch (axis) {
+    case 0:
+        return (float)(sin(a) * cos(b));
+    case 1:
+        return (float)(sin(a) * sin(b));
+    case 2:
+        return (float)cos(a);
+    }
+    return 0.0f;
+}
+
+// ---------------------------------------------------------------------------
+// 0x00515bf0 (86 bytes): a unit normal packed into an opaque ARGB colour,
+// each component mapped from -1..1 onto 1..255.
+// ---------------------------------------------------------------------------
+unsigned long GD515bf0(const V3 *normal)
+{
+    unsigned long colour = 0xff;
+    colour = (colour << 8) + (int)(normal->x * 127.0f + 128.0f);
+    colour = (colour << 8) + (int)(normal->y * 127.0f + 128.0f);
+    colour = (colour << 8) + (int)(normal->z * 127.0f + 128.0f);
+    return colour;
 }
