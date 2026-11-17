@@ -27,7 +27,7 @@ template class std::vector<std::vector<int> >;
 // so repeating the element definition and instantiating gives the same sections.
 struct SKINGEOMTYPE40
 {
-    int m[16];
+    float m[16];
 
     SKINGEOMTYPE40() {}
 };
@@ -47,6 +47,8 @@ template class std::vector<GD510b10TABLE *>;
 class GD511a30;
 template class std::vector<GD511a30 *>;
 template class std::vector<std::vector<unsigned int> >;
+template class std::vector<std::vector<float> >;
+template class std::vector<std::vector<double> >;
 
 // The object whose slot 0x1c unlinks it and whose deleting destructor runs at
 // slot 0; the wrapper at 0x5285f0 releases it.
@@ -118,10 +120,8 @@ void GD5285f0::Release()
 #include "Tongas2/MATHS.h"
 #include "Tongas2/SKINNEDMESH.h"
 
-struct GD510b10ELEM
-{
-    char m_0[0x10];
-};
+// One key frame: a matrix per bone.
+typedef std::vector<SKINGEOMTYPE40> GD510b10ELEM;
 
 // The animation an instance plays: its key table, frame count, length and
 // bone count.
@@ -1898,6 +1898,35 @@ GD511a30::GD511a30(int bones)
     m_positions.resize(bones);
 }
 
+// D3DX, imported through the exe's thunks.
+extern "C" SKMQUAT *__stdcall D3DXQuaternionSlerp(SKMQUAT *out, const SKMQUAT *q1,
+                                                  const SKMQUAT *q2, float t);
+extern "C" SKINGEOMTYPE40 *__stdcall D3DXMatrixRotationQuaternion(SKINGEOMTYPE40 *out,
+                                                                  const SKMQUAT *q);
+extern "C" SKMQUAT *__stdcall D3DXQuaternionRotationMatrix(SKMQUAT *out,
+                                                           const SKINGEOMTYPE40 *m);
+
+// 0x00510790 (262 bytes): the pose t of the way from one pose to another,
+// rotations slerped and translations interpolated straight.
+void GD511a30::Blend(GD511a30 *from, GD511a30 *to, float t)
+{
+    for (unsigned int i = 0; i < m_matrices.size(); i++) {
+        D3DXQuaternionSlerp(&m_rotations[i], &from->m_rotations[i], &to->m_rotations[i], t);
+
+        V3 &b = to->m_positions[i];
+        V3 &a = from->m_positions[i];
+        V3 &out = m_positions[i];
+        out.x = (b.x - a.x) * t + a.x;
+        out.y = (b.y - a.y) * t + a.y;
+        out.z = (b.z - a.z) * t + a.z;
+
+        D3DXMatrixRotationQuaternion(&m_matrices[i], &m_rotations[i]);
+        m_matrices[i].m[12] = m_positions[i].x;
+        m_matrices[i].m[13] = m_positions[i].y;
+        m_matrices[i].m[14] = m_positions[i].z;
+    }
+}
+
 // 0x00511a30 (143 bytes): free the tables; the members' own destructors
 // then run on the emptied vectors.
 GD511a30::~GD511a30()
@@ -1908,15 +1937,54 @@ GD511a30::~GD511a30()
 }
 
 
+// A bone of the skeleton: its local matrix, the matrix the hierarchy update
+// leaves at +0x80 and an override at +0xc4.
+struct SKMBONE
+{
+    SKINGEOMTYPE40 m_local;
+    char pad_40[0x80 - 0x40];
+    SKINGEOMTYPE40 m_world;
+    bool m_overridden;
+    SKINGEOMTYPE40 m_override;
+};
+
 class GD510b10CONTAINER
 {
 public:
-    void Add(GD511a30 *pose, GD510b10ELEM *element);
+    void Add(GD511a30 *pose, GD510b10ELEM *frame);
+    void Update();
 
     char pad_0[4];
-    void *m_4;
-    void *m_8;
+    std::vector<SKMBONE *> m_bones;
+    std::vector<int> m_poseIndex;
 };
+
+// 0x005109b0 (338 bytes): load a key frame into the bones, run the hierarchy
+// and read the result back into the pose.
+void GD510b10CONTAINER::Add(GD511a30 *pose, GD510b10ELEM *frame)
+{
+    if (pose->m_matrices.size() < m_bones.size())
+        return;
+
+    unsigned int frames = frame->size();
+    for (unsigned int i = 0; i < m_bones.size(); i++) {
+        if (i < frames)
+            m_bones[i]->m_local = (*frame)[m_poseIndex[i]];
+    }
+
+    Update();
+
+    for (unsigned int j = 0; j < m_bones.size(); j++) {
+        SKINGEOMTYPE40 *m = m_bones[j]->m_overridden ? &m_bones[j]->m_override
+                                                      : &m_bones[j]->m_world;
+        int index = m_poseIndex[j];
+        pose->m_matrices[index] = *m;
+        pose->m_positions[index].x = m->m[12];
+        pose->m_positions[index].y = m->m[13];
+        pose->m_positions[index].z = m->m[14];
+        D3DXQuaternionRotationMatrix(&pose->m_rotations[index], m);
+    }
+}
 
 // One playing animation (0x50 bytes): the key pair it sits between and the
 // three poses it blends.
