@@ -17,6 +17,10 @@
 #include <stdlib.h>
 #include <wchar.h>
 
+// A random value from min to max, or min when the range is empty.
+#define RANDOM(min, max) \
+    ((max) > (min) ? ((max) - (min)) * (float)rand() * (1.0f / RAND_MAX) + (min) : (min))
+
 #include "Tongas2/FIXEDSTRING.h"
 #include "Tongas2/MATHS.h"
 #include "Tongas2/GAME.h"
@@ -41,6 +45,7 @@ public:
 #include "Tongas2/CAMERA.h"
 #include "Tongas2/SCENE.h"
 #include "Tongas2/SRESULT.h"
+#include "Tongas2/CMDMGR.h"
 
 float ANG::GetEulerY()
 {
@@ -428,14 +433,19 @@ public:
 
     static int s_factoryId;
 
+    virtual void Update();
+    void Refresh();
+    void Jump(float duration, float height);
+    void Crumble();
+
     // The offsets are the ones its constructor touches.
     FIXEDSTRING<0x200> m_ccc;
-    int m_ecc;
+    float m_ecc;
     bool m_ed0;
     bool m_ed1;
     float m_ed4;
     V2 m_ed8;
-    int m_ee0;
+    float m_ee0;
 };
 
 G2D2::G2D2()
@@ -592,6 +602,7 @@ public:
     void PlayDestructionFX(bool create);
     void SpawnPieceFX(bool flag, const CSTRING &name, int index, float scale, int mode);
     void ConvertToPieces(bool silent, V3 *velocity, int mode);
+    SRESULT BreakUnless(TOKENS **args);
 
     int m_ccc;
     bool m_cd0;
@@ -2585,7 +2596,6 @@ struct G2CORE2M1
 
     void Respawn();
     void Collapse();
-    void Jump(float duration, int mode);
     void Detach(struct G2REFOBJECT *object);
     void Attach(struct G2REFOBJECT *object);
     void WarnObjective();
@@ -2594,7 +2604,6 @@ struct G2CORE2M1
     SRESULT SetTornadoPoint(TOKENS **args);
     void SetPair(int first, float second);
     // 0x4215f0: the collapse update, still a hole of its own.
-    void Refresh();
 };
 
 void G2CORE2M1::SetCF0(const int &value)
@@ -3904,6 +3913,37 @@ struct G2VSLOT143 : G2VSLOTPAD<143>
     virtual void Call0();
 };
 
+// The master that makes the pieces a destructible breaks into (0x43d5f0).
+struct G2PIECEMASTER
+{
+    void Spawn(const char *name, ACTOR *owner, int a, int b, int c, int d);
+};
+
+// 0x425e40: unless the named actor exists, break: run the master's command,
+// spawn the pieces and leave the scene. Residue: retail shares one
+// SRESULT(false) tail between the two false returns (entering it at the
+// push) and tests FindActor's result against the zeroed ebx; this source
+// builds the first false return inline.
+SRESULT G2D5::BreakUnless(TOKENS **args)
+{
+    if (g_pScene->FindActor((*args)->GetToken(1)))
+        return true;
+    m_removeRequested = true;
+    RESOURCEMASTER *master = g_pResources->GetMaster(m_1364);
+    if (!master)
+        return false;
+    const char *text = *(const char **)((char *)master + 0x64);
+    if (!text)
+        text = "";
+    {
+        STRING command(text);
+        g_pCmdMgr->Run(command, m_handle);
+    }
+    ((G2PIECEMASTER *)master)->Spawn(m_name.c_str(), this, 0, 0, 0, 0);
+    g_pScene->Remove(m_spawner);
+    return false;
+}
+
 // 0x421bc0: the G2D5 countdown. m_1118 is a float in the retail build.
 void G2D5::UpdateTimer(float dt)
 {
@@ -4151,7 +4191,7 @@ void G2CORE2M1::Attach(G2REFOBJECT *object)
 
 // 0x4215f0: once the building's second piece exists, play the collapse
 // effect where the actor stands.
-void G2CORE2M1::Refresh()
+void G2D2::Refresh()
 {
     if (!g_pGame->GetTornado() || !*(bool *)((char *)this + 0xed0))
         return;
@@ -4168,9 +4208,9 @@ void G2CORE2M1::Refresh()
 
 // 0x4216b0: aim at the target height over the given time and hand over to
 // the update. A zero duration only sets the mode.
-void G2CORE2M1::Jump(float duration, int mode)
+void G2D2::Jump(float duration, float height)
 {
-    *(int *)((char *)this + 0xed4) = mode;
+    m_ed4 = height;
     *(bool *)((char *)this + 0xed1) = true;
     if (duration != 0.0f) {
         V3 direction;
@@ -4184,6 +4224,63 @@ void G2CORE2M1::Jump(float duration, int mode)
     }
     *(int *)((char *)this + 0x138) = 0;
     Refresh();
+}
+
+// The suffixes of the pieces a building breaks into.
+static const char s_pieceNames[][30] = {"a", "b", "c", "d", "e", "f", "g"};
+
+// 0x421990: a shaking piece jitters about its rest point until it sinks
+// out of sight; a whole building waits until none of its pieces exist, then
+// jumps and crumbles.
+void G2D2::Update()
+{
+    if (m_ee0 > 1.0f)
+        ACTOR::Update();
+    if (m_ed1) {
+        m_position.x = RANDOM(-m_ed4, m_ed4) + m_ed8.x;
+        m_position.z = RANDOM(-m_ed4, m_ed4) + m_ed8.y;
+        if (GetPosition().y < -m_ecc)
+            m_removeRequested = true;
+        m_ee0 += g_pTimer->m_dt * 3.0f;
+        return;
+    }
+    for (int i = 0; i < 7; i++) {
+        FIXEDSTRING<0x200> name(&m_ccc);
+        name += s_pieceNames[i];
+        if (g_pScene->FindActor(name))
+            return;
+    }
+    Jump(6.0f, 1.0f);
+    if (m_ed0)
+        Crumble();
+}
+
+// Slot 0x2b4 of a destructible: the effect it plays when it breaks.
+struct G2VSLOT173 : G2VSLOTPAD<173>
+{
+    virtual void Call1(const FIXEDSTRING<0x200> &name);
+};
+
+// 0x421750: leave a destructible base where the building stood, sized like
+// it, with one of the two collapse effects.
+void G2D2::Crumble()
+{
+    ACTOR *debris = g_pScene->CreateActor(g_destructibleFactoryId);
+    if (!debris) {
+        if (g_pLog)
+            g_pLog->Error("Can't create new destructible");
+        return;
+    }
+    FIXEDSTRING<0x200> name(&m_ccc);
+    name += "_debrisBase";
+    debris->SetName(CSTRING(name));
+    debris->SetPosition(GetPosition());
+    const char *piece = s_pieceNames[rand() % 2];
+    FIXEDSTRING<0x200> effect;
+    SafeSprintf(effect, "%s%s", "l6_generic_building_collapse_", piece);
+    reinterpret_cast<G2VSLOT173 *>(debris)->Call1(effect.m_buf);
+    debris->SetOccludingBox(m_occludingBox);
+    debris->SetActive(true);
 }
 
 // 0x421ed0: the destructible pieces start inactive inside their bounding

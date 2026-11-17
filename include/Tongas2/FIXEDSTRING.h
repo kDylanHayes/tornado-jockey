@@ -22,6 +22,14 @@ public:
             m_buf[0] = '\0';
         m_buf[N - 1] = '\0';
     }
+    // A copy of another one, or empty without one.
+    FIXEDSTRING(const FIXEDSTRING *other)
+    {
+        if (other)
+            *this = *other;
+        else
+            m_buf[0] = '\0';
+    }
 
     // Out of line; defined in another unit.
     FIXEDSTRING &operator=(const char *text);
