@@ -637,6 +637,7 @@ extern int g_stormSpawnerFactoryId;
 class GD42ddd0 : public ACTOR
 {
 public:
+    GD42ddd0();
     virtual ~GD42ddd0();
     virtual int GetClassId();
     virtual int GetParentClassId();
@@ -663,6 +664,9 @@ public:
     float m_ed0;
     float m_ed4;
     float m_ed8;
+    bool m_edc;
+    int m_ee0;
+    int m_ee4;
 
     static int s_classId;
 
@@ -670,9 +674,21 @@ public:
     static void RegisterCommands();
 };
 
+GD42ddd0::GD42ddd0()
+    : m_ee0(0), m_ee4(0)
+{
+    m_name.Set("level1");
+    m_ecc = 10.0f;
+    m_ed0 = 20.0f;
+    m_ed4 = 20.0f;
+    m_ed8 = 10.0f;
+    m_edc = false;
+}
+
 __declspec(noinline) GD42ddd0::~GD42ddd0()
 {
 }
+
 
 // 0x0042e680: ACTOR::Update followed by the three steps of the frame body.
 // The three steps are still FUN_ in the retail map.
@@ -706,6 +722,7 @@ class GD42e6e0 : public ACTOR
 {
 public:
     virtual ~GD42e6e0() throw();
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
     virtual int GetFactoryId();
     virtual int GetClassId();
     virtual int GetParentClassId();
@@ -729,6 +746,11 @@ public:
 
 __declspec(noinline) GD42e6e0::~GD42e6e0() throw()
 {
+}
+
+SRESULT GD42e6e0::Execute(CMDENTRY *command, TOKENS **args)
+{
+    return (this->*(SRESULT (GD42e6e0::*)(TOKENS **))command->func)(args);
 }
 
 class GD42f370 : public ACTOR, public INPUTLISTENER
@@ -757,6 +779,7 @@ class GD432870 : public ACTOR
 {
 public:
     virtual ~GD432870() throw();
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
@@ -830,6 +853,11 @@ void GD432870::Update()
 
 __declspec(noinline) GD432870::~GD432870() throw()
 {
+}
+
+SRESULT GD432870::Execute(CMDENTRY *command, TOKENS **args)
+{
+    return (this->*(SRESULT (GD432870::*)(TOKENS **))command->func)(args);
 }
 
 class GD4331a0 : public ACTOR
