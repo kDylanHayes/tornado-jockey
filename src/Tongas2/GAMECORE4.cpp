@@ -84,6 +84,13 @@ SRESULT RESOURCES::Execute(CMDENTRY *command, TOKENS **args)
     return (this->*(SRESULT (RESOURCES::*)(TOKENS **))command->func)(args);
 }
 
+// 0x4412c0: the base forwarder. The table's member pointers are the general
+// form, so the call adds the entry's this adjustment.
+SRESULT CMDBASE::Execute(CMDENTRY *command, TOKENS **args)
+{
+    return (this->*command->func)(args);
+}
+
 template class std::basic_string<char>;
 template class std::vector<std::basic_string<char> >;
 template class std::map<int, RESHANDLE>;
@@ -262,33 +269,6 @@ public:
 };
 
 __declspec(noinline) GD440960::~GD440960()
-{
-}
-
-class GD4413d0 : public RESOURCEMASTER
-{
-public:
-    virtual ~GD4413d0() throw();
-    SRESULT Execute(CMDENTRY *command, TOKENS **args);
-};
-
-__declspec(noinline) GD4413d0::~GD4413d0() throw()
-{
-}
-
-// 0x441c60: the command-table forwarder every master in this block repeats.
-SRESULT GD4413d0::Execute(CMDENTRY *command, TOKENS **args)
-{
-    return (this->*(SRESULT (GD4413d0::*)(TOKENS **))command->func)(args);
-}
-
-class GD441630 : public OBJECT
-{
-public:
-    virtual ~GD441630() throw();
-};
-
-__declspec(noinline) GD441630::~GD441630() throw()
 {
 }
 
@@ -1635,12 +1615,33 @@ void PROGRESSBAR::Start()
         SetDecal(m_fgDecal, master->m_fgDecal, false);
 }
 
+// The decal a shadow prop draws: the decal master's name and the value the
+// spawned decal takes at its 0x46c field. The master reads it from its file
+// and each prop copies it.
+struct PROPSHADOWDECAL
+{
+    PROPSHADOWDECAL() : m_value(0) {}
+    PROPSHADOWDECAL &operator=(const PROPSHADOWDECAL &other)
+    {
+        m_name = other.m_name;
+        m_value = other.m_value;
+        return *this;
+    }
+
+    FIXEDSTRING<0x200> m_name;
+    int m_value;
+};
+
 // What a shadow prop's file sets: the decal and the pivot it is placed by.
 class PROPSHADOWMASTER : public RESOURCEMASTER
 {
 public:
-    FIXEDSTRING<0x200> m_decalName;
-    int m_260;
+    PROPSHADOWMASTER(RESOURCEMANAGER *manager, const char *name);
+    virtual ~PROPSHADOWMASTER() throw();
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
+    virtual RESOURCE *CreateCopy(const RESHANDLE &handle);
+
+    PROPSHADOWDECAL m_decal;
     V2 m_pivot;
 };
 
@@ -1648,15 +1649,90 @@ public:
 class PROPSHADOW : public OBJECT
 {
 public:
-    void Stop();
-    void Update();
+    PROPSHADOW(PROPSHADOWMASTER *master, const RESHANDLE &handle);
+    virtual ~PROPSHADOW() throw();
+    virtual void Init();
+    virtual void Start();
+    virtual void Stop();
+    virtual void Update();
+    virtual bool IsLoaded() { return true; }
+    virtual V3 GetScaleFactor() { return V3(0.0f, 0.0f, 0.0f); }
+    void SetDecal(const PROPSHADOWDECAL &decal);
 
-    FIXEDSTRING<0x200> m_name;
-    int m_600;
+    PROPSHADOWDECAL m_desc;
     RESHANDLE m_decal;
-    RESHANDLE m_610;
+    RESHANDLE m_decalMaster;
     float m_angle;
 };
+
+PROPSHADOWMASTER::PROPSHADOWMASTER(RESOURCEMANAGER *manager, const char *name)
+    : RESOURCEMASTER(manager, name), m_pivot(0.0f, 0.0f)
+{
+    m_decal = PROPSHADOWDECAL();
+    m_pivot = V2(0.5f, 0.5f);
+}
+
+__declspec(noinline) PROPSHADOWMASTER::~PROPSHADOWMASTER() throw()
+{
+}
+
+// 0x441c60: the command-table forwarder every master in this block repeats.
+SRESULT PROPSHADOWMASTER::Execute(CMDENTRY *command, TOKENS **args)
+{
+    return (this->*(SRESULT (PROPSHADOWMASTER::*)(TOKENS **))command->func)(args);
+}
+
+RESOURCE *PROPSHADOWMASTER::CreateCopy(const RESHANDLE &handle)
+{
+    return new PROPSHADOW(this, handle);
+}
+
+PROPSHADOW::PROPSHADOW(PROPSHADOWMASTER *master, const RESHANDLE &handle)
+    : OBJECT(master, handle)
+{
+    m_angle = 0.0f;
+    SetDecal(master->m_decal);
+}
+
+__declspec(noinline) PROPSHADOW::~PROPSHADOW() throw()
+{
+}
+
+// 0x441670: copies the decal description, asks the decal manager for the
+// master it names and keeps that master's handle. The failure path only
+// clears the first two slots.
+void PROPSHADOW::SetDecal(const PROPSHADOWDECAL &decal)
+{
+    m_desc = decal;
+    RESOURCEMASTER *master = g_pDECAL->GetMaster(decal.m_name.m_buf);
+    if (!master) {
+        m_decalMaster.Invalidate();
+        return;
+    }
+    m_decalMaster = master->m_handle;
+}
+
+void PROPSHADOW::Init()
+{
+    OBJECT::Init();
+    m_angle = 0.0f;
+    SetDecal(((PROPSHADOWMASTER *)m_master)->m_decal);
+}
+
+// Spawns the decal the master names and hands it the description's value.
+void PROPSHADOW::Start()
+{
+    RESOURCEMASTER *master = m_master;
+    RESOURCE *decal = g_pResources->GetResource(m_decalMaster);
+    if (!decal) {
+        if (g_pLog)
+            g_pLog->Error("could not spawn decal for shadow prop %s", master->m_name.c_str());
+        return;
+    }
+    m_decal = decal->m_handle;
+    *(int *)((char *)decal + 0x46c) = m_desc.m_value;
+    decal->SetActive(true);
+}
 
 void PROPSHADOW::Stop()
 {
@@ -2826,7 +2902,14 @@ class RADARMASTER : public RESOURCEMASTER
 {
 public:
     static void RegisterCommands();
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
 };
+
+// 0x4421a0.
+SRESULT RADARMASTER::Execute(CMDENTRY *command, TOKENS **args)
+{
+    return (this->*(SRESULT (RADARMASTER::*)(TOKENS **))command->func)(args);
+}
 
 void RADARMASTER::RegisterCommands()
 {
@@ -2995,7 +3078,13 @@ public:
         m_8 = false;
         m_18 = true;
     }
+    virtual RESOURCEMASTER *CreateMaster(const char *name);
 };
+
+RESOURCEMASTER *PROPSHADOWMANAGER::CreateMaster(const char *name)
+{
+    return new PROPSHADOWMASTER(this, name);
+}
 
 RESOURCEMANAGER *CreatePROPSHADOW()
 {
@@ -3337,57 +3426,6 @@ void G2GC4SET16::Set(int index, const unsigned short *value)
     unsigned short *element = m_0 + index;
     if (element)
         *element = *value;
-}
-
-// 0x4416e0: the object initialiser that runs the base Init, clears 0x61c and
-// hands the block at 0x28 + 0x60 to the matrix loader.
-class G2CORE4OBJ1
-{
-public:
-    void Init();
-    void FUN_00441670(char *block);
-
-    char pad_0[0x28];
-    void *m_28;
-    char pad_2c[0x61c - 0x2c];
-    int m_61c;
-};
-
-void G2CORE4OBJ1::Init()
-{
-    ((OBJECT *)this)->OBJECT::Init();
-    m_61c = 0;
-    FUN_00441670((char *)m_28 + 0x60);
-}
-
-// 0x441670: copies the 0x204-byte description block into the object, asks the
-// decal manager for the master named by the block and caches its 12-byte tag.
-// The failure path only writes the first two slots.
-struct G2CORE4OBJ1BLOCK
-{
-    char m_name[0x200];
-    int m_tag;
-};
-
-struct G2CORE4OBJ1TAG
-{
-    int m_0;
-    int m_4;
-    int m_8;
-};
-
-void G2CORE4OBJ1::FUN_00441670(char *block)
-{
-    G2CORE4OBJ1BLOCK *dst = (G2CORE4OBJ1BLOCK *)((char *)this + 0x400);
-    memcpy(dst, block, 0x200);
-    dst->m_tag = *(int *)(block + 0x200);
-    RESOURCEMASTER *master = g_pDECAL->GetMaster(block);
-    if (!master) {
-        *(int *)((char *)this + 0x610) = -1;
-        *(int *)((char *)this + 0x614) = -1;
-        return;
-    }
-    *(G2CORE4OBJ1TAG *)((char *)this + 0x610) = *(G2CORE4OBJ1TAG *)((char *)master + 8);
 }
 
 // 0x448cb0: rebinds the actor at 0x4 to the timer and caches its 0x128 field.
