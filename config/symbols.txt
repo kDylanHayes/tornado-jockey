@@ -8078,6 +8078,7 @@
 0x0043fb30 ??_GGD43fad0@@UAEPAXI@Z function 0x1e
 0x0043fa60 ??1GD43fa60@@UAE@XZ function 0xb
 0x0043ffa0 ??_GGD43fa60@@UAEPAXI@Z function 0x1e
+0x00440e20 ??0GD43fa60@@QAE@PAVRESOURCEMANAGER@@PBD@Z function 0x87
 0x00440960 ??1GD440960@@UAE@XZ function 0xb
 0x004411b0 ??_GGD440960@@UAEPAXI@Z function 0x1e
 0x004413d0 ??1PROPSHADOWMASTER@@UAE@XZ function 0xb
@@ -10297,3 +10298,17 @@
 0x00658cdc ??_C@_0BO@LKKFPCNC@Can?8t?5create?5new?5destructible?$AA@ data 0x1e
 0x0065a61c ??_C@_0M@PNOKENFB@_debrisBase?$AA@ data 0xc
 0x0065a5fc ??_C@_0BO@KEIBGNEH@l6_generic_building_collapse_?$AA@ data 0x1e
+0x0043fbd0 ?Stop@PROGRESSBAR@@UAEXXZ function 0x87
+0x0043cd60 ?CreateMaster@CAMERAOPTIONMANAGER@@UAEPAVRESOURCEMASTER@@PBD@Z function 0x96
+0x0043f560 ?CreateMaster@LOADINGTIPSMANAGER@@UAEPAVRESOURCEMASTER@@PBD@Z function 0x93
+0x0065eac8 ??_7G2CORE3CID1@@6B@ data
+0x0065f570 ??_7GD43f600@@6B@ data
+0x00432750 ??0GD432870@@QAE@XZ function 0x8e
+0x0043c570 ?UpdatePattern@GD43bb40@@QAEXXZ function 0x2b9
+0x0043bc70 ?SetDecalColor@GD43bb40@@QAEXM@Z function 0xb6
+0x0043bd30 ?Animate@GD43bb40@@QAEXXZ function 0x3d1
+0x0042c620 ?PlaceTrees@G2FORESTOBJ@@QAEXXZ function 0x2f4
+0x0042d670 ?UpdateTrees@G2FORESTOBJ@@QAEXXZ function 0x664
+0x0042e7b0 ??0GD42e6e0@@QAE@XZ function 0xac
+0x0042f670 ?Start@GD42f370@@UAEXXZ function 0xd7
+0x0065cf38 ??_C@_0BA@JMHFPPDJ@lizard_wait_001?$AA@ data 0x10

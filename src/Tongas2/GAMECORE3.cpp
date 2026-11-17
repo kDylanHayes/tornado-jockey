@@ -28,6 +28,7 @@
 #include "Tongas2/TRIGGER.h"
 #include "Tongas2/TIMER.h"
 #include "Tongas2/GAME.h"
+#include "Tongas2/HEIGHTMAPDECALDX8.h"
 
 template class std::deque<unsigned short>;
 
@@ -719,6 +720,26 @@ void GD42ddd0::SetTemplate(const FIXEDSTRING<0x200> &name)
     }
 }
 
+// A pair of floats that starts out zero.
+struct G3RANGE
+{
+    G3RANGE() : lo(0), hi(0) {}
+    G3RANGE(float lo_, float hi_) : lo(lo_), hi(hi_) {}
+
+    float lo;
+    float hi;
+};
+
+// Three ints that start out zero.
+struct G3INT3
+{
+    G3INT3() : a(0), b(0), c(0) {}
+
+    int a;
+    int b;
+    int c;
+};
+
 class GD42e6e0 : public ACTOR
 {
 public:
@@ -729,15 +750,23 @@ public:
     virtual int GetParentClassId();
     virtual const char *GetClassName();
 
+    GD42e6e0();
     void Activate();
     void Deactivate();
 
-    char pad_cd0[0xcd0 - sizeof(ACTOR)];
-    int m_cd0;
-    char pad_cd4[0xcdc - 0xcd4];
+    // sizeof(ACTOR) is 0xccc.
+    int m_ccc;
+    // The time left, restarted from m_cf8 on activation.
+    float m_cd0;
+    int m_cd4;
+    bool m_cd8;
+    bool m_cd9;
     RESHANDLE m_cdc;
-    char pad_ce8[0xcf8 - 0xce8];
-    int m_cf8;
+    G3INT3 m_ce8;
+    int m_cf4;
+    float m_cf8;
+    bool m_cfc;
+    G3RANGE m_d00;
 
     static int s_classId;
 
@@ -747,6 +776,20 @@ public:
 
 __declspec(noinline) GD42e6e0::~GD42e6e0() throw()
 {
+}
+
+// 0x0042e7b0
+GD42e6e0::GD42e6e0()
+{
+    m_cf4 = 0;
+    m_cf8 = 10.0f;
+    m_d00 = G3RANGE(10.0f, 11.0f);
+    m_cfc = false;
+    m_ccc = 0;
+    m_cd9 = false;
+    m_cd8 = false;
+    m_cd0 = 0;
+    m_cd4 = 0;
 }
 
 SRESULT GD42e6e0::Execute(CMDENTRY *command, TOKENS **args)
@@ -772,12 +815,47 @@ public:
     static CMDENTRY s_commands[];
     static void RegisterCommands();
 
-    char pad_cd0[0x1154 - sizeof(ACTOR) - sizeof(INPUTLISTENER)];
+    // Takes up its activation distances and its start position.
+    virtual void Start();
+
+    char pad_cd0[0xed8 - sizeof(ACTOR) - sizeof(INPUTLISTENER)];
+    int m_ed8;
+    char pad_edc[0xee8 - 0xedc];
+    int m_ee8;
+    int m_eec;
+    char pad_ef0[0x1154 - 0xef0];
     RESHANDLE m_sound;
+    char pad_1160[0x1174 - 0x1160];
+    bool m_1174;
+    char pad_1175[0x1190 - 0x1175];
+    float m_1190;
 };
 
 __declspec(noinline) GD42f370::~GD42f370()
 {
+}
+
+// 0x0042f670
+void GD42f370::Start()
+{
+    ACTOR::Start();
+    SetActivation(3);
+    SetDeactivation(1);
+    m_eec = m_ee8;
+    g_pGame->GetRules();
+    if (m_ed8 == 3) {
+        ACTOR *wait = (ACTOR *)g_pScene->FindActor("lizard_wait_001");
+        if (wait) {
+            m_1174 = true;
+            m_position = wait->GetPosition();
+        }
+    }
+    WTACTOR *scenario = g_pGame->GetScenario();
+    if (scenario) {
+        ACTOR *start = (ACTOR *)g_pScene->FindActor((char *)scenario + 0x3770);
+        if (start)
+            m_1190 = start->GetPosition().y;
+    }
 }
 
 // Stops the actor and the sound it was playing, then asks for its removal.
@@ -795,6 +873,7 @@ void GD42f370::Stop()
 class GD432870 : public ACTOR
 {
 public:
+    GD432870();
     virtual ~GD432870() throw();
     virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
     virtual int GetClassId();
@@ -812,6 +891,11 @@ public:
 
     // sizeof(ACTOR) is 0xccc, so these land where retail has them.
     RESHANDLE m_ccc;
+    int m_cd8;
+    RESHANDLE m_cdc;
+    int m_ce8;
+    G3RANGE m_cec;
+    float m_cf4;
 
     static int s_factoryId;
 
@@ -847,6 +931,15 @@ public:
     virtual int V158();
 };
 
+// 0x00432750
+GD432870::GD432870()
+{
+    m_cf4 = 0;
+    m_ce8 = 1;
+    m_cec = G3RANGE(20.0f, 40.0f);
+    m_cd8 = 0;
+}
+
 void GD432870::Deactivate()
 {
     ResetPowerup();
@@ -863,10 +956,9 @@ void GD432870::Activate()
 
 void GD432870::Update()
 {
-    float *time = (float *)((char *)this + 0xcf4);
-    if (*time > 0.0f) {
-        *time -= g_pTimer->m_dt;
-        if (*time <= 0.0f) {
+    if (m_cf4 > 0.0f) {
+        m_cf4 -= g_pTimer->m_dt;
+        if (m_cf4 <= 0.0f) {
             G2CORE3RULESX *rules = (G2CORE3RULESX *)g_pGame->GetRules();
             if (rules) {
                 rules->V146(this);
@@ -1174,7 +1266,10 @@ public:
     static CMDENTRY s_commands[];
     static void RegisterCommands();
 
-    char pad_ee4[0xee4 - sizeof(ACTOR)];
+    char pad_ccc[0xcd0 - sizeof(ACTOR)];
+    // The decal's full color; the pattern fades it by a phase.
+    V3I m_color;
+    char pad_cdc[0xee4 - 0xcdc];
     char *m_ee4;
     char *m_ee8;
     char *m_eec;
@@ -1197,6 +1292,28 @@ __declspec(noinline) GD43bb40::~GD43bb40() throw()
         delete[] m_eec;
         m_eec = 0;
     }
+}
+
+// The heightmap decal manager. MESHDX8's inline assembly names it by
+// address, so it keeps that name here.
+extern "C" RESOURCEMANAGER *DAT_009fef34;
+
+// 0x0043bc70: colors the crop circle's heightmap decal, faded by phase.
+void GD43bb40::SetDecalColor(float phase)
+{
+    int managerId = DAT_009fef34->m_id;
+    HEIGHTMAPDECALDX8RESOURCE *decal =
+        (HEIGHTMAPDECALDX8RESOURCE *)FindResourceCopy(managerId);
+    if (!decal) {
+        if (g_pLog)
+            g_pLog->Error("could not update color of heightmapdecal in crop circle %s!", m_name.c_str());
+        return;
+    }
+    V3I color = m_color;
+    // HEIGHTMAPDECALDX8 calls this field m_heightmap; it holds the color.
+    *(V3I *)&decal->m_heightmap = phase * color;
+    decal->m_4e0 = false;
+    decal->m_4e1 = false;
 }
 
 class GD43cc30 : public RESOURCEMASTER
@@ -1420,6 +1537,7 @@ __declspec(noinline) GD440960::~GD440960() throw()
 class GD43fa60 : public RESOURCEMASTER
 {
 public:
+    GD43fa60(RESOURCEMANAGER *manager, const char *name);
     virtual ~GD43fa60() throw();
     virtual int GetClassId();
     virtual int GetParentClassId();
@@ -1429,10 +1547,28 @@ public:
 
     static CMDENTRY s_commands[];
     static void RegisterCommands();
+
+    // The background and foreground decals' names.
+    FIXEDSTRING<0x200> m_bgDecal;
+    FIXEDSTRING<0x200> m_fgDecal;
+    int m_460;
+    int m_464;
+    int m_468;
 };
 
 __declspec(noinline) GD43fa60::~GD43fa60() throw()
 {
+}
+
+// 0x00440e20: the progress bar master starts with both names empty.
+GD43fa60::GD43fa60(RESOURCEMANAGER *manager, const char *name)
+    : RESOURCEMASTER(manager, name)
+{
+    m_bgDecal.Set("");
+    m_fgDecal.Set("");
+    m_460 = 0;
+    m_464 = 0;
+    m_468 = 3;
 }
 
 struct G2CORE3SCAN
@@ -2619,9 +2755,17 @@ int GD43b550::GetFactoryFlags()
     return g_factoryFlags[g_stormSpawnerFactoryId];
 }
 
-class GD43f600 : public CMDBASE
+// The loading tips master: the tip text (wide) and a count.
+class GD43f600 : public RESOURCEMASTER
 {
 public:
+    GD43f600(RESOURCEMANAGER *manager, const char *name)
+        : RESOURCEMASTER(manager, name)
+    {
+        m_tip = L"";
+        m_64 = 0;
+    }
+
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
@@ -2631,6 +2775,9 @@ public:
 
     static CMDENTRY s_commands[];
     static void RegisterCommands();
+
+    CWSTRING m_tip;
+    int m_64;
 };
 
 SRESULT GD43f600::Execute(CMDENTRY *command, TOKENS **args)
@@ -3044,9 +3191,20 @@ int GD43bb40::GetFactoryId()
     return s_factoryId;
 }
 
-class G2CORE3CID1 : public CMDBASE
+// The camera option master: its distances, height and blend.
+class G2CORE3CID1 : public RESOURCEMASTER
 {
 public:
+    G2CORE3CID1(RESOURCEMANAGER *manager, const char *name)
+        : RESOURCEMASTER(manager, name)
+    {
+        m_60 = 30.0f;
+        m_64 = 60.0f;
+        m_68 = 0.0f;
+        m_6c = 100.0f;
+        m_70 = 0.5f;
+    }
+
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
@@ -3056,6 +3214,12 @@ public:
 
     static CMDENTRY s_commands[];
     static void RegisterCommands();
+
+    float m_60;
+    float m_64;
+    float m_68;
+    float m_6c;
+    float m_70;
 };
 
 SRESULT G2CORE3CID1::Execute(CMDENTRY *command, TOKENS **args)
@@ -3130,8 +3294,29 @@ public:
     void SetDecalTextures(const RESHANDLE &handle, bool active);
     void UpdateDecal(const RESHANDLE &handle);
 
+    // Lets both decals go.
+    virtual void Stop();
+    // Lets a decal go and forgets its handle.
+    void ReleaseDecal(RESHANDLE &handle)
+    {
+        RESOURCE *decal = g_pResources->GetResource(handle);
+        if (decal)
+            decal->Virtual20();
+        handle.Invalidate();
+    }
+
     float m_progress;
+    float m_404;
+    RESHANDLE m_bgDecal;
+    RESHANDLE m_fgDecal;
 };
+
+// 0x0043fbd0
+void PROGRESSBAR::Stop()
+{
+    ReleaseDecal(m_bgDecal);
+    ReleaseDecal(m_fgDecal);
+}
 
 void PROGRESSBAR::SetDecal(RESHANDLE &handle, const char *name, bool active)
 {
@@ -3198,7 +3383,15 @@ public:
         m_8 = false;
         m_18 = true;
     }
+
+    virtual RESOURCEMASTER *CreateMaster(const char *name);
 };
+
+// 0x0043cd60
+RESOURCEMASTER *CAMERAOPTIONMANAGER::CreateMaster(const char *name)
+{
+    return new G2CORE3CID1(this, name);
+}
 
 RESOURCEMANAGER *CreateCAMERAOPTION()
 {
@@ -3287,7 +3480,15 @@ public:
         m_8 = false;
         m_18 = true;
     }
+
+    virtual RESOURCEMASTER *CreateMaster(const char *name);
 };
+
+// 0x0043f560
+RESOURCEMASTER *LOADINGTIPSMANAGER::CreateMaster(const char *name)
+{
+    return new GD43f600(this, name);
+}
 
 RESOURCEMANAGER *CreateLOADINGTIPS()
 {
