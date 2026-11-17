@@ -792,9 +792,20 @@ void GD42f370::Stop()
     m_removeRequested = true;
 }
 
+// A pair of floats that starts out zero.
+struct G3RANGE
+{
+    G3RANGE() : lo(0), hi(0) {}
+    G3RANGE(float lo_, float hi_) : lo(lo_), hi(hi_) {}
+
+    float lo;
+    float hi;
+};
+
 class GD432870 : public ACTOR
 {
 public:
+    GD432870();
     virtual ~GD432870() throw();
     virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
     virtual int GetClassId();
@@ -812,6 +823,11 @@ public:
 
     // sizeof(ACTOR) is 0xccc, so these land where retail has them.
     RESHANDLE m_ccc;
+    int m_cd8;
+    RESHANDLE m_cdc;
+    int m_ce8;
+    G3RANGE m_cec;
+    float m_cf4;
 
     static int s_factoryId;
 
@@ -847,6 +863,15 @@ public:
     virtual int V158();
 };
 
+// 0x00432750
+GD432870::GD432870()
+{
+    m_cf4 = 0;
+    m_ce8 = 1;
+    m_cec = G3RANGE(20.0f, 40.0f);
+    m_cd8 = 0;
+}
+
 void GD432870::Deactivate()
 {
     ResetPowerup();
@@ -863,10 +888,9 @@ void GD432870::Activate()
 
 void GD432870::Update()
 {
-    float *time = (float *)((char *)this + 0xcf4);
-    if (*time > 0.0f) {
-        *time -= g_pTimer->m_dt;
-        if (*time <= 0.0f) {
+    if (m_cf4 > 0.0f) {
+        m_cf4 -= g_pTimer->m_dt;
+        if (m_cf4 <= 0.0f) {
             G2CORE3RULESX *rules = (G2CORE3RULESX *)g_pGame->GetRules();
             if (rules) {
                 rules->V146(this);
@@ -2638,9 +2662,17 @@ int GD43b550::GetFactoryFlags()
     return g_factoryFlags[g_stormSpawnerFactoryId];
 }
 
-class GD43f600 : public CMDBASE
+// The loading tips master: the tip text (wide) and a count.
+class GD43f600 : public RESOURCEMASTER
 {
 public:
+    GD43f600(RESOURCEMANAGER *manager, const char *name)
+        : RESOURCEMASTER(manager, name)
+    {
+        m_tip = L"";
+        m_64 = 0;
+    }
+
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
@@ -2650,6 +2682,9 @@ public:
 
     static CMDENTRY s_commands[];
     static void RegisterCommands();
+
+    CWSTRING m_tip;
+    int m_64;
 };
 
 SRESULT GD43f600::Execute(CMDENTRY *command, TOKENS **args)
@@ -3063,9 +3098,20 @@ int GD43bb40::GetFactoryId()
     return s_factoryId;
 }
 
-class G2CORE3CID1 : public CMDBASE
+// The camera option master: its distances, height and blend.
+class G2CORE3CID1 : public RESOURCEMASTER
 {
 public:
+    G2CORE3CID1(RESOURCEMANAGER *manager, const char *name)
+        : RESOURCEMASTER(manager, name)
+    {
+        m_60 = 30.0f;
+        m_64 = 60.0f;
+        m_68 = 0.0f;
+        m_6c = 100.0f;
+        m_70 = 0.5f;
+    }
+
     virtual int GetClassId();
     virtual int GetParentClassId();
     virtual const char *GetClassName();
@@ -3075,6 +3121,12 @@ public:
 
     static CMDENTRY s_commands[];
     static void RegisterCommands();
+
+    float m_60;
+    float m_64;
+    float m_68;
+    float m_6c;
+    float m_70;
 };
 
 SRESULT G2CORE3CID1::Execute(CMDENTRY *command, TOKENS **args)
@@ -3238,7 +3290,15 @@ public:
         m_8 = false;
         m_18 = true;
     }
+
+    virtual RESOURCEMASTER *CreateMaster(const char *name);
 };
+
+// 0x0043cd60
+RESOURCEMASTER *CAMERAOPTIONMANAGER::CreateMaster(const char *name)
+{
+    return new G2CORE3CID1(this, name);
+}
 
 RESOURCEMANAGER *CreateCAMERAOPTION()
 {
@@ -3327,7 +3387,15 @@ public:
         m_8 = false;
         m_18 = true;
     }
+
+    virtual RESOURCEMASTER *CreateMaster(const char *name);
 };
+
+// 0x0043f560
+RESOURCEMASTER *LOADINGTIPSMANAGER::CreateMaster(const char *name)
+{
+    return new GD43f600(this, name);
+}
 
 RESOURCEMANAGER *CreateLOADINGTIPS()
 {
