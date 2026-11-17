@@ -1420,6 +1420,7 @@ __declspec(noinline) GD440960::~GD440960() throw()
 class GD43fa60 : public RESOURCEMASTER
 {
 public:
+    GD43fa60(RESOURCEMANAGER *manager, const char *name);
     virtual ~GD43fa60() throw();
     virtual int GetClassId();
     virtual int GetParentClassId();
@@ -1429,10 +1430,28 @@ public:
 
     static CMDENTRY s_commands[];
     static void RegisterCommands();
+
+    // The background and foreground decals' names.
+    FIXEDSTRING<0x200> m_bgDecal;
+    FIXEDSTRING<0x200> m_fgDecal;
+    int m_460;
+    int m_464;
+    int m_468;
 };
 
 __declspec(noinline) GD43fa60::~GD43fa60() throw()
 {
+}
+
+// 0x00440e20: the progress bar master starts with both names empty.
+GD43fa60::GD43fa60(RESOURCEMANAGER *manager, const char *name)
+    : RESOURCEMASTER(manager, name)
+{
+    m_bgDecal.Set("");
+    m_fgDecal.Set("");
+    m_460 = 0;
+    m_464 = 0;
+    m_468 = 3;
 }
 
 struct G2CORE3SCAN
@@ -3130,8 +3149,29 @@ public:
     void SetDecalTextures(const RESHANDLE &handle, bool active);
     void UpdateDecal(const RESHANDLE &handle);
 
+    // Lets both decals go.
+    virtual void Stop();
+    // Lets a decal go and forgets its handle.
+    void ReleaseDecal(RESHANDLE &handle)
+    {
+        RESOURCE *decal = g_pResources->GetResource(handle);
+        if (decal)
+            decal->Virtual20();
+        handle.Invalidate();
+    }
+
     float m_progress;
+    float m_404;
+    RESHANDLE m_bgDecal;
+    RESHANDLE m_fgDecal;
 };
+
+// 0x0043fbd0
+void PROGRESSBAR::Stop()
+{
+    ReleaseDecal(m_bgDecal);
+    ReleaseDecal(m_fgDecal);
+}
 
 void PROGRESSBAR::SetDecal(RESHANDLE &handle, const char *name, bool active)
 {
