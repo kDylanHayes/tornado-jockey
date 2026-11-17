@@ -3866,7 +3866,9 @@
         "FUN_0043eea0": "??0GD43f2f0@@QAE@PAVRESOURCEMANAGER@@PBD@Z",
         "FUN_00436f90": "?Advance@G3CIRCULAR@@QAEXXZ",
         "FUN_00436fc0": "?AllocNode@G3TREEALLOC@@QAEPAUG3TREENODE@@HHHABUV3@@D@Z",
-        "FUN_00433ff0": "?Add@G3SMOOTHER@@QAEXM@Z"
+        "FUN_00433ff0": "?Add@G3SMOOTHER@@QAEXM@Z",
+        "FUN_004112f0": "?Release@G2CORE2M1@@QAEXPAUG2REFOBJECT@@@Z",
+        "?Stop@G2MID2@@UAEXXZ": "?Stop@G2D5@@UAEXXZ"
       }
     },
     {
