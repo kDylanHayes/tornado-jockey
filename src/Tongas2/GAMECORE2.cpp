@@ -10,6 +10,7 @@
 #define ANG_SETEULERX_OUTOFLINE
 #define MATRIX_TRANSPOSE_OUTOFLINE
 #define V3_SUB_MEMBER
+#define OBJECT_GETPARENTACTOR
 
 
 #include <new>
@@ -1272,7 +1273,11 @@ class G2ODEACTOR : public ACTOR
 public:
     static int s_classId;
     // 0x54afc0: the physics body's force, in the unit's own class.
-    void AddForce(float x, float y, float z);
+    void AddForce(V3 force);
+    // 0x54bf20: the body's own step.
+    void StepBody();
+
+    void *m_body;
 };
 
 class G2WTINTRO
@@ -4294,6 +4299,9 @@ SRESULT G2CORE2M1::SetTornadoPoint(TOKENS **args)
 struct G2ODEWIND : public G2ODEACTOR
 {
     void ApplyWind();
+    bool Touch(OBJECT *object, int a, int b, int c);
+    void ClampVelocity();
+    void Tick();
 };
 
 // 0x426620
@@ -4307,6 +4315,74 @@ void G2ODEWIND::ApplyWind()
     }
     V3 force = reinterpret_cast<G2TORNADOOBJ *>(tornado)->WindField(
         GetPosition(), 0);
-    V3 scaled = force * *(float *)((char *)this + 0xd18);
-    AddForce(scaled.x, scaled.y, scaled.z);
+    AddForce(force * *(float *)((char *)this + 0xd18));
+}
+
+// What the release build keeps of a log line about an actor: the argument.
+struct G2LOGACTOR
+{
+    void Touched(WTACTOR *actor) {}
+};
+
+// 0x4266e0: a touch counts only from an object some actor carries. Once
+// the body is being pushed it is marked as hit.
+bool G2ODEWIND::Touch(OBJECT *object, int, int, int)
+{
+    if (!object->GetParentActor())
+        return false;
+    if (*(bool *)((char *)this + 0xfb8) || *(bool *)((char *)this + 0xfac)) {
+        *(bool *)((char *)this + 0xd28) = true;
+        if (g_pLog)
+            reinterpret_cast<G2LOGACTOR *>(g_pLog)->Touched(object->GetParentActor());
+    }
+    return true;
+}
+
+extern "C" void dBodySetLinearVel(void *body, float x, float y, float z);
+extern "C" void dBodySetAngularVel(void *body, float x, float y, float z);
+
+// 0x427010: keep the body under 500 units a second and its spin under
+// 100 degrees a second on each axis.
+void G2ODEWIND::ClampVelocity()
+{
+    bool changed = false;
+    V3 vel = m_vel;
+    V3 angVel = m_angVel;
+    if ((float)sqrt(vel.z * vel.z + vel.y * vel.y + vel.x * vel.x) > 500.0f) {
+        vel.Normalize();
+        vel.x *= 500.0f;
+        vel.y *= 500.0f;
+        vel.z *= 500.0f;
+        changed = true;
+    }
+    if (angVel.x > 100.0f) {
+        angVel.x = 100.0f;
+        changed = true;
+    }
+    if (angVel.y > 100.0f) {
+        angVel.y = 100.0f;
+        changed = true;
+    }
+    if (angVel.z > 100.0f) {
+        angVel.z = 100.0f;
+        changed = true;
+    }
+    if (changed) {
+        dBodySetLinearVel(m_body, vel.x, vel.y, vel.z);
+        dBodySetAngularVel(m_body, angVel.y * 0.017453292f, angVel.x * 0.017453292f,
+                           angVel.z * 0.017453292f);
+    }
+}
+
+// 0x428750: while the piece is loose the body steps under the wind;
+// otherwise the actor's own update runs.
+void G2ODEWIND::Tick()
+{
+    if (!*(bool *)((char *)this + 0xd24)) {
+        reinterpret_cast<G2VSLOT143 *>(this)->Call0();
+        return;
+    }
+    StepBody();
+    ApplyWind();
+    ClampVelocity();
 }
