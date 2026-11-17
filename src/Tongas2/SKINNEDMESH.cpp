@@ -27,7 +27,9 @@ template class std::vector<std::vector<int> >;
 // so repeating the element definition and instantiating gives the same sections.
 struct SKINGEOMTYPE40
 {
-    int m[16];
+    float m[16];
+
+    SKINGEOMTYPE40() {}
 };
 
 // push_back (0x005191e0, 0x4d) only handles the pointer, so a declaration is enough.
@@ -35,6 +37,18 @@ class BEHAVIOR;
 
 template class std::vector<SKINGEOMTYPE40>;
 template class std::vector<BEHAVIOR *>;
+
+// The other word-sized tables the mesh keeps: index and weight lists and the
+// animation list itself. Retail carries an insert/copy/push_back set for each.
+template class std::vector<unsigned int>;
+template class std::vector<float>;
+struct GD510b10TABLE;
+template class std::vector<GD510b10TABLE *>;
+class GD511a30;
+template class std::vector<GD511a30 *>;
+template class std::vector<std::vector<unsigned int> >;
+template class std::vector<std::vector<float> >;
+template class std::vector<std::vector<double> >;
 
 // The object whose slot 0x1c unlinks it and whose deleting destructor runs at
 // slot 0; the wrapper at 0x5285f0 releases it.
@@ -106,21 +120,30 @@ void GD5285f0::Release()
 #include "Tongas2/MATHS.h"
 #include "Tongas2/SKINNEDMESH.h"
 
+// One key frame: a matrix per bone.
+typedef std::vector<SKINGEOMTYPE40> GD510b10ELEM;
+
+// The animation an instance plays: its key table, frame count, length and
+// bone count.
+struct GD510b10TABLE
+{
+    char pad_0[0x10];
+    std::vector<GD510b10ELEM> m_keys;
+    int GetFrameCount() { return m_64; }
+    float GetLength() { return m_68; }
+
+    char pad_20[0x44 - 0x20];
+    std::string m_name;
+    int m_60;
+    int m_64;
+    float m_68;
+    int m_6c;
+};
+
+
 int SKINNEDMESH::RemoveAnimations(const char *name)
 {
     (void)name;
-    return 0;
-}
-
-int SKINNEDMESH::PlayAnimation(int index)
-{
-    (void)index;
-    return 0;
-}
-
-int SKINNEDMESH::BlendAnimation(int index)
-{
-    (void)index;
     return 0;
 }
 
@@ -696,43 +719,32 @@ public:
     GD510660ANIM **m_1c;
 };
 
-int SKINNEDMESH::GetAnimationIndex(const char *name)
+int SKINNEDMESH::GetAnimationIndex(const std::string &name)
 {
-    GD510660 *self = (GD510660 *)this;
-    const GD510660NAME *want = (const GD510660NAME *)name;
-    unsigned int i = 0;
-
-    while (i < (unsigned int)self->Count()) {
-        GD510660ANIM **slot = &self->m_18[i];
-
-        if (!*slot) {
+    for (unsigned int i = 0; i < m_animations.size(); i++) {
+        if (!m_animations[i]) {
             if (g_pLog)
                 g_pLog->Error("CSkinnedMesh::GetAnimationIndex - Invalid name for animation index:%d", i);
+            continue;
         }
-        else if ((*slot)->m_44 == want->m_0) {
+        if (m_animations[i]->m_name == name)
             return (int)i;
-        }
-        i++;
     }
     return -1;
 }
 
-// ?GetAnimationName@SKINNEDMESH@@QAEPBDI@Z (retail address 0x005117d0,
-// 219 bytes). The name of the animation entry, or the address of a static
-// empty string when the index is out of range. The out-of-range answer is the
-// address of the static string object itself, not its buffer.
-const char *SKINNEDMESH::GetAnimationName(unsigned int index)
+// 0x005117d0 (219 bytes): the name of the animation entry, or a static empty
+// string when the index is out of range.
+const std::string &SKINNEDMESH::GetAnimationName(unsigned int index)
 {
-    GD510660 *self = (GD510660 *)this;
+    if (index >= m_animations.size()) {
+        static std::string empty = "";
 
-    if (self->m_18 && index < (unsigned int)self->Count())
-        return (const char *)&self->m_18[index]->m_44;
-
-    static std::string empty = "";
-
-    if (g_pLog)
-        g_pLog->Error("CSkinnedMesh::GetAnimationName - Invalid index (%u)", index);
-    return (const char *)&empty;
+        if (g_pLog)
+            g_pLog->Error("CSkinnedMesh::GetAnimationName - Invalid index (%u)", index);
+        return empty;
+    }
+    return m_animations[index]->m_name;
 }
 
 // Reproduces FUN_005106f0 (retail address 0x005106f0, 47 bytes): the bounds
@@ -867,10 +879,10 @@ class GD511760 : public SKINNEDMESH
 {
 public:
     void PlayIndex(int index);
-    void PlayByName(const char *name);
+    void PlayByName(const std::string &name);
 };
 
-void GD511760::PlayByName(const char *name)
+void GD511760::PlayByName(const std::string &name)
 {
     PlayIndex(GetAnimationIndex(name));
 }
@@ -1390,41 +1402,6 @@ void GD515fd0::Run()
     g_pDisplay->m_2c0->SetFloat(2, m_2c * 57.29578f);
 }
 
-// 0x00512410 (97 bytes, the symbol file gives 0x43 and stops inside the third
-// block): release the three owned +0x1c/+0x20/+0x24 objects through their
-// destructor and the plain delete, clearing each slot.
-class GD511a30
-{
-public:
-    ~GD511a30();
-};
-
-class GD512410
-{
-public:
-    ~GD512410();
-
-    char pad_0[0x1c];
-    GD511a30 *m_1c;
-    GD511a30 *m_20;
-    GD511a30 *m_24;
-};
-
-GD512410::~GD512410()
-{
-    if (m_1c) {
-        delete m_1c;
-        m_1c = 0;
-    }
-    if (m_20) {
-        delete m_20;
-        m_20 = 0;
-    }
-    if (m_24) {
-        delete m_24;
-        m_24 = 0;
-    }
-}
 
 // ---------------------------------------------------------------------------
 // The unit's tail region (0x00515d90 onwards).
@@ -1908,64 +1885,190 @@ VF *SKMVECUNFILLF::FillInit(VF *first, unsigned int count, const VF &value)
 // 0x005109b0 (or, in the mismatched case, to the three-word setter at
 // 0x00510790 on the container at +0x24).
 // ---------------------------------------------------------------------------
-struct GD510b10ELEM
+struct SKMQUAT
 {
-    char m_0[0x10];
+    float x, y, z, w;
+
+    SKMQUAT() {}
 };
 
-struct GD510b10TABLE
+typedef std::vector<SKINGEOMTYPE40> SKMMATRIXVEC;
+typedef std::vector<SKMQUAT> SKMQUATVEC;
+typedef std::vector<V3> SKMV3VEC;
+
+class GD511a30
 {
-    char pad_0[0x14];
-    GD510b10ELEM *m_14;
+public:
+    GD511a30(int bones);
+    ~GD511a30();
+
+    void Blend(GD511a30 *from, GD511a30 *to, float t);
+
+    SKMMATRIXVEC m_matrices;
+    SKMQUATVEC m_rotations;
+    SKMV3VEC m_positions;
+};
+
+// 0x005130c0 (206 bytes): size the three tables to the bone count.
+GD511a30::GD511a30(int bones)
+{
+    m_matrices.resize(bones);
+    m_rotations.resize(bones);
+    m_positions.resize(bones);
+}
+
+// D3DX, imported through the exe's thunks.
+extern "C" SKMQUAT *__stdcall D3DXQuaternionSlerp(SKMQUAT *out, const SKMQUAT *q1,
+                                                  const SKMQUAT *q2, float t);
+extern "C" SKINGEOMTYPE40 *__stdcall D3DXMatrixRotationQuaternion(SKINGEOMTYPE40 *out,
+                                                                  const SKMQUAT *q);
+extern "C" SKMQUAT *__stdcall D3DXQuaternionRotationMatrix(SKMQUAT *out,
+                                                           const SKINGEOMTYPE40 *m);
+
+// 0x00510790 (262 bytes): the pose t of the way from one pose to another,
+// rotations slerped and translations interpolated straight.
+void GD511a30::Blend(GD511a30 *from, GD511a30 *to, float t)
+{
+    for (unsigned int i = 0; i < m_matrices.size(); i++) {
+        D3DXQuaternionSlerp(&m_rotations[i], &from->m_rotations[i], &to->m_rotations[i], t);
+
+        V3 &b = to->m_positions[i];
+        V3 &a = from->m_positions[i];
+        V3 &out = m_positions[i];
+        out.x = (b.x - a.x) * t + a.x;
+        out.y = (b.y - a.y) * t + a.y;
+        out.z = (b.z - a.z) * t + a.z;
+
+        D3DXMatrixRotationQuaternion(&m_matrices[i], &m_rotations[i]);
+        m_matrices[i].m[12] = m_positions[i].x;
+        m_matrices[i].m[13] = m_positions[i].y;
+        m_matrices[i].m[14] = m_positions[i].z;
+    }
+}
+
+// 0x00511a30 (143 bytes): free the tables; the members' own destructors
+// then run on the emptied vectors.
+GD511a30::~GD511a30()
+{
+    m_matrices.~SKMMATRIXVEC();
+    m_rotations.~SKMQUATVEC();
+    m_positions.~SKMV3VEC();
+}
+
+
+// A bone of the skeleton: its local matrix, the matrix the hierarchy update
+// leaves at +0x80 and an override at +0xc4.
+struct SKMBONE
+{
+    SKINGEOMTYPE40 m_local;
+    char pad_40[0x80 - 0x40];
+    SKINGEOMTYPE40 m_world;
+    bool m_overridden;
+    SKINGEOMTYPE40 m_override;
 };
 
 class GD510b10CONTAINER
 {
 public:
-    void Add(void *payload, GD510b10ELEM *element);
+    void Add(GD511a30 *pose, GD510b10ELEM *frame);
+    void Update();
 
     char pad_0[4];
-    void *m_4;
-    void *m_8;
+    std::vector<SKMBONE *> m_bones;
+    std::vector<int> m_poseIndex;
 };
 
-class GD510b10SETTER
+// 0x005109b0 (338 bytes): load a key frame into the bones, run the hierarchy
+// and read the result back into the pose.
+void GD510b10CONTAINER::Add(GD511a30 *pose, GD510b10ELEM *frame)
 {
-public:
-    void Set(int a, int b, int c);
-};
+    if (pose->m_matrices.size() < m_bones.size())
+        return;
 
+    unsigned int frames = frame->size();
+    for (unsigned int i = 0; i < m_bones.size(); i++) {
+        if (i < frames)
+            m_bones[i]->m_local = (*frame)[m_poseIndex[i]];
+    }
+
+    Update();
+
+    for (unsigned int j = 0; j < m_bones.size(); j++) {
+        SKINGEOMTYPE40 *m = m_bones[j]->m_overridden ? &m_bones[j]->m_override
+                                                      : &m_bones[j]->m_world;
+        int index = m_poseIndex[j];
+        pose->m_matrices[index] = *m;
+        pose->m_positions[index].x = m->m[12];
+        pose->m_positions[index].y = m->m[13];
+        pose->m_positions[index].z = m->m[14];
+        D3DXQuaternionRotationMatrix(&pose->m_rotations[index], m);
+    }
+}
+
+// One playing animation (0x50 bytes): the key pair it sits between and the
+// three poses it blends.
 class GD510b10
 {
 public:
+    GD510b10(int index, GD510b10CONTAINER *skeleton, GD510b10TABLE *anim,
+             int start, int frames, float length, float rate, bool loop);
+    ~GD510b10();
+
     void AddFirst();
     void AddSecond();
     void Dispatch();
+    void Start();
+
+    void SetBlend(float time)
+    {
+        m_44 = time;
+        m_48 = time;
+        m_4c = 1.0f;
+    }
+
+    void Pose(GD511a30 *pose, int frame)
+    {
+        m_4->Add(pose, &m_0->m_keys[frame]);
+    }
 
     GD510b10TABLE *m_0;
     GD510b10CONTAINER *m_4;
-    char pad_8[0x14 - 8];
+    int m_8;
+    int m_c;
+    int m_10;
     int m_14;
     int m_18;
-    int m_1c;
-    int m_20;
-    GD510b10SETTER *m_24;
-    char pad_28[0x2c - 0x28];
-    void *m_2c;
+    GD511a30 *m_1c;
+    GD511a30 *m_20;
+    GD511a30 *m_24;
+    float m_28;
+    float m_2c;
+    float m_30;
+    float m_34;
+    int m_38;
+    bool m_3c;
+    bool m_3d;
+    bool m_3e;
+    bool m_3f;
+    bool m_40;
+    bool m_41;
+    float m_44;
+    float m_48;
+    float m_4c;
 };
 
 // 0x00510b10 (29 bytes, ?AddFirst@GD510b10@@QAEXXZ): append the +0x18 element
 // with the +0x20 payload.
 void GD510b10::AddFirst()
 {
-    m_4->Add((void *)m_20, &m_0->m_14[m_18]);
+    Pose(m_20, m_18);
 }
 
 // 0x00510b30 (29 bytes, ?AddSecond@GD510b10@@QAEXXZ): the same append for the
 // +0x14 element and the +0x1c payload.
 void GD510b10::AddSecond()
 {
-    m_4->Add((void *)m_1c, &m_0->m_14[m_14]);
+    Pose(m_1c, m_14);
 }
 
 // 0x00510b50 (55 bytes, ?Dispatch@GD510b10@@QAEXXZ): while the two indices
@@ -1974,11 +2077,121 @@ void GD510b10::AddSecond()
 void GD510b10::Dispatch()
 {
     if (m_18 == m_14) {
-        m_4->Add((void *)m_24, &m_0->m_14[m_18]);
+        Pose(m_24, m_18);
     }
     else {
-        m_24->Set(m_1c, m_20, (int)m_2c);
+        m_24->Blend(m_1c, m_20, m_2c);
     }
+}
+
+// 0x00512410 (97 bytes, the symbol file gives 0x43 and stops inside the third
+// block): release the three owned +0x1c/+0x20/+0x24 objects through their
+// destructor and the plain delete, clearing each slot.
+// The 0x30-byte pose an animation instance blends into: one matrix, one
+// rotation and one translation per bone.
+GD510b10::~GD510b10()
+{
+    if (m_1c) {
+        delete m_1c;
+        m_1c = 0;
+    }
+    if (m_20) {
+        delete m_20;
+        m_20 = 0;
+    }
+    if (m_24) {
+        delete m_24;
+        m_24 = 0;
+    }
+}
+
+// 0x00513190 (407 bytes): sit on the start frame and pose all three.
+GD510b10::GD510b10(int index, GD510b10CONTAINER *skeleton, GD510b10TABLE *anim,
+                   int start, int frames, float length, float rate, bool loop)
+    : m_0(anim), m_4(skeleton), m_8(index), m_c(start), m_10(frames),
+      m_14(start), m_18(start), m_1c(0), m_20(0), m_24(0), m_28(length),
+      m_2c(0), m_30(rate), m_34(0), m_3c(loop), m_3d(false), m_3e(false),
+      m_3f(false), m_40(false), m_41(false), m_44(0), m_48(0), m_4c(0)
+{
+    m_1c = new GD511a30(anim->m_6c);
+    m_20 = new GD511a30(anim->m_6c);
+    m_24 = new GD511a30(anim->m_6c);
+    AddFirst();
+    AddSecond();
+    Dispatch();
+}
+
+// 0x00511530 (139 bytes): rewind to the first key pair and pose both ends.
+// Retail expands the three appenders above in place.
+void GD510b10::Start()
+{
+    m_3d = true;
+    m_3e = false;
+    m_14 = 0;
+    m_18 = 1;
+    if (m_10 <= 1)
+        m_18 = 0;
+    AddFirst();
+    AddSecond();
+    Dispatch();
+}
+
+
+// 0x00512650 (190 bytes): delete every playing instance and empty the queue.
+void SKINNEDMESH::StopAnimations()
+{
+    for (unsigned int i = 0; i < m_playing.size(); i++) {
+        if (m_playing[i]) {
+            delete m_playing[i];
+            m_playing[i] = 0;
+        }
+    }
+    m_playing.clear();
+}
+
+// 0x00513330 (308 bytes): stop everything and start the animation at the
+// front of the queue. A zero speed keeps the natural rate.
+void SKINNEDMESH::PlayAnimation(int index, bool loop, float speed)
+{
+    if (index >= m_animations.size() || index < 0) {
+        if (g_pLog)
+            g_pLog->Error("PlayAnimation - Invalid animation INDEX");
+        return;
+    }
+
+    StopAnimations();
+
+    float length = m_animations[index]->GetLength() * speed;
+    float rate = 1.0f / m_animations[index]->m_68;
+    if (speed != 0.0f)
+        rate /= speed;
+
+    GD510b10 *instance = new GD510b10(index, m_0c->GetSkeleton(), m_animations[index], 0,
+                                      m_animations[index]->GetFrameCount(), length, rate, loop);
+    instance->Start();
+    m_playing.push_front(instance);
+}
+
+// 0x005135a0 (316 bytes): start the animation on top of whatever is playing,
+// fading it in over blendTime.
+void SKINNEDMESH::BlendAnimation(int index, bool loop, float blendTime, float speed)
+{
+    if (index >= m_animations.size() || index < 0) {
+        if (g_pLog)
+            g_pLog->Error("BlendAnimation - Invalid animation INDEX");
+        return;
+    }
+
+    float length = m_animations[index]->GetLength() * speed;
+    float rate = 1.0f / m_animations[index]->m_68;
+    if (speed != 0.0f)
+        rate /= speed;
+
+    GD510b10 *instance = new GD510b10(index, m_0c->GetSkeleton(), m_animations[index], 0,
+                                      m_animations[index]->GetFrameCount(), length, rate, loop);
+    instance->Start();
+    instance->SetBlend(blendTime);
+    m_playing.push_front(instance);
 }
 
 // ---------------------------------------------------------------------------
@@ -2130,36 +2343,14 @@ GD519050::GD519050(const V3 *first, const V3 *second) : m_0(*second), m_c(*first
 }
 
 // ---------------------------------------------------------------------------
-// 0x00512810 (164 bytes): the resize front end of the pointer triple at +4
-// (twelve-byte elements): capacity, the grow call at 0x0050aa90 and the trim
-// call at 0x005104e0. Declared only -- nothing in this translation unit calls
-// it directly.
-//
-// 0x00512eb0 (44 bytes) is the one-argument front end the geometry code calls
-// on each of its three runs: it forwards a *default-constructed* V3. The
-// default constructor leaves x/y/z alone, so the compiler copies the twelve
-// uninitialised bytes of the temporary it allocated into the outgoing argument
-// area and reads them back out of its own frame -- the `[esp-0xc]` load the exe
-// carries. Written as a plain forwarding member, that shape comes out by
-// itself; nothing here is hand-written asm.
+// 0x00512810 (164 bytes) and 0x00512eb0 (44 bytes) are vector<V3>::resize:
+// the two-argument body and the one-argument front end the geometry code
+// calls on each of its runs. The front end forwards a default-constructed V3,
+// whose constructor leaves x/y/z alone, so the compiler copies the twelve
+// uninitialised bytes of its temporary -- the `[esp-0xc]` load the exe
+// carries.
 // ---------------------------------------------------------------------------
-class GD512810
-{
-public:
-    void Set(int count, V3 value);
-    void Init(int count);
-
-    char pad_0[4];
-    V3 *m_4;
-    V3 *m_8;
-    V3 *m_c;
-};
-
-void GD512810::Init(int count)
-{
-    Set(count, V3());
-}
-
+template void std::vector<V3>::resize(std::vector<V3>::size_type);
 // ---------------------------------------------------------------------------
 // 0x00510950 (83 bytes): resolve each bone's name (+0x104 of the bone record)
 // against a skeleton and keep the index it answers in the parallel id table;

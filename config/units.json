@@ -3263,6 +3263,7 @@
         "?GetMaterialNamePtr@BONEDMODELDX8MODEL@@QAEPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z": "?GetMaterialNamePtr@BONEDMODELDX8MODEL@@QAEPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z",
         "?RemoveAnimations@SKINNEDMESH@@QAEHPBD@Z": "?DeleteAnimation@BONEDMODELDX8MODEL@@QAEXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z",
         "?PlayAnimation@SKINNEDMESH@@QAEHH@Z": "?FUN_00513330@@YGXPAXHH@Z",
+        "?PlayAnimation@SKINNEDMESH@@QAEXH_NM@Z": "?FUN_00513330@@YGXPAXHH@Z",
         "_m_70": "?CreateModel@BONEDMODELDX8DISPLAYCTX@@QAEPAXPAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@11@Z",
         "FUN_00449440": "?find_last_of@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBEIPBDII@Z",
         "FUN_004497c0": "?substr@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBE?AV12@II@Z",
