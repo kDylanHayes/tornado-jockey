@@ -375,6 +375,20 @@ T *SAFEINDEX<T, N, H, KIND>::GetNext(int *index)
 template ACTOR *SAFEINDEX<ACTOR, 5000, 0xfb, 1>::GetFirst(int *);
 template ACTOR *SAFEINDEX<ACTOR, 5000, 0xfb, 1>::GetNext(int *);
 
+// The actors made by a factory, up to max of them, only the active ones if
+// asked; returns how many there were (0x40efd0).
+int SCENE::FindActors(int factoryId, ACTOR **actors, int max, bool activeOnly)
+{
+    int count = 0;
+    int i;
+    for (ACTOR *actor = m_actors.GetFirst(&i); i != -1 && count < max;
+         actor = m_actors.GetNext(&i)) {
+        if (actor && (!activeOnly || actor->m_active) && actor->GetFactoryId() == factoryId)
+            actors[count++] = actor;
+    }
+    return count;
+}
+
 extern CMDBASE *g_pScriptRoot;
 
 int RESOURCES::Virtual08()
