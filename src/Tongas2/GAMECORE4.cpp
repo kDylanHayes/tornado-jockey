@@ -65,8 +65,10 @@ __declspec(dllimport) DWORD __stdcall WaitForSingleObject(HANDLE hHandle,
 #include "Tongas2/SCENE.h"
 #include "Tongas2/SCREENDECAL.h"
 #include "Tongas2/SOUND.h"
+#include "Tongas2/SOUNDFMOD.h"
 #include "Tongas2/STRING.h"
 #include "Tongas2/UNICODESTRING.h"
+#include "Tongas2/CWSTRING.h"
 
 __declspec(noinline) CPRIMITIVE3MASTER::~CPRIMITIVE3MASTER()
 {
@@ -279,6 +281,12 @@ class __declspec(dllexport) GD442440 : public RESOURCES
 {
 };
 
+// 0x4423c0: what RESOURCES::s_pfnCreate makes in the game.
+CMDBASE *CreateGameResources()
+{
+    return new GD442440();
+}
+
 
 class GD43f600
 {
@@ -320,37 +328,64 @@ __declspec(noinline) GD4433c0X::~GD4433c0X()
 {
 }
 
-class GD5479c0
+// The tornado game's sound: the FMOD sound, heard from where the tornado is.
+class SOUNDTJ : public GD5479c0
 {
 public:
-    virtual ~GD5479c0();
+    SOUNDTJ(SOUNDMASTER *master, const RESHANDLE &handle) : GD5479c0(master, handle) {}
+    virtual ~SOUNDTJ() throw();
+    virtual V3 GetListenerPosition();
 };
 
-class GD4434d0 : public GD5479c0
-{
-public:
-    virtual ~GD4434d0() throw();
-};
-
-__declspec(noinline) GD4434d0::~GD4434d0() throw()
+__declspec(noinline) SOUNDTJ::~SOUNDTJ() throw()
 {
 }
 
-class GD548040
+// 0x443ec0.
+RESOURCEMASTER *GD548040::CreateMaster(const char *name)
 {
-public:
-    virtual ~GD548040();
-};
-
-__declspec(noinline) GD548040::~GD548040()
-{
+    return new GD5482f0(this, name);
 }
 
-// 0x443f70: same shape as 0x442440 against GD548040.
-class __declspec(dllexport) GD443f70 : public GD548040
+class SOUNDTJMASTER : public GD5482f0
 {
+public:
+    SOUNDTJMASTER(RESOURCEMANAGER *manager, const char *name) : GD5482f0(manager, name) {}
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
+    virtual RESOURCE *CreateCopy(const RESHANDLE &handle);
 };
 
+// 0x443910.
+RESOURCE *SOUNDTJMASTER::CreateCopy(const RESHANDLE &handle)
+{
+    return new SOUNDTJ(this, handle);
+}
+
+// 0x443970.
+SRESULT SOUNDTJMASTER::Execute(CMDENTRY *command, TOKENS **args)
+{
+    return (this->*(SRESULT (SOUNDTJMASTER::*)(TOKENS **))command->func)(args);
+}
+
+// 0x443f70: the manager adds no data, so its destructor is a tail jump to
+// the FMOD manager's.
+class __declspec(dllexport) SOUNDTJMANAGER : public GD548040
+{
+public:
+    virtual RESOURCEMASTER *CreateMaster(const char *name);
+};
+
+// 0x443f80.
+RESOURCEMASTER *SOUNDTJMANAGER::CreateMaster(const char *name)
+{
+    return new SOUNDTJMASTER(this, name);
+}
+
+// 0x443fe0: what the FMOD factory hook makes.
+RESOURCEMANAGER *CreateSOUNDTJ()
+{
+    return new SOUNDTJMANAGER();
+}
 
 class GD444450
 {
@@ -2901,9 +2936,38 @@ extern void *g_6ad674;
 class RADARMASTER : public RESOURCEMASTER
 {
 public:
+    RADARMASTER(RESOURCEMANAGER *manager, const char *name);
     static void RegisterCommands();
     virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
+
+    V2 m_60;
+    V2 m_68;
+    PROPSHADOWDECAL m_70;
+    RGB m_274;
+    V2 m_280;
+    PROPSHADOWDECAL m_288;
+    RGB m_48c;
+    V2 m_498;
+    RGB m_4a0;
+    V2 m_4ac;
 };
+
+// 0x441e20.
+RADARMASTER::RADARMASTER(RESOURCEMANAGER *manager, const char *name)
+    : RESOURCEMASTER(manager, name), m_60(0.0f, 0.0f), m_68(0.0f, 0.0f),
+      m_280(0.0f, 0.0f), m_498(0.0f, 0.0f), m_4ac(0.0f, 0.0f)
+{
+    m_60 = V2(0.7f, 0.2f);
+    m_68 = V2(0.15f, 0.2f);
+    m_70 = PROPSHADOWDECAL();
+    m_274 = RGB(255, 255, 255);
+    m_280 = V2(0.009f, 0.012f);
+    m_288 = PROPSHADOWDECAL();
+    m_48c = RGB(255, 0, 0);
+    m_498 = V2(0.009f, 0.012f);
+    m_4a0 = RGB(255, 192, 0);
+    m_4ac = V2(0.009f, 0.012f);
+}
 
 // 0x4421a0.
 SRESULT RADARMASTER::Execute(CMDENTRY *command, TOKENS **args)
@@ -2983,6 +3047,26 @@ void G2CORE4FID8::RegisterCommands()
     RegisterClassName(DAT_006b5118, "GUITJ", "GUI");
 }
 
+// A scripts file: the one name it carries.
+class SCRIPTSMASTER : public RESOURCEMASTER
+{
+public:
+    SCRIPTSMASTER(RESOURCEMANAGER *manager, const char *name)
+        : RESOURCEMASTER(manager, name)
+    {
+        m_60 = "";
+    }
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
+
+    CSTRING m_60;
+};
+
+// 0x442fa0.
+SRESULT SCRIPTSMASTER::Execute(CMDENTRY *command, TOKENS **args)
+{
+    return (this->*(SRESULT (SCRIPTSMASTER::*)(TOKENS **))command->func)(args);
+}
+
 // The SCRIPTS manager (0x00442df0).
 class SCRIPTSMANAGER : public RESOURCEMANAGER
 {
@@ -2993,11 +3077,77 @@ public:
         m_8 = false;
         m_18 = true;
     }
+    virtual RESOURCEMASTER *CreateMaster(const char *name);
 };
+
+// 0x442ee0.
+RESOURCEMASTER *SCRIPTSMANAGER::CreateMaster(const char *name)
+{
+    return new SCRIPTSMASTER(this, name);
+}
 
 RESOURCEMANAGER *CreateSCRIPTS()
 {
     return new SCRIPTSMANAGER();
+}
+
+// A sidekick's settings file.
+class SIDEKICKMASTER : public RESOURCEMASTER
+{
+public:
+    SIDEKICKMASTER(RESOURCEMANAGER *manager, const char *name);
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
+
+    CSTRING m_60;
+    int m_64;
+    int m_68;
+    float m_6c;
+    float m_70;
+    V2 m_74;
+    float m_7c;
+    float m_80;
+    float m_84;
+    float m_88;
+    float m_8c;
+    float m_90;
+    int m_94;
+    CSTRING m_98;
+    float m_9c;
+    float m_a0;
+    V2 m_a4;
+    CSTRING m_ac;
+    CSTRING m_b0;
+};
+
+// 0x4430f0.
+SIDEKICKMASTER::SIDEKICKMASTER(RESOURCEMANAGER *manager, const char *name)
+    : RESOURCEMASTER(manager, name), m_74(0.0f, 0.0f), m_a4(0.0f, 0.0f)
+{
+    m_60 = "";
+    m_64 = 1;
+    m_68 = 0;
+    m_6c = 30.0f;
+    m_70 = 5.0f;
+    m_74 = V2(-40.0f, 80.0f);
+    m_7c = 90.0f;
+    m_80 = 35.0f;
+    m_84 = 80.0f;
+    m_88 = 40.0f;
+    m_8c = 45.0f;
+    m_90 = 300.0f;
+    m_94 = 1;
+    m_98 = "";
+    m_9c = 10.0f;
+    m_a0 = 45.0f;
+    m_a4 = V2(0.25f, 0.4f);
+    m_ac = "";
+    m_b0 = "";
+}
+
+// 0x443430.
+SRESULT SIDEKICKMASTER::Execute(CMDENTRY *command, TOKENS **args)
+{
+    return (this->*(SRESULT (SIDEKICKMASTER::*)(TOKENS **))command->func)(args);
 }
 
 // The SIDEKICK manager (0x00443030).
@@ -3010,11 +3160,90 @@ public:
         m_8 = false;
         m_18 = true;
     }
+    virtual RESOURCEMASTER *CreateMaster(const char *name);
 };
+
+// 0x443330.
+RESOURCEMASTER *SIDEKICKMANAGER::CreateMaster(const char *name)
+{
+    return new SIDEKICKMASTER(this, name);
+}
+
+// 0x4434e0.
+V3 SOUNDTJ::GetListenerPosition()
+{
+    ACTOR *tornado = 0;
+    if (g_pGame)
+        tornado = g_pGame->GetTornado();
+    if (!tornado)
+        return SOUND::GetListenerPosition();
+    return V3(tornado->GetPosition());
+}
 
 RESOURCEMANAGER *CreateSIDEKICK()
 {
     return new SIDEKICKMANAGER();
+}
+
+// A storm chaser's settings file.
+class STORMCHASERMASTER : public RESOURCEMASTER
+{
+public:
+    STORMCHASERMASTER(RESOURCEMANAGER *manager, const char *name);
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
+
+    CSTRING m_60;
+    CWSTRING m_64;
+    float m_68;
+    int m_6c;
+    int m_70;
+    float m_74;
+    float m_78;
+    V2 m_7c;
+    float m_84;
+    float m_88;
+    float m_8c;
+    float m_90;
+    float m_94;
+    int m_98;
+    CSTRING m_9c;
+    float m_a0;
+    float m_a4;
+    V2 m_a8;
+    V3 m_b0;
+    float m_bc;
+};
+
+// 0x444110.
+STORMCHASERMASTER::STORMCHASERMASTER(RESOURCEMANAGER *manager, const char *name)
+    : RESOURCEMASTER(manager, name), m_7c(0.0f, 0.0f), m_a8(0.0f, 0.0f), m_b0(0.0f, 0.0f, 0.0f)
+{
+    m_60 = "";
+    m_64 = L"";
+    m_68 = 1.0f;
+    m_6c = 0;
+    m_70 = 0;
+    m_74 = 30.0f;
+    m_78 = 5.0f;
+    m_7c = V2(-40.0f, 80.0f);
+    m_84 = 90.0f;
+    m_88 = 35.0f;
+    m_8c = 80.0f;
+    m_90 = 40.0f;
+    m_94 = 45.0f;
+    m_98 = 0;
+    m_9c = "";
+    m_a0 = 10.0f;
+    m_a4 = 45.0f;
+    m_a8 = V2(0.25f, 0.4f);
+    m_b0 = V3(0.0f, 0.0f, 0.0f);
+    m_bc = 0.4f;
+}
+
+// 0x4444b0.
+SRESULT STORMCHASERMASTER::Execute(CMDENTRY *command, TOKENS **args)
+{
+    return (this->*(SRESULT (STORMCHASERMASTER::*)(TOKENS **))command->func)(args);
 }
 
 // The STORMCHASER manager (0x00444050).
@@ -3027,11 +3256,43 @@ public:
         m_8 = false;
         m_18 = true;
     }
+    virtual RESOURCEMASTER *CreateMaster(const char *name);
 };
+
+// 0x4443c0.
+RESOURCEMASTER *STORMCHASERMANAGER::CreateMaster(const char *name)
+{
+    return new STORMCHASERMASTER(this, name);
+}
 
 RESOURCEMANAGER *CreateSTORMCHASER()
 {
     return new STORMCHASERMANAGER();
+}
+
+// The tooltips file: the text and the decal the tip is drawn with.
+class TOOLTIPSMASTER : public RESOURCEMASTER
+{
+public:
+    TOOLTIPSMASTER(RESOURCEMANAGER *manager, const char *name);
+    virtual SRESULT Execute(CMDENTRY *command, TOKENS **args);
+
+    CWSTRING m_60;
+    CSTRING m_64;
+};
+
+// 0x444600.
+TOOLTIPSMASTER::TOOLTIPSMASTER(RESOURCEMANAGER *manager, const char *name)
+    : RESOURCEMASTER(manager, name)
+{
+    m_60 = L"";
+    m_64 = "MenuTooltip";
+}
+
+// 0x444770.
+SRESULT TOOLTIPSMASTER::Execute(CMDENTRY *command, TOKENS **args)
+{
+    return (this->*(SRESULT (TOOLTIPSMASTER::*)(TOKENS **))command->func)(args);
 }
 
 // The TOOLTIPS manager (0x00444540).
@@ -3044,7 +3305,14 @@ public:
         m_8 = false;
         m_18 = true;
     }
+    virtual RESOURCEMASTER *CreateMaster(const char *name);
 };
+
+// 0x4446a0.
+RESOURCEMASTER *TOOLTIPSMANAGER::CreateMaster(const char *name)
+{
+    return new TOOLTIPSMASTER(this, name);
+}
 
 RESOURCEMANAGER *CreateTOOLTIPS()
 {
@@ -3101,7 +3369,13 @@ public:
         m_8 = false;
         m_18 = true;
     }
+    virtual RESOURCEMASTER *CreateMaster(const char *name);
 };
+
+RESOURCEMASTER *RADARMANAGER::CreateMaster(const char *name)
+{
+    return new RADARMASTER(this, name);
+}
 
 RESOURCEMANAGER *CreateRADAR()
 {
@@ -3686,12 +3960,6 @@ public:
     char m_data[0x430];
 };
 
-class GD444600
-{
-public:
-    GD444600(void *parent, int value);
-    char m_data[0x68];
-};
 
 // 0x4410b0: creates the 0x46c-byte record the block's first vtable describes.
 class GD4410b0
@@ -3717,17 +3985,6 @@ void *GD441250::Create(void *value)
     return new GD441120(this, value);
 }
 
-// 0x4446a0: creates the 0x68-byte record the block's third vtable describes.
-class GD4446a0
-{
-public:
-    void *Create(int value);
-};
-
-void *GD4446a0::Create(int value)
-{
-    return new GD444600(this, value);
-}
 
 // ---------------------------------------------------------------------------
 // 0x44aba0 and 0x44b2f0: the two-interface media format the samples carry. The
