@@ -263,57 +263,50 @@ GD557e70::GD557e70(const std::string &a, const std::string &b, int c, const std:
 // ::operator new call (not a new-expression) keeps the null test: the
 // throwing-new optimisation would delete it.
 //
-// NOT EXACT YET, measured to the instruction: the best factory shape compiles
-// to 355 of 409 bytes.  The head now matches retail interleaved (each string's
-// inline default ctor sits right before its assign) and the destructor blocks
-// include the RESET - because VC 7.1's own ~basic_string RESETS the object:
-// it frees the buffer when _Myres >= 0x10 and then writes the empty state
-// (_Myres=0xf, _Mysize=0, _Bx=0), see the banked 0x00552220.  So the tail is
-// three plain inlined string destructors; nothing hand-written.
+// SOLVED (the mask idiom's source form): the five factories are
+//   CLASS *obj = new CLASS(std::string().assign(LIT, LEN),
+//                          std::string().assign("unknown", 7), -1,
+//                          std::string().assign("unknown", 7));
+//   m_0 = obj;
+//   if (obj) reinterpret_cast<G2TL3CALL *>(obj)->Call();
+//   return this;
+// i.e. a NEW-EXPRESSION whose three string arguments are anonymous temporaries.
+// That single form produces every piece retail has, measured in our object:
+//   * MSVC 7.1 emits the null test after a new-expression (call ??2@YAPAXI@Z,
+//     cmp, je) - so the check is the compiler's, not hand-written;
+//   * the temporaries materialise INSIDE the branch (their inline zero stores
+//     follow the je), evaluated right to left, which is why 'unknown' (the
+//     fourth argument) is constructed first and the class literal last - the
+//     exact order retail shows;
+//   * the allocation comes first, matching retail, because it is the
+//     new-expression's own;
+//   * the construction-mask cleanup ('mov eax,[esp+0x10]; or eax,8;
+//     test al,4/2/1', free-if-heap then reset, LIFO) appears verbatim - it is
+//     MSVC's guard for the temporaries' conditional destruction, and the
+//     ~basic_string RESET (free then write the empty state, see the banked
+//     0x00552220) is part of that dtor;
+//   * the scope table matches: chain A (states 0,1,2,3: the allocation and
+//     construction, terminating in operator delete of the raw obj - the
+//     new-expression's own delete-on-throw cleanup) and chain B (states 4,5,6:
+//     the post-construction region, strings only), both entering the SAME
+//     mask-guarded unwind funclets.
+// The earlier hand-rolled form (::operator new + placement new, kept for the
+// null test) can never produce this: the placement call owns nothing, so no
+// delete-on-throw state and no mask ever appear.  Rejected variants are in
+// this note's history; both __try forms are refused with C2712 and every
+// try/catch form switches to an EBP frame while retail uses [esp+X].
 //
-// TWO hard negatives now bound the answer:
-//
-//   * RETAIL HAS NO try/catch AND NO __try.  Every try/catch form compiled
-//     here switched the function to an EBP frame (mov esp,ebp / [ebp-X]
-//     addressing), while retail addresses everything through [esp+X] - the
-//     ESP frame that /GX uses for plain functions.  And both __try forms are
-//     refused outright with C2712.  So the original is a plain /GX function.
-//
-//   * THE DESTRUCTION SITS AT THE MERGED EXIT, GUARDED.  Retail's null path
-//     (new returned 0) falls into the main path: the same 'm_0 = obj' store,
-//     the guarded Call, then the destructor blocks behind the construction
-//     mask (a local set 1, 3, 7 at the three assigns, then
-//     'mov eax,[esp+0x10]; or eax,8; test al,4/2/1'), and one epilogue that
-//     returns this.  The EH state also reads 6 AT THE MERGE - the strings are
-//     still live there in the scope table's eyes, which is only possible if
-//     the destruction was laid out at the merge.  Our compiler keeps two
-//     exits, so it needs no mask.  Retail's hoisted 0xf, its four live
-//     callee-saved registers and its three stack spills all follow from the
-//     same decision.
-//
-// The open question is therefore exactly one codegen choice: what makes
-// MSVC 7.1 lay an if-scope's destructors at the shared continuation with a
-// guard rather than inside the branch.  Eleven shapes are compiled and
-// rejected in this note's history (best three: 355 with return-this and
-// m_0/Call inside the strings' scope, 351 void-return variant, 348 with
-// m_0/Call after the if).  All use the ESP frame like retail; none produces
-// the mask.  The next ideas worth a pass: a source shape whose if-branch and
-// else-branch both fall into the same continuation AND the destructors are
-// the last thing before the return (e.g. restructuring so the null path
-// skips only the construction, not the Call-guard), or comparing against a
-// known retail function with the same mask idiom elsewhere in the image.
-//
-// That comparison is now done: a whole-image scan for 'or eax,8' followed by
-// 'test al,4/2/1' finds exactly EIGHT sites, and the other three are in
-// Tongas2/TEXTUREDX8CORE - 0x00553aa9 inside FUN_00553b40 (410 bytes),
-// 0x00553c57 inside FUN_00553d00 (300 bytes), 0x00553f87 inside
-// FUN_00553e70 (410 bytes).  They are the SAME family: identical 'unknown'
-// literal at 0x0067dc44, identical assign call at 0x004073b0, identical
-// mask local (mov [esp+0x18],3) and state stores.  So the shape unlocks eight
-// factories (~3,270 bytes) plus the singletons behind them, and no already-
-// matched example of the idiom exists anywhere else in the image to copy
-// from.  FUN_00553b40's third literal and its vtables would name the two
-// TEXTUREDX8CORE exception classes the same way the five above were named.
+// REMAINING DELTA (ours 406 of 409 bytes, 117 of 121 instructions): pure
+// scheduling.  Our compiler batches the three temporaries' zero stores before
+// the first assign and sets the mask (7) and the EH state (3) up front; retail
+// pairs each temporary's ctor with its assign and updates the mask (1, 3, 7)
+// and the state (1, 2, 3) progressively.  Both are legal schedules of the same
+// semantics (batching is safe because every temporary is fully constructed
+// before the first assign can throw).  Retail also keeps this in edi and the
+// 0xf constant in ebp (hoisted above the je); we spill this from ecx and load
+// 0xf into eax inside the branch.  Those are the known colour/phase stop
+// signals - the source above is the honest shape, and the three bytes of
+// scheduling are the whole gap.
 
 GD557e70::~GD557e70()
 {
@@ -435,20 +428,12 @@ public:
                                                                                     \
     HOLD *HOLD::Create()                                                            \
     {                                                                               \
-        CLASS *obj = (CLASS *)::operator new(sizeof(CLASS));                        \
-        if (obj) {                                                                  \
-            std::string a;                                                         \
-            a.assign("unknown", 7);                                                 \
-            std::string b;                                                         \
-            b.assign("unknown", 7);                                                 \
-            std::string c;                                                         \
-            c.assign(LIT, sizeof(LIT) - 1);                                         \
-            ::new ((void *)obj) CLASS(c, b, -1, a);                                 \
-            m_0 = obj;                                                              \
+        CLASS *obj = new CLASS(std::string().assign(LIT, sizeof(LIT) - 1),           \
+                                std::string().assign("unknown", 7), -1,             \
+                                std::string().assign("unknown", 7));                \
+        m_0 = obj;                                                                  \
+        if (obj)                                                                    \
             reinterpret_cast<G2TL3CALL *>(obj)->Call();                             \
-        } else {                                                                    \
-            m_0 = obj;                                                              \
-        }                                                                           \
         return this;                                                                \
     }
 
