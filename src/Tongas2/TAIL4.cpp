@@ -220,6 +220,9 @@ int TAIL4X::ReturnArg(int a)
 class GD557e70BASE
 {
 public:
+    // Out of line at 0x005c086d in another unit: zeroes the two dwords at +4
+    // and +8 and installs the vtable at 0x00687e24.
+    GD557e70BASE();
     virtual ~GD557e70BASE();
 
     char pad_04[8];
@@ -228,13 +231,37 @@ public:
 class GD557e70 : public V5547C4, public GD557e70BASE
 {
 public:
+    // 0x00557f30 (0xc2 bytes): the four-argument constructor. V5547C4's
+    // implicit ctor inlines here, so the emitted body is
+    //   call V5547C0's ctor; [+0] = V5547C4's vtable;
+    //   call GD557e70BASE's ctor on this+8; [+8] = GD557e70's BASE vtable;
+    //   [+0] = GD557e70's V5547C4 vtable; then the three string assigns.
+    GD557e70(const std::string &a, const std::string &b, int c, const std::string &d);
     virtual ~GD557e70();
 
     std::string m_14;
     std::string m_30;
-    char pad_4c[4];
+    int m_4c;
     std::string m_50;
 };
+
+GD557e70::GD557e70(const std::string &a, const std::string &b, int c, const std::string &d)
+    : m_14(a)
+    , m_30(b)
+    , m_4c(c)
+    , m_50(d)
+{
+}
+
+// The five exception factories (0x005580c0, 0x005583b0, 0x005586a0, 0x00558990,
+// 0x00558c80; 409 bytes each, any two differing only in the third string and
+// the pair of vtables the created object gets).  Each allocates a
+// GD557e70-sized object, fills three stack strings - two "unknown"s and the
+// class's own message - constructs the exception from (message, "unknown",
+// -1, "unknown"), stores the result into the holder's first member and then
+// takes the new object's first reference through G2TL3CALL::Call.  The raw
+// ::operator new call (not a new-expression) keeps the null test: the
+// throwing-new optimisation would delete it.
 
 GD557e70::~GD557e70()
 {
@@ -327,6 +354,55 @@ public:
     int m_0;
     int m_4;
 };
+
+#define TAIL4_FACTORY(CLASS, HOLD, LIT)                                              \
+    class CLASS : public GD557e70                                                   \
+    {                                                                               \
+    public:                                                                         \
+        CLASS(const std::string &a, const std::string &b, int c,                     \
+              const std::string &d);                                                 \
+        virtual ~CLASS() throw();                                                    \
+    };                                                                              \
+                                                                                    \
+    inline CLASS::CLASS(const std::string &a, const std::string &b, int c,          \
+                         const std::string &d)                                       \
+        : GD557e70(a, b, c, d)                                                       \
+    {                                                                               \
+    }                                                                               \
+                                                                                    \
+    __declspec(noinline) CLASS::~CLASS() throw()                                    \
+    {                                                                               \
+    }                                                                               \
+                                                                                    \
+    class HOLD                                                                      \
+    {                                                                               \
+    public:                                                                         \
+        void Create();                                                              \
+        CLASS *m_0;                                                                 \
+    };                                                                              \
+                                                                                    \
+    void HOLD::Create()                                                             \
+    {                                                                               \
+        CLASS *obj = (CLASS *)::operator new(sizeof(CLASS));                        \
+        if (obj) {                                                                  \
+            std::string a;                                                         \
+            a.assign("unknown", 7);                                                 \
+            std::string b;                                                         \
+            b.assign("unknown", 7);                                                 \
+            std::string c;                                                         \
+            c.assign(LIT, sizeof(LIT) - 1);                                         \
+            ::new ((void *)obj) CLASS(c, b, -1, a);                                 \
+        }                                                                           \
+        m_0 = obj;                                                                  \
+        if (obj)                                                                    \
+            reinterpret_cast<G2TL3CALL *>(obj)->Call();                             \
+    }
+
+TAIL4_FACTORY(GD5580c0EX, GD5580c0HOLD, "Unauthorized Access")
+TAIL4_FACTORY(GD5583b0EX, GD5583b0HOLD, "IO Exception")
+TAIL4_FACTORY(GD5586a0EX, GD5586a0HOLD, "Directory not found")
+TAIL4_FACTORY(GD558990EX, GD558990HOLD, "File not found")
+TAIL4_FACTORY(GD558c80EX, GD558c80HOLD, "Path too long")
 
 class G2TL3TH1
 {

@@ -10417,3 +10417,5 @@
 
 0x00a03b9c ?empty@?4??GetAnimationName@SKINNEDMESH@@QAEABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@I@Z@4V34@A data 0x1c
 0x00a03bb8 ?$S1@?4??GetAnimationName@SKINNEDMESH@@QAEABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@I@Z@4IA data 0x4
+0x005c086d ??0GD557e70BASE@@QAE@XZ function 0x11
+0x00557f30 ??0GD557e70@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0H0@Z function 0xc2
