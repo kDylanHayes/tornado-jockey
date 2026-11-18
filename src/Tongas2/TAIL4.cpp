@@ -262,6 +262,32 @@ GD557e70::GD557e70(const std::string &a, const std::string &b, int c, const std:
 // takes the new object's first reference through G2TL3CALL::Call.  The raw
 // ::operator new call (not a new-expression) keeps the null test: the
 // throwing-new optimisation would delete it.
+//
+// NOT EXACT YET, measured to the instruction: the factory shape compiles to
+// 348 of 409 bytes with the same call and jump structure.  Everything before
+// the Call matches modulo register colour; the 61-byte residue is the string
+// cleanup.  Retail destroys the three strings through ONE shared tail:
+//
+//   mov eax, [esp+0x10]   ; a construction bitmask local: 1 after the first
+//   or eax, 8             ; assign, 3 after the second, 7 after the third
+//   test al, 4  -> destroy string 3 (the literal): free its buffer if
+//                  _Myres >= 0x10, then RESET it to the default state
+//                  (_Myres=0xf, _Mysize=0, _Bx=0)
+//   test al, 2  -> string 2, same
+//   test al, 1  -> string 1, same
+//
+// and the EH state runs 0, 1, 2, 3 at the three assigns, then 6 once the
+// ctor returns - "no live objects" - so the shared tail is also what the
+// unwind uses, and the resets are what keep a second destruction a no-op.
+// Our body instead emits the three destructors inline (no mask, no reset),
+// which is where the 61 bytes go.  The open question is the source form that
+// makes MSVC 7.1 emit the shared-mask cleanup.  Tried and rejected:
+//   - try { strings + ctor } catch(...) {}      -> 328 bytes
+//   - strings outside, try { ctor } catch(...)  -> 329 bytes
+// Both lose ~20 bytes over the plain form and neither produces the mask.
+// Retail's string scope covers the m_0 store AND the Call (the cleanup runs
+// after Call returns), so the next variant to try is moving the m_0/Call
+// inside the strings' scope, then a __try/__except form.
 
 GD557e70::~GD557e70()
 {
