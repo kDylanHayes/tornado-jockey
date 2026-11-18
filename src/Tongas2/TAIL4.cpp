@@ -263,31 +263,41 @@ GD557e70::GD557e70(const std::string &a, const std::string &b, int c, const std:
 // ::operator new call (not a new-expression) keeps the null test: the
 // throwing-new optimisation would delete it.
 //
-// NOT EXACT YET, measured to the instruction: the factory shape compiles to
-// 348 of 409 bytes with the same call and jump structure.  Everything before
-// the Call matches modulo register colour; the 61-byte residue is the string
-// cleanup.  Retail destroys the three strings through ONE shared tail:
+// NOT EXACT YET, measured to the instruction: the best factory shape compiles
+// to 355 of 409 bytes.  The head now matches retail interleaved (each string's
+// inline default ctor sits right before its assign) and the destructor blocks
+// include the RESET - because VC 7.1's own ~basic_string RESETS the object:
+// it frees the buffer when _Myres >= 0x10 and then writes the empty state
+// (_Myres=0xf, _Mysize=0, _Bx=0), see the banked 0x00552220.  So the tail is
+// three plain inlined string destructors; nothing hand-written.
 //
-//   mov eax, [esp+0x10]   ; a construction bitmask local: 1 after the first
-//   or eax, 8             ; assign, 3 after the second, 7 after the third
-//   test al, 4  -> destroy string 3 (the literal): free its buffer if
-//                  _Myres >= 0x10, then RESET it to the default state
-//                  (_Myres=0xf, _Mysize=0, _Bx=0)
-//   test al, 2  -> string 2, same
-//   test al, 1  -> string 1, same
+// The remaining residue is ONE structural choice: retail's null path (obj == 0)
+// MERGES into the main path and runs the same destructor blocks guarded by a
+// construction mask - a local set 1 after the first assign, 3 after the second,
+// 7 after the third, then 'mov eax,[esp+0x10]; or eax,8; test al,4/2/1' - and
+// both paths exit through ONE epilogue that returns this.  Our compiler keeps
+// two exits instead: the null path leaves directly, so no mask is needed and
+// the destructors run unguarded.  Retail also hoists the 0xf constant above the
+// branch (its shared tail needs it on both paths) and keeps four live callee-
+// saved registers (edi=this, ebp=0xf, esi=obj, ebx=0) with three spills
+// (+0x10 mask, +0x14 this, +0x18 obj) - all downstream of the same merge.
 //
-// and the EH state runs 0, 1, 2, 3 at the three assigns, then 6 once the
-// ctor returns - "no live objects" - so the shared tail is also what the
-// unwind uses, and the resets are what keep a second destruction a no-op.
-// Our body instead emits the three destructors inline (no mask, no reset),
-// which is where the 61 bytes go.  The open question is the source form that
-// makes MSVC 7.1 emit the shared-mask cleanup.  Tried and rejected:
-//   - try { strings + ctor } catch(...) {}      -> 328 bytes
-//   - strings outside, try { ctor } catch(...)  -> 329 bytes
-// Both lose ~20 bytes over the plain form and neither produces the mask.
-// Retail's string scope covers the m_0 store AND the Call (the cleanup runs
-// after Call returns), so the next variant to try is moving the m_0/Call
-// inside the strings' scope, then a __try/__except form.
+// Variants compiled and rejected (size, no mask in any):
+//   1. strings inside if, m_0+Call after the if          -> 348
+//   2. try { strings + ctor } catch(...)                -> 328
+//   3. strings outside, try { ctor } catch(...)         -> 329
+//   4. strings at function scope                        -> 326
+//   5. strings' scope covers try+m_0+Call               -> 320
+//   6. function-try-block                               -> 309
+//   7. strings as members of a local struct            -> 230
+//   8. __try (strings at function scope)               -> C2712
+//   9. __try (strings inside)                          -> C2712
+//  10. return this added to force one exit              -> 355 (current form)
+// The next lever is the one that makes the null path merge: a source shape
+// whose null path must fall through to the shared epilogue rather than return
+// separately - worth checking whether the created object's AddRef (the Call)
+// can throw, since a potentially-throwing call on the merged path changes the
+// EH scope table and can force the merge.
 
 GD557e70::~GD557e70()
 {
@@ -403,11 +413,11 @@ public:
     class HOLD                                                                      \
     {                                                                               \
     public:                                                                         \
-        void Create();                                                              \
+        HOLD *Create();                                                             \
         CLASS *m_0;                                                                 \
     };                                                                              \
                                                                                     \
-    void HOLD::Create()                                                             \
+    HOLD *HOLD::Create()                                                            \
     {                                                                               \
         CLASS *obj = (CLASS *)::operator new(sizeof(CLASS));                        \
         if (obj) {                                                                  \
@@ -418,10 +428,13 @@ public:
             std::string c;                                                         \
             c.assign(LIT, sizeof(LIT) - 1);                                         \
             ::new ((void *)obj) CLASS(c, b, -1, a);                                 \
+            m_0 = obj;                                                              \
+            if (obj)                                                                \
+                reinterpret_cast<G2TL3CALL *>(obj)->Call();                         \
+        } else {                                                                    \
+            m_0 = obj;                                                              \
         }                                                                           \
-        m_0 = obj;                                                                  \
-        if (obj)                                                                    \
-            reinterpret_cast<G2TL3CALL *>(obj)->Call();                             \
+        return this;                                                                \
     }
 
 TAIL4_FACTORY(GD5580c0EX, GD5580c0HOLD, "Unauthorized Access")
