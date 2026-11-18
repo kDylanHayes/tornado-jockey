@@ -35,6 +35,7 @@
 #include "Tongas2/RESOURCES.h"
 
 extern RESOURCEMANAGER *g_pEMITTER;
+extern RESOURCEMANAGER *g_pFX;
 
 class EMITTER
 {
@@ -2558,6 +2559,7 @@ struct G2REFOBJECT;
 
 struct G2CORE2M1
 {
+    void AttachFx();
     void SetCF0(const int &value);
     void SetCCC(const int &value);
     void SetCD0(const int &value);
@@ -3902,6 +3904,12 @@ struct G2VSLOT166 : G2VSLOTPAD<166>
     virtual void Call1(int *slot);
 };
 
+// Slot 0xc8 of a resource: the place call, which takes a position by value.
+struct G2FXSLOT50 : G2VSLOTPAD<50>
+{
+    virtual void Place(V3 position);
+};
+
 // Slots 0x21c and 0x23c: one argument, and none.
 struct G2VSLOT135 : G2VSLOTPAD<135>
 {
@@ -4357,6 +4365,51 @@ void G2CORE2M1::WarnObjective()
         reinterpret_cast<G2TORNADOOBJ *>(tornado)
             ->TakeObjective(*(RESHANDLE *)((char *)this + 0xd2c));
     }
+}
+
+// 0x426730: fetch the piece's fx resource once - by the master's fx name when
+// there is a master, else by the member name - and when one comes back, place
+// it at the piece's position and activate it. Runs once, guarded by the same
+// one-shot flag as Collapse.
+//
+// Not byte-exact: 240 of 241 bytes, 78 instructions on both sides, identical
+// call and jump structure. The whole residue is register colour - retail keeps
+// this in esi and fx in edi, hoisting the guard load above the delayed push
+// edi; we keep this in edi and fx in esi. The colours cascade into the error
+// arm, where retail loads g_pLog into ecx (mov ecx,[addr], 6 bytes) while our
+// colour leaves eax free so MSVC emits the 5-byte A1 form, which is the 1-byte
+// size difference. A local name variable (instead of the inline conditional in
+// both call sites) compiles to 223 bytes - MSVC then skips retail's second
+// evaluation of the name - so the conditional form is the honest best source.
+// Same class as the EMITTER/ACTOR {esi,edi} swaps in docs/matching-levers.md.
+void G2CORE2M1::AttachFx()
+{
+    if (*(bool *)((char *)this + 0xd98))
+        return;
+    RESOURCEMASTER *master =
+        g_pResources->GetMaster(*(RESHANDLE *)((char *)this + 0xd78));
+    RESOURCE *fx = 0;
+    if (master) {
+        fx = g_pFX->GetResource(*(const char **)((char *)master + 0x108)
+                                    ? *(const char **)((char *)master + 0x108)
+                                    : "");
+        if (!fx) {
+            if (g_pLog)
+                g_pLog->Error("Can't get fx: %s",
+                              *(const char **)((char *)master + 0x108)
+                                  ? *(const char **)((char *)master + 0x108)
+                                  : "");
+        }
+    } else {
+        fx = g_pFX->GetResource((const char *)((char *)this + 0xdac));
+    }
+    if (fx) {
+        reinterpret_cast<G2FXSLOT50 *>(fx)->Place(
+            reinterpret_cast<G2VSLOT90 *>(this)->Call0());
+        fx->SetActive(true);
+    }
+    *(bool *)((char *)this + 0xcbc) = true;
+    *(bool *)((char *)this + 0xd98) = true;
 }
 
 // 0x41b950: grey out the HUD icon of every objective slot that holds the
