@@ -271,33 +271,49 @@ GD557e70::GD557e70(const std::string &a, const std::string &b, int c, const std:
 // (_Myres=0xf, _Mysize=0, _Bx=0), see the banked 0x00552220.  So the tail is
 // three plain inlined string destructors; nothing hand-written.
 //
-// The remaining residue is ONE structural choice: retail's null path (obj == 0)
-// MERGES into the main path and runs the same destructor blocks guarded by a
-// construction mask - a local set 1 after the first assign, 3 after the second,
-// 7 after the third, then 'mov eax,[esp+0x10]; or eax,8; test al,4/2/1' - and
-// both paths exit through ONE epilogue that returns this.  Our compiler keeps
-// two exits instead: the null path leaves directly, so no mask is needed and
-// the destructors run unguarded.  Retail also hoists the 0xf constant above the
-// branch (its shared tail needs it on both paths) and keeps four live callee-
-// saved registers (edi=this, ebp=0xf, esi=obj, ebx=0) with three spills
-// (+0x10 mask, +0x14 this, +0x18 obj) - all downstream of the same merge.
+// TWO hard negatives now bound the answer:
 //
-// Variants compiled and rejected (size, no mask in any):
-//   1. strings inside if, m_0+Call after the if          -> 348
-//   2. try { strings + ctor } catch(...)                -> 328
-//   3. strings outside, try { ctor } catch(...)         -> 329
-//   4. strings at function scope                        -> 326
-//   5. strings' scope covers try+m_0+Call               -> 320
-//   6. function-try-block                               -> 309
-//   7. strings as members of a local struct            -> 230
-//   8. __try (strings at function scope)               -> C2712
-//   9. __try (strings inside)                          -> C2712
-//  10. return this added to force one exit              -> 355 (current form)
-// The next lever is the one that makes the null path merge: a source shape
-// whose null path must fall through to the shared epilogue rather than return
-// separately - worth checking whether the created object's AddRef (the Call)
-// can throw, since a potentially-throwing call on the merged path changes the
-// EH scope table and can force the merge.
+//   * RETAIL HAS NO try/catch AND NO __try.  Every try/catch form compiled
+//     here switched the function to an EBP frame (mov esp,ebp / [ebp-X]
+//     addressing), while retail addresses everything through [esp+X] - the
+//     ESP frame that /GX uses for plain functions.  And both __try forms are
+//     refused outright with C2712.  So the original is a plain /GX function.
+//
+//   * THE DESTRUCTION SITS AT THE MERGED EXIT, GUARDED.  Retail's null path
+//     (new returned 0) falls into the main path: the same 'm_0 = obj' store,
+//     the guarded Call, then the destructor blocks behind the construction
+//     mask (a local set 1, 3, 7 at the three assigns, then
+//     'mov eax,[esp+0x10]; or eax,8; test al,4/2/1'), and one epilogue that
+//     returns this.  The EH state also reads 6 AT THE MERGE - the strings are
+//     still live there in the scope table's eyes, which is only possible if
+//     the destruction was laid out at the merge.  Our compiler keeps two
+//     exits, so it needs no mask.  Retail's hoisted 0xf, its four live
+//     callee-saved registers and its three stack spills all follow from the
+//     same decision.
+//
+// The open question is therefore exactly one codegen choice: what makes
+// MSVC 7.1 lay an if-scope's destructors at the shared continuation with a
+// guard rather than inside the branch.  Eleven shapes are compiled and
+// rejected in this note's history (best three: 355 with return-this and
+// m_0/Call inside the strings' scope, 351 void-return variant, 348 with
+// m_0/Call after the if).  All use the ESP frame like retail; none produces
+// the mask.  The next ideas worth a pass: a source shape whose if-branch and
+// else-branch both fall into the same continuation AND the destructors are
+// the last thing before the return (e.g. restructuring so the null path
+// skips only the construction, not the Call-guard), or comparing against a
+// known retail function with the same mask idiom elsewhere in the image.
+//
+// That comparison is now done: a whole-image scan for 'or eax,8' followed by
+// 'test al,4/2/1' finds exactly EIGHT sites, and the other three are in
+// Tongas2/TEXTUREDX8CORE - 0x00553aa9 inside FUN_00553b40 (410 bytes),
+// 0x00553c57 inside FUN_00553d00 (300 bytes), 0x00553f87 inside
+// FUN_00553e70 (410 bytes).  They are the SAME family: identical 'unknown'
+// literal at 0x0067dc44, identical assign call at 0x004073b0, identical
+// mask local (mov [esp+0x18],3) and state stores.  So the shape unlocks eight
+// factories (~3,270 bytes) plus the singletons behind them, and no already-
+// matched example of the idiom exists anywhere else in the image to copy
+// from.  FUN_00553b40's third literal and its vtables would name the two
+// TEXTUREDX8CORE exception classes the same way the five above were named.
 
 GD557e70::~GD557e70()
 {
@@ -429,8 +445,7 @@ public:
             c.assign(LIT, sizeof(LIT) - 1);                                         \
             ::new ((void *)obj) CLASS(c, b, -1, a);                                 \
             m_0 = obj;                                                              \
-            if (obj)                                                                \
-                reinterpret_cast<G2TL3CALL *>(obj)->Call();                         \
+            reinterpret_cast<G2TL3CALL *>(obj)->Call();                             \
         } else {                                                                    \
             m_0 = obj;                                                              \
         }                                                                           \
